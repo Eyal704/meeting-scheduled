@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meeting Scheduled — Qualified Appointments, Automated</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-deep: #0A1628;
+      --blue-mid: #1A3A6E;
+      --blue-brand: #1F6FEB;
+      --blue-light: #4C9FFF;
+      --blue-glow: rgba(31, 111, 235, 0.15);
+      --white: #FFFFFF;
+      --off-white: #F7F9FC;
+      --text-muted: #6B7FA3;
+      --border: rgba(31, 111, 235, 0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--blue-deep);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── GRADIENT MESH CANVAS ── */
+    #mesh {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--blue-deep);
+      letter-spacing: -0.04em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--blue-brand);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    .typed-cursor {
+      display: inline-block;
+      color: var(--blue-brand);
+      animation: blink 0.7s step-end infinite;
+      font-weight: 800;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ── HERO TAGLINE ── */
+    .hero-tagline {
+      margin-top: 32px;
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      color: var(--blue-deep);
+      letter-spacing: -0.03em;
+      opacity: 0;
+      animation: fade-up 0.7s ease 0.85s forwards;
+    }
+
+    .hero-tagline span {
+      color: var(--blue-brand);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 18px;
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--blue-deep);
+      letter-spacing: 0.01em;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fade-up 0.6s ease 0.1s forwards;
+      backdrop-filter: blur(8px);
+    }
+
+    .badge-indicator {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--blue-brand);
+      flex-shrink: 0;
+    }
+
+    h1 {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+      color: var(--blue-deep);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fade-up 0.7s ease 0.25s forwards;
+    }
+
+    h1 em { font-style: normal; color: var(--blue-brand); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 520px;
+      margin: 0 auto 44px;
+      opacity: 0;
+      animation: fade-up 0.7s ease 0.4s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fade-up 0.7s ease 0.55s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--blue-brand);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 24px rgba(31,111,235,0.35);
+    }
+
+    .btn-primary:hover {
+      background: #1560D4;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(31,111,235,0.45);
+    }
+
+    .btn-secondary {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .btn-secondary:hover { color: var(--blue-deep); }
+
+    /* ── STATS ── */
+    .stats {
+      display: flex;
+      justify-content: center;
+      margin-top: 80px;
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      animation: fade-up 0.7s ease 0.7s forwards;
+    }
+
+    .stat {
+      flex: 1;
+      max-width: 200px;
+      text-align: center;
+      padding: 0 32px;
+      position: relative;
+    }
+
+    .stat + .stat::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 10%; bottom: 10%;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .stat-num {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 2.4rem;
+      color: var(--blue-deep);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .stat-num span { color: var(--blue-brand); }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: 72px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue-brand);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      letter-spacing: -0.04em;
+      line-height: 1.12;
+      color: var(--blue-deep);
+      margin-bottom: 56px;
+    }
+
+    /* ── STEPS HORIZONTAL ── */
+    .steps-vertical {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .step-v {
+      background: var(--off-white);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s;
+    }
+
+    .step-v:first-child { border-radius: 16px 0 0 16px; }
+    .step-v:last-child  { border-radius: 0 16px 16px 0; }
+    .step-v:hover { background: #EEF4FF; }
+
+    .step-v-num {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 2.2rem;
+      color: rgba(31,111,235,0.18);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .step-v-body h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--blue-deep);
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .step-v-body p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .step-v-detail {
+      margin-top: 14px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.8);
+      border-left: 3px solid var(--blue-brand);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.84rem;
+      font-weight: 300;
+      color: #5a6e8a;
+      line-height: 1.65;
+    }
+
+    /* ── CLOSING ── */
+    .closing {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 8px 24px 80px;
+    }
+
+    .closing p {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .closing a {
+      color: var(--blue-brand);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .closing a:hover { color: var(--blue-mid); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 28px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+    }
+
+    .footer-logo {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--blue-deep);
+      letter-spacing: -0.04em;
+    }
+
+    .footer-copy { font-size: 0.78rem; color: #B0BCCC; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .stats { flex-direction: column; align-items: center; gap: 24px; }
+      .stat + .stat::before { display: none; }
+      .steps-vertical { grid-template-columns: 1fr; gap: 2px; }
+      .step-v:first-child { border-radius: 16px 16px 0 0; }
+      .step-v:last-child  { border-radius: 0 0 16px 16px; }
+      footer { flex-direction: column; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ANIMATED GRADIENT MESH -->
+  <canvas id="mesh"></canvas>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">
+      <div class="logo-dot"></div>
+      MeetingScheduled
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="badge-indicator"></div>
+        Minutes to reach your ICP. You focus on the conversation.
+      </div>
+      <h1><span id="typed"></span><span class="typed-cursor">|</span><br><em>Starting today.</em></h1>
+      <p class="hero-sub">
+        Connect your email, describe what you sell, and our automated outbound system starts reaching the right prospects — fast. Your team picks up when someone replies interested.
+      </p>
+      <div class="hero-actions">
+        <a href="/cdn-cgi/l/email-protection#196a78757c6a59747c7c6d70777e346a7a717c7d6c757c7d377a7674" class="btn-primary">
+          Start Outreaching
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num" id="stat-pipeline">$0<span>M</span></div>
+          <div class="stat-label">In pipeline generated</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="stat-arr">$0<span>K</span></div>
+          <div class="stat-label">ARR attributed</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="stat-plug">0<span>%</span></div>
+          <div class="stat-label">Plug &amp; play setup</div>
+        </div>
+      </div>
+
+      <p class="hero-tagline">The pipeline without the payroll.</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section">
+    <div class="section-label">How it works</div>
+    <div class="section-title">Three simple steps.</div>
+
+    <div class="steps-vertical">
+
+      <div class="step-v">
+        <div class="step-v-num">01</div>
+        <div class="step-v-body">
+          <h3>Connect your email &amp; describe your business</h3>
+          <p>Connect Gmail or your business email. Write a few sentences about your product or service — or simply paste your website URL.</p>
+          <p class="step-v-detail">Our system then scans the web — business profiles, Google, LinkedIn posts and pages — to identify businesses that closely match your offering. It gathers relevant signals such as challenges they mention, potential needs, and buying intent.</p>
+        </div>
+      </div>
+
+      <div class="step-v">
+        <div class="step-v-num">02</div>
+        <div class="step-v-body">
+          <h3>Automated outreach begins</h3>
+          <p>The system creates and sends personalized outreach to these businesses, presenting your solution as a relevant answer to their specific needs.</p>
+        </div>
+      </div>
+
+      <div class="step-v">
+        <div class="step-v-num">03</div>
+        <div class="step-v-body">
+          <h3>You focus only on matching prospects</h3>
+          <p>Reply to incoming emails and call the relevant prospects that show up as events in your calendar. Nothing else.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <div class="closing">
+    <p>Interested? Send an email: <a href="/cdn-cgi/l/email-protection#4734262b2234072a2222332e29206a34242f2223322b22236924282a"><span class="__cf_email__" data-cfemail="9deefcf1f8eeddf0f8f8e9f4f3fab0eefef5f8f9e8f1f8f9b3fef2f0">[email&#160;protected]</span></a></p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Meeting Scheduled</div>
+    <span class="footer-copy">© 2026 Meeting Scheduled. All rights reserved.</span>
+  </footer>
+
+  <script>
+    // ── COUNTER ANIMATION ──
+    function animateCounter(el, start, end, decimals, prefix, suffix, duration) {
+      const startTime = performance.now();
+      function update(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = start + (end - start) * eased;
+        el.innerHTML = prefix + current.toFixed(decimals) + '<span>' + suffix + '</span>';
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    // Start counters after stats fade in (0.7s delay)
+    setTimeout(() => {
+      animateCounter(document.getElementById('stat-pipeline'), 0, 3.8, 1, '$', 'M', 1800);
+      animateCounter(document.getElementById('stat-arr'),      0, 790, 0, '$', 'K', 1800);
+      animateCounter(document.getElementById('stat-plug'),     0, 100, 0, '',  '%', 1800);
+    }, 900);
+
+    // ── TYPING EFFECT ──
+    const typedEl = document.getElementById('typed');
+    const cursorEl = document.querySelector('.typed-cursor');
+    const text = 'Qualified meetings.';
+    let i = 0;
+
+    function type() {
+      if (i < text.length) {
+        typedEl.textContent += text[i];
+        i++;
+        setTimeout(type, i === 1 ? 400 : 55);
+      } else {
+        setTimeout(() => { cursorEl.style.display = 'none'; }, 800);
+      }
+    }
+    setTimeout(type, 500);
+
+    // ── ANIMATED GRADIENT MESH ──
+    const canvas = document.getElementById('mesh');
+    const ctx = canvas.getContext('2d');
+
+    let W, H;
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = document.body.scrollHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const orbs = [
+      { x: 0.15, y: 0.08, r: 0.45, color: 'rgba(31,111,235,0.13)', vx: 0.00018, vy: 0.00012 },
+      { x: 0.80, y: 0.15, r: 0.38, color: 'rgba(76,159,255,0.10)', vx: -0.00014, vy: 0.00016 },
+      { x: 0.50, y: 0.45, r: 0.50, color: 'rgba(16,80,200,0.07)',  vx: 0.00010, vy: -0.00013 },
+      { x: 0.20, y: 0.75, r: 0.35, color: 'rgba(100,180,255,0.09)', vx: 0.00016, vy: -0.00010 },
+      { x: 0.85, y: 0.70, r: 0.42, color: 'rgba(31,111,235,0.08)', vx: -0.00012, vy: 0.00014 },
+    ];
+
+    function draw(t) {
+      ctx.clearRect(0, 0, W, H);
+      orbs.forEach(o => {
+        o.x += o.vx * Math.sin(t * 0.0005 + o.r);
+        o.y += o.vy * Math.cos(t * 0.0004 + o.r);
+        if (o.x < 0.05 || o.x > 0.95) o.vx *= -1;
+        if (o.y < 0.02 || o.y > 0.98) o.vy *= -1;
+        const gx = o.x * W;
+        const gy = o.y * H;
+        const gr = o.r * Math.max(W, H);
+        const grad = ctx.createRadialGradient(gx, gy, 0, gx, gy, gr);
+        grad.addColorStop(0, o.color);
+        grad.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(gx, gy, gr, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  </script>
+
+</body>
+</html>
