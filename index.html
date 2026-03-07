@@ -328,6 +328,8 @@
       color: var(--blue-deep);
       letter-spacing: -0.02em;
       margin-bottom: 12px;
+      padding-left: 12px;
+      border-left: 3px solid var(--blue-brand);
     }
 
     .step-v-body p {
@@ -457,8 +459,8 @@
           <div class="stat-label">ARR attributed</div>
         </div>
         <div class="stat">
-          <div class="stat-num" id="stat-plug">0<span>%</span></div>
-          <div class="stat-label">Plug &amp; play setup</div>
+          <div class="stat-num" id="stat-plug">0<span>+</span></div>
+          <div class="stat-label">Qualified meetings generated</div>
         </div>
       </div>
 
@@ -532,7 +534,7 @@
     setTimeout(() => {
       animateCounter(document.getElementById('stat-pipeline'), 0, 3.8, 1, '$', 'M', 1800);
       animateCounter(document.getElementById('stat-arr'),      0, 790, 0, '$', 'K', 1800);
-      animateCounter(document.getElementById('stat-plug'),     0, 100, 0, '',  '%', 1800);
+      animateCounter(document.getElementById('stat-plug'),     0, 890, 0, '',  '+', 1800);
     }, 900);
 
     // ── TYPING EFFECT ──
