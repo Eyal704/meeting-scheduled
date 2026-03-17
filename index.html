@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MeetingScheduled — AI sales development system</title>
+  <meta name="description" content="Connect Gmail, define your ICP, and MeetingScheduled starts finding prospects, sending outreach, and preparing your next calls." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rose-strong: #cb5f7c;
+      --rose: #d86e89;
+      --rose-deep: #b44f69;
+      --rose-soft: #f4e7eb;
+      --rose-canvas: #fbf5f7;
+      --rose-tint: #f8edf1;
+      --card: #fffdfd;
+      --text-strong: #191518;
+      --text: #433a40;
+      --text-muted: #746970;
+      --border: rgba(203, 95, 124, 0.14);
+      --border-strong: rgba(203, 95, 124, 0.22);
+      --shadow-soft: 0 12px 32px rgba(93, 49, 63, 0.08);
+      --shadow-card: 0 18px 44px rgba(93, 49, 63, 0.12);
+      --max: 1180px;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-strong);
+      background:
+        radial-gradient(circle at top left, rgba(216,110,137,0.15), transparent 28%),
+        radial-gradient(circle at 85% 10%, rgba(216,110,137,0.08), transparent 22%),
+        linear-gradient(180deg, #fcf7f8 0%, #fbf5f7 48%, #fffafb 100%);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+    .shell { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(251, 245, 247, 0.72);
+      border-bottom: 1px solid rgba(203,95,124,0.1);
+    }
+
+    nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Sora', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .logo-svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+
+    .logo-img {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+      display: block;
+    }
+
+
+    .nav-link, .btn-primary, .btn-secondary {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      transition: .18s ease;
+    }
+
+    .nav-link {
+      padding: 11px 16px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.62);
+      color: var(--text);
+      font-size: .95rem;
+    }
+
+    .nav-link:hover { background: rgba(255,255,255,0.82); border-color: var(--border-strong); }
+
+    .hero {
+      padding: 78px 0 24px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.62);
+      box-shadow: var(--shadow-soft);
+      color: var(--text);
+      font-size: .92rem;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow-dot {
+      width: 8px; height: 8px; border-radius: 999px;
+      background: var(--rose-strong);
+      box-shadow: 0 0 0 6px rgba(203,95,124,0.1);
+    }
+
+    h1 {
+      margin: 0 auto 18px;
+      max-width: 900px;
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2.85rem, 5.7vw, 4.75rem);
+      line-height: 1.02;
+      letter-spacing: -0.065em;
+    }
+
+    .headline-accent { color: var(--rose-strong); }
+
+    .typed-line-wrap {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .typing-cursor {
+      display: inline-block;
+      width: 0.55ch;
+      color: var(--rose-strong);
+      animation: blink 0.9s step-end infinite;
+    }
+
+    .chat-cursor { font-size: 1rem; }
+
+    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+
+    .hero-sub {
+      margin: 0 auto;
+      max-width: 710px;
+      color: var(--text-muted);
+      font-size: clamp(1.02rem, 1.4vw, 1.18rem);
+      line-height: 1.75;
+    }
+
+    .hero-cta {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .btn-primary, .btn-secondary {
+      padding: 14px 22px;
+      font-weight: 700;
+      font-size: .98rem;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(180deg, var(--rose) 0%, var(--rose-strong) 100%);
+      box-shadow: 0 16px 32px rgba(203,95,124,0.26);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 38px rgba(203,95,124,0.32); }
+
+    .btn-secondary {
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.66);
+    }
+    .btn-secondary:hover { transform: translateY(-2px); background: rgba(255,255,255,0.82); border-color: var(--border-strong); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 42px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 22px 18px;
+    }
+
+    .stat-value {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      margin-bottom: 6px;
+    }
+
+    .stat-value span { color: var(--rose-strong); }
+    .stat-label { color: var(--text-muted); font-size: .92rem; }
+
+    .section {
+      padding: 82px 0 6px;
+    }
+
+    .section-label {
+      color: var(--rose-strong);
+      text-transform: uppercase;
+      letter-spacing: .13em;
+      font-size: .77rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.95rem, 3.4vw, 3rem);
+      line-height: 1.06;
+      letter-spacing: -0.055em;
+      margin: 0 0 16px;
+      max-width: 780px;
+    }
+
+    .section-sub {
+      margin: 0 0 34px;
+      max-width: 760px;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+
+    .workspace {
+      background: linear-gradient(180deg, rgba(255,255,255,0.76), rgba(255,255,255,0.6));
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 18px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .workspace-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      border-radius: 22px 22px 0 0;
+      background: linear-gradient(90deg, rgba(216,110,137,0.15) 0%, rgba(255,255,255,0.18) 40%, rgba(216,110,137,0.08) 100%);
+      border: 1px solid rgba(203,95,124,0.1);
+      border-bottom: 0;
+    }
+
+    .ws-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .ws-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      border: 1px solid rgba(203,95,124,0.14);
+      box-shadow: 0 10px 22px rgba(203,95,124,0.12);
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .ws-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: -0.03em;
+    }
+
+    .ws-sub { color: var(--text-muted); font-size: .93rem; margin-top: 4px; }
+
+    .ws-metrics { display:grid; gap:10px; }
+    .ws-pill {
+      padding: 13px 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(203,95,124,0.14);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .workspace-body {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      min-height: 520px;
+      border: 1px solid rgba(203,95,124,0.1);
+      border-top: 0;
+      border-radius: 0 0 22px 22px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.5);
+    }
+
+    .workspace-side {
+      padding: 18px;
+      background:
+        radial-gradient(circle at top left, rgba(216,110,137,0.16), transparent 45%),
+        linear-gradient(180deg, rgba(249,238,242,0.9) 0%, rgba(248,240,243,0.74) 100%);
+    }
+
+    .side-item {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.05rem;
+      padding: 16px 14px;
+      border-radius: 18px;
+      margin-bottom: 10px;
+    }
+
+    .side-item.active {
+      color: var(--rose-strong);
+      background: linear-gradient(90deg, rgba(216,110,137,0.17), rgba(255,255,255,0.16));
+      border: 1px solid rgba(203,95,124,0.12);
+    }
+
+    .workspace-main {
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(251,245,247,0.76) 0%, rgba(255,250,251,0.86) 100%);
+    }
+
+    .workspace-message {
+      margin-bottom: 18px;
+      padding: 26px 28px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .workspace-message h3 {
+      margin: 0 0 8px;
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+    }
+    .workspace-message p { margin: 0; color: var(--text-muted); font-size: 1.03rem; line-height: 1.65; }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .column {
+      border-radius: 22px;
+      padding: 14px;
+      border: 1px solid rgba(203,95,124,0.08);
+      min-height: 340px;
+    }
+
+    .col-prospects { background: rgba(139, 92, 246, 0.065); }
+    .col-pending { background: rgba(251, 191, 36, 0.075); }
+    .col-call { background: rgba(59, 130, 246, 0.085); }
+    .col-meetings { background: rgba(203, 95, 124, 0.085); }
+
+    .column-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px; font-family: 'Sora', sans-serif; font-size: 1rem; letter-spacing: -0.03em;
+    }
+
+    .count { padding: 7px 12px; border-radius: 999px; background: rgba(255,255,255,0.78); border: 1px solid rgba(203,95,124,0.08); color: var(--text-muted); font-size: .92rem; }
+
+    .mini-card {
+      border-radius: 20px;
+      background: var(--card);
+      border: 1px solid rgba(203,95,124,0.08);
+      box-shadow: 0 10px 24px rgba(93,49,63,0.05);
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+    .mini-card:last-child { margin-bottom: 0; }
+    .mini-card h4 { margin: 0 0 8px; font-family: 'Sora', sans-serif; font-size: 1rem; line-height: 1.08; letter-spacing: -0.04em; }
+    .mini-card p { margin: 0; color: var(--text-muted); line-height: 1.45; }
+    .mini-foot { display:flex; justify-content: space-between; align-items:center; margin-top: 14px; color: var(--text-muted); }
+    .chip { padding: 7px 10px; border-radius: 999px; font-weight: 700; font-size: .9rem; }
+    .chip-rose { background: rgba(216,110,137,0.14); color: var(--rose-strong); }
+    .chip-amber { background: rgba(251,191,36,0.18); color: #a86c03; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      padding: 28px;
+    }
+
+    .step-num {
+      width: 42px; height: 42px; border-radius: 14px; display:grid; place-items:center;
+      background: rgba(216,110,137,0.14); color: var(--rose-deep); font-family: 'Sora', sans-serif; font-weight: 800; margin-bottom: 16px;
+    }
+
+    .card h3 { margin: 0 0 10px; font-family: 'Sora', sans-serif; font-size: 1.08rem; letter-spacing: -0.03em; }
+    .card p { margin: 0; color: var(--text-muted); line-height: 1.7; }
+
+    .difference-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 20px;
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--text);
+    }
+    .difference-list li {
+      background: rgba(255,255,255,0.62);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow-soft);
+      font-weight: 500;
+    }
+
+    .quote-block {
+      margin-top: 28px;
+      padding: 28px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.68);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .quote-title {
+      margin: 0 0 14px;
+      font-family: 'Sora', sans-serif;
+      font-size: 1.35rem;
+      letter-spacing: -0.04em;
+    }
+
+    .quote-block p {
+      margin: 0 0 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      max-width: 860px;
+    }
+
+    .cta-box {
+      margin: 86px 0 80px;
+      padding: 34px;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at top right, rgba(216,110,137,0.14), transparent 38%),
+        rgba(255,255,255,0.74);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-card);
+      text-align: center;
+    }
+
+    .cta-box h3 {
+      margin: 0 0 10px;
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      letter-spacing: -0.05em;
+    }
+    .cta-box p { margin: 0 auto 22px; max-width: 680px; color: var(--text-muted); font-size: 1.02rem; line-height: 1.75; }
+    .cta-email {
+      margin-top: 14px;
+      color: var(--text-muted);
+      font-size: .96rem;
+    }
+
+    footer {
+      padding: 0 0 32px;
+      color: var(--text-muted);
+      font-size: .9rem;
+    }
+
+    .foot {
+      display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center;
+      padding-top: 18px; border-top: 1px solid rgba(203,95,124,0.12);
+    }
+
+    
+
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(216,110,137,0.13), transparent 36%),
+    rgba(255,255,255,0.8);
+}
+
+.chat-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(216,110,137,0.03));
+}
+
+.chat-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(216,110,137,0.12);
+  border: 1px solid rgba(203,95,124,0.14);
+  color: var(--rose-strong);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  position: relative;
+  z-index: 1;
+}
+
+.chat-subtle {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  position: relative;
+  z-index: 1;
+}
+
+.chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.chip-action {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 11px 15px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(203,95,124,0.18);
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 6px 16px rgba(93,49,63,0.05);
+}
+
+.chip-action:hover {
+  background: rgba(216,110,137,0.12);
+  border-color: rgba(203,95,124,0.36);
+  color: var(--rose-strong);
+  transform: translateY(-1px);
+}
+
+.chip-action.is-active {
+  background: rgba(216,110,137,0.16);
+  border-color: rgba(203,95,124,0.36);
+  color: var(--rose-deep);
+}
+
+    
+    #why .step-num { display: none; }
+    #why .card h3 { margin-top: 0; }
+
+    @media (max-width: 980px) {
+      .hero { padding-top: 56px; }
+      .stats, .steps, .difference-list { grid-template-columns: 1fr; }
+      .workspace-body { grid-template-columns: 1fr; }
+      .workspace-side { display:none; }
+      .board { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .shell { width: min(var(--max), calc(100% - 24px)); }
+      nav { min-height: 72px; }
+      .brand { font-size: 1.35rem; }
+      .nav-links { display:none; }
+      h1 { font-size: clamp(2.35rem, 10vw, 3.2rem); }
+      .board { grid-template-columns: 1fr; }
+      .hero-cta { flex-direction: column; }
+      .workspace-top { flex-direction: column; align-items:flex-start; }
+      .ws-metrics { width:100%; }
+      .ws-pill { width:100%; }
+      .cta-box { margin: 70px 0 56px; padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-wrap">
+    <div class="shell">
+      <nav>
+        <a href="#" class="brand">
+          <span class="brand-mark"><img src="logo.svg" alt="MeetingScheduled logo" class="logo-img"></span>
+          <span>MeetingScheduled</span>
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="#how">How it works</a>
+          <a class="nav-link" href="#why">Why it’s different</a>
+          <a class="nav-link" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Book a demo</a>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> Connect Gmail → define your ICP → outbound starts</div>
+      <h1>
+        <span class="typed-line-wrap"><span id="typed-line"></span><span class="typing-cursor" id="hero-cursor-1">|</span></span><br>
+        <span class="typed-line-wrap"><span class="headline-accent" id="typed-line-2"></span><span class="typing-cursor" id="hero-cursor-2">|</span></span>
+      </h1>
+      <p class="hero-sub">
+        MeetingScheduled finds the right prospects, starts personalized outreach, and prepares your next calls — so your team focuses on conversations, not sequence management.
+      </p>
+      <div class="hero-cta">
+        <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn-primary">Book a demo</a>
+        <a href="#workspace" class="btn-secondary">See how it works</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value" id="stat-pipeline">$3.8<span>M</span></div>
+          <div class="stat-label">In pipeline generated</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="stat-arr">$790<span>K</span></div>
+          <div class="stat-label">ARR attributed</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="stat-meetings">890<span>+</span></div>
+          <div class="stat-label">Qualified meetings generated</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">1<span>AI</span></div>
+          <div class="stat-label">Agent guiding next-best action</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="workspace">
+      <div class="section-label">Inside the workspace</div>
+      <h2 class="section-title">One place for signals, outreach, and prepared call tasks.</h2>
+      <p class="section-sub">
+        No endless setup. No manual prospecting workflow. Just describe your business and ICP — the agent learns the context and does the rest.
+      </p>
+
+      <div class="workspace">
+        <div class="workspace-top">
+          <div class="ws-brand">
+            <div class="ws-icon"><img src="logo.svg" alt="" class="logo-img"></div>
+            <div>
+              <div class="ws-title">Outreach</div>
+              <div class="ws-sub">Daily signals · prospects ready to call · AI agent</div>
+            </div>
+          </div>
+          <div class="ws-metrics">
+            <div class="ws-pill">124 / 1000 prospects</div>
+            <div class="ws-pill" style="color: var(--rose-strong);">16 emails pending review</div>
+          </div>
+        </div>
+
+        <div class="workspace-body">
+          <aside class="workspace-side">
+            <div class="side-item active">Outreach</div>
+            <div class="side-item">Flow</div>
+            <div class="side-item">Conversation</div>
+            <div class="side-item">Analytics</div>
+            <div class="side-item">Profile</div>
+          </aside>
+
+          <div class="workspace-main">
+            <div class="workspace-message chat-box">
+              <div class="chat-badge">AI workspace assistant</div>
+              <h3>Should we start outbound to your ICP?</h3>
+              <p class="chat-subtle"><span id="chat-typed"></span><span class="typing-cursor chat-cursor" id="chat-cursor">|</span></p>
+
+              <div class="chat-suggestions">
+                <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Start outreach</a>
+                <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Show today’s signals</a>
+                <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Find new prospects</a>
+                <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Review ready-to-call</a>
+              </div>
+            </div>
+
+            <div class="board">
+              <div class="column col-prospects">
+                <div class="column-head"><span>Prospects</span><span class="count">46</span></div>
+                <div class="mini-card">
+                  <h4>Radu Palamariu</h4>
+                  <p>Group CEO · Alcott Global<br>Raised funding · hiring sales team</p>
+                  <div class="mini-foot"><span>Lead</span><span class="chip chip-rose">ICP</span></div>
+                </div>
+                <div class="mini-card">
+                  <h4>Bhavna Toor</h4>
+                  <p>Founder &amp; CEO · Shenomics<br>New leadership hire · open market expansion</p>
+                </div>
+              </div>
+
+              <div class="column col-pending">
+                <div class="column-head"><span>Pending Send</span><span class="count">22</span></div>
+                <div class="mini-card">
+                  <h4>Hugo Silva</h4>
+                  <p>SES expansion<br>AI drafted a personalized first touch.</p>
+                  <div class="mini-foot"><span>Queued</span><span class="chip chip-amber">2m</span></div>
+                </div>
+                <div class="mini-card">
+                  <h4>Antonio Miranda</h4>
+                  <p>Meridiana Group<br>Prepared email referencing recent changes.</p>
+                </div>
+              </div>
+
+              <div class="column col-call">
+                <div class="column-head"><span>Ready to Call</span><span class="count">14</span></div>
+                <div class="mini-card">
+                  <h4>Eyal Shoval</h4>
+                  <p>Owner<br>Call brief prepared with context, timing, and signal notes.</p>
+                </div>
+                <div class="mini-card">
+                  <h4>Surajit Mahanty</h4>
+                  <p>Head of Sales &amp; Marketing<br>Suggested opener and call angle attached.</p>
+                </div>
+              </div>
+
+              <div class="column col-meetings">
+                <div class="column-head"><span>Meeting Scheduled</span><span class="count">1</span></div>
+                <div class="mini-card">
+                  <h4>Alexander Beilin</h4>
+                  <p>VP of Sales &amp; Business Development<br>Warm reply converted into booked meeting.</p>
+                  <div class="mini-foot"><span>Booked</span><span class="chip chip-rose">NDA</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="why">
+      <div class="section-label">Why it’s different</div>
+      <h2 class="section-title">Built for people who care about meetings, not software busywork.</h2>
+      <p class="section-sub">
+        Many outbound tools are powerful but heavy. Meeting Scheduled is intelligent: it finds who to contact, starts the outreach, guides follow-up, and pushes the rep toward replies and calls.
+      </p>
+
+      <div class="steps">
+        <div class="card">
+          <div class="step-num">01</div>
+          <h3>AI finds who to contact and why</h3>
+          <p>Signal-driven outbound that identifies relevant accounts, contacts, and reasons to reach out now.</p>
+        </div>
+        <div class="card">
+          <div class="step-num">02</div>
+          <h3>Prepared conversations, not just sent emails</h3>
+          <p>When a prospect is ready, the rep gets context, scripts, and call prep — not another dashboard rabbit hole.</p>
+        </div>
+        <div class="card">
+          <div class="step-num">03</div>
+          <h3>No endless sequence management</h3>
+          <p>One agent dynamically determines the next-best action instead of forcing you to manage campaign logic for every persona and touchpoint.</p>
+        </div>
+      </div>
+
+      <div class="quote-block">
+        <h3 class="quote-title">AI sales development system.</h3>
+        
+        <ul class="difference-list">
+          <li>Finds fresh ICP contacts continuously</li>
+          <li>Starts outreach with relevant context</li>
+          <li>Prepares calls with scripts and details</li>
+          <li>Multi-threads accounts with the right people</li>
+          <li>Protects your domain and sending reputation</li>
+          <li>Relevant. Scalable. Always on-brand.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="section-label">How it works</div>
+      <h2 class="section-title">From Gmail connection to outbound motion in minutes.</h2>
+      <p class="section-sub">
+        No heavy setup. No sequence maze. Connect your inbox, describe who you sell to, and let the agent find, write, guide, and lead the next best move.
+      </p>
+
+      <div class="steps">
+        <div class="card">
+          <div class="step-num">01</div>
+          <h3>Connect your Gmail and describe your ICP</h3>
+          <p>Paste your website or describe what you sell. MeetingScheduled builds the context it needs to find accounts and relevant contacts.</p>
+        </div>
+        <div class="card">
+          <div class="step-num">02</div>
+          <h3>Outbound begins automatically</h3>
+          <p>The system identifies who to contact, why now, and sends personalized outreach matched to the signal and persona.</p>
+        </div>
+        <div class="card">
+          <div class="step-num">03</div>
+          <h3>You focus on replies and calls</h3>
+          <p>When a prospect engages, you get the context, the reason, and the prepared next step — so your day stays in motion.</p>
+        </div>
+      </div>
+
+        <div style="margin-top: 36px;">
+    <div class="card" style="margin-bottom: 18px;">
+      <div class="section-label" style="margin-bottom: 10px;">AI sales development system</div>
+      <div class="chat-suggestions" style="gap: 12px;">
+        <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Finds fresh ICP contacts continuously</a>
+        <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Starts outreach with relevant context</a>
+        <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Prepares calls with scripts and details</a>
+        <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Multi-threads accounts with the right people</a>
+        <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Protects your domain and sending reputation</a>
+        <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Relevant. Scalable. Always on-brand.</a>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-bottom: 10px;">What your team actually gets</div>
+    <p class="section-sub" style="max-width: 900px; margin-bottom: 16px;">
+      Less time inside B2B software. More time inside real conversations. MeetingScheduled does not stop at sending. It coaches the motion, guides the next step, and makes sure outreach turns into meetings with context.
+    </p>
+    <div class="steps">
+      <div class="card">
+        <h3>Relevant. Scalable. Always on-brand.</h3>
+        <p>Every touchpoint reflects your brand appropriately, referencing persona pains, lead history, and live signals so the messaging never feels generic.</p>
+      </div>
+      <div class="card">
+        <h3>Intelligent automation, less manual work.</h3>
+        <p>MeetingScheduled handles the heavy lifting automatically, so your team can stay focused on replies, calls, and forward motion instead of managing scattered outbound tasks.</p>
+      </div>
+      <div class="card">
+        <h3>Signal-driven outbound + prepared conversations.</h3>
+        <p>The agent warms prospects through email and supporting actions, then loops the rep in when a call or reply matters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <section class="cta-box">
+      <h3>Connect your Gmail. Start outbound.</h3>
+      <p>
+        If you want qualified meetings without building a whole outbound operating system yourself, MeetingScheduled is the faster path.
+      </p>
+      <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn-primary">Book a demo</a>
+      <div class="cta-email">sales@meeting-scheduled.com</div>
+    </section>
+
+    <footer>
+      <div class="foot">
+        <span>© 2026 MeetingScheduled</span>
+        <a href="/privacy">Privacy Policy</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const calLink = 'https://cal.com/meeting-scheduled/30min';
+
+    const typeSequence = (el, text, speed = 42, startDelay = 0, done) => {
+      let i = 0;
+      setTimeout(function tick() {
+        if (i < text.length) {
+          el.textContent += text[i++];
+          setTimeout(tick, speed);
+        } else if (done) {
+          done();
+        }
+      }, startDelay);
+    };
+
+    const heroLine1 = document.getElementById('typed-line');
+    const heroLine2 = document.getElementById('typed-line-2');
+    const heroCursor1 = document.getElementById('hero-cursor-1');
+    const heroCursor2 = document.getElementById('hero-cursor-2');
+
+    typeSequence(heroLine1, 'Outbound handles.', 58, 350, () => {
+      heroCursor1.style.display = 'none';
+      typeSequence(heroLine2, 'Meetings Scheduled.', 54, 150, () => {
+        heroCursor2.style.display = 'none';
+      });
+    });
+
+    const chatTyped = document.getElementById('chat-typed');
+    const chatCursor = document.getElementById('chat-cursor');
+    const chatText = 'Describe your ICP, what countries do you want to target, and what signals should they show?';
+
+    if ('IntersectionObserver' in window && chatTyped) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !chatTyped.dataset.started) {
+            chatTyped.dataset.started = 'true';
+            typeSequence(chatTyped, chatText, 24, 120, () => {
+              chatCursor.style.display = 'none';
+            });
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.45 });
+      observer.observe(chatTyped.closest('.workspace-message'));
+    }
+
+    document.querySelectorAll('.chip-action').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.chip-action').forEach(c => c.classList.remove('is-active'));
+        chip.classList.add('is-active');
+      });
+    });
+  </script>
+</body>
+</html>
