@@ -109,7 +109,6 @@
       display: block;
     }
 
-
     .nav-link, .btn-primary, .btn-secondary {
       text-decoration: none;
       display: inline-flex;
@@ -183,7 +182,6 @@
     .chat-cursor { font-size: 1rem; }
 
     @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
-
 
     .hero-sub {
       margin: 0 auto;
@@ -413,7 +411,14 @@
       margin-bottom: 12px; font-family: 'Sora', sans-serif; font-size: 1rem; letter-spacing: -0.03em;
     }
 
-    .count { padding: 7px 12px; border-radius: 999px; background: rgba(255,255,255,0.78); border: 1px solid rgba(203,95,124,0.08); color: var(--text-muted); font-size: .92rem; }
+    .count {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(203,95,124,0.08);
+      color: var(--text-muted);
+      font-size: .92rem;
+    }
 
     .mini-card {
       border-radius: 20px;
@@ -424,7 +429,13 @@
       margin-bottom: 12px;
     }
     .mini-card:last-child { margin-bottom: 0; }
-    .mini-card h4 { margin: 0 0 8px; font-family: 'Sora', sans-serif; font-size: 1rem; line-height: 1.08; letter-spacing: -0.04em; }
+    .mini-card h4 {
+      margin: 0 0 8px;
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
     .mini-card p { margin: 0; color: var(--text-muted); line-height: 1.45; }
     .mini-foot { display:flex; justify-content: space-between; align-items:center; margin-top: 14px; color: var(--text-muted); }
     .chip { padding: 7px 10px; border-radius: 999px; font-weight: 700; font-size: .9rem; }
@@ -446,8 +457,16 @@
     }
 
     .step-num {
-      width: 42px; height: 42px; border-radius: 14px; display:grid; place-items:center;
-      background: rgba(216,110,137,0.14); color: var(--rose-deep); font-family: 'Sora', sans-serif; font-weight: 800; margin-bottom: 16px;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display:grid;
+      place-items:center;
+      background: rgba(216,110,137,0.14);
+      color: var(--rose-deep);
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      margin-bottom: 16px;
     }
 
     .card h3 { margin: 0 0 10px; font-family: 'Sora', sans-serif; font-size: 1.08rem; letter-spacing: -0.03em; }
@@ -462,6 +481,7 @@
       list-style: none;
       color: var(--text);
     }
+
     .difference-list li {
       background: rgba(255,255,255,0.62);
       border: 1px solid var(--border);
@@ -512,11 +532,28 @@
       font-size: clamp(1.8rem, 3vw, 2.5rem);
       letter-spacing: -0.05em;
     }
-    .cta-box p { margin: 0 auto 22px; max-width: 680px; color: var(--text-muted); font-size: 1.02rem; line-height: 1.75; }
+
+    .cta-box p {
+      margin: 0 auto 22px;
+      max-width: 680px;
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      line-height: 1.75;
+    }
+
     .cta-email {
       margin-top: 14px;
       color: var(--text-muted);
       font-size: .96rem;
+    }
+
+    .email-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .email-link:hover {
+      text-decoration: underline;
     }
 
     footer {
@@ -526,94 +563,96 @@
     }
 
     .foot {
-      display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center;
-      padding-top: 18px; border-top: 1px solid rgba(203,95,124,0.12);
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      align-items:center;
+      padding-top: 18px;
+      border-top: 1px solid rgba(203,95,124,0.12);
     }
 
-    
+    .chat-box {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top right, rgba(216,110,137,0.13), transparent 36%),
+        rgba(255,255,255,0.8);
+    }
 
-.chat-box {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at top right, rgba(216,110,137,0.13), transparent 36%),
-    rgba(255,255,255,0.8);
-}
+    .chat-box::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(216,110,137,0.03));
+    }
 
-.chat-box::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(216,110,137,0.03));
-}
+    .chat-badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(216,110,137,0.12);
+      border: 1px solid rgba(203,95,124,0.14);
+      color: var(--rose-strong);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      position: relative;
+      z-index: 1;
+    }
 
-.chat-badge {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(216,110,137,0.12);
-  border: 1px solid rgba(203,95,124,0.14);
-  color: var(--rose-strong);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  position: relative;
-  z-index: 1;
-}
+    .chat-subtle {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.55;
+      position: relative;
+      z-index: 1;
+    }
 
-.chat-subtle {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 0.98rem;
-  line-height: 1.55;
-  position: relative;
-  z-index: 1;
-}
+    .chat-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
 
-.chat-suggestions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  position: relative;
-  z-index: 1;
-}
+    .chip-action {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      padding: 11px 15px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(203,95,124,0.18);
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      box-shadow: 0 6px 16px rgba(93,49,63,0.05);
+    }
 
-.chip-action {
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  padding: 11px 15px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.9);
-  border: 1px solid rgba(203,95,124,0.18);
-  font-family: inherit;
-  font-size: 0.92rem;
-  color: var(--text);
-  cursor: pointer;
-  transition: all 0.18s ease;
-  box-shadow: 0 6px 16px rgba(93,49,63,0.05);
-}
+    .chip-action:hover {
+      background: rgba(216,110,137,0.12);
+      border-color: rgba(203,95,124,0.36);
+      color: var(--rose-strong);
+      transform: translateY(-1px);
+    }
 
-.chip-action:hover {
-  background: rgba(216,110,137,0.12);
-  border-color: rgba(203,95,124,0.36);
-  color: var(--rose-strong);
-  transform: translateY(-1px);
-}
+    .chip-action.is-active {
+      background: rgba(216,110,137,0.16);
+      border-color: rgba(203,95,124,0.36);
+      color: var(--rose-deep);
+    }
 
-.chip-action.is-active {
-  background: rgba(216,110,137,0.16);
-  border-color: rgba(203,95,124,0.36);
-  color: var(--rose-deep);
-}
-
-    
     #why .step-num { display: none; }
     #why .card h3 { margin-top: 0; }
 
@@ -794,7 +833,7 @@
       <div class="section-label">Why it’s different</div>
       <h2 class="section-title">Built for people who care about meetings, not software busywork.</h2>
       <p class="section-sub">
-        Many outbound tools are powerful but heavy. Meeting Scheduled is intelligent: it finds who to contact, starts the outreach, guides follow-up, and pushes the rep toward replies and calls.
+        Many outbound tools are powerful but heavy. MeetingScheduled is intelligent: it finds who to contact, starts the outreach, guides follow-up, and pushes the rep toward replies and calls.
       </p>
 
       <div class="steps">
@@ -817,7 +856,6 @@
 
       <div class="quote-block">
         <h3 class="quote-title">AI sales development system.</h3>
-        
         <ul class="difference-list">
           <li>Finds fresh ICP contacts continuously</li>
           <li>Starts outreach with relevant context</li>
@@ -854,39 +892,40 @@
         </div>
       </div>
 
-        <div style="margin-top: 36px;">
-    <div class="card" style="margin-bottom: 18px;">
-      <div class="section-label" style="margin-bottom: 10px;">AI sales development system</div>
-      <div class="chat-suggestions" style="gap: 12px;">
-        <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Finds fresh ICP contacts continuously</a>
-        <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Starts outreach with relevant context</a>
-        <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Prepares calls with scripts and details</a>
-        <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Multi-threads accounts with the right people</a>
-        <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Protects your domain and sending reputation</a>
-        <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Relevant. Scalable. Always on-brand.</a>
-      </div>
-    </div>
+      <div style="margin-top: 36px;">
+        <div class="card" style="margin-bottom: 18px;">
+          <div class="section-label" style="margin-bottom: 10px;">AI sales development system</div>
+          <div class="chat-suggestions" style="gap: 12px;">
+            <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Finds fresh ICP contacts continuously</a>
+            <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Starts outreach with relevant context</a>
+            <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Prepares calls with scripts and details</a>
+            <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Multi-threads accounts with the right people</a>
+            <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Protects your domain and sending reputation</a>
+            <a class="chip-action" href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Relevant. Scalable. Always on-brand.</a>
+          </div>
+        </div>
 
-    <div class="section-label" style="margin-bottom: 10px;">What your team actually gets</div>
-    <p class="section-sub" style="max-width: 900px; margin-bottom: 16px;">
-      Less time inside B2B software. More time inside real conversations. MeetingScheduled does not stop at sending. It coaches the motion, guides the next step, and makes sure outreach turns into meetings with context.
-    </p>
-    <div class="steps">
-      <div class="card">
-        <h3>Relevant. Scalable. Always on-brand.</h3>
-        <p>Every touchpoint reflects your brand appropriately, referencing persona pains, lead history, and live signals so the messaging never feels generic.</p>
+        <div class="section-label" style="margin-bottom: 10px;">What your team actually gets</div>
+        <p class="section-sub" style="max-width: 900px; margin-bottom: 16px;">
+          Less time inside B2B software. More time inside real conversations. MeetingScheduled does not stop at sending. It coaches the motion, guides the next step, and makes sure outreach turns into meetings with context.
+        </p>
+
+        <div class="steps">
+          <div class="card">
+            <h3>Relevant. Scalable. Always on-brand.</h3>
+            <p>Every touchpoint reflects your brand appropriately, referencing persona pains, lead history, and live signals so the messaging never feels generic.</p>
+          </div>
+          <div class="card">
+            <h3>Intelligent automation, less manual work.</h3>
+            <p>MeetingScheduled handles the heavy lifting automatically, so your team can stay focused on replies, calls, and forward motion instead of managing scattered outbound tasks.</p>
+          </div>
+          <div class="card">
+            <h3>Signal-driven outbound + prepared conversations.</h3>
+            <p>The agent warms prospects through email and supporting actions, then loops the rep in when a call or reply matters.</p>
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <h3>Intelligent automation, less manual work.</h3>
-        <p>MeetingScheduled handles the heavy lifting automatically, so your team can stay focused on replies, calls, and forward motion instead of managing scattered outbound tasks.</p>
-      </div>
-      <div class="card">
-        <h3>Signal-driven outbound + prepared conversations.</h3>
-        <p>The agent warms prospects through email and supporting actions, then loops the rep in when a call or reply matters.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <section class="cta-box">
       <h3>Connect your Gmail. Start outbound.</h3>
@@ -894,18 +933,11 @@
         If you want qualified meetings without building a whole outbound operating system yourself, MeetingScheduled is the faster path.
       </p>
       <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn-primary">Book a demo</a>
-      <div class="cta-email"><a href="mailto:sales@meeting-scheduled.com" class="email-link">
-  sales@meeting-scheduled.com
-</a></div>
+      <div class="cta-email">
+        <a href="mailto:sales@meeting-scheduled.com" class="email-link">sales@meeting-scheduled.com</a>
+      </div>
     </section>
-.email-link {
-  color: inherit;
-  text-decoration: none;
-}
 
-.email-link:hover {
-  text-decoration: underline;
-}
     <footer>
       <div class="foot">
         <span>© 2026 MeetingScheduled</span>
@@ -915,8 +947,6 @@
   </main>
 
   <script>
-    const calLink = 'https://cal.com/meeting-scheduled/30min';
-
     const typeSequence = (el, text, speed = 42, startDelay = 0, done) => {
       let i = 0;
       setTimeout(function tick() {
