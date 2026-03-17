@@ -4,926 +4,720 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MeetingScheduled — Connect your inbox. Start outbound.</title>
-  <meta name="description" content="MeetingScheduled finds prospects, starts personalized outreach, and prepares your next calls — so your team focuses on replies and conversations, not sequence management." />
+  <meta name="description" content="MeetingScheduled finds the right prospects, starts personalized outreach, and prepares your next calls — so your team focuses on replies and conversations, not sequence management." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --rose-strong: #c95c78;
-      --rose: #d96b86;
-      --rose-mid: #e79ab0;
-      --rose-soft: #f7e8ed;
-      --rose-surface: #fff9fb;
-      --rose-canvas: #fbf5f7;
+      --rose: #d56d88;
+      --rose-deep: #b94f6b;
+      --rose-soft: #f5e8ec;
       --rose-header: #f8edf1;
-      --text-strong: #1d1a1c;
-      --text-muted: #6f6770;
-      --line: rgba(201, 92, 120, 0.14);
-      --line-strong: rgba(201, 92, 120, 0.24);
-      --card: rgba(255, 255, 255, 0.86);
-      --shadow-soft: 0 2px 10px rgba(44, 18, 28, 0.05), 0 16px 40px rgba(44, 18, 28, 0.05);
-      --shadow-card: 0 8px 24px rgba(44, 18, 28, 0.08), 0 22px 60px rgba(44, 18, 28, 0.07);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
+      --rose-canvas: #fbf5f7;
+      --card: #fffdfd;
+      --text-strong: #1f1a1d;
+      --text: #463c42;
+      --text-muted: #786b73;
+      --border: rgba(201, 92, 120, 0.14);
+      --border-strong: rgba(201, 92, 120, 0.22);
+      --shadow-soft: 0 10px 30px rgba(87, 47, 61, 0.07);
+      --shadow-card: 0 14px 38px rgba(87, 47, 61, 0.10);
+      --radius-lg: 20px;
       --radius-md: 16px;
       --radius-sm: 12px;
-      --max: 1240px;
+      --max: 1180px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', system-ui, sans-serif;
+      margin: 0;
+      font-family: 'Inter', sans-serif;
       color: var(--text-strong);
       background:
-        radial-gradient(circle at top left, rgba(217, 107, 134, 0.17), transparent 34%),
-        radial-gradient(circle at 82% 14%, rgba(231, 154, 176, 0.13), transparent 26%),
-        linear-gradient(180deg, #fdf9fa 0%, var(--rose-canvas) 45%, #fcf8f9 100%);
-      min-height: 100vh;
-      overflow-x: hidden;
+        radial-gradient(circle at top left, rgba(213,109,136,0.16), transparent 34%),
+        radial-gradient(circle at 85% 15%, rgba(213,109,136,0.08), transparent 26%),
+        linear-gradient(180deg, #fcf7f8 0%, #fbf5f7 36%, #fffafa 100%);
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    .shell-glow {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background:
-        radial-gradient(circle at 10% 20%, rgba(201, 92, 120, 0.07), transparent 20%),
-        radial-gradient(circle at 90% 70%, rgba(217, 107, 134, 0.08), transparent 24%);
-    }
+    a { color: inherit; }
 
-    .container {
-      width: min(calc(100% - 40px), var(--max));
+    .shell {
+      width: min(var(--max), calc(100% - 40px));
       margin: 0 auto;
-      position: relative;
-      z-index: 1;
+    }
+
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(251, 245, 247, 0.72);
+      border-bottom: 1px solid rgba(201, 92, 120, 0.10);
     }
 
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.75), rgba(248,237,241,0.78));
-      border-bottom: 1px solid var(--line);
-    }
-
-    .nav-inner {
-      width: min(calc(100% - 36px), var(--max));
-      margin: 0 auto;
+      min-height: 78px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      padding: 18px 0;
+      gap: 20px;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      text-decoration: none;
-      color: inherit;
       font-weight: 800;
-      font-size: 1.05rem;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
+      font-size: 1.8rem;
+      text-decoration: none;
     }
 
     .brand-mark {
-      width: 38px;
-      height: 38px;
+      width: 42px;
+      height: 42px;
       border-radius: 14px;
-      background: linear-gradient(180deg, var(--rose) 0%, var(--rose-strong) 100%);
       display: grid;
       place-items: center;
-      color: white;
-      box-shadow: 0 10px 28px rgba(201, 92, 120, 0.28);
-      flex: 0 0 auto;
-    }
-
-    .brand-sub {
-      display: block;
-      font-size: 0.86rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      letter-spacing: -0.02em;
-      margin-top: 1px;
+      color: #fff;
+      background: linear-gradient(180deg, var(--rose) 0%, var(--rose-strong) 100%);
+      box-shadow: 0 10px 20px rgba(201, 92, 120, 0.24);
+      font-size: 1.1rem;
+      font-weight: 700;
     }
 
     .nav-actions {
       display: flex;
       align-items: center;
       gap: 12px;
-      flex-wrap: wrap;
     }
 
-    .btn, .btn-ghost {
+    .pill-link {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
+      gap: 8px;
       text-decoration: none;
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.66);
+      padding: 11px 16px;
       border-radius: 999px;
-      padding: 14px 22px;
-      font-size: 0.96rem;
-      font-weight: 600;
-      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
-      white-space: nowrap;
+      font-size: 0.95rem;
+      transition: .18s ease;
     }
 
-    .btn {
-      background: linear-gradient(180deg, var(--rose) 0%, var(--rose-strong) 100%);
-      color: #fff;
-      box-shadow: 0 10px 32px rgba(201, 92, 120, 0.28);
+    .pill-link:hover {
+      transform: translateY(-1px);
+      border-color: var(--border-strong);
+      background: rgba(255,255,255,0.82);
     }
-
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(201, 92, 120, 0.34); }
-
-    .btn-ghost {
-      color: var(--text-strong);
-      background: rgba(255,255,255,0.7);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .btn-ghost:hover { transform: translateY(-2px); background: rgba(255,255,255,0.92); }
 
     .hero {
-      padding: 68px 0 26px;
+      padding: 72px 0 40px;
     }
 
-    .hero-wrap {
+    .hero-grid {
       display: grid;
-      grid-template-columns: 1.02fr .98fr;
-      gap: 48px;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 42px;
       align-items: center;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.58);
-      color: var(--text-strong);
+      gap: 10px;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
       border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      margin-bottom: 18px;
-      backdrop-filter: blur(10px);
+      color: var(--text);
+      background: rgba(255,255,255,0.56);
+      box-shadow: var(--shadow-soft);
+      font-size: .92rem;
+      margin-bottom: 22px;
     }
 
     .eyebrow-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
       background: var(--rose-strong);
-      box-shadow: 0 0 0 7px rgba(201, 92, 120, 0.08);
+      box-shadow: 0 0 0 6px rgba(201, 92, 120, 0.10);
     }
 
     h1 {
-      font-size: clamp(2.8rem, 6vw, 5.35rem);
+      margin: 0 0 18px;
+      font-size: clamp(3rem, 7vw, 5.4rem);
       line-height: 0.96;
       letter-spacing: -0.065em;
-      font-weight: 800;
-      margin-bottom: 18px;
+      max-width: 700px;
     }
 
     h1 .accent {
       display: block;
-      background: linear-gradient(180deg, var(--rose) 0%, var(--rose-strong) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero p {
-      font-size: 1.15rem;
-      line-height: 1.7;
-      color: var(--text-muted);
-      max-width: 620px;
-    }
-
-    .hero-copy strong { color: var(--text-strong); font-weight: 700; }
-
-    .hero-cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 30px;
-      margin-bottom: 22px;
-    }
-
-    .micro-proof {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .chip {
-      border-radius: 999px;
-      padding: 10px 14px;
-      background: rgba(255,255,255,0.68);
-      border: 1px solid var(--line);
-      color: var(--text-strong);
-      font-size: 0.92rem;
-      font-weight: 600;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .hero-card {
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(201, 92, 120, 0.16);
-      border-radius: 30px;
-      padding: 16px;
-      box-shadow: var(--shadow-card);
-      backdrop-filter: blur(18px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(217, 107, 134, 0.12), transparent 28%);
-      pointer-events: none;
-    }
-
-    .window-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-      padding: 4px 2px 10px;
-    }
-
-    .window-dots { display: flex; gap: 7px; }
-    .window-dots span {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: rgba(201, 92, 120, 0.36);
-    }
-    .window-title {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    .product-frame {
-      background: linear-gradient(180deg, rgba(251,245,247,0.96), rgba(255,252,253,0.98));
-      border: 1px solid rgba(201, 92, 120, 0.16);
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
-    }
-
-    .product-topbar {
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      background: linear-gradient(180deg, rgba(248,237,241,0.96), rgba(252,246,248,0.8));
-      border-bottom: 1px solid var(--line);
-    }
-
-    .product-topbar .left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-    }
-
-    .mini-logo {
-      width: 30px;
-      height: 30px;
-      border-radius: 12px;
-      background: linear-gradient(180deg, var(--rose) 0%, var(--rose-strong) 100%);
-      color: white;
-      display: grid;
-      place-items: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-      flex: 0 0 auto;
-    }
-
-    .mini-title {
-      font-size: 0.93rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    .mini-sub { font-size: 0.78rem; color: var(--text-muted); }
-
-    .mini-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 8px 12px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.9);
-      color: var(--text-strong);
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-
-    .pill.rose { background: rgba(201, 92, 120, 0.08); border-color: rgba(201, 92, 120, 0.18); color: var(--rose-strong); }
-    .pill.green { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.18); color: #178a46; }
-
-    .product-body {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      min-height: 430px;
-    }
-
-    .product-sidebar {
-      background:
-        radial-gradient(circle at top left, rgba(201, 92, 120, 0.10), transparent 32%),
-        linear-gradient(180deg, rgba(248,237,241,0.86), rgba(250,244,246,0.74));
-      border-right: 1px solid rgba(201, 92, 120, 0.12);
-      padding: 16px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .product-nav {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .product-nav a {
-      text-decoration: none;
-      border-radius: 14px;
-      padding: 11px 12px;
-      color: var(--text-strong);
-      font-size: 0.92rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .product-nav a.active {
-      background: rgba(201, 92, 120, 0.10);
       color: var(--rose-strong);
     }
 
-    .product-sidebar-footer {
-      margin-top: auto;
-      border: 1px solid rgba(201, 92, 120, 0.1);
-      border-radius: 16px;
-      padding: 12px;
-      background: rgba(255,255,255,0.62);
+    .sub {
+      margin: 0;
+      max-width: 630px;
+      font-size: clamp(1.06rem, 1.5vw, 1.22rem);
+      line-height: 1.75;
+      color: var(--text-muted);
     }
 
-    .product-main {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .main-header {
+    .hero-cta {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .btn-primary, .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: .18s ease;
+      font-size: .98rem;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(180deg, var(--rose) 0%, var(--rose-strong) 100%);
+      box-shadow: 0 16px 30px rgba(201, 92, 120, 0.28);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 36px rgba(201, 92, 120, 0.34);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.65);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-strong);
+      background: rgba(255,255,255,0.82);
+    }
+
+    .hero-notes {
+      display: flex;
       gap: 12px;
-      padding: 12px 14px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(248,237,241,0.86), rgba(251,245,247,0.56));
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .note-chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(201, 92, 120, 0.12);
+      color: var(--text);
+      font-size: .9rem;
+    }
+
+    .product {
+      position: relative;
+      border-radius: 28px;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.56));
+      border: 1px solid rgba(201, 92, 120, 0.12);
+      box-shadow: var(--shadow-card);
+    }
+
+    .product::before {
+      content: '';
+      position: absolute;
+      inset: -18px;
+      z-index: -1;
+      border-radius: 38px;
+      background: radial-gradient(circle at top, rgba(213,109,136,0.18), transparent 55%);
+      filter: blur(8px);
+    }
+
+    .app-frame {
+      overflow: hidden;
+      background: #fffdfd;
+      border-radius: 22px;
       border: 1px solid rgba(201, 92, 120, 0.12);
     }
 
-    .main-header h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
+    .app-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: linear-gradient(180deg, #fbf0f3 0%, #f9edf0 100%);
+      border-bottom: 1px solid rgba(201, 92, 120, 0.10);
     }
 
-    .main-header p {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.3;
+    .dots { display:flex; gap:7px; }
+    .dots span {
+      width: 8px; height: 8px; border-radius: 999px;
+      background: rgba(185,79,107,0.18);
+    }
+
+    .app-body {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      min-height: 410px;
+    }
+
+    .app-sidebar {
+      padding: 14px 10px;
+      background:
+        radial-gradient(circle at top left, rgba(213,109,136,0.18), transparent 44%),
+        linear-gradient(180deg, #fbf0f3 0%, #f9f0f2 100%);
+      border-right: 1px solid rgba(201, 92, 120, 0.08);
+    }
+
+    .app-side-logo {
+      height: 38px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, var(--rose) 0%, var(--rose-strong) 100%);
+      margin-bottom: 16px;
+    }
+
+    .app-nav-pill {
+      height: 34px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(201, 92, 120, 0.07);
+    }
+
+    .app-nav-pill.active { background: rgba(213,109,136,0.16); }
+
+    .app-main {
+      padding: 14px;
+      background: linear-gradient(180deg, #fcf7f8 0%, #fbf5f7 100%);
+    }
+
+    .flow-title {
+      height: 48px;
+      border-radius: 16px;
+      margin-bottom: 14px;
+      background: linear-gradient(180deg, #fbf0f3 0%, #faeff2 100%);
+      border: 1px solid rgba(201, 92, 120, 0.10);
     }
 
     .board {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
-      min-height: 0;
     }
 
-    .lane {
+    .col {
       border-radius: 18px;
-      padding: 12px;
-      border: 1px solid rgba(201, 92, 120, 0.10);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 286px;
-    }
-    .lane.prospects { background: rgba(139, 92, 246, 0.05); }
-    .lane.pending { background: rgba(251, 191, 36, 0.08); }
-    .lane.calls { background: rgba(59, 130, 246, 0.07); }
-
-    .lane-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 0.86rem;
-      font-weight: 700;
+      padding: 10px;
+      border: 1px solid rgba(201, 92, 120, 0.08);
+      min-height: 330px;
     }
 
-    .lane-head span:last-child {
-      border-radius: 999px;
-      background: rgba(255,255,255,0.75);
-      border: 1px solid rgba(201, 92, 120, 0.1);
-      padding: 3px 8px;
-      font-size: 0.74rem;
-      color: var(--text-muted);
-      font-weight: 700;
+    .col.prospects { background: rgba(139, 92, 246, 0.05); }
+    .col.pending { background: rgba(251, 191, 36, 0.07); }
+    .col.call { background: rgba(59, 130, 246, 0.08); }
+    .col.replied { background: rgba(34, 197, 94, 0.07); }
+
+    .col-head {
+      height: 24px;
+      width: 72%;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.8);
+      margin-bottom: 10px;
     }
 
     .mini-card {
       border-radius: 16px;
-      background: rgba(255,255,255,0.96);
-      border: 1px solid rgba(201, 92, 120, 0.12);
-      padding: 12px;
-      box-shadow: 0 3px 14px rgba(44, 18, 28, 0.04);
+      background: #fffdfd;
+      border: 1px solid rgba(201, 92, 120, 0.08);
+      box-shadow: 0 10px 24px rgba(87,47,61,0.05);
+      height: 94px;
+      margin-bottom: 10px;
     }
 
-    .mini-card .name {
-      font-size: 0.92rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .mini-card .subtext {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      line-height: 1.45;
-      margin-bottom: 8px;
-    }
-    .mini-card .meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 0.74rem;
-      color: var(--text-muted);
-    }
+    .mini-card:last-child { margin-bottom: 0; }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      border-radius: 999px;
-      padding: 5px 8px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      background: rgba(201, 92, 120, 0.08);
-      color: var(--rose-strong);
-    }
-    .badge.blue { background: rgba(59,130,246,0.10); color: #1f6feb; }
-    .badge.gold { background: rgba(251,191,36,0.14); color: #ad6b00; }
-
-    .stats-row {
-      padding: 30px 0 8px;
-    }
-
-    .stats-grid {
+    .stats {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      gap: 14px;
+      margin-top: 34px;
     }
 
-    .stat-card {
-      padding: 24px 22px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.66);
-      border: 1px solid var(--line);
+    .stat {
+      background: rgba(255,255,255,0.68);
+      border: 1px solid var(--border);
       box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      padding: 22px 22px 18px;
     }
 
-    .stat-card .label {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-      margin-bottom: 14px;
-      font-weight: 600;
-    }
-
-    .stat-card .value {
-      font-size: clamp(2rem, 3vw, 3rem);
-      line-height: 1;
-      letter-spacing: -0.06em;
+    .stat-value {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
       font-weight: 800;
+      letter-spacing: -0.05em;
+      margin-bottom: 6px;
     }
-    .stat-card .value span { color: var(--rose-strong); }
+
+    .stat-value span { color: var(--rose-strong); }
+    .stat-label { color: var(--text-muted); font-size: .92rem; }
 
     .section {
-      padding: 84px 0 0;
-      position: relative;
-      z-index: 1;
+      padding: 84px 0 10px;
     }
 
-    .section-head {
-      max-width: 740px;
-      margin-bottom: 34px;
-    }
-
-    .section-kicker {
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
+    .section-label {
       color: var(--rose-strong);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .78rem;
       font-weight: 700;
       margin-bottom: 12px;
     }
 
-    .section h2 {
-      font-size: clamp(2rem, 4vw, 3.35rem);
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
       line-height: 1.02;
-      letter-spacing: -0.05em;
-      font-weight: 800;
-      margin-bottom: 14px;
+      letter-spacing: -0.055em;
+      margin: 0 0 18px;
+      max-width: 780px;
     }
 
-    .section-copy {
+    .section-sub {
+      max-width: 740px;
       color: var(--text-muted);
-      font-size: 1.05rem;
-      line-height: 1.7;
-      max-width: 700px;
+      font-size: 1.06rem;
+      line-height: 1.75;
+      margin: 0 0 40px;
     }
 
-    .grid-3 {
+    .steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      gap: 14px;
     }
 
-    .panel {
-      border-radius: 24px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
+    .card {
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
       box-shadow: var(--shadow-soft);
-      padding: 24px;
-      backdrop-filter: blur(12px);
     }
 
-    .panel-num {
-      font-size: 2rem;
-      line-height: 1;
-      letter-spacing: -0.05em;
+    .step-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(213,109,136,0.13);
+      color: var(--rose-deep);
       font-weight: 800;
-      color: rgba(201,92,120,0.28);
       margin-bottom: 18px;
     }
 
-    .panel h3 {
-      font-size: 1.08rem;
-      font-weight: 700;
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 1.12rem;
       letter-spacing: -0.03em;
-      margin-bottom: 12px;
     }
 
-    .panel p, .list p {
+    .card p {
+      margin: 0;
       color: var(--text-muted);
-      font-size: 0.98rem;
-      line-height: 1.7;
+      line-height: 1.72;
+      font-size: .97rem;
     }
 
-    .compare {
+    .feature-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
       align-items: stretch;
     }
 
-    .list {
-      border-radius: 24px;
-      padding: 24px;
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-      background: rgba(255,255,255,0.70);
-      backdrop-filter: blur(12px);
-    }
-
-    .list h3 {
-      font-size: 1.15rem;
-      letter-spacing: -0.03em;
-      margin-bottom: 18px;
-      font-weight: 800;
-    }
-
-    .list ul {
-      list-style: none;
+    .stack {
       display: grid;
-      gap: 12px;
-    }
-
-    .list li {
-      display: grid;
-      grid-template-columns: 20px 1fr;
-      gap: 10px;
-      align-items: start;
-      color: var(--text-muted);
-      font-size: 0.98rem;
-      line-height: 1.6;
-    }
-
-    .list li strong { color: var(--text-strong); }
-
-    .list li .dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      font-size: 0.78rem;
-      font-weight: 800;
-      margin-top: 2px;
-    }
-
-    .list.bad .dot { background: rgba(148,163,184,0.15); color: #64748b; }
-    .list.good .dot { background: rgba(201,92,120,0.10); color: var(--rose-strong); }
-
-    .signals {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
       gap: 14px;
-      margin-top: 8px;
     }
 
-    .signal {
-      border-radius: 18px;
-      padding: 16px 16px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
+    .feature {
       display: flex;
-      gap: 12px;
+      gap: 14px;
       align-items: flex-start;
+      padding: 22px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--border);
       box-shadow: var(--shadow-soft);
     }
 
-    .signal-icon {
+    .feature-bullet {
       width: 34px;
       height: 34px;
       border-radius: 12px;
       display: grid;
       place-items: center;
-      font-size: 0.95rem;
-      background: rgba(201,92,120,0.10);
       flex: 0 0 auto;
+      color: var(--rose-deep);
+      background: rgba(213,109,136,0.14);
+      font-weight: 700;
     }
 
-    .signal h4 {
-      font-size: 0.98rem;
-      font-weight: 700;
-      margin-bottom: 4px;
+    .feature h4 {
+      margin: 0 0 6px;
+      font-size: 1rem;
       letter-spacing: -0.02em;
     }
 
-    .signal p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
-
-    .cta {
-      padding: 84px 0 100px;
+    .feature p {
+      margin: 0;
+      color: var(--text-muted);
+      line-height: 1.68;
     }
 
-    .cta-box {
-      border-radius: 30px;
-      padding: 34px;
+    .promise {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px;
+      border-radius: 24px;
       background:
-        radial-gradient(circle at top right, rgba(217, 107, 134, 0.14), transparent 30%),
-        linear-gradient(180deg, rgba(255,255,255,0.88), rgba(248,237,241,0.78));
-      border: 1px solid var(--line-strong);
+        radial-gradient(circle at top right, rgba(213,109,136,0.12), transparent 40%),
+        rgba(255,255,255,0.72);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .promise strong {
+      display: block;
+      font-size: 1.35rem;
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+    }
+
+    .promise p {
+      color: var(--text-muted);
+      line-height: 1.72;
+      margin: 0 0 20px;
+    }
+
+    .promise ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      color: var(--text);
+    }
+
+    .promise li::before {
+      content: '•';
+      color: var(--rose-strong);
+      font-weight: 800;
+      display: inline-block;
+      width: 18px;
+    }
+
+    .quote {
+      margin-top: 16px;
+      padding: 22px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      font-size: 1.12rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    .quote b { color: var(--rose-deep); }
+
+    .cta-band {
+      margin: 82px 0 80px;
+      padding: 34px;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at top, rgba(213,109,136,0.14), transparent 45%),
+        linear-gradient(180deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.62) 100%);
+      border: 1px solid var(--border);
       box-shadow: var(--shadow-card);
       text-align: center;
     }
 
-    .cta-box h2 { margin-bottom: 12px; }
-    .cta-box p {
-      max-width: 740px;
+    .cta-band h2 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.055em;
+    }
+
+    .cta-band p {
       margin: 0 auto 24px;
+      max-width: 700px;
       color: var(--text-muted);
-      line-height: 1.7;
-      font-size: 1.03rem;
+      line-height: 1.72;
+      font-size: 1.04rem;
     }
 
     footer {
-      border-top: 1px solid var(--line);
-      background: rgba(255,255,255,0.52);
-      backdrop-filter: blur(14px);
-      position: relative;
-      z-index: 1;
+      border-top: 1px solid rgba(201, 92, 120, 0.10);
+      background: rgba(255,255,255,0.36);
     }
 
     .footer-inner {
-      width: min(calc(100% - 36px), var(--max));
-      margin: 0 auto;
-      padding: 22px 0;
+      min-height: 80px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
+      gap: 20px;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: .92rem;
     }
 
     .footer-links {
       display: flex;
-      gap: 16px;
+      gap: 18px;
       flex-wrap: wrap;
     }
 
     .footer-links a {
-      color: inherit;
       text-decoration: none;
+      color: var(--text-muted);
     }
 
-    .footer-links a:hover { color: var(--text-strong); }
+    .footer-links a:hover { color: var(--text); }
 
-    @media (max-width: 1080px) {
-      .hero-wrap,
-      .compare,
-      .grid-3,
-      .stats-grid,
-      .board,
-      .signals { grid-template-columns: 1fr; }
-      .product-body { grid-template-columns: 1fr; }
-      .product-sidebar { border-right: 0; border-bottom: 1px solid rgba(201, 92, 120, 0.12); }
+    @media (max-width: 980px) {
+      .hero-grid,
+      .feature-grid,
+      .steps,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .product { order: -1; }
+      .board { grid-template-columns: 1fr 1fr; }
     }
 
-    @media (max-width: 760px) {
-      .container, .nav-inner, .footer-inner { width: min(calc(100% - 24px), var(--max)); }
-      .hero { padding-top: 40px; }
-      nav { position: static; }
-      .nav-inner { padding: 16px 0; }
-      .hero-cta, .nav-actions { width: 100%; }
-      .btn, .btn-ghost { width: 100%; }
-      .hero-card { padding: 12px; }
-      .main-header { flex-direction: column; align-items: flex-start; }
-      .mini-actions { justify-content: flex-start; }
-      .stats-row, .section, .cta { padding-top: 64px; }
-      .cta-box { padding: 24px; }
+    @media (max-width: 720px) {
+      .shell { width: min(var(--max), calc(100% - 24px)); }
+      nav { min-height: 72px; }
+      .nav-actions { display: none; }
+      .hero { padding-top: 38px; }
+      .board { grid-template-columns: 1fr; }
+      .app-body { grid-template-columns: 86px 1fr; }
+      .section { padding-top: 64px; }
+      .cta-band { padding: 24px; }
+      .footer-inner {
+        padding: 16px 0;
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="shell-glow"></div>
-
-  <nav>
-    <div class="nav-inner">
-      <a class="brand" href="#top" aria-label="MeetingScheduled home">
-        <span class="brand-mark" aria-hidden="true">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8Z" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span>
-          MeetingScheduled
-          <span class="brand-sub">Outbound & meetings</span>
-        </span>
-      </a>
-      <div class="nav-actions">
-        <a class="btn-ghost" href="#how">How it works</a>
-        <a class="btn" href="mailto:sales@meeting-scheduled.com?subject=MeetingScheduled demo">Book demo</a>
-      </div>
+  <div class="nav-wrap">
+    <div class="shell">
+      <nav>
+        <a class="brand" href="#top" aria-label="MeetingScheduled homepage">
+          <span class="brand-mark">↯</span>
+          <span>MeetingScheduled</span>
+        </a>
+        <div class="nav-actions">
+          <a class="pill-link" href="#how">How it works</a>
+          <a class="pill-link" href="#why">Why it’s different</a>
+          <a class="pill-link" href="mailto:sales@meeting-scheduled.com">Book demo</a>
+        </div>
+      </nav>
     </div>
-  </nav>
+  </div>
 
   <main id="top">
-    <section class="hero container">
-      <div class="hero-wrap">
-        <div class="hero-copy">
-          <div class="eyebrow"><span class="eyebrow-dot"></span> Connect Gmail → describe your customer → outbound starts</div>
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Connect Gmail → define your ICP → outbound starts
+          </div>
           <h1>
-            Meetings booked.<br>
+            Meetings booked.
             <span class="accent">Outbound handled.</span>
           </h1>
-          <p>
-            MeetingScheduled finds the right prospects, starts personalized outreach, and prepares your next calls — so your team focuses on <strong>replies and conversations</strong>, not sequence management.
+          <p class="sub">
+            MeetingScheduled finds the right prospects, starts personalized outreach, and prepares your next calls — so your team focuses on replies and conversations, not sequence management.
           </p>
           <div class="hero-cta">
-            <a class="btn" href="mailto:sales@meeting-scheduled.com?subject=MeetingScheduled demo">Start outreaching</a>
-            <a class="btn-ghost" href="#product">See product</a>
+            <a class="btn-primary" href="mailto:sales@meeting-scheduled.com">Book a demo</a>
+            <a class="btn-secondary" href="#how">See how it works</a>
           </div>
-          <div class="micro-proof">
-            <span class="chip">Wake up to prospects ready to call</span>
-            <span class="chip">Prepared conversations, not just more emails</span>
-            <span class="chip">We protect your domain</span>
+          <div class="hero-notes">
+            <span class="note-chip">Wake up to prospects ready to call</span>
+            <span class="note-chip">No endless sequence management</span>
+            <span class="note-chip">Prepared conversations, not just more emails</span>
           </div>
         </div>
 
-        <div class="hero-card" id="product">
-          <div class="window-bar">
-            <div class="window-dots"><span></span><span></span><span></span></div>
-            <div class="window-title">MeetingScheduled — live outbound workspace</div>
-          </div>
-
-          <div class="product-frame">
-            <div class="product-topbar">
-              <div class="left">
-                <div class="mini-logo">⚡</div>
-                <div>
-                  <div class="mini-title">Outreach</div>
-                  <div class="mini-sub">Daily signals · prospects ready to call · AI agent</div>
-                </div>
-              </div>
-              <div class="mini-actions">
-                <span class="pill">124 / 1000 prospects</span>
-                <span class="pill rose">16 emails pending review</span>
-              </div>
+        <div class="product">
+          <div class="app-frame">
+            <div class="app-topbar">
+              <div class="dots"><span></span><span></span><span></span></div>
+              <div style="height:12px;width:110px;border-radius:999px;background:rgba(201,92,120,.12);"></div>
             </div>
-
-            <div class="product-body">
-              <aside class="product-sidebar">
-                <div class="product-nav">
-                  <a class="active" href="javascript:void(0)">Outreach</a>
-                  <a href="javascript:void(0)">Flow</a>
-                  <a href="javascript:void(0)">Analytics</a>
-                  <a href="javascript:void(0)">Profile</a>
-                </div>
-                <div class="product-sidebar-footer">
-                  <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Credits today</div>
-                  <div style="height:8px;border-radius:999px;background:rgba(201,92,120,0.08);overflow:hidden;">
-                    <div style="height:100%;width:68%;background:linear-gradient(90deg,var(--rose-mid),var(--rose-strong));border-radius:999px;"></div>
-                  </div>
-                </div>
-              </aside>
-
-              <div class="product-main">
-                <div class="main-header">
-                  <div>
-                    <h3>Open laptop → know who to contact</h3>
-                    <p>Signals, outreach, and prepared call tasks in one place.</p>
-                  </div>
-                  <div class="mini-actions">
-                    <span class="pill green">Reply detected</span>
-                    <span class="pill">Call script ready</span>
-                  </div>
-                </div>
-
+            <div class="app-body">
+              <div class="app-sidebar">
+                <div class="app-side-logo"></div>
+                <div class="app-nav-pill active"></div>
+                <div class="app-nav-pill"></div>
+                <div class="app-nav-pill"></div>
+                <div class="app-nav-pill"></div>
+              </div>
+              <div class="app-main">
+                <div class="flow-title"></div>
                 <div class="board">
-                  <div class="lane prospects">
-                    <div class="lane-head"><span>Prospects</span><span>46</span></div>
-                    <div class="mini-card">
-                      <div class="name">Radu Palamariu</div>
-                      <div class="subtext">Group CEO · Alcott Global<br>Raised funding · hiring sales team</div>
-                      <div class="meta"><span>Lead</span><span class="badge">ICP</span></div>
-                    </div>
-                    <div class="mini-card">
-                      <div class="name">Bhavna Toor</div>
-                      <div class="subtext">Founder & CEO · Shenomics<br>New leadership hire · open market expansion</div>
-                      <div class="meta"><span>Today</span><span class="badge">Signal</span></div>
-                    </div>
+                  <div class="col prospects">
+                    <div class="col-head"></div>
+                    <div class="mini-card"></div>
+                    <div class="mini-card"></div>
+                    <div class="mini-card"></div>
                   </div>
-
-                  <div class="lane pending">
-                    <div class="lane-head"><span>Pending Send</span><span>22</span></div>
-                    <div class="mini-card">
-                      <div class="name">Hugo Silva</div>
-                      <div class="subtext">SES expansion<br>AI drafted a personalized first touch.</div>
-                      <div class="meta"><span>Queued</span><span class="badge gold">2m</span></div>
-                    </div>
-                    <div class="mini-card">
-                      <div class="name">Antonio Miranda</div>
-                      <div class="subtext">Meridiana Group<br>Prepared email + LinkedIn opener.</div>
-                      <div class="meta"><span>Queued</span><span class="badge gold">5m</span></div>
-                    </div>
+                  <div class="col pending">
+                    <div class="col-head"></div>
+                    <div class="mini-card"></div>
+                    <div class="mini-card"></div>
+                    <div class="mini-card"></div>
                   </div>
-
-                  <div class="lane calls">
-                    <div class="lane-head"><span>Ready to Call</span><span>14</span></div>
-                    <div class="mini-card">
-                      <div class="name">Eyal Shoval</div>
-                      <div class="subtext">Owner<br>Call script prepared from live signal + last email.</div>
-                      <div class="meta"><span>Now</span><span class="badge blue">Call</span></div>
-                    </div>
-                    <div class="mini-card">
-                      <div class="name">Surajit Mahanty</div>
-                      <div class="subtext">Head of Sales & Marketing<br>Signal summary + objections + talking points.</div>
-                      <div class="meta"><span>Today</span><span class="badge blue">Prepared</span></div>
-                    </div>
+                  <div class="col call">
+                    <div class="col-head"></div>
+                    <div class="mini-card"></div>
+                    <div class="mini-card"></div>
+                    <div class="mini-card"></div>
+                  </div>
+                  <div class="col replied">
+                    <div class="col-head"></div>
+                    <div class="mini-card"></div>
+                    <div class="mini-card"></div>
                   </div>
                 </div>
               </div>
@@ -931,157 +725,167 @@
           </div>
         </div>
       </div>
-    </section>
 
-    <section class="stats-row container">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="label">In pipeline generated</div>
-          <div class="value" data-target="3.8" data-decimals="1" data-prefix="$" data-suffix="M">$0<span>M</span></div>
+      <div class="shell stats">
+        <div class="stat">
+          <div class="stat-value" id="stat-pipeline">$0<span>M</span></div>
+          <div class="stat-label">In pipeline generated</div>
         </div>
-        <div class="stat-card">
-          <div class="label">ARR attributed</div>
-          <div class="value" data-target="790" data-prefix="$" data-suffix="K">$0<span>K</span></div>
+        <div class="stat">
+          <div class="stat-value" id="stat-arr">$0<span>K</span></div>
+          <div class="stat-label">ARR attributed</div>
         </div>
-        <div class="stat-card">
-          <div class="label">Qualified meetings</div>
-          <div class="value" data-target="890" data-suffix="+">0<span>+</span></div>
+        <div class="stat">
+          <div class="stat-value" id="stat-meetings">0<span>+</span></div>
+          <div class="stat-label">Qualified meetings generated</div>
         </div>
-        <div class="stat-card">
-          <div class="label">What reps do</div>
-          <div class="value" style="font-size:2rem;letter-spacing:-0.04em;">Call<span>. Reply.</span></div>
+        <div class="stat">
+          <div class="stat-value">1<span> AI</span></div>
+          <div class="stat-label">Agent guiding next-best action</div>
         </div>
       </div>
     </section>
 
-    <section class="section container" id="how">
-      <div class="section-head">
-        <div class="section-kicker">How it works</div>
-        <h2>Three simple steps.</h2>
-        <p class="section-copy">The goal is not to give you another outbound control panel to babysit. The goal is to get outbound moving, keep it relevant, and pull you in when a conversation is worth your time.</p>
-      </div>
-
-      <div class="grid-3">
-        <div class="panel">
-          <div class="panel-num">01</div>
-          <h3>Connect your inbox and define your customer</h3>
-          <p>Connect Gmail, describe what you sell, and define who a good fit looks like. No heavy setup, no complex workflow builder.</p>
+    <section class="section shell" id="how">
+      <div class="section-label">How it works</div>
+      <h2 class="section-title">From inbox connection to outbound motion in minutes.</h2>
+      <p class="section-sub">
+        No heavy setup. No sequence maze. Connect your inbox, describe who you sell to, and let the agent find, write, guide, and prepare the next best move.
+      </p>
+      <div class="steps">
+        <div class="card">
+          <div class="step-num">01</div>
+          <h3>Connect your inbox</h3>
+          <p>Connect Gmail and give the system the channel it needs to start outbound from your real sending environment.</p>
         </div>
-        <div class="panel">
-          <div class="panel-num">02</div>
-          <h3>The agent finds who to contact and why</h3>
-          <p>MeetingScheduled maps accounts, finds ICP contacts, watches signals, and starts personalized outreach based on what is relevant right now.</p>
+        <div class="card">
+          <div class="step-num">02</div>
+          <h3>Describe your customer</h3>
+          <p>Paste your website or explain what you sell. The agent maps your ICP, pulls relevant signals, and decides who to contact today.</p>
         </div>
-        <div class="panel">
-          <div class="panel-num">03</div>
-          <h3>You focus on replies and calls</h3>
-          <p>When someone responds, the agent prepares the conversation — context, scripts, and next steps — so you spend your time talking, not hunting.</p>
+        <div class="card">
+          <div class="step-num">03</div>
+          <h3>Reply and call</h3>
+          <p>The agent starts outreach and prepares calls with context and scripts, so your attention stays on conversations, not admin.</p>
         </div>
       </div>
     </section>
 
-    <section class="section container">
-      <div class="section-head">
-        <div class="section-kicker">Why it feels different</div>
-        <h2>The pipeline without the payroll.</h2>
-        <p class="section-copy">Most outbound tools give you more data, more tabs, and more setup. MeetingScheduled is built to reduce drag and create motion.</p>
-      </div>
-
-      <div class="compare">
-        <div class="list bad">
-          <h3>What you do not want</h3>
+    <section class="section shell" id="why">
+      <div class="section-label">Why it’s different</div>
+      <h2 class="section-title">Built for people who care about meetings, not software busywork.</h2>
+      <p class="section-sub">
+        Many outbound tools are powerful but heavy. MeetingScheduled is opinionated: it finds who to contact, starts the outreach, guides follow-up, and pushes the rep toward replies and calls.
+      </p>
+      <div class="feature-grid">
+        <div class="stack">
+          <div class="feature">
+            <div class="feature-bullet">01</div>
+            <div>
+              <h4>AI finds who to contact and why</h4>
+              <p>Signal-driven outbound that identifies relevant accounts, contacts, and reasons to reach out now.</p>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-bullet">02</div>
+            <div>
+              <h4>Prepared conversations, not just sent emails</h4>
+              <p>When a prospect is ready, the rep gets context, scripts, and call prep — not another dashboard rabbit hole.</p>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-bullet">03</div>
+            <div>
+              <h4>No endless sequence management</h4>
+              <p>One agent dynamically determines the next-best action instead of forcing you to manage campaign logic for every persona and touchpoint.</p>
+            </div>
+          </div>
+          <div class="quote">
+            <b>“The pipeline without the payroll.”</b><br>
+            Wake up, see who replied, know who to call, and move the deal forward.
+          </div>
+        </div>
+        <div class="promise">
+          <div>
+            <strong>Your rep should spend time replying, calling, and closing.</strong>
+            <p>Not list-building. Not rewriting sequences. Not bouncing between tabs trying to remember what to say.</p>
+          </div>
           <ul>
-            <li><span class="dot">–</span><span>Managing endless sequences for every persona, industry, and campaign.</span></li>
-            <li><span class="dot">–</span><span>Jumping between list building, enrichment, writing, review, and call prep.</span></li>
-            <li><span class="dot">–</span><span>Opening your laptop and still wondering <strong>who should I contact today?</strong></span></li>
+            <li>Finds fresh ICP contacts continuously</li>
+            <li>Starts outreach with relevant context</li>
+            <li>Prepares calls with scripts and details</li>
+            <li>Multi-threads accounts with the right people</li>
+            <li>Protects your domain and sending reputation</li>
           </ul>
         </div>
+      </div>
+    </section>
 
-        <div class="list good">
-          <h3>What MeetingScheduled does instead</h3>
-          <ul>
-            <li><span class="dot">+</span><span><strong>Finds who to contact today</strong> and why they are relevant now.</span></li>
-            <li><span class="dot">+</span><span><strong>Starts the outreach</strong> with personalized messaging that stays on-brand.</span></li>
-            <li><span class="dot">+</span><span><strong>Prepares the conversation</strong> so reps wake up to tasks that are ready to execute.</span></li>
-          </ul>
+    <section class="section shell">
+      <div class="section-label">What your team actually gets</div>
+      <h2 class="section-title">Less time inside B2B software. More time inside real conversations.</h2>
+      <p class="section-sub">
+        MeetingScheduled does not stop at sending. It coaches the motion, guides the next step, and makes sure outreach turns into calls with context.
+      </p>
+      <div class="steps">
+        <div class="card">
+          <h3>Relevant. Scalable. On-brand.</h3>
+          <p>Every touchpoint reflects your brand appropriately, referencing persona pains, lead history, and live signals so the messaging does not feel generic.</p>
+        </div>
+        <div class="card">
+          <h3>Quality contacts, less data spend.</h3>
+          <p>Continuously enrich accounts with the right people so you are not overpaying for scattered tools and stale records.</p>
+        </div>
+        <div class="card">
+          <h3>Signal-driven outbound + prepared calls.</h3>
+          <p>The agent warms prospects through email and supporting actions, then loops the rep in when a call or reply matters.</p>
         </div>
       </div>
     </section>
 
-    <section class="section container">
-      <div class="section-head">
-        <div class="section-kicker">Signal-driven outbound</div>
-        <h2>AI that finds people you should contact today.</h2>
-        <p class="section-copy">Relevant. Scalable. Always on-brand. The agent warms prospects through email and social, then brings a rep in when the timing is right.</p>
-      </div>
-
-      <div class="signals">
-        <div class="signal"><div class="signal-icon">📈</div><div><h4>Buying signals</h4><p>Funding, hiring, expansion, product launches, leadership changes, and intent cues guide who gets attention first.</p></div></div>
-        <div class="signal"><div class="signal-icon">🎯</div><div><h4>Quality contacts</h4><p>Multi-thread accounts with the right people, not just another giant export that drains your data spend.</p></div></div>
-        <div class="signal"><div class="signal-icon">✍️</div><div><h4>Personalized outreach</h4><p>Every message reflects persona pains, lead history, and account context so no two touches sound the same.</p></div></div>
-        <div class="signal"><div class="signal-icon">📞</div><div><h4>Prepared calls</h4><p>Scripts, talking points, objections, and context are ready when it is time to call.</p></div></div>
-        <div class="signal"><div class="signal-icon">🛡️</div><div><h4>Domain protection</h4><p>Guardrails keep your sending healthy so volume never comes at the expense of deliverability.</p></div></div>
-        <div class="signal"><div class="signal-icon">⚙️</div><div><h4>One agent, fewer workflows</h4><p>No more building and maintaining endless campaign logic. The system determines the next-best action dynamically.</p></div></div>
-      </div>
-    </section>
-
-    <section class="cta container">
-      <div class="cta-box">
-        <div class="section-kicker" style="margin-bottom:10px;">Start simple</div>
+    <section class="shell">
+      <div class="cta-band">
         <h2>Connect your inbox. Start outbound.</h2>
-        <p>MeetingScheduled helps business owners and sales teams automate the hard part of outbound — finding the right prospects, starting the outreach, and preparing the next conversation.</p>
-        <div class="hero-cta" style="justify-content:center; margin-bottom:0;">
-          <a class="btn" href="mailto:sales@meeting-scheduled.com?subject=MeetingScheduled demo">Book a demo</a>
-          <a class="btn-ghost" href="mailto:sales@meeting-scheduled.com?subject=MeetingScheduled question">Ask a question</a>
+        <p>
+          If you want qualified meetings without building a whole outbound operating system yourself, MeetingScheduled is the faster path.
+        </p>
+        <div class="hero-cta" style="justify-content:center; margin-top:0;">
+          <a class="btn-primary" href="mailto:sales@meeting-scheduled.com">Book a demo</a>
+          <a class="btn-secondary" href="mailto:sales@meeting-scheduled.com">sales@meeting-scheduled.com</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="footer-inner">
-      <div>© 2026 MeetingScheduled. Outbound & meetings.</div>
+    <div class="shell footer-inner">
+      <div>© 2026 MeetingScheduled. All rights reserved.</div>
       <div class="footer-links">
-        <a href="mailto:sales@meeting-scheduled.com">sales@meeting-scheduled.com</a>
         <a href="/privacy">Privacy Policy</a>
+        <a href="mailto:sales@meeting-scheduled.com">sales@meeting-scheduled.com</a>
       </div>
     </div>
   </footer>
 
   <script>
-    function animateNumber(el) {
-      const target = parseFloat(el.dataset.target || '0');
-      const decimals = parseInt(el.dataset.decimals || '0', 10);
-      const prefix = el.dataset.prefix || '';
-      const suffix = el.dataset.suffix || '';
-      const duration = 1700;
-      const start = performance.now();
-
-      function frame(now) {
-        const t = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - t, 3);
-        const current = (target * eased).toFixed(decimals);
-        el.innerHTML = `${prefix}${current}<span>${suffix}</span>`;
-        if (t < 1) requestAnimationFrame(frame);
+    function animateCounter(el, start, end, decimals, prefix, suffix, duration) {
+      const startTime = performance.now();
+      function update(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = start + (end - start) * eased;
+        el.innerHTML = prefix + current.toFixed(decimals) + '<span>' + suffix + '</span>';
+        if (progress < 1) requestAnimationFrame(update);
       }
-
-      requestAnimationFrame(frame);
+      requestAnimationFrame(update);
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.querySelectorAll('.value[data-target]').forEach((el) => {
-          if (!el.dataset.animated) {
-            el.dataset.animated = 'true';
-            animateNumber(el);
-          }
-        });
-      });
-    }, { threshold: 0.35 });
-
-    const stats = document.querySelector('.stats-grid');
-    if (stats) observer.observe(stats);
+    setTimeout(() => {
+      animateCounter(document.getElementById('stat-pipeline'), 0, 3.8, 1, '$', 'M', 1500);
+      animateCounter(document.getElementById('stat-arr'), 0, 790, 0, '$', 'K', 1500);
+      animateCounter(document.getElementById('stat-meetings'), 0, 890, 0, '', '+', 1500);
+    }, 350);
   </script>
 </body>
 </html>
