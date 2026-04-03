@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — MeetingScheduled</title>
+  <meta name="description" content="Terms of Service for MeetingScheduled." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rose-strong: #cb5f7c;
+      --rose: #d86e89;
+      --rose-deep: #b44f69;
+      --card: #fffdfd;
+      --text-strong: #191518;
+      --text: #433a40;
+      --text-muted: #746970;
+      --border: rgba(203, 95, 124, 0.14);
+      --border-strong: rgba(203, 95, 124, 0.22);
+      --shadow-soft: 0 12px 32px rgba(93, 49, 63, 0.08);
+      --max: 780px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-strong);
+      background:
+        radial-gradient(circle at top left, rgba(216,110,137,0.12), transparent 28%),
+        linear-gradient(180deg, #fcf7f8 0%, #fbf5f7 48%, #fffafb 100%);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--rose-strong); }
+
+    .shell { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+    /* NAV */
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(251, 245, 247, 0.72);
+      border-bottom: 1px solid rgba(203,95,124,0.1);
+    }
+
+    nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Sora', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      text-decoration: none;
+      color: var(--text-strong);
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .logo-img { width: 24px; height: 24px; object-fit: contain; display: block; }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.62);
+      color: var(--text);
+      font-size: .92rem;
+      text-decoration: none;
+      transition: .18s ease;
+    }
+
+    .nav-back:hover {
+      background: rgba(255,255,255,0.88);
+      border-color: var(--border-strong);
+      color: var(--text-strong);
+    }
+
+    /* CONTENT */
+    .page {
+      padding: 56px 0 80px;
+    }
+
+    .page-header {
+      margin-bottom: 40px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.62);
+      color: var(--rose-strong);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .page-label-dot {
+      width: 7px; height: 7px;
+      border-radius: 999px;
+      background: var(--rose-strong);
+      box-shadow: 0 0 0 5px rgba(203,95,124,0.12);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+    }
+
+    .page-meta {
+      color: var(--text-muted);
+      font-size: .92rem;
+      margin: 0;
+    }
+
+    /* INTRO */
+    .intro {
+      background: rgba(255,255,255,0.68);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px 24px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-soft);
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    /* SECTIONS */
+    .tos-section {
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: -0.03em;
+      margin: 0 0 10px;
+      color: var(--text-strong);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(203,95,124,0.1);
+      color: var(--rose-deep);
+      font-size: .82rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--text);
+      line-height: 1.78;
+      font-size: .98rem;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      margin: 8px 0 12px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    ul li {
+      position: relative;
+      padding: 9px 12px 9px 36px;
+      margin-bottom: 6px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: .95rem;
+      line-height: 1.55;
+    }
+
+    ul li::before {
+      content: "→";
+      position: absolute;
+      left: 12px;
+      color: var(--rose-strong);
+      font-weight: 700;
+    }
+
+    /* CAPS block */
+    .caps-block {
+      background: rgba(255,255,255,0.6);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+      font-size: .9rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    /* CONTACT */
+    .contact-box {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .contact-box p { margin-bottom: 6px; }
+    .contact-box strong { color: var(--text-strong); }
+    .contact-box a { color: var(--rose-strong); text-decoration: none; }
+    .contact-box a:hover { text-decoration: underline; }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 36px 0;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 0 0 32px;
+      color: var(--text-muted);
+      font-size: .9rem;
+    }
+
+    .foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+      padding-top: 18px;
+      border-top: 1px solid rgba(203,95,124,0.12);
+    }
+
+    .foot-links { display: flex; gap: 20px; }
+    .foot-links a { color: var(--text-muted); text-decoration: none; transition: color .15s; }
+    .foot-links a:hover { color: var(--rose-strong); }
+
+    @media (max-width: 600px) {
+      .shell { width: calc(100% - 24px); }
+      h1 { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-wrap">
+    <div class="shell">
+      <nav>
+        <a href="/" class="brand">
+          <span class="brand-mark"><img src="logo.svg" alt="MeetingScheduled" class="logo-img"></span>
+          MeetingScheduled
+        </a>
+        <a href="/" class="nav-back">← Back to home</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="shell">
+    <div class="page">
+
+      <div class="page-header">
+        <div class="page-label"><span class="page-label-dot"></span> Legal</div>
+        <h1>Terms of Service</h1>
+        <p class="page-meta">Last updated: April 3, 2026</p>
+      </div>
+
+      <div class="intro">
+        These Terms of Service ("Terms") govern your access to and use of MeetingScheduled ("MeetingScheduled," "we," "our," or "us"), including our website, application, and related services (collectively, the "Service"). By accessing or using the Service, you agree to these Terms.
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">1</span> Eligibility</h2>
+        <p>You may use the Service only if you are legally able to enter into a binding agreement and are authorized to use any connected accounts, email inboxes, or third-party services you link to the Service.</p>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">2</span> The Service</h2>
+        <p>MeetingScheduled is a software platform that helps users run outbound sales workflows, including prospect research, signal-based prospect identification, draft generation, sequence management, email sending through connected accounts, and reply monitoring.</p>
+        <p>We may update, improve, limit, or modify parts of the Service at any time.</p>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">3</span> Account Registration</h2>
+        <p>You are responsible for maintaining the confidentiality of your account credentials and for all activity that occurs under your account.</p>
+        <p>You agree to provide accurate information and to keep it up to date.</p>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">4</span> Connected Accounts and Third-Party Services</h2>
+        <p>The Service may allow you to connect third-party services such as Google or Gmail. By connecting a third-party account, you authorize MeetingScheduled to access and use that account only as needed to provide the requested features.</p>
+        <p>You are responsible for ensuring that you have the right to connect and use any third-party accounts, inboxes, domains, or data sources with the Service.</p>
+        <p>Your use of third-party services is also governed by the terms and privacy policies of those third parties.</p>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">5</span> Acceptable Use</h2>
+        <p>You agree not to use the Service to:</p>
+        <ul>
+          <li>violate any law or regulation</li>
+          <li>infringe the rights of others</li>
+          <li>send unlawful, deceptive, abusive, or fraudulent communications</li>
+          <li>distribute malware, spam, or harmful code</li>
+          <li>attempt to gain unauthorized access to the Service or related systems</li>
+          <li>interfere with or disrupt the integrity or performance of the Service</li>
+          <li>use the Service in a way that violates the policies of connected providers such as Google or Gmail</li>
+        </ul>
+        <p>You are solely responsible for the content of emails, sequences, campaigns, prompts, imported data, and other materials you create or send through the Service.</p>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">6</span> User Content and Data</h2>
+        <p>You retain ownership of the content and data you submit to the Service, including prospect data, prompts, email drafts, campaign inputs, and connected account data ("User Content").</p>
+        <p>You grant us a limited, non-exclusive license to host, process, transmit, and use User Content solely to operate, maintain, secure, and improve the Service.</p>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">7</span> Email Sending and Communications</h2>
+        <p>If you use MeetingScheduled to send email through a connected account, you are responsible for:</p>
+        <ul>
+          <li>compliance with applicable email, privacy, and marketing laws</li>
+          <li>obtaining any required permissions or consents</li>
+          <li>ensuring your communications are lawful and appropriate</li>
+          <li>monitoring your own sending practices, targeting, and deliverability</li>
+        </ul>
+        <p>MeetingScheduled provides tooling and automation, but you remain responsible for the emails sent from your connected accounts.</p>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">8</span> AI-Generated Output</h2>
+        <p>The Service may generate research, recommendations, signals, summaries, or draft content using automated systems and AI models.</p>
+        <p>You are responsible for reviewing and approving outputs before use. We do not guarantee that generated content will be accurate, complete, lawful, or fit for any specific purpose.</p>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">9</span> Privacy</h2>
+        <p>Your use of the Service is also subject to our <a href="/privacy">Privacy Policy</a>.</p>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">10</span> Intellectual Property</h2>
+        <p>The Service, including its software, design, branding, features, and underlying technology, is owned by MeetingScheduled or its licensors and is protected by applicable intellectual property laws.</p>
+        <p>Except as expressly allowed by these Terms, you may not copy, modify, distribute, sell, lease, reverse engineer, or create derivative works from the Service.</p>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">11</span> Suspension and Termination</h2>
+        <p>We may suspend or terminate your access to the Service at any time if:</p>
+        <ul>
+          <li>you violate these Terms</li>
+          <li>your use creates risk for us, other users, or third parties</li>
+          <li>we are required to do so by law or a third-party provider</li>
+          <li>continued access is no longer commercially or technically feasible</li>
+        </ul>
+        <p>You may stop using the Service at any time.</p>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">12</span> Disclaimers</h2>
+        <div class="caps-block">THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE." TO THE MAXIMUM EXTENT PERMITTED BY LAW, MEETINGSCHEDULED DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND ANY WARRANTY THAT THE SERVICE WILL BE UNINTERRUPTED, ERROR-FREE, OR FULLY SECURE.</div>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">13</span> Limitation of Liability</h2>
+        <div class="caps-block">TO THE MAXIMUM EXTENT PERMITTED BY LAW, MEETINGSCHEDULED AND ITS AFFILIATES, OFFICERS, EMPLOYEES, AND AGENTS WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, REVENUE, DATA, GOODWILL, OR BUSINESS OPPORTUNITY, ARISING OUT OF OR RELATED TO YOUR USE OF THE SERVICE.</div>
+        <div class="caps-block">TO THE MAXIMUM EXTENT PERMITTED BY LAW, OUR TOTAL LIABILITY FOR ANY CLAIM ARISING OUT OF OR RELATING TO THE SERVICE WILL NOT EXCEED THE AMOUNT YOU PAID US FOR THE SERVICE IN THE 12 MONTHS BEFORE THE CLAIM, OR USD $100 IF YOU HAVE NOT PAID US ANYTHING.</div>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">14</span> Indemnification</h2>
+        <p>You agree to defend, indemnify, and hold harmless MeetingScheduled and its affiliates, officers, employees, and agents from and against any claims, liabilities, damages, losses, and expenses arising out of or related to:</p>
+        <ul>
+          <li>your use of the Service</li>
+          <li>your User Content</li>
+          <li>your emails, campaigns, or communications</li>
+          <li>your violation of these Terms</li>
+          <li>your violation of any law or third-party rights</li>
+        </ul>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">15</span> Governing Law</h2>
+        <p>These Terms are governed by the laws of the State of Israel, without regard to conflict of law principles.</p>
+        <p>Any dispute arising out of or relating to these Terms or the Service will be subject to the exclusive jurisdiction of the competent courts located in Tel Aviv, Israel.</p>
+      </div>
+
+      <div class="tos-section">
+        <h2><span class="section-num">16</span> Changes to These Terms</h2>
+        <p>We may update these Terms from time to time. If we make material changes, we may update the "Last updated" date above or provide additional notice where appropriate.</p>
+        <p>Your continued use of the Service after updated Terms become effective constitutes acceptance of the updated Terms.</p>
+      </div>
+
+      <hr>
+
+      <div class="tos-section">
+        <h2><span class="section-num">17</span> Contact</h2>
+        <div class="contact-box">
+          <p>If you have any questions about these Terms, please contact:</p>
+          <p><strong>Eyal Shoval</strong><br>MeetingScheduled<br>
+          <a href="mailto:eyal.growth@gmail.com">eyal.growth@gmail.com</a></p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="shell">
+    <footer>
+      <div class="foot">
+        <span>© 2026 MeetingScheduled</span>
+        <div class="foot-links">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>
