@@ -159,6 +159,9 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;justify
 .footer-copy{font-family:var(--mono);font-size:11px;color:var(--muted2);letter-spacing:0.06em;}
 .footer-copy a{color:inherit;text-decoration:underline;}
 .footer-copy a:hover{color:var(--rose);}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-family:var(--mono);font-size:11px;color:var(--muted2);letter-spacing:0.06em;text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:var(--rose);}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
@@ -357,6 +360,10 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;justify
 
 <footer>
   <span class="footer-logo">Meeting<span>Scheduled</span></span>
+  <div class="footer-links">
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms.html">Terms of Service</a>
+  </div>
   <span class="footer-copy">AI-POWERED B2B OUTBOUND · <a href="mailto:sales@meeting-scheduled.com">sales@meeting-scheduled.com</a></span>
 </footer>
 
