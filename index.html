@@ -31,6 +31,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn-primary:hover{background:var(--rose-hover);transform:translateY(-1px);box-shadow:0 6px 24px rgba(184,53,104,0.28);}
 .btn-ghost{font-family:var(--mono);font-size:12px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--muted);padding-bottom:2px;transition:color 0.2s,border-color 0.2s;}
 .btn-ghost:hover{color:var(--text);border-color:var(--text);}
+.nav-login{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:0.04em;color:var(--rose);text-decoration:none;transition:color 0.2s;}
+.nav-login:hover{color:var(--rose-hover);}
+.nav-cta{display:flex;align-items:center;gap:16px;}
 
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:140px 48px 80px;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;top:-200px;left:-200px;width:700px;height:700px;background:radial-gradient(ellipse,rgba(184,53,104,0.09) 0%,transparent 70%);pointer-events:none;}
@@ -197,8 +200,10 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:grid;grid-te
     <a href="#pillars">Why it's different</a>
     <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Book a demo</a>
   </div>
-  <a href="https://reach.meeting-scheduled.com" class="btn-ghost">Login</a>
-  <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn-primary">Start in 1 Minute</a>
+  <div class="nav-cta">
+    <a href="https://reach.meeting-scheduled.com" class="nav-login">Login</a>
+    <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn-primary">Start in 1 Minute</a>
+  </div>
 </nav>
 
 <div class="hero">
