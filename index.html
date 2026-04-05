@@ -361,6 +361,14 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;justify
 </footer>
 
 <script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id=a.getAttribute('href').slice(1);
+    const el=id?document.getElementById(id):null;
+    if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth'});history.pushState(null,'',window.location.pathname);}
+  });
+});
+
 const reveals=document.querySelectorAll('.reveal');
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),80);obs.unobserve(e.target);}});},{threshold:0.08});
 reveals.forEach(el=>obs.observe(el));
