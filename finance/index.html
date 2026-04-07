@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MeetingScheduled Finance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* ========================================
+   CSS RESET & BASE
+   ======================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --rose: #E03C71;
+  --rose-light: #F06292;
+  --rose-dark: #B71C50;
+  --blush: #F9E8E0;
+  --blush-light: #FDF2ED;
+  --bg: #FFFAF5;
+  --bg-white: #FFFFFF;
+  --text-dark: #2C1810;
+  --text-mid: #5A4A42;
+  --text-light: #8B7B73;
+  --border: #F0E0D8;
+  --border-light: #F5EBE5;
+  --green: #2E7D32;
+  --green-bg: #E8F5E9;
+  --green-border: #A5D6A7;
+  --amber: #E65100;
+  --amber-bg: #FFF3E0;
+  --amber-border: #FFCC80;
+  --red: #C62828;
+  --red-bg: #FFEBEE;
+  --red-border: #EF9A9A;
+  --shadow-sm: 0 1px 3px rgba(44, 24, 16, 0.06);
+  --shadow-md: 0 4px 12px rgba(44, 24, 16, 0.08);
+  --shadow-lg: 0 8px 24px rgba(44, 24, 16, 0.10);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
+}
+
+/* ========================================
+   LOGIN PAGE
+   ======================================== */
+#login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg) 0%, var(--blush-light) 50%, var(--bg) 100%);
+}
+
+.login-card {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  border: 1px solid var(--border-light);
+}
+
+.login-card h1 {
+  font-size: 32px;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+
+.login-card .subtitle {
+  color: var(--text-light);
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-family: inherit;
+  background: var(--bg);
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-bottom: 16px;
+}
+
+.login-card input:focus {
+  border-color: var(--rose);
+  box-shadow: 0 0 0 3px rgba(224, 60, 113, 0.1);
+}
+
+.login-card button {
+  width: 100%;
+  padding: 14px;
+  background: var(--rose);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.login-card button:hover { background: var(--rose-dark); }
+.login-card button:active { transform: scale(0.98); }
+
+.login-error {
+  color: var(--red);
+  font-size: 13px;
+  margin-top: 12px;
+  display: none;
+}
+
+/* ========================================
+   APP SHELL
+   ======================================== */
+#app { display: none; }
+
+.app-header {
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--border-light);
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.header-brand {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 22px;
+  color: var(--text-dark);
+}
+
+.header-brand span { color: var(--rose); }
+
+/* ========================================
+   TAB NAVIGATION
+   ======================================== */
+.tab-nav {
+  display: flex;
+  gap: 4px;
+}
+
+.tab-btn {
+  padding: 8px 20px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover { color: var(--text-dark); background: var(--blush-light); }
+.tab-btn.active { color: var(--rose); background: var(--blush); font-weight: 600; }
+
+/* ========================================
+   CONTENT AREA
+   ======================================== */
+.content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ========================================
+   KPI CARDS
+   ======================================== */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpi-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s;
+}
+
+.kpi-card:hover { box-shadow: var(--shadow-md); }
+
+.kpi-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+
+.kpi-value {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 28px;
+  color: var(--text-dark);
+}
+
+.kpi-value.positive { color: var(--green); }
+.kpi-value.negative { color: var(--red); }
+
+/* ========================================
+   INSIGHT LINE & ALERTS
+   ======================================== */
+.insight-line {
+  background: var(--blush-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  font-size: 14px;
+  color: var(--text-mid);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.alert-banner {
+  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.alert-banner.red { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+.alert-banner.green { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
+.alert-banner.amber { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber); }
+
+.alert-dismiss {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  padding: 0 4px;
+}
+
+.alert-dismiss:hover { opacity: 1; }
+
+/* ========================================
+   CARDS & SECTIONS
+   ======================================== */
+.card {
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+}
+
+.card h2 {
+  font-size: 22px;
+  margin-bottom: 16px;
+  color: var(--text-dark);
+}
+
+.card h3 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: var(--text-dark);
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* ========================================
+   TABLES
+   ======================================== */
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th {
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--blush-light);
+  color: var(--text-mid);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-light);
+  white-space: nowrap;
+}
+
+tr:hover td { background: var(--blush-light); }
+
+.status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-profitable { background: var(--green-bg); color: var(--green); }
+.status-marginal { background: var(--amber-bg); color: var(--amber); }
+.status-loss { background: var(--red-bg); color: var(--red); }
+
+/* ========================================
+   FORMS
+   ======================================== */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.form-group { display: flex; flex-direction: column; }
+
+.form-group label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--bg);
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--rose);
+}
+
+.form-group textarea { resize: vertical; min-height: 60px; }
+
+.toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.toggle input { display: none; }
+
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.toggle input:checked + .toggle-slider { background: var(--rose); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+.btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary { background: var(--rose); color: white; }
+.btn-primary:hover { background: var(--rose-dark); }
+.btn-secondary { background: var(--blush); color: var(--text-dark); }
+.btn-secondary:hover { background: var(--border); }
+.btn-danger { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+.btn-danger:hover { background: #FFCDD2; }
+.btn-sm { padding: 6px 14px; font-size: 12px; }
+
+/* ========================================
+   CHART CONTAINERS
+   ======================================== */
+.chart-container {
+  position: relative;
+  height: 320px;
+  width: 100%;
+}
+
+/* ========================================
+   SETTINGS COST EDITOR
+   ======================================== */
+.cost-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.cost-row input[type="text"] {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--bg);
+}
+
+.cost-row input[type="number"] {
+  width: 120px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--bg);
+  text-align: right;
+}
+
+.cost-row input:focus {
+  border-color: var(--rose);
+  outline: none;
+}
+
+.cost-row .remove-cost {
+  background: none;
+  border: none;
+  color: var(--red);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  opacity: 0.5;
+}
+
+.cost-row .remove-cost:hover { opacity: 1; background: var(--red-bg); }
+
+.cost-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  margin-top: 8px;
+  border-top: 2px solid var(--border);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.derived-costs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.derived-item {
+  background: var(--blush-light);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+}
+
+.derived-item .label { font-size: 12px; color: var(--text-light); margin-bottom: 4px; }
+.derived-item .value { font-size: 16px; font-weight: 600; }
+
+/* ========================================
+   SIMULATOR
+   ======================================== */
+.sim-results {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.sim-card {
+  background: var(--blush-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.sim-card .label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+
+.sim-card .value {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 24px;
+}
+
+.sim-framing {
+  background: var(--blush);
+  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* ========================================
+   PLAN HEALTH
+   ======================================== */
+.danger-zone {
+  margin-top: 24px;
+}
+
+.danger-item {
+  background: var(--red-bg);
+  border: 1px solid var(--red-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--red);
+}
+
+.all-clear {
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  font-size: 14px;
+  color: var(--green);
+  font-weight: 500;
+}
+
+/* ========================================
+   INLINE EDIT
+   ======================================== */
+td .inline-input {
+  width: 80px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  background: var(--bg);
+  text-align: right;
+}
+
+td .inline-input:focus {
+  border-color: var(--rose);
+  outline: none;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background 0.15s;
+}
+
+.icon-btn:hover { background: var(--blush); }
+.icon-btn.danger:hover { background: var(--red-bg); }
+
+/* ========================================
+   DATA ACTIONS (Settings)
+   ======================================== */
+.data-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 1024px) {
+  .kpi-row { grid-template-columns: repeat(3, 1fr); }
+  .two-col { grid-template-columns: 1fr; }
+  .sim-results { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .content { padding: 20px 16px; }
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .form-grid { grid-template-columns: 1fr; }
+  .header-inner { padding: 0 16px; }
+  .tab-nav { overflow-x: auto; }
+  .tab-btn { white-space: nowrap; padding: 8px 14px; font-size: 13px; }
+  .derived-costs { grid-template-columns: 1fr; }
+  .sim-results { grid-template-columns: 1fr 1fr; }
+}
+
+/* ========================================
+   MODAL OVERLAY
+   ======================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 24, 16, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: var(--bg-white);
+  border-radius: var(--radius);
+  padding: 32px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.modal-box h3 { margin-bottom: 12px; }
+.modal-box p { color: var(--text-mid); font-size: 14px; margin-bottom: 24px; }
+.modal-box .btn { margin: 0 6px; }
+</style>
+</head>
+<body>
+
+<!-- =============================================
+     LOGIN PAGE
+     ============================================= -->
+<div id="login-page">
+  <div class="login-card">
+    <h1>MeetingScheduled</h1>
+    <p class="subtitle">CEO Financial Dashboard</p>
+    <input type="password" id="login-password" placeholder="Enter password" autocomplete="off">
+    <button onclick="attemptLogin()">Sign In</button>
+    <p class="login-error" id="login-error">Incorrect password. Please try again.</p>
+  </div>
+</div>
+
+<!-- =============================================
+     MAIN APP
+     ============================================= -->
+<div id="app">
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-brand">Meeting<span>Scheduled</span> Finance</div>
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="overview">Overview</button>
+        <button class="tab-btn" data-tab="clients">Clients</button>
+        <button class="tab-btn" data-tab="plan-health">Plan Health</button>
+        <button class="tab-btn" data-tab="simulator">Simulator</button>
+        <button class="tab-btn" data-tab="settings">Settings</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="content">
+    <!-- =============================================
+         TAB 1: OVERVIEW
+         ============================================= -->
+    <div id="tab-overview" class="tab-panel active">
+      <div class="kpi-row" id="overview-kpis"></div>
+      <div class="insight-line" id="overview-insight"></div>
+      <div id="overview-alerts"></div>
+      <div class="two-col">
+        <div class="card">
+          <h2>Monthly P&L</h2>
+          <div class="table-wrap" id="overview-pnl-table"></div>
+        </div>
+        <div class="card">
+          <h2>Net Margin by Client</h2>
+          <div class="chart-container"><canvas id="chart-margin"></canvas></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Projected Company Net by Client Count</h2>
+        <div class="chart-container"><canvas id="chart-projection"></canvas></div>
+      </div>
+    </div>
+
+    <!-- =============================================
+         TAB 2: CLIENTS
+         ============================================= -->
+    <div id="tab-clients" class="tab-panel">
+      <div class="card">
+        <h2>Add Client</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Company Name</label>
+            <input type="text" id="client-name" placeholder="e.g. Acme Corp">
+          </div>
+          <div class="form-group">
+            <label>Monthly Revenue ($)</label>
+            <input type="number" id="client-revenue" step="0.01" placeholder="e.g. 699">
+          </div>
+          <div class="form-group">
+            <label>Emails / Day</label>
+            <input type="number" id="client-emails" placeholder="e.g. 20">
+          </div>
+          <div class="form-group">
+            <label>Start Date</label>
+            <input type="text" id="client-start" placeholder="e.g. Apr 2026">
+          </div>
+          <div class="form-group">
+            <label>Phone Steps</label>
+            <div class="toggle-group">
+              <span>No</span>
+              <label class="toggle">
+                <input type="checkbox" id="client-phone">
+                <span class="toggle-slider"></span>
+              </label>
+              <span>Yes</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>BYO Contacts</label>
+            <div class="toggle-group">
+              <span>No</span>
+              <label class="toggle">
+                <input type="checkbox" id="client-byo">
+                <span class="toggle-slider"></span>
+              </label>
+              <span>Yes</span>
+            </div>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label>Notes</label>
+            <textarea id="client-notes" placeholder="Optional notes..."></textarea>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="addClient()">Add Client</button>
+      </div>
+      <div class="card">
+        <h2>All Clients</h2>
+        <div class="table-wrap" id="clients-table"></div>
+      </div>
+    </div>
+
+    <!-- =============================================
+         TAB 3: PLAN HEALTH
+         ============================================= -->
+    <div id="tab-plan-health" class="tab-panel">
+      <div class="card">
+        <h2>Plan Profitability Reference</h2>
+        <p style="color: var(--text-light); font-size: 14px; margin-bottom: 16px;">
+          All plans shown with ContactOut enrichment (not BYO). Fixed allocation is live and updates as clients are added or removed.
+        </p>
+        <div class="table-wrap" id="plan-health-table"></div>
+        <div class="danger-zone" id="plan-danger-zone"></div>
+      </div>
+    </div>
+
+    <!-- =============================================
+         TAB 4: SIMULATOR
+         ============================================= -->
+    <div id="tab-simulator" class="tab-panel">
+      <div class="card">
+        <h2>Client Simulator</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Monthly Revenue ($)</label>
+            <input type="number" id="sim-revenue" step="0.01" value="699" oninput="runSimulator()">
+          </div>
+          <div class="form-group">
+            <label>Emails / Day</label>
+            <input type="number" id="sim-emails" value="20" oninput="runSimulator()">
+          </div>
+          <div class="form-group">
+            <label>Phone Steps</label>
+            <div class="toggle-group">
+              <span>No</span>
+              <label class="toggle">
+                <input type="checkbox" id="sim-phone" onchange="runSimulator()">
+                <span class="toggle-slider"></span>
+              </label>
+              <span>Yes</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>BYO Contacts</label>
+            <div class="toggle-group">
+              <span>No</span>
+              <label class="toggle">
+                <input type="checkbox" id="sim-byo" onchange="runSimulator()">
+                <span class="toggle-slider"></span>
+              </label>
+              <span>Yes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sim-results" id="sim-results"></div>
+        <div class="sim-framing" id="sim-framing"></div>
+      </div>
+
+      <div class="card">
+        <h2>Scale Sensitivity</h2>
+        <p style="color: var(--text-light); font-size: 14px; margin-bottom: 16px;">
+          How this client's net margin changes as total client count grows.
+        </p>
+        <div class="table-wrap" id="sim-scale-table"></div>
+      </div>
+
+      <div class="card">
+        <h2>Revenue vs Costs by Client Count</h2>
+        <div class="chart-container"><canvas id="chart-simulator"></canvas></div>
+      </div>
+    </div>
+
+    <!-- =============================================
+         TAB 5: SETTINGS
+         ============================================= -->
+    <div id="tab-settings" class="tab-panel">
+      <div class="two-col">
+        <div class="card">
+          <h2>Fixed Costs (Monthly)</h2>
+          <div id="settings-fixed-costs"></div>
+          <div class="cost-total" id="settings-fixed-total"></div>
+          <button class="btn btn-secondary btn-sm" onclick="addFixedCostRow()" style="margin-top: 12px;">+ Add Line</button>
+        </div>
+        <div class="card">
+          <h2>Variable Costs (Per Prospect)</h2>
+          <div id="settings-var-costs"></div>
+          <div class="derived-costs" id="settings-derived"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Data Management</h2>
+        <div class="data-actions">
+          <button class="btn btn-secondary" onclick="exportData()">Export JSON</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">Import JSON</button>
+          <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
+          <button class="btn btn-danger" onclick="confirmClearAll()">Clear All Data</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- =============================================
+     JAVASCRIPT
+     ============================================= -->
+<script>
+/* ========================================
+   STORAGE KEY
+   ======================================== */
+const STORAGE_KEY = 'ms_finance_v1';
+
+/* ========================================
+   DEFAULT COST CONSTANTS
+   ======================================== */
+const DEFAULT_FIXED_COSTS = [
+  { name: 'Vercel Pro', amount: 50 },
+  { name: 'Supabase Pro', amount: 25 },
+  { name: 'GPT Pro', amount: 20 },
+  { name: 'Domain Email', amount: 9 },
+  { name: 'Claude Code / Cursor', amount: 20 },
+  { name: 'Other', amount: 60 }
+];
+
+const DEFAULT_VAR_COSTS = {
+  claude_opus: 0.140,
+  claude_sonnet: 0.021,
+  claude_haiku: 0.003,
+  grok: 0.001,
+  contactout_email: 0.350,
+  contactout_phone: 0.250,
+  contactout_search: 0.001
+};
+
+const SEED_CLIENTS = [
+  {
+    id: 'seed-1',
+    name: 'Client 1',
+    revenue: 332.50,
+    emailsPerDay: 20,
+    phoneSteps: false,
+    byoContacts: true,
+    startDate: 'Apr 2026',
+    notes: 'Annual deal $3,990 upfront. Brings own contacts.'
+  }
+];
+
+/* ========================================
+   PLAN DEFINITIONS
+   ======================================== */
+const PLAN_DEFS = [
+  { name: 'Starter Email', prospects: 200, phone: false, prices: { monthly: 299, six: 269, annual: 249 } },
+  { name: 'Growth Email', prospects: 600, phone: false, prices: { monthly: 699, six: 629, annual: 583 } },
+  { name: 'Starter E+P', prospects: 200, phone: true, prices: { monthly: 399, six: 359, annual: 333 } },
+  { name: 'Growth E+P', prospects: 600, phone: true, prices: { monthly: 899, six: 809, annual: 749 } }
+];
+
+const TERM_LABELS = { monthly: 'Monthly', six: '6-Month', annual: '12-Month' };
+
+/* ========================================
+   STATE
+   ======================================== */
+let state = loadState();
+let dismissedAlerts = new Set();
+
+/* ========================================
+   STATE MANAGEMENT
+   ======================================== */
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // Ensure all fields exist
+      if (!parsed.fixedCosts) parsed.fixedCosts = JSON.parse(JSON.stringify(DEFAULT_FIXED_COSTS));
+      if (!parsed.varCosts) parsed.varCosts = { ...DEFAULT_VAR_COSTS };
+      if (!parsed.clients) parsed.clients = [];
+      return parsed;
+    }
+  } catch (e) {
+    console.warn('Failed to load state', e);
+  }
+  // First open: seed data
+  return {
+    fixedCosts: JSON.parse(JSON.stringify(DEFAULT_FIXED_COSTS)),
+    varCosts: { ...DEFAULT_VAR_COSTS },
+    clients: JSON.parse(JSON.stringify(SEED_CLIENTS))
+  };
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+/* ========================================
+   CALCULATION ENGINE
+   ======================================== */
+function totalFixed() {
+  return state.fixedCosts.reduce((sum, c) => sum + c.amount, 0);
+}
+
+function fixedAlloc(clientCount) {
+  if (clientCount <= 0) return 0;
+  return totalFixed() / clientCount;
+}
+
+function prospectsPerMonth(emailsPerDay) {
+  return emailsPerDay * 30;
+}
+
+function varCostPerProspect(phoneSteps, byoContacts) {
+  const v = state.varCosts;
+  let cost = v.claude_opus + v.claude_sonnet + v.claude_haiku + v.grok;
+  if (!byoContacts) {
+    cost += v.contactout_email;
+    cost += v.contactout_search;
+  }
+  if (phoneSteps && !byoContacts) {
+    cost += v.contactout_phone;
+  }
+  return cost;
+}
+
+function stripeFee(revenue) {
+  return (revenue * 0.029) + 0.30;
+}
+
+function clientCalc(client, clientCount) {
+  const prospects = prospectsPerMonth(client.emailsPerDay);
+  const varPerProspect = varCostPerProspect(client.phoneSteps, client.byoContacts);
+  const totalVar = varPerProspect * prospects;
+  const stripe = stripeFee(client.revenue);
+  const grossMargin = client.revenue - stripe - totalVar;
+  const fixedAllocAmt = fixedAlloc(clientCount);
+  const netMargin = grossMargin - fixedAllocAmt;
+  return {
+    prospects,
+    varPerProspect,
+    totalVar,
+    stripe,
+    grossMargin,
+    fixedAlloc: fixedAllocAmt,
+    netMargin,
+    netYear: netMargin * 12
+  };
+}
+
+function companyTotals() {
+  const n = state.clients.length;
+  const fixed = totalFixed();
+  if (n === 0) {
+    return { mrr: 0, arr: 0, netMo: -fixed, netYear: -fixed * 12, clients: 0, fixed };
+  }
+  let totalRevenue = 0;
+  let totalVarCost = 0;
+  let totalStripe = 0;
+  state.clients.forEach(c => {
+    const calc = clientCalc(c, n);
+    totalRevenue += c.revenue;
+    totalVarCost += calc.totalVar;
+    totalStripe += calc.stripe;
+  });
+  const netMo = totalRevenue - totalStripe - totalVarCost - fixed;
+  return {
+    mrr: totalRevenue,
+    arr: totalRevenue * 12,
+    netMo,
+    netYear: netMo * 12,
+    clients: n,
+    fixed
+  };
+}
+
+function breakEvenClients() {
+  // Find how many clients of average profile are needed to break even
+  const fixed = totalFixed();
+  if (state.clients.length === 0) return '?';
+  // Average net contribution per client (gross margin minus stripe)
+  let totalGrossContrib = 0;
+  state.clients.forEach(c => {
+    const prospects = prospectsPerMonth(c.emailsPerDay);
+    const totalVar = varCostPerProspect(c.phoneSteps, c.byoContacts) * prospects;
+    const stripe = stripeFee(c.revenue);
+    totalGrossContrib += (c.revenue - stripe - totalVar);
+  });
+  const avgGross = totalGrossContrib / state.clients.length;
+  if (avgGross <= 0) return 'N/A';
+  return Math.ceil(fixed / avgGross);
+}
+
+function fixedCoverage() {
+  const fixed = totalFixed();
+  if (fixed === 0) return 100;
+  const n = state.clients.length;
+  if (n === 0) return 0;
+  let totalGrossContrib = 0;
+  state.clients.forEach(c => {
+    const prospects = prospectsPerMonth(c.emailsPerDay);
+    const totalVar = varCostPerProspect(c.phoneSteps, c.byoContacts) * prospects;
+    const stripe = stripeFee(c.revenue);
+    totalGrossContrib += (c.revenue - stripe - totalVar);
+  });
+  return Math.round((totalGrossContrib / fixed) * 100);
+}
+
+/* ========================================
+   FORMAT HELPERS
+   ======================================== */
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString('en-US');
+}
+
+function fmtSigned(n) {
+  const rounded = Math.round(n);
+  const prefix = rounded >= 0 ? '+' : '';
+  return prefix + '$' + rounded.toLocaleString('en-US');
+}
+
+function fmtCents(n) {
+  return '$' + n.toFixed(3);
+}
+
+function clientStatus(netMo) {
+  if (netMo >= 50) return 'Profitable';
+  if (netMo >= 0) return 'Marginal';
+  return 'Loss';
+}
+
+function statusClass(netMo) {
+  if (netMo >= 50) return 'status-profitable';
+  if (netMo >= 0) return 'status-marginal';
+  return 'status-loss';
+}
+
+/* ========================================
+   AUTH
+   ======================================== */
+function attemptLogin() {
+  const pw = document.getElementById('login-password').value;
+  if (pw === 'msfinance') {
+    sessionStorage.setItem('ms_finance_auth', 'true');
+    showApp();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+
+document.getElementById('login-password').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') attemptLogin();
+});
+
+function checkAuth() {
+  if (sessionStorage.getItem('ms_finance_auth') === 'true') {
+    showApp();
+  }
+}
+
+function showApp() {
+  document.getElementById('login-page').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  renderAll();
+}
+
+/* ========================================
+   TAB NAVIGATION
+   ======================================== */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    renderAll();
+  });
+});
+
+/* ========================================
+   RENDER: OVERVIEW
+   ======================================== */
+function renderOverview() {
+  const totals = companyTotals();
+  const be = breakEvenClients();
+  const coverage = fixedCoverage();
+
+  // KPIs
+  const kpis = [
+    { label: 'MRR', value: fmt(totals.mrr) },
+    { label: 'ARR', value: fmt(totals.arr) },
+    { label: 'Net / Mo', value: fmt(totals.netMo), cls: totals.netMo >= 0 ? 'positive' : 'negative' },
+    { label: 'Net / Year', value: fmt(totals.netYear), cls: totals.netYear >= 0 ? 'positive' : 'negative' },
+    { label: 'Active Clients', value: totals.clients }
+  ];
+
+  document.getElementById('overview-kpis').innerHTML = kpis.map(k =>
+    `<div class="kpi-card">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value ${k.cls || ''}">${k.value}</div>
+    </div>`
+  ).join('');
+
+  // Insight
+  document.getElementById('overview-insight').innerHTML =
+    `Fixed costs: <strong>${fmt(totals.fixed)}/mo</strong> exist regardless of clients. ` +
+    `<strong>${totals.clients}</strong> client(s) cover <strong>${coverage}%</strong> of fixed costs. ` +
+    `Break-even: <strong>${be}</strong> client(s).`;
+
+  // Alerts
+  let alertsHtml = '';
+  if (totals.netMo < 0 && !dismissedAlerts.has('company-loss')) {
+    alertsHtml += `<div class="alert-banner red" id="alert-company-loss">
+      Company is net negative: ${fmt(totals.netMo)}/mo. Need ${be} client(s) at current average to break even.
+      <button class="alert-dismiss" onclick="dismissAlert('company-loss')">&times;</button>
+    </div>`;
+  }
+  if (totals.netMo > 0 && !dismissedAlerts.has('company-profit')) {
+    alertsHtml += `<div class="alert-banner green" id="alert-company-profit">
+      Company is profitable: ${fmtSigned(totals.netMo)}/mo net. Keep growing!
+      <button class="alert-dismiss" onclick="dismissAlert('company-profit')">&times;</button>
+    </div>`;
+  }
+  const n = state.clients.length;
+  state.clients.forEach(c => {
+    const calc = clientCalc(c, n);
+    if (calc.netMargin < 0 && !dismissedAlerts.has('client-loss-' + c.id)) {
+      alertsHtml += `<div class="alert-banner amber" id="alert-client-loss-${c.id}">
+        ${c.name} is loss-making: ${fmt(calc.netMargin)}/mo net after fixed allocation.
+        <button class="alert-dismiss" onclick="dismissAlert('client-loss-${c.id}')">&times;</button>
+      </div>`;
+    }
+  });
+  document.getElementById('overview-alerts').innerHTML = alertsHtml;
+
+  // P&L Table
+  renderPnLTable();
+
+  // Charts
+  renderMarginChart();
+  renderProjectionChart();
+}
+
+function dismissAlert(id) {
+  dismissedAlerts.add(id);
+  renderOverview();
+}
+
+function renderPnLTable() {
+  const n = state.clients.length;
+  const fixed = totalFixed();
+
+  let rows = '';
+  let totalRev = 0, totalVar = 0, totalStripeSum = 0, totalNet = 0;
+
+  if (n === 0) {
+    rows = `<tr><td colspan="6" style="text-align:center; color: var(--text-light); padding: 20px;">No clients yet. Company burns ${fmt(fixed)}/mo in fixed costs.</td></tr>`;
+  } else {
+    state.clients.forEach(c => {
+      const calc = clientCalc(c, n);
+      totalRev += c.revenue;
+      totalVar += calc.totalVar;
+      totalStripeSum += calc.stripe;
+      totalNet += calc.netMargin;
+      rows += `<tr>
+        <td>${c.name}</td>
+        <td>${fmt(c.revenue)}</td>
+        <td>${fmt(calc.totalVar)}</td>
+        <td>${fmt(calc.stripe)}</td>
+        <td>${fmt(calc.fixedAlloc)}</td>
+        <td><strong class="${calc.netMargin >= 0 ? 'positive' : 'negative'}" style="color: ${calc.netMargin >= 0 ? 'var(--green)' : 'var(--red)'}">${fmt(calc.netMargin)}</strong></td>
+      </tr>`;
+    });
+    rows += `<tr style="font-weight:600; border-top: 2px solid var(--border);">
+      <td>TOTAL</td>
+      <td>${fmt(totalRev)}</td>
+      <td>${fmt(totalVar)}</td>
+      <td>${fmt(totalStripeSum)}</td>
+      <td>${fmt(fixed)}</td>
+      <td style="color: ${totalNet >= 0 ? 'var(--green)' : 'var(--red)'}">${fmt(totalNet)}</td>
+    </tr>`;
+  }
+
+  document.getElementById('overview-pnl-table').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Client</th><th>Revenue</th><th>Var Cost</th><th>Stripe</th><th>Fixed Alloc</th><th>Net/Mo</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+/* ========================================
+   CHARTS
+   ======================================== */
+let marginChart = null;
+let projectionChart = null;
+let simulatorChart = null;
+
+function renderMarginChart() {
+  const canvas = document.getElementById('chart-margin');
+  if (marginChart) marginChart.destroy();
+
+  const n = state.clients.length;
+  const labels = state.clients.map(c => c.name);
+  const data = state.clients.map(c => Math.round(clientCalc(c, n).netMargin));
+  const colors = data.map(v => v >= 0 ? '#2E7D32' : '#C62828');
+
+  marginChart = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Net Margin/Mo',
+        data,
+        backgroundColor: colors,
+        borderRadius: 6,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => fmt(ctx.raw) + '/mo'
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: { color: '#F0E0D8' },
+          ticks: { callback: v => fmt(v) }
+        },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+}
+
+function renderProjectionChart() {
+  const canvas = document.getElementById('chart-projection');
+  if (projectionChart) projectionChart.destroy();
+
+  const fixed = totalFixed();
+  // Use average gross contribution per client
+  let avgGross = 0;
+  if (state.clients.length > 0) {
+    let sum = 0;
+    state.clients.forEach(c => {
+      const prospects = prospectsPerMonth(c.emailsPerDay);
+      const totalVar = varCostPerProspect(c.phoneSteps, c.byoContacts) * prospects;
+      const stripe = stripeFee(c.revenue);
+      sum += (c.revenue - stripe - totalVar);
+    });
+    avgGross = sum / state.clients.length;
+  } else {
+    avgGross = 200; // fallback estimate
+  }
+
+  const currentN = state.clients.length;
+  const maxN = currentN + 15;
+  const labels = [];
+  const netData = [];
+  const zeroLine = [];
+  let crossoverLabel = null;
+
+  for (let i = 0; i <= maxN; i++) {
+    labels.push(i + ' clients');
+    const net = (avgGross * i) - fixed;
+    netData.push(Math.round(net));
+    zeroLine.push(0);
+    if (crossoverLabel === null && net >= 0 && i > 0) {
+      crossoverLabel = i;
+    }
+  }
+
+  projectionChart = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Net/Mo',
+          data: netData,
+          borderColor: '#E03C71',
+          backgroundColor: 'rgba(224, 60, 113, 0.1)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointHoverRadius: 6
+        },
+        {
+          label: 'Break-even',
+          data: zeroLine,
+          borderColor: '#8B7B73',
+          borderDash: [6, 4],
+          pointRadius: 0,
+          fill: false
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, position: 'top' },
+        tooltip: {
+          callbacks: {
+            label: ctx => ctx.dataset.label + ': ' + fmt(ctx.raw)
+          }
+        },
+        annotation: crossoverLabel ? {
+          annotations: {
+            crossover: {
+              type: 'label',
+              xValue: crossoverLabel,
+              yValue: 0,
+              content: 'Break-even: ' + crossoverLabel + ' clients',
+              backgroundColor: 'rgba(46, 125, 50, 0.1)',
+              color: '#2E7D32',
+              font: { size: 12 }
+            }
+          }
+        } : undefined
+      },
+      scales: {
+        y: {
+          grid: { color: '#F0E0D8' },
+          ticks: { callback: v => fmt(v) }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { maxTicksLimit: 10 }
+        }
+      }
+    }
+  });
+}
+
+/* ========================================
+   RENDER: CLIENTS
+   ======================================== */
+let editingClientId = null;
+
+function renderClients() {
+  const n = state.clients.length;
+  if (n === 0) {
+    document.getElementById('clients-table').innerHTML =
+      '<p style="color: var(--text-light); text-align: center; padding: 24px;">No clients yet. Add one above.</p>';
+    return;
+  }
+
+  let rows = '';
+  state.clients.forEach(c => {
+    const calc = clientCalc(c, n);
+    const status = clientStatus(calc.netMargin);
+    const isEditing = editingClientId === c.id;
+
+    if (isEditing) {
+      rows += `<tr>
+        <td><input class="inline-input" style="width:120px" id="edit-name" value="${c.name}"></td>
+        <td>${c.startDate}</td>
+        <td><input class="inline-input" type="number" step="0.01" id="edit-revenue" value="${c.revenue}"></td>
+        <td><input class="inline-input" type="number" id="edit-emails" value="${c.emailsPerDay}"></td>
+        <td>
+          <label class="toggle" style="display:inline-flex">
+            <input type="checkbox" id="edit-phone" ${c.phoneSteps ? 'checked' : ''}>
+            <span class="toggle-slider"></span>
+          </label>
+        </td>
+        <td>
+          <label class="toggle" style="display:inline-flex">
+            <input type="checkbox" id="edit-byo" ${c.byoContacts ? 'checked' : ''}>
+            <span class="toggle-slider"></span>
+          </label>
+        </td>
+        <td>${fmt(calc.totalVar)}</td>
+        <td>${fmt(calc.stripe)}</td>
+        <td>${fmt(calc.netMargin)}</td>
+        <td>${fmt(calc.netYear)}</td>
+        <td><span class="status-badge ${statusClass(calc.netMargin)}">${status}</span></td>
+        <td>
+          <div class="edit-actions">
+            <button class="icon-btn" onclick="saveClient('${c.id}')" title="Save">&#10003;</button>
+            <button class="icon-btn" onclick="cancelEdit()" title="Cancel">&#10005;</button>
+          </div>
+        </td>
+      </tr>`;
+    } else {
+      rows += `<tr>
+        <td><strong>${c.name}</strong></td>
+        <td>${c.startDate}</td>
+        <td>${fmt(c.revenue)}</td>
+        <td>${calc.prospects}</td>
+        <td>${c.phoneSteps ? 'Yes' : 'No'}</td>
+        <td>${c.byoContacts ? 'Yes' : 'No'}</td>
+        <td>${fmt(calc.totalVar)}</td>
+        <td>${fmt(calc.stripe)}</td>
+        <td style="color: ${calc.netMargin >= 0 ? 'var(--green)' : 'var(--red)'}; font-weight:600;">${fmt(calc.netMargin)}</td>
+        <td style="color: ${calc.netYear >= 0 ? 'var(--green)' : 'var(--red)'};">${fmt(calc.netYear)}</td>
+        <td><span class="status-badge ${statusClass(calc.netMargin)}">${status}</span></td>
+        <td>
+          <div class="edit-actions">
+            <button class="icon-btn" onclick="editClient('${c.id}')" title="Edit">&#9998;</button>
+            <button class="icon-btn danger" onclick="removeClient('${c.id}')" title="Remove">&#128465;</button>
+          </div>
+        </td>
+      </tr>`;
+    }
+  });
+
+  document.getElementById('clients-table').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Name</th><th>Start</th><th>Revenue/mo</th><th>Prospects/mo</th>
+        <th>Phone</th><th>BYO</th><th>Var Cost</th><th>Stripe</th>
+        <th>Net/Mo</th><th>Net/Year</th><th>Status</th><th></th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+function addClient() {
+  const name = document.getElementById('client-name').value.trim();
+  const revenue = parseFloat(document.getElementById('client-revenue').value);
+  const emailsPerDay = parseInt(document.getElementById('client-emails').value);
+  const startDate = document.getElementById('client-start').value.trim();
+  const phoneSteps = document.getElementById('client-phone').checked;
+  const byoContacts = document.getElementById('client-byo').checked;
+  const notes = document.getElementById('client-notes').value.trim();
+
+  if (!name || isNaN(revenue) || isNaN(emailsPerDay)) {
+    alert('Please fill in Company Name, Revenue, and Emails/Day.');
+    return;
+  }
+
+  state.clients.push({
+    id: 'c-' + Date.now(),
+    name,
+    revenue,
+    emailsPerDay,
+    phoneSteps,
+    byoContacts,
+    startDate: startDate || 'N/A',
+    notes
+  });
+  saveState();
+
+  // Clear form
+  document.getElementById('client-name').value = '';
+  document.getElementById('client-revenue').value = '';
+  document.getElementById('client-emails').value = '';
+  document.getElementById('client-start').value = '';
+  document.getElementById('client-phone').checked = false;
+  document.getElementById('client-byo').checked = false;
+  document.getElementById('client-notes').value = '';
+
+  dismissedAlerts.clear();
+  renderAll();
+}
+
+function editClient(id) {
+  editingClientId = id;
+  renderClients();
+}
+
+function cancelEdit() {
+  editingClientId = null;
+  renderClients();
+}
+
+function saveClient(id) {
+  const client = state.clients.find(c => c.id === id);
+  if (!client) return;
+
+  const name = document.getElementById('edit-name').value.trim();
+  const revenue = parseFloat(document.getElementById('edit-revenue').value);
+  const emailsPerDay = parseInt(document.getElementById('edit-emails').value);
+  const phoneSteps = document.getElementById('edit-phone').checked;
+  const byoContacts = document.getElementById('edit-byo').checked;
+
+  if (name) client.name = name;
+  if (!isNaN(revenue)) client.revenue = revenue;
+  if (!isNaN(emailsPerDay)) client.emailsPerDay = emailsPerDay;
+  client.phoneSteps = phoneSteps;
+  client.byoContacts = byoContacts;
+
+  editingClientId = null;
+  saveState();
+  dismissedAlerts.clear();
+  renderAll();
+}
+
+function removeClient(id) {
+  const client = state.clients.find(c => c.id === id);
+  if (!client) return;
+  showConfirmModal(
+    'Remove Client',
+    `Are you sure you want to remove "${client.name}"? This will recalculate fixed allocation for all remaining clients.`,
+    () => {
+      state.clients = state.clients.filter(c => c.id !== id);
+      saveState();
+      dismissedAlerts.clear();
+      renderAll();
+    }
+  );
+}
+
+/* ========================================
+   RENDER: PLAN HEALTH
+   ======================================== */
+function renderPlanHealth() {
+  const n = state.clients.length;
+  const fa = fixedAlloc(Math.max(n, 1)); // Use at least 1 to show meaningful data
+  const faLabel = n === 0 ? `${fmt(totalFixed())} (0 clients)` : fmt(fa);
+
+  let rows = '';
+  const dangerItems = [];
+
+  PLAN_DEFS.forEach(plan => {
+    Object.keys(TERM_LABELS).forEach(term => {
+      const price = plan.prices[term];
+      const prospects = plan.prospects;
+      const varPer = varCostPerProspect(plan.phone, false); // ContactOut, not BYO
+      const totalVar = varPer * prospects;
+      const stripe = stripeFee(price);
+      const gross = price - stripe - totalVar;
+      const net = n > 0 ? gross - fa : gross - totalFixed();
+      const status = clientStatus(net);
+
+      // Break-even: how many clients of THIS plan needed to cover fixed
+      const beN = gross > 0 ? Math.ceil(totalFixed() / gross) : 'N/A';
+
+      rows += `<tr>
+        <td><strong>${plan.name}</strong></td>
+        <td>${TERM_LABELS[term]}</td>
+        <td>${fmt(price)}</td>
+        <td>${fmt(totalVar)}</td>
+        <td>${fmt(stripe)}</td>
+        <td>${n > 0 ? fmt(fa) : fmt(totalFixed())}</td>
+        <td style="color: ${net >= 0 ? 'var(--green)' : 'var(--red)'}; font-weight:600;">${fmt(net)}</td>
+        <td>${beN}</td>
+        <td><span class="status-badge ${statusClass(net)}">${status}</span></td>
+      </tr>`;
+
+      if (net < 0) {
+        const moreNeeded = typeof beN === 'number' ? Math.max(0, beN - n) : '?';
+        dangerItems.push({
+          name: `${plan.name} (${TERM_LABELS[term]}) at ${fmt(price)}`,
+          net,
+          moreNeeded
+        });
+      }
+    });
+  });
+
+  document.getElementById('plan-health-table').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Plan</th><th>Term</th><th>Price</th><th>Var Cost</th><th>Stripe</th>
+        <th>Fixed Alloc</th><th>Net/Mo</th><th>Break-even N</th><th>Status</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+
+  // Danger zone
+  let dangerHtml = '<h3 style="color: var(--text-dark); margin-bottom: 12px;">Danger Zone</h3>';
+  if (dangerItems.length === 0) {
+    dangerHtml += '<div class="all-clear">All plan/term combinations are profitable at the current client count. No action needed.</div>';
+  } else {
+    dangerItems.forEach(d => {
+      dangerHtml += `<div class="danger-item">
+        <strong>${d.name}</strong> is loss-making at ${fmt(d.net)}/mo.
+        ${typeof d.moreNeeded === 'number' ? `Need <strong>${d.moreNeeded}</strong> more client(s) of this plan to break even.` : ''}
+      </div>`;
+    });
+  }
+  document.getElementById('plan-danger-zone').innerHTML = dangerHtml;
+}
+
+/* ========================================
+   RENDER: SIMULATOR
+   ======================================== */
+function runSimulator() {
+  const revenue = parseFloat(document.getElementById('sim-revenue').value) || 0;
+  const emailsPerDay = parseInt(document.getElementById('sim-emails').value) || 0;
+  const phoneSteps = document.getElementById('sim-phone').checked;
+  const byoContacts = document.getElementById('sim-byo').checked;
+
+  const prospects = prospectsPerMonth(emailsPerDay);
+  const varPer = varCostPerProspect(phoneSteps, byoContacts);
+  const totalVar = varPer * prospects;
+  const stripe = stripeFee(revenue);
+  const grossMargin = revenue - stripe - totalVar;
+
+  const currentN = state.clients.length;
+  const newN = currentN + 1;
+  const newFixedAlloc = fixedAlloc(newN);
+  const theirNet = grossMargin - newFixedAlloc;
+  const theirNetYear = theirNet * 12;
+
+  // Company net with vs without
+  const currentTotals = companyTotals();
+  const currentNetMo = currentTotals.netMo;
+  // New company net = sum of all clients gross + this client's gross - fixed
+  let sumGross = 0;
+  state.clients.forEach(c => {
+    const p = prospectsPerMonth(c.emailsPerDay);
+    const v = varCostPerProspect(c.phoneSteps, c.byoContacts) * p;
+    const s = stripeFee(c.revenue);
+    sumGross += (c.revenue - s - v);
+  });
+  const newCompanyNet = sumGross + grossMargin - totalFixed();
+
+  // Result cards
+  document.getElementById('sim-results').innerHTML = `
+    <div class="sim-card">
+      <div class="label">Their Gross/Mo</div>
+      <div class="value" style="color: ${grossMargin >= 0 ? 'var(--green)' : 'var(--red)'}">${fmt(grossMargin)}</div>
+    </div>
+    <div class="sim-card">
+      <div class="label">Their Net/Mo</div>
+      <div class="value" style="color: ${theirNet >= 0 ? 'var(--green)' : 'var(--red)'}">${fmt(theirNet)}</div>
+    </div>
+    <div class="sim-card">
+      <div class="label">Their Net/Year</div>
+      <div class="value" style="color: ${theirNetYear >= 0 ? 'var(--green)' : 'var(--red)'}">${fmt(theirNetYear)}</div>
+    </div>
+    <div class="sim-card">
+      <div class="label">Company Net/Mo After</div>
+      <div class="value" style="color: ${newCompanyNet >= 0 ? 'var(--green)' : 'var(--red)'}">${fmt(newCompanyNet)}</div>
+    </div>`;
+
+  // Framing line
+  document.getElementById('sim-framing').innerHTML =
+    `Without this client: <strong>${fmt(currentNetMo)}/mo</strong> &rarr; With this client: <strong>${fmt(newCompanyNet)}/mo</strong>`;
+
+  // Scale sensitivity table
+  const scaleNs = [1, 2, 3, 5, 7, 10, 15, 20];
+  let scaleRows = '';
+  scaleNs.forEach(sn => {
+    const snFixedAlloc = fixedAlloc(sn);
+    const snNet = grossMargin - snFixedAlloc;
+    scaleRows += `<tr>
+      <td>${sn}</td>
+      <td>${fmt(snFixedAlloc)}</td>
+      <td style="color: ${snNet >= 0 ? 'var(--green)' : 'var(--red)'}; font-weight:600;">${fmt(snNet)}</td>
+    </tr>`;
+  });
+
+  document.getElementById('sim-scale-table').innerHTML = `
+    <table>
+      <thead><tr><th>Total Clients (N)</th><th>Fixed Alloc</th><th>This Client Net/Mo</th></tr></thead>
+      <tbody>${scaleRows}</tbody>
+    </table>`;
+
+  // Simulator chart
+  renderSimulatorChart(revenue, grossMargin);
+}
+
+function renderSimulatorChart(revenue, clientGross) {
+  const canvas = document.getElementById('chart-simulator');
+  if (simulatorChart) simulatorChart.destroy();
+
+  const fixed = totalFixed();
+  const ns = [0, 1, 2, 3, 5, 7, 10, 15, 20];
+  const labels = ns.map(n => n + ' clients');
+
+  // Assume all clients are like the simulated one
+  const revData = ns.map(n => Math.round(revenue * n));
+  const costData = ns.map(n => {
+    const totalVar = (revenue - clientGross) * n; // var + stripe per client
+    return Math.round(totalVar + fixed);
+  });
+  const netData = ns.map(n => Math.round(clientGross * n - fixed));
+
+  simulatorChart = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Revenue',
+          data: revData,
+          backgroundColor: 'rgba(224, 60, 113, 0.2)',
+          borderColor: '#E03C71',
+          borderWidth: 1,
+          borderRadius: 4,
+          order: 2
+        },
+        {
+          label: 'Total Costs',
+          data: costData,
+          backgroundColor: 'rgba(139, 123, 115, 0.2)',
+          borderColor: '#8B7B73',
+          borderWidth: 1,
+          borderRadius: 4,
+          order: 3
+        },
+        {
+          label: 'Net Profit',
+          data: netData,
+          type: 'line',
+          borderColor: '#2E7D32',
+          backgroundColor: 'rgba(46, 125, 50, 0.1)',
+          fill: false,
+          tension: 0.3,
+          pointRadius: 4,
+          order: 1
+        },
+        {
+          label: 'Break-even',
+          data: ns.map(() => 0),
+          type: 'line',
+          borderColor: '#8B7B73',
+          borderDash: [6, 4],
+          pointRadius: 0,
+          fill: false,
+          order: 0
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: ctx => ctx.dataset.label + ': ' + fmt(ctx.raw)
+          }
+        }
+      },
+      scales: {
+        y: {
+          grid: { color: '#F0E0D8' },
+          ticks: { callback: v => fmt(v) }
+        },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+}
+
+/* ========================================
+   RENDER: SETTINGS
+   ======================================== */
+function renderSettings() {
+  // Fixed costs
+  let fixedHtml = '';
+  state.fixedCosts.forEach((c, i) => {
+    fixedHtml += `<div class="cost-row">
+      <input type="text" value="${c.name}" onchange="updateFixedCost(${i}, 'name', this.value)">
+      <input type="number" value="${c.amount}" step="0.01" onchange="updateFixedCost(${i}, 'amount', parseFloat(this.value) || 0)">
+      <button class="remove-cost" onclick="removeFixedCost(${i})">&times;</button>
+    </div>`;
+  });
+  document.getElementById('settings-fixed-costs').innerHTML = fixedHtml;
+  document.getElementById('settings-fixed-total').innerHTML =
+    `<span>Total Fixed</span><span>${fmt(totalFixed())}/mo</span>`;
+
+  // Variable costs
+  const v = state.varCosts;
+  const varItems = [
+    { key: 'claude_opus', label: 'Claude Opus' },
+    { key: 'claude_sonnet', label: 'Claude Sonnet' },
+    { key: 'claude_haiku', label: 'Claude Haiku' },
+    { key: 'grok', label: 'Grok' },
+    { key: 'contactout_email', label: 'ContactOut Email Enrichment' },
+    { key: 'contactout_phone', label: 'ContactOut Phone Enrichment' },
+    { key: 'contactout_search', label: 'ContactOut Search' }
+  ];
+
+  let varHtml = '';
+  varItems.forEach(item => {
+    varHtml += `<div class="cost-row">
+      <input type="text" value="${item.label}" disabled style="opacity:0.7">
+      <input type="number" value="${v[item.key]}" step="0.001" onchange="updateVarCost('${item.key}', parseFloat(this.value) || 0)">
+    </div>`;
+  });
+  document.getElementById('settings-var-costs').innerHTML = varHtml;
+
+  // Derived totals
+  const emailContactOut = v.claude_opus + v.claude_sonnet + v.claude_haiku + v.grok + v.contactout_email + v.contactout_search;
+  const emailByo = v.claude_opus + v.claude_sonnet + v.claude_haiku + v.grok;
+  const emailPhoneContactOut = emailContactOut + v.contactout_phone;
+  const emailPhoneByo = emailByo;
+
+  document.getElementById('settings-derived').innerHTML = `
+    <div class="derived-item">
+      <div class="label">Email + ContactOut</div>
+      <div class="value">${fmtCents(emailContactOut)} / prospect</div>
+    </div>
+    <div class="derived-item">
+      <div class="label">Email (BYO contacts)</div>
+      <div class="value">${fmtCents(emailByo)} / prospect</div>
+    </div>
+    <div class="derived-item">
+      <div class="label">E+Phone + ContactOut</div>
+      <div class="value">${fmtCents(emailPhoneContactOut)} / prospect</div>
+    </div>
+    <div class="derived-item">
+      <div class="label">E+Phone (BYO contacts)</div>
+      <div class="value">${fmtCents(emailPhoneByo)} / prospect</div>
+    </div>`;
+}
+
+function updateFixedCost(index, field, value) {
+  state.fixedCosts[index][field] = value;
+  saveState();
+  renderAll();
+}
+
+function removeFixedCost(index) {
+  state.fixedCosts.splice(index, 1);
+  saveState();
+  renderAll();
+}
+
+function addFixedCostRow() {
+  state.fixedCosts.push({ name: 'New Cost', amount: 0 });
+  saveState();
+  renderSettings();
+}
+
+function updateVarCost(key, value) {
+  state.varCosts[key] = value;
+  saveState();
+  renderAll();
+}
+
+/* ========================================
+   DATA EXPORT / IMPORT / CLEAR
+   ======================================== */
+function exportData() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'ms-finance-data.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (imported.fixedCosts && imported.varCosts) {
+        state = imported;
+        if (!state.clients) state.clients = [];
+        saveState();
+        dismissedAlerts.clear();
+        renderAll();
+        alert('Data imported successfully.');
+      } else {
+        alert('Invalid file format. Expected fixedCosts and varCosts.');
+      }
+    } catch (err) {
+      alert('Failed to parse JSON file.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function confirmClearAll() {
+  showConfirmModal(
+    'Clear All Data',
+    'This will remove all clients and reset costs to defaults. This action cannot be undone.',
+    () => {
+      localStorage.removeItem(STORAGE_KEY);
+      state = {
+        fixedCosts: JSON.parse(JSON.stringify(DEFAULT_FIXED_COSTS)),
+        varCosts: { ...DEFAULT_VAR_COSTS },
+        clients: []
+      };
+      saveState();
+      dismissedAlerts.clear();
+      renderAll();
+    }
+  );
+}
+
+/* ========================================
+   CONFIRM MODAL
+   ======================================== */
+function showConfirmModal(title, message, onConfirm) {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal-box">
+      <h3>${title}</h3>
+      <p>${message}</p>
+      <button class="btn btn-secondary" id="modal-cancel">Cancel</button>
+      <button class="btn btn-danger" id="modal-confirm">Confirm</button>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  overlay.querySelector('#modal-cancel').onclick = () => overlay.remove();
+  overlay.querySelector('#modal-confirm').onclick = () => { overlay.remove(); onConfirm(); };
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+}
+
+/* ========================================
+   MASTER RENDER
+   ======================================== */
+function renderAll() {
+  renderOverview();
+  renderClients();
+  renderPlanHealth();
+  renderSettings();
+  runSimulator();
+}
+
+/* ========================================
+   INIT
+   ======================================== */
+checkAuth();
+</script>
+</body>
+</html>
