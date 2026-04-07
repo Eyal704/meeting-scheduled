@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teams of 3–7 — Pricing — MeetingScheduled</title>
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#fdf9fa;color:#1c1c1e;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+.bg-glow{pointer-events:none;position:fixed;inset:0;background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(201,83,110,0.04) 0%,transparent 60%);}
+
+/* Gate */
+.gate{min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.gate-form{width:100%;max-width:280px;display:flex;flex-direction:column;gap:12px;}
+.gate-input{width:100%;height:44px;border-radius:10px;border:1px solid #e4e4e0;background:#fff;padding:0 16px;font-size:14px;color:#1c1c1e;outline:none;transition:all 0.2s;}
+.gate-input::placeholder{color:#a0a0a8;}
+.gate-input:focus{box-shadow:0 0 0 2px rgba(201,83,110,0.2);border-color:rgba(201,83,110,0.4);}
+.gate-input.error{border-color:#fca5a5;}
+.gate-error{font-size:12px;color:#ef4444;margin-top:-4px;}
+.gate-btn{height:44px;border-radius:10px;background:#c9536e;color:#fff;font-size:14px;font-weight:500;border:none;cursor:pointer;transition:background 0.2s;}
+.gate-btn:hover{background:#b84a62;}
+
+/* Layout */
+.wrap{position:relative;max-width:72rem;margin:0 auto;padding:56px 16px 80px;}
+@media(min-width:640px){.wrap{padding-top:80px;}}
+.text-center{text-align:center;}
+.mb-5{margin-bottom:20px;}
+.mb-6{margin-bottom:24px;}
+.mb-10{margin-bottom:40px;}
+.mb-12{margin-bottom:48px;}
+.mb-14{margin-bottom:56px;}
+.mb-16{margin-bottom:64px;}
+.my-12{margin-top:48px;margin-bottom:48px;}
+
+/* Back link */
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#a0a0a8;text-decoration:none;margin-bottom:40px;transition:color 0.2s;}
+.back-link:hover{color:#6c6c72;}
+
+/* Hero */
+.hero-subtitle{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6c6c72;margin-bottom:12px;}
+.hero-title{font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:44px;line-height:1.08;letter-spacing:-0.025em;color:#1c1c1e;margin-bottom:20px;}
+@media(min-width:640px){.hero-title{font-size:60px;}}
+.hero-sub{max-width:36rem;margin:0 auto;font-size:18px;line-height:1.625;color:#6c6c72;}
+
+/* Toggles */
+.toggle-wrap{display:flex;justify-content:center;}
+.toggle-bar{display:inline-flex;gap:6px;border-radius:12px;background:#fff;padding:6px;box-shadow:0 2px 6px rgba(0,0,0,0.05);border:1px solid #e4e4e0;}
+.toggle-btn{height:44px;border-radius:9px;padding:0 28px;font-size:15px;font-weight:500;border:none;cursor:pointer;transition:all 0.2s;background:transparent;color:#6c6c72;}
+.toggle-btn:hover{color:#1c1c1e;}
+.toggle-btn.active{background:#1c1c1e;color:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.1);}
+.mobile-toggle{display:flex;justify-content:center;}
+@media(min-width:640px){.mobile-toggle{display:none;}}
+.mobile-bar{display:inline-flex;gap:4px;border-radius:11px;background:#fff;padding:6px;box-shadow:0 2px 6px rgba(0,0,0,0.05);border:1px solid #e4e4e0;}
+.mobile-btn{height:36px;border-radius:8px;padding:0 16px;font-size:14px;font-weight:500;border:none;cursor:pointer;transition:all 0.2s;background:transparent;color:#6c6c72;}
+.mobile-btn:hover{color:#1c1c1e;}
+.mobile-btn.active{background:#1c1c1e;color:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.1);}
+
+/* Column headers */
+.col-headers{display:none;grid-template-columns:1fr 1fr 1.2fr;gap:20px;padding:0 8px;margin-bottom:16px;}
+@media(min-width:640px){.col-headers{display:grid;}}
+.col-h{text-align:center;font-size:14px;font-weight:500;color:#6c6c72;}
+.col-h.best{font-weight:600;color:#c9536e;}
+
+/* Card grid */
+.plan-row{margin-bottom:20px;}
+.plan-row.last{margin-bottom:64px;}
+.desktop-grid{display:none;grid-template-columns:1fr 1fr 1.2fr;gap:20px;}
+@media(min-width:640px){.desktop-grid{display:grid;}}
+.mobile-card{display:block;}
+@media(min-width:640px){.mobile-card{display:none;}}
+
+/* Card */
+.card{position:relative;display:flex;flex-direction:column;border-radius:16px;background:#fff;height:100%;}
+.card.standard{padding:24px 28px;box-shadow:0 6px 16px rgba(0,0,0,0.05),0 2px 4px rgba(0,0,0,0.04);border:1px solid #e4e4e0;}
+.card.annual{padding:28px 32px;box-shadow:0 12px 40px rgba(201,83,110,0.12),0 3px 10px rgba(0,0,0,0.05);border:2px solid rgba(201,83,110,0.3);}
+
+/* Card header */
+.card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:24px;}
+.card-name{font-weight:600;color:#1c1c1e;}
+.card.annual .card-name{font-size:18px;}
+.card.standard .card-name{font-size:16px;}
+.badge-popular{font-size:11px;font-weight:500;background:#fdf2f4;color:#c9536e;padding:2px 10px;border-radius:999px;line-height:1.4;}
+.badges{display:flex;flex-direction:row;align-items:center;gap:6px;flex-shrink:0;}
+.badge-save{font-weight:600;border-radius:999px;line-height:1.4;}
+.badge-save.annual{font-size:13px;padding:4px 14px;background:#e03c72;color:#fff;}
+.badge-save.six{font-size:11px;padding:4px 12px;background:#fdf2f4;color:#c9536e;}
+.badge-alt{font-size:11px;font-weight:500;padding:2px 12px;background:#fdf2f4;color:#c9536e;border-radius:999px;line-height:1.4;}
+
+/* Price hero */
+.price-hero{margin-bottom:24px;}
+.price-big{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
+.price-amount{font-weight:700;color:#1c1c1e;letter-spacing:-0.025em;line-height:1;}
+.price-amount.sz-annual{font-size:44px;}
+.price-amount.sz-six{font-size:38px;}
+.price-amount.sz-monthly{font-size:33px;}
+.price-suffix{font-size:14px;color:#6c6c72;line-height:1.4;}
+.price-sub{margin-top:6px;font-size:14px;color:#a0a0a8;}
+
+/* Plan details */
+.details{flex:1;display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+.detail-row{display:flex;align-items:center;justify-content:space-between;}
+.detail-label{font-size:14px;color:#6c6c72;}
+.detail-value{font-size:14px;font-weight:600;color:#1c1c1e;}
+.detail-divider{width:100%;height:1px;background:#f0eeec;}
+
+/* CTA */
+.cta{display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;transition:background 0.2s;}
+.cta.annual{height:48px;background:#c9536e;color:#fff;letter-spacing:0.025em;}
+.cta.annual:hover{background:#b84a62;}
+.cta.standard{height:44px;background:#f5f3f2;color:#1c1c1e;}
+.cta.standard:hover{background:#edebe8;}
+
+/* Features */
+.features-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6c6c72;margin-bottom:24px;}
+.features-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:640px){.features-grid{grid-template-columns:1fr 1fr;}}
+.feature{display:flex;align-items:flex-start;gap:14px;}
+.feature-check{margin-top:2px;width:20px;height:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fdf2f4;}
+.feature-text{font-size:15px;line-height:1.4;color:#1c1c1e;}
+
+/* Price toggle */
+.price-toggle{display:flex;justify-content:center;}
+.price-toggle button{font-size:13px;color:#a0a0a8;background:none;border:none;cursor:pointer;transition:color 0.2s;}
+.price-toggle button:hover{color:#6c6c72;}
+
+.hidden{display:none!important;}
+</style>
+</head>
+<body>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<!-- Gate -->
+<div id="gate" class="gate">
+  <form class="gate-form" id="gate-form">
+    <input type="password" class="gate-input" id="gate-input" placeholder="Access code" autofocus>
+    <p class="gate-error hidden" id="gate-error">Incorrect code.</p>
+    <button type="submit" class="gate-btn">Continue</button>
+  </form>
+</div>
+
+<!-- Content -->
+<div id="content" class="hidden">
+<div class="wrap">
+
+  <!-- Back link -->
+  <a href="/pricing/" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    All plans
+  </a>
+
+  <!-- Hero -->
+  <div class="text-center mb-12">
+    <p class="hero-subtitle">Teams of 3&ndash;7</p>
+    <h1 class="hero-title">Shared outbound for growing teams.</h1>
+    <p class="hero-sub">One shared workspace. Prospect discovery, enrichment, and sending for teams scaling from 3 to 7.</p>
+  </div>
+
+  <!-- Plan type toggle -->
+  <div class="toggle-wrap mb-10">
+    <div class="toggle-bar">
+      <button class="toggle-btn active" data-plan="emailOnly">Email Only</button>
+      <button class="toggle-btn" data-plan="emailPhone">Email + Phone</button>
+    </div>
+  </div>
+
+  <!-- Mobile tier toggle -->
+  <div class="mobile-toggle mb-6">
+    <div class="mobile-bar">
+      <button class="mobile-btn" data-tier="monthly">Monthly</button>
+      <button class="mobile-btn" data-tier="sixMonth">6 Months</button>
+      <button class="mobile-btn active" data-tier="annual">12 Months</button>
+    </div>
+  </div>
+
+  <!-- Column headers -->
+  <div class="col-headers">
+    <p class="col-h">Monthly</p>
+    <p class="col-h">6 Months</p>
+    <p class="col-h best">12 Months &mdash; Best Value</p>
+  </div>
+
+  <!-- Plan rows rendered by JS -->
+  <div id="plan-rows"></div>
+
+  <!-- What's included -->
+  <div class="mb-14">
+    <h2 class="features-title">What&rsquo;s included</h2>
+    <div class="features-grid" id="features"></div>
+  </div>
+
+  <!-- Price display toggle -->
+  <div class="price-toggle mb-10">
+    <button id="price-toggle-btn">Show total prices</button>
+  </div>
+
+</div>
+</div>
+
+<script>
+// ─── Data ───
+var PRICING = {
+  emailOnly: {
+    core: {
+      monthly:  { total:'$2,999',  suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.40' },
+      sixMonth: { total:'$16,194', suffix:'/ 6 months', mo:'$2,699/mo', savings:'Save 10%',      savingsAlt:null,         overage:'$1.25' },
+      annual:   { total:'$29,990', suffix:'/ year',     mo:'$2,499/mo', savings:'2 months free', savingsAlt:'Save 16.7%', overage:'$1.15' },
+      prospects:2500, inboxes:12, users:'Up to 5'
+    },
+    scale: {
+      monthly:  { total:'$3,999',  suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.30' },
+      sixMonth: { total:'$21,594', suffix:'/ 6 months', mo:'$3,599/mo', savings:'Save 10%',      savingsAlt:null,         overage:'$1.20' },
+      annual:   { total:'$39,990', suffix:'/ year',     mo:'$3,333/mo', savings:'2 months free', savingsAlt:'Save 16.7%', overage:'$1.10' },
+      prospects:3500, inboxes:15, users:'Up to 7'
+    }
+  },
+  emailPhone: {
+    core: {
+      monthly:  { total:'$3,999',  suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.85' },
+      sixMonth: { total:'$21,594', suffix:'/ 6 months', mo:'$3,599/mo', savings:'Save 10%',      savingsAlt:null,         overage:'$1.65' },
+      annual:   { total:'$39,990', suffix:'/ year',     mo:'$3,333/mo', savings:'2 months free', savingsAlt:'Save 16.7%', overage:'$1.55' },
+      prospects:2500, inboxes:12, users:'Up to 5'
+    },
+    scale: {
+      monthly:  { total:'$5,399',  suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.75' },
+      sixMonth: { total:'$29,154', suffix:'/ 6 months', mo:'$4,859/mo', savings:'Save 10%',      savingsAlt:null,         overage:'$1.60' },
+      annual:   { total:'$53,990', suffix:'/ year',     mo:'$4,499/mo', savings:'2 months free', savingsAlt:'Save 16.7%', overage:'$1.50' },
+      prospects:3500, inboxes:15, users:'Up to 7'
+    }
+  }
+};
+
+var PLANS = [
+  { key:'core',  label:'Core',  popularTiers:[] },
+  { key:'scale', label:'Scale', popularTiers:['sixMonth'] }
+];
+
+var FEATURES = [
+  'Live prospect discovery via real-time signals',
+  'Unique outreach angles per prospect \u2014 no generic templates',
+  'Verified contact enrichment with work emails and direct phone numbers',
+  'Automated follow-ups across email, plus tailored LinkedIn and WhatsApp message preparation',
+  'Personalized emails sent from your own Gmail account',
+  'Quick setup. No complex sequence builder or technical knowledge required.'
+];
+
+var CHECK_SVG = '<svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1.5 3.5L3.5 5.5L7.5 1.5" stroke="#c9536e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+// ─── State ───
+var state = { planType:'emailOnly', mobileTier:'annual', showMonthly:true };
+
+// ─── Gate ───
+(function(){
+  if(sessionStorage.getItem('pricing_unlocked')==='1'){
+    document.getElementById('gate').classList.add('hidden');
+    document.getElementById('content').classList.remove('hidden');
+    render();
+  }
+  document.getElementById('gate-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=document.getElementById('gate-input').value;
+    if(v==='pricing'){
+      sessionStorage.setItem('pricing_unlocked','1');
+      document.getElementById('gate').classList.add('hidden');
+      document.getElementById('content').classList.remove('hidden');
+      render();
+    } else {
+      document.getElementById('gate-input').classList.add('error');
+      document.getElementById('gate-error').classList.remove('hidden');
+      document.getElementById('gate-input').value='';
+    }
+  });
+  document.getElementById('gate-input').addEventListener('input',function(){
+    this.classList.remove('error');
+    document.getElementById('gate-error').classList.add('hidden');
+  });
+})();
+
+// ─── Toggles ───
+document.querySelectorAll('[data-plan]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    state.planType=this.dataset.plan;
+    document.querySelectorAll('[data-plan]').forEach(function(b){b.classList.remove('active');});
+    this.classList.add('active');
+    render();
+  });
+});
+document.querySelectorAll('[data-tier]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    state.mobileTier=this.dataset.tier;
+    document.querySelectorAll('[data-tier]').forEach(function(b){b.classList.remove('active');});
+    this.classList.add('active');
+    render();
+  });
+});
+document.getElementById('price-toggle-btn').addEventListener('click',function(){
+  state.showMonthly=!state.showMonthly;
+  this.textContent=state.showMonthly?'Show total prices':'Show monthly prices';
+  render();
+});
+
+// ─── Render ───
+function buildCard(planLabel, tierKey, planData, isPopular) {
+  var price = planData[tierKey];
+  var isAnnual = tierKey==='annual';
+  var isSixMonth = tierKey==='sixMonth';
+  var cls = isAnnual?'card annual':'card standard';
+  var szCls = isAnnual?'sz-annual':isSixMonth?'sz-six':'sz-monthly';
+  var ctaCls = isAnnual?'cta annual':'cta standard';
+
+  var headerLeft = '<span class="card-name">'+planLabel+'</span>';
+  if(isPopular) headerLeft += '<span class="badge-popular">Most popular</span>';
+
+  var badgesHtml = '';
+  if(price.savings){
+    badgesHtml = '<div class="badges">';
+    if(price.savingsAlt) badgesHtml += '<span class="badge-alt">'+price.savingsAlt+'</span>';
+    var bCls = isAnnual?'badge-save annual':'badge-save six';
+    badgesHtml += '<span class="'+bCls+'">'+price.savings+'</span></div>';
+  }
+
+  var priceHtml = '';
+  if(state.showMonthly && price.mo) {
+    priceHtml = '<div class="price-big"><span class="price-amount '+szCls+'">'+price.mo+'</span></div>';
+    priceHtml += '<p class="price-sub">'+price.total+' '+price.suffix+'</p>';
+  } else {
+    priceHtml = '<div class="price-big"><span class="price-amount '+szCls+'">'+price.total+'</span><span class="price-suffix">'+price.suffix+'</span></div>';
+    if(price.mo) priceHtml += '<p class="price-sub">'+price.mo+'</p>';
+  }
+
+  var detailsHtml = '<div class="details">';
+  detailsHtml += '<div class="detail-row"><span class="detail-label">Prospects / mo</span><span class="detail-value">'+planData.prospects.toLocaleString()+'</span></div>';
+  detailsHtml += '<div class="detail-divider"></div>';
+  detailsHtml += '<div class="detail-row"><span class="detail-label">Sending inboxes</span><span class="detail-value">'+planData.inboxes+'</span></div>';
+  detailsHtml += '<div class="detail-divider"></div>';
+  detailsHtml += '<div class="detail-row"><span class="detail-label">Users included</span><span class="detail-value">'+planData.users+'</span></div>';
+  detailsHtml += '<div class="detail-divider"></div>';
+  detailsHtml += '<div class="detail-row"><span class="detail-label">Extra prospect</span><span class="detail-value">'+price.overage+' each</span></div>';
+  detailsHtml += '</div>';
+
+  return '<div class="'+cls+'"><div class="card-header"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+headerLeft+'</div>'+badgesHtml+'</div><div class="price-hero">'+priceHtml+'</div>'+detailsHtml+'<a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener noreferrer" class="'+ctaCls+'">Get started</a></div>';
+}
+
+function render() {
+  var d = PRICING[state.planType];
+  var html = '';
+  for(var i=0;i<PLANS.length;i++){
+    var plan = PLANS[i];
+    var planData = d[plan.key];
+    var isLast = i===PLANS.length-1;
+
+    // Desktop
+    html += '<div class="plan-row'+(isLast?' last':'')+'">';
+    html += '<div class="desktop-grid">';
+    html += buildCard(plan.label,'monthly',planData,plan.popularTiers.indexOf('monthly')>=0);
+    html += buildCard(plan.label,'sixMonth',planData,plan.popularTiers.indexOf('sixMonth')>=0);
+    html += buildCard(plan.label,'annual',planData,plan.popularTiers.indexOf('annual')>=0);
+    html += '</div>';
+
+    // Mobile
+    html += '<div class="mobile-card">';
+    html += buildCard(plan.label,state.mobileTier,planData,plan.popularTiers.indexOf(state.mobileTier)>=0);
+    html += '</div>';
+
+    html += '</div>';
+  }
+  document.getElementById('plan-rows').innerHTML = html;
+}
+
+// Features
+(function(){
+  var h='';
+  for(var i=0;i<FEATURES.length;i++){
+    h+='<div class="feature"><div class="feature-check">'+CHECK_SVG+'</div><span class="feature-text">'+FEATURES[i]+'</span></div>';
+  }
+  document.getElementById('features').innerHTML=h;
+})();
+
+render();
+</script>
+</body>
+</html>
