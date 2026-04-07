@@ -781,6 +781,14 @@ td .inline-input:focus {
             <input type="number" id="client-emails" placeholder="e.g. 20">
           </div>
           <div class="form-group">
+            <label>Included Prospects/mo</label>
+            <input type="number" id="client-included" placeholder="e.g. 200 (0 = no cap)">
+          </div>
+          <div class="form-group">
+            <label>Overage Rate ($/prospect)</label>
+            <input type="number" id="client-overage-rate" step="0.01" placeholder="e.g. 1.40">
+          </div>
+          <div class="form-group">
             <label>Start Date</label>
             <input type="text" id="client-start" placeholder="e.g. Apr 2026">
           </div>
@@ -968,10 +976,10 @@ const SEED_CLIENTS = [
    PLAN DEFINITIONS
    ======================================== */
 const PLAN_DEFS = [
-  { name: 'Starter Email', prospects: 200, phone: false, prices: { monthly: 299, six: 269, annual: 249 } },
-  { name: 'Growth Email', prospects: 600, phone: false, prices: { monthly: 699, six: 629, annual: 583 } },
-  { name: 'Starter E+P', prospects: 200, phone: true, prices: { monthly: 399, six: 359, annual: 333 } },
-  { name: 'Growth E+P', prospects: 600, phone: true, prices: { monthly: 899, six: 809, annual: 749 } }
+  { name: 'Starter Email', prospects: 200, phone: false, overageRate: 1.40, prices: { monthly: 299, six: 269, annual: 249 } },
+  { name: 'Growth Email', prospects: 600, phone: false, overageRate: 1.25, prices: { monthly: 699, six: 629, annual: 583 } },
+  { name: 'Starter E+P', prospects: 200, phone: true, overageRate: 1.80, prices: { monthly: 399, six: 359, annual: 333 } },
+  { name: 'Growth E+P', prospects: 600, phone: true, overageRate: 1.60, prices: { monthly: 899, six: 809, annual: 749 } }
 ];
 
 const TERM_LABELS = { monthly: 'Monthly', six: '6-Month', annual: '12-Month' };
@@ -1048,14 +1056,23 @@ function clientCalc(client, clientCount) {
   const prospects = prospectsPerMonth(client.emailsPerDay);
   const varPerProspect = varCostPerProspect(client.phoneSteps, client.byoContacts);
   const totalVar = varPerProspect * prospects;
-  const stripe = stripeFee(client.revenue);
-  const grossMargin = client.revenue - stripe - totalVar;
+  // Overage: extra prospects beyond included plan amount
+  const included = client.includedProspects || 0;
+  const overageRate = client.overageRate || 0;
+  const overageProspects = (included > 0 && prospects > included) ? prospects - included : 0;
+  const overageRevenue = overageProspects * overageRate;
+  const effectiveRevenue = client.revenue + overageRevenue;
+  const stripe = stripeFee(effectiveRevenue);
+  const grossMargin = effectiveRevenue - stripe - totalVar;
   const fixedAllocAmt = fixedAlloc(clientCount);
   const netMargin = grossMargin - fixedAllocAmt;
   return {
     prospects,
     varPerProspect,
     totalVar,
+    overageProspects,
+    overageRevenue,
+    effectiveRevenue,
     stripe,
     grossMargin,
     fixedAlloc: fixedAllocAmt,
@@ -1070,19 +1087,23 @@ function companyTotals() {
   if (n === 0) {
     return { mrr: 0, arr: 0, netMo: -fixed, netYear: -fixed * 12, clients: 0, fixed };
   }
-  let totalRevenue = 0;
+  let totalBaseRevenue = 0;
+  let totalOverageRevenue = 0;
   let totalVarCost = 0;
   let totalStripe = 0;
   state.clients.forEach(c => {
     const calc = clientCalc(c, n);
-    totalRevenue += c.revenue;
+    totalBaseRevenue += c.revenue;
+    totalOverageRevenue += calc.overageRevenue;
     totalVarCost += calc.totalVar;
     totalStripe += calc.stripe;
   });
+  const totalRevenue = totalBaseRevenue + totalOverageRevenue;
   const netMo = totalRevenue - totalStripe - totalVarCost - fixed;
   return {
     mrr: totalRevenue,
     arr: totalRevenue * 12,
+    overageRevenue: totalOverageRevenue,
     netMo,
     netYear: netMo * 12,
     clients: n,
@@ -1094,13 +1115,10 @@ function breakEvenClients() {
   // Find how many clients of average profile are needed to break even
   const fixed = totalFixed();
   if (state.clients.length === 0) return '?';
-  // Average net contribution per client (gross margin minus stripe)
   let totalGrossContrib = 0;
   state.clients.forEach(c => {
-    const prospects = prospectsPerMonth(c.emailsPerDay);
-    const totalVar = varCostPerProspect(c.phoneSteps, c.byoContacts) * prospects;
-    const stripe = stripeFee(c.revenue);
-    totalGrossContrib += (c.revenue - stripe - totalVar);
+    const calc = clientCalc(c, state.clients.length);
+    totalGrossContrib += calc.grossMargin;
   });
   const avgGross = totalGrossContrib / state.clients.length;
   if (avgGross <= 0) return 'N/A';
@@ -1114,10 +1132,8 @@ function fixedCoverage() {
   if (n === 0) return 0;
   let totalGrossContrib = 0;
   state.clients.forEach(c => {
-    const prospects = prospectsPerMonth(c.emailsPerDay);
-    const totalVar = varCostPerProspect(c.phoneSteps, c.byoContacts) * prospects;
-    const stripe = stripeFee(c.revenue);
-    totalGrossContrib += (c.revenue - stripe - totalVar);
+    const calc = clientCalc(c, n);
+    totalGrossContrib += calc.grossMargin;
   });
   return Math.round((totalGrossContrib / fixed) * 100);
 }
@@ -1267,29 +1283,33 @@ function renderPnLTable() {
   const fixed = totalFixed();
 
   let rows = '';
-  let totalRev = 0, totalVar = 0, totalStripeSum = 0, totalNet = 0;
+  let totalRev = 0, totalOverage = 0, totalVar = 0, totalStripeSum = 0, totalNet = 0;
 
   if (n === 0) {
     rows = `<tr><td colspan="6" style="text-align:center; color: var(--text-light); padding: 20px;">No clients yet. Company burns ${fmt(fixed)}/mo in fixed costs.</td></tr>`;
   } else {
     state.clients.forEach(c => {
       const calc = clientCalc(c, n);
-      totalRev += c.revenue;
+      totalRev += calc.effectiveRevenue;
+      totalOverage += calc.overageRevenue;
       totalVar += calc.totalVar;
       totalStripeSum += calc.stripe;
       totalNet += calc.netMargin;
+      const revLabel = calc.overageRevenue > 0
+        ? `${fmt(c.revenue)} <span style="color:var(--green);font-size:12px;">+${fmt(calc.overageRevenue)}</span>`
+        : fmt(c.revenue);
       rows += `<tr>
         <td>${c.name}</td>
-        <td>${fmt(c.revenue)}</td>
+        <td>${revLabel}</td>
         <td>${fmt(calc.totalVar)}</td>
         <td>${fmt(calc.stripe)}</td>
         <td>${fmt(calc.fixedAlloc)}</td>
-        <td><strong class="${calc.netMargin >= 0 ? 'positive' : 'negative'}" style="color: ${calc.netMargin >= 0 ? 'var(--green)' : 'var(--red)'}">${fmt(calc.netMargin)}</strong></td>
+        <td><strong style="color: ${calc.netMargin >= 0 ? 'var(--green)' : 'var(--red)'}">${fmt(calc.netMargin)}</strong></td>
       </tr>`;
     });
     rows += `<tr style="font-weight:600; border-top: 2px solid var(--border);">
       <td>TOTAL</td>
-      <td>${fmt(totalRev)}</td>
+      <td>${fmt(totalRev)}${totalOverage > 0 ? ` <span style="color:var(--green);font-size:12px;">(${fmt(totalOverage)} overage)</span>` : ''}</td>
       <td>${fmt(totalVar)}</td>
       <td>${fmt(totalStripeSum)}</td>
       <td>${fmt(fixed)}</td>
@@ -1367,10 +1387,8 @@ function renderProjectionChart() {
   if (state.clients.length > 0) {
     let sum = 0;
     state.clients.forEach(c => {
-      const prospects = prospectsPerMonth(c.emailsPerDay);
-      const totalVar = varCostPerProspect(c.phoneSteps, c.byoContacts) * prospects;
-      const stripe = stripeFee(c.revenue);
-      sum += (c.revenue - stripe - totalVar);
+      const calc = clientCalc(c, state.clients.length);
+      sum += calc.grossMargin;
     });
     avgGross = sum / state.clients.length;
   } else {
@@ -1480,19 +1498,21 @@ function renderClients() {
       rows += `<tr>
         <td><input class="inline-input" style="width:120px" id="edit-name" value="${c.name}"></td>
         <td>${c.startDate}</td>
-        <td><input class="inline-input" type="number" step="0.01" id="edit-revenue" value="${c.revenue}"></td>
-        <td><input class="inline-input" type="number" id="edit-emails" value="${c.emailsPerDay}"></td>
-        <td>
-          <label class="toggle" style="display:inline-flex">
-            <input type="checkbox" id="edit-phone" ${c.phoneSteps ? 'checked' : ''}>
-            <span class="toggle-slider"></span>
-          </label>
+        <td><input class="inline-input" type="number" step="0.01" style="width:80px" id="edit-revenue" value="${c.revenue}">
+            <input class="inline-input" type="number" style="width:60px;margin-top:4px" id="edit-included" value="${c.includedProspects || 0}" placeholder="Incl." title="Included prospects">
+            <input class="inline-input" type="number" step="0.01" style="width:60px;margin-top:2px" id="edit-overage-rate" value="${c.overageRate || 0}" placeholder="$/extra" title="Overage rate">
         </td>
-        <td>
-          <label class="toggle" style="display:inline-flex">
-            <input type="checkbox" id="edit-byo" ${c.byoContacts ? 'checked' : ''}>
-            <span class="toggle-slider"></span>
-          </label>
+        <td><input class="inline-input" type="number" style="width:60px" id="edit-emails" value="${c.emailsPerDay}">
+            <div style="margin-top:4px;font-size:11px;">
+              <label class="toggle" style="display:inline-flex;vertical-align:middle">
+                <input type="checkbox" id="edit-phone" ${c.phoneSteps ? 'checked' : ''}>
+                <span class="toggle-slider"></span>
+              </label> <span style="color:var(--text-light)">Phone</span>
+              <label class="toggle" style="display:inline-flex;vertical-align:middle;margin-left:6px">
+                <input type="checkbox" id="edit-byo" ${c.byoContacts ? 'checked' : ''}>
+                <span class="toggle-slider"></span>
+              </label> <span style="color:var(--text-light)">BYO</span>
+            </div>
         </td>
         <td>${fmt(calc.totalVar)}</td>
         <td>${fmt(calc.stripe)}</td>
@@ -1507,13 +1527,13 @@ function renderClients() {
         </td>
       </tr>`;
     } else {
+      const overageTag = calc.overageRevenue > 0
+        ? `<span style="display:block;font-size:11px;color:var(--green);">+${fmt(calc.overageRevenue)} overage</span>` : '';
       rows += `<tr>
         <td><strong>${c.name}</strong></td>
         <td>${c.startDate}</td>
-        <td>${fmt(c.revenue)}</td>
-        <td>${calc.prospects}</td>
-        <td>${c.phoneSteps ? 'Yes' : 'No'}</td>
-        <td>${c.byoContacts ? 'Yes' : 'No'}</td>
+        <td>${fmt(c.revenue)}${overageTag}</td>
+        <td>${calc.prospects}${(c.includedProspects && calc.overageProspects > 0) ? `<span style="display:block;font-size:11px;color:var(--text-light);">${c.includedProspects} incl.</span>` : ''}</td>
         <td>${fmt(calc.totalVar)}</td>
         <td>${fmt(calc.stripe)}</td>
         <td style="color: ${calc.netMargin >= 0 ? 'var(--green)' : 'var(--red)'}; font-weight:600;">${fmt(calc.netMargin)}</td>
@@ -1533,7 +1553,7 @@ function renderClients() {
     <table>
       <thead><tr>
         <th>Name</th><th>Start</th><th>Revenue/mo</th><th>Prospects/mo</th>
-        <th>Phone</th><th>BYO</th><th>Var Cost</th><th>Stripe</th>
+        <th>Var Cost</th><th>Stripe</th>
         <th>Net/Mo</th><th>Net/Year</th><th>Status</th><th></th>
       </tr></thead>
       <tbody>${rows}</tbody>
@@ -1544,6 +1564,8 @@ function addClient() {
   const name = document.getElementById('client-name').value.trim();
   const revenue = parseFloat(document.getElementById('client-revenue').value);
   const emailsPerDay = parseInt(document.getElementById('client-emails').value);
+  const includedProspects = parseInt(document.getElementById('client-included').value) || 0;
+  const overageRate = parseFloat(document.getElementById('client-overage-rate').value) || 0;
   const startDate = document.getElementById('client-start').value.trim();
   const phoneSteps = document.getElementById('client-phone').checked;
   const byoContacts = document.getElementById('client-byo').checked;
@@ -1559,6 +1581,8 @@ function addClient() {
     name,
     revenue,
     emailsPerDay,
+    includedProspects,
+    overageRate,
     phoneSteps,
     byoContacts,
     startDate: startDate || 'N/A',
@@ -1570,6 +1594,8 @@ function addClient() {
   document.getElementById('client-name').value = '';
   document.getElementById('client-revenue').value = '';
   document.getElementById('client-emails').value = '';
+  document.getElementById('client-included').value = '';
+  document.getElementById('client-overage-rate').value = '';
   document.getElementById('client-start').value = '';
   document.getElementById('client-phone').checked = false;
   document.getElementById('client-byo').checked = false;
@@ -1596,12 +1622,16 @@ function saveClient(id) {
   const name = document.getElementById('edit-name').value.trim();
   const revenue = parseFloat(document.getElementById('edit-revenue').value);
   const emailsPerDay = parseInt(document.getElementById('edit-emails').value);
+  const includedProspects = parseInt(document.getElementById('edit-included').value) || 0;
+  const overageRate = parseFloat(document.getElementById('edit-overage-rate').value) || 0;
   const phoneSteps = document.getElementById('edit-phone').checked;
   const byoContacts = document.getElementById('edit-byo').checked;
 
   if (name) client.name = name;
   if (!isNaN(revenue)) client.revenue = revenue;
   if (!isNaN(emailsPerDay)) client.emailsPerDay = emailsPerDay;
+  client.includedProspects = includedProspects;
+  client.overageRate = overageRate;
   client.phoneSteps = phoneSteps;
   client.byoContacts = byoContacts;
 
@@ -1660,6 +1690,7 @@ function renderPlanHealth() {
         <td>${n > 0 ? fmt(fa) : fmt(totalFixed())}</td>
         <td style="color: ${net >= 0 ? 'var(--green)' : 'var(--red)'}; font-weight:600;">${fmt(net)}</td>
         <td>${beN}</td>
+        <td>$${plan.overageRate.toFixed(2)}<span style="font-size:11px;color:var(--text-light)">/extra</span></td>
         <td><span class="status-badge ${statusClass(net)}">${status}</span></td>
       </tr>`;
 
@@ -1678,7 +1709,7 @@ function renderPlanHealth() {
     <table>
       <thead><tr>
         <th>Plan</th><th>Term</th><th>Price</th><th>Var Cost</th><th>Stripe</th>
-        <th>Fixed Alloc</th><th>Net/Mo</th><th>Break-even N</th><th>Status</th>
+        <th>Fixed Alloc</th><th>Net/Mo</th><th>Break-even N</th><th>Overage</th><th>Status</th>
       </tr></thead>
       <tbody>${rows}</tbody>
     </table>`;
