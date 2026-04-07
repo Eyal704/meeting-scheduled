@@ -178,6 +178,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-c
 .cta-fine a:hover{color:var(--rose);}
 
 footer{padding:32px 48px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;background:var(--bg);}
+.footer-left{display:flex;align-items:center;gap:16px;}
+.footer-login{font-family:var(--mono);font-size:11px;color:var(--rose);letter-spacing:0.06em;text-decoration:none;transition:color 0.2s;}
+.footer-login:hover{color:var(--rose-hover);}
 .footer-links{justify-self:end;}
 .footer-logo{font-family:var(--sans);font-weight:800;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);}
 .footer-logo span{color:var(--rose);}
@@ -387,10 +390,9 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:grid;grid-te
 </div>
 
 <footer>
-  <span class="footer-logo">Meeting<span>Scheduled</span></span>
+  <div class="footer-left"><span class="footer-logo">Meeting<span>Scheduled</span></span><a href="https://reach.meeting-scheduled.com" class="footer-login">Login</a></div>
   <span class="footer-copy">AI-POWERED B2B OUTBOUND · <a href="mailto:sales@meeting-scheduled.com">sales@meeting-scheduled.com</a></span>
   <div class="footer-links">
-    <a href="https://reach.meeting-scheduled.com">Login</a>
     <a href="/privacy">Privacy Policy</a>
     <a href="/terms.html">Terms of Service</a>
   </div>
