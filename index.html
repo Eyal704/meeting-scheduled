@@ -43,7 +43,7 @@ body{background:linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 45%, #FDF5F4 70%, #F
 
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
 .nav-cta{justify-self:end;}
-.nav-logo{font-family:var(--sans);font-weight:800;font-size:15px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text);text-decoration:none;}
+.nav-logo{font-family:var(--sans);font-weight:800;font-size:15px;letter-spacing:0.04em;color:var(--text);text-decoration:none;}
 .nav-logo span{color:var(--rose);}
 .nav-links{display:flex;align-items:center;gap:32px;}
 .nav-links a{font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;transition:color 0.2s;}
@@ -181,7 +181,7 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:grid;grid-te
 .footer-login{font-family:var(--mono);font-size:11px;color:var(--rose);letter-spacing:0.06em;text-decoration:none;transition:color 0.2s;}
 .footer-login:hover{color:var(--rose-hover);}
 .footer-links{justify-self:end;}
-.footer-logo{font-family:var(--sans);font-weight:800;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);}
+.footer-logo{font-family:var(--sans);font-weight:800;font-size:14px;letter-spacing:0.04em;color:var(--muted);}
 .footer-logo span{color:var(--rose);}
 .footer-copy{font-family:var(--mono);font-size:11px;color:var(--muted2);letter-spacing:0.06em;}
 .footer-copy a{color:inherit;text-decoration:underline;}
@@ -196,7 +196,7 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:grid;grid-te
 .reveal.visible{opacity:1;transform:translateY(0);}
 
 @media(max-width:980px){
-  nav{padding:16px 24px;}.nav-links{display:none;}
+  nav{padding:16px 24px;}.nav-links{display:none;}.nav-login{display:none;}
   .hero{padding:120px 24px 60px;}
   .stats-bar{grid-template-columns:repeat(2,1fr);}
   .stat-item{padding:28px 24px;}
@@ -217,7 +217,7 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:grid;grid-te
 <body>
 
 <nav>
-  <a href="#" class="nav-logo">Meeting<span>Scheduled</span></a>
+  <a href="#" class="nav-logo" aria-label="MeetingScheduled">Meeting<span>Scheduled</span></a>
   <div class="nav-links">
     <a href="#product">How it works</a>
     <a href="#pillars">Why it's different</a>
@@ -299,7 +299,7 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:grid;grid-te
             <div class="mini-card"><h4>Surajit Mahanty</h4><p>Prepared a call opener and angle for Surajit's expansion play.</p></div>
           </div>
           <div class="column col-meetings">
-            <div class="column-head"><span>Meeting Scheduled</span><span class="col-count">1</span></div>
+            <div class="column-head"><span>Meetings Booked</span><span class="col-count">1</span></div>
             <div class="mini-card"><h4>Alexander Beilin</h4><p>VP of Sales & Business Development<br>Warm reply converted into booked meeting.</p><div class="mini-foot"><span>Booked</span></div></div>
           </div>
         </div>
@@ -389,7 +389,7 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:grid;grid-te
 </div>
 
 <footer>
-  <div class="footer-left"><span class="footer-logo">Meeting<span>Scheduled</span></span><a href="https://reach.meeting-scheduled.com" class="footer-login">Login</a></div>
+  <div class="footer-left"><span class="footer-logo" aria-label="MeetingScheduled">Meeting<span>Scheduled</span></span><a href="https://reach.meeting-scheduled.com" class="footer-login">Login</a></div>
   <span class="footer-copy">AI-POWERED B2B OUTBOUND · <a href="mailto:sales@meeting-scheduled.com">sales@meeting-scheduled.com</a></span>
   <div class="footer-links">
     <a href="/privacy">Privacy Policy</a>
