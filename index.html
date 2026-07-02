@@ -67,6 +67,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-c
 .hero-sub{font-size:17px;font-weight:500;color:var(--rose);max-width:600px;margin-top:24px;line-height:1.6;opacity:0;animation:fadeUp 0.8s ease forwards 0.32s;}
 .hero-clarify{font-size:16px;font-weight:400;color:var(--muted);max-width:540px;margin-top:12px;line-height:1.7;opacity:0;animation:fadeUp 0.8s ease forwards 0.42s;}
 .hero-cta{display:flex;align-items:center;gap:20px;margin-top:44px;opacity:0;animation:fadeUp 0.8s ease forwards 0.54s;}
+.hero-video{position:relative;width:min(880px,100%);aspect-ratio:16/9;margin-top:56px;border-radius:20px;overflow:hidden;border:1px solid var(--rose-border);background:var(--rose-pale);box-shadow:0 28px 68px -26px rgba(184,53,104,0.38),0 12px 30px -20px rgba(28,18,24,0.24);opacity:0;animation:fadeUp 0.8s ease forwards 0.66s;}
+.hero-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;}
 
 .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);opacity:0;animation:fadeUp 0.8s ease forwards 0.7s;}
 .stat-item{padding:36px 44px;border-right:1px solid var(--border);transition:background 0.3s;}
@@ -198,6 +200,7 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:grid;grid-te
 @media(max-width:980px){
   nav{padding:16px 24px;display:flex;align-items:center;}.nav-links{display:none;}.nav-cta{flex:1;justify-content:space-between;margin-left:10px;}
   .hero{padding:120px 24px 60px;}
+  .hero-video{margin-top:40px;border-radius:14px;}
   .stats-bar{grid-template-columns:repeat(2,1fr);}
   .stat-item{padding:28px 24px;}
   .workspace-section,.section,.pillars-inner,.workflow-inner{padding-left:24px;padding-right:24px;}
@@ -237,6 +240,16 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:grid;grid-te
   <div class="hero-cta">
     <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn-primary">Start in 1 Minute</a>
     <a href="#product" class="btn-ghost">See how it works</a>
+  </div>
+  <div class="hero-video">
+    <iframe
+      src="https://player.vimeo.com/video/1199909588?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+      title="MeetingScheduled product video"
+      loading="lazy"
+      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
   </div>
 </div>
 
