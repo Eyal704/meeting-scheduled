@@ -206,11 +206,11 @@ body{background:#fdf9fa;color:#1c1c1e;font-family:'Plus Jakarta Sans',system-ui,
     <div class="team-bridge-links">
       <a href="/pricing/">Solo</a>
       <span class="dot">&middot;</span>
-      <a href="/pricing/teams-3/">Teams of 3</a>
+      <a href="/pricing/teams-3/">Teams of 2&ndash;3</a>
       <span class="dot">&middot;</span>
-      <a href="/pricing/teams-3-7/">Teams of 3&ndash;7</a>
+      <a href="/pricing/teams-3-7/">Teams of 4&ndash;7</a>
       <span class="dot">&middot;</span>
-      <a href="/pricing/teams-7-10/">Teams of 7&ndash;10</a>
+      <a href="/pricing/teams-7-10/">Teams of 8&ndash;10</a>
     </div>
   </div>
 
@@ -229,54 +229,42 @@ body{background:#fdf9fa;color:#1c1c1e;font-family:'Plus Jakarta Sans',system-ui,
 var PRICING = {
   emailOnly: {
     starter: {
-      monthly:  { total:'$299',    suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.75' },
-      sixMonth: { total:'$1,614',  suffix:'/ 6 months', mo:'$269/mo',   savings:'Save 10%',      savingsAlt:null,         overage:'$1.55' },
-      annual:   { total:'$2,990',  suffix:'/ year',     mo:'$249/mo',   savings:'2 months free', savingsAlt:'Save 16.7%', overage:'$1.45' },
+      monthly:  { total:'$299',    suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.70' },
+      sixMonth: { total:'$1,704',  suffix:'/ 6 months', mo:'$284/mo',   savings:'Save 5%',       savingsAlt:null,         overage:'$1.65' },
+      annual:   { total:'$3,229',  suffix:'/ year',     mo:'$269/mo',   savings:'Save 10%',      savingsAlt:'Over 1 month free', overage:'$1.55' },
       prospects:200, inboxes:1
     },
     growth: {
       monthly:  { total:'$699',    suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.35' },
-      sixMonth: { total:'$3,774',  suffix:'/ 6 months', mo:'$629/mo',   savings:'Save 10%',      savingsAlt:null,         overage:'$1.20' },
-      annual:   { total:'$6,990',  suffix:'/ year',     mo:'$583/mo',   savings:'2 months free', savingsAlt:'Save 16.7%', overage:'$1.10' },
+      sixMonth: { total:'$3,984',  suffix:'/ 6 months', mo:'$664/mo',   savings:'Save 5%',       savingsAlt:null,         overage:'$1.25' },
+      annual:   { total:'$7,549',  suffix:'/ year',     mo:'$629/mo',   savings:'Save 10%',      savingsAlt:'Over 1 month free', overage:'$1.20' },
       prospects:600, inboxes:3
     },
     max: {
       monthly:  { total:'$1,099',  suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.25' },
-      sixMonth: { total:'$5,934',  suffix:'/ 6 months', mo:'$989/mo',   savings:'Save 10%',      savingsAlt:null,         overage:'$1.15' },
-      annual:   { total:'$10,990', suffix:'/ year',     mo:'$916/mo',   savings:'2 months free', savingsAlt:'Save 16.7%', overage:'$1.05' },
+      sixMonth: { total:'$6,264',  suffix:'/ 6 months', mo:'$1,044/mo', savings:'Save 5%',       savingsAlt:null,         overage:'$1.20' },
+      annual:   { total:'$11,869', suffix:'/ year',     mo:'$989/mo',   savings:'Save 10%',      savingsAlt:'Over 1 month free', overage:'$1.15' },
       prospects:1000, inboxes:5
-    },
-    maxPlus: {
-      monthly:  { total:'$1,999',  suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.15' },
-      sixMonth: { total:'$10,794', suffix:'/ 6 months', mo:'$1,799/mo', savings:'Save 10%',      savingsAlt:null,         overage:'$1.05' },
-      annual:   { total:'$19,990', suffix:'/ year',     mo:'$1,666/mo', savings:'2 months free', savingsAlt:'Save 16.7%', overage:'$0.95' },
-      prospects:2000, inboxes:8
     }
   },
   emailPhone: {
     starter: {
       monthly:  { total:'$399',    suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$2.30' },
-      sixMonth: { total:'$2,154',  suffix:'/ 6 months', mo:'$359/mo',   savings:'Save 10%',      savingsAlt:null,         overage:'$2.05' },
-      annual:   { total:'$3,990',  suffix:'/ year',     mo:'$333/mo',   savings:'2 months free', savingsAlt:'Save 16.7%', overage:'$1.90' },
+      sixMonth: { total:'$2,274',  suffix:'/ 6 months', mo:'$379/mo',   savings:'Save 5%',       savingsAlt:null,         overage:'$2.20' },
+      annual:   { total:'$4,309',  suffix:'/ year',     mo:'$359/mo',   savings:'Save 10%',      savingsAlt:'Over 1 month free', overage:'$2.05' },
       prospects:200, inboxes:1
     },
     growth: {
-      monthly:  { total:'$899',    suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.75' },
-      sixMonth: { total:'$4,854',  suffix:'/ 6 months', mo:'$809/mo',   savings:'Save 10%',      savingsAlt:null,         overage:'$1.55' },
-      annual:   { total:'$8,990',  suffix:'/ year',     mo:'$749/mo',   savings:'2 months free', savingsAlt:'Save 16.7%', overage:'$1.45' },
+      monthly:  { total:'$949',    suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.80' },
+      sixMonth: { total:'$5,409',  suffix:'/ 6 months', mo:'$902/mo',   savings:'Save 5%',       savingsAlt:null,         overage:'$1.75' },
+      annual:   { total:'$10,249', suffix:'/ year',     mo:'$854/mo',   savings:'Save 10%',      savingsAlt:'Over 1 month free', overage:'$1.65' },
       prospects:600, inboxes:3
     },
     max: {
-      monthly:  { total:'$1,399',  suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.60' },
-      sixMonth: { total:'$7,554',  suffix:'/ 6 months', mo:'$1,259/mo', savings:'Save 10%',      savingsAlt:null,         overage:'$1.45' },
-      annual:   { total:'$13,990', suffix:'/ year',     mo:'$1,166/mo', savings:'2 months free', savingsAlt:'Save 16.7%', overage:'$1.35' },
+      monthly:  { total:'$1,499',  suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.70' },
+      sixMonth: { total:'$8,544',  suffix:'/ 6 months', mo:'$1,424/mo', savings:'Save 5%',       savingsAlt:null,         overage:'$1.65' },
+      annual:   { total:'$16,189', suffix:'/ year',     mo:'$1,349/mo', savings:'Save 10%',      savingsAlt:'Over 1 month free', overage:'$1.55' },
       prospects:1000, inboxes:5
-    },
-    maxPlus: {
-      monthly:  { total:'$2,499',  suffix:'/ month',    mo:null,        savings:null,            savingsAlt:null,         overage:'$1.45' },
-      sixMonth: { total:'$13,494', suffix:'/ 6 months', mo:'$2,249/mo', savings:'Save 10%',      savingsAlt:null,         overage:'$1.30' },
-      annual:   { total:'$24,990', suffix:'/ year',     mo:'$2,083/mo', savings:'2 months free', savingsAlt:'Save 16.7%', overage:'$1.20' },
-      prospects:2000, inboxes:8
     }
   }
 };
@@ -284,8 +272,7 @@ var PRICING = {
 var PLANS = [
   { key:'starter', label:'Starter', popularTiers:[] },
   { key:'growth',  label:'Growth',  popularTiers:['sixMonth','annual'] },
-  { key:'max',     label:'Max',     popularTiers:[] },
-  { key:'maxPlus', label:'Max+',    popularTiers:[] }
+  { key:'max',     label:'Max',     popularTiers:[] }
 ];
 
 var FEATURES = [
