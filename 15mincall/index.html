@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#B83568">
+<title>Book a Time — MeetingScheduled</title>
+<meta name="description" content="Grab 15 minutes with MeetingScheduled. We'll look at your ICP, show how signal-led outbound runs itself, and you'll leave knowing whether it fits.">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph (WhatsApp, LinkedIn, Facebook) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MeetingScheduled">
+<meta property="og:title" content="Book a Time — MeetingScheduled">
+<meta property="og:description" content="15 minutes. Your ICP, your outbound, and whether MeetingScheduled fits. Pick a slot below.">
+<meta property="og:url" content="https://www.meeting-scheduled.com/15mincall">
+<meta property="og:image" content="https://www.meeting-scheduled.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Book a Time — MeetingScheduled">
+<meta name="twitter:description" content="15 minutes. Your ICP, your outbound, and whether MeetingScheduled fits.">
+<meta name="twitter:image" content="https://www.meeting-scheduled.com/og-image.png">
+
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="canonical" href="https://www.meeting-scheduled.com/15mincall">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://app.cal.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Poppins:ital,wght@0,600;0,700;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Light-only page. Without this the browser canvas, scrollbars and any
+     form control render dark for visitors whose OS is in dark mode. */
+  color-scheme: light;
+  --bg:#FDF5F8;--bg2:#F8ECF2;--bg3:#F2E0EA;--bg4:#EDD5E4;
+  --rose:#B83568;--rose-hover:#8C2050;--rose-soft:#E8A0BE;
+  --rose-pale:#FAF0F5;--rose-dim:rgba(184,53,104,0.08);--rose-border:rgba(184,53,104,0.18);
+  --text:#1C1218;--text2:#4A3040;--muted:#7A5568;--muted2:#A8889A;
+  --border:rgba(184,53,104,0.14);--border-light:rgba(28,18,24,0.08);
+  --serif:'Instrument Serif',Georgia,serif;--sans:'Plus Jakarta Sans',system-ui,sans-serif;--mono:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;background:#FFFFFF;}
+body{background:linear-gradient(180deg,#FFFFFF 0%,#FFFFFF 40%,#FDF5F4 68%,#F8ECE8 88%,#F8ECF2 100%);background-attachment:fixed;color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ── Nav (matches site) ─────────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;max-width:100vw;z-index:100;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
+.nav-logo{font-family:var(--sans);font-weight:800;font-size:15px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text);text-decoration:none;}
+.nav-logo span{color:var(--rose);}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--text);}
+.nav-cta{justify-self:end;display:flex;align-items:center;gap:16px;}
+.nav-login{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:0.04em;color:var(--rose);text-decoration:none;transition:color 0.2s;}
+.nav-login:hover{color:var(--rose-hover);}
+.btn-primary{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#fff;background:var(--rose);padding:10px 22px;text-decoration:none;border-radius:3px;transition:all 0.2s;display:inline-block;border:none;cursor:pointer;}
+.btn-primary:hover{background:var(--rose-hover);transform:translateY(-1px);box-shadow:0 6px 24px rgba(184,53,104,0.28);}
+
+/* ── Header ─────────────────────────────────────────────────────── */
+.book-head{padding:132px 48px 8px;max-width:1160px;margin:0 auto;text-align:center;position:relative;}
+.book-head::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:760px;height:520px;background:radial-gradient(ellipse,rgba(184,53,104,0.08) 0%,transparent 70%);pointer-events:none;}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--rose);margin-bottom:20px;display:block;position:relative;}
+.book-title{font-family:'Poppins',system-ui,sans-serif;font-weight:700;font-size:clamp(30px,4.2vw,50px);line-height:1.06;letter-spacing:-0.03em;color:#3D2535;position:relative;}
+.book-title em{font-style:italic;color:var(--rose);}
+.book-sub{font-size:16px;color:var(--muted);max-width:560px;margin:18px auto 0;line-height:1.7;position:relative;}
+.greeting{display:none;font-family:var(--mono);font-size:12px;letter-spacing:0.06em;color:var(--rose);background:var(--rose-dim);border:1px solid var(--rose-border);border-radius:999px;padding:6px 16px;margin-bottom:20px;}
+.greeting.show{display:inline-block;}
+
+/* ── Trust chips ────────────────────────────────────────────────── */
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:28px;position:relative;}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,0.9);border:1px solid var(--rose-border);font-size:13px;font-weight:500;color:var(--text2);}
+.chip svg{width:14px;height:14px;flex:none;color:var(--rose);}
+
+/* ── Cal embed card ─────────────────────────────────────────────── */
+.book-wrap{max-width:1160px;margin:0 auto;padding:36px 48px 88px;}
+.cal-card{background:linear-gradient(180deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid var(--rose-border);border-radius:24px;padding:10px;box-shadow:0 28px 68px -30px rgba(184,53,104,0.36),0 10px 30px -22px rgba(28,18,24,0.20);}
+.cal-inner{border-radius:18px;overflow:hidden;background:#fff;min-height:720px;position:relative;}
+#my-cal-inline-15min{width:100%;height:100%;min-height:720px;overflow:auto;}
+.cal-loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;pointer-events:none;transition:opacity 0.35s ease;}
+.cal-loading.hide{opacity:0;}
+.spinner{width:26px;height:26px;border-radius:50%;border:2px solid var(--rose-border);border-top-color:var(--rose);animation:spin 0.8s linear infinite;}
+.cal-loading span{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted2);}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── Fallback ───────────────────────────────────────────────────── */
+.fallback{text-align:center;margin-top:22px;font-size:14px;color:var(--muted);}
+.fallback a{color:var(--rose);font-weight:600;text-decoration:none;border-bottom:1px solid var(--rose-border);}
+.fallback a:hover{color:var(--rose-hover);}
+
+/* ── Footer (matches site) ──────────────────────────────────────── */
+footer{padding:32px 48px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;background:var(--bg);}
+.footer-left{display:flex;align-items:center;gap:16px;}
+.footer-logo{font-family:var(--sans);font-weight:800;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);}
+.footer-logo span{color:var(--rose);}
+.footer-login{font-family:var(--mono);font-size:11px;color:var(--rose);letter-spacing:0.06em;text-decoration:none;transition:color 0.2s;}
+.footer-login:hover{color:var(--rose-hover);}
+.footer-copy{font-family:var(--mono);font-size:11px;color:var(--muted2);letter-spacing:0.06em;}
+.footer-copy a{color:inherit;text-decoration:underline;}
+.footer-copy a:hover{color:var(--rose);}
+.footer-links{justify-self:end;display:flex;gap:20px;}
+.footer-links a{font-family:var(--mono);font-size:11px;color:var(--muted2);letter-spacing:0.06em;text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:var(--rose);}
+
+@media(max-width:980px){
+  nav{padding:16px 24px;display:flex;align-items:center;}
+  .nav-links{display:none;}
+  .nav-cta{flex:1;justify-content:flex-end;margin-left:10px;}
+  .book-head{padding:104px 22px 4px;}
+  .book-wrap{padding:26px 16px 64px;}
+  .cal-card{padding:6px;border-radius:18px;}
+  .cal-inner,#my-cal-inline-15min{min-height:560px;}
+  footer{padding:24px;grid-template-columns:1fr;justify-items:center;gap:12px;text-align:center;}
+  .footer-links{justify-self:center;}
+}
+/* Phones: the nav's logo + login + CTA do not fit side by side at 375px,
+   so the CTA drops to its short label and everything tightens up. */
+.btn-label-short{display:none;}
+@media(max-width:560px){
+  nav{padding:14px 16px;gap:8px;}
+  .nav-logo{font-size:12px;letter-spacing:0.04em;}
+  .nav-cta{gap:12px;}
+  .nav-login{font-size:11px;}
+  .btn-primary{padding:8px 14px;font-size:10px;letter-spacing:0.06em;}
+  .btn-label-full{display:none;}
+  .btn-label-short{display:inline;}
+  .book-head{padding:96px 18px 4px;}
+  .book-sub{font-size:15px;}
+  .chips{gap:8px;}
+  .chip{font-size:12px;padding:7px 13px;}
+  .book-wrap{padding:22px 12px 56px;}
+  .cal-inner,#my-cal-inline-15min{min-height:620px;}
+  .fallback{font-size:13px;}
+}
+@media(prefers-reduced-motion:reduce){.spinner{animation:none;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo" aria-label="MeetingScheduled">Meeting<span>Scheduled</span></a>
+  <div class="nav-links">
+    <a href="/#product">How it works</a>
+    <a href="/#pillars">Why it's different</a>
+    <a href="/pricing">Pricing</a>
+  </div>
+  <div class="nav-cta">
+    <a href="https://reach.meeting-scheduled.com" class="nav-login">Login</a>
+    <a href="/" class="btn-primary"><span class="btn-label-full">See the Product</span><span class="btn-label-short">Product</span></a>
+  </div>
+</nav>
+
+<header class="book-head">
+  <span class="greeting" id="greeting"></span>
+  <span class="eyebrow">15 minutes · No deck</span>
+  <h1 class="book-title">Let's find out if this <em>fits</em>.</h1>
+  <p class="book-sub">
+    Bring your ICP and one deal you wish had happened. We'll show you what
+    signal-led outbound looks like running on your own market — and you'll
+    leave knowing either way.
+  </p>
+
+  <div class="chips">
+    <span class="chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      15 minutes, ends on time
+    </span>
+    <span class="chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      Straight answer on fit
+    </span>
+    <span class="chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Nothing to install first
+    </span>
+  </div>
+</header>
+
+<main class="book-wrap">
+  <div class="cal-card">
+    <div class="cal-inner">
+      <!-- Cal inline embed code begins -->
+      <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-15min"></div>
+      <!-- Cal inline embed code ends -->
+      <div class="cal-loading" id="calLoading" aria-hidden="true">
+        <div class="spinner"></div>
+        <span>Loading available times</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="fallback">
+    Calendar not loading?
+    <a id="calFallback" href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener">Open it in a new tab</a>
+    or email <a href="mailto:sales@meeting-scheduled.com">sales@meeting-scheduled.com</a>.
+  </p>
+</main>
+
+<footer>
+  <div class="footer-left">
+    <span class="footer-logo" aria-label="MeetingScheduled">Meeting<span>Scheduled</span></span>
+    <a href="https://reach.meeting-scheduled.com" class="footer-login">Login</a>
+  </div>
+  <span class="footer-copy">AI-POWERED B2B OUTBOUND · <a href="mailto:sales@meeting-scheduled.com">sales@meeting-scheduled.com</a></span>
+  <div class="footer-links">
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms.html">Terms of Service</a>
+  </div>
+</footer>
+
+<!-- ── Link attribution ──────────────────────────────────────────────
+     Every tracking param that lands on this page (utm_*, ref, src,
+     campaign ids, prospect id) is captured once, kept for the session,
+     and forwarded into Cal.com so the booking record itself carries the
+     source. Cal.config.forwardQueryParams handles the pass-through;
+     this block persists the params across in-page navigation and
+     re-applies them if the visitor arrives on a clean URL later.
+─────────────────────────────────────────────────────────────────────── -->
+<script>
+(function () {
+  var STORE = 'ms_book_attribution';
+  var TRACKED = [
+    'utm_source','utm_medium','utm_campaign','utm_term','utm_content',
+    'ref','src','source','cid','eid','pid','p','prospect','gclid','fbclid','li_fat_id'
+  ];
+  var PREFILL = { name: 'name', firstname: 'name', email: 'email', notes: 'notes' };
+
+  function readParams() {
+    var out = {};
+    try {
+      var qs = new URLSearchParams(window.location.search);
+      TRACKED.forEach(function (k) {
+        var v = qs.get(k);
+        if (v) out[k] = v.slice(0, 200);
+      });
+    } catch (e) {}
+    return out;
+  }
+
+  function restore() {
+    try {
+      var raw = sessionStorage.getItem(STORE);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) { return {}; }
+  }
+
+  function persist(obj) {
+    try { sessionStorage.setItem(STORE, JSON.stringify(obj)); } catch (e) {}
+  }
+
+  // Fresh params win; anything already captured this session is retained.
+  var attribution = Object.assign({}, restore(), readParams());
+  if (!attribution.landed_at) attribution.landed_at = new Date().toISOString();
+  if (!attribution.referrer && document.referrer) {
+    attribution.referrer = document.referrer.slice(0, 200);
+  }
+  persist(attribution);
+  window.msAttribution = attribution;
+
+  // Prefill + attribution passed straight into the Cal booking form.
+  // theme is set here (not only in the `ui` call) so it is baked into the
+  // embed URL — otherwise Cal renders in the visitor's OS dark mode and
+  // clashes with the page.
+  var calConfig = { layout: 'month_view', useSlotsViewOnSmallScreen: 'true', theme: 'light' };
+  try {
+    var qs = new URLSearchParams(window.location.search);
+    Object.keys(PREFILL).forEach(function (k) {
+      var v = qs.get(k);
+      if (v) calConfig[PREFILL[k]] = v.slice(0, 200);
+    });
+  } catch (e) {}
+  TRACKED.forEach(function (k) {
+    if (attribution[k]) calConfig[k] = attribution[k];
+  });
+  window.msCalConfig = calConfig;
+
+  // Personal greeting when the link carries a first name.
+  var who = calConfig.name;
+  if (who) {
+    var first = String(who).trim().split(/\s+/)[0];
+    if (first) {
+      var el = document.getElementById('greeting');
+      el.textContent = 'Hi ' + first + ' 👋';
+      el.classList.add('show');
+    }
+  }
+
+  // Carry the same params onto the "open in a new tab" fallback so a
+  // fallback booking is attributed identically to an embedded one.
+  try {
+    var fb = document.getElementById('calFallback');
+    var fbUrl = new URL(fb.href);
+    Object.keys(calConfig).forEach(function (k) {
+      if (k !== 'layout' && k !== 'useSlotsViewOnSmallScreen') {
+        fbUrl.searchParams.set(k, calConfig[k]);
+      }
+    });
+    fb.href = fbUrl.toString();
+  } catch (e) {}
+})();
+</script>
+
+<!-- ── GoatCounter ───────────────────────────────────────────────────
+     Same tag as the rest of the site, but loaded here rather than in
+     <head>: window.goatcounter must already exist when count.js runs,
+     and the path callback below depends on the attribution block above.
+
+     That callback appends the campaign source to the recorded path, so
+     each inbound link is its own row in the dashboard instead of every
+     visit collapsing into a single "/15mincall" count.
+─────────────────────────────────────────────────────────────────────── -->
+<script>
+window.goatcounter = {
+  path: function (p) {
+    var a = window.msAttribution || {};
+    var src = a.utm_campaign || a.utm_source || a.ref || a.src || a.cid || a.eid;
+    return src ? p + '?src=' + encodeURIComponent(String(src).slice(0, 80)) : p;
+  }
+};
+</script>
+<script data-goatcounter="https://meetingscheduled.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<!-- Cal inline embed code begins -->
+<script type="text/javascript">
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+Cal("init", "15min", {origin:"https://app.cal.com"});
+Cal.config = Cal.config || {};
+Cal.config.forwardQueryParams = true;
+
+  Cal.ns["15min"]("inline", {
+    elementOrSelector:"#my-cal-inline-15min",
+    config: window.msCalConfig || {"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"},
+    calLink: "meeting-scheduled/15min",
+  });
+
+  // Themed to the site: forced light so the embed never flips to dark
+  // against the rose page, with the brand rose driving Cal's accents.
+  Cal.ns["15min"]("ui", {
+    "hideEventTypeDetails":false,
+    "layout":"month_view",
+    "theme":"light",
+    "cssVarsPerTheme":{
+      "light":{
+        "cal-brand":"#B83568",
+        "cal-bg":"#FFFFFF",
+        "cal-bg-emphasis":"#FAF0F5",
+        "cal-border":"rgba(184,53,104,0.18)",
+        "cal-border-emphasis":"rgba(184,53,104,0.34)",
+        "cal-text":"#1C1218",
+        "cal-text-emphasis":"#1C1218",
+        "cal-text-subtle":"#7A5568",
+        "cal-text-muted":"#A8889A"
+      }
+    }
+  });
+  </script>
+  <!-- Cal inline embed code ends -->
+
+<!-- ── Embed lifecycle: hide the loader, record the booking ────────── -->
+<script>
+(function () {
+  var loader = document.getElementById('calLoading');
+  function hideLoader() { if (loader) loader.classList.add('hide'); }
+
+  try {
+    Cal.ns['15min']('on', {
+      action: 'linkReady',
+      callback: hideLoader
+    });
+
+    Cal.ns['15min']('on', {
+      action: 'bookingSuccessful',
+      callback: function (e) {
+        var detail = (e && e.detail && e.detail.data) || {};
+        var record = Object.assign({}, window.msAttribution || {}, {
+          booked_at: new Date().toISOString(),
+          event_type: '15min',
+          uid: detail.uid || detail.booking && detail.booking.uid || null
+        });
+        try { sessionStorage.setItem('ms_book_confirmed', JSON.stringify(record)); } catch (err) {}
+
+        // Counted as a GoatCounter event so the dashboard shows visits
+        // and actual bookings side by side, split by campaign.
+        try {
+          var src = record.utm_campaign || record.utm_source || record.ref || record.src;
+          window.goatcounter.count({
+            path: src ? 'booked-15mincall-' + String(src).slice(0, 60) : 'booked-15mincall',
+            title: '15min call booked',
+            event: true
+          });
+        } catch (err) {}
+
+        // Surfaced for any analytics tag added to the site later.
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: 'ms_booking_confirmed' }, record));
+      }
+    });
+  } catch (e) {}
+
+  // Safety net: never leave a spinner sitting over a rendered calendar.
+  setTimeout(hideLoader, 6000);
+})();
+</script>
+
+<!-- Crisp chat (same as the rest of the site) -->
+<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345c5509-5794-4f9b-9fca-729075f9eea3";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+
+</body>
+</html>
