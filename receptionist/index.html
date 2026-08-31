@@ -128,17 +128,19 @@ h3{font-size:22px;font-weight:600;}
 /* Live demo (real callable numbers) */
 .live-demo-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:640px;margin:40px auto 0;}
 @media(min-width:640px){.live-demo-grid{grid-template-columns:1fr 1fr;}}
-.demo-line-card{display:flex;flex-direction:column;align-items:center;border:1px solid var(--border);border-radius:20px;background:#fff;padding:24px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.04);}
+.demo-line-card{display:flex;flex-direction:column;align-items:center;border:1.5px solid var(--accent-border,var(--border));border-radius:20px;background:#fff;padding:24px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.04);}
 @media(min-width:640px){.demo-line-card{padding:32px;}}
-.demo-line-country{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--green);}
+.demo-line-flag{font-size:28px;line-height:1;margin-bottom:4px;}
+.demo-line-country{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);}
 .demo-line-number-row{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:6px;}
 .demo-line-number{font-size:24px;font-weight:600;color:var(--ink);}
 @media(min-width:640px){.demo-line-number{font-size:28px;}}
 .copy-btn{display:flex;height:36px;width:36px;flex-shrink:0;align-items:center;justify-content:center;border-radius:8px;border:0;background:none;cursor:pointer;color:var(--faint);}
-.copy-btn:hover{background:#f4f4f2;}
-.copy-btn.copied{color:var(--green);}
-.demo-line-card .btn{margin-top:24px;width:100%;}
-@media(min-width:640px){.demo-line-card .btn{width:auto;padding-left:32px;padding-right:32px;}}
+.copy-btn:hover{background:var(--accent-tint,#f4f4f2);}
+.copy-btn.copied{color:var(--accent);}
+.demo-line-card .btn-accent{margin-top:24px;width:100%;background:var(--accent);}
+.demo-line-card .btn-accent:hover{background:var(--accent-dark);}
+@media(min-width:640px){.demo-line-card .btn-accent{width:auto;padding-left:32px;padding-right:32px;}}
 .try-asking{margin-top:40px;text-align:center;}
 .try-asking-label{font-size:13px;font-weight:500;color:var(--faint);}
 .try-asking-chips{margin:12px auto 0;display:flex;max-width:560px;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;}
@@ -147,6 +149,24 @@ h3{font-size:22px;font-weight:600;}
 .coverage-message{font-size:14.5px;font-weight:500;color:var(--ink);}
 .coverage-badges{margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;}
 .coverage-badge{border-radius:999px;background:var(--green-tint);color:var(--green);padding:4px 12px;font-size:12px;font-weight:500;}
+
+/* Number-choice popup (triggered by "Try Our Voice Agent" / "Hear the AI") */
+.number-modal-overlay{display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:24px;}
+.number-modal-overlay.open{display:flex;}
+.number-modal-box{width:100%;max-width:400px;border-radius:20px;background:#fff;padding:28px;box-shadow:0 24px 60px rgba(0,0,0,.3);}
+.number-modal-close-row{display:flex;justify-content:flex-end;margin-bottom:4px;}
+.number-modal-close{width:28px;height:28px;border-radius:8px;border:0;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);}
+.number-modal-close:hover{background:#f4f4f2;}
+.number-modal-title{font-size:18px;font-weight:600;text-align:center;color:var(--ink);}
+.number-modal-sub{margin-top:6px;font-size:13.5px;color:var(--muted);text-align:center;}
+.number-modal-options{margin-top:20px;display:flex;flex-direction:column;gap:10px;}
+.number-option{display:flex;align-items:center;gap:12px;border-radius:14px;border:1.5px solid var(--accent-border,var(--border));padding:14px 16px;transition:background .15s;}
+.number-option:hover{background:var(--accent-tint);}
+.number-option-flag{font-size:26px;line-height:1;flex-shrink:0;}
+.number-option-info{flex:1;min-width:0;text-align:left;display:flex;flex-direction:column;}
+.number-option-country{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);}
+.number-option-number{margin-top:2px;font-size:16px;font-weight:600;color:var(--ink);}
+.number-option-arrow{flex-shrink:0;color:var(--accent);}
 
 /* Grid cards */
 .grid-2{display:grid;grid-template-columns:1fr;gap:16px;}
@@ -263,7 +283,7 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
       <p class="lede-sm">Available for after-hours, overflow, or full-time call coverage.</p>
       <div class="btn-row">
         <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-green">Book a Demo</a>
-        <a href="#live-demo" class="btn btn-secondary">Hear the AI</a>
+        <button type="button" class="btn btn-secondary js-open-voice-modal">Try Our Voice Agent</button>
       </div>
     </div>
   </section>
@@ -280,10 +300,10 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
                 <p class="demo-caption">Illustration only — not a real customer call</p>
               </div>
             </div>
-            <a href="#live-demo" class="hear-btn">
+            <button type="button" class="hear-btn js-open-voice-modal">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
               Hear the AI
-            </a>
+            </button>
           </div>
           <div class="bubbles">
             <div class="bubble-row ai"><div class="bubble ai">Good afternoon, Dr. Berger&rsquo;s practice. How can I help?</div></div>
@@ -326,7 +346,8 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
       </div>
 
       <div class="live-demo-grid">
-        <div class="demo-line-card">
+        <div class="demo-line-card" style="--accent:#b8802f;--accent-dark:#9c6d28;--accent-tint:#fbf3e7;--accent-border:rgba(184,128,47,.35);">
+          <span class="demo-line-flag" aria-hidden="true">🇦🇹</span>
           <p class="demo-line-country">Austria</p>
           <div class="demo-line-number-row">
             <a href="tel:+4314352116" class="demo-line-number">+43 1 435 2116</a>
@@ -335,12 +356,13 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
               <svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
             </button>
           </div>
-          <a href="tel:+4314352116" class="btn btn-green">
+          <a href="tel:+4314352116" class="btn btn-accent">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             Call Austrian Demo
           </a>
         </div>
-        <div class="demo-line-card">
+        <div class="demo-line-card" style="--accent:#3d6b52;--accent-dark:#325943;--accent-tint:#e8f2ec;--accent-border:rgba(61,107,82,.35);">
+          <span class="demo-line-flag" aria-hidden="true">🇺🇸</span>
           <p class="demo-line-country">United States</p>
           <div class="demo-line-number-row">
             <a href="tel:+15108718697" class="demo-line-number">+1 510 871 8697</a>
@@ -349,7 +371,7 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
               <svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
             </button>
           </div>
-          <a href="tel:+15108718697" class="btn btn-green">
+          <a href="tel:+15108718697" class="btn btn-accent">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             Call US Demo
           </a>
@@ -623,6 +645,36 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
   </div>
 </footer>
 
+<div class="number-modal-overlay" id="voiceModalOverlay">
+  <div class="number-modal-box">
+    <div class="number-modal-close-row">
+      <button type="button" class="number-modal-close" id="voiceModalClose" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+      </button>
+    </div>
+    <p class="number-modal-title">Try the voice agent</p>
+    <p class="number-modal-sub">Choose a demo line — it&rsquo;ll call from your phone.</p>
+    <div class="number-modal-options">
+      <a href="tel:+4314352116" class="number-option" style="--accent:#b8802f;--accent-tint:#fbf3e7;--accent-border:rgba(184,128,47,.35);">
+        <span class="number-option-flag" aria-hidden="true">🇦🇹</span>
+        <span class="number-option-info">
+          <span class="number-option-country">Austria</span>
+          <span class="number-option-number">+43 1 435 2116</span>
+        </span>
+        <svg class="number-option-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </a>
+      <a href="tel:+15108718697" class="number-option" style="--accent:#3d6b52;--accent-tint:#e8f2ec;--accent-border:rgba(61,107,82,.35);">
+        <span class="number-option-flag" aria-hidden="true">🇺🇸</span>
+        <span class="number-option-info">
+          <span class="number-option-country">United States</span>
+          <span class="number-option-number">+1 510 871 8697</span>
+        </span>
+        <svg class="number-option-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -668,6 +720,15 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
     }
   });
 });
+
+const voiceModalOverlay = document.getElementById('voiceModalOverlay');
+const voiceModalClose = document.getElementById('voiceModalClose');
+function openVoiceModal() { voiceModalOverlay.classList.add('open'); }
+function closeVoiceModal() { voiceModalOverlay.classList.remove('open'); }
+document.querySelectorAll('.js-open-voice-modal').forEach(el => el.addEventListener('click', openVoiceModal));
+voiceModalClose.addEventListener('click', closeVoiceModal);
+voiceModalOverlay.addEventListener('click', e => { if (e.target === voiceModalOverlay) closeVoiceModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVoiceModal(); });
 </script>
 
 </body>
