@@ -125,17 +125,28 @@ h3{font-size:22px;font-weight:600;}
 .status-pill{border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;background:#e6f4ea;color:#2e7d42;}
 .demo-note{margin-top:20px;text-align:center;font-size:13px;color:var(--faint);line-height:1.6;}
 
-/* Modal */
-.modal-overlay{display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.4);align-items:center;justify-content:center;padding:24px;}
-.modal-overlay.open{display:flex;}
-.modal-box{width:100%;max-width:380px;border-radius:16px;background:#fff;padding:24px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.3);}
-.modal-close-row{display:flex;justify-content:flex-end;margin-bottom:12px;}
-.modal-close{width:28px;height:28px;border-radius:8px;border:0;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);}
-.modal-close:hover{background:#f4f4f2;}
-.modal-icon{width:48px;height:48px;border-radius:999px;background:var(--green-tint);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
-.modal-title{font-size:15px;font-weight:600;}
-.modal-body{margin-top:8px;font-size:13.5px;color:var(--muted);line-height:1.5;}
-.modal-cta{margin-top:20px;display:flex;height:44px;width:100%;align-items:center;justify-content:center;border-radius:10px;background:var(--green);color:#fff;font-size:14px;font-weight:600;}
+/* Live demo (real callable numbers) */
+.live-demo-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:640px;margin:40px auto 0;}
+@media(min-width:640px){.live-demo-grid{grid-template-columns:1fr 1fr;}}
+.demo-line-card{display:flex;flex-direction:column;align-items:center;border:1px solid var(--border);border-radius:20px;background:#fff;padding:24px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.04);}
+@media(min-width:640px){.demo-line-card{padding:32px;}}
+.demo-line-country{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--green);}
+.demo-line-number-row{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:6px;}
+.demo-line-number{font-size:24px;font-weight:600;color:var(--ink);}
+@media(min-width:640px){.demo-line-number{font-size:28px;}}
+.copy-btn{display:flex;height:36px;width:36px;flex-shrink:0;align-items:center;justify-content:center;border-radius:8px;border:0;background:none;cursor:pointer;color:var(--faint);}
+.copy-btn:hover{background:#f4f4f2;}
+.copy-btn.copied{color:var(--green);}
+.demo-line-card .btn{margin-top:24px;width:100%;}
+@media(min-width:640px){.demo-line-card .btn{width:auto;padding-left:32px;padding-right:32px;}}
+.try-asking{margin-top:40px;text-align:center;}
+.try-asking-label{font-size:13px;font-weight:500;color:var(--faint);}
+.try-asking-chips{margin:12px auto 0;display:flex;max-width:560px;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;}
+.chip{border-radius:999px;border:1px solid var(--border);padding:6px 16px;font-size:13px;color:var(--muted);}
+.coverage-box{margin:48px auto 0;max-width:640px;border-radius:16px;border:1px solid var(--border-subtle);background:var(--canvas);padding:24px;text-align:center;}
+.coverage-message{font-size:14.5px;font-weight:500;color:var(--ink);}
+.coverage-badges{margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;}
+.coverage-badge{border-radius:999px;background:var(--green-tint);color:var(--green);padding:4px 12px;font-size:12px;font-weight:500;}
 
 /* Grid cards */
 .grid-2{display:grid;grid-template-columns:1fr;gap:16px;}
@@ -252,7 +263,7 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
       <p class="lede-sm">Available for after-hours, overflow, or full-time call coverage.</p>
       <div class="btn-row">
         <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-green">Book a Demo</a>
-        <a href="#call-demo" class="btn btn-secondary">Hear the AI</a>
+        <a href="#live-demo" class="btn btn-secondary">Hear the AI</a>
       </div>
     </div>
   </section>
@@ -269,10 +280,10 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
                 <p class="demo-caption">Illustration only — not a real customer call</p>
               </div>
             </div>
-            <button class="hear-btn" id="hearAiBtn">
+            <a href="#live-demo" class="hear-btn">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
               Hear the AI
-            </button>
+            </a>
           </div>
           <div class="bubbles">
             <div class="bubble-row ai"><div class="bubble ai">Good afternoon, Dr. Berger&rsquo;s practice. How can I help?</div></div>
@@ -303,6 +314,67 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
         </div>
       </div>
       <p class="demo-note">The questions, booking rules, information captured, and handoff conditions are configured around your business.</p>
+    </div>
+  </section>
+
+  <section id="live-demo" class="section-border-top bg-canvas section">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow">Live Demo</p>
+        <h2>Call the AI receptionist.</h2>
+        <p class="subtitle">Experience MeetingScheduled the same way your customers would. Choose a demo line and try a real conversation.</p>
+      </div>
+
+      <div class="live-demo-grid">
+        <div class="demo-line-card">
+          <p class="demo-line-country">Austria</p>
+          <div class="demo-line-number-row">
+            <a href="tel:+4314352116" class="demo-line-number">+43 1 435 2116</a>
+            <button type="button" class="copy-btn" data-copy="+43 1 435 2116" aria-label="Copy Austria demo number">
+              <svg class="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+          <a href="tel:+4314352116" class="btn btn-green">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Call Austrian Demo
+          </a>
+        </div>
+        <div class="demo-line-card">
+          <p class="demo-line-country">United States</p>
+          <div class="demo-line-number-row">
+            <a href="tel:+15108718697" class="demo-line-number">+1 510 871 8697</a>
+            <button type="button" class="copy-btn" data-copy="+1 510 871 8697" aria-label="Copy United States demo number">
+              <svg class="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+          <a href="tel:+15108718697" class="btn btn-green">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Call US Demo
+          </a>
+        </div>
+      </div>
+
+      <div class="try-asking">
+        <p class="try-asking-label">Try asking about&hellip;</p>
+        <div class="try-asking-chips">
+          <span class="chip">Book an appointment</span>
+          <span class="chip">Ask about opening hours</span>
+          <span class="chip">Change an appointment</span>
+          <span class="chip">Ask to speak with someone</span>
+        </div>
+      </div>
+
+      <div class="coverage-box">
+        <p class="coverage-message">Your team answers as usual. MeetingScheduled steps in when they can&rsquo;t.</p>
+        <div class="coverage-badges">
+          <span class="coverage-badge">After hours</span>
+          <span class="coverage-badge">No answer</span>
+          <span class="coverage-badge">Busy / overflow</span>
+          <span class="coverage-badge">Full-time</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -551,20 +623,6 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
   </div>
 </footer>
 
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal-box">
-    <div class="modal-close-row">
-      <button class="modal-close" id="modalClose" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
-      </button>
-    </div>
-    <div class="modal-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
-    <p class="modal-title">A live audio sample is coming soon</p>
-    <p class="modal-body">Book a demo and we&rsquo;ll walk you through how the AI receptionist sounds when configured for your business.</p>
-    <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="modal-cta">Book a Demo</a>
-  </div>
-</div>
-
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -593,15 +651,23 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-const modalOverlay = document.getElementById('modalOverlay');
-const hearAiBtn = document.getElementById('hearAiBtn');
-const modalClose = document.getElementById('modalClose');
-function openModal() { modalOverlay.classList.add('open'); }
-function closeModal() { modalOverlay.classList.remove('open'); }
-hearAiBtn.addEventListener('click', openModal);
-modalClose.addEventListener('click', closeModal);
-modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(btn.dataset.copy);
+      btn.classList.add('copied');
+      btn.querySelector('.icon-copy').style.display = 'none';
+      btn.querySelector('.icon-check').style.display = 'block';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.querySelector('.icon-copy').style.display = 'block';
+        btn.querySelector('.icon-check').style.display = 'none';
+      }, 1600);
+    } catch {
+      // Clipboard API unavailable — the tel: link and visible number still work.
+    }
+  });
+});
 </script>
 
 </body>
