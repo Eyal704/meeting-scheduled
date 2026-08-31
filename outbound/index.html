@@ -122,16 +122,16 @@ h2{font-size:30px;font-weight:600;line-height:1.15;letter-spacing:-.02em;}
 .pillar-list li{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;color:var(--muted);line-height:1.4;}
 .pillar-dot{width:4px;height:4px;border-radius:999px;margin-top:7px;flex-shrink:0;}
 .converge-arrow{display:flex;justify-content:center;padding:16px 0;color:var(--faint);}
-.converge-card{border-radius:20px;background:linear-gradient(165deg,#fff 0%,var(--rose-tint) 100%);border:1.5px solid var(--rose);padding:28px;box-shadow:0 16px 40px rgba(201,83,110,.14);text-align:center;}
-@media(min-width:640px){.converge-card{padding:40px 32px;}}
-.converge-head{display:flex;flex-direction:column;align-items:center;margin-bottom:24px;}
-.converge-icon{width:48px;height:48px;border-radius:14px;background:var(--rose);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(201,83,110,.3);margin-bottom:14px;}
-.converge-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--rose);}
-.converge-title{margin-top:4px;font-size:22px;font-weight:600;color:var(--ink);}
-.converge-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;max-width:520px;margin:0 auto;text-align:left;}
-@media(min-width:640px){.converge-grid{grid-template-columns:repeat(3,1fr);max-width:none;}}
-.converge-line{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;font-weight:500;color:var(--ink);line-height:1.4;}
-.converge-dot{width:4px;height:4px;border-radius:999px;background:var(--rose);margin-top:7px;flex-shrink:0;}
+.converge-card{border-radius:20px;background:linear-gradient(165deg,#fff 0%,var(--rose-tint) 100%);border:1.5px solid var(--rose);padding:32px 24px;box-shadow:0 16px 40px rgba(201,83,110,.14);text-align:center;}
+@media(min-width:640px){.converge-card{padding:48px 40px;}}
+.converge-head{display:flex;flex-direction:column;align-items:center;margin-bottom:32px;}
+.converge-icon{width:56px;height:56px;border-radius:16px;background:var(--rose);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(201,83,110,.3);margin-bottom:16px;}
+.converge-eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--rose);}
+.converge-title{margin-top:6px;font-size:28px;font-weight:600;color:var(--ink);}
+.converge-grid{display:grid;grid-template-columns:1fr;gap:18px;max-width:440px;margin:0 auto;text-align:left;}
+@media(min-width:480px){.converge-grid{grid-template-columns:1fr 1fr;gap:20px 44px;max-width:640px;}}
+.converge-line{display:flex;align-items:flex-start;gap:10px;font-size:16px;font-weight:500;color:var(--ink);line-height:1.45;}
+.converge-dot{width:5px;height:5px;border-radius:999px;background:var(--rose);margin-top:9px;flex-shrink:0;}
 
 /* Output cards */
 .output-grid{display:grid;grid-template-columns:1fr;gap:16px;}
@@ -298,7 +298,7 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
 
       <div class="converge-card">
         <div class="converge-head">
-          <div class="converge-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z"/></svg></div>
+          <div class="converge-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z"/></svg></div>
           <div>
             <p class="converge-eyebrow">Converges Into</p>
             <p class="converge-title">Prospect Intelligence</p>
@@ -355,8 +355,10 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
       <p class="subtitle" style="max-width:480px;margin-left:auto;margin-right:auto;">Book a demo and we'll walk through what MeetingScheduled finds for accounts that look like yours.</p>
       <div class="btn-row" style="margin-top:32px;">
         <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-rose">Book a Demo</a>
-        <a href="/receptionist/" class="btn-ghost-rose" style="height:auto;">Explore AI Receptionist →</a>
       </div>
+      <p style="margin-top:20px;">
+        <a href="/classic/" class="btn-ghost-rose" style="height:auto;font-size:13px;">Learn more about our Outbound system →</a>
+      </p>
     </div>
   </section>
 
