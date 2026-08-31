@@ -128,9 +128,9 @@ h3{font-size:22px;font-weight:600;}
 /* Live demo (real callable numbers) */
 .live-demo-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:640px;margin:40px auto 0;}
 @media(min-width:640px){.live-demo-grid{grid-template-columns:1fr 1fr;}}
-.demo-line-card{display:flex;flex-direction:column;align-items:center;border:1.5px solid var(--accent-border,var(--border));border-radius:20px;background:#fff;padding:24px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.04);transition:background .15s,box-shadow .15s,transform .15s;}
+.demo-line-card{display:flex;flex-direction:column;align-items:center;border:2px solid var(--accent-border,var(--border));border-radius:20px;background:linear-gradient(155deg,#fff 0%,var(--accent-soft) 100%);padding:24px;text-align:center;box-shadow:0 6px 20px var(--accent-soft);transition:background .2s,box-shadow .2s,transform .2s,border-color .2s;}
 @media(min-width:640px){.demo-line-card{padding:32px;}}
-.demo-line-card:hover{background:var(--accent-tint);box-shadow:0 10px 28px rgba(0,0,0,.08);transform:translateY(-2px);}
+.demo-line-card:hover{background:linear-gradient(155deg,var(--accent-tint) 0%,var(--accent-soft) 100%);box-shadow:0 14px 32px var(--accent-soft);transform:translateY(-3px);border-color:var(--accent);}
 .demo-line-flag{font-size:28px;line-height:1;margin-bottom:4px;}
 .demo-line-country{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);}
 .demo-line-number-row{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:6px;max-width:100%;}
@@ -343,7 +343,7 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
       </div>
 
       <div class="live-demo-grid">
-        <div class="demo-line-card" style="--accent:#b8802f;--accent-dark:#9c6d28;--accent-tint:#fbf3e7;--accent-border:rgba(184,128,47,.35);">
+        <div class="demo-line-card" style="--accent:#b8802f;--accent-dark:#9c6d28;--accent-tint:#fbf3e7;--accent-soft:rgba(184,128,47,.16);--accent-border:rgba(184,128,47,.4);">
           <span class="demo-line-flag" aria-hidden="true">🇦🇹</span>
           <p class="demo-line-country">Austria</p>
           <div class="demo-line-number-row">
@@ -358,7 +358,7 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
             Call Austrian Demo
           </a>
         </div>
-        <div class="demo-line-card" style="--accent:#3d6b52;--accent-dark:#325943;--accent-tint:#e8f2ec;--accent-border:rgba(61,107,82,.35);">
+        <div class="demo-line-card" style="--accent:#3d6b52;--accent-dark:#325943;--accent-tint:#e8f2ec;--accent-soft:rgba(61,107,82,.16);--accent-border:rgba(61,107,82,.4);">
           <span class="demo-line-flag" aria-hidden="true">🇺🇸</span>
           <p class="demo-line-country">United States</p>
           <div class="demo-line-number-row">
