@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Receptionist — MeetingScheduled</title>
+<meta name="description" content="An AI receptionist that answers calls, handles common questions, understands what customers need, and books appointments directly into your calendar.">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MeetingScheduled">
+<meta property="og:title" content="AI Receptionist — MeetingScheduled">
+<meta property="og:description" content="An AI receptionist that answers calls, handles common questions, understands what customers need, and books appointments directly into your calendar.">
+<meta property="og:url" content="https://www.meeting-scheduled.com/receptionist/">
+<meta property="og:image" content="https://www.meeting-scheduled.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Receptionist — MeetingScheduled">
+<meta name="twitter:description" content="Your business answers every call. Even when you can't.">
+<meta name="twitter:image" content="https://www.meeting-scheduled.com/og-image.png">
+
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="canonical" href="https://www.meeting-scheduled.com/receptionist/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1c1e;--muted:#6c6c72;--faint:#a0a0a8;--border:#e4e4e0;--border-subtle:#f0eeec;--canvas:#fdf9fa;
+  --rose:#c9536e;--rose-dark:#b84a62;--rose-tint:#fdf2f4;
+  --green:#3d6b52;--green-dark:#325943;--green-tint:#e8f2ec;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.5;letter-spacing:-0.01em;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;}
+.container{max-width:1152px;margin:0 auto;padding:0 24px;}
+
+header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border-subtle);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:var(--ink);}
+.logo-mark{width:32px;height:32px;border-radius:9px;background:var(--rose);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo-mark svg{width:16px;height:16px;}
+.nav-links{display:none;align-items:center;gap:32px;}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);}
+.nav-links a:hover{color:var(--rose);}
+@media(min-width:900px){.nav-links{display:flex;}}
+.nav-actions{display:none;align-items:center;gap:16px;}
+@media(min-width:640px){.nav-actions{display:flex;}}
+.nav-login{font-size:14px;font-weight:500;color:var(--muted);}
+.nav-login:hover{color:var(--rose);}
+.menu-btn{display:flex;width:40px;height:40px;align-items:center;justify-content:center;border:0;background:none;cursor:pointer;color:var(--ink);}
+@media(min-width:900px){.menu-btn{display:none;}}
+.mobile-nav{display:none;border-top:1px solid var(--border-subtle);background:#fff;}
+.mobile-nav.open{display:block;}
+.mobile-nav .container{display:flex;flex-direction:column;gap:2px;padding-top:16px;padding-bottom:16px;}
+.mobile-nav a{display:block;padding:12px;border-radius:8px;font-weight:500;font-size:15px;color:var(--ink);}
+.mobile-nav a:hover{background:var(--rose-tint);color:var(--rose);}
+.mobile-nav .btn{margin-top:8px;}
+
+.btn{display:inline-flex;height:48px;align-items:center;justify-content:center;gap:6px;border-radius:10px;padding:0 24px;font-size:14px;font-weight:600;white-space:nowrap;transition:background .15s;border:0;cursor:pointer;}
+.btn-rose{background:var(--rose);color:#fff;}
+.btn-rose:hover{background:var(--rose-dark);}
+.btn-green{background:var(--green);color:#fff;}
+.btn-green:hover{background:var(--green-dark);}
+.btn-secondary{background:#f5f3f2;color:var(--ink);}
+.btn-secondary:hover{background:#edebe8;}
+.btn-ghost-green{color:var(--green);height:auto;padding:0;background:none;font-weight:600;font-size:14px;}
+.btn-ghost-green:hover{color:var(--green-dark);}
+.btn-sm{height:40px;padding:0 20px;font-size:13px;}
+.btn-row{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+@media(min-width:640px){.btn-row{flex-direction:row;}}
+
+.eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;margin-bottom:16px;color:var(--green);}
+h1{font-size:38px;font-weight:600;line-height:1.1;letter-spacing:-.02em;}
+@media(min-width:640px){h1{font-size:54px;}}
+h2{font-size:30px;font-weight:600;line-height:1.15;letter-spacing:-.02em;}
+@media(min-width:640px){h2{font-size:38px;}}
+h3{font-size:22px;font-weight:600;}
+.section-head{max-width:640px;}
+.section-head.center{margin:0 auto;text-align:center;}
+.subtitle{font-size:16px;color:var(--muted);line-height:1.6;margin-top:16px;}
+.section{padding:80px 0;}
+.section-border-top{border-top:1px solid var(--border-subtle);}
+.bg-canvas{background:var(--canvas);}
+
+.hero{position:relative;overflow:hidden;text-align:center;padding:80px 0 64px;}
+@media(min-width:640px){.hero{padding-top:96px;}}
+.hero-glow{pointer-events:none;position:absolute;inset:0;background:radial-gradient(ellipse 80% 45% at 50% 0%,rgba(61,111,145,.07) 0%,transparent 60%);}
+.hero-inner{position:relative;max-width:720px;margin:0 auto;}
+.hero p.lede{font-size:17px;color:var(--muted);line-height:1.6;margin-top:24px;max-width:560px;margin-left:auto;margin-right:auto;}
+.hero p.lede-sm{font-size:14px;color:var(--faint);margin-top:8px;}
+.hero .btn-row{margin-top:36px;}
+
+/* Call demo */
+.demo-grid{display:grid;grid-template-columns:1fr;gap:24px;}
+@media(min-width:1024px){.demo-grid{grid-template-columns:1.1fr .9fr;}}
+.demo-card{border:1px solid var(--border);border-radius:22px;background:#fff;padding:20px;box-shadow:0 6px 20px rgba(0,0,0,.05);}
+@media(min-width:640px){.demo-card{padding:24px;}}
+.demo-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;}
+.demo-head-left{display:flex;align-items:center;gap:10px;}
+.demo-avatar{width:36px;height:36px;border-radius:999px;background:var(--green-tint);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.demo-title{font-size:13.5px;font-weight:600;}
+.demo-caption{font-size:12px;color:var(--faint);}
+.hear-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:8px;background:var(--green-tint);color:var(--green);font-size:12.5px;font-weight:600;border:0;cursor:pointer;flex-shrink:0;}
+.bubbles{display:flex;flex-direction:column;gap:10px;}
+.bubble-row{display:flex;}
+.bubble-row.caller{justify-content:flex-end;}
+.bubble{max-width:85%;border-radius:16px;padding:10px 16px;font-size:13.5px;line-height:1.4;}
+.bubble.ai{background:#f4f4f2;color:var(--ink);border-bottom-left-radius:4px;}
+.bubble.caller{background:var(--green);color:#fff;border-bottom-right-radius:4px;}
+.outcome-head{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.outcome-icon{width:36px;height:36px;border-radius:999px;background:var(--rose-tint);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.outcome-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;}
+.outcome-list{display:flex;flex-direction:column;gap:14px;}
+.outcome-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;border-bottom:1px solid var(--border-subtle);padding-bottom:14px;}
+.outcome-row:last-child{border-bottom:0;padding-bottom:0;}
+.outcome-label{font-size:13px;color:var(--muted);flex-shrink:0;}
+.outcome-value{font-size:13.5px;font-weight:500;text-align:right;}
+.status-pill{border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;background:#e6f4ea;color:#2e7d42;}
+.demo-note{margin-top:20px;text-align:center;font-size:13px;color:var(--faint);line-height:1.6;}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.4);align-items:center;justify-content:center;padding:24px;}
+.modal-overlay.open{display:flex;}
+.modal-box{width:100%;max-width:380px;border-radius:16px;background:#fff;padding:24px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.3);}
+.modal-close-row{display:flex;justify-content:flex-end;margin-bottom:12px;}
+.modal-close{width:28px;height:28px;border-radius:8px;border:0;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);}
+.modal-close:hover{background:#f4f4f2;}
+.modal-icon{width:48px;height:48px;border-radius:999px;background:var(--green-tint);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+.modal-title{font-size:15px;font-weight:600;}
+.modal-body{margin-top:8px;font-size:13.5px;color:var(--muted);line-height:1.5;}
+.modal-cta{margin-top:20px;display:flex;height:44px;width:100%;align-items:center;justify-content:center;border-radius:10px;background:var(--green);color:#fff;font-size:14px;font-weight:600;}
+
+/* Grid cards */
+.grid-2{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:640px){.grid-2{grid-template-columns:1fr 1fr;}}
+.grid-3{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:640px){.grid-3{grid-template-columns:1fr 1fr;}}
+@media(min-width:1024px){.grid-3{grid-template-columns:repeat(3,1fr);}}
+.grid-4{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:640px){.grid-4{grid-template-columns:1fr 1fr;}}
+@media(min-width:1024px){.grid-4{grid-template-columns:repeat(4,1fr);}}
+.feature-card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:20px;transition:box-shadow .15s;}
+.feature-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.05);}
+.feature-icon{width:40px;height:40px;border-radius:12px;background:var(--green-tint);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+.feature-title{font-size:14.5px;font-weight:600;}
+.feature-desc{margin-top:6px;font-size:13.5px;color:var(--muted);line-height:1.5;}
+
+/* Call flow (linear vertical) */
+.call-flow-box{max-width:480px;margin:0 auto;border:1px solid var(--border);border-radius:20px;background:#fff;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,.04);}
+@media(min-width:640px){.call-flow-box{padding:32px;}}
+.cf-item{display:flex;align-items:center;gap:16px;}
+.cf-badge{width:40px;height:40px;border-radius:999px;background:var(--green-tint);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cf-label{font-size:14.5px;font-weight:500;}
+.cf-arrow{height:32px;display:flex;align-items:center;justify-content:center;width:40px;color:var(--faint);}
+
+/* Works with / handoff */
+.split-2{display:grid;grid-template-columns:1fr;gap:56px;}
+@media(min-width:1024px){.split-2{grid-template-columns:1fr 1fr;gap:64px;}}
+.split-2 p.desc{margin-top:12px;font-size:14.5px;color:var(--muted);line-height:1.6;}
+.tool-tags{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.tool-tag{border:1px solid var(--border);border-radius:12px;padding:12px 16px;font-size:13.5px;font-weight:500;}
+.handoff-quote{margin-top:24px;display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:12px;padding:16px;}
+.handoff-icon{width:36px;height:36px;border-radius:999px;background:var(--green-tint);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.handoff-quote p{font-size:13.5px;}
+
+/* Step flow (how it's built) */
+.step-box{border:1px solid var(--border);border-radius:20px;background:#fff;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,.04);}
+@media(min-width:640px){.step-box{padding:32px;}}
+.step-list-mobile{display:flex;flex-direction:column;gap:12px;}
+@media(min-width:640px){.step-list-mobile{display:none;}}
+.step-list-desktop{display:none;}
+@media(min-width:640px){.step-list-desktop{display:flex;align-items:flex-start;}}
+.step-item-m{display:flex;align-items:flex-start;gap:16px;}
+.step-badge{width:48px;height:48px;border-radius:999px;background:var(--green-tint);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-item-m .step-label{padding-top:10px;font-size:14px;font-weight:600;}
+.step-item-m .step-desc{font-size:13px;color:var(--muted);margin-top:2px;}
+.step-arrow-v{margin-left:24px;height:24px;display:flex;align-items:center;color:var(--faint);}
+.step-col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.step-col .step-label{margin-top:12px;font-size:13.5px;font-weight:600;}
+.step-col .step-desc{margin-top:4px;font-size:12.5px;color:var(--muted);max-width:140px;line-height:1.3;}
+.step-arrow-h{width:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding-top:24px;color:var(--faint);}
+
+footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
+.footer-top{display:flex;flex-direction:column;gap:40px;padding:56px 0;}
+@media(min-width:640px){.footer-top{flex-direction:row;justify-content:space-between;}}
+.footer-brand{max-width:280px;}
+.footer-brand p{margin-top:16px;font-size:14px;color:var(--muted);line-height:1.6;}
+.footer-cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+@media(min-width:480px){.footer-cols{grid-template-columns:repeat(3,auto);gap:56px;}}
+.footer-col-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);margin-bottom:12px;}
+.footer-col a{display:block;font-size:14px;color:var(--muted);margin-bottom:10px;}
+.footer-col a:hover{color:var(--rose);}
+.footer-bottom{border-top:1px solid var(--border-subtle);padding:24px 0;display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--faint);}
+@media(min-width:640px){.footer-bottom{flex-direction:row;justify-content:space-between;}}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="MeetingScheduled home">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="white"/></svg></span>
+      MeetingScheduled
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/outbound/">Outbound Sales</a>
+      <a href="/receptionist/">AI Receptionist</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="/pricing">Pricing</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://reach.meeting-scheduled.com" class="nav-login">Login</a>
+      <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-rose btn-sm">Book a Demo</a>
+    </div>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <svg id="menuIconOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      <svg id="menuIconClose" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <div class="container">
+      <a href="/outbound/">Outbound Sales</a>
+      <a href="/receptionist/">AI Receptionist</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="/pricing">Pricing</a>
+      <a href="https://reach.meeting-scheduled.com">Login</a>
+      <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-rose">Book a Demo</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <p class="eyebrow">MeetingScheduled AI Receptionist</p>
+      <h1>Your business answers every call. Even when you can&rsquo;t.</h1>
+      <p class="lede">An AI receptionist that answers calls, handles common questions, understands what customers need, and books appointments directly into your calendar.</p>
+      <p class="lede-sm">Available for after-hours, overflow, or full-time call coverage.</p>
+      <div class="btn-row">
+        <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-green">Book a Demo</a>
+        <a href="#call-demo" class="btn btn-secondary">Hear the AI</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="call-demo" class="section" style="padding-top:0;padding-bottom:64px;">
+    <div class="container">
+      <div class="demo-grid">
+        <div class="demo-card">
+          <div class="demo-head">
+            <div class="demo-head-left">
+              <div class="demo-avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+              <div>
+                <p class="demo-title">Example conversation — Dental practice</p>
+                <p class="demo-caption">Illustration only — not a real customer call</p>
+              </div>
+            </div>
+            <button class="hear-btn" id="hearAiBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Hear the AI
+            </button>
+          </div>
+          <div class="bubbles">
+            <div class="bubble-row ai"><div class="bubble ai">Good afternoon, Dr. Berger&rsquo;s practice. How can I help?</div></div>
+            <div class="bubble-row caller"><div class="bubble caller">Hi, I&rsquo;m a new patient. Part of my front tooth broke yesterday and I&rsquo;d like someone to look at it.</div></div>
+            <div class="bubble-row ai"><div class="bubble ai">Of course. Are you currently experiencing severe pain, swelling, or bleeding?</div></div>
+            <div class="bubble-row caller"><div class="bubble caller">No, luckily not.</div></div>
+            <div class="bubble-row ai"><div class="bubble ai">Understood. I can help you arrange an appointment. We have availability tomorrow at 11:20 or 15:40. Would either work?</div></div>
+            <div class="bubble-row caller"><div class="bubble caller">15:40 would be perfect.</div></div>
+            <div class="bubble-row ai"><div class="bubble ai">Done. I&rsquo;ve booked you for tomorrow at 15:40 and noted that you&rsquo;re a new patient with a chipped front tooth. I&rsquo;ll send the appointment confirmation shortly. Is there anything else you&rsquo;d like the practice to know?</div></div>
+            <div class="bubble-row caller"><div class="bubble caller">No, that&rsquo;s all.</div></div>
+            <div class="bubble-row ai"><div class="bubble ai">Perfect. We&rsquo;ll see you tomorrow at 15:40.</div></div>
+          </div>
+        </div>
+
+        <div class="demo-card">
+          <div class="outcome-head">
+            <div class="outcome-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg></div>
+            <p class="outcome-title">Appointment Booked</p>
+          </div>
+          <div class="outcome-list">
+            <div class="outcome-row"><span class="outcome-label">Caller</span><span class="outcome-value">New patient</span></div>
+            <div class="outcome-row"><span class="outcome-label">Reason</span><span class="outcome-value">Chipped front tooth</span></div>
+            <div class="outcome-row"><span class="outcome-label">Urgency</span><span class="outcome-value">No severe pain / swelling reported</span></div>
+            <div class="outcome-row"><span class="outcome-label">Appointment</span><span class="outcome-value">Tomorrow, 15:40</span></div>
+            <div class="outcome-row"><span class="outcome-label">Notes</span><span class="outcome-value">New-patient appointment</span></div>
+            <div class="outcome-row"><span class="outcome-label">Status</span><span class="status-pill">Confirmed</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="demo-note">The questions, booking rules, information captured, and handoff conditions are configured around your business.</p>
+    </div>
+  </section>
+
+  <section class="section-border-top bg-canvas section">
+    <div class="container">
+      <div class="section-head" style="margin-bottom:40px;">
+        <p class="eyebrow">The Problem</p>
+        <h2>Every unanswered call is a missed opportunity</h2>
+        <p class="subtitle">Calls arrive while your team is busy, after you&rsquo;ve closed, or when nobody is available to pick up. Some of those callers won&rsquo;t try again.</p>
+      </div>
+      <div class="grid-2">
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1-1a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 17.72"/><path d="M3 3l18 18"/><path d="M14.44 6.06A17 17 0 0 1 21.94 15"/><path d="M8.53 8.53a4 4 0 0 0 5.94 5.94"/></svg></div>
+          <p class="feature-title">Missed calls</p>
+          <p class="feature-desc">Customers call while your team is already busy.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></div>
+          <p class="feature-title">After-hours</p>
+          <p class="feature-desc">New inquiries don&rsquo;t stop when the working day does.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+          <p class="feature-title">Repetitive requests</p>
+          <p class="feature-desc">Staff repeatedly answer the same questions and scheduling requests.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <p class="feature-title">Inconsistent intake</p>
+          <p class="feature-desc">Important caller details can get lost between the phone call and the next action.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head" style="margin-bottom:40px;">
+        <p class="eyebrow">What It Does</p>
+        <h2>A receptionist for the phone, built around your business</h2>
+        <p class="subtitle">Available actions depend on how your receptionist is configured and which systems are connected.</p>
+      </div>
+      <div class="grid-3">
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M6 8.5a6 6 0 0 1 12 0"/><path d="M6 8.5v3a6 6 0 0 0 12 0v-3"/><path d="M12 17.5v3"/></svg></div>
+          <p class="feature-title">Answers &amp; understands</p>
+          <p class="feature-desc">Answers naturally and identifies why the customer is calling.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg></div>
+          <p class="feature-title">Handles routine requests</p>
+          <p class="feature-desc">Provides approved information about services, hours, availability, and common questions.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></div>
+          <p class="feature-title">Captures what matters</p>
+          <p class="feature-desc">Collects the details your team needs before the conversation ends.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg></div>
+          <p class="feature-title">Books appointments</p>
+          <p class="feature-desc">Checks availability and schedules according to your booking rules.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <p class="feature-title">Routes when needed</p>
+          <p class="feature-desc">Transfers or escalates calls according to rules you define.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M21 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2"/><path d="M3 8h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><line x1="7" y1="13" x2="17" y2="13"/><line x1="7" y1="17" x2="13" y2="17"/></svg></div>
+          <p class="feature-title">Keeps your team informed</p>
+          <p class="feature-desc">Creates a structured record of what happened and what happens next.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="section-border-top bg-canvas section">
+    <div class="container">
+      <div class="section-head center" style="margin-bottom:40px;">
+        <p class="eyebrow">Call Flow</p>
+        <h2>What happens on every call</h2>
+      </div>
+      <div class="call-flow-box">
+        <div class="cf-item"><div class="cf-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M16 2v4"/><path d="M8 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M7 12l4 4 6-8"/></svg></div><p class="cf-label">Call comes in</p></div>
+        <div class="cf-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+        <div class="cf-item"><div class="cf-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M6 8.5a6 6 0 0 1 12 0"/><path d="M6 8.5v3a6 6 0 0 0 12 0v-3"/><path d="M12 17.5v3"/></svg></div><p class="cf-label">Understand who is calling and why</p></div>
+        <div class="cf-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+        <div class="cf-item"><div class="cf-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg></div><p class="cf-label">Answer questions / collect information</p></div>
+        <div class="cf-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+        <div class="cf-item"><div class="cf-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></div><p class="cf-label">Book, qualify, route, or escalate</p></div>
+        <div class="cf-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+        <div class="cf-item"><div class="cf-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg></div><p class="cf-label">Update your calendar or workflow</p></div>
+        <div class="cf-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+        <div class="cf-item"><div class="cf-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M21 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2"/><path d="M3 8h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><line x1="7" y1="13" x2="17" y2="13"/><line x1="7" y1="17" x2="13" y2="17"/></svg></div><p class="cf-label">Send your team the outcome</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="split-2">
+        <div>
+          <p class="eyebrow">Works With Your Business</p>
+          <h3>Built to fit your workflow, not replace it</h3>
+          <p class="desc">The goal isn&rsquo;t a new operating model — it&rsquo;s making sure the calls you&rsquo;re already getting are handled consistently, using the tools you already run.</p>
+          <div class="tool-tags">
+            <div class="tool-tag">Calendar</div>
+            <div class="tool-tag">CRM</div>
+            <div class="tool-tag">Phone number</div>
+            <div class="tool-tag">Notifications</div>
+          </div>
+        </div>
+        <div>
+          <p class="eyebrow">Human Handoff</p>
+          <h3>Your team stays in the loop</h3>
+          <p class="desc">Configure when calls should be transferred or escalated to your team — for certain requests, important callers, or whenever the receptionist reaches a situation you want a person to handle.</p>
+          <div class="handoff-quote">
+            <div class="handoff-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <p>&ldquo;Let me connect you with our team — one moment.&rdquo;</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-border-top bg-canvas section">
+    <div class="container">
+      <div class="section-head" style="margin-bottom:40px;">
+        <p class="eyebrow">Use Cases</p>
+        <h2>Coverage that matches how you operate</h2>
+      </div>
+      <div class="grid-4">
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <p class="feature-title">24/7 Receptionist</p>
+          <p class="feature-desc">Keep your phone line available around the clock.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></div>
+          <p class="feature-title">After-Hours Coverage</p>
+          <p class="feature-desc">Handle calls that arrive during evenings, weekends, and holidays.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M21 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2"/><path d="M3 8h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><line x1="7" y1="13" x2="17" y2="13"/><line x1="7" y1="17" x2="13" y2="17"/></svg></div>
+          <p class="feature-title">Overflow Coverage</p>
+          <p class="feature-desc">Pick up calls when your team is already occupied.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+          <p class="feature-title">Dedicated Intake Line</p>
+          <p class="feature-desc">Use a separate number for a specific service, campaign, or workflow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head" style="margin-bottom:40px;">
+        <p class="eyebrow">How It&rsquo;s Built</p>
+        <h2>Designed around your business, not the other way around</h2>
+      </div>
+      <div class="step-box">
+        <div class="step-list-mobile">
+          <div class="step-item-m"><div class="step-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div><div><p class="step-label">Understand your business</p><p class="step-desc">Services, hours, locations, FAQs, and existing call patterns.</p></div></div>
+          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+          <div class="step-item-m"><div class="step-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><p class="step-label">Define the rules</p><p class="step-desc">What it can answer, what information it collects, when it books, and when it transfers.</p></div></div>
+          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+          <div class="step-item-m"><div class="step-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M21 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2"/><path d="M3 8h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><line x1="7" y1="13" x2="17" y2="13"/><line x1="7" y1="17" x2="13" y2="17"/></svg></div><div><p class="step-label">Connect your tools</p><p class="step-desc">Phone, calendar, and the workflows needed for each call.</p></div></div>
+          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+          <div class="step-item-m"><div class="step-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div><p class="step-label">Test real scenarios</p><p class="step-desc">Run through the calls your business actually receives.</p></div></div>
+          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+          <div class="step-item-m"><div class="step-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><p class="step-label">Go live</p><p class="step-desc">Use it after-hours, for overflow, or as your primary receptionist.</p></div></div>
+          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+          <div class="step-item-m"><div class="step-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div><div><p class="step-label">Improve</p><p class="step-desc">Review real conversations and refine how calls are handled.</p></div></div>
+        </div>
+        <div class="step-list-desktop">
+          <div class="step-col"><div class="step-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div><p class="step-label">Understand your business</p><p class="step-desc">Services, hours, locations, FAQs, and existing call patterns.</p></div>
+          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          <div class="step-col"><div class="step-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><p class="step-label">Define the rules</p><p class="step-desc">What it can answer, what information it collects, when it books, and when it transfers.</p></div>
+          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          <div class="step-col"><div class="step-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M21 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2"/><path d="M3 8h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><line x1="7" y1="13" x2="17" y2="13"/><line x1="7" y1="17" x2="13" y2="17"/></svg></div><p class="step-label">Connect your tools</p><p class="step-desc">Phone, calendar, and the workflows needed for each call.</p></div>
+          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          <div class="step-col"><div class="step-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><p class="step-label">Test real scenarios</p><p class="step-desc">Run through the calls your business actually receives.</p></div>
+          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          <div class="step-col"><div class="step-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><p class="step-label">Go live</p><p class="step-desc">Use it after-hours, for overflow, or as your primary receptionist.</p></div>
+          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          <div class="step-col"><div class="step-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div><p class="step-label">Improve</p><p class="step-desc">Review real conversations and refine how calls are handled.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-border-top bg-canvas section" style="text-align:center;">
+    <div class="container" style="max-width:640px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="1.75" style="margin:0 auto 20px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <h2 style="font-size:24px;">Designed with caller privacy and business control in mind</h2>
+      <p class="subtitle">You decide what information the receptionist collects, what it is allowed to say and do, and when a conversation should be handed to your team.</p>
+    </div>
+  </section>
+
+  <section class="section" style="text-align:center;">
+    <div class="container">
+      <h2>Hear what your receptionist could sound like.</h2>
+      <p class="subtitle" style="max-width:480px;margin-left:auto;margin-right:auto;">We&rsquo;ll configure a demonstration around your business, your calls, and the way you handle customers today.</p>
+      <div class="btn-row" style="margin-top:32px;">
+        <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-green">Book a Demo</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-top">
+    <div class="footer-brand">
+      <a href="/" class="logo">
+        <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="white"/></svg></span>
+        MeetingScheduled
+      </a>
+      <p>AI systems that turn more opportunities into meetings — outbound intelligence and an AI receptionist, working together.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <p class="footer-col-title">Products</p>
+        <a href="/outbound/">Outbound Sales</a>
+        <a href="/receptionist/">AI Receptionist</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Company</p>
+        <a href="/pricing">Pricing</a>
+        <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Book a Demo</a>
+        <a href="https://reach.meeting-scheduled.com">Login</a>
+        <a href="mailto:sales@meeting-scheduled.com">sales@meeting-scheduled.com</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Legal</p>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© <span id="year"></span> MeetingScheduled. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-close-row">
+      <button class="modal-close" id="modalClose" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+      </button>
+    </div>
+    <div class="modal-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
+    <p class="modal-title">A live audio sample is coming soon</p>
+    <p class="modal-body">Book a demo and we&rsquo;ll walk you through how the AI receptionist sounds when configured for your business.</p>
+    <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="modal-cta">Book a Demo</a>
+  </div>
+</div>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const menuBtn = document.getElementById('menuBtn');
+const mobileNav = document.getElementById('mobileNav');
+const iconOpen = document.getElementById('menuIconOpen');
+const iconClose = document.getElementById('menuIconClose');
+menuBtn.addEventListener('click', () => {
+  const isOpen = mobileNav.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', String(isOpen));
+  iconOpen.style.display = isOpen ? 'none' : 'block';
+  iconClose.style.display = isOpen ? 'block' : 'none';
+});
+mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mobileNav.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  iconOpen.style.display = 'block';
+  iconClose.style.display = 'none';
+}));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href').slice(1);
+    const el = id ? document.getElementById(id) : null;
+    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+
+const modalOverlay = document.getElementById('modalOverlay');
+const hearAiBtn = document.getElementById('hearAiBtn');
+const modalClose = document.getElementById('modalClose');
+function openModal() { modalOverlay.classList.add('open'); }
+function closeModal() { modalOverlay.classList.remove('open'); }
+hearAiBtn.addEventListener('click', openModal);
+modalClose.addEventListener('click', closeModal);
+modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+
+</body>
+</html>

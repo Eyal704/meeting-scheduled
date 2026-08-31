@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outbound Sales — MeetingScheduled</title>
+<meta name="description" content="MeetingScheduled researches your market, identifies relevant accounts and signals, investigates each prospect, and turns that context into personalized outbound.">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MeetingScheduled">
+<meta property="og:title" content="Outbound Sales — MeetingScheduled">
+<meta property="og:description" content="MeetingScheduled researches your market, identifies relevant accounts and signals, investigates each prospect, and turns that context into personalized outbound.">
+<meta property="og:url" content="https://www.meeting-scheduled.com/outbound/">
+<meta property="og:image" content="https://www.meeting-scheduled.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Outbound Sales — MeetingScheduled">
+<meta name="twitter:description" content="Know who to contact, why now, and what to say.">
+<meta name="twitter:image" content="https://www.meeting-scheduled.com/og-image.png">
+
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="canonical" href="https://www.meeting-scheduled.com/outbound/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1c1e;--muted:#6c6c72;--faint:#a0a0a8;--border:#e4e4e0;--border-subtle:#f0eeec;--canvas:#fdf9fa;
+  --rose:#c9536e;--rose-dark:#b84a62;--rose-darker:#a84059;--rose-tint:#fdf2f4;
+  --amber:#b8802f;--amber-tint:#fbf3e7;
+  --green:#3d6b52;--green-dark:#325943;--green-tint:#e8f2ec;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.5;letter-spacing:-0.01em;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;}
+.container{max-width:1152px;margin:0 auto;padding:0 24px;}
+
+header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border-subtle);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:var(--ink);}
+.logo-mark{width:32px;height:32px;border-radius:9px;background:var(--rose);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo-mark svg{width:16px;height:16px;}
+.nav-links{display:none;align-items:center;gap:32px;}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);}
+.nav-links a:hover{color:var(--rose);}
+@media(min-width:900px){.nav-links{display:flex;}}
+.nav-actions{display:none;align-items:center;gap:16px;}
+@media(min-width:640px){.nav-actions{display:flex;}}
+.nav-login{font-size:14px;font-weight:500;color:var(--muted);}
+.nav-login:hover{color:var(--rose);}
+.menu-btn{display:flex;width:40px;height:40px;align-items:center;justify-content:center;border:0;background:none;cursor:pointer;color:var(--ink);}
+@media(min-width:900px){.menu-btn{display:none;}}
+.mobile-nav{display:none;border-top:1px solid var(--border-subtle);background:#fff;}
+.mobile-nav.open{display:block;}
+.mobile-nav .container{display:flex;flex-direction:column;gap:2px;padding-top:16px;padding-bottom:16px;}
+.mobile-nav a{display:block;padding:12px;border-radius:8px;font-weight:500;font-size:15px;color:var(--ink);}
+.mobile-nav a:hover{background:var(--rose-tint);color:var(--rose);}
+.mobile-nav .btn{margin-top:8px;}
+
+.btn{display:inline-flex;height:48px;align-items:center;justify-content:center;gap:6px;border-radius:10px;padding:0 24px;font-size:14px;font-weight:600;white-space:nowrap;transition:background .15s;border:0;cursor:pointer;}
+.btn-rose{background:var(--rose);color:#fff;}
+.btn-rose:hover{background:var(--rose-dark);}
+.btn-secondary{background:#f5f3f2;color:var(--ink);}
+.btn-secondary:hover{background:#edebe8;}
+.btn-ghost-rose{color:var(--rose);height:auto;padding:0;background:none;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:4px;}
+.btn-ghost-rose:hover{color:var(--rose-dark);}
+.btn-sm{height:40px;padding:0 20px;font-size:13px;}
+.btn-row{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+@media(min-width:640px){.btn-row{flex-direction:row;}}
+
+.eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;margin-bottom:16px;color:var(--rose);}
+h1{font-size:38px;font-weight:600;line-height:1.1;letter-spacing:-.02em;}
+@media(min-width:640px){h1{font-size:54px;}}
+h2{font-size:30px;font-weight:600;line-height:1.15;letter-spacing:-.02em;}
+@media(min-width:640px){h2{font-size:38px;}}
+.section-head{max-width:640px;}
+.section-head.center{margin:0 auto;text-align:center;}
+.subtitle{font-size:16px;color:var(--muted);line-height:1.6;margin-top:16px;}
+.section{padding:80px 0;}
+.section-border-top{border-top:1px solid var(--border-subtle);}
+.bg-canvas{background:var(--canvas);}
+
+.hero{position:relative;overflow:hidden;text-align:center;padding:80px 0 64px;}
+@media(min-width:640px){.hero{padding-top:96px;}}
+.hero-glow{pointer-events:none;position:absolute;inset:0;background:radial-gradient(ellipse 80% 45% at 50% 0%,rgba(201,83,110,.06) 0%,transparent 60%);}
+.hero-inner{position:relative;max-width:720px;margin:0 auto;}
+.hero p.lede{font-size:17px;color:var(--muted);line-height:1.6;margin-top:24px;max-width:560px;margin-left:auto;margin-right:auto;}
+.hero .btn-row{margin-top:36px;}
+
+/* Workflow step flow (reused pattern) */
+.step-box{border:1px solid var(--border);border-radius:20px;background:#fff;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,.04);}
+@media(min-width:640px){.step-box{padding:32px;}}
+.step-list-mobile{display:flex;flex-direction:column;gap:12px;}
+@media(min-width:640px){.step-list-mobile{display:none;}}
+.step-list-desktop{display:none;}
+@media(min-width:640px){.step-list-desktop{display:flex;align-items:flex-start;}}
+.step-item-m{display:flex;align-items:flex-start;gap:16px;}
+.step-badge{width:48px;height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-item-m .step-label{padding-top:10px;font-size:14px;font-weight:600;}
+.step-item-m .step-desc{font-size:13px;color:var(--muted);margin-top:2px;}
+.step-arrow-v{margin-left:24px;height:24px;display:flex;align-items:center;color:var(--faint);}
+.step-col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.step-col .step-label{margin-top:12px;font-size:13.5px;font-weight:600;}
+.step-col .step-desc{margin-top:4px;font-size:12.5px;color:var(--muted);max-width:140px;line-height:1.3;}
+.step-arrow-h{width:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding-top:24px;color:var(--faint);}
+
+/* Research visualization */
+.pillars-grid{display:grid;grid-template-columns:1fr;gap:20px;}
+@media(min-width:640px){.pillars-grid{grid-template-columns:repeat(3,1fr);}}
+.pillar-card{border:1px solid var(--border);border-radius:18px;background:#fff;padding:24px;}
+.pillar-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.pillar-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;}
+.pillar-title{margin-top:6px;font-size:17px;font-weight:600;}
+.pillar-list{margin-top:16px;display:flex;flex-direction:column;gap:8px;list-style:none;}
+.pillar-list li{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;color:var(--muted);line-height:1.4;}
+.pillar-dot{width:4px;height:4px;border-radius:999px;margin-top:7px;flex-shrink:0;}
+.converge-arrow{display:flex;justify-content:center;padding:16px 0;color:var(--faint);}
+.converge-card{border-radius:18px;background:var(--rose-darker);padding:28px;}
+@media(min-width:640px){.converge-card{padding:32px;}}
+.converge-head{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.converge-icon{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;}
+.converge-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.65);}
+.converge-title{margin-top:2px;font-size:18px;font-weight:600;color:#fff;}
+.converge-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;}
+@media(min-width:640px){.converge-grid{grid-template-columns:repeat(3,1fr);}}
+.converge-line{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;color:rgba(255,255,255,.85);line-height:1.4;}
+.converge-dot{width:4px;height:4px;border-radius:999px;background:var(--rose);margin-top:7px;flex-shrink:0;}
+
+/* Output cards */
+.output-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:640px){.output-grid{grid-template-columns:1fr 1fr;}}
+@media(min-width:1024px){.output-grid{grid-template-columns:repeat(4,1fr);}}
+.output-card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:20px;transition:box-shadow .15s;}
+.output-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.05);}
+.output-icon{width:40px;height:40px;border-radius:12px;background:var(--rose-tint);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+.output-title{font-size:14.5px;font-weight:600;}
+.output-desc{margin-top:6px;font-size:13.5px;color:var(--muted);line-height:1.5;}
+
+footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
+.footer-top{display:flex;flex-direction:column;gap:40px;padding:56px 0;}
+@media(min-width:640px){.footer-top{flex-direction:row;justify-content:space-between;}}
+.footer-brand{max-width:280px;}
+.footer-brand p{margin-top:16px;font-size:14px;color:var(--muted);line-height:1.6;}
+.footer-cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+@media(min-width:480px){.footer-cols{grid-template-columns:repeat(3,auto);gap:56px;}}
+.footer-col-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);margin-bottom:12px;}
+.footer-col a{display:block;font-size:14px;color:var(--muted);margin-bottom:10px;}
+.footer-col a:hover{color:var(--rose);}
+.footer-bottom{border-top:1px solid var(--border-subtle);padding:24px 0;display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--faint);}
+@media(min-width:640px){.footer-bottom{flex-direction:row;justify-content:space-between;}}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="MeetingScheduled home">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="white"/></svg></span>
+      MeetingScheduled
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/outbound/">Outbound Sales</a>
+      <a href="/receptionist/">AI Receptionist</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="/pricing">Pricing</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://reach.meeting-scheduled.com" class="nav-login">Login</a>
+      <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-rose btn-sm">Book a Demo</a>
+    </div>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <svg id="menuIconOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      <svg id="menuIconClose" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <div class="container">
+      <a href="/outbound/">Outbound Sales</a>
+      <a href="/receptionist/">AI Receptionist</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="/pricing">Pricing</a>
+      <a href="https://reach.meeting-scheduled.com">Login</a>
+      <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-rose">Book a Demo</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <p class="eyebrow">MeetingScheduled Outbound Sales</p>
+      <h1>Know who to contact, why now, and what to say.</h1>
+      <p class="lede">MeetingScheduled researches your market, identifies accounts and buying signals worth acting on, investigates each prospect, and turns that context into outreach that reads like someone actually did the homework.</p>
+      <div class="btn-row">
+        <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-rose">Book a Demo</a>
+        <a href="#how-it-works" class="btn btn-secondary">See how it works</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head" style="margin-bottom:40px;">
+        <p class="eyebrow">The Pipeline</p>
+        <h2>Not another bulk sequencer</h2>
+        <p class="subtitle">Every step is grounded in research before a single word is drafted — the intelligence comes first, the message comes second.</p>
+      </div>
+      <div class="step-box">
+        <div class="step-list-mobile">
+          <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div><div><p class="step-label">Identify Accounts</p><p class="step-desc">ICP-fit companies worth pursuing</p></div></div>
+          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+          <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div><p class="step-label">Detect Signals</p><p class="step-desc">Live timing and buying signals</p></div></div>
+          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+          <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div><div><p class="step-label">Research the Account</p><p class="step-desc">What the company actually does</p></div></div>
+          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+          <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><p class="step-label">Research the Person</p><p class="step-desc">Role, priorities, background</p></div></div>
+          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+          <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></div><div><p class="step-label">Create Outreach</p><p class="step-desc">Messaging grounded in the research</p></div></div>
+          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+          <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><p class="step-label">Support the Conversation</p><p class="step-desc">Follow-ups and call prep</p></div></div>
+        </div>
+        <div class="step-list-desktop">
+          <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div><p class="step-label">Identify Accounts</p><p class="step-desc">ICP-fit companies worth pursuing</p></div>
+          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><p class="step-label">Detect Signals</p><p class="step-desc">Live timing and buying signals</p></div>
+          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div><p class="step-label">Research the Account</p><p class="step-desc">What the company actually does</p></div>
+          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><p class="step-label">Research the Person</p><p class="step-desc">Role, priorities, background</p></div>
+          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></div><p class="step-label">Create Outreach</p><p class="step-desc">Messaging grounded in the research</p></div>
+          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><p class="step-label">Support the Conversation</p><p class="step-desc">Follow-ups and call prep</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-border-top bg-canvas section">
+    <div class="container">
+      <div class="section-head center" style="margin-bottom:48px;">
+        <p class="eyebrow">The Differentiator</p>
+        <h2>Research before a single word is drafted</h2>
+        <p class="subtitle">Three intelligence layers combine into one brief on every prospect — what makes them relevant, why they're worth contacting now, and what to actually say.</p>
+      </div>
+
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon" style="background:var(--rose-tint)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div>
+          <p class="pillar-eyebrow" style="color:var(--rose)">Company Intelligence</p>
+          <p class="pillar-title">Who is relevant?</p>
+          <ul class="pillar-list">
+            <li><span class="pillar-dot" style="background:var(--rose)"></span>ICP fit</li>
+            <li><span class="pillar-dot" style="background:var(--rose)"></span>Company characteristics</li>
+            <li><span class="pillar-dot" style="background:var(--rose)"></span>Business model</li>
+            <li><span class="pillar-dot" style="background:var(--rose)"></span>Market context</li>
+          </ul>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon" style="background:var(--amber-tint)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b8802f" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <p class="pillar-eyebrow" style="color:var(--amber)">Timing Intelligence</p>
+          <p class="pillar-title">Why now?</p>
+          <ul class="pillar-list">
+            <li><span class="pillar-dot" style="background:var(--amber)"></span>Hiring activity</li>
+            <li><span class="pillar-dot" style="background:var(--amber)"></span>Expansion or leadership change</li>
+            <li><span class="pillar-dot" style="background:var(--amber)"></span>Technology and commercial signals</li>
+            <li><span class="pillar-dot" style="background:var(--amber)"></span>Other live buying signals</li>
+          </ul>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon" style="background:var(--green-tint)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <p class="pillar-eyebrow" style="color:var(--green)">Person Intelligence</p>
+          <p class="pillar-title">Why this person?</p>
+          <ul class="pillar-list">
+            <li><span class="pillar-dot" style="background:var(--green)"></span>Role and responsibility</li>
+            <li><span class="pillar-dot" style="background:var(--green)"></span>Background</li>
+            <li><span class="pillar-dot" style="background:var(--green)"></span>Priorities</li>
+            <li><span class="pillar-dot" style="background:var(--green)"></span>Relevant activity</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="converge-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+
+      <div class="converge-card">
+        <div class="converge-head">
+          <div class="converge-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z"/></svg></div>
+          <div>
+            <p class="converge-eyebrow">Converges Into</p>
+            <p class="converge-title">Prospect Intelligence</p>
+          </div>
+        </div>
+        <div class="converge-grid">
+          <div class="converge-line"><span class="converge-dot"></span>Why them</div>
+          <div class="converge-line"><span class="converge-dot"></span>Why now</div>
+          <div class="converge-line"><span class="converge-dot"></span>What matters</div>
+          <div class="converge-line"><span class="converge-dot"></span>What to say</div>
+          <div class="converge-line"><span class="converge-dot"></span>What not to claim</div>
+          <div class="converge-line"><span class="converge-dot"></span>What the salesperson should know before calling</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head" style="margin-bottom:40px;">
+        <p class="eyebrow">Output</p>
+        <h2>Every research finding becomes something you can send</h2>
+        <p class="subtitle">The same prospect brief feeds every channel, so the story stays consistent from the first email to the follow-up call.</p>
+      </div>
+      <div class="output-grid">
+        <div class="output-card">
+          <div class="output-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></div>
+          <p class="output-title">Personalized Email</p>
+          <p class="output-desc">Drafted and sent from your own Gmail account, grounded in the research brief.</p>
+        </div>
+        <div class="output-card">
+          <div class="output-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+          <p class="output-title">LinkedIn Connection Note</p>
+          <p class="output-desc">A low-pressure connection request that references the email already sent.</p>
+        </div>
+        <div class="output-card">
+          <div class="output-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div>
+          <p class="output-title">Automated Follow-ups</p>
+          <p class="output-desc">Scheduled follow-ups so a good-fit account doesn't go cold after one email.</p>
+        </div>
+        <div class="output-card">
+          <div class="output-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <p class="output-title">Call Prep</p>
+          <p class="output-desc">A grounded opener and talking points before you dial, built from the same research.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-border-top section" style="text-align:center;">
+    <div class="container">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="1.75" style="margin:0 auto 20px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      <h2>Ready to see it work on your own market?</h2>
+      <p class="subtitle" style="max-width:480px;margin-left:auto;margin-right:auto;">Book a demo and we'll walk through what MeetingScheduled finds for accounts that look like yours.</p>
+      <div class="btn-row" style="margin-top:32px;">
+        <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-rose">Book a Demo</a>
+        <a href="/receptionist/" class="btn-ghost-rose" style="height:auto;">Explore AI Receptionist →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-top">
+    <div class="footer-brand">
+      <a href="/" class="logo">
+        <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="white"/></svg></span>
+        MeetingScheduled
+      </a>
+      <p>AI systems that turn more opportunities into meetings — outbound intelligence and an AI receptionist, working together.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <p class="footer-col-title">Products</p>
+        <a href="/outbound/">Outbound Sales</a>
+        <a href="/receptionist/">AI Receptionist</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Company</p>
+        <a href="/pricing">Pricing</a>
+        <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Book a Demo</a>
+        <a href="https://reach.meeting-scheduled.com">Login</a>
+        <a href="mailto:sales@meeting-scheduled.com">sales@meeting-scheduled.com</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Legal</p>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© <span id="year"></span> MeetingScheduled. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+const menuBtn = document.getElementById('menuBtn');
+const mobileNav = document.getElementById('mobileNav');
+const iconOpen = document.getElementById('menuIconOpen');
+const iconClose = document.getElementById('menuIconClose');
+menuBtn.addEventListener('click', () => {
+  const isOpen = mobileNav.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', String(isOpen));
+  iconOpen.style.display = isOpen ? 'none' : 'block';
+  iconClose.style.display = isOpen ? 'block' : 'none';
+});
+mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mobileNav.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  iconOpen.style.display = 'block';
+  iconClose.style.display = 'none';
+}));
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href').slice(1);
+    const el = id ? document.getElementById(id) : null;
+    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+
+</body>
+</html>
