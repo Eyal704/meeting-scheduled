@@ -96,6 +96,10 @@ h3{font-size:22px;font-weight:600;}
 .hero p.lede{font-size:17px;color:var(--muted);line-height:1.6;margin-top:24px;max-width:560px;margin-left:auto;margin-right:auto;}
 .hero p.lede-sm{font-size:14px;color:var(--faint);margin-top:8px;}
 .hero .btn-row{margin-top:36px;}
+.hero-visual{position:relative;width:260px;height:260px;border-radius:50%;margin:48px auto 0;overflow:hidden;background:conic-gradient(from 160deg,var(--green-tint),#fff 35%,var(--rose-tint) 70%,var(--green-tint));box-shadow:0 24px 60px -20px rgba(61,107,82,.35),0 8px 24px rgba(0,0,0,.06);}
+@media(min-width:640px){.hero-visual{width:340px;height:340px;}}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s;}
+.hero-visual.has-video .hero-video{opacity:1;}
 
 /* Call demo */
 .demo-grid{display:grid;grid-template-columns:1fr;gap:24px;}
@@ -247,8 +251,8 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
       MeetingScheduled
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="/outbound/">Outbound Sales</a>
       <a href="/receptionist/">AI Receptionist</a>
+      <a href="/outbound/">Outbound Sales</a>
     </nav>
     <div class="nav-actions">
       <a href="https://reach.meeting-scheduled.com" class="nav-login">Login</a>
@@ -261,8 +265,8 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
   </div>
   <div class="mobile-nav" id="mobileNav">
     <div class="container">
-      <a href="/outbound/">Outbound Sales</a>
       <a href="/receptionist/">AI Receptionist</a>
+      <a href="/outbound/">Outbound Sales</a>
       <a href="https://reach.meeting-scheduled.com">Login</a>
       <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-rose">Book a Demo</a>
     </div>
@@ -281,6 +285,11 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
       <div class="btn-row">
         <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-green">Book a Demo</a>
         <button type="button" class="btn btn-secondary js-open-voice-modal">Try Our Voice Agent</button>
+      </div>
+      <div class="hero-visual" id="heroVisual">
+        <video class="hero-video" id="heroVideo" autoplay muted loop playsinline aria-hidden="true">
+          <source src="/updates/receptionist-hero.mp4" type="video/mp4">
+        </video>
       </div>
     </div>
   </section>
@@ -620,8 +629,8 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
     <div class="footer-cols">
       <div class="footer-col">
         <p class="footer-col-title">Products</p>
-        <a href="/outbound/">Outbound Sales</a>
         <a href="/receptionist/">AI Receptionist</a>
+        <a href="/outbound/">Outbound Sales</a>
       </div>
       <div class="footer-col">
         <p class="footer-col-title">Company</p>
@@ -726,6 +735,16 @@ document.querySelectorAll('.js-open-voice-modal').forEach(el => el.addEventListe
 voiceModalClose.addEventListener('click', closeVoiceModal);
 voiceModalOverlay.addEventListener('click', e => { if (e.target === voiceModalOverlay) closeVoiceModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVoiceModal(); });
+
+// Hero video: /updates/receptionist-hero.mp4 doesn't exist yet. Until it's
+// added, the video element simply never fires loadeddata and the gradient
+// circle stays as the visual — no broken-video icon, no console noise.
+const heroVideo = document.getElementById('heroVideo');
+if (heroVideo) {
+  heroVideo.addEventListener('loadeddata', () => {
+    document.getElementById('heroVisual').classList.add('has-video');
+  });
+}
 </script>
 
 </body>
