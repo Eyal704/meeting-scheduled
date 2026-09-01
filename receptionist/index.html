@@ -96,10 +96,18 @@ h3{font-size:22px;font-weight:600;}
 .hero p.lede{font-size:17px;color:var(--muted);line-height:1.6;margin-top:24px;max-width:560px;margin-left:auto;margin-right:auto;}
 .hero p.lede-sm{font-size:14px;color:var(--faint);margin-top:8px;}
 .hero .btn-row{margin-top:36px;}
-.hero-visual{position:relative;width:208px;height:208px;border-radius:50%;margin:48px auto 0;overflow:hidden;box-shadow:0 24px 60px -20px rgba(61,107,82,.35),0 8px 24px rgba(0,0,0,.06);}
+.hero-visual{position:relative;width:208px;height:208px;border-radius:50%;margin:48px auto 0;overflow:hidden;background:#f4f9f6;box-shadow:0 24px 60px -20px rgba(61,107,82,.35),0 8px 24px rgba(0,0,0,.06);}
 @media(min-width:640px){.hero-visual{width:272px;height:272px;}}
-.hero-visual-spin{position:absolute;top:-40%;left:-40%;width:180%;height:180%;background:conic-gradient(from 0deg,rgba(61,107,82,.6),#fff 16%,rgba(201,83,110,.55) 35%,#fff 54%,rgba(61,107,82,.6) 73%,rgba(201,83,110,.55) 88%,rgba(61,107,82,.6));animation:hero-visual-rotate 16s linear infinite;}
-@keyframes hero-visual-rotate{to{transform:rotate(360deg);}}
+.hero-blob{position:absolute;border-radius:50%;filter:blur(20px);}
+@media(min-width:640px){.hero-blob{filter:blur(26px);}}
+.hero-blob-1{width:75%;height:75%;top:-15%;left:-10%;background:radial-gradient(circle,rgba(61,107,82,.95) 0%,rgba(61,107,82,0) 72%);animation:blob-drift-1 9s ease-in-out infinite;}
+.hero-blob-2{width:68%;height:68%;bottom:-18%;right:-12%;background:radial-gradient(circle,rgba(89,148,114,.9) 0%,rgba(89,148,114,0) 72%);animation:blob-drift-2 11s ease-in-out infinite;}
+.hero-blob-3{width:55%;height:55%;top:22%;left:28%;background:radial-gradient(circle,rgba(61,107,82,.75) 0%,rgba(61,107,82,0) 72%);animation:blob-drift-3 7.5s ease-in-out infinite;}
+.hero-blob-4{width:42%;height:42%;top:8%;right:2%;background:radial-gradient(circle,rgba(201,83,110,.7) 0%,rgba(201,83,110,0) 72%);animation:blob-drift-4 8.5s ease-in-out infinite;}
+@keyframes blob-drift-1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(16%,14%) scale(1.15);}}
+@keyframes blob-drift-2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-14%,-16%) scale(1.12);}}
+@keyframes blob-drift-3{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(-18%,12%) scale(1.2);}66%{transform:translate(14%,-10%) scale(0.88);}}
+@keyframes blob-drift-4{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-12%,16%) scale(0.85);}}
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s;z-index:1;}
 .hero-visual.has-video .hero-video{opacity:1;}
 
@@ -289,7 +297,10 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
         <button type="button" class="btn btn-secondary js-open-voice-modal">Try Our Voice Agent</button>
       </div>
       <div class="hero-visual" id="heroVisual">
-        <div class="hero-visual-spin" aria-hidden="true"></div>
+        <div class="hero-blob hero-blob-1" aria-hidden="true"></div>
+        <div class="hero-blob hero-blob-2" aria-hidden="true"></div>
+        <div class="hero-blob hero-blob-3" aria-hidden="true"></div>
+        <div class="hero-blob hero-blob-4" aria-hidden="true"></div>
         <video class="hero-video" id="heroVideo" autoplay muted loop playsinline aria-hidden="true">
           <source src="/updates/receptionist-hero.mp4" type="video/mp4">
         </video>
