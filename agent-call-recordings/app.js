@@ -46,6 +46,25 @@
     }
   }
 
+  const safeFilePart = (value) => String(value || 'call').replace(/[^a-z0-9+_-]+/gi, '-').replace(/^-|-$/g, '')
+
+  const saveBlob = (blob, filename) => {
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = filename
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    setTimeout(() => URL.revokeObjectURL(url), 1000)
+  }
+
+  const fetchAudioBlob = async (recordingSid) => {
+    const response = await fetch(`${API_BASE}/audio?recordingSid=${encodeURIComponent(recordingSid)}`, { credentials: 'include' })
+    if (!response.ok) throw new Error('audio_failed')
+    return response.blob()
+  }
+
   const emptyState = (title, copy, error = false) => {
     els.recordingList.innerHTML = `
       <div class="empty-state ${error ? 'error-state' : ''}">
@@ -91,9 +110,7 @@
       if (!audio) {
         button.disabled = true
         try {
-          const response = await fetch(`${API_BASE}/audio?recordingSid=${encodeURIComponent(item.recordingSid)}`, { credentials: 'include' })
-          if (!response.ok) throw new Error('audio_failed')
-          audio = new Audio(URL.createObjectURL(await response.blob()))
+          audio = new Audio(URL.createObjectURL(await fetchAudioBlob(item.recordingSid)))
           audio.addEventListener('timeupdate', () => {
             const ratio = audio.duration ? audio.currentTime / audio.duration : 0
             progress.style.width = `${ratio * 100}%`
@@ -118,11 +135,49 @@
     })
   }
 
+  const wireDownload = (row, item) => {
+    const button = row.querySelector('.download-button')
+    const label = button.querySelector('span')
+    button.addEventListener('click', async () => {
+      button.disabled = true
+      button.classList.add('loading')
+      label.textContent = 'Preparing…'
+      try {
+        const blob = await fetchAudioBlob(item.recordingSid)
+        const extension = blob.type.includes('wav') ? 'wav' : 'mp3'
+        const day = new Date(item.createdAt).toISOString().slice(0, 10)
+        saveBlob(blob, `${day}-${safeFilePart(item.remoteNumber)}-${safeFilePart(item.recordingSid)}.${extension}`)
+        label.textContent = 'Downloaded'
+      } catch {
+        label.textContent = 'Try again'
+      } finally {
+        button.disabled = false
+        button.classList.remove('loading')
+        setTimeout(() => { label.textContent = 'Download' }, 1800)
+      }
+    })
+  }
+
   const wireTranscript = (row, item) => {
     const button = row.querySelector('.transcript-button')
     const panel = row.querySelector('.transcript-panel')
     const output = panel.querySelector('p')
+    const copyButton = panel.querySelector('.copy-transcript-button')
+    const downloadButton = panel.querySelector('.download-transcript-button')
     const cacheKey = `ms-recording-transcript:${item.recordingSid}`
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(output.textContent)
+        copyButton.textContent = 'Copied'
+      } catch {
+        copyButton.textContent = 'Copy failed'
+      }
+      setTimeout(() => { copyButton.textContent = 'Copy' }, 1600)
+    })
+    downloadButton.addEventListener('click', () => {
+      const day = new Date(item.createdAt).toISOString().slice(0, 10)
+      saveBlob(new Blob([output.textContent], { type: 'text/plain;charset=utf-8' }), `${day}-${safeFilePart(item.remoteNumber)}-transcript.txt`)
+    })
     button.addEventListener('click', async () => {
       if (!panel.classList.contains('hidden')) { panel.classList.add('hidden'); return }
       const cached = localStorage.getItem(cacheKey)
@@ -165,6 +220,7 @@
       row.querySelector('.audio-time').textContent = formatDuration(item.duration)
       wireAudio(row, item)
       wireTranscript(row, item)
+      wireDownload(row, item)
       els.recordingList.appendChild(row)
     })
   }
