@@ -17,8 +17,22 @@
     template: document.querySelector('#recordingTemplate'),
   }
 
+  const fetchWithRetry = async (url, options, attempts = 3) => {
+    let response
+    for (let attempt = 0; attempt < attempts; attempt += 1) {
+      try {
+        response = await fetch(url, options)
+        if (response.ok || response.status < 500 || attempt === attempts - 1) return response
+      } catch (error) {
+        if (attempt === attempts - 1) throw error
+      }
+      await new Promise((resolve) => setTimeout(resolve, 450 * (attempt + 1)))
+    }
+    return response
+  }
+
   const api = async (path = '') => {
-    const response = await fetch(`${API_BASE}${path}`, { credentials: 'include', cache: 'no-store' })
+    const response = await fetchWithRetry(`${API_BASE}${path}`, { credentials: 'include', cache: 'no-store' })
     const body = await response.json().catch(() => ({}))
     if (!response.ok) throw Object.assign(new Error(body.error || 'request_failed'), { status: response.status })
     return body
@@ -60,7 +74,7 @@
   }
 
   const fetchAudioBlob = async (recordingSid) => {
-    const response = await fetch(`${API_BASE}/audio?recordingSid=${encodeURIComponent(recordingSid)}`, { credentials: 'include' })
+    const response = await fetchWithRetry(`${API_BASE}/audio?recordingSid=${encodeURIComponent(recordingSid)}`, { credentials: 'include', cache: 'no-store' })
     if (!response.ok) throw new Error('audio_failed')
     return response.blob()
   }
