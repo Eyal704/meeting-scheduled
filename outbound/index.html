@@ -25,7 +25,7 @@
 <link rel="canonical" href="https://www.meeting-scheduled.com/outbound/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#1c1c1e;--muted:#6c6c72;--faint:#a0a0a8;--border:#e4e4e0;--border-subtle:#f0eeec;--canvas:#fdf9fa;
@@ -150,53 +150,315 @@ h2{font-size:30px;font-weight:600;line-height:1.15;letter-spacing:-.02em;}
 .relevance-points li{display:flex;align-items:flex-start;gap:10px;font-size:15px;font-weight:600;color:var(--rose-darker);list-style:none;line-height:1.4;}
 .relevance-spark{color:var(--amber);flex-shrink:0;}
 
-/* Flow HUD badges (above the 5-step pipeline motion) */
-.flow-hud{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:24px;}
-.flow-hud span{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:5px 12px;}
-.flow-hud-live{color:var(--rose) !important;border-color:rgba(201,83,110,.3) !important;}
-.flow-hud-live i{width:6px;height:6px;border-radius:999px;background:var(--rose);display:inline-block;animation:flow-pulse 1.6s ease-in-out infinite;}
-@keyframes flow-pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-.flow-num{width:40px;height:40px;border-radius:999px;background:var(--rose-tint);color:var(--rose);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+/* ═══ Pipeline motion diagram — ported from classic/index.html #product-story .flow-diagram (same markup/animation; rose wash + glow alphas turned down per "less pink" note) ═══ */
+#autopilot-transplant {
+  --rose-100: #fce7ec;
+  --rose-200: #fad4dc;
+  --rose-300: #f3b6c4;
+  --rose:     #c9536e;
+  --wine:     #7c1f33;
+  --text-soft: #6e5560;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --font-display: 'Poppins', system-ui, sans-serif;
+  --font-mono:    'DM Mono', ui-monospace, monospace;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+#autopilot-transplant .flow-diagram {
+  position: relative;
+  min-height: 380px;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(201,83,110,0.13);
+  border-radius: 30px;
+  background:
+    radial-gradient(72% 88% at 50% 0%, rgba(201,83,110,0.07), transparent 58%),
+    radial-gradient(82% 118% at 96% 100%, rgba(243,182,196,0.10), transparent 55%),
+    linear-gradient(145deg, rgba(255,255,255,0.96), rgba(253,251,251,0.90));
+  box-shadow:
+    0 28px 80px -42px rgba(124,31,51,0.38),
+    inset 0 1px 0 rgba(255,255,255,0.72);
+  padding: clamp(22px, 3vw, 34px);
+}
+#autopilot-transplant .flow-diagram::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(rgba(124,31,51,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,31,51,0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(82% 78% at 50% 50%, #000 0%, transparent 76%);
+  pointer-events: none;
+}
+#autopilot-transplant .flow-diagram::after {
+  content: '';
+  position: absolute;
+  inset: -45% -20%;
+  z-index: 0;
+  background: linear-gradient(100deg, transparent 38%, rgba(255,255,255,0.34) 50%, transparent 62%);
+  transform: translateX(-45%);
+  animation: flowScan 7s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes flowScan {
+  0%, 18% { transform: translateX(-55%) rotate(0.001deg); opacity: 0; }
+  38%, 58% { opacity: 0.9; }
+  82%, 100% { transform: translateX(55%) rotate(0.001deg); opacity: 0; }
+}
+#autopilot-transplant .flow-diagram__hud {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: clamp(18px, 3vw, 28px);
+  color: rgba(124,31,51,0.68);
+  font-family: var(--font-mono);
+  font-size: 0.69rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+#autopilot-transplant .flow-diagram__hud span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 30px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(201,83,110,0.13);
+  background: rgba(255,255,255,0.70);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.82);
+}
+#autopilot-transplant .flow-diagram__hud i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--rose);
+  box-shadow: 0 0 0 5px rgba(201,83,110,0.08), 0 0 12px rgba(201,83,110,0.20);
+  animation: flowLivePulse 1.8s ease-in-out infinite;
+}
+@keyframes flowLivePulse {
+  0%, 100% { transform: scale(0.82); opacity: 0.72; }
+  50% { transform: scale(1.18); opacity: 1; }
+}
+#autopilot-transplant .flow-diagram__svg {
+  position: absolute;
+  inset: 74px 34px 26px;
+  width: calc(100% - 68px);
+  height: calc(100% - 100px);
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+#autopilot-transplant .flow-line { fill: none; stroke-linecap: round; }
+#autopilot-transplant .flow-line--base { stroke: rgba(124,31,51,0.13); stroke-width: 5; }
+#autopilot-transplant .flow-line--live {
+  stroke: url(#flowStroke);
+  stroke-width: 5;
+  stroke-dasharray: 16 18;
+  filter: drop-shadow(0 0 6px rgba(201,83,110,0.14));
+  animation: flowDash 14s linear infinite;
+}
+@keyframes flowDash { to { stroke-dashoffset: -280; } }
+#autopilot-transplant .flow-signal { fill: var(--rose); opacity: 0.6; }
+#autopilot-transplant .flow-signal--two { fill: var(--rose-300); opacity: 0.5; }
+#autopilot-transplant .flow-signal--three { fill: var(--wine); opacity: 0.36; }
+#autopilot-transplant .flow-nodes {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  min-height: 250px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(10px, 1.3vw, 16px);
+  align-items: center;
+}
+#autopilot-transplant .flow-node {
+  position: relative;
+  min-height: 174px;
+  display: grid;
+  gap: 8px;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  padding: 20px 13px;
+  border: 1px solid rgba(124,31,51,0.12);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.62)),
+    rgba(255,252,252,0.55);
+  box-shadow:
+    0 18px 50px -32px rgba(124,31,51,0.36),
+    inset 0 1px 0 rgba(255,255,255,0.82);
+  backdrop-filter: blur(12px);
+  transition: transform .28s var(--ease), border-color .28s var(--ease), box-shadow .28s var(--ease), background .28s var(--ease);
+}
+#autopilot-transplant .flow-node::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.48), transparent 32%),
+    radial-gradient(circle at 50% 0%, rgba(201,83,110,0.07), transparent 54%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s var(--ease);
+}
+#autopilot-transplant .flow-node:hover {
+  transform: translateY(-5px);
+  border-color: rgba(201,83,110,0.18);
+  box-shadow:
+    0 24px 58px -30px rgba(124,31,51,0.44),
+    0 0 0 1px rgba(201,83,110,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.90);
+}
+#autopilot-transplant .flow-node:hover::after { opacity: 1; }
+#autopilot-transplant .flow-node:nth-child(even):hover { transform: translateY(32px); }
+#autopilot-transplant .flow-node--final {
+  border-color: rgba(201,83,110,0.30);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(201,83,110,0.09), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.70)),
+    rgba(255,251,251,0.60);
+  box-shadow:
+    0 24px 62px -30px rgba(201,83,110,0.24),
+    inset 0 1px 0 rgba(255,255,255,0.90);
+}
+#autopilot-transplant .flow-node:nth-child(even) { transform: translateY(38px); }
+#autopilot-transplant .flow-node__num {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--wine);
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255,255,255,0.62), transparent 32%),
+    linear-gradient(145deg, var(--rose-100), #fff);
+  border: 1px solid rgba(201,83,110,0.14);
+  box-shadow: 0 0 0 6px rgba(201,83,110,0.05), 0 0 14px rgba(201,83,110,0.12);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+}
+#autopilot-transplant .flow-node--final .flow-node__num {
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255,255,255,0.68), transparent 32%),
+    linear-gradient(145deg, var(--rose-100), var(--rose-200));
+  box-shadow: 0 0 0 6px rgba(201,83,110,0.06), 0 0 16px rgba(201,83,110,0.14);
+}
+#autopilot-transplant .flow-node strong {
+  position: relative;
+  z-index: 1;
+  color: var(--wine);
+  font-family: var(--font-display);
+  font-size: clamp(0.98rem, 1.24vw, 1.12rem);
+  font-weight: 600;
+  line-height: 1.22;
+}
+#autopilot-transplant .flow-node span:last-child {
+  position: relative;
+  z-index: 1;
+  color: var(--text-soft);
+  font-size: 0.84rem;
+  line-height: 1.42;
+}
+@media (max-width: 980px) {
+  #autopilot-transplant .flow-diagram { min-height: auto; }
+  #autopilot-transplant .flow-diagram__svg { inset: 78px 16px 22px; width: calc(100% - 32px); height: calc(100% - 100px); }
+  #autopilot-transplant .flow-nodes { grid-template-columns: repeat(3, minmax(0, 1fr)); min-height: 0; }
+  #autopilot-transplant .flow-node:nth-child(even),
+  #autopilot-transplant .flow-node:nth-child(even):hover { transform: none; }
+}
+@media (max-width: 760px) {
+  #autopilot-transplant .flow-diagram { border-radius: 22px; padding: 16px; }
+  #autopilot-transplant .flow-diagram__svg { display: none; }
+  #autopilot-transplant .flow-diagram__hud { justify-content: flex-start; margin-bottom: 14px; }
+  #autopilot-transplant .flow-diagram__hud span { min-height: 28px; font-size: 0.62rem; }
+  #autopilot-transplant .flow-nodes { grid-template-columns: 1fr; gap: 12px; }
+  #autopilot-transplant .flow-node { min-height: 0; grid-template-columns: 38px minmax(0, 1fr); justify-items: start; text-align: left; align-content: center; padding: 15px; position: relative; }
+  #autopilot-transplant .flow-node:hover,
+  #autopilot-transplant .flow-node:nth-child(even):hover { transform: none; }
+  #autopilot-transplant .flow-node::before {
+    content: '';
+    position: absolute;
+    left: 33px;
+    top: 52px;
+    bottom: -13px;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(201,83,110,0.18), rgba(243,182,196,0.08));
+  }
+  #autopilot-transplant .flow-node:last-child::before { display: none; }
+  #autopilot-transplant .flow-node__num { grid-row: span 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #autopilot-transplant .flow-line--live { stroke-dasharray: none; }
+  #autopilot-transplant .flow-signal { display: none; }
+}
 
-/* Workspace mockup */
-.workspace-mock{border:1px solid var(--border);border-radius:20px;background:#fff;box-shadow:0 20px 50px rgba(0,0,0,.06);overflow:hidden;}
-.wsm-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border-subtle);}
-.wsm-brand{display:flex;align-items:center;gap:10px;}
-.wsm-icon{width:32px;height:32px;border-radius:9px;background:var(--rose);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.wsm-brand strong{display:block;font-size:13.5px;}
-.wsm-brand span{display:block;font-size:11.5px;color:var(--muted);}
-.wsm-pills{display:flex;flex-wrap:wrap;gap:8px;}
-.wsm-pill{font-size:11.5px;font-weight:600;border-radius:999px;padding:5px 12px;background:var(--rose-tint);color:var(--rose);}
-.wsm-pill--alert{background:var(--amber-tint);color:var(--amber);}
-.wsm-body{display:flex;}
-.wsm-side{display:none;flex-direction:column;gap:2px;padding:16px 12px;border-right:1px solid var(--border-subtle);min-width:150px;}
-@media(min-width:768px){.wsm-side{display:flex;}}
-.wsm-side span{font-size:13px;font-weight:500;color:var(--muted);padding:8px 12px;border-radius:8px;}
-.wsm-side span.active{background:var(--rose-tint);color:var(--rose);font-weight:600;}
-.wsm-main{flex:1;min-width:0;padding:20px;}
-@media(min-width:640px){.wsm-main{padding:24px;}}
-.wsm-assistant{border:1px solid var(--border);border-radius:14px;padding:18px;background:var(--canvas);}
-.wsm-badge{display:inline-block;font-size:11px;font-weight:600;color:var(--rose);background:var(--rose-tint);border-radius:999px;padding:4px 10px;}
-.wsm-q{margin-top:10px;font-size:16px;font-weight:600;}
-.wsm-sub{margin-top:4px;font-size:13px;color:var(--muted);}
-.wsm-chips{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;}
-.wsm-chips span{font-size:12.5px;font-weight:500;border:1px solid var(--border);border-radius:999px;padding:6px 12px;color:var(--ink);background:#fff;}
-.wsm-board{margin-top:16px;display:grid;grid-template-columns:1fr;gap:12px;}
-@media(min-width:640px){.wsm-board{grid-template-columns:repeat(2,1fr);}}
-@media(min-width:900px){.wsm-board{grid-template-columns:repeat(4,1fr);}}
-.wsm-col-head{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:8px;}
-.wsm-col-head span{font-size:11px;color:var(--muted);background:var(--border-subtle);border-radius:999px;padding:2px 8px;}
-.wsm-card{border:1px solid var(--border);border-radius:12px;padding:12px;background:#fff;}
-.wsm-card strong{display:block;font-size:12.5px;}
-.wsm-card span{display:block;margin-top:3px;font-size:11.5px;color:var(--muted);line-height:1.4;}
+/* ═══ Workspace mockup + Who-it's-for grid — ported verbatim from classic/index.html, scoped so classic's own tokens don't leak into the rest of the page ═══ */
+.classic-scope{
+  --border:rgba(184,53,104,0.14);
+  --rose:#B83568;--rose-hover:#8C2050;--rose-soft:#E8A0BE;--rose-pale:#FAF0F5;
+  --rose-dim:rgba(184,53,104,0.08);--rose-border:rgba(184,53,104,0.18);
+  --text:#1C1218;--text2:#4A3040;--muted:#7A5568;--muted2:#A8889A;
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;--mono:'DM Mono',monospace;
+  font-family:var(--sans);color:var(--text);
+}
+.workspace{background:linear-gradient(180deg,rgba(255,255,255,0.82),rgba(255,255,255,0.66));border:1px solid var(--border);border-radius:24px;padding:16px;box-shadow:0 8px 48px rgba(184,53,104,0.10);overflow:hidden;}
+.workspace-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;border-radius:16px 16px 0 0;background:linear-gradient(90deg,rgba(184,53,104,0.12) 0%,rgba(255,255,255,0.14) 50%,rgba(184,53,104,0.07) 100%);border:1px solid var(--rose-border);border-bottom:0;}
+.ws-brand{display:flex;align-items:center;gap:12px;}
+.ws-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#fff;border:1px solid var(--rose-border);box-shadow:0 6px 16px rgba(184,53,104,0.12);font-family:var(--sans);font-weight:800;font-size:10px;letter-spacing:0.04em;color:var(--rose);text-transform:uppercase;}
+.ws-name{font-weight:700;font-size:14px;color:var(--text);letter-spacing:-0.01em;}
+.ws-sub{color:var(--muted);font-size:12px;margin-top:2px;}
+.ws-metrics{display:flex;gap:10px;}
+.ws-pill{padding:8px 16px;border-radius:999px;background:rgba(255,255,255,0.88);border:1px solid var(--rose-border);font-weight:700;font-size:12px;color:var(--text2);white-space:nowrap;}
+.ws-pill.alert{color:var(--rose);}
+.workspace-body{display:grid;grid-template-columns:180px 1fr;min-height:480px;border:1px solid var(--rose-border);border-top:0;border-radius:0 0 16px 16px;overflow:hidden;background:rgba(255,255,255,0.5);}
+.workspace-side{padding:16px;background:linear-gradient(180deg,rgba(242,224,234,0.7) 0%,rgba(248,236,242,0.5) 100%);}
+.side-item{font-size:13px;font-weight:500;padding:12px 14px;border-radius:10px;margin-bottom:4px;color:var(--muted);cursor:pointer;transition:all 0.15s;}
+.side-item.active{color:var(--rose);background:rgba(184,53,104,0.10);border:1px solid var(--rose-border);}
+.workspace-main{padding:16px;background:linear-gradient(180deg,rgba(253,245,248,0.8) 0%,rgba(255,250,252,0.9) 100%);}
+.chat-box{margin-bottom:14px;padding:20px 22px;border-radius:16px;background:rgba(255,255,255,0.82);border:1px solid var(--border);display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;}
+.chat-box::before{content:'';position:absolute;top:0;right:0;width:200px;height:200px;background:radial-gradient(circle at top right,rgba(184,53,104,0.10),transparent 60%);pointer-events:none;}
+.chat-badge{display:inline-flex;align-items:center;width:fit-content;padding:5px 12px;border-radius:999px;background:rgba(184,53,104,0.10);border:1px solid var(--rose-border);color:var(--rose);font-size:11px;font-weight:600;font-family:var(--mono);letter-spacing:0.06em;}
+.chat-box h3{font-family:var(--sans);font-size:1.15rem;font-weight:700;line-height:1.25;letter-spacing:-0.02em;color:var(--text);}
+.chat-subtle{color:var(--muted);font-size:13px;line-height:1.6;}
+.chat-suggestions{display:flex;flex-wrap:wrap;gap:8px;}
+.chip-action{display:inline-flex;align-items:center;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,0.92);border:1px solid var(--rose-border);font-size:12px;color:var(--text2);font-weight:500;cursor:default;font-family:var(--sans);}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+.column{border-radius:14px;padding:12px;border:1px solid rgba(184,53,104,0.08);min-height:300px;}
+.col-prospects{background:rgba(139,92,246,0.12);}
+.col-pending{background:rgba(251,191,36,0.14);}
+.col-call{background:rgba(59,130,246,0.14);}
+.col-meetings{background:rgba(184,53,104,0.16);}
+.column-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.column-head span:first-child{font-size:12px;font-weight:700;color:var(--text2);}
+.col-count{padding:4px 10px;border-radius:999px;background:rgba(255,255,255,0.80);border:1px solid rgba(184,53,104,0.08);color:var(--muted);font-size:11px;font-weight:600;}
+.mini-card{border-radius:12px;background:#fff;border:1px solid rgba(184,53,104,0.07);box-shadow:0 4px 16px rgba(93,49,63,0.05);padding:14px;margin-bottom:8px;}
+.mini-card h4{font-size:12px;font-weight:700;color:var(--text);margin-bottom:5px;}
+.mini-card p{font-size:11px;color:var(--muted);line-height:1.5;margin:0;}
+.mini-foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:11px;color:var(--muted2);}
+.chip{padding:3px 9px;border-radius:999px;font-weight:700;font-size:10px;}
+.chip-rose{background:rgba(184,53,104,0.12);color:var(--rose);}
+.chip-amber{background:rgba(251,191,36,0.18);color:#9a6200;}
+@media(max-width:980px){.workspace-body{grid-template-columns:1fr;}.workspace-side{display:none;}.board{grid-template-columns:1fr 1fr;}}
+@media(max-width:720px){.board{grid-template-columns:1fr;}.workspace-top{flex-direction:column;align-items:flex-start;}.ws-metrics{flex-direction:column;width:100%;}}
 
-/* Who it's for */
-.who-grid{display:grid;grid-template-columns:1fr;gap:32px;}
-@media(min-width:640px){.who-grid{grid-template-columns:1fr 1fr;gap:32px 40px;}}
-@media(min-width:960px){.who-grid{grid-template-columns:repeat(3,1fr);}}
-.who-tag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);border:1px solid rgba(201,83,110,.3);border-radius:6px;padding:4px 10px;background:var(--rose-tint);}
-.who-item h3{margin-top:12px;font-size:17px;font-weight:600;}
-.who-item p{margin-top:8px;font-size:13.5px;color:var(--muted);line-height:1.55;}
+.for-who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+.for-who-grid.row2{grid-template-columns:repeat(2,1fr);margin-top:2px;}
+.for-who-item{background:#ffffff;padding:36px;transition:all 0.35s ease;}
+.for-who-item:hover{background:linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 50%, #FDF5F6 75%, #F5EAF0 100%);}
+.for-who-icon{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--rose);background:var(--rose-dim);border:1px solid var(--rose-border);padding:4px 10px;border-radius:2px;display:inline-block;margin-bottom:18px;}
+.for-who-title{font-family:'Poppins',system-ui,sans-serif;font-weight:600;font-size:17px;line-height:1.2;color:var(--text);margin-bottom:10px;}
+.for-who-body{font-size:13px;color:var(--muted);line-height:1.75;}
+@media(max-width:980px){.for-who-grid,.for-who-grid.row2{grid-template-columns:1fr;}}
 
 footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
 .footer-top{display:flex;flex-direction:column;gap:40px;padding:56px 0;}
@@ -270,34 +532,77 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
         <h2>Not another bulk sequencer</h2>
         <p class="subtitle">A focused path from positioning to prospects, research, outreach, and call prep.</p>
       </div>
-      <div class="flow-hud">
-        <span class="flow-hud-live"><i></i>Live motion</span>
-        <span>Prospect intelligence</span>
-        <span>Outbound system</span>
+      <div id="autopilot-transplant">
+      <div class="flow-diagram" aria-label="MeetingScheduled outbound flow">
+        <div class="flow-diagram__hud" aria-hidden="true">
+          <span><i></i>Live motion</span>
+          <span>Prospect intelligence</span>
+          <span>Outbound system</span>
+        </div>
+        <svg class="flow-diagram__svg" viewBox="0 0 1120 260" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="flowStroke" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#f3b6c4" stop-opacity="0.22" />
+              <stop offset="42%" stop-color="#c9536e" stop-opacity="0.5" />
+              <stop offset="74%" stop-color="#7c1f33" stop-opacity="0.35" />
+              <stop offset="100%" stop-color="#fff7f9" stop-opacity="0.25" />
+            </linearGradient>
+            <filter id="flowGlow" x="-20%" y="-80%" width="140%" height="260%">
+              <feGaussianBlur stdDeviation="7" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+            <path id="outboundFlowPath" d="M72 130 C180 36 284 214 392 130 S604 46 716 130 S928 218 1048 130" />
+          </defs>
+          <use class="flow-line flow-line--base" href="#outboundFlowPath" />
+          <use class="flow-line flow-line--live" href="#outboundFlowPath" />
+          <circle class="flow-signal flow-signal--one" r="8" filter="url(#flowGlow)">
+            <animateMotion dur="7.5s" repeatCount="indefinite">
+              <mpath href="#outboundFlowPath" />
+            </animateMotion>
+          </circle>
+          <circle class="flow-signal flow-signal--two" r="5" filter="url(#flowGlow)">
+            <animateMotion dur="7.5s" begin="2.5s" repeatCount="indefinite">
+              <mpath href="#outboundFlowPath" />
+            </animateMotion>
+          </circle>
+          <circle class="flow-signal flow-signal--three" r="6" filter="url(#flowGlow)">
+            <animateMotion dur="7.5s" begin="5s" repeatCount="indefinite">
+              <mpath href="#outboundFlowPath" />
+            </animateMotion>
+          </circle>
+        </svg>
+
+        <ol class="flow-nodes">
+          <li class="flow-node">
+            <span class="flow-node__num">01</span>
+            <strong>Solution learned</strong>
+            <span>Offer, proof, use cases.</span>
+          </li>
+          <li class="flow-node">
+            <span class="flow-node__num">02</span>
+            <strong>Prospects found</strong>
+            <span>Accounts with a reason to care.</span>
+          </li>
+          <li class="flow-node">
+            <span class="flow-node__num">03</span>
+            <strong>Research gathered</strong>
+            <span>Signals, context, timing.</span>
+          </li>
+          <li class="flow-node">
+            <span class="flow-node__num">04</span>
+            <strong>Outbound built</strong>
+            <span>Angle, proof, case study.</span>
+          </li>
+          <li class="flow-node flow-node--final">
+            <span class="flow-node__num">05</span>
+            <strong>Sales development running</strong>
+            <span>Research, outreach, and call prep.</span>
+          </li>
+        </ol>
       </div>
-      <div class="step-box">
-        <div class="step-list-mobile">
-          <div class="step-item-m"><div class="flow-num">01</div><div><p class="step-label">Solution learned</p><p class="step-desc">Offer, proof, use cases</p></div></div>
-          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-          <div class="step-item-m"><div class="flow-num">02</div><div><p class="step-label">Prospects found</p><p class="step-desc">Accounts with a reason to care</p></div></div>
-          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-          <div class="step-item-m"><div class="flow-num">03</div><div><p class="step-label">Research gathered</p><p class="step-desc">Signals, context, timing</p></div></div>
-          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-          <div class="step-item-m"><div class="flow-num">04</div><div><p class="step-label">Outbound built</p><p class="step-desc">Angle, proof, case study</p></div></div>
-          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-          <div class="step-item-m"><div class="flow-num">05</div><div><p class="step-label">Sales development running</p><p class="step-desc">Research, outreach, and call prep</p></div></div>
-        </div>
-        <div class="step-list-desktop">
-          <div class="step-col"><div class="flow-num">01</div><p class="step-label">Solution learned</p><p class="step-desc">Offer, proof, use cases</p></div>
-          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="step-col"><div class="flow-num">02</div><p class="step-label">Prospects found</p><p class="step-desc">Accounts with a reason to care</p></div>
-          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="step-col"><div class="flow-num">03</div><p class="step-label">Research gathered</p><p class="step-desc">Signals, context, timing</p></div>
-          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="step-col"><div class="flow-num">04</div><p class="step-label">Outbound built</p><p class="step-desc">Angle, proof, case study</p></div>
-          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="step-col"><div class="flow-num">05</div><p class="step-label">Sales development running</p><p class="step-desc">Research, outreach, and call prep</p></div>
-        </div>
       </div>
     </div>
   </section>
@@ -360,50 +665,62 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
         <h2>One place for signals, outreach, and real pipeline.</h2>
         <p class="subtitle">No endless setup. No manual prospecting workflow. Describe your business and ICP — the system learns the context and does the rest.</p>
       </div>
-      <div class="workspace-mock">
-        <div class="wsm-top">
-          <div class="wsm-brand">
-            <span class="wsm-icon">MS</span>
-            <div><strong>MeetingScheduled</strong><span>Daily signals · prospects ready to call · AI agent</span></div>
+      <div class="classic-scope">
+      <div class="workspace">
+        <div class="workspace-top">
+          <div class="ws-brand">
+            <div class="ws-icon">MS</div>
+            <div><div class="ws-name">MeetingScheduled</div><div class="ws-sub">Daily signals · prospects ready to call · AI agent</div></div>
           </div>
-          <div class="wsm-pills">
-            <span class="wsm-pill">124 / 1000 prospects</span>
-            <span class="wsm-pill wsm-pill--alert">16 emails pending review</span>
-          </div>
-        </div>
-        <div class="wsm-body">
-          <div class="wsm-side">
-            <span class="active">Outreach</span><span>Flow</span><span>Conversations</span><span>Analytics</span><span>Workspace</span>
-          </div>
-          <div class="wsm-main">
-            <div class="wsm-assistant">
-              <span class="wsm-badge">AI workspace assistant</span>
-              <p class="wsm-q">Should we start outbound to your ICP?</p>
-              <p class="wsm-sub">Describe your ICP, what regions to target, and what signals should trigger outreach.</p>
-              <div class="wsm-chips">
-                <span>Start outreach</span><span>Show today's signals</span><span>Find new prospects</span><span>Review ready-to-call</span>
-              </div>
-            </div>
-            <div class="wsm-board">
-              <div class="wsm-col">
-                <div class="wsm-col-head">Prospects <span>46</span></div>
-                <div class="wsm-card"><strong>Radu Palamariu</strong><span>Group CEO · Alcott Global</span></div>
-              </div>
-              <div class="wsm-col">
-                <div class="wsm-col-head">Pending Send <span>22</span></div>
-                <div class="wsm-card"><strong>Hugo Silva</strong><span>Drafted an email regarding Hugo's SES expansion</span></div>
-              </div>
-              <div class="wsm-col">
-                <div class="wsm-col-head">Ready to Call <span>14</span></div>
-                <div class="wsm-card"><strong>Eyal Shoval</strong><span>Prepared a call brief with timing and signal notes</span></div>
-              </div>
-              <div class="wsm-col">
-                <div class="wsm-col-head">Meetings Booked <span>1</span></div>
-                <div class="wsm-card"><strong>Alexander Beilin</strong><span>VP of Sales & Business Development</span></div>
-              </div>
-            </div>
+          <div class="ws-metrics">
+            <div class="ws-pill">124 / 1000 prospects</div>
+            <div class="ws-pill alert">16 emails pending review</div>
           </div>
         </div>
+        <div class="workspace-body">
+          <aside class="workspace-side">
+            <div class="side-item active">Outreach</div>
+            <div class="side-item">Flow</div>
+            <div class="side-item">Conversations</div>
+            <div class="side-item">Analytics</div>
+            <div class="side-item">Workspace</div>
+          </aside>
+          <div class="workspace-main">
+            <div class="chat-box">
+              <div class="chat-badge">AI workspace assistant</div>
+              <h3>Should we start outbound to your ICP?</h3>
+              <p class="chat-subtle">Describe your ICP, what regions to target, and what signals should trigger outreach.</p>
+              <div class="chat-suggestions">
+                <button class="chip-action">Start outreach</button>
+                <button class="chip-action">Show today's signals</button>
+                <button class="chip-action">Find new prospects</button>
+                <button class="chip-action">Review ready-to-call</button>
+              </div>
+            </div>
+            <div class="board">
+              <div class="column col-prospects">
+                <div class="column-head"><span>Prospects</span><span class="col-count">46</span></div>
+                <div class="mini-card"><h4>Radu Palamariu</h4><p>Group CEO · Alcott Global<br>Raised funding · hiring sales team</p><div class="mini-foot"><span>Lead</span><span class="chip chip-rose">ICP</span></div></div>
+                <div class="mini-card"><h4>Bhavna Toor</h4><p>Founder & CEO · Shenomics<br>New leadership · open market expansion</p></div>
+              </div>
+              <div class="column col-pending">
+                <div class="column-head"><span>Pending Send</span><span class="col-count">22</span></div>
+                <div class="mini-card"><h4>Hugo Silva</h4><p>Drafted an email regarding Hugo's SES expansion.</p><div class="mini-foot"><span>Queued</span><span class="chip chip-amber">2m</span></div></div>
+                <div class="mini-card"><h4>Antonio Miranda</h4><p>Drafted an email referencing Meridiana Group's recent changes.</p></div>
+              </div>
+              <div class="column col-call">
+                <div class="column-head"><span>Ready to Call</span><span class="col-count">14</span></div>
+                <div class="mini-card"><h4>Eyal Shoval</h4><p>Prepared a call brief with timing, context, and signal notes.</p></div>
+                <div class="mini-card"><h4>Surajit Mahanty</h4><p>Prepared a call opener and angle for Surajit's expansion play.</p></div>
+              </div>
+              <div class="column col-meetings">
+                <div class="column-head"><span>Meetings Booked</span><span class="col-count">1</span></div>
+                <div class="mini-card"><h4>Alexander Beilin</h4><p>VP of Sales & Business Development<br>Warm reply converted into booked meeting.</p><div class="mini-foot"><span>Booked</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   </section>
@@ -446,12 +763,16 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
         <p class="eyebrow">Who It's For</p>
         <h2>Built for teams that care about <span style="color:var(--rose);font-style:italic;">results,</span> not just activity.</h2>
       </div>
-      <div class="who-grid">
-        <div class="who-item"><span class="who-tag">Agencies</span><h3>Outbound &amp; Lead Gen Agencies</h3><p>Handle more client volume without scaling headcount. Run high-quality campaigns across multiple ICPs from a single platform.</p></div>
-        <div class="who-item"><span class="who-tag">B2B Teams</span><h3>Lean B2B Sales Teams</h3><p>Perform above your size. A small team with MeetingScheduled executes at the level of a much larger operation — without the overhead.</p></div>
-        <div class="who-item"><span class="who-tag">Founders</span><h3>Founders Doing Outbound</h3><p>Build a repeatable outbound motion without a dedicated SDR. You own the judgment. The system handles the rest.</p></div>
-        <div class="who-item"><span class="who-tag">Service Businesses</span><h3>Service Businesses in Defined Niches</h3><p>Sell into a specific market with signal-led precision. Reach the right people at the right moment — without a full sales team behind you.</p></div>
-        <div class="who-item"><span class="who-tag">Operators</span><h3>Operators Who Need More Output</h3><p>More volume without losing message quality. MeetingScheduled is built for teams where standards matter as much as scale.</p></div>
+      <div class="classic-scope">
+      <div class="for-who-grid">
+        <div class="for-who-item"><span class="for-who-icon">Agencies</span><h3 class="for-who-title">Outbound &amp; Lead Gen Agencies</h3><p class="for-who-body">Handle more client volume without scaling headcount. Run high-quality campaigns across multiple ICPs from a single platform.</p></div>
+        <div class="for-who-item"><span class="for-who-icon">B2B Teams</span><h3 class="for-who-title">Lean B2B Sales Teams</h3><p class="for-who-body">Perform above your size. A small team with MeetingScheduled executes at the level of a much larger operation — without the overhead.</p></div>
+        <div class="for-who-item"><span class="for-who-icon">Founders</span><h3 class="for-who-title">Founders Doing Outbound</h3><p class="for-who-body">Build a repeatable outbound motion without a dedicated SDR. You own the judgment. The system handles the rest.</p></div>
+      </div>
+      <div class="for-who-grid row2">
+        <div class="for-who-item"><span class="for-who-icon">Service Businesses</span><h3 class="for-who-title">Service Businesses in Defined Niches</h3><p class="for-who-body">Sell into a specific market with signal-led precision. Reach the right people at the right moment — without a full sales team behind you.</p></div>
+        <div class="for-who-item"><span class="for-who-icon">Operators</span><h3 class="for-who-title">Operators Who Need More Output</h3><p class="for-who-body">More volume without losing message quality. MeetingScheduled is built for teams where standards matter as much as scale.</p></div>
+      </div>
       </div>
     </div>
   </section>
