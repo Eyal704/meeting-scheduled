@@ -145,6 +145,59 @@ h2{font-size:30px;font-weight:600;line-height:1.15;letter-spacing:-.02em;}
 .output-title{font-size:14.5px;font-weight:600;}
 .output-desc{margin-top:6px;font-size:13.5px;color:var(--muted);line-height:1.5;}
 
+/* Relevance bullets (under Differentiator subtitle) */
+.relevance-points{margin:20px auto 0;display:inline-flex;flex-direction:column;gap:10px;text-align:left;}
+.relevance-points li{display:flex;align-items:flex-start;gap:10px;font-size:15px;font-weight:600;color:var(--rose-darker);list-style:none;line-height:1.4;}
+.relevance-spark{color:var(--amber);flex-shrink:0;}
+
+/* Flow HUD badges (above the 5-step pipeline motion) */
+.flow-hud{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:24px;}
+.flow-hud span{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:5px 12px;}
+.flow-hud-live{color:var(--rose) !important;border-color:rgba(201,83,110,.3) !important;}
+.flow-hud-live i{width:6px;height:6px;border-radius:999px;background:var(--rose);display:inline-block;animation:flow-pulse 1.6s ease-in-out infinite;}
+@keyframes flow-pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.flow-num{width:40px;height:40px;border-radius:999px;background:var(--rose-tint);color:var(--rose);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* Workspace mockup */
+.workspace-mock{border:1px solid var(--border);border-radius:20px;background:#fff;box-shadow:0 20px 50px rgba(0,0,0,.06);overflow:hidden;}
+.wsm-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border-subtle);}
+.wsm-brand{display:flex;align-items:center;gap:10px;}
+.wsm-icon{width:32px;height:32px;border-radius:9px;background:var(--rose);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.wsm-brand strong{display:block;font-size:13.5px;}
+.wsm-brand span{display:block;font-size:11.5px;color:var(--muted);}
+.wsm-pills{display:flex;flex-wrap:wrap;gap:8px;}
+.wsm-pill{font-size:11.5px;font-weight:600;border-radius:999px;padding:5px 12px;background:var(--rose-tint);color:var(--rose);}
+.wsm-pill--alert{background:var(--amber-tint);color:var(--amber);}
+.wsm-body{display:flex;}
+.wsm-side{display:none;flex-direction:column;gap:2px;padding:16px 12px;border-right:1px solid var(--border-subtle);min-width:150px;}
+@media(min-width:768px){.wsm-side{display:flex;}}
+.wsm-side span{font-size:13px;font-weight:500;color:var(--muted);padding:8px 12px;border-radius:8px;}
+.wsm-side span.active{background:var(--rose-tint);color:var(--rose);font-weight:600;}
+.wsm-main{flex:1;min-width:0;padding:20px;}
+@media(min-width:640px){.wsm-main{padding:24px;}}
+.wsm-assistant{border:1px solid var(--border);border-radius:14px;padding:18px;background:var(--canvas);}
+.wsm-badge{display:inline-block;font-size:11px;font-weight:600;color:var(--rose);background:var(--rose-tint);border-radius:999px;padding:4px 10px;}
+.wsm-q{margin-top:10px;font-size:16px;font-weight:600;}
+.wsm-sub{margin-top:4px;font-size:13px;color:var(--muted);}
+.wsm-chips{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;}
+.wsm-chips span{font-size:12.5px;font-weight:500;border:1px solid var(--border);border-radius:999px;padding:6px 12px;color:var(--ink);background:#fff;}
+.wsm-board{margin-top:16px;display:grid;grid-template-columns:1fr;gap:12px;}
+@media(min-width:640px){.wsm-board{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:900px){.wsm-board{grid-template-columns:repeat(4,1fr);}}
+.wsm-col-head{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:8px;}
+.wsm-col-head span{font-size:11px;color:var(--muted);background:var(--border-subtle);border-radius:999px;padding:2px 8px;}
+.wsm-card{border:1px solid var(--border);border-radius:12px;padding:12px;background:#fff;}
+.wsm-card strong{display:block;font-size:12.5px;}
+.wsm-card span{display:block;margin-top:3px;font-size:11.5px;color:var(--muted);line-height:1.4;}
+
+/* Who it's for */
+.who-grid{display:grid;grid-template-columns:1fr;gap:32px;}
+@media(min-width:640px){.who-grid{grid-template-columns:1fr 1fr;gap:32px 40px;}}
+@media(min-width:960px){.who-grid{grid-template-columns:repeat(3,1fr);}}
+.who-tag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);border:1px solid rgba(201,83,110,.3);border-radius:6px;padding:4px 10px;background:var(--rose-tint);}
+.who-item h3{margin-top:12px;font-size:17px;font-weight:600;}
+.who-item p{margin-top:8px;font-size:13.5px;color:var(--muted);line-height:1.55;}
+
 footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
 .footer-top{display:flex;flex-direction:column;gap:40px;padding:56px 0;}
 @media(min-width:640px){.footer-top{flex-direction:row;justify-content:space-between;}}
@@ -215,34 +268,35 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
       <div class="section-head center" style="margin-bottom:40px;">
         <p class="eyebrow">The Pipeline</p>
         <h2>Not another bulk sequencer</h2>
-        <p class="subtitle">Every step is grounded in research before a single word is drafted — the intelligence comes first, the message comes second.</p>
+        <p class="subtitle">A focused path from positioning to prospects, research, outreach, and call prep.</p>
+      </div>
+      <div class="flow-hud">
+        <span class="flow-hud-live"><i></i>Live motion</span>
+        <span>Prospect intelligence</span>
+        <span>Outbound system</span>
       </div>
       <div class="step-box">
         <div class="step-list-mobile">
-          <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div><div><p class="step-label">Identify Accounts</p><p class="step-desc">ICP-fit companies worth pursuing</p></div></div>
+          <div class="step-item-m"><div class="flow-num">01</div><div><p class="step-label">Solution learned</p><p class="step-desc">Offer, proof, use cases</p></div></div>
           <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-          <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div><p class="step-label">Detect Signals</p><p class="step-desc">Live timing and buying signals</p></div></div>
+          <div class="step-item-m"><div class="flow-num">02</div><div><p class="step-label">Prospects found</p><p class="step-desc">Accounts with a reason to care</p></div></div>
           <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-          <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div><div><p class="step-label">Research the Account</p><p class="step-desc">What the company actually does</p></div></div>
+          <div class="step-item-m"><div class="flow-num">03</div><div><p class="step-label">Research gathered</p><p class="step-desc">Signals, context, timing</p></div></div>
           <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-          <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><p class="step-label">Research the Person</p><p class="step-desc">Role, priorities, background</p></div></div>
+          <div class="step-item-m"><div class="flow-num">04</div><div><p class="step-label">Outbound built</p><p class="step-desc">Angle, proof, case study</p></div></div>
           <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-          <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></div><div><p class="step-label">Create Outreach</p><p class="step-desc">Messaging grounded in the research</p></div></div>
-          <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-          <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><p class="step-label">Support the Conversation</p><p class="step-desc">Follow-ups and call prep</p></div></div>
+          <div class="step-item-m"><div class="flow-num">05</div><div><p class="step-label">Sales development running</p><p class="step-desc">Research, outreach, and call prep</p></div></div>
         </div>
         <div class="step-list-desktop">
-          <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div><p class="step-label">Identify Accounts</p><p class="step-desc">ICP-fit companies worth pursuing</p></div>
+          <div class="step-col"><div class="flow-num">01</div><p class="step-label">Solution learned</p><p class="step-desc">Offer, proof, use cases</p></div>
           <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><p class="step-label">Detect Signals</p><p class="step-desc">Live timing and buying signals</p></div>
+          <div class="step-col"><div class="flow-num">02</div><p class="step-label">Prospects found</p><p class="step-desc">Accounts with a reason to care</p></div>
           <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div><p class="step-label">Research the Account</p><p class="step-desc">What the company actually does</p></div>
+          <div class="step-col"><div class="flow-num">03</div><p class="step-label">Research gathered</p><p class="step-desc">Signals, context, timing</p></div>
           <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><p class="step-label">Research the Person</p><p class="step-desc">Role, priorities, background</p></div>
+          <div class="step-col"><div class="flow-num">04</div><p class="step-label">Outbound built</p><p class="step-desc">Angle, proof, case study</p></div>
           <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></div><p class="step-label">Create Outreach</p><p class="step-desc">Messaging grounded in the research</p></div>
-          <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><p class="step-label">Support the Conversation</p><p class="step-desc">Follow-ups and call prep</p></div>
+          <div class="step-col"><div class="flow-num">05</div><p class="step-label">Sales development running</p><p class="step-desc">Research, outreach, and call prep</p></div>
         </div>
       </div>
     </div>
@@ -251,9 +305,14 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
   <section class="section-border-top bg-canvas section">
     <div class="container">
       <div class="section-head center" style="margin-bottom:48px;">
-        <p class="eyebrow">The Differentiator</p>
+        <p class="eyebrow">Outbound, rebuilt around relevance</p>
         <h2>Research before a single word is drafted</h2>
-        <p class="subtitle">Three intelligence layers combine into one brief on every prospect — what makes them relevant, why they're worth contacting now, and what to actually say.</p>
+        <p class="subtitle">MeetingScheduled helps B2B teams replace generic prospecting with a research-first sales motion — one that identifies the right accounts, sharpens the message, and gives every conversation a stronger reason to happen.</p>
+        <ul class="relevance-points">
+          <li><span class="relevance-spark">✦</span>Less spray-and-pray.</li>
+          <li><span class="relevance-spark">✦</span>More precision behind every touch.</li>
+          <li><span class="relevance-spark">✦</span>A scalable outbound system built around the people most likely to care.</li>
+        </ul>
       </div>
 
       <div class="pillars-grid">
@@ -291,30 +350,65 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
           </ul>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="converge-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-
-      <div class="converge-card">
-        <div class="converge-head">
-          <div class="converge-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z"/></svg></div>
-          <div>
-            <p class="converge-eyebrow">Converges Into</p>
-            <p class="converge-title">Prospect Intelligence</p>
+  <section class="section-border-top section">
+    <div class="container">
+      <div class="section-head center" style="margin-bottom:40px;">
+        <p class="eyebrow">Inside The Workspace</p>
+        <h2>One place for signals, outreach, and real pipeline.</h2>
+        <p class="subtitle">No endless setup. No manual prospecting workflow. Describe your business and ICP — the system learns the context and does the rest.</p>
+      </div>
+      <div class="workspace-mock">
+        <div class="wsm-top">
+          <div class="wsm-brand">
+            <span class="wsm-icon">MS</span>
+            <div><strong>MeetingScheduled</strong><span>Daily signals · prospects ready to call · AI agent</span></div>
+          </div>
+          <div class="wsm-pills">
+            <span class="wsm-pill">124 / 1000 prospects</span>
+            <span class="wsm-pill wsm-pill--alert">16 emails pending review</span>
           </div>
         </div>
-        <div class="converge-grid">
-          <div class="converge-chip"><span class="converge-dot"></span>Why them</div>
-          <div class="converge-chip"><span class="converge-dot"></span>Why now</div>
-          <div class="converge-chip"><span class="converge-dot"></span>What matters</div>
-          <div class="converge-chip"><span class="converge-dot"></span>What to say</div>
-          <div class="converge-chip"><span class="converge-dot"></span>What not to claim</div>
-          <div class="converge-chip"><span class="converge-dot"></span>What the salesperson should know before calling</div>
+        <div class="wsm-body">
+          <div class="wsm-side">
+            <span class="active">Outreach</span><span>Flow</span><span>Conversations</span><span>Analytics</span><span>Workspace</span>
+          </div>
+          <div class="wsm-main">
+            <div class="wsm-assistant">
+              <span class="wsm-badge">AI workspace assistant</span>
+              <p class="wsm-q">Should we start outbound to your ICP?</p>
+              <p class="wsm-sub">Describe your ICP, what regions to target, and what signals should trigger outreach.</p>
+              <div class="wsm-chips">
+                <span>Start outreach</span><span>Show today's signals</span><span>Find new prospects</span><span>Review ready-to-call</span>
+              </div>
+            </div>
+            <div class="wsm-board">
+              <div class="wsm-col">
+                <div class="wsm-col-head">Prospects <span>46</span></div>
+                <div class="wsm-card"><strong>Radu Palamariu</strong><span>Group CEO · Alcott Global</span></div>
+              </div>
+              <div class="wsm-col">
+                <div class="wsm-col-head">Pending Send <span>22</span></div>
+                <div class="wsm-card"><strong>Hugo Silva</strong><span>Drafted an email regarding Hugo's SES expansion</span></div>
+              </div>
+              <div class="wsm-col">
+                <div class="wsm-col-head">Ready to Call <span>14</span></div>
+                <div class="wsm-card"><strong>Eyal Shoval</strong><span>Prepared a call brief with timing and signal notes</span></div>
+              </div>
+              <div class="wsm-col">
+                <div class="wsm-col-head">Meetings Booked <span>1</span></div>
+                <div class="wsm-card"><strong>Alexander Beilin</strong><span>VP of Sales & Business Development</span></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section-border-top bg-canvas section">
     <div class="container">
       <div class="section-head center" style="margin-bottom:40px;">
         <p class="eyebrow">Output</p>
@@ -342,6 +436,22 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
           <p class="output-title">Call Prep</p>
           <p class="output-desc">A grounded opener and talking points before you dial, built from the same research.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head center" style="margin-bottom:40px;">
+        <p class="eyebrow">Who It's For</p>
+        <h2>Built for teams that care about <span style="color:var(--rose);font-style:italic;">results,</span> not just activity.</h2>
+      </div>
+      <div class="who-grid">
+        <div class="who-item"><span class="who-tag">Agencies</span><h3>Outbound &amp; Lead Gen Agencies</h3><p>Handle more client volume without scaling headcount. Run high-quality campaigns across multiple ICPs from a single platform.</p></div>
+        <div class="who-item"><span class="who-tag">B2B Teams</span><h3>Lean B2B Sales Teams</h3><p>Perform above your size. A small team with MeetingScheduled executes at the level of a much larger operation — without the overhead.</p></div>
+        <div class="who-item"><span class="who-tag">Founders</span><h3>Founders Doing Outbound</h3><p>Build a repeatable outbound motion without a dedicated SDR. You own the judgment. The system handles the rest.</p></div>
+        <div class="who-item"><span class="who-tag">Service Businesses</span><h3>Service Businesses in Defined Niches</h3><p>Sell into a specific market with signal-led precision. Reach the right people at the right moment — without a full sales team behind you.</p></div>
+        <div class="who-item"><span class="who-tag">Operators</span><h3>Operators Who Need More Output</h3><p>More volume without losing message quality. MeetingScheduled is built for teams where standards matter as much as scale.</p></div>
       </div>
     </div>
   </section>
