@@ -402,6 +402,359 @@ h2{font-size:30px;font-weight:600;line-height:1.15;letter-spacing:-.02em;}
   #autopilot-transplant .flow-signal { display: none; }
 }
 
+/* ═══ Autopilot lead-flow visual — ported verbatim from classic/index.html #relevance .lead-flow (Autopilot stage: tag clusters → planet processor → scrolling lead stream) ═══ */
+#lead-flow-transplant {
+  --rose: #c9536e;
+  --rose-deep: #a83d59;
+  --wine: #7c1f33;
+  --gold: #cf9a5b;
+  --font-display: 'Poppins', system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+#lead-flow-transplant .lead-flow {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+#lead-flow-transplant .lead-flow__stage {
+  position: relative;
+  min-height: 680px;
+  border-radius: 28px;
+  overflow: hidden;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  background:
+    radial-gradient(ellipse 100% 70% at 50% -8%, rgba(255,255,255,0.98), transparent 55%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(252,231,236,0.75), transparent 60%),
+    linear-gradient(180deg, #fffdfb 0%, #fdf2f4 48%, #fce7ec 100%);
+  border: 1px solid rgba(201,83,110,0.16);
+  box-shadow:
+    0 28px 72px -32px rgba(124,31,51,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+#lead-flow-transplant .lf-autopilot-header {
+  position: relative;
+  z-index: 6;
+  text-align: center;
+  padding: 15px 24px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: var(--wine);
+  background: linear-gradient(180deg, #fff8f6 0%, #fce8ee 100%);
+  border-bottom: 1px solid rgba(201,83,110,0.14);
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,0.7);
+}
+#lead-flow-transplant .lead-flow__mesh {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+#lead-flow-transplant .lf-mesh { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+#lead-flow-transplant .lf-mesh--glow {
+  stroke: url(#lfFlowGlow);
+  stroke-width: 6;
+  opacity: 0.45;
+  filter: blur(2px);
+}
+#lead-flow-transplant .lf-mesh--main {
+  stroke: url(#lfFlowGrad);
+  stroke-width: 2.2;
+  opacity: 0.88;
+}
+#lead-flow-transplant .lf-mesh--pulse {
+  stroke: #f0a88a;
+  stroke-width: 2;
+  stroke-dasharray: 10 18;
+  opacity: 0.75;
+  animation: lfFlowPulse 24s linear infinite;
+}
+#lead-flow-transplant .lf-mesh--delay1 { animation-delay: -8s; }
+#lead-flow-transplant .lf-mesh--delay2 { animation-delay: -16s; }
+@keyframes lfFlowPulse { to { stroke-dashoffset: -280; } }
+#lead-flow-transplant .lf-anchor {
+  fill: #fff;
+  stroke: #e8927a;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 4px rgba(232,146,122,0.5));
+}
+#lead-flow-transplant .lf-dot { fill: #e8927a; opacity: 0.95; }
+#lead-flow-transplant .lf-dot--gold { fill: var(--gold); }
+#lead-flow-transplant .lead-flow__sources {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 16px 16px 0;
+  z-index: 4;
+}
+#lead-flow-transplant .lf-cluster {
+  display: grid;
+  justify-items: center;
+}
+#lead-flow-transplant .lf-tag {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--wine);
+  padding: 7px 13px;
+  border-radius: 999px;
+  white-space: nowrap;
+  background: linear-gradient(180deg, #fff8f4, #fce8e0);
+  border: 1px solid rgba(240,168,138,0.45);
+  box-shadow: 0 4px 16px -6px rgba(201,83,110,0.28);
+  position: relative;
+  z-index: 4;
+}
+#lead-flow-transplant .lf-particles { pointer-events: none; }
+#lead-flow-transplant .lf-face {
+  filter: drop-shadow(0 4px 10px rgba(124,31,51,0.22));
+}
+#lead-flow-transplant .lf-face__border {
+  fill: #fff;
+  stroke: rgba(201,83,110,0.14);
+  stroke-width: 0.6;
+}
+#lead-flow-transplant .lf-face__img {
+  clip-path: url(#lfFaceClip);
+  transition: opacity .22s cubic-bezier(.2,.7,.2,1);
+}
+#lead-flow-transplant .lead-flow__processor {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  width: 136px;
+  height: 136px;
+  display: grid;
+  place-items: center;
+}
+#lead-flow-transplant .lf-processor-veil {
+  position: absolute;
+  width: 94px;
+  height: 94px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffdfb 0%, #fdf2f4 55%, rgba(253,242,244,0.92) 100%);
+  box-shadow: 0 0 0 6px rgba(253,242,244,0.85);
+  z-index: 1;
+}
+#lead-flow-transplant .lf-processor-glow {
+  position: absolute;
+  inset: -34px;
+  z-index: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240,160,184,0.35) 0%, rgba(201,83,110,0.12) 45%, transparent 72%);
+  animation: lfProcessorGlow 4s ease-in-out infinite;
+}
+@keyframes lfProcessorGlow {
+  0%, 100% { opacity: 0.5; transform: scale(0.96); }
+  50% { opacity: 0.85; transform: scale(1.04); }
+}
+#lead-flow-transplant .lead-flow__planet {
+  position: relative;
+  z-index: 2;
+  width: 122px;
+  height: 122px;
+  filter: drop-shadow(0 6px 20px rgba(201,83,110,0.38));
+}
+#lead-flow-transplant .lf-wave {
+  fill: none;
+  stroke: #f0a0b8;
+  stroke-width: 1.4;
+  filter: url(#lfWaveBlur);
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: lfWavePulse 3.6s ease-out infinite;
+}
+#lead-flow-transplant .lf-wave--2 { animation-delay: 1.2s; }
+#lead-flow-transplant .lf-wave--3 { animation-delay: 2.4s; }
+@keyframes lfWavePulse {
+  0% { transform: scale(0.5); opacity: 0.55; stroke-width: 2.2; }
+  55% { opacity: 0.18; }
+  100% { transform: scale(1.55); opacity: 0; stroke-width: 0.6; }
+}
+#lead-flow-transplant .lf-ring-front {
+  animation: lfRingShimmer 4s ease-in-out infinite;
+}
+@keyframes lfRingShimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.82; }
+}
+#lead-flow-transplant .lead-flow__stream {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translateX(-50%);
+  width: min(380px, 88%);
+  height: 260px;
+  overflow: hidden;
+  z-index: 2;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 6%, #000 20%, #000 82%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0%, transparent 6%, #000 20%, #000 82%, transparent 100%);
+}
+#lead-flow-transplant .lead-flow__track {
+  display: grid;
+  gap: 10px;
+  animation: lfScrollDown 24s linear infinite;
+}
+@keyframes lfScrollDown {
+  from { transform: translateY(-50%); }
+  to { transform: translateY(0); }
+}
+#lead-flow-transplant .lf-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.97);
+  border: 1px solid rgba(201,83,110,0.10);
+  box-shadow:
+    0 10px 28px -14px rgba(124,31,51,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.95);
+}
+#lead-flow-transplant .lf-card__avatar {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 36%, #efc2a5 0 22%, transparent 23%),
+    radial-gradient(ellipse at 50% 92%, #8a2038 0 36%, transparent 37%),
+    linear-gradient(145deg, #fce7ec, #fff7f0);
+  box-shadow: inset 0 0 0 1px rgba(124,31,51,0.08);
+}
+#lead-flow-transplant .lf-card__avatar img {
+  position: relative;
+  z-index: 1;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+#lead-flow-transplant .lf-card__logo {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  z-index: 2;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+#lead-flow-transplant .lf-card__logo svg { width: 11px; height: 11px; }
+#lead-flow-transplant .lf-card__logo--linkedin { background: #0a66c2; color: #fff; }
+#lead-flow-transplant .lf-card__logo--stripe { background: #635bff; color: #fff; }
+#lead-flow-transplant .lf-card__logo--slack { background: #fff; color: #e01e5a; }
+#lead-flow-transplant .lf-card__logo--notion { background: #fff; color: #111; }
+#lead-flow-transplant .lf-card__logo--hubspot { background: #ff7a59; color: #fff; }
+#lead-flow-transplant .lf-card__logo--openai { background: #111; color: #fff; }
+#lead-flow-transplant .lf-card__body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+#lead-flow-transplant .lf-card__body strong {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #190f17;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#lead-flow-transplant .lf-card__body span {
+  font-size: 0.78rem;
+  color: #6e5560;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#lead-flow-transplant .lead-flow__featured {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 4;
+  width: min(400px, 90%);
+}
+#lead-flow-transplant .lf-card--featured {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.99);
+  box-shadow:
+    0 16px 40px -14px rgba(124,31,51,0.28),
+    0 0 0 1px rgba(201,83,110,0.14);
+  animation: lfFeaturedIn 1.2s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes lfFeaturedIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+#lead-flow-transplant .lf-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+#lead-flow-transplant .lf-intent {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--rose-deep);
+  white-space: nowrap;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(201,83,110,0.08);
+  border: 1px solid rgba(201,83,110,0.14);
+}
+#lead-flow-transplant .lf-arrow {
+  width: 18px;
+  height: 18px;
+  color: var(--rose);
+  opacity: 0.7;
+  animation: lfArrowNudge 2.4s ease-in-out infinite;
+}
+@keyframes lfArrowNudge {
+  0%, 100% { transform: translateX(0); opacity: 0.5; }
+  50% { transform: translateX(4px); opacity: 1; }
+}
+@media (max-width: 760px) {
+  #lead-flow-transplant .lead-flow__stage { min-height: 620px; border-radius: 22px; }
+  #lead-flow-transplant .lf-autopilot-header { font-size: 0.92rem; padding: 13px 18px; }
+  #lead-flow-transplant .lead-flow__sources { grid-template-columns: 1fr; gap: 10px; padding-top: 12px; }
+  #lead-flow-transplant .lf-cluster--center { order: -1; }
+  #lead-flow-transplant .lf-tag { font-size: 0.66rem; padding: 6px 11px; }
+  #lead-flow-transplant .lead-flow__processor { top: 46%; width: 104px; height: 104px; }
+  #lead-flow-transplant .lf-processor-veil { width: 74px; height: 74px; }
+  #lead-flow-transplant .lead-flow__planet { width: 84px; height: 84px; }
+  #lead-flow-transplant .lead-flow__stream { top: 54%; height: 200px; width: 92%; }
+  #lead-flow-transplant .lead-flow__featured { bottom: 12px; width: 94%; }
+  #lead-flow-transplant .lf-card--featured { flex-wrap: wrap; }
+  #lead-flow-transplant .lf-card__meta { width: 100%; justify-content: flex-end; margin-top: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #lead-flow-transplant .lf-dot { display: none; }
+  #lead-flow-transplant .lf-particles { display: none; }
+  #lead-flow-transplant .lf-card--featured { opacity: 1; transform: none; }
+}
+
 /* ═══ Workspace mockup + Who-it's-for grid — ported verbatim from classic/index.html, scoped so classic's own tokens don't leak into the rest of the page ═══ */
 .classic-scope{
   --border:rgba(184,53,104,0.14);
@@ -523,6 +876,213 @@ footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
       <div class="btn-row">
         <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-rose">Book a Demo</a>
         <a href="#how-it-works" class="btn btn-secondary">See how it works</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div id="lead-flow-transplant">
+      <div class="lead-flow" aria-label="Animated preview of leads flowing into MeetingScheduled">
+        <div class="lead-flow__stage">
+          <header class="lf-autopilot-header">Autopilot</header>
+
+          <svg class="lead-flow__mesh" viewBox="0 0 720 680" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <defs>
+              <linearGradient id="lfFlowGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f0a88a" stop-opacity="0.15" />
+                <stop offset="35%" stop-color="#e8927a" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#c9536e" stop-opacity="0.55" />
+              </linearGradient>
+              <linearGradient id="lfFlowGlow" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#fce7ec" stop-opacity="0" />
+                <stop offset="50%" stop-color="#f4a88a" stop-opacity="0.7" />
+                <stop offset="100%" stop-color="#c9536e" stop-opacity="0.3" />
+              </linearGradient>
+              <filter id="lfGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="3" result="b" />
+                <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+              <clipPath id="lfFaceClip"><rect width="42" height="42" rx="9" /></clipPath>
+              <path id="lfBranchL" d="M 120 108 C 168 190, 280 268, 360 318" />
+              <path id="lfBranchC" d="M 360 100 L 360 318" />
+              <path id="lfBranchR" d="M 600 108 C 552 190, 440 268, 360 318" />
+            </defs>
+            <use class="lf-mesh lf-mesh--glow" href="#lfBranchL" />
+            <use class="lf-mesh lf-mesh--glow" href="#lfBranchC" />
+            <use class="lf-mesh lf-mesh--glow" href="#lfBranchR" />
+            <use class="lf-mesh lf-mesh--main" href="#lfBranchL" />
+            <use class="lf-mesh lf-mesh--main" href="#lfBranchC" />
+            <use class="lf-mesh lf-mesh--main" href="#lfBranchR" />
+            <use class="lf-mesh lf-mesh--pulse" href="#lfBranchL" />
+            <use class="lf-mesh lf-mesh--pulse lf-mesh--delay1" href="#lfBranchC" />
+            <use class="lf-mesh lf-mesh--pulse lf-mesh--delay2" href="#lfBranchR" />
+            <circle class="lf-anchor" cx="120" cy="108" r="4" />
+            <circle class="lf-anchor" cx="360" cy="100" r="4" />
+            <circle class="lf-anchor" cx="600" cy="108" r="4" />
+            <circle class="lf-dot" r="4" filter="url(#lfGlow)">
+              <animateMotion dur="24s" repeatCount="indefinite"><mpath href="#lfBranchL" /></animateMotion>
+            </circle>
+            <circle class="lf-dot lf-dot--gold" r="3" filter="url(#lfGlow)">
+              <animateMotion dur="24s" begin="8s" repeatCount="indefinite"><mpath href="#lfBranchC" /></animateMotion>
+            </circle>
+            <circle class="lf-dot" r="4" filter="url(#lfGlow)">
+              <animateMotion dur="24s" begin="16s" repeatCount="indefinite"><mpath href="#lfBranchR" /></animateMotion>
+            </circle>
+            <g id="lfParticles" class="lf-particles"></g>
+          </svg>
+
+          <div class="lead-flow__sources" aria-hidden="true">
+            <div class="lf-cluster lf-cluster--left"><span class="lf-tag">Right Account</span></div>
+            <div class="lf-cluster lf-cluster--center"><span class="lf-tag">Problem fit</span></div>
+            <div class="lf-cluster lf-cluster--right"><span class="lf-tag">Matched your ICP</span></div>
+          </div>
+
+          <div class="lead-flow__processor" aria-hidden="true">
+            <span class="lf-processor-veil"></span>
+            <span class="lf-processor-glow"></span>
+            <svg class="lead-flow__planet" viewBox="0 0 100 100" aria-hidden="true">
+              <defs>
+                <radialGradient id="lfPlanet" cx="38%" cy="28%" r="75%">
+                  <stop offset="0%" stop-color="#f0a0b4" />
+                  <stop offset="45%" stop-color="#c9536e" />
+                  <stop offset="100%" stop-color="#6b1a30" />
+                </radialGradient>
+                <linearGradient id="lfRingPink" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#ffd0de" />
+                  <stop offset="35%" stop-color="#f0809e" />
+                  <stop offset="65%" stop-color="#e86888" />
+                  <stop offset="100%" stop-color="#ffc8d8" />
+                </linearGradient>
+                <filter id="lfRingGlow" x="-50%" y="-100%" width="200%" height="300%">
+                  <feGaussianBlur stdDeviation="1.4" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <filter id="lfWaveBlur" x="-60%" y="-60%" width="220%" height="220%">
+                  <feGaussianBlur stdDeviation="0.8" />
+                </filter>
+              </defs>
+              <ellipse class="lf-wave lf-wave--1" cx="50" cy="50" rx="38" ry="11" />
+              <ellipse class="lf-wave lf-wave--2" cx="50" cy="50" rx="38" ry="11" />
+              <ellipse class="lf-wave lf-wave--3" cx="50" cy="50" rx="38" ry="11" />
+              <path class="lf-ring-back" d="M 10 50 A 40 11 0 0 1 90 50" fill="none" stroke="#e888a8" stroke-width="5" stroke-linecap="round" opacity="0.42" />
+              <circle class="lf-planet-body" cx="50" cy="50" r="17" fill="url(#lfPlanet)" />
+              <ellipse cx="44" cy="43" rx="5.5" ry="3.5" fill="#fff" opacity="0.14" />
+              <path class="lf-ring-front" d="M 10 50 A 40 11 0 0 0 90 50" fill="none" stroke="url(#lfRingPink)" stroke-width="6" stroke-linecap="round" filter="url(#lfRingGlow)" />
+              <path class="lf-ring-shine" d="M 14 52 A 36 9 0 0 0 86 52" fill="none" stroke="#fff5f8" stroke-width="2.5" opacity="0.8" />
+            </svg>
+          </div>
+
+          <div class="lead-flow__stream" aria-hidden="true">
+            <div class="lead-flow__track">
+              <article class="lf-card">
+                <div class="lf-card__avatar">
+                  <img src="/assets/lead-faces/face-13.jpg" alt="" width="48" height="48" loading="lazy" />
+                  <span class="lf-card__logo lf-card__logo--linkedin" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span>
+                </div>
+                <div class="lf-card__body"><strong>Yael Cohen</strong><span>Head of Growth</span></div>
+              </article>
+              <article class="lf-card">
+                <div class="lf-card__avatar">
+                  <img src="/assets/lead-faces/face-14.jpg" alt="" width="48" height="48" loading="lazy" />
+                  <span class="lf-card__logo lf-card__logo--stripe" title="Stripe"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg></span>
+                </div>
+                <div class="lf-card__body"><strong>Omer Shapira</strong><span>VP Sales</span></div>
+              </article>
+              <article class="lf-card">
+                <div class="lf-card__avatar">
+                  <img src="/assets/lead-faces/face-15.jpg" alt="" width="48" height="48" loading="lazy" />
+                  <span class="lf-card__logo lf-card__logo--hubspot" title="HubSpot"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.164 7.93V5.084a2.198 2.198 0 0 0 1.267-1.978v-.067A2.2 2.2 0 0 0 17.238.845h-.067a2.2 2.2 0 0 0-2.193 2.193v.067a2.196 2.196 0 0 0 1.252 1.978v2.853a6.14 6.14 0 0 0-2.619 1.145l-7.455-5.8a2.715 2.715 0 0 0 .422-1.43A2.7 2.7 0 0 0 5.26 0 2.7 2.7 0 0 0 2.56 2.7a2.7 2.7 0 0 0 1.68 2.496l7.455 5.8a6.127 6.127 0 0 0-.98 3.287 6.14 6.14 0 0 0 .98 3.287l-5.72 5.72a2.715 2.715 0 0 0-1.43-.422A2.7 2.7 0 0 0 2.56 24a2.7 2.7 0 0 0 2.7-2.7 2.715 2.715 0 0 0-.422-1.43l5.72-5.72a6.14 6.14 0 0 0 2.619 1.145v2.853a2.196 2.196 0 0 0-1.252 1.978v.067a2.2 2.2 0 0 0 2.193 2.193h.067a2.2 2.2 0 0 0 2.193-2.193v-.067a2.198 2.198 0 0 0-1.267-1.978v-2.853a6.127 6.127 0 0 0 3.287-.98l4.06 4.06a2.715 2.715 0 0 0 .422-1.43A2.7 2.7 0 0 0 24 21.3a2.7 2.7 0 0 0-2.7-2.7 2.715 2.715 0 0 0-1.43.422l-4.06-4.06a6.14 6.14 0 0 0 .98-3.287 6.127 6.127 0 0 0-.98-3.287l4.06-4.06a2.715 2.715 0 0 0 1.43.422A2.7 2.7 0 0 0 21.44 2.7a2.7 2.7 0 0 0-2.7-2.7 2.715 2.715 0 0 0-1.43.422l-4.06 4.06a6.14 6.14 0 0 0-3.287-.98z"/></svg></span>
+                </div>
+                <div class="lf-card__body"><strong>Sarah Mitchell</strong><span>Customer Success Director</span></div>
+              </article>
+              <article class="lf-card">
+                <div class="lf-card__avatar">
+                  <img src="/assets/lead-faces/face-16.jpg" alt="" width="48" height="48" loading="lazy" />
+                  <span class="lf-card__logo lf-card__logo--slack" title="Slack"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.528 2.528 0 0 1-2.52-2.521V2.522A2.528 2.528 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.528 2.528 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.528 2.528 0 0 1-2.52-2.523 2.527 2.527 0 0 1 2.52-2.52h6.313A2.528 2.528 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg></span>
+                </div>
+                <div class="lf-card__body"><strong>James Carter</strong><span>RevOps Lead</span></div>
+              </article>
+              <article class="lf-card">
+                <div class="lf-card__avatar">
+                  <img src="/assets/lead-faces/face-17.jpg" alt="" width="48" height="48" loading="lazy" />
+                  <span class="lf-card__logo lf-card__logo--notion" title="Notion"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.98-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.606c.047.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952l1.449.327s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-2.055V2.667c0-.839.374-1.54 1.447-1.632z"/></svg></span>
+                </div>
+                <div class="lf-card__body"><strong>Lukas Weber</strong><span>Product Lead</span></div>
+              </article>
+              <article class="lf-card">
+                <div class="lf-card__avatar">
+                  <img src="/assets/lead-faces/face-18.jpg" alt="" width="48" height="48" loading="lazy" />
+                  <span class="lf-card__logo lf-card__logo--openai" title="OpenAI"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.057v5.583a4.504 4.504 0 0 1-4.494 4.489zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.677a.79.79 0 0 0-.407-.667zm2.01-3.023-1.375-.8-4.78-2.758a.795.795 0 0 0-.785 0L6.409 8.88v-2.33a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135-2.02-1.168a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.142.08-4.778 2.758a.795.795 0 0 0-.393.681zm1.097 2.365 2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z"/></svg></span>
+                </div>
+                <div class="lf-card__body"><strong>Anna Gruber</strong><span>Marketing Director</span></div>
+              </article>
+              <article class="lf-card" aria-hidden="true">
+                <div class="lf-card__avatar">
+                  <img src="/assets/lead-faces/face-13.jpg" alt="" width="48" height="48" loading="lazy" />
+                  <span class="lf-card__logo lf-card__logo--linkedin"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span>
+                </div>
+                <div class="lf-card__body"><strong>Yael Cohen</strong><span>Head of Growth</span></div>
+              </article>
+              <article class="lf-card" aria-hidden="true">
+                <div class="lf-card__avatar">
+                  <img src="/assets/lead-faces/face-14.jpg" alt="" width="48" height="48" loading="lazy" />
+                  <span class="lf-card__logo lf-card__logo--stripe"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg></span>
+                </div>
+                <div class="lf-card__body"><strong>Omer Shapira</strong><span>VP Sales</span></div>
+              </article>
+              <article class="lf-card" aria-hidden="true">
+                <div class="lf-card__avatar">
+                  <img src="/assets/lead-faces/face-15.jpg" alt="" width="48" height="48" loading="lazy" />
+                  <span class="lf-card__logo lf-card__logo--hubspot"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.164 7.93V5.084a2.198 2.198 0 0 0 1.267-1.978v-.067A2.2 2.2 0 0 0 17.238.845h-.067a2.2 2.2 0 0 0-2.193 2.193v.067a2.196 2.196 0 0 0 1.252 1.978v2.853a6.14 6.14 0 0 0-2.619 1.145l-7.455-5.8a2.715 2.715 0 0 0 .422-1.43A2.7 2.7 0 0 0 5.26 0 2.7 2.7 0 0 0 2.56 2.7a2.7 2.7 0 0 0 1.68 2.496l7.455 5.8a6.127 6.127 0 0 0-.98 3.287 6.14 6.14 0 0 0 .98 3.287l-5.72 5.72a2.715 2.715 0 0 0-1.43-.422A2.7 2.7 0 0 0 2.56 24a2.7 2.7 0 0 0 2.7-2.7 2.715 2.715 0 0 0-.422-1.43l5.72-5.72a6.14 6.14 0 0 0 2.619 1.145v2.853a2.196 2.196 0 0 0-1.252 1.978v.067a2.2 2.2 0 0 0 2.193 2.193h.067a2.2 2.2 0 0 0 2.193-2.193v-.067a2.198 2.198 0 0 0-1.267-1.978v-2.853a6.127 6.127 0 0 0 3.287-.98l4.06 4.06a2.715 2.715 0 0 0 .422-1.43A2.7 2.7 0 0 0 24 21.3a2.7 2.7 0 0 0-2.7-2.7 2.715 2.715 0 0 0-1.43.422l-4.06-4.06a6.14 6.14 0 0 0 .98-3.287 6.127 6.127 0 0 0-.98-3.287l4.06-4.06a2.715 2.715 0 0 0 1.43.422A2.7 2.7 0 0 0 21.44 2.7a2.7 2.7 0 0 0-2.7-2.7 2.715 2.715 0 0 0-1.43.422l-4.06 4.06a6.14 6.14 0 0 0-3.287-.98z"/></svg></span>
+                </div>
+                <div class="lf-card__body"><strong>Sarah Mitchell</strong><span>Customer Success Director</span></div>
+              </article>
+              <article class="lf-card" aria-hidden="true">
+                <div class="lf-card__avatar">
+                  <img src="/assets/lead-faces/face-16.jpg" alt="" width="48" height="48" loading="lazy" />
+                  <span class="lf-card__logo lf-card__logo--slack"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.528 2.528 0 0 1-2.52-2.521V2.522A2.528 2.528 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.528 2.528 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.528 2.528 0 0 1-2.52-2.523 2.527 2.527 0 0 1 2.52-2.52h6.313A2.528 2.528 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg></span>
+                </div>
+                <div class="lf-card__body"><strong>James Carter</strong><span>RevOps Lead</span></div>
+              </article>
+              <article class="lf-card" aria-hidden="true">
+                <div class="lf-card__avatar">
+                  <img src="/assets/lead-faces/face-17.jpg" alt="" width="48" height="48" loading="lazy" />
+                  <span class="lf-card__logo lf-card__logo--notion"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.98-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.606c.047.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952l1.449.327s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-2.055V2.667c0-.839.374-1.54 1.447-1.632z"/></svg></span>
+                </div>
+                <div class="lf-card__body"><strong>Lukas Weber</strong><span>Product Lead</span></div>
+              </article>
+              <article class="lf-card" aria-hidden="true">
+                <div class="lf-card__avatar">
+                  <img src="/assets/lead-faces/face-18.jpg" alt="" width="48" height="48" loading="lazy" />
+                  <span class="lf-card__logo lf-card__logo--openai"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.057v5.583a4.504 4.504 0 0 1-4.494 4.489zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.677a.79.79 0 0 0-.407-.667zm2.01-3.023-1.375-.8-4.78-2.758a.795.795 0 0 0-.785 0L6.409 8.88v-2.33a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135-2.02-1.168a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.142.08-4.778 2.758a.795.795 0 0 0-.393.681zm1.097 2.365 2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z"/></svg></span>
+                </div>
+                <div class="lf-card__body"><strong>Anna Gruber</strong><span>Marketing Director</span></div>
+              </article>
+            </div>
+          </div>
+
+          <article class="lead-flow__featured">
+            <div class="lf-card lf-card--featured">
+              <div class="lf-card__avatar">
+                <img src="/assets/lead-faces/face-19.jpg" alt="" width="48" height="48" loading="lazy" />
+                <span class="lf-card__logo lf-card__logo--linkedin" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span>
+              </div>
+              <div class="lf-card__body">
+                <strong>Noa Levi</strong>
+                <span>Head of Partnerships</span>
+              </div>
+              <div class="lf-card__meta">
+                <span class="lf-intent">High intent</span>
+                <svg class="lf-arrow" viewBox="0 0 20 20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 10h10M11 6l4 4-4 4"/></svg>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
       </div>
     </div>
   </section>
@@ -853,6 +1413,93 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
   });
 });
+</script>
+
+<script>
+(function () {
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var particleGroup = document.getElementById('lfParticles');
+  if (particleGroup && !reduce) {
+    var NS = 'http://www.w3.org/2000/svg';
+    var pace = 24;
+    var perLane = 4;
+    var faceSize = 42;
+    var pad = 2;
+    var lanePhotos = [
+      ['/assets/lead-faces/face-01.jpg','/assets/lead-faces/face-02.jpg','/assets/lead-faces/face-03.jpg','/assets/lead-faces/face-04.jpg'],
+      ['/assets/lead-faces/face-05.jpg','/assets/lead-faces/face-06.jpg','/assets/lead-faces/face-07.jpg','/assets/lead-faces/face-08.jpg'],
+      ['/assets/lead-faces/face-09.jpg','/assets/lead-faces/face-10.jpg','/assets/lead-faces/face-11.jpg','/assets/lead-faces/face-12.jpg']
+    ];
+    var paths = ['#lfBranchL', '#lfBranchC', '#lfBranchR'];
+    var half = faceSize / 2;
+
+    paths.forEach(function (pathId, lane) {
+      lanePhotos[lane].forEach(function (src, i) {
+        var g = document.createElementNS(NS, 'g');
+        g.setAttribute('class', 'lf-face');
+        g.setAttribute('transform', 'translate(' + (-half) + ',' + (-half) + ')');
+
+        var border = document.createElementNS(NS, 'rect');
+        border.setAttribute('class', 'lf-face__border');
+        border.setAttribute('x', String(-pad));
+        border.setAttribute('y', String(-pad));
+        border.setAttribute('width', String(faceSize + pad * 2));
+        border.setAttribute('height', String(faceSize + pad * 2));
+        border.setAttribute('rx', '11');
+
+        var img = document.createElementNS(NS, 'image');
+        img.setAttribute('class', 'lf-face__img');
+        img.setAttribute('width', String(faceSize));
+        img.setAttribute('height', String(faceSize));
+        img.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+        img.addEventListener('error', function () {
+          if (img.parentNode) img.parentNode.removeChild(img);
+        });
+        img.setAttribute('href', src);
+
+        var motion = document.createElementNS(NS, 'animateMotion');
+        motion.setAttribute('dur', pace + 's');
+        motion.setAttribute('begin', (i * (pace / perLane)) + 's');
+        motion.setAttribute('repeatCount', 'indefinite');
+        motion.setAttribute('rotate', '0');
+        motion.setAttribute('calcMode', 'linear');
+        var mpath = document.createElementNS(NS, 'mpath');
+        mpath.setAttribute('href', pathId);
+        motion.appendChild(mpath);
+
+        var fade = document.createElementNS(NS, 'animate');
+        fade.setAttribute('attributeName', 'opacity');
+        fade.setAttribute('dur', pace + 's');
+        fade.setAttribute('begin', (i * (pace / perLane)) + 's');
+        fade.setAttribute('repeatCount', 'indefinite');
+        fade.setAttribute('calcMode', 'linear');
+        fade.setAttribute('values', '0;1;1;0;0');
+        fade.setAttribute('keyTimes', '0;0.03;0.72;0.8;1');
+
+        g.appendChild(border);
+        g.appendChild(img);
+        g.appendChild(motion);
+        g.appendChild(fade);
+        particleGroup.appendChild(g);
+      });
+    });
+  }
+
+  var leadCardImages = Array.prototype.slice.call(document.querySelectorAll('#lead-flow-transplant .lf-card__avatar img'));
+  leadCardImages.forEach(function (img) {
+    function useGeneratedAvatar() {
+      img.hidden = true;
+      if (img.parentNode) img.parentNode.classList.add('is-generated');
+    }
+    img.addEventListener('error', useGeneratedAvatar);
+    img.addEventListener('load', function () {
+      if (img.parentNode) img.parentNode.classList.add('has-photo');
+    });
+    if (img.complete && img.naturalWidth === 0) useGeneratedAvatar();
+  });
+})();
 </script>
 
 </body>
