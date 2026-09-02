@@ -131,16 +131,6 @@ body::after {
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 @media (max-width: 520px) { .row2 { grid-template-columns: 1fr; } }
 
-.pillgroup { display: flex; gap: 10px; }
-.pill {
-  flex: 1; padding: 11px 16px; border: 1.5px solid var(--border); border-radius: 10px;
-  text-align: center; font-size: 14px; font-weight: 600; color: var(--text2); cursor: pointer;
-  transition: all .15s; background: var(--white); user-select: none; font-family: inherit;
-}
-.pill:hover { border-color: var(--rose-mid); }
-.pill:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
-.pill.is-selected { background: var(--rose); border-color: var(--rose); color: #fff; }
-
 .slots { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 @media (max-width: 520px) { .slots { grid-template-columns: 1fr; } }
 .slot {
@@ -247,16 +237,8 @@ body::after {
       </div>
 
       <div class="field">
-        <label>Have you used AI tools before?</label>
-        <div class="pillgroup" id="oppAiGroup">
-          <button class="pill" type="button" data-value="yes" aria-pressed="false">Yes</button>
-          <button class="pill" type="button" data-value="no" aria-pressed="false">Not yet</button>
-        </div>
-      </div>
-
-      <div class="field" id="oppAiDetailField" style="display:none;">
-        <label for="oppAiDetail">Tell me about your AI experience <span class="hint">(tools, projects, work, or personal use)</span></label>
-        <textarea id="oppAiDetail" name="ai_experience_detail" placeholder="For example: I use ChatGPT at work, built an automation, completed a course..." maxlength="1000"></textarea>
+        <label for="oppAiDetail">What experience, if any, do you have with AI tools? <span class="hint">(Please mention any experience you have. Experience is not required.)</span></label>
+        <textarea id="oppAiDetail" name="ai_experience_detail" placeholder="For example: tools you've used, projects you've built, courses you've taken—or leave this blank if you're completely new to AI." maxlength="1000"></textarea>
       </div>
 
       <div class="field">
@@ -325,21 +307,6 @@ body::after {
     });
   }
 
-  var aiValue = null;
-  var aiGroup = document.getElementById('oppAiGroup');
-  aiGroup.querySelectorAll('.pill').forEach(function (pill) {
-    onActivate(pill, function () {
-      aiValue = pill.getAttribute('data-value');
-      aiGroup.querySelectorAll('.pill').forEach(function (p) {
-        p.classList.toggle('is-selected', p === pill);
-        p.setAttribute('aria-pressed', p === pill ? 'true' : 'false');
-      });
-      document.getElementById('oppAiDetailField').style.display = aiValue === 'yes' ? 'block' : 'none';
-      document.getElementById('oppAiDetail').required = aiValue === 'yes';
-      if (aiValue !== 'yes') document.getElementById('oppAiDetail').value = '';
-    });
-  });
-
   var dayValue = null;
   var slotsGroup = document.getElementById('oppSlots');
   slotsGroup.querySelectorAll('.slot').forEach(function (slot) {
@@ -369,8 +336,6 @@ body::after {
     if (!name) { showErr('Please enter your name.'); return; }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('Please enter a valid email.'); return; }
     if (!location) { showErr('Please tell us where you live.'); return; }
-    if (!aiValue) { showErr('Please let us know if you have experience with AI.'); return; }
-    if (aiValue === 'yes' && !aiDetail) { showErr('Please briefly describe your AI experience.'); return; }
     if (!language) { showErr('Please tell us what language you speak.'); return; }
     if (!availability) { showErr('Please tell us your availability.'); return; }
     if (!dayValue) { showErr('Please choose a session.'); return; }
@@ -385,7 +350,7 @@ body::after {
         name: name,
         email: email,
         location: location,
-        ai_experience: aiValue === 'yes',
+        ai_experience: aiDetail.length > 0,
         ai_experience_detail: aiDetail,
         language: language,
         availability: availability,
