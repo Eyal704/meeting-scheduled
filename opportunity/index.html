@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>An AI Opportunity · MeetingScheduled</title>
+<title>Learn AI with MeetingScheduled · Apply for a Session</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Tell us a bit about yourself and reserve a spot next week to hear about an AI opportunity.">
+<meta name="description" content="Join Eyal for a practical introduction to AI, see how MeetingScheduled is being built, and explore a potential commission-based role.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 
@@ -80,6 +80,34 @@ body::after {
 }
 .hero p { font-size: 15.5px; color: var(--text2); line-height: 1.6; max-width: 480px; margin: 0 auto; }
 
+.quickfacts {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  margin-top: 18px;
+}
+.quickfact {
+  font-size: 12px; font-weight: 600; color: var(--text2); background: var(--white);
+  border: 1px solid var(--border); padding: 6px 10px; border-radius: 999px;
+}
+
+.intro {
+  background: linear-gradient(145deg, #fff 0%, var(--rose-light) 100%);
+  border: 1px solid var(--rose-mid); border-radius: 18px; padding: 24px;
+  margin-bottom: 18px;
+}
+.intro-kicker {
+  color: var(--rose-dark); font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.intro h2 { font-size: 19px; line-height: 1.35; margin-bottom: 12px; }
+.intro-list { list-style: none; display: grid; gap: 9px; }
+.intro-list li { position: relative; padding-left: 22px; color: var(--text2); font-size: 14px; line-height: 1.5; }
+.intro-list li::before { content: '\2713'; position: absolute; left: 0; color: var(--rose); font-weight: 800; }
+.role-note {
+  margin-top: 15px; padding-top: 14px; border-top: 1px solid var(--rose-mid);
+  color: var(--text2); font-size: 13px; line-height: 1.55;
+}
+.role-note strong { color: var(--text); }
+
 .card {
   background: var(--white); border: 1px solid var(--border); border-radius: 20px;
   padding: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.05);
@@ -104,7 +132,7 @@ body::after {
 .pill {
   flex: 1; padding: 11px 16px; border: 1.5px solid var(--border); border-radius: 10px;
   text-align: center; font-size: 14px; font-weight: 600; color: var(--text2); cursor: pointer;
-  transition: all .15s; background: var(--white); user-select: none;
+  transition: all .15s; background: var(--white); user-select: none; font-family: inherit;
 }
 .pill:hover { border-color: var(--rose-mid); }
 .pill:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
@@ -114,7 +142,7 @@ body::after {
 @media (max-width: 520px) { .slots { grid-template-columns: 1fr; } }
 .slot {
   border: 1.5px solid var(--border); border-radius: 14px; padding: 16px; cursor: pointer;
-  transition: all .15s; text-align: center; background: var(--white);
+  transition: all .15s; text-align: center; background: var(--white); font-family: inherit;
 }
 .slot:hover { border-color: var(--rose-mid); }
 .slot:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
@@ -147,6 +175,7 @@ body::after {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .finePrint { text-align: center; font-size: 12.5px; color: var(--text3); margin-top: 14px; line-height: 1.5; }
+.finePrint a { color: var(--text2); }
 
 .done { display: none; text-align: center; }
 .done.is-visible { display: block; }
@@ -173,10 +202,26 @@ body::after {
 
 <div class="main">
   <div class="hero">
-    <span class="hero-tag">AI Opportunity</span>
-    <h1>There's an AI Opportunity Waiting for You</h1>
-    <p>Tell us a bit about yourself and grab a spot next week. We'll email you the exact meeting details.</p>
+    <span class="hero-tag">A practical AI session</span>
+    <h1>Learn AI. See what we're building. Explore a role with us.</h1>
+    <p>I'm Eyal, founder of MeetingScheduled. I'm opening two small sessions for people who want practical AI experience and a closer look at how an AI company is built.</p>
+    <div class="quickfacts" aria-label="Session highlights">
+      <span class="quickfact">No AI experience required</span>
+      <span class="quickfact">English-friendly</span>
+      <span class="quickfact">All adults 18+ welcome</span>
+    </div>
   </div>
+
+  <section class="intro" aria-labelledby="whatToExpect">
+    <p class="intro-kicker">What to expect</p>
+    <h2 id="whatToExpect">A real introduction—not a generic AI webinar</h2>
+    <ul class="intro-list">
+      <li>Learn useful AI capabilities you can start applying yourself.</li>
+      <li>See what we're building at MeetingScheduled and how we work with customers.</li>
+      <li>Ask questions and find out whether working together could be a fit.</li>
+    </ul>
+    <p class="role-note"><strong>About the opportunity:</strong> selected participants may be offered a commission-based role after the session. This is not a guaranteed job offer or a salaried position.</p>
+  </section>
 
   <div class="card" id="oppCard">
     <form class="form" id="oppForm" novalidate>
@@ -185,52 +230,53 @@ body::after {
       <div class="row2">
         <div class="field">
           <label for="oppName">Your name</label>
-          <input type="text" id="oppName" name="name" autocomplete="name">
+          <input type="text" id="oppName" name="name" autocomplete="name" required>
         </div>
         <div class="field">
           <label for="oppEmail">Email address</label>
-          <input type="email" id="oppEmail" name="email" autocomplete="email">
+          <input type="email" id="oppEmail" name="email" autocomplete="email" required>
         </div>
       </div>
 
       <div class="field">
         <label for="oppLocation">Where do you live?</label>
-        <input type="text" id="oppLocation" name="location" placeholder="City, country" autocomplete="off">
+        <input type="text" id="oppLocation" name="location" placeholder="e.g. Vienna, Austria" autocomplete="address-level2" required>
       </div>
 
       <div class="field">
-        <label>Do you have experience with AI? <span class="hint">(if yes, what's the experience?)</span></label>
+        <label>Have you used AI tools before?</label>
         <div class="pillgroup" id="oppAiGroup">
-          <div class="pill" data-value="yes" role="button" tabindex="0">Yes</div>
-          <div class="pill" data-value="no" role="button" tabindex="0">No</div>
+          <button class="pill" type="button" data-value="yes" aria-pressed="false">Yes</button>
+          <button class="pill" type="button" data-value="no" aria-pressed="false">Not yet</button>
         </div>
       </div>
 
       <div class="field" id="oppAiDetailField" style="display:none;">
-        <textarea id="oppAiDetail" name="ai_experience_detail" placeholder="Tell us briefly..."></textarea>
+        <label for="oppAiDetail">Tell me about your AI experience <span class="hint">(tools, projects, work, or personal use)</span></label>
+        <textarea id="oppAiDetail" name="ai_experience_detail" placeholder="For example: I use ChatGPT at work, built an automation, completed a course..." maxlength="1000"></textarea>
       </div>
 
       <div class="field">
-        <label for="oppLanguage">What language do you speak?</label>
-        <input type="text" id="oppLanguage" name="language" placeholder="e.g. English, German, French" autocomplete="off">
+        <label for="oppLanguage">Which languages do you speak?</label>
+        <input type="text" id="oppLanguage" name="language" placeholder="e.g. English, German, French" autocomplete="language" required>
       </div>
 
       <div class="field">
-        <label for="oppAvailability">Your availability <span class="hint">(hours per week)</span></label>
-        <input type="text" id="oppAvailability" name="availability" placeholder="e.g. 10 hours/week" autocomplete="off">
+        <label for="oppAvailability">If the role is a fit, what is your availability?</label>
+        <input type="text" id="oppAvailability" name="availability" placeholder="e.g. 10 hours/week, weekday evenings" autocomplete="off" required>
       </div>
 
       <div class="field">
-        <label>Choose your time <span class="hint">(next week, Israel time)</span></label>
+        <label>Which session could you attend? <span class="hint">(Vienna time / CEST)</span></label>
         <div class="slots" id="oppSlots">
-          <div class="slot" data-value="tuesday" role="button" tabindex="0">
+          <button class="slot" type="button" data-value="tuesday" aria-pressed="false">
             <div class="slot-day">Tuesday, Sep 8</div>
-            <div class="slot-time">2:00 PM · Israel time</div>
-          </div>
-          <div class="slot" data-value="thursday" role="button" tabindex="0">
+            <div class="slot-time">14:00 · Vienna time</div>
+          </button>
+          <button class="slot" type="button" data-value="thursday" aria-pressed="false">
             <div class="slot-day">Thursday, Sep 10</div>
-            <div class="slot-time">2:00 PM · Israel time</div>
-          </div>
+            <div class="slot-time">17:00 · Vienna time</div>
+          </button>
         </div>
       </div>
 
@@ -239,16 +285,16 @@ body::after {
 
       <button type="submit" class="submit" id="oppSubmit">
         <span class="spinner"></span>
-        <span class="submit-label">Reserve My Spot</span>
+        <span class="submit-label">Apply for an Invitation</span>
       </button>
-      <p class="finePrint">We'll email you the exact meeting details — nothing else.</p>
+      <p class="finePrint">Applying does not guarantee participation. If selected, you'll receive an invitation and the exact details by email. Your information is handled according to our <a href="/privacy/">privacy policy</a>.</p>
     </form>
 
-    <div class="done" id="oppDone">
+    <div class="done" id="oppDone" aria-live="polite">
       <div class="done-icon">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <h2>You're on the list! 🎉</h2>
+      <h2>Application received</h2>
       <p id="oppDoneSub"></p>
     </div>
   </div>
@@ -258,8 +304,8 @@ body::after {
 (function () {
   var ENDPOINT = 'https://reach.meeting-scheduled.com/api/opportunity-leads';
   var SLOT_LABEL = {
-    tuesday: 'Tuesday, Sep 8 at 2:00 PM (Israel time)',
-    thursday: 'Thursday, Sep 10 at 2:00 PM (Israel time)'
+    tuesday: 'Tuesday, Sep 8 at 14:00 (Vienna time)',
+    thursday: 'Thursday, Sep 10 at 17:00 (Vienna time)'
   };
 
   var form = document.getElementById('oppForm');
@@ -281,8 +327,13 @@ body::after {
   aiGroup.querySelectorAll('.pill').forEach(function (pill) {
     onActivate(pill, function () {
       aiValue = pill.getAttribute('data-value');
-      aiGroup.querySelectorAll('.pill').forEach(function (p) { p.classList.toggle('is-selected', p === pill); });
+      aiGroup.querySelectorAll('.pill').forEach(function (p) {
+        p.classList.toggle('is-selected', p === pill);
+        p.setAttribute('aria-pressed', p === pill ? 'true' : 'false');
+      });
       document.getElementById('oppAiDetailField').style.display = aiValue === 'yes' ? 'block' : 'none';
+      document.getElementById('oppAiDetail').required = aiValue === 'yes';
+      if (aiValue !== 'yes') document.getElementById('oppAiDetail').value = '';
     });
   });
 
@@ -291,7 +342,10 @@ body::after {
   slotsGroup.querySelectorAll('.slot').forEach(function (slot) {
     onActivate(slot, function () {
       dayValue = slot.getAttribute('data-value');
-      slotsGroup.querySelectorAll('.slot').forEach(function (s) { s.classList.toggle('is-selected', s === slot); });
+      slotsGroup.querySelectorAll('.slot').forEach(function (s) {
+        s.classList.toggle('is-selected', s === slot);
+        s.setAttribute('aria-pressed', s === slot ? 'true' : 'false');
+      });
     });
   });
 
@@ -316,7 +370,7 @@ body::after {
     if (aiValue === 'yes' && !aiDetail) { showErr('Please briefly describe your AI experience.'); return; }
     if (!language) { showErr('Please tell us what language you speak.'); return; }
     if (!availability) { showErr('Please tell us your availability.'); return; }
-    if (!dayValue) { showErr('Please choose Tuesday or Thursday.'); return; }
+    if (!dayValue) { showErr('Please choose a session.'); return; }
 
     submitBtn.disabled = true;
     submitBtn.classList.add('is-loading');
@@ -342,7 +396,7 @@ body::after {
         throw new Error((r.data && r.data.message) || 'Something went wrong — please try again.');
       }
       card.classList.add('is-done');
-      doneSub.innerHTML = 'We\'ve saved your details for <b>' + SLOT_LABEL[dayValue] + '</b>. Keep an eye on <b>' + email + '</b> — we\'ll send the exact meeting details soon.';
+      doneSub.innerHTML = 'Thanks, ' + name.replace(/[&<>"']/g, '') + '. You applied for <b>' + SLOT_LABEL[dayValue] + '</b>. Applying does not guarantee participation. If selected, your invitation and exact details will be sent to <b>' + email.replace(/[&<>"']/g, '') + '</b>.';
       doneEl.classList.add('is-visible');
     }).catch(function (err) {
       showErr(err.message || 'Something went wrong — please try again.');
