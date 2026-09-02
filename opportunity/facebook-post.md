@@ -1,4 +1,4 @@
-Are you curious about AI and want to keep up with where technology is going? **WE WANT YOU**
+Are you curious about AI and want to keep up with where technology is going? WE WANT YOU
 
 My name is Eyal. Over the last 8 months, I've built and grown MeetingScheduled, worked closely with customers, and learned a lot about what AI can actually do today.
 
