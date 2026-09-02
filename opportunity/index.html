@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An AI Opportunity · MeetingScheduled</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Tell us a bit about yourself and reserve a spot next week to hear about an AI opportunity.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --rose: #c9536e;
+  --rose-dark: #a84059;
+  --rose-light: #fdf2f4;
+  --rose-mid: #f5d6dd;
+  --text: #1a1a2e;
+  --text2: #6e6e7a;
+  --text3: #aeaeb8;
+  --white: #ffffff;
+  --border: #ece8f0;
+  --bg: #faf8fc;
+}
+
+html, body { height:100%; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed; top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(201,83,110,0.08) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed; bottom: -150px; left: -150px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(201,83,110,0.06) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+.header {
+  padding: 20px 32px;
+  display: flex; align-items: center; gap: 10px;
+  position: relative; z-index: 10;
+}
+.header-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+.logo-mark {
+  width: 30px; height: 30px; background: var(--rose); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 800; color: #fff;
+}
+.logo-text { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -0.2px; }
+
+.main {
+  position: relative; z-index: 10;
+  max-width: 640px; margin: 0 auto; padding: 20px 20px 80px;
+}
+
+.hero { text-align: center; margin-bottom: 32px; }
+.hero-tag {
+  display: inline-block; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; color: var(--rose);
+  background: var(--rose-light); border: 1px solid var(--rose-mid);
+  padding: 6px 14px; border-radius: 20px; margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: 'DM Sans', sans-serif; font-size: clamp(28px,5vw,38px); font-weight: 700;
+  line-height: 1.2; letter-spacing: -0.3px; margin-bottom: 14px;
+}
+.hero p { font-size: 15.5px; color: var(--text2); line-height: 1.6; max-width: 480px; margin: 0 auto; }
+
+.card {
+  background: var(--white); border: 1px solid var(--border); border-radius: 20px;
+  padding: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+}
+
+.field { margin-bottom: 20px; }
+.field label { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+.field .hint { font-weight: 400; color: var(--text3); font-size: 12px; }
+.field input[type=text], .field input[type=email], .field textarea {
+  width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+  font-family: 'DM Sans', sans-serif; font-size: 14.5px; color: var(--text); background: var(--white);
+  transition: border-color .15s, box-shadow .15s;
+}
+.field textarea { resize: vertical; min-height: 70px; }
+.field input:focus, .field textarea:focus {
+  outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px rgba(201,83,110,0.08);
+}
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 520px) { .row2 { grid-template-columns: 1fr; } }
+
+.pillgroup { display: flex; gap: 10px; }
+.pill {
+  flex: 1; padding: 11px 16px; border: 1.5px solid var(--border); border-radius: 10px;
+  text-align: center; font-size: 14px; font-weight: 600; color: var(--text2); cursor: pointer;
+  transition: all .15s; background: var(--white); user-select: none;
+}
+.pill:hover { border-color: var(--rose-mid); }
+.pill:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
+.pill.is-selected { background: var(--rose); border-color: var(--rose); color: #fff; }
+
+.slots { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 520px) { .slots { grid-template-columns: 1fr; } }
+.slot {
+  border: 1.5px solid var(--border); border-radius: 14px; padding: 16px; cursor: pointer;
+  transition: all .15s; text-align: center; background: var(--white);
+}
+.slot:hover { border-color: var(--rose-mid); }
+.slot:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
+.slot.is-selected { border-color: var(--rose); background: var(--rose-light); box-shadow: 0 0 0 3px rgba(201,83,110,0.1); }
+.slot-day { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 4px; }
+.slot-time { font-size: 13px; color: var(--text2); }
+
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.err {
+  display: none; background: #fdf1f1; border: 1px solid #f3c9c9; color: #a83b3b;
+  font-size: 13px; padding: 10px 14px; border-radius: 10px; margin-bottom: 16px;
+}
+.err.is-visible { display: block; }
+
+.submit {
+  width: 100%; padding: 15px; background: var(--rose); color: #fff; border: none; border-radius: 12px;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer;
+  transition: all .15s; box-shadow: 0 4px 14px rgba(201,83,110,0.3);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.submit:hover:not(:disabled) { background: var(--rose-dark); transform: translateY(-1px); }
+.submit:disabled { opacity: .7; cursor: progress; }
+.spinner {
+  width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff; animation: spin .7s linear infinite; display: none;
+}
+.submit.is-loading .spinner { display: inline-block; }
+.submit.is-loading .submit-label { opacity: .85; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.finePrint { text-align: center; font-size: 12.5px; color: var(--text3); margin-top: 14px; line-height: 1.5; }
+
+.done { display: none; text-align: center; }
+.done.is-visible { display: block; }
+.card.is-done .form { display: none; }
+.done-icon {
+  width: 60px; height: 60px; background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+  border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;
+  box-shadow: 0 4px 16px rgba(201,83,110,0.3);
+}
+.done h2 { font-family: 'DM Sans', sans-serif; font-size: 21px; font-weight: 700; margin-bottom: 10px; }
+.done p { font-size: 14.5px; color: var(--text2); line-height: 1.65; }
+.done p b { color: var(--text); }
+</style>
+<script data-goatcounter="https://meetingscheduled.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<div class="header">
+  <a href="/" class="header-logo">
+    <div class="logo-mark">MS</div>
+    <div class="logo-text">MeetingScheduled</div>
+  </a>
+</div>
+
+<div class="main">
+  <div class="hero">
+    <span class="hero-tag">AI Opportunity</span>
+    <h1>There's an AI Opportunity Waiting for You</h1>
+    <p>Tell us a bit about yourself and grab a spot next week. We'll email you the exact meeting details.</p>
+  </div>
+
+  <div class="card" id="oppCard">
+    <form class="form" id="oppForm" novalidate>
+      <p class="err" id="oppErr" role="alert"></p>
+
+      <div class="row2">
+        <div class="field">
+          <label for="oppName">Your name</label>
+          <input type="text" id="oppName" name="name" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="oppEmail">Email address</label>
+          <input type="email" id="oppEmail" name="email" autocomplete="email">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="oppLocation">Where do you live?</label>
+        <input type="text" id="oppLocation" name="location" placeholder="City, country" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label>Do you have experience with AI? <span class="hint">(if yes, what's the experience?)</span></label>
+        <div class="pillgroup" id="oppAiGroup">
+          <div class="pill" data-value="yes" role="button" tabindex="0">Yes</div>
+          <div class="pill" data-value="no" role="button" tabindex="0">No</div>
+        </div>
+      </div>
+
+      <div class="field" id="oppAiDetailField" style="display:none;">
+        <textarea id="oppAiDetail" name="ai_experience_detail" placeholder="Tell us briefly..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="oppLanguage">What language do you speak?</label>
+        <input type="text" id="oppLanguage" name="language" placeholder="e.g. English, German, French" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="oppAvailability">Your availability <span class="hint">(hours per week)</span></label>
+        <input type="text" id="oppAvailability" name="availability" placeholder="e.g. 10 hours/week" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label>Choose your time <span class="hint">(next week, Israel time)</span></label>
+        <div class="slots" id="oppSlots">
+          <div class="slot" data-value="tuesday" role="button" tabindex="0">
+            <div class="slot-day">Tuesday, Sep 8</div>
+            <div class="slot-time">2:00 PM · Israel time</div>
+          </div>
+          <div class="slot" data-value="thursday" role="button" tabindex="0">
+            <div class="slot-day">Thursday, Sep 10</div>
+            <div class="slot-time">2:00 PM · Israel time</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- honeypot: hidden from humans, bots fill it -->
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <button type="submit" class="submit" id="oppSubmit">
+        <span class="spinner"></span>
+        <span class="submit-label">Reserve My Spot</span>
+      </button>
+      <p class="finePrint">We'll email you the exact meeting details — nothing else.</p>
+    </form>
+
+    <div class="done" id="oppDone">
+      <div class="done-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>You're on the list! 🎉</h2>
+      <p id="oppDoneSub"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var ENDPOINT = 'https://reach.meeting-scheduled.com/api/opportunity-leads';
+  var SLOT_LABEL = {
+    tuesday: 'Tuesday, Sep 8 at 2:00 PM (Israel time)',
+    thursday: 'Thursday, Sep 10 at 2:00 PM (Israel time)'
+  };
+
+  var form = document.getElementById('oppForm');
+  var card = document.getElementById('oppCard');
+  var errEl = document.getElementById('oppErr');
+  var submitBtn = document.getElementById('oppSubmit');
+  var doneEl = document.getElementById('oppDone');
+  var doneSub = document.getElementById('oppDoneSub');
+
+  function onActivate(el, handler) {
+    el.addEventListener('click', handler);
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(e); }
+    });
+  }
+
+  var aiValue = null;
+  var aiGroup = document.getElementById('oppAiGroup');
+  aiGroup.querySelectorAll('.pill').forEach(function (pill) {
+    onActivate(pill, function () {
+      aiValue = pill.getAttribute('data-value');
+      aiGroup.querySelectorAll('.pill').forEach(function (p) { p.classList.toggle('is-selected', p === pill); });
+      document.getElementById('oppAiDetailField').style.display = aiValue === 'yes' ? 'block' : 'none';
+    });
+  });
+
+  var dayValue = null;
+  var slotsGroup = document.getElementById('oppSlots');
+  slotsGroup.querySelectorAll('.slot').forEach(function (slot) {
+    onActivate(slot, function () {
+      dayValue = slot.getAttribute('data-value');
+      slotsGroup.querySelectorAll('.slot').forEach(function (s) { s.classList.toggle('is-selected', s === slot); });
+    });
+  });
+
+  function showErr(msg) { errEl.textContent = msg; errEl.classList.add('is-visible'); }
+  function clearErr() { errEl.classList.remove('is-visible'); errEl.textContent = ''; }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    clearErr();
+
+    var name = document.getElementById('oppName').value.trim();
+    var email = document.getElementById('oppEmail').value.trim();
+    var location = document.getElementById('oppLocation').value.trim();
+    var language = document.getElementById('oppLanguage').value.trim();
+    var availability = document.getElementById('oppAvailability').value.trim();
+    var aiDetail = document.getElementById('oppAiDetail').value.trim();
+
+    if (!name) { showErr('Please enter your name.'); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('Please enter a valid email.'); return; }
+    if (!location) { showErr('Please tell us where you live.'); return; }
+    if (!aiValue) { showErr('Please let us know if you have experience with AI.'); return; }
+    if (aiValue === 'yes' && !aiDetail) { showErr('Please briefly describe your AI experience.'); return; }
+    if (!language) { showErr('Please tell us what language you speak.'); return; }
+    if (!availability) { showErr('Please tell us your availability.'); return; }
+    if (!dayValue) { showErr('Please choose Tuesday or Thursday.'); return; }
+
+    submitBtn.disabled = true;
+    submitBtn.classList.add('is-loading');
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        location: location,
+        ai_experience: aiValue === 'yes',
+        ai_experience_detail: aiDetail,
+        language: language,
+        availability: availability,
+        day: dayValue,
+        website: document.querySelector('input[name=website]').value
+      })
+    }).then(function (res) {
+      return res.json().then(function (data) { return { status: res.status, data: data }; });
+    }).then(function (r) {
+      if (r.status !== 200 || !r.data || r.data.ok !== true) {
+        throw new Error((r.data && r.data.message) || 'Something went wrong — please try again.');
+      }
+      card.classList.add('is-done');
+      doneSub.innerHTML = 'We\'ve saved your details for <b>' + SLOT_LABEL[dayValue] + '</b>. Keep an eye on <b>' + email + '</b> — we\'ll send the exact meeting details soon.';
+      doneEl.classList.add('is-visible');
+    }).catch(function (err) {
+      showErr(err.message || 'Something went wrong — please try again.');
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('is-loading');
+    });
+  });
+})();
+</script>
+</body>
+</html>
