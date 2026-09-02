@@ -54,13 +54,16 @@ body::after {
   display: flex; align-items: center; gap: 10px;
   position: relative; z-index: 10;
 }
-.header-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+.header-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
 .logo-mark {
-  width: 30px; height: 30px; background: var(--rose); border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 800; color: #fff;
+  display: block; width: 36px; height: 36px; flex: 0 0 36px;
 }
-.logo-text { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -0.2px; }
+.logo-text { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -0.35px; }
+@media (max-width: 520px) {
+  .header { padding: 16px 20px; }
+  .logo-mark { width: 34px; height: 34px; flex-basis: 34px; }
+  .logo-text { font-size: 14px; }
+}
 
 .main {
   position: relative; z-index: 10;
@@ -194,8 +197,8 @@ body::after {
 <body>
 
 <div class="header">
-  <a href="/" class="header-logo">
-    <div class="logo-mark">MS</div>
+  <a href="/" class="header-logo" aria-label="MeetingScheduled home">
+    <img class="logo-mark" src="/logo.svg" alt="">
     <div class="logo-text">MeetingScheduled</div>
   </a>
 </div>
