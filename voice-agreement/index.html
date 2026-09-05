@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Voice agent agreement | MeetingScheduled</title>
+  <meta name="description" content="Review and sign your MeetingScheduled voice-agent agreement.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header>
+    <a class="brand" href="/"><span class="mark">M</span>MeetingScheduled</a>
+    <span class="secure">Secure agreement</span>
+  </header>
+  <main>
+    <div id="loading" class="state-card">Loading your agreement…</div>
+    <div id="error" class="state-card error" hidden></div>
+    <div id="app" hidden>
+      <div class="steps" aria-label="Signing progress">
+        <span class="active">1 <em>Your details</em></span>
+        <span>2 <em>Review</em></span>
+        <span>3 <em>Sign</em></span>
+        <span>4 <em>Complete</em></span>
+      </div>
+      <section id="step-0" class="card"></section>
+      <section id="step-1" class="card" hidden></section>
+      <section id="step-2" class="card" hidden></section>
+      <section id="step-3" class="card" hidden></section>
+    </div>
+  </main>
+</body>
+</html>
