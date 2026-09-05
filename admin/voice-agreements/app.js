@@ -8,13 +8,19 @@
   const errorBox = document.querySelector('#form-error')
   const recentPanel = document.querySelector('#recent-panel')
   const recentBox = document.querySelector('#recent')
+  const packages = {
+    essential: { name: 'Essential', includedMinutes: 100, monthlyFeeDollars: 119, overagePerMinuteDollars: 0.99 },
+    growth: { name: 'Growth', includedMinutes: 300, monthlyFeeDollars: 269, overagePerMinuteDollars: 0.79 },
+    scale: { name: 'Scale', includedMinutes: 500, monthlyFeeDollars: 399, overagePerMinuteDollars: 0.69 },
+  }
+  let paidTerms = { ...packages.essential, setupFeeDollars: 0 }
   let recent = []
 
   const esc = value => String(value ?? '').replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]))
   const cents = dollars => Math.max(0, Math.round((Number(dollars) || 0) * 100))
   const value = name => form.elements[name].value
   const number = name => Number(value(name))
-  const type = () => value('agreementType')
+  const type = () => form.elements.freeTrial.checked ? 'trial' : 'service'
 
   function today() { return new Date().toISOString().slice(0,10) }
   function expiry() { const date = new Date(); date.setDate(date.getDate()+30); return date.toISOString().slice(0,10) }
@@ -26,12 +32,58 @@
     updateSummary()
   }
 
+  function matchingPackage() {
+    return Object.values(packages).find(plan =>
+      number('includedMinutes') === plan.includedMinutes &&
+      number('monthlyFeeDollars') === plan.monthlyFeeDollars &&
+      number('overagePerMinuteDollars') === plan.overagePerMinuteDollars
+    )
+  }
+
+  function updatePackageSelection() {
+    const selected = matchingPackage()
+    document.querySelectorAll('[data-package]').forEach(button => {
+      button.classList.toggle('selected', button.dataset.package === selected?.name.toLowerCase())
+    })
+  }
+
+  function applyPackage(id) {
+    const plan = packages[id]
+    paidTerms = { ...plan, setupFeeDollars: 0 }
+    form.elements.includedMinutes.value = plan.includedMinutes
+    form.elements.setupFeeDollars.value = 0
+    form.elements.monthlyFeeDollars.value = plan.monthlyFeeDollars
+    form.elements.overagePerMinuteDollars.value = plan.overagePerMinuteDollars
+    updatePackageSelection()
+    updateSummary()
+  }
+
+  function setFreeTrial(enabled) {
+    if (enabled) {
+      paidTerms = {
+        includedMinutes: number('includedMinutes'),
+        setupFeeDollars: number('setupFeeDollars'),
+        monthlyFeeDollars: number('monthlyFeeDollars'),
+        overagePerMinuteDollars: number('overagePerMinuteDollars'),
+      }
+      form.elements.includedMinutes.value = 100
+    } else {
+      form.elements.includedMinutes.value = paidTerms.includedMinutes
+      form.elements.setupFeeDollars.value = paidTerms.setupFeeDollars
+      form.elements.monthlyFeeDollars.value = paidTerms.monthlyFeeDollars
+      form.elements.overagePerMinuteDollars.value = paidTerms.overagePerMinuteDollars
+      updatePackageSelection()
+    }
+    updateMode()
+  }
+
   function updateSummary() {
     const name = value('customerLegalName').trim() || 'New client'
     document.querySelector('#summary-client').textContent = name
+    const selected = matchingPackage()
     document.querySelector('#summary-line').textContent = type() === 'trial'
-      ? `${number('trialLengthDays') || 30}-day free trial · ${(number('includedMinutes') || 0).toLocaleString()} included minutes · no auto-conversion`
-      : `$${(number('monthlyFeeDollars') || 0).toFixed(2)}/month · ${(number('includedMinutes') || 0).toLocaleString()} minutes · ${number('initialTermMonths') === 1 ? 'month-to-month' : `${number('initialTermMonths')}-month initial term`}`
+      ? `30-day free trial · 100 included minutes · no auto-conversion`
+      : `${selected ? `${selected.name} · ` : 'Custom · '}$${(number('monthlyFeeDollars') || 0).toFixed(2)}/month · ${(number('includedMinutes') || 0).toLocaleString()} minutes · ${number('initialTermMonths') === 1 ? 'month-to-month' : `${number('initialTermMonths')}-month initial term`}`
   }
 
   function payload() {
@@ -97,15 +149,17 @@
     } finally { button.disabled = false; button.textContent = 'Generate private agreement link' }
   })
 
-  document.querySelectorAll('input[name="agreementType"]').forEach(input => input.addEventListener('change', updateMode))
-  form.addEventListener('input', updateSummary)
+  form.elements.freeTrial.addEventListener('change', event => setFreeTrial(event.target.checked))
+  document.querySelectorAll('[data-package]').forEach(button => button.addEventListener('click', () => applyPackage(button.dataset.package)))
+  form.addEventListener('input', () => { updatePackageSelection(); updateSummary() })
   document.querySelector('#new-client').addEventListener('click', () => {
     const provider = value('providerLegalName'), email = value('providerEmail'), law = value('governingLaw'), venue = value('venue')
     form.reset(); form.elements.activationDate.value = today(); form.elements.providerLegalName.value = provider; form.elements.providerEmail.value = email; form.elements.governingLaw.value = law; form.elements.venue.value = venue
-    resultBox.hidden = true; errorBox.hidden = true; updateMode(); scrollTo({top:0,behavior:'smooth'})
+    paidTerms = { ...packages.essential, setupFeeDollars: 0 }
+    resultBox.hidden = true; errorBox.hidden = true; updatePackageSelection(); updateMode(); scrollTo({top:0,behavior:'smooth'})
   })
 
   form.elements.activationDate.value = today()
   try { recent = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]') } catch { recent = [] }
-  renderRecent(); updateMode()
+  renderRecent(); updatePackageSelection(); updateMode()
 })()

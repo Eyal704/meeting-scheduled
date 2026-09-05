@@ -21,10 +21,8 @@
       <form id="builder">
         <section class="panel">
           <h2>1. Agreement type and client</h2>
-          <div class="type-grid">
-            <label class="type-card"><input type="radio" name="agreementType" value="trial" checked><span><strong>Free trial</strong><small>No charge and no automatic conversion.</small></span></label>
-            <label class="type-card"><input type="radio" name="agreementType" value="service"><span><strong>Paid service</strong><small>Monthly service with your chosen initial term.</small></span></label>
-          </div>
+          <label class="trial-toggle"><input type="checkbox" name="freeTrial"><span><strong>Make this a free trial</strong><small>Changes the agreement to $0 for 30 days or 100 minutes, whichever comes first. Uncheck it to restore the paid package.</small></span></label>
+          <input type="hidden" name="trialLengthDays" value="30">
           <div class="fields">
             <label><span>Client legal or business name</span><input name="customerLegalName" required placeholder="Acme Dental LLC"></label>
             <label><span>Client email <em>optional</em></span><input name="customerEmail" type="email" placeholder="owner@example.com"><small>Prefills and locks the signer email when provided.</small></label>
@@ -39,20 +37,27 @@
             <label><span>Phone setup</span><select name="phoneSetup"><option value="forward_existing">Client forwards an existing line</option><option value="provider_number">MeetingScheduled provides a number</option><option value="sip_or_other">SIP or another agreed setup</option></select></label>
             <label><span>Number of locations</span><input name="locations" type="number" min="1" max="100" value="1" required></label>
             <label><span>Coverage</span><input name="coverage" value="Inbound calls, 24 hours a day, 7 days a week" required></label>
-            <label><span>Included minutes</span><input name="includedMinutes" type="number" min="0" value="500" required></label>
+            <label><span>Included minutes</span><input name="includedMinutes" type="number" min="0" value="100" required></label>
             <label><span>Call-data retention</span><input name="dataRetentionDays" type="number" min="1" max="730" value="90" required><small>Days recordings and transcripts may be retained.</small></label>
           </div>
         </section>
         <section class="panel">
           <h2>3. Commercial terms</h2>
-          <div id="trial-fields" class="fields">
-            <label><span>Trial length in days</span><input name="trialLengthDays" type="number" min="1" max="90" value="30"></label>
-            <div class="free-note"><strong>$0 total.</strong><br>No setup fee, subscription, overage, card capture, or automatic paid conversion.</div>
+          <div id="trial-fields" hidden>
+            <div class="free-note"><strong>$0 total for 30 days or 100 minutes, whichever comes first.</strong><br>No setup fee, subscription, overage, card capture, or automatic paid conversion.</div>
           </div>
-          <div id="service-fields" class="fields" hidden>
+          <div id="service-fields" class="fields">
+            <div class="package-presets full">
+              <span>Package preset</span>
+              <div class="package-grid">
+                <button type="button" class="package-card selected" data-package="essential"><strong>Essential</strong><small>$119/month</small><small>100 minutes · $0.99/extra minute</small></button>
+                <button type="button" class="package-card" data-package="growth"><strong>Growth</strong><small>$269/month</small><small>300 minutes · $0.79/extra minute</small></button>
+                <button type="button" class="package-card" data-package="scale"><strong>Scale</strong><small>$399/month</small><small>500 minutes · $0.69/extra minute</small></button>
+              </div>
+            </div>
             <label><span>One-time setup fee (USD)</span><input name="setupFeeDollars" type="number" min="0" step="0.01" value="0"></label>
-            <label><span>Monthly fee (USD)</span><input name="monthlyFeeDollars" type="number" min="0" step="0.01" value="499"></label>
-            <label><span>Extra-minute price (USD)</span><input name="overagePerMinuteDollars" type="number" min="0" step="0.01" value="0.18"></label>
+            <label><span>Monthly fee (USD)</span><input name="monthlyFeeDollars" type="number" min="0" step="0.01" value="119"></label>
+            <label><span>Extra-minute price (USD)</span><input name="overagePerMinuteDollars" type="number" min="0" step="0.01" value="0.99"></label>
             <label><span>Initial agreement length</span><select name="initialTermMonths"><option value="1">Month-to-month</option><option value="3">3 months</option><option value="6">6 months</option><option value="12">12 months</option><option value="24">24 months</option></select></label>
             <label class="full"><span>Payment-page URL <em>optional</em></span><input name="paymentUrl" type="url" placeholder="https://buy.stripe.com/..."><small>Shown after the agreement is signed.</small></label>
           </div>
@@ -63,7 +68,7 @@
         <section id="result" class="result" hidden></section>
         <section id="recent-panel" class="panel" hidden><div class="section-heading"><h2>Recent links</h2><small>Saved on this device</small></div><div id="recent"></div></section>
       </form>
-      <aside><p class="eyebrow">Current offer</p><h2 id="summary-client">New client</h2><p id="summary-line">30-day free trial · 500 included minutes · no auto-conversion</p><dl><div><dt>Provider</dt><dd>Eyal Taieb</dd></div><div><dt>Website</dt><dd>meeting-scheduled.com</dd></div><div><dt>Link</dt><dd>Private & tamper-evident</dd></div></dl><div class="aside-note">Each generated URL contains fixed commercial terms. If anything changes, duplicate the offer and create a new link.</div></aside>
+      <aside><p class="eyebrow">Current offer</p><h2 id="summary-client">New client</h2><p id="summary-line">Essential · $119.00/month · 100 minutes · month-to-month</p><dl><div><dt>Provider</dt><dd>Eyal Taieb</dd></div><div><dt>Website</dt><dd>meeting-scheduled.com</dd></div><div><dt>Link</dt><dd>Private & tamper-evident</dd></div></dl><div class="aside-note">Each generated URL contains fixed commercial terms. If anything changes, duplicate the offer and create a new link.</div></aside>
     </div>
   </main>
 </body>
