@@ -233,7 +233,7 @@
           <div class="quote-top">
             <p class="quote-label">Suggested monthly price</p>
             <div class="quote-price">
-              <span class="quote-amount" id="quote-amount">₪449</span>
+              <span class="quote-amount" id="quote-amount">$194</span>
               <span class="quote-period">/ month</span>
             </div>
             <p class="quote-detail"><strong id="quote-minutes">200 minutes</strong> included each month, based on the estimated call volume.</p>
@@ -241,10 +241,10 @@
           <div class="quote-bottom">
             <div class="quote-divider"></div>
             <div class="quote-stats">
-              <div class="quote-stat"><span>Effective rate</span><strong id="effective-rate">₪2.25 / min</strong></div>
-              <div class="quote-stat"><span>Extra minute</span><strong id="extra-rate">₪2.00 / min</strong></div>
+              <div class="quote-stat"><span>Effective rate</span><strong id="effective-rate">$0.97 / min</strong></div>
+              <div class="quote-stat"><span>Extra minute</span><strong id="extra-rate">$0.79 / min</strong></div>
             </div>
-            <p class="closest" id="closest-plan">Closest package: Growth includes 300 minutes for ₪599/month.</p>
+            <p class="closest" id="closest-plan">Closest package: Growth includes 300 minutes for $269/month.</p>
           </div>
         </aside>
       </section>
@@ -256,7 +256,7 @@
         </div>
         <div class="packages" id="packages"></div>
         <div class="fine-print">
-          <p>All packages renew monthly. Unused minutes do not roll over.</p>
+          <p>Standard setup included. Custom integrations quoted separately. Unused minutes do not roll over.</p>
           <span id="rate-footnote">Currency rates updated daily.</span>
         </div>
       </section>
@@ -270,15 +270,15 @@
       var state={
         currency:'USD',
         mode:'calls',
-        rates:{ILS:1,USD:1/3.012,EUR:0.86006/3.012},
+        rates:{USD:1,ILS:3.012,EUR:0.86006},
         rateDate:'2026-09-05',
         liveRates:false
       };
 
       var plans=[
-        {name:'Essential',minutes:100,price:299,overage:2.50},
-        {name:'Growth',minutes:300,price:599,overage:2.00,featured:true},
-        {name:'Scale',minutes:500,price:849,overage:1.70}
+        {name:'Essential',minutes:100,price:119,overage:0.99},
+        {name:'Growth',minutes:300,price:269,overage:0.79,featured:true},
+        {name:'Scale',minutes:500,price:399,overage:0.69}
       ];
 
       function unlock(){
@@ -354,16 +354,16 @@
       }
 
       function quoteFor(minutes){
-        if(minutes<=100) return 299;
-        if(minutes<=300) return 299+(minutes-100)*1.5;
-        if(minutes<=500) return 599+(minutes-300)*1.25;
-        return 849+(minutes-500)*1.7;
+        if(minutes<=100) return 119;
+        if(minutes<=300) return 119+(minutes-100)*0.75;
+        if(minutes<=500) return 269+(minutes-300)*0.65;
+        return 399+(minutes-500)*0.69;
       }
 
       function overageFor(minutes){
-        if(minutes<=100) return 2.50;
-        if(minutes<=300) return 2.00;
-        return 1.70;
+        if(minutes<=100) return 0.99;
+        if(minutes<=300) return 0.79;
+        return 0.69;
       }
 
       function closestPlan(minutes){
@@ -371,10 +371,10 @@
         return plans[plans.length-1];
       }
 
-      function converted(nis){return nis*state.rates[state.currency]}
+      function converted(usd){return usd*state.rates[state.currency]}
 
-      function money(nis,decimals){
-        var value=converted(nis);
+      function money(usd,decimals){
+        var value=converted(usd);
         var symbols={ILS:'₪',USD:'$',EUR:'€'};
         return symbols[state.currency]+new Intl.NumberFormat('en-US',{minimumFractionDigits:decimals,maximumFractionDigits:decimals}).format(value);
       }
@@ -428,8 +428,8 @@
             var found={};
             rows.forEach(function(row){found[row.quote]=row});
             if(!found.ILS||!found.EUR) throw new Error('missing currency');
-            state.rates.USD=1/found.ILS.rate;
-            state.rates.EUR=found.EUR.rate/found.ILS.rate;
+            state.rates.ILS=found.ILS.rate;
+            state.rates.EUR=found.EUR.rate;
             state.rateDate=found.ILS.date;
             state.liveRates=true;
             updateRateText();
