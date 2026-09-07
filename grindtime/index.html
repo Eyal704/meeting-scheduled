@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grind Time — MeetingScheduled</title>
+<meta name="description" content="Mark the days and times you're free. Everyone gets a colour. See instantly when the whole group overlaps.">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1c1e;--muted:#6c6c72;--faint:#a0a0a8;--border:#e4e4e0;--border-subtle:#f0eeec;--canvas:#fdf9fa;
+  --rose:#c9536e;--rose-dark:#b84a62;--rose-tint:#fdf2f4;
+  --green:#3d6b52;--green-dark:#325943;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --shadow:0 6px 20px rgba(0,0,0,.04);
+  --shadow-lg:0 10px 32px rgba(0,0,0,.07);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{color-scheme:light}
+body{font-family:var(--sans);color:var(--ink);background:var(--canvas);-webkit-font-smoothing:antialiased;line-height:1.5;letter-spacing:-.01em}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+.container{max-width:1152px;margin:0 auto;padding:0 24px}
+.hidden{display:none!important}
+
+/* Header */
+header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border-subtle)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.logo{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px}
+.logo-mark{width:32px;height:32px;border-radius:9px;background:var(--rose);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{width:16px;height:16px}
+.logo-sep{color:var(--faint);font-weight:400;margin:0 2px}
+.logo-page{color:var(--muted);font-weight:500}
+@media(max-width:520px){.logo-sep,.logo-page{display:none}}
+
+/* Buttons */
+.btn{display:inline-flex;height:40px;align-items:center;justify-content:center;gap:6px;border-radius:10px;padding:0 18px;font-size:13px;font-weight:600;white-space:nowrap;transition:background .15s,border-color .15s}
+.btn-rose{background:var(--rose);color:#fff}
+.btn-rose:hover{background:var(--rose-dark)}
+.btn-secondary{background:#fff;color:var(--ink);border:1px solid var(--border)}
+.btn-secondary:hover{background:#faf7f8;border-color:#d8d6d2}
+.btn-quiet{color:var(--muted);font-size:13px;font-weight:500;padding:0 8px;height:32px;border-radius:8px}
+.btn-quiet:hover{color:var(--rose);background:var(--rose-tint)}
+
+/* Hero */
+.hero{padding:34px 0 26px;text-align:center;position:relative;overflow:hidden}
+.hero-glow{pointer-events:none;position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(201,83,110,.07) 0%,transparent 62%)}
+.hero-inner{position:relative}
+.eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--rose);margin-bottom:10px}
+.lede{font-size:17px;color:var(--muted);line-height:1.6;margin:0 auto;max-width:540px}
+
+/* Cards */
+.card{background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow)}
+.section{padding-bottom:28px}
+
+/* Toolbar */
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:16px;padding:16px 18px;margin-bottom:16px}
+.tool-group{display:flex;align-items:center;gap:10px;min-width:0}
+.tool-group.grow{flex:1 1 260px}
+.field-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);display:block;margin-bottom:5px}
+.name-row{display:flex;align-items:center;gap:8px}
+input[type=text]{height:40px;border:1px solid var(--border);border-radius:10px;padding:0 12px;font-size:14px;background:#fff;width:100%;min-width:0;transition:border-color .15s,box-shadow .15s}
+input[type=text]:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3px rgba(201,83,110,.12)}
+.swatch{width:40px;height:40px;border-radius:10px;border:1px solid rgba(0,0,0,.08);flex-shrink:0;position:relative;transition:transform .12s}
+.swatch:hover{transform:scale(1.06)}
+.swatch::after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+
+/* Week nav */
+.weeknav{display:flex;align-items:center;gap:4px;margin-left:auto}
+.wk-btn{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--muted);border:1px solid var(--border);background:#fff;transition:.15s}
+.wk-btn:hover{color:var(--rose);border-color:var(--rose);background:var(--rose-tint)}
+.wk-label{min-width:172px;text-align:center;font-size:14px;font-weight:600;padding:0 6px;line-height:1.25}
+.wk-label small{display:block;font-size:11px;font-weight:500;color:var(--faint);letter-spacing:.04em;text-transform:uppercase}
+
+/* Roster */
+.roster{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 18px;margin-bottom:16px}
+.roster-empty{font-size:13px;color:var(--faint)}
+.chip{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 6px 0 9px;border-radius:999px;border:1px solid var(--border);background:#fff;font-size:13px;font-weight:500;transition:.15s;max-width:200px}
+.chip:hover{border-color:#d8d6d2}
+.chip.dim{opacity:.35}
+.chip.me{border-color:currentColor}
+.chip .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chip .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.chip .ct{color:var(--faint);font-size:11px;font-variant-numeric:tabular-nums}
+.chip .x{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--faint);flex-shrink:0}
+.chip .x:hover{background:var(--rose-tint);color:var(--rose)}
+
+/* Grid */
+.gridcard{padding:0;overflow:hidden}
+.gridscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.grid{display:grid;min-width:660px}
+.gh{position:sticky;top:0;z-index:3;background:#fff;border-bottom:1px solid var(--border);padding:10px 4px;text-align:center;cursor:pointer;transition:background .12s}
+.gh:hover{background:var(--rose-tint)}
+.gh .dow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.gh .dnum{font-size:17px;font-weight:600;margin-top:1px}
+.gh.today .dow{color:var(--rose)}
+.gh.today .dnum{color:var(--rose)}
+.gh.past{opacity:.45}
+.gh.corner{cursor:default;background:#fff}
+.gh.corner:hover{background:#fff}
+.tlabel{position:sticky;left:0;z-index:2;background:#fff;border-right:1px solid var(--border-subtle);font-size:11px;color:var(--muted);text-align:right;padding:0 10px 0 6px;display:flex;align-items:center;justify-content:flex-end;cursor:pointer;font-variant-numeric:tabular-nums;transition:color .12s}
+.tlabel:hover{color:var(--rose)}
+.tlabel.half{color:var(--faint);font-size:10px}
+.tlabel.hourline{border-top:1px solid var(--border-subtle)}
+.cell{position:relative;border-right:1px solid var(--border-subtle);border-top:1px solid #f7f5f4;background:#fff;cursor:pointer;overflow:hidden}
+.cell.hourline{border-top:1px solid var(--border-subtle)}
+.cell:hover{box-shadow:inset 0 0 0 2px rgba(201,83,110,.28)}
+.cell.mine::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 1.5px rgba(28,28,30,.5);pointer-events:none}
+.cell.all{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.cell.past{background:#fbfafa}
+.stripes{position:absolute;inset:0;display:flex}
+.stripes i{flex:1;min-width:0}
+.cnt{position:absolute;right:2px;bottom:0;font-size:9px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.45);font-variant-numeric:tabular-nums;pointer-events:none}
+.gridfoot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-top:1px solid var(--border-subtle);background:#fdfbfb}
+.hint{font-size:12px;color:var(--faint)}
+
+/* Results */
+.results{padding:20px 22px;margin-top:16px}
+.results h2{font-size:18px;font-weight:600;letter-spacing:-.015em}
+.results .sub{font-size:13px;color:var(--muted);margin-top:3px}
+.best-list{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.best{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--border-subtle);border-radius:12px;background:#fdfbfb}
+.best.top{border-color:var(--rose);background:var(--rose-tint)}
+.best .when{font-size:14px;font-weight:600;flex:1;min-width:0}
+.best .when span{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.best .score{font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.best.top .score{color:var(--rose)}
+.best .dots{display:flex;gap:3px;flex-shrink:0}
+.best .dots i{width:8px;height:8px;border-radius:50%}
+.empty{font-size:14px;color:var(--faint);padding:18px 0 4px}
+
+/* Share */
+.share{padding:18px 22px;margin-top:16px}
+.share summary{font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px}
+.share summary::-webkit-details-marker{display:none}
+.share summary:hover{color:var(--rose)}
+.share-body{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+.share-body input{flex:1 1 280px}
+.share-note{font-size:12px;color:var(--faint);margin-top:10px;line-height:1.5}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(14px);background:var(--ink);color:#fff;font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:80}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+footer{padding:32px 0 48px;text-align:center;font-size:12px;color:var(--faint)}
+footer a{color:var(--muted);font-weight:500}
+footer a:hover{color:var(--rose)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="MeetingScheduled home">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="white"/></svg>
+      </span>
+      MeetingScheduled
+      <span class="logo-sep">/</span><span class="logo-page">Grind Time</span>
+    </a>
+    <button class="btn btn-rose" id="copyBtn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+      Copy share link
+    </button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="container hero-inner">
+    <div class="eyebrow">Group availability</div>
+    <p class="lede">Add your name, paint the hours you're free, and send the link on. Everyone gets a colour — the overlap shows itself.</p>
+  </div>
+</div>
+
+<main class="container section">
+
+  <div class="card toolbar">
+    <div class="tool-group grow">
+      <div style="flex:1;min-width:0">
+        <label class="field-label" for="nameInput">Your name</label>
+        <div class="name-row">
+          <input type="text" id="nameInput" placeholder="Type your name to start" autocomplete="off" spellcheck="false" maxlength="28">
+          <button class="swatch" id="swatchBtn" title="Click to change your colour" aria-label="Change your colour"></button>
+        </div>
+      </div>
+    </div>
+    <div class="weeknav">
+      <button class="wk-btn" id="prevWk" aria-label="Previous week">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="wk-label" id="wkLabel"><small>Week of</small>—</div>
+      <button class="wk-btn" id="nextWk" aria-label="Next week">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="btn-quiet" id="todayBtn">This week</button>
+    </div>
+  </div>
+
+  <div class="card roster" id="roster"></div>
+
+  <div class="card gridcard">
+    <div class="gridscroll"><div class="grid" id="grid"></div></div>
+    <div class="gridfoot">
+      <span class="hint" id="gridHint">Click a cell to mark yourself free. Drag to paint. Click a day or a time to toggle the whole line.</span>
+      <button class="btn-quiet" id="clearBtn">Clear my week</button>
+    </div>
+  </div>
+
+  <div class="card results">
+    <h2>When everyone can</h2>
+    <p class="sub" id="resultsSub">Best overlapping windows for this week.</p>
+    <ul class="best-list" id="bestList"></ul>
+    <p class="empty hidden" id="bestEmpty">No availability marked for this week yet.</p>
+  </div>
+
+  <details class="card share">
+    <summary>Someone sent you their own link? Merge it here</summary>
+    <div class="share-body">
+      <input type="text" id="mergeInput" placeholder="Paste the link they sent you" autocomplete="off" spellcheck="false">
+      <button class="btn btn-secondary" id="mergeBtn">Merge</button>
+    </div>
+    <p class="share-note">Everything lives in the link itself — nothing is stored on a server. Mark your hours, hit <strong>Copy share link</strong>, and pass it along. Merging combines someone else's marks with yours.</p>
+  </details>
+
+</main>
+
+<footer>
+  <a href="/">MeetingScheduled</a> · Create more conversations. Capture every opportunity.
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+
+var PALETTE=['#c9536e','#3d6b52','#2f6f9f','#b8763a','#7a5aa8','#1f8a8a','#c4553a','#4a5f8a','#8a5a7a','#5f7a2f'];
+var START_HOUR=8, END_HOUR=22, STEP=30;
+var LS_STATE='grindtime.state', LS_ME='grindtime.me';
+
+var state={v:1,p:[],a:{}};
+var meId=null;
+var weekStart=startOfWeek(new Date());
+var soloId=null;
+
+/* ---------- date helpers ---------- */
+function startOfWeek(d){var x=new Date(d);var day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);x.setHours(0,0,0,0);return x;}
+function addDays(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x;}
+function dk(d){return ''+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate());}
+function pad(n){return n<10?'0'+n:''+n;}
+function fromDk(k){return new Date(+k.slice(0,4),+k.slice(4,6)-1,+k.slice(6,8));}
+function sameDay(a,b){return dk(a)===dk(b);}
+function fmtTime(m){var h=Math.floor(m/60),mm=m%60,ap=h>=12?'PM':'AM',hh=h%12;if(hh===0)hh=12;return mm===0?hh+' '+ap:hh+':'+pad(mm)+' '+ap;}
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var DOW=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+/* ---------- range helpers ---------- */
+function addRange(rs,s,e){
+  var all=rs.concat([[s,e]]).sort(function(a,b){return a[0]-b[0];});
+  var out=[];
+  for(var i=0;i<all.length;i++){
+    var last=out[out.length-1];
+    if(last&&all[i][0]<=last[1]) last[1]=Math.max(last[1],all[i][1]);
+    else out.push([all[i][0],all[i][1]]);
+  }
+  return out;
+}
+function subRange(rs,s,e){
+  var out=[];
+  for(var i=0;i<rs.length;i++){
+    var a=rs[i][0],b=rs[i][1];
+    if(b<=s||a>=e){out.push([a,b]);continue;}
+    if(a<s)out.push([a,s]);
+    if(b>e)out.push([e,b]);
+  }
+  return out;
+}
+function covers(rs,s,e){for(var i=0;i<rs.length;i++){if(rs[i][0]<=s&&rs[i][1]>=e)return true;}return false;}
+
+/* ---------- state accessors ---------- */
+function person(id){for(var i=0;i<state.p.length;i++){if(state.p[i][0]===id)return state.p[i];}return null;}
+function colorOf(id){var p=person(id);return p?PALETTE[p[1]%PALETTE.length]:'#999';}
+function nameOf(id){var p=person(id);return p?p[2]:'';}
+function ranges(id,key){return (state.a[key]&&state.a[key][id])||[];}
+function setRanges(id,key,rs){
+  if(!state.a[key])state.a[key]={};
+  if(rs.length)state.a[key][id]=rs;
+  else{delete state.a[key][id];if(!Object.keys(state.a[key]).length)delete state.a[key];}
+}
+function has(id,key,m){return covers(ranges(id,key),m,m+STEP);}
+function mark(id,key,m,on){setRanges(id,key,on?addRange(ranges(id,key),m,m+STEP):subRange(ranges(id,key),m,m+STEP));}
+function slotCount(id){var n=0;for(var k in state.a){if(state.a[k][id]){var rs=state.a[k][id];for(var i=0;i<rs.length;i++)n+=(rs[i][1]-rs[i][0])/STEP;}}return n;}
+
+function newId(){var s='';for(var i=0;i<4;i++)s+='abcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random()*36)];return person(s)?newId():s;}
+function nextColor(){
+  var used={};state.p.forEach(function(p){used[p[1]]=1;});
+  for(var i=0;i<PALETTE.length;i++){if(!used[i])return i;}
+  return state.p.length%PALETTE.length;
+}
+
+/* ---------- encode / decode ---------- */
+function b64e(str){var b=new TextEncoder().encode(str),s='';for(var i=0;i<b.length;i++)s+=String.fromCharCode(b[i]);return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+function b64d(str){var s=str.replace(/-/g,'+').replace(/_/g,'/');var bin=atob(s),b=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)b[i]=bin.charCodeAt(i);return new TextDecoder().decode(b);}
+function encode(st){try{return b64e(JSON.stringify(st));}catch(e){return '';}}
+function decode(s){try{var o=JSON.parse(b64d(s));if(o&&Array.isArray(o.p)&&o.a&&typeof o.a==='object')return o;}catch(e){}return null;}
+
+/* ---------- persistence ---------- */
+function persist(){
+  var enc=encode(state);
+  try{localStorage.setItem(LS_STATE,enc);if(meId)localStorage.setItem(LS_ME,meId);}catch(e){}
+  try{history.replaceState(null,'',location.pathname+(enc?'#s='+enc:''));}catch(e){}
+}
+function load(){
+  var h=location.hash||'';
+  var m=h.match(/[#&]s=([A-Za-z0-9_-]+)/);
+  var fromUrl=m?decode(m[1]):null;
+  if(fromUrl){state=fromUrl;}
+  else{
+    var saved=null;try{saved=localStorage.getItem(LS_STATE);}catch(e){}
+    if(saved){var o=decode(saved);if(o)state=o;}
+  }
+  if(!state.p)state.p=[];if(!state.a)state.a={};
+  var savedMe=null;try{savedMe=localStorage.getItem(LS_ME);}catch(e){}
+  if(savedMe&&person(savedMe))meId=savedMe;
+}
+
+/* ---------- merge ---------- */
+function mergeState(other){
+  var mapId={};
+  other.p.forEach(function(op){
+    var match=null;
+    for(var i=0;i<state.p.length;i++){
+      if(state.p[i][2].trim().toLowerCase()===op[2].trim().toLowerCase()){match=state.p[i];break;}
+    }
+    if(match){mapId[op[0]]=match[0];}
+    else{
+      var id=person(op[0])?newId():op[0];
+      state.p.push([id,nextColor(),op[2]]);
+      mapId[op[0]]=id;
+    }
+  });
+  for(var key in other.a){
+    for(var oid in other.a[key]){
+      var id=mapId[oid];if(!id)continue;
+      var rs=ranges(id,key);
+      other.a[key][oid].forEach(function(r){rs=addRange(rs,r[0],r[1]);});
+      setRanges(id,key,rs);
+    }
+  }
+}
+
+/* ---------- rendering ---------- */
+var gridEl=document.getElementById('grid');
+var days=[],slots=[];
+
+function buildAxes(){
+  days=[];for(var i=0;i<7;i++)days.push(addDays(weekStart,i));
+  slots=[];for(var m=START_HOUR*60;m<END_HOUR*60;m+=STEP)slots.push(m);
+}
+
+function renderWeekLabel(){
+  var a=days[0],b=days[6];
+  var txt=MON[a.getMonth()]+' '+a.getDate()+' – '+(a.getMonth()===b.getMonth()?'':MON[b.getMonth()]+' ')+b.getDate();
+  var now=startOfWeek(new Date());
+  var diff=Math.round((weekStart-now)/604800000);
+  var tag=diff===0?'This week':diff===1?'Next week':diff===-1?'Last week':'Week of';
+  document.getElementById('wkLabel').innerHTML='<small>'+tag+'</small>'+txt;
+  document.getElementById('resultsSub').textContent='Best overlapping windows for '+txt+'.';
+}
+
+function renderGrid(){
+  var today=new Date();today.setHours(0,0,0,0);
+  gridEl.style.gridTemplateColumns='64px repeat(7,minmax(76px,1fr))';
+  var html='<div class="gh corner"></div>';
+  days.forEach(function(d,i){
+    var cls='gh'+(sameDay(d,today)?' today':'')+(d<today?' past':'');
+    html+='<div class="'+cls+'" data-day="'+i+'" title="Toggle the whole day"><div class="dow">'+DOW[i]+'</div><div class="dnum">'+d.getDate()+'</div></div>';
+  });
+  slots.forEach(function(m){
+    var onHour=m%60===0;
+    html+='<div class="tlabel'+(onHour?' hourline':' half')+'" data-min="'+m+'" title="Toggle this time across the week" style="height:22px">'+(onHour?fmtTime(m):':30')+'</div>';
+    days.forEach(function(d){
+      var key=dk(d),cs=cellState(key,m);
+      var cls='cell'+(onHour?' hourline':'')+(d<today?' past':'');
+      if(meId&&has(meId,key,m))cls+=' mine';
+      if(cs.all)cls+=' all';
+      html+='<div class="'+cls+'" data-key="'+key+'" data-min="'+m+'" style="height:22px"'+(cs.tip?' title="'+esc(cs.tip)+'"':'')+'>'+cs.inner+'</div>';
+    });
+  });
+  gridEl.innerHTML=html;
+  cellMap={};
+  var all=gridEl.querySelectorAll('.cell');
+  for(var i=0;i<all.length;i++)cellMap[all[i].dataset.key+'|'+all[i].dataset.min]=all[i];
+}
+var cellMap={};
+function cellAt(di,si){return cellMap[dk(days[di])+'|'+slots[si]];}
+function dayIndex(key){for(var i=0;i<days.length;i++){if(dk(days[i])===key)return i;}return -1;}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+
+/* Everything needed to draw one cell, so a drag can repaint just the cells it
+   touches instead of rebuilding the whole grid on every pointermove. */
+function cellState(key,m){
+  var who=[];
+  state.p.forEach(function(p){if(has(p[0],key,m))who.push(p);});
+  var visible=soloId?who.filter(function(p){return p[0]===soloId;}):who;
+  var inner='';
+  if(visible.length){
+    inner='<div class="stripes">';
+    visible.forEach(function(p){inner+='<i style="background:'+PALETTE[p[1]%PALETTE.length]+'"></i>';});
+    inner+='</div>';
+    if(visible.length>1)inner+='<span class="cnt">'+visible.length+'</span>';
+  }
+  return {who:who,inner:inner,all:state.p.length>1&&who.length===state.p.length,
+          tip:who.length?who.map(function(p){return p[2];}).join(', '):''};
+}
+function paintCell(cell){
+  var key=cell.dataset.key,m=+cell.dataset.min,cs=cellState(key,m);
+  cell.innerHTML=cs.inner;
+  cell.classList.toggle('mine',!!(meId&&has(meId,key,m)));
+  cell.classList.toggle('all',cs.all);
+  if(cs.tip)cell.title=cs.tip; else cell.removeAttribute('title');
+}
+
+function renderRoster(){
+  var el=document.getElementById('roster');
+  if(!state.p.length){el.innerHTML='<span class="roster-empty">No one has marked anything yet — you\'re first. Add your name above.</span>';return;}
+  var html='';
+  state.p.forEach(function(p){
+    var c=PALETTE[p[1]%PALETTE.length];
+    var cls='chip'+(soloId&&soloId!==p[0]?' dim':'')+(p[0]===meId?' me':'');
+    html+='<span class="'+cls+'" data-id="'+p[0]+'" style="color:'+c+'" title="Click to isolate">'
+      +'<i class="dot" style="background:'+c+'"></i><span class="nm">'+esc(p[2])+(p[0]===meId?' (you)':'')+'</span>'
+      +'<span class="ct">'+slotCount(p[0])+'</span>'
+      +'<button class="x" data-remove="'+p[0]+'" title="Remove '+esc(p[2])+'" aria-label="Remove">'
+      +'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>'
+      +'</button></span>';
+  });
+  el.innerHTML=html;
+}
+
+function renderBest(){
+  var list=document.getElementById('bestList'),empty=document.getElementById('bestEmpty');
+  var blocks=[];
+  days.forEach(function(d){
+    var key=dk(d),run=null;
+    slots.forEach(function(m){
+      var who=state.p.filter(function(p){return has(p[0],key,m);}).map(function(p){return p[0];});
+      var sig=who.slice().sort().join(',');
+      if(who.length&&run&&run.sig===sig&&run.end===m){run.end=m+STEP;}
+      else{
+        if(run)blocks.push(run);
+        run=who.length?{d:d,key:key,start:m,end:m+STEP,who:who,sig:sig}:null;
+      }
+    });
+    if(run)blocks.push(run);
+  });
+  blocks.sort(function(a,b){
+    if(b.who.length!==a.who.length)return b.who.length-a.who.length;
+    var da=b.end-b.start,db=a.end-a.start;
+    if(da!==db)return da-db;
+    return a.key===b.key?a.start-b.start:(a.key<b.key?-1:1);
+  });
+  var top=blocks.slice(0,7);
+  if(!top.length){list.innerHTML='';empty.classList.remove('hidden');return;}
+  empty.classList.add('hidden');
+  var max=top[0].who.length;
+  list.innerHTML=top.map(function(b){
+    var isTop=b.who.length===max&&state.p.length>0&&b.who.length===state.p.length;
+    var names=b.who.map(function(id){return nameOf(id);}).join(', ');
+    var dots=b.who.map(function(id){return '<i style="background:'+colorOf(id)+'"></i>';}).join('');
+    return '<li class="best'+(isTop?' top':'')+'">'
+      +'<div class="dots">'+dots+'</div>'
+      +'<div class="when">'+DOW[(b.d.getDay()+6)%7]+' '+MON[b.d.getMonth()]+' '+b.d.getDate()+' · '+fmtTime(b.start)+' – '+fmtTime(b.end)
+      +'<span>'+esc(names)+'</span></div>'
+      +'<div class="score">'+b.who.length+' of '+state.p.length+(isTop?' · all':'')+'</div></li>';
+  }).join('');
+}
+
+function render(){
+  buildAxes();
+  renderWeekLabel();
+  renderGrid();
+  renderRoster();
+  renderBest();
+  var p=meId?person(meId):null;
+  document.getElementById('swatchBtn').style.background=p?PALETTE[p[1]%PALETTE.length]:'#e4e4e0';
+  var ni=document.getElementById('nameInput');
+  if(p&&document.activeElement!==ni)ni.value=p[2];
+}
+
+/* Browsers restore typed form values across reloads and history moves. That value
+   can belong to someone else's session, so set it from state, never trust it. */
+function syncNameField(){
+  var ni=document.getElementById('nameInput');
+  ni.value=(meId&&person(meId))?person(meId)[2]:'';
+}
+
+/* ---------- interaction ---------- */
+function ensureMe(){
+  if(meId&&person(meId))return true;
+  var ni=document.getElementById('nameInput');
+  var v=ni.value.trim();
+  if(!v){ni.focus();toast('Add your name first');return false;}
+  commitName();
+  return !!meId;
+}
+function commitName(){
+  var ni=document.getElementById('nameInput');
+  var v=ni.value.trim();
+  if(!v)return;
+  if(meId&&person(meId)){person(meId)[2]=v;}
+  else{
+    var existing=null;
+    for(var i=0;i<state.p.length;i++){if(state.p[i][2].trim().toLowerCase()===v.toLowerCase()){existing=state.p[i];break;}}
+    if(existing)meId=existing[0];
+    else{var id=newId();state.p.push([id,nextColor(),v]);meId=id;}
+  }
+  save();
+}
+function save(){persist();render();}
+
+/* Drag selects the rectangle between the anchor cell and the cursor. Painting only
+   the cell under the pointer would leave gaps, because pointermove does not fire
+   once per cell on a fast drag. Each move restores the pre-drag snapshot and
+   re-applies the current rectangle, so shrinking the selection undoes cleanly. */
+var drag=null,dragMouse=false;
+
+function applyRect(di,si){
+  var d0=Math.min(drag.a.di,di),d1=Math.max(drag.a.di,di);
+  var s0=Math.min(drag.a.si,si),s1=Math.max(drag.a.si,si);
+  var pv=drag.prev,i,sI;
+  var rd0=pv?Math.min(pv.d0,d0):d0, rd1=pv?Math.max(pv.d1,d1):d1;
+  var rs0=pv?Math.min(pv.s0,s0):s0, rs1=pv?Math.max(pv.s1,s1):s1;
+  for(i=rd0;i<=rd1;i++){
+    var key=dk(days[i]);
+    setRanges(meId,key,drag.snap[key].map(function(r){return [r[0],r[1]];}));
+  }
+  for(i=d0;i<=d1;i++){
+    for(sI=s0;sI<=s1;sI++)mark(meId,dk(days[i]),slots[sI],drag.mode);
+  }
+  for(i=rd0;i<=rd1;i++){
+    for(sI=rs0;sI<=rs1;sI++){var c=cellAt(i,sI);if(c)paintCell(c);}
+  }
+  drag.prev={d0:d0,d1:d1,s0:s0,s1:s1};
+}
+
+gridEl.addEventListener('pointerdown',function(e){
+  var head=e.target.closest('.gh[data-day]');
+  if(head){toggleDay(+head.dataset.day);return;}
+  var lab=e.target.closest('.tlabel[data-min]');
+  if(lab){toggleTime(+lab.dataset.min);return;}
+  var cell=e.target.closest('.cell');
+  if(!cell)return;
+  if(!ensureMe())return;
+  var key=cell.dataset.key,m=+cell.dataset.min;
+  var di=dayIndex(key),si=slots.indexOf(m);
+  if(di<0||si<0)return;
+  var snap={};
+  days.forEach(function(d){snap[dk(d)]=ranges(meId,dk(d)).map(function(r){return [r[0],r[1]];});});
+  drag={mode:!has(meId,key,m),a:{di:di,si:si},prev:null,snap:snap};
+  dragMouse=(e.pointerType==='mouse');
+  applyRect(di,si);
+});
+gridEl.addEventListener('pointermove',function(e){
+  if(!drag||!dragMouse)return;
+  var el=document.elementFromPoint(e.clientX,e.clientY);
+  var cell=el&&el.closest?el.closest('.cell'):null;
+  if(!cell)return;
+  var di=dayIndex(cell.dataset.key),si=slots.indexOf(+cell.dataset.min);
+  if(di<0||si<0)return;
+  if(drag.prev&&drag.prev.d1===di&&drag.prev.d0===di&&drag.prev.s1===si&&drag.prev.s0===si)return;
+  applyRect(di,si);
+});
+/* Commit once, on release. Saving per cell would rewrite the URL on every
+   pointermove, which browsers rate-limit. */
+window.addEventListener('pointerup',function(){
+  if(!drag)return;
+  drag=null;
+  save();
+});
+
+function toggleDay(i){
+  if(!ensureMe())return;
+  var key=dk(days[i]);
+  var all=slots.every(function(m){return has(meId,key,m);});
+  slots.forEach(function(m){mark(meId,key,m,!all);});
+  save();
+}
+function toggleTime(m){
+  if(!ensureMe())return;
+  var all=days.every(function(d){return has(meId,dk(d),m);});
+  days.forEach(function(d){mark(meId,dk(d),m,!all);});
+  save();
+}
+
+document.getElementById('roster').addEventListener('click',function(e){
+  var rm=e.target.closest('[data-remove]');
+  if(rm){
+    var id=rm.dataset.remove;
+    if(!confirm('Remove '+nameOf(id)+' and all their marks?'))return;
+    state.p=state.p.filter(function(p){return p[0]!==id;});
+    for(var k in state.a){delete state.a[k][id];if(!Object.keys(state.a[k]).length)delete state.a[k];}
+    if(meId===id){meId=null;document.getElementById('nameInput').value='';try{localStorage.removeItem(LS_ME);}catch(err){}}
+    if(soloId===id)soloId=null;
+    save();return;
+  }
+  var chip=e.target.closest('.chip');
+  if(chip){soloId=(soloId===chip.dataset.id)?null:chip.dataset.id;render();}
+});
+
+document.getElementById('nameInput').addEventListener('change',commitName);
+document.getElementById('nameInput').addEventListener('blur',commitName);
+document.getElementById('nameInput').addEventListener('keydown',function(e){if(e.key==='Enter')this.blur();});
+
+document.getElementById('swatchBtn').addEventListener('click',function(){
+  if(!ensureMe())return;
+  var p=person(meId);
+  p[1]=(p[1]+1)%PALETTE.length;
+  save();
+});
+
+document.getElementById('prevWk').addEventListener('click',function(){weekStart=addDays(weekStart,-7);render();});
+document.getElementById('nextWk').addEventListener('click',function(){weekStart=addDays(weekStart,7);render();});
+document.getElementById('todayBtn').addEventListener('click',function(){weekStart=startOfWeek(new Date());render();});
+document.addEventListener('keydown',function(e){
+  if(/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName))return;
+  if(e.key==='ArrowLeft'){weekStart=addDays(weekStart,-7);render();}
+  if(e.key==='ArrowRight'){weekStart=addDays(weekStart,7);render();}
+});
+
+document.getElementById('clearBtn').addEventListener('click',function(){
+  if(!meId||!person(meId)){toast('Add your name first');return;}
+  if(!confirm('Clear all of your marks for this week?'))return;
+  days.forEach(function(d){setRanges(meId,dk(d),[]);});
+  save();
+});
+
+document.getElementById('copyBtn').addEventListener('click',function(){
+  persist();
+  var url=location.href;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(function(){toast('Link copied — send it on');},fallbackCopy);
+  }else fallbackCopy();
+  function fallbackCopy(){
+    var t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();
+    try{document.execCommand('copy');toast('Link copied — send it on');}catch(e){toast('Copy the address bar URL');}
+    document.body.removeChild(t);
+  }
+});
+
+document.getElementById('mergeBtn').addEventListener('click',function(){
+  var inp=document.getElementById('mergeInput');
+  var m=(inp.value||'').match(/[#&]s=([A-Za-z0-9_-]+)/);
+  var other=m?decode(m[1]):null;
+  if(!other){toast('That link has no availability in it');return;}
+  mergeState(other);
+  inp.value='';
+  save();
+  toast('Merged');
+});
+
+var toastTimer=null;
+function toast(msg){
+  var el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){el.classList.remove('show');},2200);
+}
+
+/* A share link differs from the current page only by its #hash, so the browser
+   does not reload. Pick up the incoming availability and merge it in. */
+window.addEventListener('hashchange',function(){
+  var m=(location.hash||'').match(/[#&]s=([A-Za-z0-9_-]+)/);
+  if(!m)return;
+  if(m[1]===encode(state))return;
+  var other=decode(m[1]);
+  if(!other)return;
+  mergeState(other);
+  save();
+  toast('Loaded the availability from that link');
+});
+
+load();
+syncNameField();
+render();
+})();
+</script>
+</body>
+</html>
