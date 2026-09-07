@@ -119,6 +119,11 @@ input[type=text]:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3p
 .cnt{position:absolute;right:2px;bottom:0;font-size:9px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.45);font-variant-numeric:tabular-nums;pointer-events:none}
 .gridfoot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-top:1px solid var(--border-subtle);background:#fdfbfb}
 .hint{font-size:12px;color:var(--faint)}
+.sync{font-size:12px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.sync::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+.sync.ok{color:var(--green)}
+.sync.saving{color:var(--faint)}
+.sync.bad{color:var(--rose)}
 
 /* Results */
 .results{padding:20px 22px;margin-top:16px}
@@ -200,7 +205,7 @@ footer a:hover{color:var(--rose)}
     </a>
     <button class="btn btn-rose" id="copyBtn">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
-      Copy share link
+      Copy link
     </button>
   </div>
 </header>
@@ -209,7 +214,7 @@ footer a:hover{color:var(--rose)}
   <div class="hero-glow"></div>
   <div class="container hero-inner">
     <div class="eyebrow">Group availability</div>
-    <p class="lede">Add your name, paint the hours you're free, and send the link on. Everyone gets a colour — the overlap shows itself.</p>
+    <p class="lede">Add your name and paint the hours you're free. Everyone shares one link, everyone gets a colour, and the overlap shows itself.</p>
   </div>
 </div>
 
@@ -242,7 +247,10 @@ footer a:hover{color:var(--rose)}
   <div class="card gridcard">
     <div class="gridscroll"><div class="grid" id="grid"></div></div>
     <div class="gridfoot">
-      <span class="hint" id="gridHint">Tap a cell to mark yourself free, or drag across the grid. Tap a day or a time to toggle that whole line.</span>
+      <span style="display:flex;flex-direction:column;gap:3px;min-width:0">
+        <span class="sync saving" id="syncStatus">Loading the board…</span>
+        <span class="hint" id="gridHint">Tap a cell to mark yourself free, or drag across the grid. Tap a day or a time to toggle that whole line.</span>
+      </span>
       <span style="display:flex;gap:6px;align-items:center">
         <button class="btn-quiet paint-toggle" id="paintBtn" aria-pressed="false">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>
@@ -261,12 +269,12 @@ footer a:hover{color:var(--rose)}
   </div>
 
   <details class="card share">
-    <summary>Someone sent you their own link? Merge it here</summary>
+    <summary>Got an older link with marks in it? Bring them in here</summary>
     <div class="share-body">
-      <input type="text" id="mergeInput" placeholder="Paste the link they sent you" autocomplete="off" spellcheck="false">
-      <button class="btn btn-secondary" id="mergeBtn">Merge</button>
+      <input type="text" id="mergeInput" placeholder="Paste an old #s=… link" autocomplete="off" spellcheck="false">
+      <button class="btn btn-secondary" id="mergeBtn">Bring in</button>
     </div>
-    <p class="share-note">Everything lives in the link itself — nothing is stored on a server. Mark your hours, hit <strong>Copy share link</strong>, and pass it along. Merging combines someone else's marks with yours.</p>
+    <p class="share-note">Everyone works from the same link — mark your hours and they show up for everybody else within a few seconds. No need to pass an updated link around any more. This box is only for rescuing marks from an older <code>#s=…</code> link from before the shared board existed.</p>
   </details>
 
 </main>
@@ -284,6 +292,17 @@ footer a:hover{color:var(--rose)}
 var PALETTE=['#c9536e','#3d6b52','#2f6f9f','#b8763a','#7a5aa8','#1f8a8a','#c4553a','#4a5f8a','#8a5a7a','#5f7a2f'];
 var START_HOUR=8, END_HOUR=22, STEP=30;
 var LS_STATE='grindtime.state', LS_ME='grindtime.me';
+
+/* Shared storage. One row per person per board, so two people editing at the same
+   moment never overwrite each other — each only ever writes its own row. The
+   publishable key is meant to be public; row-level security confines anon to this
+   one table. The bare URL is the 'main' board; #b=<id> opens a separate one. */
+var SB='https://acfinbwjrfzwrnenyusc.supabase.co/rest/v1/grindtime_entries';
+var SB_KEY='sb_publishable_7d2pssl63nI4JliFGbIqsA_1AvmHWzB';
+var BOARD=((location.hash||'').match(/[#&]b=([A-Za-z0-9_-]{1,64})/)||[])[1]||'main';
+var LS_SEEDED='grindtime.seeded.'+BOARD;
+var sbHeaders={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
+var pendingWrite=false, failedWrite=false, writeTimer=null, pullTimer=null;
 
 var state={v:1,p:[],a:{}};
 var meId=null;
@@ -352,10 +371,13 @@ function encode(st){try{return b64e(JSON.stringify(st));}catch(e){return '';}}
 function decode(s){try{var o=JSON.parse(b64d(s));if(o&&Array.isArray(o.p)&&o.a&&typeof o.a==='object')return o;}catch(e){}return null;}
 
 /* ---------- persistence ---------- */
+/* Local storage is only an offline cache now — the board is the real record — so
+   the URL is left clean and shareable as-is. */
 function persist(){
-  var enc=encode(state);
-  try{localStorage.setItem(LS_STATE,enc);if(meId)localStorage.setItem(LS_ME,meId);}catch(e){}
-  try{history.replaceState(null,'',location.pathname+(enc?'#s='+enc:''));}catch(e){}
+  try{
+    localStorage.setItem(LS_STATE,encode(state));
+    if(meId)localStorage.setItem(LS_ME,meId);
+  }catch(e){}
 }
 /* An incoming link is merged into whatever this device already has, never swapped
    in over it. Replacing was silently wiping your own marks whenever you opened a
@@ -377,8 +399,6 @@ function load(){
     if(savedMe&&person(savedMe))meId=savedMe;
   }
   if(!state.p)state.p=[];if(!state.a)state.a={};
-  /* Fold the union straight back into the URL so the link in the address bar is
-     already the complete one, ready to pass on. */
   if(merged)persist();
 }
 
@@ -575,7 +595,144 @@ function commitName(){
   }
   save();
 }
-function save(){persist();render();}
+function save(){persist();render();pushMine();}
+
+/* ---------- shared board ---------- */
+function setStatus(kind,text){
+  var el=document.getElementById('syncStatus');
+  if(!el)return;
+  el.className='sync '+kind;
+  el.textContent=text;
+}
+
+function myAvail(){
+  var out={};
+  for(var k in state.a){if(state.a[k][meId])out[k]=state.a[k][meId];}
+  return out;
+}
+
+/* Only ever writes my own row. Debounced, because a drag produces a burst of edits. */
+function pushMine(){
+  if(!meId||!person(meId))return;
+  pendingWrite=true;
+  setStatus('saving','Saving…');
+  clearTimeout(writeTimer);
+  writeTimer=setTimeout(function(){
+    var p=person(meId);
+    if(!p){pendingWrite=false;return;}
+    fetch(SB,{method:'POST',headers:Object.assign({'Prefer':'resolution=merge-duplicates'},sbHeaders),
+      body:JSON.stringify([{board_id:BOARD,person_id:meId,name:p[2],color:p[1],avail:myAvail()}])})
+      .then(function(r){
+        pendingWrite=false;failedWrite=!r.ok;
+        if(r.ok)setStatus('ok','Saved — everyone with the link sees this');
+        else setStatus('bad','Could not save — retrying');
+      })
+      .catch(function(){pendingWrite=false;failedWrite=true;setStatus('bad','Offline — will retry');});
+  },500);
+}
+
+/* An imported link can carry other people, not just me, so push all of them up
+   rather than only my own row. */
+function pushImported(other){
+  var rows=[];
+  state.p.forEach(function(pp){
+    var carried=other.p.some(function(op){
+      return op[2].trim().toLowerCase()===pp[2].trim().toLowerCase();
+    });
+    if(!carried)return;
+    var av={};
+    for(var k in state.a){if(state.a[k][pp[0]])av[k]=state.a[k][pp[0]];}
+    if(!Object.keys(av).length)return;
+    rows.push({board_id:BOARD,person_id:pp[0],name:pp[2],color:pp[1],avail:av});
+  });
+  if(!rows.length)return;
+  setStatus('saving','Saving…');
+  fetch(SB,{method:'POST',headers:Object.assign({'Prefer':'resolution=merge-duplicates'},sbHeaders),
+    body:JSON.stringify(rows)})
+    .then(function(){syncPull();})
+    .catch(function(){setStatus('bad','Could not save — check your connection');});
+}
+
+function removeRemote(id){
+  fetch(SB+'?board_id=eq.'+encodeURIComponent(BOARD)+'&person_id=eq.'+encodeURIComponent(id),
+    {method:'DELETE',headers:sbHeaders}).catch(function(){});
+}
+
+/* Rebuilds the board from what the server holds. Skipped while my own edits are
+   still in flight, so a poll can never land on top of something I just drew. */
+function applyRemote(rows){
+  var mineP=meId?person(meId):null;
+  var mineA=mineP?myAvail():null;
+  var np=[],na={};
+  rows.forEach(function(r){
+    np.push([r.person_id,r.color|0,r.name]);
+    var av=r.avail||{};
+    for(var k in av){
+      if(!Array.isArray(av[k]))continue;
+      if(!na[k])na[k]={};
+      na[k][r.person_id]=av[k];
+    }
+  });
+  state.p=np;state.a=na;
+  /* My row may not have reached the server yet — someone who has just typed their
+     name exists only on this device for a moment. Keep the local copy rather than
+     letting a poll erase them. Deliberate removal clears meId first, so this
+     cannot resurrect someone who was deleted on purpose. */
+  if(mineP&&!person(meId)){
+    state.p.push(mineP);
+    for(var k in mineA){
+      if(!state.a[k])state.a[k]={};
+      state.a[k][meId]=mineA[k];
+    }
+  }
+  persist();
+}
+
+function syncPull(then){
+  if(pendingWrite){if(then)then();return;}
+  fetch(SB+'?board_id=eq.'+encodeURIComponent(BOARD)+'&select=person_id,name,color,avail',{headers:sbHeaders})
+    .then(function(r){return r.ok?r.json():Promise.reject(r.status);})
+    .then(function(rows){
+      /* Re-check on arrival, not just before dispatch: edits may have started
+         while this request was in the air. */
+      if(pendingWrite){if(then)then();return;}
+      applyRemote(rows);
+      render();
+      setStatus('ok','Live — everyone with the link sees this');
+      if(then)then();
+    })
+    .catch(function(){
+      setStatus('bad','Offline — showing what is saved on this device');
+      if(then)then();
+    });
+}
+
+/* One-off lift of whatever this device already had — old localStorage, or an old
+   #s= link — up onto the shared board, so nobody's existing marks are stranded. */
+function seedFromLocal(){
+  var already=null;try{already=localStorage.getItem(LS_SEEDED);}catch(e){}
+  if(already)return Promise.resolve();
+  var pre=preSync;
+  if(!pre||!pre.p.length){try{localStorage.setItem(LS_SEEDED,'1');}catch(e){}return Promise.resolve();}
+  var rows=[];
+  pre.p.forEach(function(op){
+    var dup=false;
+    for(var i=0;i<state.p.length;i++){
+      if(state.p[i][2].trim().toLowerCase()===op[2].trim().toLowerCase()){dup=true;break;}
+    }
+    if(dup)return;
+    var av={};
+    for(var k in pre.a){if(pre.a[k][op[0]])av[k]=pre.a[k][op[0]];}
+    if(!Object.keys(av).length)return;
+    rows.push({board_id:BOARD,person_id:op[0],name:op[2],color:op[1],avail:av});
+  });
+  try{localStorage.setItem(LS_SEEDED,'1');}catch(e){}
+  if(!rows.length)return Promise.resolve();
+  return fetch(SB,{method:'POST',headers:Object.assign({'Prefer':'resolution=merge-duplicates'},sbHeaders),
+    body:JSON.stringify(rows)}).then(function(){
+      toast('Brought '+rows.length+' '+(rows.length===1?'person':'people')+' across to the shared board');
+    }).catch(function(){});
+}
 
 /* Drag selects the rectangle between the anchor cell and the cursor. Painting only
    the cell under the pointer would leave gaps, because pointermove does not fire
@@ -683,7 +840,8 @@ document.getElementById('roster').addEventListener('click',function(e){
     for(var k in state.a){delete state.a[k][id];if(!Object.keys(state.a[k]).length)delete state.a[k];}
     if(meId===id){meId=null;document.getElementById('nameInput').value='';try{localStorage.removeItem(LS_ME);}catch(err){}}
     if(soloId===id)soloId=null;
-    save();return;
+    removeRemote(id);
+    persist();render();return;
   }
   var chip=e.target.closest('.chip');
   if(chip){soloId=(soloId===chip.dataset.id)?null:chip.dataset.id;render();}
@@ -725,8 +883,7 @@ document.getElementById('clearBtn').addEventListener('click',function(){
 });
 
 document.getElementById('copyBtn').addEventListener('click',function(){
-  persist();
-  var url=location.href;
+  var url=location.origin+location.pathname+(BOARD==='main'?'':'#b='+BOARD);
   if(navigator.clipboard&&navigator.clipboard.writeText){
     navigator.clipboard.writeText(url).then(function(){toast('Link copied — send it on');},fallbackCopy);
   }else fallbackCopy();
@@ -744,8 +901,9 @@ document.getElementById('mergeBtn').addEventListener('click',function(){
   if(!other){toast('That link has no availability in it');return;}
   mergeState(other,meId);
   inp.value='';
-  save();
-  toast('Merged');
+  persist();render();
+  pushImported(other);
+  toast('Brought those marks in');
 });
 
 var toastTimer=null;
@@ -765,13 +923,29 @@ window.addEventListener('hashchange',function(){
   var other=decode(m[1]);
   if(!other)return;
   mergeState(other,meId);
-  save();
+  persist();render();
+  pushImported(other);
   toast('Added the availability from that link');
 });
 
+/* What this device knew before the board answered — used once to lift any older
+   marks up onto the shared board. */
+var preSync={p:state.p.slice(),a:JSON.parse(JSON.stringify(state.a))};
+
 load();
+preSync={p:state.p.slice(),a:JSON.parse(JSON.stringify(state.a))};
 syncNameField();
 render();
+setStatus('saving','Loading the board…');
+syncPull(function(){
+  seedFromLocal().then(function(){syncPull();});
+});
+pullTimer=setInterval(function(){
+  if(document.hidden)return;
+  if(failedWrite){failedWrite=false;pushMine();return;}
+  syncPull();
+},5000);
+document.addEventListener('visibilitychange',function(){if(!document.hidden)syncPull();});
 })();
 </script>
 </body>
