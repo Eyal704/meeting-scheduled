@@ -357,22 +357,33 @@ function persist(){
   try{localStorage.setItem(LS_STATE,enc);if(meId)localStorage.setItem(LS_ME,meId);}catch(e){}
   try{history.replaceState(null,'',location.pathname+(enc?'#s='+enc:''));}catch(e){}
 }
+/* An incoming link is merged into whatever this device already has, never swapped
+   in over it. Replacing was silently wiping your own marks whenever you opened a
+   link built by someone who had started from an empty board. */
 function load(){
-  var h=location.hash||'';
-  var m=h.match(/[#&]s=([A-Za-z0-9_-]+)/);
+  var saved=null;try{saved=localStorage.getItem(LS_STATE);}catch(e){}
+  var local=saved?decode(saved):null;
+  var savedMe=null;try{savedMe=localStorage.getItem(LS_ME);}catch(e){}
+  var m=(location.hash||'').match(/[#&]s=([A-Za-z0-9_-]+)/);
   var fromUrl=m?decode(m[1]):null;
-  if(fromUrl){state=fromUrl;}
-  else{
-    var saved=null;try{saved=localStorage.getItem(LS_STATE);}catch(e){}
-    if(saved){var o=decode(saved);if(o)state=o;}
+  var merged=false;
+
+  if(local){
+    state=local;
+    if(savedMe&&person(savedMe))meId=savedMe;
+    if(fromUrl){mergeState(fromUrl,meId);merged=true;}
+  }else if(fromUrl){
+    state=fromUrl;
+    if(savedMe&&person(savedMe))meId=savedMe;
   }
   if(!state.p)state.p=[];if(!state.a)state.a={};
-  var savedMe=null;try{savedMe=localStorage.getItem(LS_ME);}catch(e){}
-  if(savedMe&&person(savedMe))meId=savedMe;
+  /* Fold the union straight back into the URL so the link in the address bar is
+     already the complete one, ready to pass on. */
+  if(merged)persist();
 }
 
 /* ---------- merge ---------- */
-function mergeState(other){
+function mergeState(other,protectId){
   var mapId={};
   other.p.forEach(function(op){
     var match=null;
@@ -388,7 +399,8 @@ function mergeState(other){
   });
   for(var key in other.a){
     for(var oid in other.a[key]){
-      var id=mapId[oid];if(!id)continue;
+      var id=mapId[oid];
+      if(!id||id===protectId)continue;
       var rs=ranges(id,key);
       other.a[key][oid].forEach(function(r){rs=addRange(rs,r[0],r[1]);});
       setRanges(id,key,rs);
@@ -730,7 +742,7 @@ document.getElementById('mergeBtn').addEventListener('click',function(){
   var m=(inp.value||'').match(/[#&]s=([A-Za-z0-9_-]+)/);
   var other=m?decode(m[1]):null;
   if(!other){toast('That link has no availability in it');return;}
-  mergeState(other);
+  mergeState(other,meId);
   inp.value='';
   save();
   toast('Merged');
@@ -752,9 +764,9 @@ window.addEventListener('hashchange',function(){
   if(m[1]===encode(state))return;
   var other=decode(m[1]);
   if(!other)return;
-  mergeState(other);
+  mergeState(other,meId);
   save();
-  toast('Loaded the availability from that link');
+  toast('Added the availability from that link');
 });
 
 load();
