@@ -93,7 +93,8 @@ input[type=text]:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3p
 /* Grid */
 .gridcard{padding:0;overflow:hidden}
 .gridscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.grid{display:grid;min-width:660px}
+.grid{display:grid;grid-template-columns:64px repeat(7,minmax(76px,1fr));min-width:660px}
+.cell,.tlabel{height:22px}
 .gh{position:sticky;top:0;z-index:3;background:#fff;border-bottom:1px solid var(--border);padding:10px 4px;text-align:center;cursor:pointer;transition:background .12s}
 .gh:hover{background:var(--rose-tint)}
 .gh .dow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
@@ -148,6 +149,40 @@ input[type=text]:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3p
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 footer{padding:32px 0 48px;text-align:center;font-size:12px;color:var(--faint)}
+.btn-quiet{white-space:nowrap}
+
+/* Phones: the whole point of the page is seeing the week at once, so squeeze the
+   seven columns in rather than leaving four of them off-screen. */
+@media(max-width:700px){
+  .container{padding:0 14px}
+  .grid{grid-template-columns:40px repeat(7,minmax(0,1fr));min-width:0}
+  .cell,.tlabel{height:28px}
+  .tlabel{font-size:10px;padding:0 5px 0 2px}
+  .tlabel.half{font-size:9px}
+  .gh{padding:8px 2px}
+  .gh .dow{font-size:9px;letter-spacing:.02em}
+  .gh .dnum{font-size:15px}
+  .cnt{font-size:8px;right:1px}
+  .hero{padding:24px 0 20px}
+  .lede{font-size:15px}
+  .toolbar{padding:14px;gap:12px}
+  .tool-group.grow{flex:1 1 100%}
+  .weeknav{margin-left:0;width:100%;justify-content:space-between}
+  .wk-label{min-width:0;flex:1}
+  .roster,.results,.share{padding-left:14px;padding-right:14px}
+  .gridfoot{padding:12px 14px}
+  .nav-inner{gap:10px}
+}
+
+/* Touch: a drag over the grid is ambiguous — paint, or scroll the page? Rather than
+   guess, expose the choice. Off (default) leaves scrolling untouched and taps mark
+   single cells; on, the grid stops scrolling and drags paint. */
+.paint-toggle{display:none}
+@media(hover:none) and (pointer:coarse){
+  .paint-toggle{display:inline-flex;align-items:center;gap:6px}
+}
+.paint-toggle[aria-pressed="true"]{color:var(--rose);background:var(--rose-tint)}
+.grid.painting .cell{touch-action:none;cursor:crosshair}
 footer a{color:var(--muted);font-weight:500}
 footer a:hover{color:var(--rose)}
 </style>
@@ -207,8 +242,14 @@ footer a:hover{color:var(--rose)}
   <div class="card gridcard">
     <div class="gridscroll"><div class="grid" id="grid"></div></div>
     <div class="gridfoot">
-      <span class="hint" id="gridHint">Click a cell to mark yourself free. Drag to paint. Click a day or a time to toggle the whole line.</span>
-      <button class="btn-quiet" id="clearBtn">Clear my week</button>
+      <span class="hint" id="gridHint">Tap a cell to mark yourself free, or drag across the grid. Tap a day or a time to toggle that whole line.</span>
+      <span style="display:flex;gap:6px;align-items:center">
+        <button class="btn-quiet paint-toggle" id="paintBtn" aria-pressed="false">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>
+          <span id="paintLabel">Drag to paint: Off</span>
+        </button>
+        <button class="btn-quiet" id="clearBtn">Clear my week</button>
+      </span>
     </div>
   </div>
 
@@ -376,7 +417,6 @@ function renderWeekLabel(){
 
 function renderGrid(){
   var today=new Date();today.setHours(0,0,0,0);
-  gridEl.style.gridTemplateColumns='64px repeat(7,minmax(76px,1fr))';
   var html='<div class="gh corner"></div>';
   days.forEach(function(d,i){
     var cls='gh'+(sameDay(d,today)?' today':'')+(d<today?' past':'');
@@ -384,13 +424,13 @@ function renderGrid(){
   });
   slots.forEach(function(m){
     var onHour=m%60===0;
-    html+='<div class="tlabel'+(onHour?' hourline':' half')+'" data-min="'+m+'" title="Toggle this time across the week" style="height:22px">'+(onHour?fmtTime(m):':30')+'</div>';
+    html+='<div class="tlabel'+(onHour?' hourline':' half')+'" data-min="'+m+'" title="Toggle this time across the week">'+(onHour?fmtTime(m):':30')+'</div>';
     days.forEach(function(d){
       var key=dk(d),cs=cellState(key,m);
       var cls='cell'+(onHour?' hourline':'')+(d<today?' past':'');
       if(meId&&has(meId,key,m))cls+=' mine';
       if(cs.all)cls+=' all';
-      html+='<div class="'+cls+'" data-key="'+key+'" data-min="'+m+'" style="height:22px"'+(cs.tip?' title="'+esc(cs.tip)+'"':'')+'>'+cs.inner+'</div>';
+      html+='<div class="'+cls+'" data-key="'+key+'" data-min="'+m+'"'+(cs.tip?' title="'+esc(cs.tip)+'"':'')+'>'+cs.inner+'</div>';
     });
   });
   gridEl.innerHTML=html;
@@ -529,7 +569,7 @@ function save(){persist();render();}
    the cell under the pointer would leave gaps, because pointermove does not fire
    once per cell on a fast drag. Each move restores the pre-drag snapshot and
    re-applies the current rectangle, so shrinking the selection undoes cleanly. */
-var drag=null,dragMouse=false;
+var drag=null,dragEnabled=false,paintMode=false,lastPt=null,edgeTimer=null;
 
 function applyRect(di,si){
   var d0=Math.min(drag.a.di,di),d1=Math.max(drag.a.di,di);
@@ -564,22 +604,45 @@ gridEl.addEventListener('pointerdown',function(e){
   var snap={};
   days.forEach(function(d){snap[dk(d)]=ranges(meId,dk(d)).map(function(r){return [r[0],r[1]];});});
   drag={mode:!has(meId,key,m),a:{di:di,si:si},prev:null,snap:snap};
-  dragMouse=(e.pointerType==='mouse');
+  dragEnabled=(e.pointerType==='mouse')||paintMode;
+  lastPt={x:e.clientX,y:e.clientY};
+  if(dragEnabled&&!edgeTimer)edgeTimer=setInterval(edgeScroll,30);
   applyRect(di,si);
 });
-gridEl.addEventListener('pointermove',function(e){
-  if(!drag||!dragMouse)return;
-  var el=document.elementFromPoint(e.clientX,e.clientY);
+function rectFromPoint(x,y){
+  var el=document.elementFromPoint(x,y);
   var cell=el&&el.closest?el.closest('.cell'):null;
   if(!cell)return;
   var di=dayIndex(cell.dataset.key),si=slots.indexOf(+cell.dataset.min);
   if(di<0||si<0)return;
-  if(drag.prev&&drag.prev.d1===di&&drag.prev.d0===di&&drag.prev.s1===si&&drag.prev.s0===si)return;
+  if(drag.prev&&drag.prev.d0===di&&drag.prev.d1===di&&drag.prev.s0===si&&drag.prev.s1===si)return;
   applyRect(di,si);
+}
+gridEl.addEventListener('pointermove',function(e){
+  if(!drag||!dragEnabled)return;
+  lastPt={x:e.clientX,y:e.clientY};
+  rectFromPoint(e.clientX,e.clientY);
 });
+
+/* A block can run taller than the screen, so creep the page along when the drag
+   reaches an edge. Driven by a timer rather than pointermove, so it keeps going
+   while the finger is held still against the edge. */
+var EDGE=70;
+function edgeScroll(){
+  if(!drag||!dragEnabled||!lastPt)return;
+  var h=window.innerHeight,y=lastPt.y,d=0;
+  if(y<EDGE)d=-Math.max(5,(EDGE-y)/3);
+  else if(y>h-EDGE)d=Math.max(5,(y-(h-EDGE))/3);
+  if(!d)return;
+  var before=window.scrollY;
+  window.scrollBy(0,d);
+  if(window.scrollY!==before)rectFromPoint(lastPt.x,lastPt.y);
+}
 /* Commit once, on release. Saving per cell would rewrite the URL on every
    pointermove, which browsers rate-limit. */
 window.addEventListener('pointerup',function(){
+  if(edgeTimer){clearInterval(edgeTimer);edgeTimer=null;}
+  lastPt=null;
   if(!drag)return;
   drag=null;
   save();
@@ -632,6 +695,14 @@ document.addEventListener('keydown',function(e){
   if(/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName))return;
   if(e.key==='ArrowLeft'){weekStart=addDays(weekStart,-7);render();}
   if(e.key==='ArrowRight'){weekStart=addDays(weekStart,7);render();}
+});
+
+document.getElementById('paintBtn').addEventListener('click',function(){
+  paintMode=!paintMode;
+  gridEl.classList.toggle('painting',paintMode);
+  this.setAttribute('aria-pressed',paintMode?'true':'false');
+  document.getElementById('paintLabel').textContent='Drag to paint: '+(paintMode?'On':'Off');
+  toast(paintMode?'Drag across the grid to paint — page scrolling is paused':'Drag to paint off');
 });
 
 document.getElementById('clearBtn').addEventListener('click',function(){
