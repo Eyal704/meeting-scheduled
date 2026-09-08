@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=20260907-1">
+  <link rel="stylesheet" href="./styles.css?v=20260908-1">
 </head>
 <body>
   <div class="shell">
@@ -37,7 +37,7 @@
         </div>
         <div class="hero-stat" aria-label="Recording count">
           <span id="recordingCount">—</span>
-          <small>recordings in view</small>
+          <small id="recordingCountLabel">recordings in view</small>
         </div>
       </section>
 
@@ -90,7 +90,7 @@
             </div>
           </div>
 
-          <div class="notice hidden" id="limitNotice">Twilio returned the maximum batch size. Narrow the date range to make sure nothing is omitted.</div>
+          <div class="notice hidden" id="limitNotice">This number has more call history than one lookup covers, so some older recordings may be missing. Narrow the date range to see the rest.</div>
 
           <div class="table-head" aria-hidden="true">
             <span>Caller</span><span>Date &amp; time</span><span>Duration</span><span>Recording</span><span>Actions</span>
@@ -148,6 +148,6 @@
     </article>
   </template>
 
-  <script src="./app.js?v=20260901-2"></script>
+  <script src="./app.js?v=20260908-1"></script>
 </body>
 </html>

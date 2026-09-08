@@ -8,6 +8,7 @@
     numberCount: document.querySelector('#numberCount'),
     recordingList: document.querySelector('#recordingList'),
     recordingCount: document.querySelector('#recordingCount'),
+    recordingCountLabel: document.querySelector('#recordingCountLabel'),
     selectedNumber: document.querySelector('#selectedNumber'),
     selectedFlag: document.querySelector('#selectedFlag'),
     search: document.querySelector('#searchInput'),
@@ -103,9 +104,22 @@
     })
   }
 
+  const digitsOf = (value) => String(value || '').replace(/\D+/g, '')
+
+  // Callers get typed the way people say them — 0660 111 2223 or 054-123-0000 —
+  // while Twilio stores +436601112223 and +972541230000. Compare on digits, and
+  // drop the national trunk prefix so a local-format search still matches.
+  const searchDigits = (value) => digitsOf(value).replace(/^0+/, '')
+
   const filteredRecordings = () => {
     const query = els.search.value.trim().toLowerCase()
-    return query ? state.recordings.filter((item) => item.remoteNumber.toLowerCase().includes(query)) : state.recordings
+    if (!query) return state.recordings
+    const queryDigits = searchDigits(query)
+    return state.recordings.filter((item) => {
+      const remote = String(item.remoteNumber || '')
+      if (remote.toLowerCase().includes(query)) return true
+      return queryDigits.length >= 3 && digitsOf(remote).includes(queryDigits)
+    })
   }
 
   const stopActiveAudio = () => {
@@ -213,13 +227,30 @@
     })
   }
 
+  // Twilio still stitching a just-ended call has no playable media yet, so the
+  // row is shown as pending rather than dropped — an absent row reads as a lost
+  // recording.
+  const markPending = (row) => {
+    row.classList.add('pending')
+    row.querySelectorAll('button').forEach((button) => { button.disabled = true })
+    row.querySelector('.audio-time').textContent = 'Processing'
+    row.querySelector('.direction-label').textContent += ' · recording still processing'
+  }
+
   const renderRecordings = () => {
     stopActiveAudio()
     const recordings = filteredRecordings()
+    const total = state.recordings.length
     els.recordingCount.textContent = String(recordings.length)
+    els.recordingCountLabel.textContent = recordings.length === total
+      ? 'recordings in view'
+      : `of ${total} recordings`
     els.recordingList.innerHTML = ''
     if (!recordings.length) {
-      emptyState(state.recordings.length ? 'No matching caller' : 'No recordings found', state.recordings.length ? 'Try a different phone number.' : 'Try a wider date range or refresh the page.')
+      emptyState(
+        total ? 'No matching caller' : 'No recordings found',
+        total ? `Clear the search box to see all ${total} recordings for this number.` : 'Try a wider date range or refresh the page.',
+      )
       return
     }
     recordings.forEach((item) => {
@@ -232,9 +263,13 @@
       row.querySelector('.date-cell small').textContent = date.time
       row.querySelector('.duration-cell').textContent = formatDuration(item.duration)
       row.querySelector('.audio-time').textContent = formatDuration(item.duration)
-      wireAudio(row, item)
-      wireTranscript(row, item)
-      wireDownload(row, item)
+      if (item.ready === false) {
+        markPending(row)
+      } else {
+        wireAudio(row, item)
+        wireTranscript(row, item)
+        wireDownload(row, item)
+      }
       els.recordingList.appendChild(row)
     })
   }
@@ -246,6 +281,7 @@
     els.selectedNumber.textContent = item.number
     els.selectedFlag.textContent = flagFor(item.number)
     els.recordingCount.textContent = '—'
+    els.recordingCountLabel.textContent = 'recordings in view'
     els.limitNotice.classList.add('hidden')
     els.recordingList.innerHTML = '<div class="empty-state"><div class="number-skeleton" style="width:80%;max-width:560px"></div><p>Loading Twilio recordings…</p></div>'
     try {
