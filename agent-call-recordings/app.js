@@ -131,34 +131,114 @@
 
   const wireAudio = (row, item) => {
     const button = row.querySelector('.play-button')
-    const progress = row.querySelector('.audio-track span')
+    const track = row.querySelector('.audio-track')
     const time = row.querySelector('.audio-time')
+    const fallbackDuration = Math.max(0, Number(item.duration) || 0)
     let audio = null
-    button.addEventListener('click', async () => {
-      if (!audio) {
-        button.disabled = true
-        try {
-          audio = new Audio(URL.createObjectURL(await fetchAudioBlob(item.recordingSid)))
-          audio.addEventListener('timeupdate', () => {
-            const ratio = audio.duration ? audio.currentTime / audio.duration : 0
-            progress.style.width = `${ratio * 100}%`
-            time.textContent = formatDuration(Math.floor(audio.currentTime))
-          })
-          audio.addEventListener('ended', () => {
-            button.classList.remove('playing'); progress.style.width = '0'; time.textContent = '0:00'; state.activeAudio = null
-          })
-        } catch {
-          time.textContent = 'Unavailable'
-          return
-        } finally { button.disabled = false }
+    let audioPromise = null
+    let isSeeking = false
+
+    const knownDuration = () => {
+      if (audio && Number.isFinite(audio.duration) && audio.duration > 0) return audio.duration
+      return fallbackDuration
+    }
+
+    const renderPosition = (seconds) => {
+      const duration = knownDuration()
+      const position = Math.min(Math.max(0, Number(seconds) || 0), duration || 0)
+      const ratio = duration ? position / duration : 0
+      track.max = String(duration || 1)
+      track.value = String(position)
+      track.style.setProperty('--progress', `${ratio * 100}%`)
+      track.setAttribute('aria-valuetext', `${formatDuration(Math.floor(position))} of ${formatDuration(Math.floor(duration))}`)
+      time.textContent = `${formatDuration(Math.floor(position))} / ${formatDuration(Math.floor(duration))}`
+    }
+
+    const setAudioPosition = (loadedAudio, seconds) => {
+      const applyPosition = () => {
+        loadedAudio.currentTime = Math.min(Math.max(0, seconds), knownDuration())
+        renderPosition(loadedAudio.currentTime)
       }
-      if (audio.paused) {
+      if (loadedAudio.readyState >= 1) applyPosition()
+      else loadedAudio.addEventListener('loadedmetadata', applyPosition, { once: true })
+    }
+
+    const loadAudio = async () => {
+      if (audio) return audio
+      if (audioPromise) return audioPromise
+
+      audioPromise = (async () => {
+        button.disabled = true
+        track.disabled = true
+        try {
+          const loadedAudio = new Audio(URL.createObjectURL(await fetchAudioBlob(item.recordingSid)))
+          loadedAudio.preload = 'metadata'
+          loadedAudio.addEventListener('loadedmetadata', () => renderPosition(loadedAudio.currentTime))
+          loadedAudio.addEventListener('durationchange', () => renderPosition(loadedAudio.currentTime))
+          loadedAudio.addEventListener('timeupdate', () => {
+            if (!isSeeking) renderPosition(loadedAudio.currentTime)
+          })
+          loadedAudio.addEventListener('ended', () => {
+            button.classList.remove('playing')
+            state.activeAudio = null
+            loadedAudio.currentTime = 0
+            renderPosition(0)
+          })
+          audio = loadedAudio
+          return loadedAudio
+        } catch (error) {
+          time.textContent = 'Unavailable'
+          track.disabled = true
+          throw error
+        } finally {
+          button.disabled = false
+          if (audio) track.disabled = false
+        }
+      })()
+
+      try {
+        return await audioPromise
+      } finally {
+        audioPromise = null
+      }
+    }
+
+    renderPosition(0)
+
+    track.addEventListener('pointerdown', () => { isSeeking = true })
+    track.addEventListener('pointercancel', () => { isSeeking = false })
+    track.addEventListener('input', () => {
+      const target = Number(track.value)
+      renderPosition(target)
+      if (audio) setAudioPosition(audio, target)
+    })
+    track.addEventListener('change', async () => {
+      const target = Number(track.value)
+      try {
+        const loadedAudio = await loadAudio()
+        setAudioPosition(loadedAudio, target)
+      } catch {
+        // loadAudio already presents the unavailable state.
+      } finally {
+        isSeeking = false
+      }
+    })
+
+    button.addEventListener('click', async () => {
+      try {
+        const loadedAudio = await loadAudio()
+        if (!loadedAudio.paused) {
+          loadedAudio.pause()
+          button.classList.remove('playing')
+          state.activeAudio = null
+          return
+        }
         stopActiveAudio()
-        await audio.play()
+        await loadedAudio.play()
         button.classList.add('playing')
-        state.activeAudio = { audio, button }
-      } else {
-        audio.pause(); button.classList.remove('playing'); state.activeAudio = null
+        state.activeAudio = { audio: loadedAudio, button }
+      } catch {
+        // loadAudio presents fetch errors; play() failures leave the row paused.
       }
     })
   }
@@ -232,7 +312,7 @@
   // recording.
   const markPending = (row) => {
     row.classList.add('pending')
-    row.querySelectorAll('button').forEach((button) => { button.disabled = true })
+    row.querySelectorAll('button, input').forEach((control) => { control.disabled = true })
     row.querySelector('.audio-time').textContent = 'Processing'
     row.querySelector('.direction-label').textContent += ' · recording still processing'
   }
@@ -262,7 +342,6 @@
       row.querySelector('.date-cell strong').textContent = date.day
       row.querySelector('.date-cell small').textContent = date.time
       row.querySelector('.duration-cell').textContent = formatDuration(item.duration)
-      row.querySelector('.audio-time').textContent = formatDuration(item.duration)
       if (item.ready === false) {
         markPending(row)
       } else {
