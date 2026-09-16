@@ -1,0 +1,18 @@
+AI Voice Agent — Inbound & Outbound Calling
+===========================================
+
+Automatic speech transcript. Original spoken wording retained; product names and obvious recognition errors corrected.
+
+[00:00] So very quickly here, I'm going to show you one of the voice agent I built. This one specifically is for MeetingScheduled. And it could either be when a user fills up a form on your website and then the voice agent immediately calls him.
+
+[00:16] Or when it's an after -hour service or we create some sort of an automation that the user commits an action and then receives a call. So if I go here, we can just test it.
+
+[00:30] Thanks for calling MeetingScheduled. How can I help you today? Yeah, I was just looking to understand a bit about your service here. Sure, I'm happy to help. MeetingScheduled builds digital phone receptionists for businesses, so your calls can be answered automatically, even after hours or when your team is busy.
+
+[00:50] What kind of business do you run? Good. I have an outbound agency. Thanks for sharing. When your customers call in, what do they usually need help with?
+
+[01:06] Well, usually they look to increase sales and have more qualified appointments. That makes sense for an outbound agency. Do you find that you miss calls during busy times,
+
+[01:20] or do you already have someone answering every inbound call? Yeah, I do. So this agent, we can modify her and we can change her voice. It would be different language. I have an agent that speaks German and
+
+[01:34] different dialects as well in German. If you want to try, you can just call this number and you will be able to try it out and speak to her.

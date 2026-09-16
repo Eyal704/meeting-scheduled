@@ -24,7 +24,9 @@ test("homepage is accessible, responsive and does not preload video", async ({
   await expect(
     page.getByRole("heading", { name: "90 Seconds of My Work." }),
   ).toBeVisible();
-  await expect(page.getByText("Final edited reel coming soon")).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Watch 90 Seconds of My Work" }),
+  ).toBeVisible();
   await expect(page.locator("video")).toHaveCount(0);
   await page.locator("footer").scrollIntoViewIfNeeded();
   expect(mediaRequests).toEqual([]);
@@ -84,6 +86,16 @@ test("all case studies contain the requested sections and working media", async 
         ),
       )
       .toBe(true);
+    const transcript = page
+      .locator("#demo")
+      .getByRole("link", { name: "Read the transcript" });
+    const transcriptResponse = await request.get(
+      (await transcript.getAttribute("href"))!,
+    );
+    expect(transcriptResponse.status()).toBe(200);
+    expect(await transcriptResponse.text()).toContain(
+      "Automatic speech transcript",
+    );
     await page.locator("#demo button").click();
     const dialog = page.getByRole("dialog");
     await expect(dialog).toBeVisible();
@@ -199,4 +211,35 @@ test("case study passes accessibility checks", async ({ page }) => {
     .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
     .analyze();
   expect(accessibility.violations).toEqual([]);
+});
+
+test("the edited reel plays for 90 seconds and unloads on close", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Watch 90 Seconds of My Work" })
+    .click();
+  const video = page.getByRole("dialog").locator("video");
+  await expect
+    .poll(() => video.evaluate((v: HTMLVideoElement) => v.readyState), {
+      timeout: 20000,
+    })
+    .toBeGreaterThanOrEqual(2);
+  expect(await video.evaluate((v: HTMLVideoElement) => v.duration)).toBeCloseTo(
+    90,
+    1,
+  );
+  await video.evaluate((v: HTMLVideoElement) => {
+    v.currentTime = 65;
+  });
+  await expect
+    .poll(() => video.evaluate((v: HTMLVideoElement) => v.readyState))
+    .toBeGreaterThanOrEqual(2);
+  await page.getByRole("button", { name: "Close dialog" }).click();
+  await expect(page.locator("video")).toHaveCount(0);
+  const response = await request.get("/transcripts/reel-transcript.txt");
+  expect(response.status()).toBe(200);
+  expect(await response.text()).toContain("MeetingScheduled");
 });

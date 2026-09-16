@@ -1,0 +1,10 @@
+CRM & Revenue Systems
+=====================
+
+Automatic speech transcript. Original spoken wording retained; product names and obvious recognition errors corrected.
+
+[00:00] And this is a MeetingScheduled CRM. It's also able to connect to HubSpot or Salesforce in here. We can follow either on each user as an admin or to see your own pipeline.
+
+[00:16] When we click on one of the leads we've spoken with, we can hear the recordings. We can see the transcript directly here,
+
+[00:28] and we can log in any information that we have new directly in our calendar and see how many conversations I had, how many call recordings and who I need to call today.

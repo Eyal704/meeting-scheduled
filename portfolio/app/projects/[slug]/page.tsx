@@ -137,7 +137,7 @@ export default async function ProjectPage({
             <h2>Demo</h2>
           </div>
           <p>
-            Full recording · {project.duration}
+            Full recording · {project.duration} · English subtitles
             <br />
             {project.portrait
               ? "Mobile calling workflow"
@@ -146,7 +146,7 @@ export default async function ProjectPage({
         </div>
         <MediaDialog
           title={project.name}
-          src={assetPath(`/media/${project.media}.mp4`)}
+          src={assetPath(`/media/${project.media}-captioned.mp4`)}
           poster={assetPath(`/media/${project.media}-poster.webp`)}
           className={`full-demo ${project.portrait ? "portrait-demo" : ""}`}
         >
@@ -165,6 +165,23 @@ export default async function ProjectPage({
             <span>{project.duration} · Sound on</span>
           </span>
         </MediaDialog>
+        <div className="demo-resources">
+          <a
+            className="text-link"
+            href={assetPath(`/transcripts/${project.media}-transcript.txt`)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Read the transcript <ArrowUpRight size={16} />
+          </a>
+          <a
+            className="text-link"
+            href={assetPath(`/transcripts/${project.media}.srt`)}
+            download
+          >
+            Download subtitles <ArrowDown size={16} />
+          </a>
+        </div>
       </section>
       <div className="case-overview case-outcomes">
         <section id="value" className="case-text">

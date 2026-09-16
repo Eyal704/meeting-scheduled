@@ -10,7 +10,7 @@ export function ProjectCard({ project }: { project: Project }) {
     <article className="project-card">
       <MediaDialog
         title={project.name}
-        src={assetPath(`/media/${project.media}.mp4`)}
+        src={assetPath(`/media/${project.media}-captioned.mp4`)}
         poster={assetPath(`/media/${project.media}-poster.webp`)}
         className={`project-preview ${project.portrait ? "portrait-preview" : ""}`}
       >

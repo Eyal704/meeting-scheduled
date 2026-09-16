@@ -299,9 +299,8 @@ export const evidence: Evidence[] = [
   },
 ];
 
-// Set this to a public media path when the final edited reel is supplied.
-// Do not substitute a full project recording for the promised 90-second reel.
-export const workReel: { src: string | null; poster: string } = {
-  src: null,
-  poster: "/media/meetingscheduled-poster.webp",
+// Edited from the supplied product recordings, with matching English subtitles.
+export const workReel = {
+  src: "/media/eyal-90-seconds.mp4",
+  poster: "/media/eyal-90-seconds-poster.webp",
 };

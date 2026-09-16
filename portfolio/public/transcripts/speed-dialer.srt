@@ -1,0 +1,223 @@
+1
+00:00:00,020 --> 00:00:01,380
+This is the Speed Dialer
+
+2
+00:00:01,380 --> 00:00:03,360
+app where you are able
+
+3
+00:00:03,360 --> 00:00:04,990
+to call, email,
+
+4
+00:00:05,120 --> 00:00:07,230
+WhatsApp, look at the company.
+
+5
+00:00:08,512 --> 00:00:10,100
+Here on the top you
+
+6
+00:00:10,100 --> 00:00:12,640
+can add your lead sheets
+
+7
+00:00:12,640 --> 00:00:14,870
+or they are inserted directly
+
+8
+00:00:15,720 --> 00:00:17,070
+from the MCP.
+
+9
+00:00:17,740 --> 00:00:21,060
+The leads for each user
+
+10
+00:00:21,060 --> 00:00:22,630
+or sales rep.
+
+11
+00:00:23,080 --> 00:00:24,360
+You can add your sales
+
+12
+00:00:24,360 --> 00:00:25,070
+script here
+
+13
+00:00:25,600 --> 00:00:27,280
+and the objection handling here
+
+14
+00:00:27,280 --> 00:00:29,100
+and then once you add
+
+15
+00:00:29,100 --> 00:00:30,400
+them while you're on the
+
+16
+00:00:30,400 --> 00:00:31,800
+call you can just click
+
+17
+00:00:31,800 --> 00:00:33,180
+on it and read it
+
+18
+00:00:33,180 --> 00:00:34,660
+when you speak to someone
+
+19
+00:00:34,660 --> 00:00:36,900
+same as goes for the
+
+20
+00:00:36,900 --> 00:00:37,770
+objection handling
+
+21
+00:00:38,688 --> 00:00:41,110
+it's quite straightforward now
+
+22
+00:00:42,360 --> 00:00:42,970
+when you call
+
+23
+00:00:43,860 --> 00:00:45,400
+each user has different numbers
+
+24
+00:00:45,400 --> 00:00:47,552
+for this user specifically he
+
+25
+00:00:47,552 --> 00:00:48,860
+can call from a US
+
+26
+00:00:48,860 --> 00:00:49,790
+West number
+
+27
+00:00:51,120 --> 00:00:52,280
+from a US East number
+
+28
+00:00:52,280 --> 00:00:55,200
+it's plus 1202 this one
+
+29
+00:00:55,200 --> 00:00:58,840
+is plus 1505 and from
+
+30
+00:00:58,840 --> 00:01:00,500
+Austria number and an Israeli
+
+31
+00:01:00,500 --> 00:01:01,050
+number
+
+32
+00:01:02,380 --> 00:01:04,100
+the the person receives the
+
+33
+00:01:04,100 --> 00:01:05,150
+call will receive
+
+34
+00:01:05,620 --> 00:01:07,460
+the call depending or on
+
+35
+00:01:07,460 --> 00:01:08,580
+which number I choose to
+
+36
+00:01:08,580 --> 00:01:09,150
+call from
+
+37
+00:01:09,880 --> 00:01:11,240
+once I do the call
+
+38
+00:01:11,240 --> 00:01:13,340
+I'm able to see my
+
+39
+00:01:13,340 --> 00:01:14,390
+recent calls
+
+40
+00:01:14,900 --> 00:01:16,960
+you download them to see
+
+41
+00:01:16,960 --> 00:01:18,530
+the transcript of each one
+
+42
+00:01:19,480 --> 00:01:20,440
+and down here if I
+
+43
+00:01:20,440 --> 00:01:22,280
+have any note I can
+
+44
+00:01:22,280 --> 00:01:23,210
+write it down
+
+45
+00:01:23,720 --> 00:01:25,030
+and then edit directly
+
+46
+00:01:27,580 --> 00:01:28,400
+now if you've ever been
+
+47
+00:01:28,400 --> 00:01:30,140
+to sales you probably know
+
+48
+00:01:30,140 --> 00:01:32,960
+this is very convenient that
+
+49
+00:01:32,960 --> 00:01:33,860
+you can use it from
+
+50
+00:01:33,860 --> 00:01:35,580
+your phone or from the
+
+51
+00:01:35,580 --> 00:01:40,560
+laptop it's just super relevant
+
+52
+00:01:40,560 --> 00:01:42,100
+to today's where people are
+
+53
+00:01:42,100 --> 00:01:43,980
+working remotely they can do
+
+54
+00:01:43,980 --> 00:01:45,010
+their call calling
+
+55
+00:01:45,420 --> 00:01:46,580
+or calling to their existing
+
+56
+00:01:46,580 --> 00:01:48,290
+leads from anywhere

@@ -40,6 +40,19 @@ try {
     expect(pdfResponse.status()).toBe(200);
     expect(pdfResponse.headers()["content-type"]).toContain("application/pdf");
     await page
+      .getByRole("button", { name: "Watch 90 Seconds of My Work" })
+      .click();
+    await expect
+      .poll(() => page.locator("video").evaluate((v) => v.readyState), {
+        timeout: 20000,
+      })
+      .toBeGreaterThanOrEqual(2);
+    expect(await page.locator("video").evaluate((v) => v.duration)).toBeCloseTo(
+      90,
+      1,
+    );
+    await page.getByRole("button", { name: "Close dialog" }).click();
+    await page
       .getByRole("button", { name: "Watch MeetingScheduled", exact: true })
       .click();
     await expect
@@ -67,6 +80,13 @@ try {
         }),
       ).toBeVisible();
       await page.locator("#demo img").evaluate((i) => i.decode());
+      const transcript = await page
+        .locator("#demo")
+        .getByRole("link", { name: "Read the transcript" })
+        .getAttribute("href");
+      expect(
+        (await page.request.get(new URL(transcript, base).href)).status(),
+      ).toBe(200);
       await page.locator("#demo button").click();
       await expect
         .poll(() => page.locator("video").evaluate((v) => v.readyState))
@@ -82,7 +102,7 @@ try {
     await expect(page).toHaveURL(new RegExp("/eyal/?#projects$"));
     expect(failures).toEqual([]);
     console.log(
-      `PASS ${viewport.width}px: 4 direct routes, client navigation, all videos, PDF, image paths, no browser errors.`,
+      `PASS ${viewport.width}px: 4 direct routes, client navigation, all captioned demos, 90-second reel, transcripts, PDF, image paths, no browser errors.`,
     );
     await page.close();
   }

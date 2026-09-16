@@ -159,25 +159,42 @@ export default function Home() {
               AI outbound. Voice agents. Calling systems. Connected revenue
               workflows.
             </p>
-            {workReel.src ? (
-              <MediaDialog
-                title="90 Seconds of My Work"
-                src={assetPath(workReel.src)}
-                poster={assetPath(workReel.poster)}
-                className="button button-primary"
+            <MediaDialog
+              title="90 Seconds of My Work"
+              src={assetPath(workReel.src)}
+              poster={assetPath(workReel.poster)}
+              caption="A 90-second edit of my actual product demos, with English subtitles and original commercial evidence."
+              className="button button-primary"
+            >
+              <Play size={17} fill="currentColor" /> Watch the reel
+            </MediaDialog>
+            <a
+              className="text-link reel-transcript"
+              href={assetPath("/transcripts/reel-transcript.txt")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Read the transcript <ArrowUpRight size={16} />
+            </a>
+            <p className="reel-music-credit">
+              Music: “Convergence” by{" "}
+              <a
+                href="https://www.scottbuckley.com.au/library/convergence/"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Play size={17} fill="currentColor" /> Watch the reel
-              </MediaDialog>
-            ) : (
-              <>
-                <span className="reel-status">
-                  <span className="status-dot" /> Final edited reel coming soon
-                </span>
-                <a className="text-link" href="#projects">
-                  Explore the full project demos <ArrowUpRight size={16} />
-                </a>
-              </>
-            )}
+                Scott Buckley
+              </a>{" "}
+              —{" "}
+              <a
+                href="https://creativecommons.org/licenses/by/4.0/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                CC BY 4.0
+              </a>
+              . Edited excerpt.
+            </p>
           </div>
           <div className="reel-visual" aria-hidden="true">
             <div className="reel-browser">
@@ -187,17 +204,17 @@ export default function Home() {
                   <i />
                   <i />
                 </span>
-                <span>MEETINGSCHEDULED / PRODUCT FOOTAGE</span>
+                <span>EYAL TAIEB / SELECTED WORK</span>
               </div>
               <Image
                 src={assetPath(workReel.poster)}
                 alt=""
-                width={1200}
-                height={778}
+                width={1280}
+                height={720}
                 sizes="(max-width: 680px) 80vw, 580px"
               />
               <span className="reel-time">
-                01:30 <span>REEL IN PROGRESS</span>
+                01:30 <span>ENGLISH SUBTITLES</span>
               </span>
             </div>
             <div className="reel-track">
