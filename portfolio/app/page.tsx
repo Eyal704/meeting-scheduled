@@ -177,13 +177,13 @@ export default function Home() {
               Read the transcript <ArrowUpRight size={16} />
             </a>
             <p className="reel-music-credit">
-              Music: “Convergence” by{" "}
+              Music: “Cylinder Seven” by{" "}
               <a
-                href="https://www.scottbuckley.com.au/library/convergence/"
+                href="https://chriszabriskie.com/cylinders/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Scott Buckley
+                Chris Zabriskie
               </a>{" "}
               —{" "}
               <a
@@ -193,7 +193,7 @@ export default function Home() {
               >
                 CC BY 4.0
               </a>
-              . Edited excerpt.
+              . From Cylinders. Edited excerpt.
             </p>
           </div>
           <div className="reel-visual" aria-hidden="true">

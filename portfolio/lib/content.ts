@@ -301,6 +301,6 @@ export const evidence: Evidence[] = [
 
 // Edited from the supplied product recordings, with matching English subtitles.
 export const workReel = {
-  src: "/media/eyal-90-seconds.mp4",
+  src: "/media/eyal-90-seconds-v2.mp4",
   poster: "/media/eyal-90-seconds-poster.webp",
 };

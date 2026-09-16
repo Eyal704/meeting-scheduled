@@ -2,7 +2,7 @@
 
 The homepage reel is an edited 90-second film assembled from Eyal's supplied product recordings. Four complete recordings have matching burned-in English subtitles. No face or narration was generated.
 
-- Reel: `/media/eyal-90-seconds.mp4` (1280 × 720, 30 fps, H.264/AAC, fast-start).
+- Reel: `/media/eyal-90-seconds-v2.mp4` (1280 × 720, 30 fps, H.264/AAC, fast-start).
 - Captioned demos: `/media/{meetingscheduled,voice-agent,speed-dialer,crm}-captioned.mp4`.
 - Clean source encodes remain at the original media URLs.
 - Text transcripts, SRT and WebVTT files: `/transcripts/`.
@@ -12,9 +12,10 @@ The homepage reel is an edited 90-second film assembled from Eyal's supplied pro
 
 | Reel time | Original recording | Source excerpt |
 |---|---|---|
-| 00:00–00:03 | Supplied headshot | Opening identity |
-| 00:03–00:18 | MeetingScheduled overview | 01:37.75–01:52.75 |
-| 00:18–00:28.60 | MeetingScheduled overview | 01:52.85–02:03.45 |
+| 00:00–00:01 | Supplied headshot | Opening identity |
+| 00:01–00:16 | MeetingScheduled overview | 01:37.75–01:52.75 |
+| 00:16–00:26.60 | MeetingScheduled overview | 01:52.85–02:03.45 |
+| 00:26.60–00:28.60 | Native title | AI Voice Agent — standalone inbound & outbound calling |
 | 00:28.60–00:38.10 | Voice agent | 00:07.05–00:16.55 |
 | 00:38.10–00:41.15 | Voice agent | 00:29.95–00:33.00 |
 | 00:41.15–00:49.50 | Voice agent | 00:41.95–00:50.30 |
@@ -36,10 +37,12 @@ Validation covers caption word retention, rendered frames, complete video/audio 
 
 ## Music attribution
 
-“Convergence” by Scott Buckley — released under CC BY 4.0. www.scottbuckley.com.au
+“Cylinder Seven” by Chris Zabriskie, from the album Cylinders — released under CC BY 4.0. https://chriszabriskie.com
 
-- Source: https://www.scottbuckley.com.au/library/convergence/
+- Source: https://chriszabriskie.com/cylinders/
 - License: https://creativecommons.org/licenses/by/4.0/
-- Changes: 65–155 second excerpt, trimmed, faded and mixed under speech.
+- Changes: 30–120 second excerpt, trimmed, faded and mixed under speech.
 
-This credit is displayed next to the reel and included in the MP4 metadata and download package. Include it in the description when reposting the reel, including on YouTube.
+Revision 2 shortens the opening to one second, gives the standalone Voice Agent a two-second introduction and persistent large title, and replaces the previous music with a quieter ambient bed. Narration remains unchanged; subtitle timings are realigned to the revised edit. The PDF links directly to this revised reel.
+
+This credit is displayed on the closing frame and next to the reel and included in the MP4 metadata and download package. Include it in the description when reposting the reel, including on YouTube.
