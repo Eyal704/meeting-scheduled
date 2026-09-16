@@ -1,0 +1,14 @@
+{
+  "name": "meetingscheduled-workspace",
+  "private": true,
+  "workspaces": [
+    "portfolio"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=portfolio",
+    "build": "npm run build --workspace=portfolio",
+    "start": "npm run start --workspace=portfolio",
+    "test": "npm run test --workspace=portfolio",
+    "typecheck": "npm run typecheck --workspace=portfolio"
+  }
+}
