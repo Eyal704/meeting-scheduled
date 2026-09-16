@@ -48,7 +48,14 @@ node portfolio/scripts/verify-static.mjs https://www.meeting-scheduled.com/eyal/
 
 ## One-page PDF
 
-`public/documents/eyal-taieb-portfolio.pdf` is the one-page recruiter handout linked from the homepage. It contains the supplied headshot, four projects, career metrics, original commercial evidence and eight clickable links. Its canonical output is `output/pdf/eyal-taieb-portfolio.pdf`. Regenerate with `scripts/create-portfolio-pdf.py` using Python with ReportLab, Pillow and pypdf; the script currently uses the local macOS Arial fonts. The PDF is approximately 129 KB and preserves selectable text.
+`public/documents/eyal-taieb-portfolio.pdf` is the visual one-page portfolio linked from the homepage. The revised design follows the supplied dark portfolio mockup, with a prominent original portrait, four cards using actual product footage, a commercial-proof photo strip, selectable text and 18 clickable annotations. The canonical local output is `output/pdf/eyal-taieb-portfolio.pdf`.
+
+```sh
+npx playwright install chromium
+npm run build:pdf --workspace=portfolio
+```
+
+The generator uses the bundled DM Sans font, Sharp for image compression and Chromium for tagged PDF export. It writes the PDF and copies it to `public/documents/`. The resulting A4 page is approximately 670 KB. The source photos remain unchanged; there is no generated portrait or fictional product imagery. Update the same PDF in `eyal/documents/` when publishing a document-only revision. The earlier light PDF and its builder are archived locally outside the published site.
 
 ## Content and intentional placeholders
 
