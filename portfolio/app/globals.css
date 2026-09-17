@@ -200,15 +200,6 @@ ol {
   font-weight: 700;
   letter-spacing: 0.12em;
 }
-.monogram {
-  font-size: 32px;
-  font-weight: 600;
-  letter-spacing: -0.09em;
-  line-height: 1;
-}
-.monogram span {
-  color: var(--blue);
-}
 .navigation {
   display: flex;
   gap: 34px;
@@ -1748,9 +1739,6 @@ h2 {
   .wordmark {
     font-size: 10px;
     gap: 12px;
-  }
-  .monogram {
-    font-size: 30px;
   }
   .menu-toggle {
     display: inline-flex;

@@ -37,9 +37,6 @@ export function Header() {
           aria-label="Eyal Taieb home"
           onClick={() => setOpen(false)}
         >
-          <span className="monogram">
-            et<span>.</span>
-          </span>
           <span>EYAL TAIEB</span>
         </Link>
         <button
