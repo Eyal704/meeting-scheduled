@@ -289,8 +289,41 @@ ol {
 }
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 30px;
+}
+.hero-actions .button {
+  min-height: 58px;
+  padding: 16px 25px;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 15px;
+  font-weight: 700;
+}
+.hero-actions .button-primary {
+  background: #80b8ff;
+  color: #081728;
+  border-color: #a4cdff;
+  box-shadow: 0 5px 20px #5897ec24;
+}
+.hero-actions .button-primary:hover {
+  background: #a5ceff;
+}
+.hero-actions .button-secondary {
+  background: #e6edf5;
+  color: #15253a;
+  border-color: #e6edf5;
+}
+.hero-actions .button-secondary:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+.hero-actions-note {
+  margin-top: 13px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #b8c8db;
 }
 .hero-footnote {
   display: flex;
@@ -1564,9 +1597,9 @@ h2 {
     flex-wrap: wrap;
   }
   .hero-actions .button {
-    font-size: 11px;
-    padding-inline: 16px;
-    min-height: 44px;
+    font-size: 14px;
+    padding-inline: 20px;
+    min-height: 54px;
   }
   .hero-footnote {
     font-size: 7px;
@@ -1791,9 +1824,10 @@ h2 {
     gap: 11px;
   }
   .hero-actions .button {
-    font-size: 12px;
-    min-height: 47px;
+    font-size: 15px;
+    min-height: 56px;
     padding-inline: 20px;
+    width: 100%;
   }
   .hero-footnote {
     font-size: 7px;

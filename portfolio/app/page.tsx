@@ -45,13 +45,23 @@ export default function Home() {
             commercial outcomes.
           </p>
           <div className="hero-actions">
-            <a href="#work-reel" className="button button-primary">
-              <Play size={16} fill="currentColor" /> See My Work
-            </a>
+            <MediaDialog
+              title="90-sec Overview"
+              src={assetPath(workReel.src)}
+              poster={assetPath(workReel.poster)}
+              caption="90 seconds of actual product demos, with English subtitles."
+              className="button button-primary"
+            >
+              <Play size={20} fill="currentColor" aria-hidden="true" /> Watch
+              90-sec Overview
+            </MediaDialog>
             <a href="#projects" className="button button-secondary">
-              View Projects <ArrowDown size={17} />
+              Explore Projects <ArrowDown size={20} aria-hidden="true" />
             </a>
           </div>
+          <p className="hero-actions-note">
+            See the systems in action, then explore the case studies.
+          </p>
           <div className="hero-footnote">
             <span>BUSINESS CONTEXT</span>
             <span className="small-cross">+</span>
