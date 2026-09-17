@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { assetPath } from "@/lib/paths";
-import { ArrowUpRight, Mail } from "lucide-react";
+import { ArrowUpRight, Mail, Phone } from "lucide-react";
 
 export function Footer() {
   return (
@@ -30,6 +30,9 @@ export function Footer() {
             </a>
             <a className="contact-email" href="mailto:eyal.growth@gmail.com">
               eyal.growth@gmail.com
+            </a>
+            <a className="text-link contact-phone" href="tel:+4367762921189">
+              <Phone size={16} aria-hidden="true" /> +43 677 62921189
             </a>
             <a
               className="text-link"

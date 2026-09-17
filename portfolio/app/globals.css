@@ -1051,6 +1051,11 @@ h2 {
   font-size: 11px;
   margin-top: 14px;
 }
+.contact-actions .contact-phone {
+  font-size: 14px;
+  min-height: 44px;
+  margin-top: 6px;
+}
 .footer-bottom {
   border-top: 1px solid var(--line);
   padding-block: 27px;
