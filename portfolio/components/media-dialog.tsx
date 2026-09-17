@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { ArrowUpRight, Play, X, ZoomIn } from "lucide-react";
+import { AutoplayVideo } from "@/components/autoplay-video";
 
 type Props = {
   title: string;
@@ -11,6 +12,7 @@ type Props = {
   type?: "video" | "image";
   className?: string;
   children?: ReactNode;
+  autoOpenHash?: string;
 };
 
 export function MediaDialog({
@@ -21,12 +23,37 @@ export function MediaDialog({
   type = "video",
   className = "",
   children,
+  autoOpenHash,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [failed, setFailed] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const titleId = useId();
+
+  useEffect(() => {
+    if (!autoOpenHash || type !== "video") return;
+    const openFromLink = () => {
+      if (window.location.hash === `#${autoOpenHash}`) {
+        setFailed(false);
+        setOpen(true);
+      }
+    };
+    openFromLink();
+    window.addEventListener("hashchange", openFromLink);
+    return () => window.removeEventListener("hashchange", openFromLink);
+  }, [autoOpenHash, type]);
+
+  function close() {
+    setOpen(false);
+    if (autoOpenHash && window.location.hash === `#${autoOpenHash}`) {
+      window.history.replaceState(
+        window.history.state,
+        "",
+        window.location.pathname + window.location.search,
+      );
+    }
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -64,7 +91,7 @@ export function MediaDialog({
           ref={dialog}
           className={`media-dialog ${type}-dialog`}
           aria-labelledby={titleId}
-          onCancel={() => setOpen(false)}
+          onCancel={close}
           onClose={() => setOpen(false)}
           onKeyDown={(event) => {
             if (event.key !== "Tab") return;
@@ -82,7 +109,7 @@ export function MediaDialog({
             }
           }}
           onClick={(event) => {
-            if (event.target === event.currentTarget) setOpen(false);
+            if (event.target === event.currentTarget) close();
           }}
         >
           <div className="dialog-panel">
@@ -98,26 +125,14 @@ export function MediaDialog({
               <button
                 className="icon-button"
                 aria-label="Close dialog"
-                onClick={() => setOpen(false)}
+                onClick={close}
                 autoFocus
               >
                 <X size={22} />
               </button>
             </div>
             {type === "video" ? (
-              <video
-                className="dialog-video"
-                controls
-                autoPlay
-                playsInline
-                preload="none"
-                poster={poster}
-                onError={() => setFailed(true)}
-              >
-                <source src={src} type="video/mp4" />
-                Your browser does not support embedded video.{" "}
-                <a href={src}>Open the demo.</a>
-              </video>
+              <AutoplayVideo src={src} poster={poster} onFailure={setFailed} />
             ) : (
               // Native image keeps the original screenshot readable and loads only on demand.
               // eslint-disable-next-line @next/next/no-img-element

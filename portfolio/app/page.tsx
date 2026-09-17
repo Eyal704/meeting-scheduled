@@ -172,6 +172,7 @@ export default function Home() {
             </p>
             <MediaDialog
               title="90 Seconds of My Work"
+              autoOpenHash="watch-reel"
               src={assetPath(workReel.src)}
               poster={assetPath(workReel.poster)}
               caption="A 90-second edit of my actual product demos, with English subtitles and original commercial evidence."

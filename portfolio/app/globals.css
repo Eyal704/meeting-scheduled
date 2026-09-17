@@ -1145,6 +1145,19 @@ h2 {
   justify-content: space-between;
   gap: 25px;
 }
+.playback-notice {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 20px;
+  background: #142235;
+}
+.playback-notice p {
+  flex: 1 1 220px;
+  font-size: 12px;
+  line-height: 1.5;
+}
 .dialog-footer p {
   font-size: 11px;
   line-height: 1.7;

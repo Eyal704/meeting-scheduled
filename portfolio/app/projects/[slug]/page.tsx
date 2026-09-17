@@ -146,6 +146,7 @@ export default async function ProjectPage({
         </div>
         <MediaDialog
           title={project.name}
+          autoOpenHash="demo"
           src={assetPath(`/media/${project.media}-captioned.mp4`)}
           poster={assetPath(`/media/${project.media}-poster.webp`)}
           className={`full-demo ${project.portrait ? "portrait-demo" : ""}`}
