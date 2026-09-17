@@ -2,7 +2,6 @@ import { assetPath } from "@/lib/paths";
 import Image from "next/image";
 import {
   ArrowDown,
-  ArrowRight,
   ArrowUpRight,
   AudioLines,
   Braces,
@@ -11,7 +10,6 @@ import {
   Layers3,
   Phone,
   Play,
-  Route,
   Workflow,
 } from "lucide-react";
 import { ProjectCard } from "@/components/project-card";
@@ -20,7 +18,6 @@ import { MediaDialog } from "@/components/media-dialog";
 import {
   companies,
   metrics,
-  process,
   projects,
   toolNames,
   workReel,
@@ -252,66 +249,13 @@ export default function Home() {
       </section>
 
       <section
-        id="approach"
-        className="approach-section"
-        aria-labelledby="approach-title"
-      >
-        <div className="container">
-          <div className="section-heading">
-            <div>
-              <span className="eyebrow">03 / HOW I WORK</span>
-              <h2 id="approach-title">
-                Start with the problem.
-                <br />
-                <span className="muted">Stay for the outcome.</span>
-              </h2>
-            </div>
-            <p>
-              A useful system needs more than a successful demo. It needs to fit
-              the workflow, reach the user and improve through real use.
-            </p>
-          </div>
-          <ol className="process-grid">
-            {process.map((step, index) => (
-              <li key={step}>
-                <span className="process-number">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3>{step}</h3>
-                {index < process.length - 1 ? (
-                  <ArrowRight
-                    className="process-arrow"
-                    size={18}
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <Check
-                    className="process-arrow"
-                    size={18}
-                    aria-hidden="true"
-                  />
-                )}
-              </li>
-            ))}
-          </ol>
-          <div className="approach-note">
-            <Route size={19} />
-            <p>
-              Business context guides the build. User feedback guides what comes
-              next.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section
         id="about"
         className="section about-section container"
         aria-labelledby="about-title"
       >
         <div className="about-grid">
           <div className="about-copy">
-            <span className="eyebrow">04 / THE PERSON BEHIND THE WORK</span>
+            <span className="eyebrow">03 / THE PERSON BEHIND THE WORK</span>
             <h2 id="about-title">
               The bridge between
               <br />
@@ -376,7 +320,11 @@ export default function Home() {
           <span className="eyebrow">EXPERIENCE WITH</span>
           <ul>
             {companies.map((company) => (
-              <li key={company}>{company}</li>
+              <li key={company.name}>
+                <a href={company.url} target="_blank" rel="noopener noreferrer">
+                  {company.name}
+                </a>
+              </li>
             ))}
           </ul>
         </div>

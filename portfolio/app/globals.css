@@ -885,63 +885,21 @@ h2 {
   font-size: 11px;
   min-height: 43px;
 }
-.approach-section {
-  padding-block: 86px;
-  background: #0e1722;
-  border-block: 1px solid var(--line);
-}
-.process-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1px solid #314155;
-  border-left: 1px solid #314155;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-top: 43px;
-}
-.process-grid > li {
-  position: relative;
-  border-right: 1px solid #314155;
-  border-bottom: 1px solid #314155;
-  padding: 22px 22px 25px;
-  min-height: 128px;
-}
+
+
+
 .process-number {
   font-size: 10px;
   font-weight: 550;
   color: var(--blue);
   letter-spacing: 0.1em;
 }
-.process-grid h3 {
-  font-size: 15px;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
-  max-width: 160px;
-  margin-top: 18px;
-}
-.process-arrow {
-  position: absolute;
-  right: 19px;
-  top: 23px;
-  color: #7e98b7;
-}
-.process-grid > li:last-child {
-  background: #16263a;
-}
-.process-grid > li:last-child h3,
-.process-grid > li:last-child .process-arrow {
-  color: var(--blue);
-}
-.approach-note {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  color: var(--blue);
-  margin-top: 24px;
-}
-.approach-note p {
-  font-size: 11px;
-}
+
+
+
+
+
+
 .about-grid {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
@@ -1039,6 +997,19 @@ h2 {
   font-weight: 500;
   letter-spacing: -0.05em;
   color: #d0d6df;
+}
+.experience li a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: underline;
+  text-decoration-color: #536b88;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+}
+.experience li a:hover {
+  color: var(--blue);
+  text-decoration-color: currentColor;
 }
 .experience li:first-child {
   font-style: italic;
@@ -1554,7 +1525,20 @@ h2 {
   .experience li {
     font-size: 17px;
   }
-  .experience li:first-child {
+  .experience li a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: underline;
+  text-decoration-color: #536b88;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+}
+.experience li a:hover {
+  color: var(--blue);
+  text-decoration-color: currentColor;
+}
+.experience li:first-child {
     font-size: 18px;
   }
   .contact-grid {
@@ -2038,31 +2022,13 @@ h2 {
     font-size: 11px;
     min-height: 46px;
   }
-  .approach-section {
-    padding-block: 61px;
-  }
-  .process-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: 28px;
-  }
-  .process-grid > li {
-    padding: 19px 17px 22px;
-    min-height: 120px;
-  }
-  .process-grid h3 {
-    font-size: 13px;
-    max-width: 130px;
-  }
-  .process-arrow {
-    top: 20px;
-    right: 14px;
-  }
-  .approach-note {
-    align-items: flex-start;
-  }
-  .approach-note p {
-    font-size: 10px;
-  }
+
+
+
+
+
+
+
   .about-grid {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -2099,7 +2065,20 @@ h2 {
     gap: 15px 25px;
   }
   .experience li,
-  .experience li:first-child {
+  .experience li a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: underline;
+  text-decoration-color: #536b88;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+}
+.experience li a:hover {
+  color: var(--blue);
+  text-decoration-color: currentColor;
+}
+.experience li:first-child {
     font-size: 19px;
   }
   .site-footer {

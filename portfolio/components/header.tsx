@@ -60,9 +60,6 @@ export function Header() {
           <Link href="/#projects" onClick={() => setOpen(false)}>
             Work
           </Link>
-          <Link href="/#approach" onClick={() => setOpen(false)}>
-            Approach
-          </Link>
           <Link href="/#about" onClick={() => setOpen(false)}>
             About
           </Link>

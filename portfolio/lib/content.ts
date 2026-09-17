@@ -164,19 +164,9 @@ export const metrics = [
   { value: "8+ Years", label: "GTM, Sales & AI Automation" },
 ];
 
-export const process = [
-  "Business problem",
-  "Workflow design",
-  "AI/system architecture",
-  "Implementation",
-  "Deployment",
-  "User feedback",
-  "Iteration",
-  "Business outcome",
-];
 export const toolNames = [
   "Claude",
-  "Cursor",
+  "Codex",
   "Next.js",
   "Supabase/Postgres",
   "Vercel",
@@ -186,11 +176,11 @@ export const toolNames = [
   "CRM integrations",
 ];
 export const companies = [
-  "Incredibuild",
-  "Epox.ai",
-  "RampedUp",
-  "Twingo.co.il",
-  "SingleStore",
+  { name: "Incredibuild", url: "https://incredibuild.com" },
+  { name: "Epox.ai", url: "https://epox.ai" },
+  { name: "RampedUp", url: "https://rampedup.io" },
+  { name: "Twingo.co.il", url: "https://twingo.co.il" },
+  { name: "SingleStore", url: "https://singlestore.com" },
 ];
 
 export type Evidence = {
