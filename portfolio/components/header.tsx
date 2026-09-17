@@ -66,13 +66,13 @@ export function Header() {
           <Link href="/#about" onClick={() => setOpen(false)}>
             About
           </Link>
-          <Link
-            href="/#contact"
+          <a
+            href="mailto:eyal.growth@gmail.com"
             className="nav-contact"
             onClick={() => setOpen(false)}
           >
             Let’s talk <ArrowUpRight size={16} />
-          </Link>
+          </a>
         </nav>
       </div>
     </header>

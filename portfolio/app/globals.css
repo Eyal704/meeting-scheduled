@@ -325,6 +325,11 @@ ol {
   line-height: 1.6;
   color: #b8c8db;
 }
+.hero-phone {
+  min-height: 44px;
+  margin-top: 5px;
+  font-size: 14px;
+}
 .hero-footnote {
   display: flex;
   align-items: center;

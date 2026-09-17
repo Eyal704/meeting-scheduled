@@ -9,6 +9,7 @@ import {
   Check,
   FileText,
   Layers3,
+  Phone,
   Play,
   Route,
   Workflow,
@@ -62,6 +63,9 @@ export default function Home() {
           <p className="hero-actions-note">
             See the systems in action, then explore the case studies.
           </p>
+          <a className="text-link hero-phone" href="tel:+4367762921189">
+            <Phone size={16} aria-hidden="true" /> +43 677 62921189
+          </a>
           <div className="hero-footnote">
             <span>BUSINESS CONTEXT</span>
             <span className="small-cross">+</span>
@@ -186,25 +190,6 @@ export default function Home() {
             >
               Read the transcript <ArrowUpRight size={16} />
             </a>
-            <p className="reel-music-credit">
-              Music: “Cylinder Seven” by{" "}
-              <a
-                href="https://chriszabriskie.com/cylinders/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Chris Zabriskie
-              </a>{" "}
-              —{" "}
-              <a
-                href="https://creativecommons.org/licenses/by/4.0/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                CC BY 4.0
-              </a>
-              . From Cylinders. Edited excerpt.
-            </p>
           </div>
           <div className="reel-visual" aria-hidden="true">
             <div className="reel-browser">

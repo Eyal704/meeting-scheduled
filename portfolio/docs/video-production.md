@@ -45,4 +45,4 @@ Validation covers caption word retention, rendered frames, complete video/audio 
 
 Revision 2 shortens the opening to one second, gives the standalone Voice Agent a two-second introduction and persistent large title, and replaces the previous music with a quieter ambient bed. Narration remains unchanged; subtitle timings are realigned to the revised edit. The PDF links directly to this revised reel.
 
-This credit is displayed on the closing frame and next to the reel and included in the MP4 metadata and download package. Include it in the description when reposting the reel, including on YouTube.
+This credit is displayed on the closing frame and included in the MP4 metadata, linked transcript and download package. The homepage does not display a separate music-credit line. Include it in the description when reposting the reel, including on YouTube.
