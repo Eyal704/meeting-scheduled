@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MeetingScheduled — Create more conversations. Capture every opportunity.</title>
-<meta name="description" content="MeetingScheduled combines AI-powered outbound intelligence with an AI receptionist that answers, qualifies, and books incoming calls.">
+<title>MeetingScheduled — Applied AI for real business workflows</title>
+<meta name="description" content="MeetingScheduled turns high-value workflows in sales, customer service, and operations into working AI systems — connected to the tools, documents, and people you already have.">
 <meta name="robots" content="index, follow">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MeetingScheduled">
-<meta property="og:title" content="MeetingScheduled — Create more conversations. Capture every opportunity.">
-<meta property="og:description" content="MeetingScheduled combines AI-powered outbound intelligence with an AI receptionist that answers, qualifies, and books incoming calls.">
+<meta property="og:title" content="MeetingScheduled — Applied AI for real business workflows">
+<meta property="og:description" content="We find a workflow worth fixing, connect AI to your existing knowledge and systems, and turn it into a working process that carries the job through to a finished result.">
 <meta property="og:url" content="https://www.meeting-scheduled.com">
 <meta property="og:image" content="https://www.meeting-scheduled.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MeetingScheduled — Create more conversations. Capture every opportunity.">
-<meta name="twitter:description" content="AI-powered outbound intelligence and an AI receptionist that answers, qualifies, and books incoming calls.">
+<meta name="twitter:title" content="MeetingScheduled — Applied AI for real business workflows">
+<meta name="twitter:description" content="Working AI systems for sales, customer service, and operations — connected to your existing knowledge and tools, with your team in control.">
 <meta name="twitter:image" content="https://www.meeting-scheduled.com/og-image.png">
 
 <link rel="icon" type="image/svg+xml" href="/logo.svg">
@@ -31,6 +31,7 @@
   --ink:#1c1c1e;--muted:#6c6c72;--faint:#a0a0a8;--border:#e4e4e0;--border-subtle:#f0eeec;--canvas:#fdf9fa;
   --rose:#c9536e;--rose-dark:#b84a62;--rose-darker:#a84059;--rose-tint:#fdf2f4;
   --green:#3d6b52;--green-dark:#325943;--green-tint:#e8f2ec;
+  --slate-tint:#f3f2f0;
   --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -47,10 +48,21 @@ header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);backdro
 .logo{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:var(--ink);}
 .logo-mark{width:32px;height:32px;border-radius:9px;background:var(--rose);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .logo-mark svg{width:16px;height:16px;}
-.nav-links{display:none;align-items:center;gap:32px;}
-.nav-links a{font-size:14px;font-weight:500;color:var(--muted);}
-.nav-links a:hover{color:var(--rose);}
+.nav-links{display:none;align-items:center;gap:28px;}
+.nav-links > a,.nav-dd-btn{font-size:14px;font-weight:500;color:#4a4a50;}
+.nav-links > a:hover,.nav-dd-btn:hover,.nav-dd-btn[aria-expanded="true"]{color:var(--rose);}
 @media(min-width:900px){.nav-links{display:flex;}}
+.nav-dd{position:relative;}
+.nav-dd-btn{display:inline-flex;align-items:center;gap:5px;height:40px;padding:0;border:0;background:none;cursor:pointer;font-family:inherit;letter-spacing:inherit;}
+.nav-dd-btn svg{transition:transform .15s;}
+.nav-dd-btn[aria-expanded="true"] svg{transform:rotate(180deg);}
+.nav-dd-panel{position:absolute;top:calc(100% + 10px);left:-14px;width:360px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 32px rgba(0,0,0,.08);padding:8px;}
+.nav-dd-panel ul{list-style:none;}
+.dd-item{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:11px;}
+.dd-item:hover,.dd-item:focus-visible{background:var(--canvas);}
+.dd-icon{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.dd-title{display:block;font-size:14px;font-weight:600;color:var(--ink);}
+.dd-desc{display:block;margin-top:3px;font-size:12.5px;line-height:1.45;color:var(--muted);}
 .nav-actions{display:none;align-items:center;gap:16px;}
 @media(min-width:640px){.nav-actions{display:flex;}}
 .nav-login{font-size:14px;font-weight:500;color:var(--muted);}
@@ -63,13 +75,20 @@ header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);backdro
 .mobile-nav a{display:block;padding:12px;border-radius:8px;font-weight:500;font-size:15px;color:var(--ink);}
 .mobile-nav a:hover{background:var(--rose-tint);color:var(--rose);}
 .mobile-nav .btn{margin-top:8px;}
+.mobile-nav a.btn-rose{color:#fff;}
+.mobile-nav a.btn-rose:hover{background:var(--rose-dark);color:#fff;}
+.m-group-btn{display:flex;width:100%;align-items:center;justify-content:space-between;padding:12px;border:0;border-radius:8px;background:none;cursor:pointer;font-family:inherit;font-weight:500;font-size:15px;letter-spacing:inherit;color:var(--ink);text-align:left;}
+.m-group-btn,.nav-dd-btn{-webkit-tap-highlight-color:transparent;}
+.m-group-btn:hover{background:var(--rose-tint);color:var(--rose);}
+.m-group-btn svg{transition:transform .15s;}
+.m-group-btn[aria-expanded="true"] svg{transform:rotate(180deg);}
+.m-group{margin:2px 0 6px 12px;padding-left:8px;border-left:1px solid var(--border);}
+.m-group a{font-size:14.5px;color:var(--muted);padding:10px 12px;}
 
 /* Buttons */
 .btn{display:inline-flex;height:48px;align-items:center;justify-content:center;gap:6px;border-radius:10px;padding:0 24px;font-size:14px;font-weight:600;white-space:nowrap;transition:background .15s;border:0;cursor:pointer;}
 .btn-rose{background:var(--rose);color:#fff;}
 .btn-rose:hover{background:var(--rose-dark);}
-.btn-green{background:var(--green);color:#fff;}
-.btn-green:hover{background:var(--green-dark);}
 .btn-secondary{background:#f5f3f2;color:var(--ink);}
 .btn-secondary:hover{background:#edebe8;}
 .btn-ghost-rose{color:var(--rose);height:auto;padding:0;background:none;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:4px;}
@@ -79,86 +98,96 @@ header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);backdro
 .btn-sm{height:40px;padding:0 20px;font-size:13px;}
 .btn-row{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
 @media(min-width:640px){.btn-row{flex-direction:row;}}
+:focus-visible{outline:2px solid var(--rose);outline-offset:3px;border-radius:4px;}
 
 /* Typography */
 .eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;margin-bottom:16px;color:var(--rose);}
-h1{font-size:40px;font-weight:600;line-height:1.08;letter-spacing:-.025em;}
-@media(min-width:640px){h1{font-size:58px;}}
+h1{font-size:38px;font-weight:600;line-height:1.08;letter-spacing:-.025em;}
+@media(min-width:640px){h1{font-size:56px;}}
 h2{font-size:30px;font-weight:600;line-height:1.15;letter-spacing:-.02em;}
 @media(min-width:640px){h2{font-size:38px;}}
-.section-head{max-width:640px;}
+.section-head{max-width:680px;}
 .section-head.center{margin:0 auto;text-align:center;}
 .subtitle{font-size:16px;color:var(--muted);line-height:1.6;margin-top:16px;}
 .section{padding:80px 0;}
 .section-border-top{border-top:1px solid var(--border-subtle);}
 .bg-canvas{background:var(--canvas);}
+main section[id]{scroll-margin-top:80px;}
+.grid-head{margin-bottom:40px;}
 
 /* Hero */
 .hero{position:relative;overflow:hidden;text-align:center;padding:80px 0 64px;}
-@media(min-width:640px){.hero{padding-top:112px;}}
+@media(min-width:640px){.hero{padding-top:104px;}}
 .hero-glow{pointer-events:none;position:absolute;inset:0;background:radial-gradient(ellipse 80% 45% at 50% 0%,rgba(201,83,110,.06) 0%,transparent 60%);}
-.hero-inner{position:relative;max-width:720px;margin:0 auto;}
-.hero p.lede{font-size:17px;color:var(--muted);line-height:1.6;margin-top:24px;max-width:560px;margin-left:auto;margin-right:auto;}
+.hero-inner{position:relative;max-width:760px;margin:0 auto;}
+.hero p.lede{font-size:17px;color:var(--muted);line-height:1.6;margin-top:24px;max-width:620px;margin-left:auto;margin-right:auto;}
 .hero .btn-row{margin-top:36px;}
+.hero p.domain-line{margin-top:28px;font-size:14px;color:var(--muted);line-height:1.5;}
 
-/* Product selector cards */
-.selector-grid{display:grid;grid-template-columns:1fr;gap:20px;}
-@media(min-width:1024px){.selector-grid{grid-template-columns:1fr 1fr;}}
-.p-card{border:1px solid var(--border);border-radius:22px;background:#fff;padding:32px;box-shadow:0 6px 20px rgba(0,0,0,.04);transition:box-shadow .15s;display:flex;flex-direction:column;}
-@media(min-width:640px){.p-card{padding:40px;}}
-.p-card:hover{box-shadow:0 10px 32px rgba(0,0,0,.07);}
-.p-card-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;}
-.p-card h3{font-size:26px;font-weight:600;letter-spacing:-.01em;}
-.p-card p.desc{margin-top:12px;font-size:15px;color:var(--muted);line-height:1.6;}
-.p-card ul{margin-top:24px;display:flex;flex-direction:column;gap:12px;flex:1;list-style:none;}
-.p-card li{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.4;}
-.p-card li svg{flex-shrink:0;margin-top:2px;}
-.p-card .btn{margin-top:32px;align-self:flex-start;}
+/* Areas of value */
+.value-grid{display:grid;grid-template-columns:1fr;gap:20px;}
+@media(min-width:900px){.value-grid{grid-template-columns:repeat(3,1fr);}}
+.v-card{border:1px solid var(--border);border-radius:20px;background:#fff;padding:28px;display:flex;flex-direction:column;box-shadow:0 4px 16px rgba(0,0,0,.03);}
+@media(min-width:640px){.v-card{padding:32px;}}
+.v-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:22px;}
+.v-card h3{font-size:21px;font-weight:600;letter-spacing:-.01em;}
+.v-card p.desc{margin-top:10px;font-size:15px;color:var(--muted);line-height:1.6;}
+.v-card ul{margin-top:22px;list-style:none;display:flex;flex-direction:column;gap:11px;}
+.v-card li{display:flex;align-items:flex-start;gap:11px;font-size:14px;line-height:1.5;}
+.v-card li .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:7px;}
 
-/* Flow diagram */
-.flow-box{border:1px solid var(--border-subtle);border-radius:24px;background:#fdfbfb;padding:24px;}
-@media(min-width:640px){.flow-box{padding:40px;}}
-.flow-row{display:flex;flex-direction:column;align-items:center;gap:0;}
-@media(min-width:640px){.flow-row{flex-direction:row;justify-content:center;}}
-.flow-node{width:100%;max-width:220px;border:1px solid var(--border);border-radius:18px;background:#fff;padding:28px 24px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.04);}
-.flow-node.emphasize{border-color:var(--ink);box-shadow:0 8px 28px rgba(28,28,30,.08);}
-.flow-node-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
-.flow-node .fn-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;}
-.flow-node .fn-title{margin-top:4px;font-size:15px;font-weight:600;}
-.flow-node .fn-sub{margin-top:4px;font-size:12.5px;color:var(--muted);line-height:1.4;}
-.flow-connector{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0;color:var(--faint);font-size:11px;font-weight:500;}
-@media(min-width:640px){.flow-connector{flex:1;flex-direction:column;padding:0 12px;}
-  .flow-connector .fc-line{display:flex;align-items:center;gap:6px;width:100%;}
-  .flow-connector .fc-line::before{content:'';flex:1;height:1px;background:var(--border);}
+/* Journeys */
+.journey{border:1px solid var(--border);border-radius:22px;background:#fff;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,.03);}
+@media(min-width:640px){.journey{padding:32px;}}
+.journey + .journey{margin-top:24px;}
+.journey-head{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+.j-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.j-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;}
+.j-title{margin-top:2px;font-size:16px;font-weight:600;}
+.j-track{list-style:none;display:flex;flex-direction:column;gap:22px;}
+.j-step{position:relative;border:1px solid var(--border-subtle);border-radius:14px;background:#fff;padding:16px 18px;}
+.j-step .j-kicker{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--faint);}
+.j-step .j-text{margin-top:6px;font-size:14px;line-height:1.55;color:var(--ink);}
+.j-step.is-human{border-color:#cfe0d5;background:var(--green-tint);}
+.j-step.is-human .j-kicker{color:var(--green);}
+.j-step.is-outcome{border-color:#e9cfd6;background:var(--rose-tint);}
+.j-step.is-outcome .j-kicker{color:var(--rose);}
+.j-step:not(:last-child)::after{content:'';position:absolute;left:50%;top:100%;width:1px;height:22px;background:var(--border);}
+.j-step:not(:last-child)::before{content:'';position:absolute;left:50%;top:calc(100% + 8px);width:6px;height:6px;border-right:1px solid var(--faint);border-bottom:1px solid var(--faint);transform:translate(-50%,0) rotate(45deg);}
+@media(min-width:900px){
+  .j-track{flex-direction:row;align-items:stretch;gap:0;}
+  .j-step{flex:1;min-width:0;margin-right:22px;}
+  .j-step:last-child{margin-right:0;}
+  .j-step:not(:last-child)::after{left:100%;top:50%;width:22px;height:1px;}
+  .j-step:not(:last-child)::before{left:calc(100% + 8px);top:50%;transform:translate(0,-50%) rotate(-45deg);}
 }
+.journey-note{margin-top:32px;font-size:15px;color:var(--muted);line-height:1.6;max-width:680px;}
 
-/* Preview step flows */
-.preview-grid{display:grid;grid-template-columns:1fr;gap:56px;}
-@media(min-width:1024px){.preview-grid{grid-template-columns:1fr 1fr;gap:40px;}}
-.preview-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;}
-.preview-head-left{display:flex;align-items:center;gap:12px;}
-.preview-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.preview-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;}
-.preview-title{font-size:16px;font-weight:600;}
-.step-box{border:1px solid var(--border);border-radius:20px;background:#fff;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,.04);}
-@media(min-width:640px){.step-box{padding:32px;}}
-.step-list-mobile{display:flex;flex-direction:column;gap:12px;}
-@media(min-width:640px){.step-list-mobile{display:none;}}
-.step-list-desktop{display:none;}
-@media(min-width:640px){.step-list-desktop{display:flex;align-items:flex-start;}}
-.step-item-m{display:flex;align-items:flex-start;gap:16px;}
-.step-badge{width:48px;height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.step-item-m .step-label{padding-top:10px;font-size:14px;font-weight:600;}
-.step-arrow-v{margin-left:24px;height:24px;display:flex;align-items:center;color:var(--faint);}
-.step-col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;}
-.step-col .step-label{margin-top:12px;font-size:13.5px;font-weight:600;}
-.step-arrow-h{width:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding-top:24px;color:var(--faint);}
+/* How we work */
+.work-grid{display:grid;grid-template-columns:1fr;gap:20px;}
+@media(min-width:640px){.work-grid{grid-template-columns:1fr 1fr;}}
+@media(min-width:1024px){.work-grid{grid-template-columns:repeat(4,1fr);}}
+.w-step{border:1px solid var(--border);border-radius:18px;background:#fff;padding:26px;box-shadow:0 4px 16px rgba(0,0,0,.03);}
+.w-num{width:34px;height:34px;border-radius:11px;background:var(--rose-tint);color:var(--rose);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.w-step h3{font-size:16.5px;font-weight:600;}
+.w-step p{margin-top:8px;font-size:14px;color:var(--muted);line-height:1.6;}
+
+/* Principles */
+.principle-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:768px){
+  .principle-grid{grid-template-columns:1fr 1fr;}
+  .principle-grid > :last-child{grid-column:1 / -1;}
+}
+.principle{display:flex;gap:16px;align-items:flex-start;padding:22px;border:1px solid var(--border-subtle);border-radius:16px;background:#fff;}
+.principle .p-ic{width:38px;height:38px;border-radius:11px;background:var(--green-tint);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.principle h3{font-size:15.5px;font-weight:600;}
+.principle p{margin-top:6px;font-size:14px;color:var(--muted);line-height:1.55;}
 
 /* Footer */
 footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
 .footer-top{display:flex;flex-direction:column;gap:40px;padding:56px 0;}
 @media(min-width:640px){.footer-top{flex-direction:row;justify-content:space-between;}}
-.footer-brand{max-width:280px;}
+.footer-brand{max-width:300px;}
 .footer-brand p{margin-top:16px;font-size:14px;color:var(--muted);line-height:1.6;}
 .footer-cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
 @media(min-width:480px){.footer-cols{grid-template-columns:repeat(3,auto);gap:56px;}}
@@ -190,8 +219,18 @@ footer .container{padding-left:32px;}
       MeetingScheduled
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="/receptionist/">AI Receptionist</a>
-      <a href="/outbound/">Outbound Sales</a>
+      <div class="nav-dd" id="solutionsDD">
+        <button type="button" class="nav-dd-btn" id="solutionsBtn" aria-expanded="false" aria-controls="solutionsMenu">Solutions <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-dd-panel" id="solutionsMenu" hidden>
+          <ul>
+            <li><a href="#solutions" class="dd-item"><span class="dd-icon" style="background:var(--slate-tint)" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1c1c1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span><span><span class="dd-title">Custom AI Workflows</span><span class="dd-desc">AI applied to the processes, knowledge, and systems your business already uses.</span></span></a></li>
+            <li><a href="/receptionist/" class="dd-item"><span class="dd-icon" style="background:var(--green-tint)" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span><span class="dd-title">AI Receptionist</span><span class="dd-desc">Turn incoming calls into answered questions, qualified opportunities, and booked appointments.</span></span></a></li>
+            <li><a href="/outbound/" class="dd-item"><span class="dd-icon" style="background:var(--rose-tint)" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span><span class="dd-title">Outbound Sales</span><span class="dd-desc">Turn relevant account signals and research into conversations worth having.</span></span></a></li>
+          </ul>
+        </div>
+      </div>
+      <a href="#workflow-examples">Workflow Examples</a>
+      <a href="#how-we-work">How It Works</a>
     </nav>
     <div class="nav-actions">
       <a href="https://reach.meeting-scheduled.com" class="nav-login">Login</a>
@@ -204,8 +243,14 @@ footer .container{padding-left:32px;}
   </div>
   <div class="mobile-nav" id="mobileNav">
     <div class="container">
-      <a href="/receptionist/">AI Receptionist</a>
-      <a href="/outbound/">Outbound Sales</a>
+      <button type="button" class="m-group-btn" id="mSolutionsBtn" aria-expanded="false" aria-controls="mSolutionsList">Solutions <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="m-group" id="mSolutionsList" hidden>
+        <a href="#solutions">Custom AI Workflows</a>
+        <a href="/receptionist/">AI Receptionist</a>
+        <a href="/outbound/">Outbound Sales</a>
+      </div>
+      <a href="#workflow-examples">Workflow Examples</a>
+      <a href="#how-we-work">How It Works</a>
       <a href="https://reach.meeting-scheduled.com">Login</a>
       <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-rose">Book a Demo</a>
     </div>
@@ -214,201 +259,246 @@ footer .container{padding-left:32px;}
 
 <main>
 
-  <section class="hero">
+  <section class="hero" aria-labelledby="hero-title">
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="container hero-inner">
-      <p class="eyebrow">MeetingScheduled</p>
-      <h1>Create more conversations. Capture every opportunity.</h1>
-      <p class="lede">MeetingScheduled pairs AI-powered outbound intelligence with an AI receptionist that answers, qualifies, and books incoming calls — so fewer opportunities slip through on either side.</p>
+      <p class="eyebrow">Applied AI for real business workflows</p>
+      <h1 id="hero-title">Put AI to work where your business actually runs.</h1>
+      <p class="lede">We find a workflow that costs your team time, connect AI to the documents and systems you already use, and turn it into a working process — from incoming request to finished result. Your people stay in control of the decisions that require judgement.</p>
       <div class="btn-row">
-        <a href="/receptionist/" class="btn btn-green">Explore AI Receptionist</a>
-        <a href="/outbound/" class="btn btn-rose">Explore Outbound Sales</a>
+        <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-rose">Map your first workflow</a>
+        <a href="#workflow-examples" class="btn btn-secondary">See workflow examples</a>
       </div>
+      <p class="domain-line">Applied across sales · customer service · operations</p>
     </div>
   </section>
 
-  <section class="section" style="padding-top:0;padding-bottom:80px;">
+  <section id="solutions" class="section section-border-top" aria-labelledby="value-title">
     <div class="container">
-      <div class="selector-grid">
-        <div class="p-card">
-          <div class="p-card-icon" style="background:var(--green-tint)">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <div class="section-head center grid-head">
+        <h2 id="value-title">Three places the work adds up</h2>
+        <p class="subtitle">Most of the time lost inside a company isn't lost in one big place. It's lost gathering the same context, rewriting the same documents, and waiting for the one person who knows what to do next. These are three areas where we usually begin.</p>
+      </div>
+      <div class="value-grid">
+
+        <div class="v-card">
+          <div class="v-icon" style="background:var(--rose-tint)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 16.5 8.5 11.5 1 19"/><polyline points="17 6 23 6 23 12"/></svg>
           </div>
-          <p class="eyebrow" style="color:var(--green)">Capture Demand</p>
-          <h3>AI Receptionist</h3>
-          <p class="desc">Answers every call — day or night — so customers get help and opportunities get booked.</p>
+          <h3>Grow revenue</h3>
+          <p class="desc">Get to the right conversations sooner, walk into them prepared, and stop losing deals in the gap between calls.</p>
           <ul>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Answers and qualifies incoming callers</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Books, reschedules, and cancels appointments</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Hands off to your team whenever a call needs a person</li>
+            <li><span class="dot" style="background:var(--rose)"></span>Spot the accounts and signals worth acting on this week</li>
+            <li><span class="dot" style="background:var(--rose)"></span>Brief a salesperson or engineer before a complex quote</li>
+            <li><span class="dot" style="background:var(--rose)"></span>Turn technical requirements into a structured proposal brief</li>
+            <li><span class="dot" style="background:var(--rose)"></span>Write the follow-up and update the CRM after a conversation</li>
           </ul>
-          <a href="/receptionist/" class="btn btn-green">Explore AI Receptionist</a>
         </div>
 
-        <div class="p-card">
-          <div class="p-card-icon" style="background:var(--rose-tint)">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        <div class="v-card">
+          <div class="v-icon" style="background:var(--green-tint)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
           </div>
-          <p class="eyebrow" style="color:var(--rose)">Create Demand</p>
-          <h3>Outbound Sales</h3>
-          <p class="desc">Finds the right accounts, understands why now, and turns research into outreach worth answering.</p>
+          <h3>Serve customers</h3>
+          <p class="desc">Answer what people ask, keep requests moving, and hand your team the full picture before they pick up.</p>
           <ul>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Identifies accounts and buying signals worth acting on</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Researches the company and the person before you reach out</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Drafts personalized email, LinkedIn, and call-prep messaging</li>
+            <li><span class="dot" style="background:var(--green)"></span>Answer, qualify, and book incoming calls around the clock</li>
+            <li><span class="dot" style="background:var(--green)"></span>Draft replies grounded in your manuals, policies, and history</li>
+            <li><span class="dot" style="background:var(--green)"></span>Pull service history, equipment context, and parts into one brief</li>
+            <li><span class="dot" style="background:var(--green)"></span>Keep onboarding, training, and adoption follow-up moving</li>
           </ul>
-          <a href="/outbound/" class="btn btn-rose">Explore Outbound Sales</a>
+        </div>
+
+        <div class="v-card">
+          <div class="v-icon" style="background:var(--slate-tint)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1c1c1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </div>
+          <h3>Run operations</h3>
+          <p class="desc">Move documents and checks between the systems that don't talk to each other — and surface the exceptions that need a person.</p>
+          <ul>
+            <li><span class="dot" style="background:var(--ink)"></span>Bring specifications, supplier documents, and logistics updates into one process</li>
+            <li><span class="dot" style="background:var(--ink)"></span>Flag the orders, deliveries, or quality checks that look wrong</li>
+            <li><span class="dot" style="background:var(--ink)"></span>Assemble compliance, commissioning, and handover packages</li>
+            <li><span class="dot" style="background:var(--ink)"></span>Keep records current across email, CRM, ERP, and shared drives</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="workflow-examples" class="section section-border-top bg-canvas" aria-labelledby="examples-title">
+    <div class="container">
+      <div class="section-head grid-head">
+        <p class="eyebrow">Workflows end to end</p>
+        <h2 id="examples-title">From the moment work arrives to the moment it's done</h2>
+        <p class="subtitle">A workflow isn't a feature. It begins when something real happens, gathers the context a good employee would gather, produces work someone can use, and routes the decisions that require judgement to the right person.</p>
+      </div>
+
+      <div class="journey">
+        <div class="journey-head">
+          <div class="j-icon" style="background:var(--rose-tint)" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+          </div>
+          <div>
+            <p class="j-eyebrow" style="color:var(--rose)">Sales engineering</p>
+            <h3 class="j-title">Quoting a technical requirement</h3>
+          </div>
+        </div>
+        <ol class="j-track">
+          <li class="j-step"><p class="j-kicker">Trigger</p><p class="j-text">A customer sends technical requirements by email.</p></li>
+          <li class="j-step"><p class="j-kicker">Context</p><p class="j-text">Specifications, past quotes, supplier documents, and pricing rules are pulled together.</p></li>
+          <li class="j-step"><p class="j-kicker">Draft</p><p class="j-text">A structured brief and a recommended configuration are written, with assumptions listed.</p></li>
+          <li class="j-step is-human"><p class="j-kicker">Your team</p><p class="j-text">An engineer checks the assumptions, adjusts, and approves.</p></li>
+          <li class="j-step is-outcome"><p class="j-kicker">Outcome</p><p class="j-text">The proposal goes out and the CRM and quote record are updated.</p></li>
+        </ol>
+      </div>
+
+      <div class="journey">
+        <div class="journey-head">
+          <div class="j-icon" style="background:var(--green-tint)" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <div>
+            <p class="j-eyebrow" style="color:var(--green)">Field service</p>
+            <h3 class="j-title">Preparing a service visit</h3>
+          </div>
+        </div>
+        <ol class="j-track">
+          <li class="j-step"><p class="j-kicker">Trigger</p><p class="j-text">A service request comes in, or a machine sends an alert.</p></li>
+          <li class="j-step"><p class="j-kicker">Context</p><p class="j-text">Asset details, previous visits, warranty status, and parts availability are gathered.</p></li>
+          <li class="j-step"><p class="j-kicker">Draft</p><p class="j-text">Likely causes, the checks to run, and the parts to bring are proposed.</p></li>
+          <li class="j-step is-human"><p class="j-kicker">Your team</p><p class="j-text">The technician or planner confirms the plan and the timing.</p></li>
+          <li class="j-step is-outcome"><p class="j-kicker">Outcome</p><p class="j-text">The visit is scheduled with the right parts, and the service record is updated.</p></li>
+        </ol>
+      </div>
+
+      <div class="journey">
+        <div class="journey-head">
+          <div class="j-icon" style="background:var(--rose-tint)" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <div>
+            <p class="j-eyebrow" style="color:var(--rose)">New business</p>
+            <h3 class="j-title">Turning a signal into a conversation</h3>
+          </div>
+        </div>
+        <ol class="j-track">
+          <li class="j-step"><p class="j-kicker">Trigger</p><p class="j-text">A signal appears — a new role, a tender, a returning visitor, an inbound call.</p></li>
+          <li class="j-step"><p class="j-kicker">Context</p><p class="j-text">The account, the person, and your own history with them are researched.</p></li>
+          <li class="j-step"><p class="j-kicker">Draft</p><p class="j-text">A relevant message is drafted, together with the preparation the rep needs for the call.</p></li>
+          <li class="j-step is-human"><p class="j-kicker">Your team</p><p class="j-text">The rep reviews the message, adjusts it where needed, approves, and sends.</p></li>
+          <li class="j-step is-outcome"><p class="j-kicker">Outcome</p><p class="j-text">The conversation happens, and the notes and next steps land in the CRM.</p></li>
+        </ol>
+      </div>
+
+      <p class="journey-note">The shape repeats across departments. What changes is the trigger, the context that matters, and who signs off — which is exactly the part that has to be designed around how your business actually works.</p>
+    </div>
+  </section>
+
+  <section id="how-we-work" class="section section-border-top" aria-labelledby="how-title">
+    <div class="container">
+      <div class="section-head grid-head">
+        <p class="eyebrow">How we work</p>
+        <h2 id="how-title">Built around your process, not around a demo</h2>
+        <p class="subtitle">The hard part is rarely the model. It's knowing which workflow is worth the effort, how the work really gets done, and where the information actually lives. That understanding is part of what we deliver.</p>
+      </div>
+      <div class="work-grid">
+        <div class="w-step">
+          <div class="w-num" aria-hidden="true">1</div>
+          <h3>Find the right workflow</h3>
+          <p>We look for work that happens often, costs skilled people hours, and has a clear finish line. One workflow, bounded, worth doing.</p>
+        </div>
+        <div class="w-step">
+          <div class="w-num" aria-hidden="true">2</div>
+          <h3>Design it around the real thing</h3>
+          <p>We sit with the people who do the work today — the exceptions, the judgement calls, the steps nobody wrote down — and design around that.</p>
+        </div>
+        <div class="w-step">
+          <div class="w-num" aria-hidden="true">3</div>
+          <h3>Connect the systems</h3>
+          <p>Email, phone, documents, CRM, ERP, and internal knowledge. The workflow reads from where your information already lives and writes back to it.</p>
+        </div>
+        <div class="w-step">
+          <div class="w-num" aria-hidden="true">4</div>
+          <h3>Deploy, measure, improve</h3>
+          <p>We put it in front of real work, watch what it gets wrong, and tighten it. Then we look at the next workflow with everything we learned.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section" style="padding-top:0;padding-bottom:96px;">
+  <section class="section section-border-top bg-canvas" aria-labelledby="principles-title">
     <div class="container">
-      <div class="flow-box">
-        <div class="flow-row">
-          <div class="flow-node">
-            <div class="flow-node-icon" style="background:var(--rose-tint)">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-            </div>
-            <p class="fn-eyebrow" style="color:var(--rose)">Create Demand</p>
-            <p class="fn-title">MeetingScheduled Outbound Sales</p>
-            <p class="fn-sub">New conversations, started with context</p>
+      <div class="section-head grid-head">
+        <h2 id="principles-title">What stays true in every workflow</h2>
+        <p class="subtitle">A system only gets used if the people who own the work trust it. These are the commitments behind every workflow we put into production.</p>
+      </div>
+      <div class="principle-grid">
+
+        <div class="principle">
+          <div class="p-ic" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6"/><path d="M15 2v6"/><path d="M6 8h12v3a6 6 0 0 1-12 0V8z"/><path d="M12 17v5"/></svg>
           </div>
-          <div class="flow-connector">
-            <span>opportunities</span>
-            <div class="fc-line"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          </div>
-          <div class="flow-node emphasize">
-            <div class="flow-node-icon" style="background:#f2f2f0">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1c1c1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            </div>
-            <p class="fn-eyebrow" style="color:var(--faint)">The Outcome</p>
-            <p class="fn-title">Meetings &amp; Revenue</p>
-            <p class="fn-sub">Qualified conversations that turn into pipeline</p>
-          </div>
-          <div class="flow-connector">
-            <span>incoming calls</span>
-            <div class="fc-line" style="flex-direction:row-reverse"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 5 5 12 12 19"/></svg></div>
-          </div>
-          <div class="flow-node">
-            <div class="flow-node-icon" style="background:var(--green-tint)">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </div>
-            <p class="fn-eyebrow" style="color:var(--green)">Capture Demand</p>
-            <p class="fn-title">MeetingScheduled AI Receptionist</p>
-            <p class="fn-sub">Incoming conversations, never missed</p>
+          <div>
+            <h3>Works with what you already run</h3>
+            <p>You don't need to replace the systems your team already uses. We connect to your CRM, ERP, phone system, inboxes, and shared drives.</p>
           </div>
         </div>
+
+        <div class="principle">
+          <div class="p-ic" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div>
+            <h3>Grounded in your own knowledge</h3>
+            <p>Answers and drafts come from your documents, records, and the way your company does things — not from a generic model's guess.</p>
+          </div>
+        </div>
+
+        <div class="principle">
+          <div class="p-ic" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+          </div>
+          <div>
+            <h3>People make the decisions that matter</h3>
+            <p>Wherever professional judgement or accountability matters, the work stops for a human to review it. Your experts stay the experts.</p>
+          </div>
+        </div>
+
+        <div class="principle">
+          <div class="p-ic" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div>
+            <h3>Measured in finished work</h3>
+            <p>Quotes sent, calls answered, visits prepared, records kept current. We agree on what counts before we build.</p>
+          </div>
+        </div>
+
+        <div class="principle">
+          <div class="p-ic" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+          </div>
+          <div>
+            <h3>Start with one, expand on evidence</h3>
+            <p>We begin with a single bounded workflow you can judge honestly. What comes next is decided by what that one actually delivered.</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <section id="how-it-works" class="section-border-top bg-canvas section">
+  <section class="section section-border-top" style="text-align:center;" aria-labelledby="cta-title">
     <div class="container">
-      <div class="section-head center">
-        <p class="eyebrow">The MeetingScheduled Approach</p>
-        <h2>The conversation is the conversion point.</h2>
-        <p class="subtitle">Businesses lose revenue in two directions: relevant conversations that never get started, and real opportunities that call in and don't get answered. MeetingScheduled is built to close both — one system that starts the first conversation, another that makes sure the second one is never missed.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="preview-grid">
-        <div>
-          <div class="preview-head">
-            <div class="preview-head-left">
-              <div class="preview-icon" style="background:var(--green-tint)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              </div>
-              <div>
-                <p class="preview-eyebrow" style="color:var(--green)">AI Receptionist</p>
-                <p class="preview-title">From ring to resolution</p>
-              </div>
-            </div>
-          </div>
-          <div class="step-box">
-            <div class="step-list-mobile">
-              <div class="step-item-m"><div class="step-badge" style="background:var(--green-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M16 2v4"/><path d="M8 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M7 12l4 4 6-8"/></svg></div><p class="step-label">Incoming Call</p></div>
-              <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-              <div class="step-item-m"><div class="step-badge" style="background:var(--green-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0v3a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6V8Z"/><path d="M12 19v3"/></svg></div><p class="step-label">AI Answers</p></div>
-              <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-              <div class="step-item-m"><div class="step-badge" style="background:var(--green-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><p class="step-label">Understands Intent</p></div>
-              <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-              <div class="step-item-m"><div class="step-badge" style="background:var(--green-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><p class="step-label">Answers / Qualifies</p></div>
-              <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-              <div class="step-item-m"><div class="step-badge" style="background:var(--green-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg></div><p class="step-label">Books or Transfers</p></div>
-            </div>
-            <div class="step-list-desktop">
-              <div class="step-col"><div class="step-badge" style="background:var(--green-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M16 2v4"/><path d="M8 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M7 12l4 4 6-8"/></svg></div><p class="step-label">Incoming Call</p></div>
-              <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-              <div class="step-col"><div class="step-badge" style="background:var(--green-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0v3a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6V8Z"/><path d="M12 19v3"/></svg></div><p class="step-label">AI Answers</p></div>
-              <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-              <div class="step-col"><div class="step-badge" style="background:var(--green-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><p class="step-label">Understands Intent</p></div>
-              <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-              <div class="step-col"><div class="step-badge" style="background:var(--green-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><p class="step-label">Answers / Qualifies</p></div>
-              <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-              <div class="step-col"><div class="step-badge" style="background:var(--green-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg></div><p class="step-label">Books or Transfers</p></div>
-            </div>
-          </div>
-          <div style="margin-top:16px"><a href="/receptionist/" class="btn-ghost-green">Learn more →</a></div>
-        </div>
-
-        <div>
-          <div class="preview-head">
-            <div class="preview-head-left">
-              <div class="preview-icon" style="background:var(--rose-tint)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-              </div>
-              <div>
-                <p class="preview-eyebrow" style="color:var(--rose)">Outbound Sales</p>
-                <p class="preview-title">From signal to conversation</p>
-              </div>
-            </div>
-          </div>
-          <div class="step-box">
-            <div class="step-list-mobile">
-              <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><p class="step-label">Signals</p></div>
-              <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-              <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div><p class="step-label">Account Research</p></div>
-              <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-              <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><p class="step-label">Person Research</p></div>
-              <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-              <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></div><p class="step-label">Relevant Messaging</p></div>
-              <div class="step-arrow-v"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
-              <div class="step-item-m"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><p class="step-label">Conversation</p></div>
-            </div>
-            <div class="step-list-desktop">
-              <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><p class="step-label">Signals</p></div>
-              <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-              <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div><p class="step-label">Account Research</p></div>
-              <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-              <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><p class="step-label">Person Research</p></div>
-              <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-              <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></div><p class="step-label">Relevant Messaging</p></div>
-              <div class="step-arrow-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-              <div class="step-col"><div class="step-badge" style="background:var(--rose-tint)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><p class="step-label">Conversation</p></div>
-            </div>
-          </div>
-          <div style="margin-top:16px"><a href="/outbound/" class="btn-ghost-rose">Learn more →</a></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section-border-top section" style="text-align:center;">
-    <div class="container">
-      <h2>Where are you losing conversations?</h2>
-      <p class="subtitle" style="max-width:480px;margin-left:auto;margin-right:auto;">See how MeetingScheduled creates the conversations you're missing — and catches the ones already trying to reach you.</p>
+      <h2 id="cta-title">Where does work slow down in your business?</h2>
+      <p class="subtitle" style="max-width:600px;margin-left:auto;margin-right:auto;">Tell us about the process that eats hours, waits on one person, or needs the same information gathered over and over. We'll tell you whether AI can move it forward — and what it would take to build.</p>
       <div class="btn-row" style="margin-top:32px;">
-        <a href="/receptionist/" class="btn btn-green">Explore AI Receptionist</a>
-        <a href="/outbound/" class="btn btn-rose">Explore Outbound Sales</a>
+        <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn btn-rose">Discuss a workflow</a>
+        <a href="mailto:sales@meeting-scheduled.com" class="btn btn-secondary">Email us about a workflow</a>
       </div>
-      <div style="margin-top:16px;">
-        <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener" class="btn-ghost-rose" style="height:auto;">Book a Demo</a>
-      </div>
+      <p style="margin-top:20px;font-size:14px;color:var(--muted);">Prefer a ready-made starting point? Explore <a href="/receptionist/" class="btn-ghost-green">AI Receptionist</a> or <a href="/outbound/" class="btn-ghost-rose">Outbound Sales</a>.</p>
     </div>
   </section>
 
@@ -421,17 +511,20 @@ footer .container{padding-left:32px;}
         <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="white"/></svg></span>
         MeetingScheduled
       </a>
-      <p>AI systems that turn more opportunities into meetings — outbound intelligence and an AI receptionist, working together.</p>
+      <p>Applied AI for real business workflows. We turn valuable work across sales, customer service, and operations into working systems — connected to the knowledge, tools, and people you already have.</p>
       <a href="mailto:sales@meeting-scheduled.com" class="footer-email">sales@meeting-scheduled.com</a>
     </div>
     <div class="footer-cols">
       <div class="footer-col">
-        <p class="footer-col-title">Products</p>
+        <p class="footer-col-title">Solutions</p>
+        <a href="/#solutions">Custom AI Workflows</a>
         <a href="/receptionist/">AI Receptionist</a>
         <a href="/outbound/">Outbound Sales</a>
+        <a href="/#workflow-examples">Workflow Examples</a>
       </div>
       <div class="footer-col">
         <p class="footer-col-title">Company</p>
+        <a href="/#how-we-work">How we work</a>
         <a href="https://cal.com/meeting-scheduled/30min" target="_blank" rel="noopener">Book a Demo</a>
         <a href="https://reach.meeting-scheduled.com">Login</a>
       </div>
@@ -457,15 +550,44 @@ const iconClose = document.getElementById('menuIconClose');
 menuBtn.addEventListener('click', () => {
   const isOpen = mobileNav.classList.toggle('open');
   menuBtn.setAttribute('aria-expanded', String(isOpen));
+  menuBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
   iconOpen.style.display = isOpen ? 'none' : 'block';
   iconClose.style.display = isOpen ? 'block' : 'none';
 });
 mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   mobileNav.classList.remove('open');
   menuBtn.setAttribute('aria-expanded', 'false');
+  menuBtn.setAttribute('aria-label', 'Open menu');
   iconOpen.style.display = 'block';
   iconClose.style.display = 'none';
 }));
+
+const ddWrap = document.getElementById('solutionsDD');
+const ddBtn = document.getElementById('solutionsBtn');
+const ddMenu = document.getElementById('solutionsMenu');
+function setDropdown(open, returnFocus) {
+  ddMenu.hidden = !open;
+  ddBtn.setAttribute('aria-expanded', String(open));
+  if (!open && returnFocus) ddBtn.focus();
+}
+ddBtn.addEventListener('click', () => setDropdown(ddMenu.hidden));
+ddWrap.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !ddMenu.hidden) { e.preventDefault(); setDropdown(false, true); }
+});
+ddWrap.addEventListener('focusout', e => {
+  if (!ddWrap.contains(e.relatedTarget)) setDropdown(false);
+});
+document.addEventListener('pointerdown', e => {
+  if (!ddMenu.hidden && !ddWrap.contains(e.target)) setDropdown(false);
+});
+ddMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setDropdown(false)));
+
+const mGroupBtn = document.getElementById('mSolutionsBtn');
+const mGroup = document.getElementById('mSolutionsList');
+mGroupBtn.addEventListener('click', () => {
+  mGroup.hidden = !mGroup.hidden;
+  mGroupBtn.setAttribute('aria-expanded', String(!mGroup.hidden));
+});
 
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
