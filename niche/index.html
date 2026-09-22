@@ -11,91 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Noto+Sans+Hebrew:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-  <style>
-    :root{--ink:#141414;--soft:#5a5a5a;--line:#dedede;--faint:#f6f6f6;--paper:#fdf9fa;--card:#fff;--edge:#efe4e7}
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth;scroll-padding-top:72px}
-    body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans","Noto Sans Hebrew",Arial,sans-serif;font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
-    [lang="he"]{font-family:"Noto Sans Hebrew","IBM Plex Sans",Arial,sans-serif}
-    .toc-label,.case-label,.group,.meta,.bar-inner>span{font-family:"IBM Plex Mono","Noto Sans Hebrew",monospace}
-    h1{letter-spacing:-.035em}
-    h2,h3{letter-spacing:-.02em}
-    [dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3{letter-spacing:-.015em}
-    .bar{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
-    .bar-inner{direction:ltr;max-width:1180px;margin:0 auto;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.85rem;color:var(--soft)}
-    .langs{display:flex;gap:4px}
-    .langs button{font:inherit;border:1px solid var(--line);background:var(--paper);color:var(--soft);padding:4px 12px;border-radius:4px;cursor:pointer}
-    .langs button[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);font-weight:600}
-    .langs button:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-    main{max-width:1180px;margin:0 auto;padding:48px 28px 120px}
-    .doc-head{background:var(--card);border:1px solid var(--edge);border-radius:14px;padding:40px 44px;margin:0 0 28px}
-    h1{font-size:2.4rem;line-height:1.2;margin:0 0 10px;letter-spacing:-.015em}
-    .meta{color:var(--soft);font-size:.95rem;margin:0}
-    .layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:28px;align-items:start}
-    .content{background:var(--card);border:1px solid var(--edge);border-radius:14px;padding:40px 48px 56px;min-width:0}
-    .content > *{max-width:780px}
-    .toc{position:sticky;top:76px;max-height:calc(100vh - 96px);overflow-y:auto;font-size:.92rem;line-height:1.4;background:var(--card);border:1px solid var(--edge);border-radius:14px;padding:20px 20px}
-    .toc-label{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin:4px 0 12px}
-    .toc ol{list-style:none;margin:0;padding:0;border-inline-start:1px solid var(--line)}
-    .toc li{margin:0}
-    .toc a{display:block;padding:7px 0 7px 14px;margin-inline-start:-1px;border-inline-start:2px solid transparent;color:var(--soft);text-decoration:none}
-    [dir="rtl"] .toc a{padding:7px 14px 7px 0}
-    .toc a:hover{color:var(--ink)}
-    .toc a.active{color:var(--ink);font-weight:600;border-inline-start-color:var(--ink)}
-    h2{font-size:1.75rem;line-height:1.25;margin:72px 0 20px;padding-top:36px;border-top:1px solid var(--line);letter-spacing:-.01em}
-    .content > h2:first-of-type{margin-top:48px}
-    h3{font-size:1.22rem;line-height:1.35;margin:36px 0 10px}
-    p{margin:0 0 16px}
-    ul,ol{margin:0 0 20px;padding-inline-start:1.3em}
-    li{margin:8px 0}
-    a{color:inherit}
-    .summary{border-top:2px solid var(--ink);border-bottom:1px solid var(--line);margin:0 0 36px}
-    .summary div{display:grid;grid-template-columns:160px 1fr;gap:6px 24px;padding:20px 0;border-top:1px solid var(--line)}
-    .summary div:first-child{border-top:0}
-    .summary dt{font-weight:700}
-    .summary dd{margin:0}
-    .summary ol{margin:0}
-    blockquote{margin:16px 0 20px;padding:14px 20px;border-inline-start:3px solid var(--ink);background:var(--faint)}
-    blockquote p:last-child{margin:0}
-    .note{color:var(--soft);font-size:.95rem}
-    .case{border:1px solid var(--line);border-radius:6px;padding:26px 30px;margin:0 0 28px}
-    .case h3{margin:0 0 6px}
-    .case-label{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:0 0 6px}
-    .case dd ol{margin:4px 0 0}
-    @media(max-width:560px){.case{padding:20px 18px}}
-    .case dl{margin:0}
-    .case dt{font-weight:700;margin-top:14px}
-    .case dd{margin:2px 0 0}
-    .group{font-size:1rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:44px 0 22px}
-    .email{border:1px solid var(--line);padding:18px 22px;margin:12px 0 28px;white-space:pre-line;line-height:1.65}
-    .email .subj{font-weight:700}
-    .table-wrap{overflow-x:auto;margin:0 0 20px}
-    table{border-collapse:collapse;width:100%;font-size:.97rem}
-    th,td{border-bottom:1px solid var(--line);padding:12px 12px;text-align:start;vertical-align:top}
-    th{font-weight:700}
-    .ladder{padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px 0;margin-bottom:24px}
-    .ladder li{margin:0}
-    .ladder li:not(:last-child)::after{content:"→";margin:0 12px;color:var(--soft)}
-    [dir="rtl"] .ladder li:not(:last-child)::after{content:"←"}
-    .ltr{direction:ltr;unicode-bidi:isolate}
-    footer{margin-top:72px;padding-top:18px;border-top:1px solid var(--line);color:var(--soft);font-size:.88rem}
-    [hidden]{display:none!important}
-    @media(max-width:960px){
-      .doc-head{padding:28px 24px}
-      .content{padding:28px 24px 40px}
-      .layout{grid-template-columns:1fr;gap:12px}
-      .toc{position:sticky;top:49px;z-index:4;max-height:none;overflow-x:auto;overflow-y:hidden;white-space:nowrap;padding:8px 16px;border-radius:10px}
-      .toc-label{display:none}
-      .toc ol{display:flex;gap:18px;border:0}
-      .toc a{padding:4px 0;border:0;margin:0}
-      [dir="rtl"] .toc a{padding:4px 0}
-      .toc a.active{border:0;text-decoration:underline;text-underline-offset:4px}
-      html{scroll-padding-top:110px}
-    }
-    @media(max-width:560px){body{font-size:16px}main{padding:20px 12px 80px}.doc-head{padding:22px 18px}.content{padding:22px 18px 32px}.bar-inner{padding:10px 16px}.summary div{grid-template-columns:1fr;gap:2px}h1{font-size:1.8rem}h2{font-size:1.45rem;margin-top:56px}}
-    @media print{body{background:#fff}.bar,.toc{display:none}.layout{display:block}.doc-head,.content{border:0;padding:0;margin:0}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  </style>
+  <link rel="stylesheet" href="./niche.css">
 </head>
 <body>
   <div class="bar">
@@ -124,22 +40,23 @@
   <dl class="summary" id="en-top">
     <div><dt>The offer</dt><dd>I help manufacturers and distributors of packaging and processing machinery win back parts, service and upgrade orders from customers who already bought machines from them. I do the work for them.</dd></div>
     <div><dt>Who it's for</dt><dd>Manufacturers, distributors and importers of packaging and processing machinery (filling, capping, labeling, cartoning, wrapping, palletizing, inspection, food and pharma processing) that have machines in the field and a parts or service team.</dd></div>
-    <div><dt>What happens today</dt><dd>New machines get the sales attention. Parts and service wait for the customer to call. Customers who stop calling go quiet: contacts change, machines are resold, parts are bought elsewhere. The data is split across the ERP, spreadsheets and people's heads, so nobody sees who went quiet.</dd></div>
+    <div><dt>What happens today</dt><dd>New machines get the sales attention. Parts and service wait for the customer to call. Customers who stop calling go quiet: contacts change, machines are resold, parts are bought elsewhere. The data is split across the ERP, spreadsheets and people's heads, so it's easy to miss who went quiet.</dd></div>
     <div><dt>What I do</dt><dd><ol>
-      <li>Find the quiet customers in their data (no parts or service order in 18–24 months).</li>
+      <li>Find the quiet customers in their data: no parts or service order in 18–24 months, checked against each customer's normal buying rhythm.</li>
       <li>Contact them in the company's name, with messages the company approves.</li>
-      <li>Qualify the need and hand ready quote requests to their parts or service team.</li>
-      <li>Track every opportunity until the order is paid, and report weekly.</li>
+      <li>Qualify the need and hand their parts or service team qualified requests with the details needed to quote.</li>
+      <li>Track every opportunity in their CRM or an agreed shared tracker, report weekly, and follow orders from those accounts for an agreed period after the pilot.</li>
     </ol></dd></div>
-    <div><dt>The result</dt><dd>Signed orders and collected revenue from customers they already have, without new salespeople or new software. The 90-day target is set from their own data after the audit.</dd></div>
-    <div><dt>Price</dt><dd>Two-week audit: $2,000 / ₪6,000, credited if they continue. Then $5,000 / ₪15,000 per month, three-month minimum.</dd></div>
-    <div><dt>Markets</dt><dd>The US is the main market. Israel is for one paid first client and a case study. Both run in parallel.</dd></div>
+    <div><dt>The result</dt><dd>More parts, service and upgrade orders from customers they already have, without new salespeople or new software. I commit to the agreed work. I target qualified needs and quote requests. I measure orders and collected revenue as the goal, not as a guarantee.</dd></div>
+    <div><dt>Price</dt><dd>One 90-day reactivation pilot. US hypothesis: $5,000 per month ($15,000 for 90 days). First Israeli partner, proposed: ₪10,000 per month (₪30,000). Early-exit terms still open.</dd></div>
+    <div><dt>First step</dt><dd>A free 20-minute fit call. It needs no customer-level data.</dd></div>
+    <div><dt>Markets</dt><dd>The US is the main market. Israel is for one paid first pilot and a case study. Both run in parallel.</dd></div>
     <div><dt>Long term</dt><dd>The same service for other industrial-equipment companies. Packaging machinery is the first vertical.</dd></div>
-    <div><dt>Status</dt><dd>A hypothesis under test (about 60–65% confidence). The 60-day test at the end of this document decides.</dd></div>
+    <div><dt>Status</dt><dd>A focused hypothesis under validation. The 60-day test at the end of this document decides.</dd></div>
   </dl>
 
   <p><strong>Say it in one breath:</strong></p>
-  <blockquote><p>"I help packaging machinery companies win back customers who stopped ordering parts and service. I find them in your data, reach out in your name, and hand your team ready quote requests."</p></blockquote>
+  <blockquote><p>"I help packaging machinery companies win back customers who stopped ordering parts and service. I find them in your data, reach out in your name, and hand your team qualified requests to quote."</p></blockquote>
   <p class="note">Lead with the orders, not with AI. Never pitch it as an automation agency, AI calling, CRM cleanup, lead generation, or installed-base software. Software gives them another tool to run; I run the work with their team.</p>
 
   <h2 id="en-who">1. Who we target</h2>
@@ -167,17 +84,16 @@
   <p class="note">Lower priority: stretch wrappers, carton tapers, simple conveyors and tabletop sealers. Their parts are cheap and the orders small.</p>
   <h3>Not a fit</h3>
   <ul>
-    <li><strong>Too few machines:</strong> fewer than about 200 identifiable machines in the field, or fewer than about 100 customer accounts.</li>
-    <li><strong>Orders too small:</strong> an average parts or service order under about $1,000. The math: three months cost the client about $17,000 (audit plus three months). To be clearly worth it, they need roughly $50,000 in recovered gross profit, about $100,000 in orders. At $1,000 per order that's 100 orders in 90 days, which isn't realistic.</li>
+    <li><strong>Too little to recover:</strong> too few reachable dormant customers, or orders too small, for the additional gross profit to plausibly cover the pilot fee. Machine counts and order sizes are clues, not cutoffs: a few hundred machines with large orders can fit better than thousands with small ones.</li>
     <li>No direct, ongoing relationship with the end customer.</li>
     <li>The OEM or a third party owns the parts and service business.</li>
     <li>No usable data and no realistic way to rebuild it.</li>
     <li>An aftermarket team that already does this well.</li>
   </ul>
-  <p class="note">Both thresholds are working assumptions. Adjust them after the first audits.</p>
+  <p class="note">This is a working rule. Adjust it after the first fit calls and pilots.</p>
   <h3>Who buys</h3>
   <p>In a smaller company, the owner or CEO. In a larger one, the VP or Director of Aftermarket, Service or Parts, or the commercial leader who owns revenue from existing customers.</p>
-  <p class="note">The 500-machine threshold is only a working assumption. Data quality, the customer relationship, order size and a person who can close matter more.</p>
+  <p class="note">No machine count decides fit on its own. Data quality, the customer relationship, order size and a person who can quote and close matter more.</p>
 
   <h2 id="en-problem">2. Where revenue slips away</h2>
   <ul>
@@ -194,18 +110,28 @@
     <li><strong>Check the normal cycle first.</strong> Eighteen months without an order is unusual for one machine family and normal for another.</li>
     <li><strong>When the owner and location are known,</strong> rank machines by last activity, age, service history, likely need, reachable contact and value.</li>
     <li><strong>When ownership is uncertain,</strong> start from customers who stopped ordering and their order history. Don't claim to know where every machine is.</li>
+    <li><strong>The strongest signal is a customer whose own ordering rhythm stopped</strong> (Example B).</li>
+    <li><strong>No buying rhythm to compare against?</strong> Use a fixed window (for example 24 months) and mark it as such in the list.</li>
   </ul>
   <p>Only after this works: lapsed service agreements, warranty expiry, wear parts, preventive maintenance, upgrades and retrofits, obsolete components, machine replacement.</p>
 
   <h2 id="en-work">4. How the work runs</h2>
+  <p><strong>Free conversations first, then one paid 90-day pilot.</strong> There is no separate paid audit: checking the data is the first part of the pilot.</p>
   <ol>
-    <li><strong>Fit call.</strong> How many machines are in the field, how existing customers are handled today, what data exists, order sizes, who decides. Not an AI demo.</li>
-    <li><strong>Paid two-week audit.</strong> Check data quality, define inactivity, find reachable customers, size the opportunity, pick a first group. It ends with a clear go or stop.</li>
-    <li><strong>Set the 90-day target</strong> from their data, prices and delivery capacity. No fixed promise up front.</li>
-    <li><strong>Ranked work list</strong> by data confidence, reachable contact, likely need, value and next step.</li>
-    <li><strong>Outreach in their name,</strong> with approved emails and human calls. Replies are sorted and the information needed for a quote is collected.</li>
-    <li><strong>Follow through to the money,</strong> reporting contact, conversation, confirmed need, quote, order and collected revenue.</li>
+    <li><strong>Free fit call (20 minutes, no customer data).</strong> Roughly how many machines and customers, typical order value, whether order history can be exported, how quiet customers are handled today, who quotes and who decides. It ends with a concrete next step and a date, usually a longer strategy meeting with the people who decide.</li>
+    <li><strong>One agreement: the 90-day pilot.</strong> Scope, dates, responsibilities, data terms, early exit and payment are written down before any data is shared.</li>
+    <li><strong>Data validation first.</strong> A limited export with the minimum fields (pseudonymized where possible). I link machines, customers and orders, define "inactive" per machine family against each customer's normal buying rhythm, and count the reachable dormant customers. The review clock starts when usable data arrives, not at signing.</li>
+    <li><strong>Checkpoint.</strong> Continue, or exit under the agreed early-exit terms (below).</li>
+    <li><strong>Agree targets and messages</strong> from their numbers: how many qualified needs and quote requests we aim for, and which messages the company approves.</li>
+    <li><strong>Outreach in their name,</strong> by approved email and human calls, within an agreed cadence and number of attempts. Replies are sorted and the details needed for a quote are collected.</li>
+    <li><strong>Weekly report, and a final review at day 90.</strong> Open opportunities are handed to their team at the end.</li>
   </ol>
+  <h3>What I commit to, what we target, what we measure</h3>
+  <div class="table-wrap"><table>
+    <tr><th>I commit to (the work)</th><th>We target (agreed per client)</th><th>We measure (the goal, not guaranteed)</th></tr>
+    <tr><td>Data validation, the ranked account list, approved outreach within the agreed cadence, sorting replies, collecting quote details, weekly reports</td><td>Qualified needs and quote requests handed to their team</td><td>Quotes, orders and collected revenue from the pilot accounts, and the gross profit on them</td></tr>
+  </table></div>
+  <p class="note">Quotes, orders and revenue depend on the client's team (pricing, speed, availability) and on their customers. I don't guarantee them.</p>
   <div class="table-wrap"><table>
     <tr><th>I own</th><th>The client owns</th></tr>
     <tr><td>Cleaning and linking the data, segmenting, prioritizing</td><td>The right to use the data, who may be contacted, the do-not-contact list</td></tr>
@@ -214,104 +140,188 @@
     <tr><td>Collecting what's needed for a quote, and reporting</td><td>Delivery, invoicing, collection and exceptions</td></tr>
   </table></div>
   <p class="note">AI helps with matching messy records, research, personalizing messages, sorting replies, drafting follow-ups and reporting. Who may be contacted, prices and what may be promised follow clear rules and human approval.</p>
+  <h3>Early exit (principle agreed, terms to be decided)</h3>
+  <p>If the data validation shows the pilot can't work (too few reachable dormant customers, or data that can't be linked), the client can stop early. Still to be decided: when the checkpoint happens, the exact criteria, the maximum charge, and any refund. Don't quote terms that aren't decided, and never call the pilot risk-free.</p>
+  <h3>Tracking</h3>
+  <p>No new system to buy or run. Tracking stays in the client's CRM, or in a shared tracker we agree on: each account and why it was selected, emails, call outcomes, next steps, quotes and orders. At the end they get a full export. Not included: connecting every legacy system, custom development, or hosting and support after the pilot. Complex integration work is scoped separately.</p>
+  <h3>Data handling</h3>
+  <ul>
+    <li>Only the minimum fields, agreed in writing before anything is shared (an NDA and, where needed, a data processing agreement).</li>
+    <li>The client confirms its right to use the data and to contact each customer, and keeps the do-not-contact list.</li>
+    <li>Be exact about what exists today: our platform database is hosted in Seoul (region ap-northeast-2), and the platform uses third-party AI and data services. Don't promise data location, certifications, "no AI training" or deletion terms until the services for that client are chosen, their terms are checked, and it's written into the agreement.</li>
+  </ul>
+  <h3>AI calls (optional)</h3>
+  <p>Not included by default. Only with the client's written approval, a check of the calling rules in that country (in the US, rules on artificial or AI voices), disclosure, recording consent where required, handover to a person, and a small test first.</p>
+  <h3>After the pilot</h3>
+  <p>Continue only if the pilot produced fresh opportunities and real work remains (new segments, triggers or accounts). Access to the tracker alone isn't a reason to renew. The price after the pilot is still to be decided.</p>
 
   <h2 id="en-price">5. Price</h2>
   <div class="table-wrap"><table>
-    <tr><th>Stage</th><th>US</th><th>Israel</th></tr>
-    <tr><td>Two-week data and opportunity audit</td><td>$2,000</td><td>₪6,000</td></tr>
-    <tr><td>90-day execution</td><td>$5,000 / month, 3-month minimum</td><td>₪15,000 / month, 3-month minimum</td></tr>
+    <tr><th></th><th>US</th><th>Israel</th></tr>
+    <tr><td>Fit call</td><td>Free</td><td>Free</td></tr>
+    <tr><td>90-day reactivation pilot</td><td>$15,000 ($5,000 per month), price being tested</td><td>First partner, proposed: ₪30,000 (₪10,000 per month)</td></tr>
   </table></div>
   <ul>
-    <li>The audit fee is credited toward execution when the proposal says so.</li>
-    <li>No automatic discounts. A special deal for the first client must buy something concrete: fast data access, decision-maker time, and permission to document results.</li>
-    <li><strong>Exit point:</strong> if the audit finds no credible opportunity big enough, stop after two weeks. The client still gets a clear picture of their data and potential.</li>
-      <li><strong>One price during the test.</strong> Every company pays the same for now, so the results are comparable. The price doesn't drop for small companies; the fit rules filter them out instead.</li>
-    <li><strong>After the test, price by size.</strong> A much larger installed base (about 2,000+ machines, several brands or countries) gets a scoped quote. The first Israeli client may get a design-partner price in exchange for permission to publish the case study.</li>
+    <li><strong>These are hypotheses to test, not final prices.</strong></li>
+    <li><strong>No separate audit.</strong> Data validation is part of the pilot.</li>
+    <li><strong>Still to be decided:</strong> the early-exit terms, the payment schedule (upfront or monthly), later Israeli pricing, any US proof-partner price, and pricing for large installed bases.</li>
+    <li><strong>No revenue share by default, and no discount for deciding on the call.</strong></li>
+    <li><strong>A first-partner price must buy something concrete:</strong> fast data access, decision-maker time, and permission to publish the results. It applies to the first Israeli client only.</li>
   </ul>
-  <h3>Price by size, after the test</h3>
-  <div class="table-wrap"><table>
-    <tr><th>Company size</th><th>Audit</th><th>Monthly (3-month minimum)</th></tr>
-    <tr><td><strong>Standard:</strong> about 200–2,000 machines, one brand family, one country</td><td>$2,000 / ₪6,000</td><td>$5,000 / ₪15,000</td></tr>
-    <tr><td><strong>Large:</strong> about 2,000–5,000 machines, or 2–3 brands or countries</td><td>$3,500–5,000 / ₪12,000–18,000</td><td>$7,500–10,000 / ₪25,000–35,000</td></tr>
-    <tr><td><strong>Very large:</strong> 5,000+ machines or many countries</td><td colspan="2">Scoped quote, usually $10,000–15,000+ per month</td></tr>
-    <tr><td><strong>First Israeli client</strong> (design partner)</td><td>₪3,000</td><td>₪9,000–10,000, in exchange for publishing the case study, a quote from the client, fast data access and decision-maker time</td></tr>
-  </table></div>
-  <p class="note">Rule of thumb: the monthly fee should be about 10% or less of the gross profit the client can realistically recover. These ranges are starting points; confirm them after the first audits.</p>
-
+  <h3>How to judge whether the price makes sense</h3>
+  <p>Compare the pilot fee with the additional gross profit the client could plausibly earn from the pilot accounts, using their own order values, margins and buying cycles, and account for their team's time and how long orders take to arrive. Don't plug in margins, recovery rates or customer lifetime values we haven't verified. A 90-day pilot fee is not a yearly retainer: compare it with what can realistically come in during the pilot and the agreed tracking period.</p>
 
   <h2 id="en-sell">6. How we sell</h2>
-  <p>The first touch has one job: get a 20-minute call. The paid audit is offered only after they recognize the problem and usable data seems to exist.</p>
+  <p>The first touch has one job: a 20-minute fit call. No price in the first touch. I present the pilot only after they recognize the problem and the basics fit.</p>
+  <ul>
+    <li><strong>Every call ends with a concrete next step and a date,</strong> for example the strategy meeting with the people who decide. No open "maybe", and no artificial discount for deciding on the call.</li>
+    <li><strong>Always give a direct way to book:</strong> the booking link or two proposed times.</li>
+    <li><strong>A short demo video (about 90 seconds) is optional,</strong> useful in email 2 once it exists.</li>
+  </ul>
   <p>Sequence: email 1 → call next day → LinkedIn → email 2 (day 3) → call (day 6) → LinkedIn message (day 8) → email 3 (day 11) → email 4 (day 16). Everything is logged in the CRM, with one calendar reminder per lead for the next step.</p>
 
-  <h3>Email 1: show what their customer would receive</h3>
-  <div class="email"><span class="subj">Subject: The machines you sold in 2019</span>
+  <h3>Emails</h3>
+  <p>Email 1 has two versions to test. Alternate version A and version B by company, and record in the CRM which one each company received. Judge them by fit calls with qualified buyers and by meetings, not by raw replies. With about 30 companies per market, the result shows a direction, not a proven winner.</p>
+  <details class="script-disclosure">
+    <summary>Email 1, version A: a short question</summary>
+    <div class="email"><span class="subj">Subject: quiet [machine type] customers</span>
+
+Hi [Name],
+
+[One verified fact about their machines, or their parts and service.]
+
+Quick question: when a customer goes 18–24 months without ordering parts or service, does someone work that list, or does it wait for the next inbound call?
+
+I run that recovery work for packaging-machinery companies. I find the inactive customers in your data, contact them in your name with messages you approve, and hand your team the requests to quote.
+
+Worth comparing notes for 20 minutes?
+
+Eyal Taieb</div>
+  </details>
+
+  <details class="script-disclosure">
+    <summary>Email 1, version B: with an example of what their customer could receive</summary>
+    <div class="email"><span class="subj">Subject: The machines you sold in 2019</span>
 
 Hi Mark,
 
 [One verified fact, e.g.: You've built filling and capping lines since 1998 and sell parts and service for them.]
 
-Customers who bought a machine years ago often stop ordering parts and service from the manufacturer, and nobody notices until they call.
+Customers who bought a machine years ago can stop ordering parts and service from the manufacturer without anyone noticing.
 
-I find those customers in your existing data and reach out to them in your name. For example, one of your customers would get:
+I find those customers in your existing data and reach out to them in your name. For example, a message one of your customers could receive:
 
 "Your Model X filler was installed in 2019. Our records show the seal kit hasn't been ordered from us since 2023. Would you like us to send a quote?"
 
 You approve every message, and interested customers go straight to your parts team.
 
-Worth 20 minutes to see how many of your machines have gone quiet?
+Worth 20 minutes to see whether this applies to your installed base?
 
 Eyal Taieb</div>
+  </details>
 
-  <h3>Email 2 (day 3, same thread): one question and the math</h3>
-  <div class="email">Hi Mark,
+  <details class="script-disclosure">
+    <summary>Email 2 (day 3, same thread): one question and the arithmetic</summary>
+    <div class="email">Hi Mark,
 
-One quick question: roughly how many of the machines you've sold haven't ordered a part from you in the last two years?
+One quick question: roughly how many of the customers you've sold machines to haven't ordered parts or service in the last two years?
 
-If even 30 of them ordered a $5,000 seal kit, that's $150,000 from customers who already bought from you. One data export is enough to find out which ones.
+Just to show the arithmetic: if 300 accounts were inactive and 5% placed a $5,000 order, that would be $75,000 in orders. On a call we'd replace those numbers with yours.
 
-Worth a short call?
+Worth 20 minutes?
 
 Eyal</div>
+  </details>
 
-  <h3>Email 3 (day 11): a new angle</h3>
-  <div class="email">Hi Mark,
+  <details class="script-disclosure">
+    <summary>Email 3 (day 11): a new angle</summary>
+    <div class="email">Hi Mark,
 
 One more idea, then I'll leave it.
 
-Older machines often run controls the manufacturer no longer supports. When one fails, the line can stop for days. Customers with those machines are usually glad to plan an upgrade before that happens. I find them in your installed base and set up those conversations for your engineers.
+Some older machines run controls their manufacturer no longer supports. If one fails and spares are hard to find, the line can stand still. Where your engineers confirm an upgrade path, I can find those machines in your installed base and set up the conversations.
 
 If this isn't yours, who handles parts and service revenue?
 
 Eyal</div>
+  </details>
 
-  <h3>Email 4 (day 16): close the loop</h3>
-  <div class="email">Hi Mark,
+  <details class="script-disclosure">
+    <summary>Email 4 (day 16): close the loop</summary>
+    <div class="email">Hi Mark,
 
 I haven't heard back, so I'll assume the timing isn't right. Should I close the file, or is someone else the right person for parts and service revenue?
 
 Eyal</div>
-  <p class="note">US emails also need a postal address and an opt-out line at the bottom. No dollar figures in email 1: the example message is the proof.</p>
+  </details>
+  <p class="note">No dollar figures in email 1. The example shows how the service works; it is not evidence of results. US emails also need a postal address and an opt-out line at the bottom.</p>
 
-  <h3>Call opening</h3>
-  <blockquote><p>"Hi Mark, this is Eyal Taieb. Did I catch you at an OK time for 30 seconds? Quick question: when a customer who bought a machine from you stops ordering parts or service for a year or two, how does your team spot that today?"</p></blockquote>
-  <p class="note">The full script per lead (voicemail, gatekeeper, objections) is prepared in the CRM under "Call script".</p>
+  <h3>LinkedIn</h3>
+  <details class="script-disclosure">
+    <summary>Connection note</summary>
+    <div class="email">Hi [Name], I saw that [Company] builds [machine type]. I focus on bringing back parts and service orders from existing machinery customers. Happy to connect.</div>
+  </details>
+  <details class="script-disclosure">
+    <summary>First message after connecting</summary>
+    <div class="email">Thanks for connecting, [Name].
 
-  <h3>Questions for the first call</h3>
-  <ul>
-    <li>How many active and older machines, or existing customers, can you identify in your data?</li>
-    <li>Can you link a serial number to the machine's current owner and location?</li>
-    <li>When does your team reach out to a customer who already owns a machine?</li>
-    <li>How do you spot customers who haven't ordered parts or service in a long time?</li>
-    <li>Which systems hold customer, order, machine and service data?</li>
-    <li>How often does a customer normally buy parts or service for each machine family?</li>
-    <li>What are typical order size, gross margin and sales cycle?</li>
-    <li>Who validates the technical need, sets the price and issues the quote?</li>
-    <li>If demand goes up, can the team deliver in reasonable time?</li>
-    <li>What result would make a 90-day pilot a success for you?</li>
-  </ul>
+When a customer stops ordering parts or service, does someone on your team actively follow up with that account?
+
+I help machinery companies identify those customers and run the follow-up in their name, using approved messages. Relevant requests then go to their parts or service team.
+
+Would a 15-minute call to see whether this could be useful at [Company] make sense?</div>
+  </details>
+  <p class="note">Replace the placeholders with verified details. Use “distributes” or “services” when that describes the company more accurately.</p>
+
+  <h3>The 15-minute qualification call</h3>
+  <details class="script-disclosure">
+    <summary>Open the qualification call script</summary>
+    <div class="script-body">
+      <p class="direction">Goal: establish fit, interest, potential value and practical scope, then book a strategy meeting. Ask one question at a time and skip what they have already answered.</p>
+      <h4>If this starts as a cold call</h4>
+      <p>“Hi [Name], this is Eyal Taieb. I saw [one verified fact about their machinery or service business]. Have you got 30 seconds for why I’m calling?”</p>
+      <p>“I work on bringing back parts and service orders from existing machinery customers. When a customer stops ordering from you, how does your team notice and follow up?”</p>
+      <p>“Would you have fifteen minutes now to see whether this is relevant, or should we find another time?”</p>
+      <p class="direction">Continue only if they have time. Agreement to 30 seconds is not agreement to a 15-minute interview.</p>
+      <h4>0–1 min · Set the purpose</h4>
+      <p>“I’d like to understand how you handle customers who stop ordering, see whether there could be a worthwhile opportunity, and decide whether a longer strategy meeting makes sense. I don’t need customer records for this conversation.”</p>
+      <h4>1–4 min · Current process and interest</h4>
+      <p>“When customers stop buying parts or service, what usually happens next?”</p>
+      <p>“Does someone actively work those accounts, or does most follow-up happen when the customer contacts you?”</p>
+      <p>“How well is that working?”</p>
+      <p class="direction">If there is a gap: “Can you give me an example?” If the process works well: “Is there any customer group that still gets less attention than you’d like?”</p>
+      <h4>4–7 min · Scale and economics</h4>
+      <p>“Roughly how many customer accounts have machines you currently support?”</p>
+      <p>“What would those customers normally buy again, and how often?”</p>
+      <p>“What’s a typical order worth for that kind of work?”</p>
+      <p class="direction">If they know: ask roughly how many customers have gone beyond their normal ordering cycle. Estimates are enough for this call.</p>
+      <h4>7–10 min · Desired result and practical scope</h4>
+      <p>“If those customers were being contacted consistently, with relevant requests reaching your team, what difference would that make?”</p>
+      <p>“That’s the area I work on. I identify suitable accounts from existing records, run approved outreach in your name, and follow up. Your team gets the relevant requests and can see the progress.”</p>
+      <p>“Where do your customer and order records sit today? Who could help us review the data structure or provide a limited export?”</p>
+      <p>“Who would handle the quotes, and do they have capacity for more work?”</p>
+      <h4>10–12 min · Priority and commercial fit</h4>
+      <p>“So the potential opportunity is [their situation], and the main thing missing is [their obstacle]. Is that a fair summary?”</p>
+      <p>“Is this something you would want to act on in the next few months if the numbers make sense?”</p>
+      <p>“For context, the engagement I’m proposing is a 90-day pilot at $5,000 a month. We’d use the strategy meeting to assess whether the opportunity could justify that investment for you. Is that within the range you could consider if the case is strong?”</p>
+      <p class="direction">Working US pilot price. Confirm the commercial terms before quoting. The initial data review is included; early-exit charges still need to be defined.</p>
+      <h4>12–15 min · Book the strategy meeting</h4>
+      <p>“I think a strategy meeting would be worthwhile because [specific reason from their answers]. We’ll look at the current numbers, the result you want, the best first customer group and what it would take to run the pilot. You won’t need to send customer-level data beforehand.”</p>
+      <p>“Who else should join so we can assess the opportunity and make a decision?”</p>
+      <p>“Let’s reserve 45 minutes. Would [actual available time] or [actual available time] work better?”</p>
+      <p>“If you have them, bring rough figures for parts and service sales, typical order values and the systems holding the records. Estimates are fine. I’ll send a short agenda.”</p>
+      <h4>If the timing or fit is wrong</h4>
+      <p>Interested, but not ready: “What would need to change for this to become a priority?” Agree on a relevant follow-up date if appropriate.</p>
+      <p>Not a fit: “From what you’ve described, I don’t think a pilot at this price would be justified right now because [reason]. I’d rather be clear about that.”</p>
+    </div>
+  </details>
+  <div class="script-nav">
+    <a href="./strategy/index.html?lang=en">Open the 45-minute strategy meeting script →</a>
+    <p class="note">The complete 12-stage conversation, offer, pricing and objection responses. English, Hebrew and German.</p>
+  </div>
 
   <h2 id="en-cases">7. Examples</h2>
-  <p class="note">Companies, numbers and prices are invented to illustrate. With a real client, use only figures verified in the audit. The quoted text in each example is the message <strong>their customer</strong> would receive, sent in the company's name.</p>
+  <p class="note">Companies, numbers and prices are invented to show how the work runs. They are not evidence of results or conversion rates. With a real client, use only figures verified in the pilot's data validation, and let the client confirm every technical claim. The quoted text in each example is the message <strong>their customer</strong> would receive, sent in the company's name.</p>
 
   <p class="group">First campaign</p>
 
@@ -329,7 +339,7 @@ Eyal</div>
         <li>Pass every yes to the parts manager, with the model, serial number and what the customer needs.</li>
       </ol></dd>
       <dt>Example message</dt><dd><blockquote><p>"Your Model X filler was installed in 2019. Our records show the seal kit hasn't been ordered from us since 2023. Is the machine still running? We can send a quote for a replacement kit."</p></blockquote></dd>
-      <dt>Illustration</dt><dd>If 40 of the 300 order a kit at $5,000, that's $200,000.</dd>
+      <dt>Illustration</dt><dd>If 40 of the 300 order a kit at $5,000, that's $200,000 in orders.</dd>
       <dt>Watch out</dt><dd>No order from the builder doesn't mean the part was never replaced; the customer may have bought it elsewhere. So the message says "not ordered from us", never "not replaced". Check the normal replacement cycle for each model before treating two years as a signal.</dd>
     </dl>
   </div>
@@ -353,7 +363,7 @@ Eyal</div>
       <dt>What happens today</dt><dd>The technicians are busy with urgent breakdowns. Some plants moved to a cheaper independent technician and order parts directly from abroad. The installation list sits in Priority (their ERP), but nobody goes through it. The export shows 120 customers or machines with no service or parts purchase in 18 months. That's the review list, not an automatic mailing list.</dd>
       <dt>What I do</dt><dd>Check which brands and customers the importer may contact (sometimes the manufacturer or another importer holds the service rights), rank the records, contact plant maintenance managers in the importer's name, and gauge interest in an inspection, preventive maintenance, parts or an annual service contract. The service manager approves, prices and closes.</dd>
       <dt>Example message</dt><dd><blockquote><p>"Your Model X packer last had a service visit with us in April 2024. Would you like to book a maintenance visit before the busy season?"</p></blockquote></dd>
-      <dt>Illustration</dt><dd>If 25 plants come back, worth ₪400,000 a year in total, that becomes the documented case study for US conversations.</dd>
+      <dt>Illustration</dt><dd>If 25 plants come back with ₪400,000 a year in orders (order value, not profit), that becomes the documented case study for US conversations.</dd>
       <dt>Check first</dt><dd>That the importer really owns the service relationship, that the machine data is current, and that the team has capacity to do the added work.</dd>
     </dl>
   </div>
@@ -368,7 +378,7 @@ Eyal</div>
       <dt>The signal</dt><dd>The company knows exactly which controller is inside each specific machine (from the build record, the serial number or a technician's report), and the controller's maker has confirmed it's discontinued.</dd>
       <dt>What I do</dt><dd>Build the list of those machines. The company's engineer confirms the upgrade for each one (a retrofit: upgrading the existing machine instead of replacing it) before anyone is contacted.</dd>
       <dt>Example message</dt><dd><blockquote><p>"Your labeler on line 2 runs a controller the manufacturer no longer supports. If it fails, spare parts are hard to find. Would you like our engineer to plan an upgrade at a time that suits you?"</p></blockquote></dd>
-      <dt>Illustration</dt><dd>8 upgrade projects at $25,000 each = $200,000.</dd>
+      <dt>Illustration</dt><dd>8 upgrade projects at $25,000 each = $200,000 in orders.</dd>
       <dt>Tone</dt><dd>Offer to plan ahead. No scare tactics, and no technical claim that hasn't been checked. Never guess the controller from the machine's age.</dd>
     </dl>
   </div>
@@ -377,11 +387,11 @@ Eyal</div>
     <p class="case-label">Example E · change parts</p>
     <h3>Customer moves to a new bottle or carton size</h3>
     <dl>
-      <dt>Background</dt><dd>A cartoner (a machine that puts products into cartons) is set up for specific sizes. When a customer launches a new bottle or box size, the machine needs change parts: guides, star wheels and tooling made for the new size, often $8,000–25,000. Many customers don't know their existing machine can be adapted, and start shopping for a new machine elsewhere.</dd>
+      <dt>Background</dt><dd>A cartoner (a machine that puts products into cartons) is set up for specific sizes. When a customer launches a new bottle or box size, the machine needs change parts: guides, star wheels and tooling made for the new size, often $8,000–25,000. Some customers don't know their existing machine can be adapted, and start shopping for a new machine elsewhere.</dd>
       <dt>The signal</dt><dd>Only a real indication: an announced launch, a packaging change, an earlier inquiry or a service call. A quiet customer alone proves nothing.</dd>
       <dt>What I do</dt><dd>Match the new dimensions to the installed model, collect the production requirements, and pass a clean request to the engineer for a fit check and a change-parts quote.</dd>
-      <dt>Example message</dt><dd><blockquote><p>"We saw you're launching a new 330 ml can. Your cartoner can usually run it with a change-parts set. Want our engineers to check the fit?"</p></blockquote></dd>
-      <dt>Illustration</dt><dd>10 orders at $15,000 = $150,000, sometimes opening a new-machine conversation too.</dd>
+      <dt>Example message</dt><dd><blockquote><p>"We saw you're launching a new 330 ml can. Your cartoner may be able to run it with a change-parts set. Want our engineers to check the fit?"</p></blockquote></dd>
+      <dt>Illustration</dt><dd>10 orders at $15,000 each = $150,000 in orders, sometimes opening a new-machine conversation too.</dd>
     </dl>
   </div>
 
@@ -462,7 +472,7 @@ Eyal</div>
     <h3>A company that isn't a fit</h3>
     <dl>
       <dt>Background</dt><dd>8 employees, about 60 machines in the field, knowledge only in the owner's head, and nobody who can validate needs, write quotes and deliver the work.</dd>
-      <dt>What I do</dt><dd>If it's clear on the first call, say it's not a fit. A paid audit only makes sense when data quality or economics are genuinely unclear.</dd>
+      <dt>What I do</dt><dd>If it's clear on the fit call, say it's not a fit. Don't sell a pilot to find out: a pilot only makes sense when the basics fit and the numbers could plausibly cover the fee.</dd>
       <dt>Why it matters</dt><dd>Saying no is what makes $5,000 a month believable.</dd>
     </dl>
   </div>
@@ -478,29 +488,46 @@ Eyal</div>
 
   <h2 id="en-measure">8. Measurement</h2>
   <ul class="ladder">
-    <li>Eligible customer</li><li>Contacted</li><li>Conversation</li><li>Confirmed need</li><li>Quote</li><li>Order</li><li>Collected revenue</li>
+    <li>Pilot account</li><li>Contacted</li><li>Conversation</li><li>Qualified need</li><li>Quote request</li><li>Quote</li><li>Order</li><li>Collected revenue</li>
   </ul>
-  <p>The result is orders and collected revenue (and gross profit when the data allows). The earlier steps show progress; they are not the result.</p>
-  <p><strong>Sizing the opportunity:</strong> reachable eligible customers × conversation rate × confirmed-need rate × close rate × average order value (or gross profit). Use the client's own history where possible. Otherwise show conservative scenarios and label every assumption. It's an estimate, not a forecast or a promise.</p>
+  <p>The commercial goal is orders and collected revenue. The earlier steps show progress; they are not the result, and none of them is guaranteed.</p>
+  <h3>Definitions (the same in every language)</h3>
+  <ul>
+    <li><strong>Pilot accounts:</strong> the dormant-customer list fixed at the start of outreach. Opportunities already open at the start don't count.</li>
+    <li><strong>Qualified need:</strong> a customer confirms a current requirement the client can quote.</li>
+    <li><strong>Quote request:</strong> the client's team has the details it needs to quote.</li>
+    <li><strong>Quote value:</strong> the total of quotes the client issued to pilot accounts.</li>
+    <li><strong>Orders:</strong> signed orders from pilot accounts during the pilot and the agreed tracking period (length to be decided).</li>
+    <li><strong>Collected revenue:</strong> paid invoices for those orders.</li>
+    <li><strong>Gross profit:</strong> the client's gross profit on those orders (revenue minus the direct cost of the parts or service), calculated with the client's own numbers.</li>
+  </ul>
+  <p><strong>Sizing the opportunity:</strong> reachable eligible customers × conversation rate × qualified-need rate × close rate × average order value (or gross profit). Use the client's own history where possible. Otherwise show conservative scenarios and label every assumption. It's an estimate, not a forecast or a promise.</p>
 
   <h2 id="en-remember">9. What to remember</h2>
   <ul>
-    <li>I sell recovered parts, service and upgrade revenue, not AI.</li>
-    <li>The first campaign: customers with no parts or service order in 18–24 months.</li>
-    <li>Inactivity means something only against that machine's normal buying cycle.</li>
+    <li>I sell more parts, service and upgrade orders from existing customers, not AI.</li>
+    <li>The first campaign: customers with no parts or service order in 18–24 months, checked against their normal buying rhythm. A broken rhythm is the strongest signal.</li>
     <li>I run the process; the client makes the technical and commercial decisions.</li>
+    <li>I commit to the work. Qualified needs and quote requests are targets. Orders and revenue are the goal, not a guarantee.</li>
     <li>Never invent machine counts, data quality, lost revenue, contacts or expected returns.</li>
-    <li>The first step is a short call. The paid audit is the entry product.</li>
+    <li>The first step is a free 20-minute fit call without customer data. The paid product is the 90-day pilot, with data validation built in.</li>
+    <li>Terms still to be decided (early exit, payment, tracking period) are never presented as agreed.</li>
     <li>The US is the main market; Israel produces the first proof. Both run in parallel.</li>
   </ul>
 
   <h2 id="en-test">10. The 60-day test</h2>
   <ul>
     <li><strong>US:</strong> 30 well-qualified companies, one offer, research-based emails and phone follow-up.</li>
-    <li><strong>Israel:</strong> about 10–15 fitting companies, to close one paid first client and get permission to document a case study.</li>
+    <li><strong>Israel:</strong> about 10–15 fitting companies, to close one paid first pilot and get permission to document a case study.</li>
   </ul>
-  <p><strong>It passes with:</strong> 5+ serious conversations · 2+ conversations about their data · 1 paid audit · 1 executable opportunity.</p>
-  <p>These are decision thresholds, not market facts. If results are weak, first check the company list, the decision-maker, the research, the message, the next-step ask, the channel and the follow-up. Only then consider changing the niche.</p>
+  <p>Four separate questions, recorded separately:</p>
+  <ol>
+    <li><strong>Do they want it?</strong> 5+ fit calls with qualified buyers.</li>
+    <li><strong>Will they share usable data?</strong> 2+ agree to a field list or a data sample.</li>
+    <li><strong>Will they pay?</strong> 1 signed and paid pilot.</li>
+    <li><strong>Does it deliver?</strong> Data validation passed, outreach launched, then qualified needs, quotes and orders, judged at the end of the pilot, not within 60 days.</li>
+  </ol>
+  <p>These are decision thresholds, not market facts. One pilot is first evidence, not proof of the whole niche. Our past outreach sample is too small to forecast conversion rates. If results are weak, first check the company list, the decision-maker, the research, the message, the next-step ask, the channel and the follow-up. Only then consider changing the niche.</p>
   <p>If packaging machinery fails the test, keep the same business (more parts, service and upgrade revenue from existing customers) and test another industrial-equipment vertical. Change one thing at a time and record what was learned.</p>
 
   </div>
@@ -521,22 +548,23 @@ Eyal</div>
   <dl class="summary" id="he-top">
     <div><dt>ההצעה</dt><dd>אני עוזר ליצרנים, ליבואנים ולמפיצים של מכונות מילוי ואריזה להחזיר הזמנות של חלפים, שירות ושדרוגים מלקוחות שכבר קנו מהם מכונות. אני עושה את העבודה בשבילם.</dd></div>
     <div><dt>למי</dt><dd>יצרנים, יבואנים ומפיצים של מכונות מילוי ואריזה וקווי אריזה (מילוי, סגירה ופקקים, תיוג, קרטונים, עטיפה ושרינק, משטוח, שקילה וגלאי מתכות, וציוד לתעשיית המזון והתרופות), שיש להם מכונות אצל לקוחות, שירות טכני ומחסן חלפים.</dd></div>
-    <div><dt>המצב היום</dt><dd>המכירות עסוקות במכונות חדשות. החלפים והשירות מחכים שהלקוח יתקשר. לקוח שמפסיק להתקשר נעלם: אנשי קשר מתחלפים, מכונות נמכרות הלאה, וחלפים נקנים אצל מישהו אחר. המידע מפוזר בין ה־ERP, אקסלים והראש של העובדים, ולכן אף אחד לא רואה מי נעלם.</dd></div>
+    <div><dt>המצב היום</dt><dd>המכירות עסוקות במכונות חדשות. החלפים והשירות מחכים שהלקוח יתקשר. לקוח שמפסיק להתקשר נעלם: אנשי קשר מתחלפים, מכונות נמכרות הלאה, וחלפים נקנים אצל מישהו אחר. המידע מפוזר בין ה־ERP, אקסלים והראש של העובדים, ולכן קל לפספס מי נעלם.</dd></div>
     <div><dt>מה אני עושה</dt><dd><ol>
-      <li>מוצא בנתונים שלהם את הלקוחות שנעלמו (בלי הזמנת חלפים או שירות 18–24 חודשים).</li>
+      <li>מוצא בנתונים שלהם את הלקוחות שנעלמו: בלי הזמנת חלפים או שירות 18–24 חודשים, מול קצב הקנייה הרגיל של כל לקוח.</li>
       <li>פונה אליהם בשם החברה, עם הודעות שהחברה מאשרת.</li>
-      <li>בודק את הצורך ומעביר לצוות החלפים או השירות בקשות מוכנות להצעת מחיר.</li>
-      <li>עוקב אחרי כל הזדמנות עד שההזמנה משולמת, ומדווח כל שבוע.</li>
+      <li>בודק את הצורך ומעביר לצוות החלפים או השירות בקשות מאומתות, עם הפרטים שצריך כדי לתת הצעת מחיר.</li>
+      <li>עוקב אחרי כל הזדמנות ב־CRM שלהם או בגיליון מעקב משותף, מדווח כל שבוע, וממשיך לעקוב אחרי הזמנות מהלקוחות האלה לתקופה שסוכמה אחרי הפיילוט.</li>
     </ol></dd></div>
-    <div><dt>התוצאה</dt><dd>הזמנות חתומות וכסף שנכנס מלקוחות שכבר יש להם, בלי אנשי מכירות חדשים ובלי תוכנה חדשה. היעד ל־90 יום נקבע מהנתונים שלהם, אחרי הבדיקה.</dd></div>
-    <div><dt>מחיר</dt><dd>בדיקה של שבועיים: 6,000 ₪ (<span class="ltr">$2,000</span> בארה״ב), מתקזזת אם ממשיכים. אחר כך 15,000 ₪ לחודש (<span class="ltr">$5,000</span> בארה״ב), התחייבות לשלושה חודשים.</dd></div>
-    <div><dt>שווקים</dt><dd>ארה״ב היא השוק העיקרי. ישראל נועדה ללקוח ראשון משלם ולמקרה הצלחה. עובדים בשניהם במקביל.</dd></div>
+    <div><dt>התוצאה</dt><dd>יותר הזמנות של חלפים, שירות ושדרוגים מלקוחות שכבר יש להם, בלי אנשי מכירות חדשים ובלי תוכנה חדשה. אני מתחייב לעבודה שסוכמה. היעד הוא צרכים מאומתים ובקשות להצעת מחיר. הזמנות וכסף שנכנס הם המטרה שנמדדת, לא הבטחה.</dd></div>
+    <div><dt>מחיר</dt><dd>פיילוט אחד של 90 יום להחזרת לקוחות רדומים. ללקוח הישראלי הראשון, בהצעה: 10,000 ₪ לחודש (30,000 ₪ לפיילוט). בארה״ב, המחיר שנבדק: 5,000 דולר לחודש (15,000 דולר ל־90 יום). תנאי היציאה המוקדמת עוד פתוחים.</dd></div>
+    <div><dt>הצעד הראשון</dt><dd>שיחת התאמה של 20 דקות, בחינם. לא צריך בה נתוני לקוחות.</dd></div>
+    <div><dt>שווקים</dt><dd>ארה״ב היא השוק העיקרי. ישראל נועדה לפיילוט ראשון בתשלום ולמקרה הצלחה. עובדים בשניהם במקביל.</dd></div>
     <div><dt>לטווח ארוך</dt><dd>אותו שירות לחברות ציוד תעשייתי נוספות. מכונות מילוי ואריזה הן התחום הראשון.</dd></div>
-    <div><dt>סטטוס</dt><dd>השערה שנבדקת (ביטחון של כ־60%–65%). מבחן 60 הימים בסוף המסמך מכריע.</dd></div>
+    <div><dt>סטטוס</dt><dd>השערה ממוקדת שנבדקת. מבחן 60 הימים בסוף המסמך מכריע.</dd></div>
   </dl>
 
   <p><strong>במשפט אחד:</strong></p>
-  <blockquote><p>״אני עוזר לחברות שמוכרות מכונות מילוי ואריזה להחזיר לקוחות שהפסיקו להזמין חלפים ושירות. אני מוצא אותם בנתונים שלכם, פונה אליהם בשמכם, ומעביר לצוות שלכם בקשות מוכנות להצעת מחיר.״</p></blockquote>
+  <blockquote><p>״אני עוזר לחברות שמוכרות מכונות מילוי ואריזה להחזיר לקוחות שהפסיקו להזמין חלפים ושירות. אני מוצא אותם בנתונים שלכם, פונה אליהם בשמכם, ומעביר לצוות שלכם בקשות מאומתות להצעת מחיר.״</p></blockquote>
   <p class="note">פותחים בהזמנות, לא ב־AI. לא מציגים את זה כסוכנות אוטומציה, שיחות AI, ניקוי CRM, לידים או תוכנה. תוכנה נותנת להם עוד כלי להפעיל; אני מפעיל את העבודה יחד עם הצוות שלהם.</p>
 
   <h2 id="he-who">1. למי פונים</h2>
@@ -564,17 +592,16 @@ Eyal</div>
   <p class="note">עדיפות נמוכה: מכונות מתיחה (סטרץ׳), מכונות הדבקת סרט לקרטונים, מסועים פשוטים ומכונות הלחמה שולחניות. החלפים זולים וההזמנות קטנות.</p>
   <h3>לא מתאים</h3>
   <ul>
-    <li><strong>מעט מדי מכונות:</strong> פחות מכ־200 מכונות מזוהות בשטח, או פחות מכ־100 לקוחות.</li>
-    <li><strong>הזמנות קטנות מדי:</strong> הזמנת חלפים או שירות ממוצעת מתחת לכ־3,000 ₪. החשבון: שלושה חודשים עולים ללקוח כ־51,000 ₪ (בדיקה ועוד שלושה חודשי ביצוע). כדי שזה ישתלם בבירור, הוא צריך רווח גולמי של כ־150,000 ₪, כלומר הזמנות של כ־300,000 ₪. בהזמנה של 3,000 ₪ זה 100 הזמנות ב־90 יום, וזה לא ריאלי.</li>
+    <li><strong>מעט מדי מה להחזיר:</strong> מעט מדי לקוחות רדומים שאפשר להגיע אליהם, או הזמנות קטנות מדי, כך שהרווח הגולמי הנוסף לא יכול באופן סביר לכסות את מחיר הפיילוט. מספר המכונות וגודל ההזמנות הם סימנים, לא ספים: כמה מאות מכונות עם הזמנות גדולות יכולות להתאים יותר מאלפי מכונות עם הזמנות קטנות.</li>
     <li>אין קשר ישיר ומתמשך עם לקוח הקצה.</li>
     <li>היצרן או צד שלישי מחזיקים בפועל את החלפים והשירות.</li>
     <li>אין נתונים שימושיים ואין דרך סבירה לשחזר אותם.</li>
     <li>יש כבר צוות שעושה את זה טוב.</li>
   </ul>
-  <p class="note">שני הספים הם הנחות עבודה. מעדכנים אותם אחרי הבדיקות הראשונות.</p>
+  <p class="note">זה כלל עבודה. מעדכנים אותו אחרי שיחות ההתאמה והפיילוטים הראשונים.</p>
   <h3>מי מחליט</h3>
   <p>בחברה קטנה: הבעלים או המנכ״ל. בחברה גדולה יותר: מנהל שירות, מנהל חלפים או המנהל המסחרי שאחראי על ההכנסות מלקוחות קיימים.</p>
-  <p class="note">הסף של 500 מכונות הוא רק הנחת עבודה. איכות הנתונים, הקשר עם הלקוחות, גודל ההזמנות ומי שסוגר חשובים יותר.</p>
+  <p class="note">אין מספר מכונות שקובע התאמה לבד. איכות הנתונים, הקשר עם הלקוחות, גודל ההזמנות ומי שיכול לתת הצעה ולסגור חשובים יותר.</p>
 
   <h2 id="he-problem">2. איפה הכסף הולך לאיבוד</h2>
   <ul>
@@ -591,18 +618,28 @@ Eyal</div>
     <li><strong>קודם בודקים את המחזור הרגיל.</strong> 18 חודשים בלי הזמנה זה חריג במכונה אחת ושגרה באחרת.</li>
     <li><strong>כשידוע מי מחזיק במכונה ואיפה,</strong> מדרגים לפי פעילות אחרונה, גיל, היסטוריית שירות, צורך סביר, איש קשר זמין ושווי.</li>
     <li><strong>כשהבעלות לא ודאית,</strong> מתחילים מלקוחות שהפסיקו להזמין ומהיסטוריית ההזמנות שלהם. לא טוענים שיודעים איפה כל מכונה.</li>
+    <li><strong>הסימן החזק ביותר הוא לקוח שקצב ההזמנות שלו עצמו נעצר</strong> (דוגמה ב׳).</li>
+    <li><strong>אין קצב קנייה להשוות אליו?</strong> משתמשים בחלון קבוע (למשל 24 חודשים) ומסמנים את זה ברשימה.</li>
   </ul>
   <p>רק אחרי שזה עובד: חוזי שירות שלא חודשו, סיום אחריות, חלקי בלאי, תחזוקה מונעת, שדרוגים ורטרופיט, רכיבים שיצאו מייצור, החלפת מכונה.</p>
 
   <h2 id="he-work">4. איך העבודה מתנהלת</h2>
+  <p><strong>קודם שיחות בחינם, ואז פיילוט אחד בתשלום של 90 יום.</strong> אין בדיקה נפרדת בתשלום: בדיקת הנתונים היא החלק הראשון של הפיילוט.</p>
   <ol>
-    <li><strong>שיחת התאמה.</strong> כמה מכונות בשטח, איך מטפלים היום בלקוחות קיימים, אילו נתונים יש, גודל ההזמנות ומי מחליט. לא הדגמת AI.</li>
-    <li><strong>בדיקה בתשלום, שבועיים.</strong> בודקים את איכות הנתונים, מגדירים מה זה ״לא פעיל״, מוצאים לקוחות שאפשר להגיע אליהם, מעריכים את ההזדמנות ובוחרים קבוצה ראשונה. בסוף: ממשיכים או עוצרים.</li>
-    <li><strong>קובעים יעד ל־90 יום</strong> מהנתונים, מהמחירים ומיכולת הביצוע שלהם. בלי הבטחה מראש.</li>
-    <li><strong>רשימת עבודה מדורגת</strong> לפי אמינות הנתונים, איש קשר זמין, צורך סביר, שווי והצעד הבא.</li>
-    <li><strong>פנייה בשמם,</strong> במיילים מאושרים ובשיחות אנושיות. ממיינים תשובות ואוספים את מה שצריך להצעת מחיר.</li>
-    <li><strong>עוקבים עד הכסף,</strong> ומדווחים: פנייה, שיחה, צורך מאומת, הצעה, הזמנה וכסף שנכנס.</li>
+    <li><strong>שיחת התאמה בחינם (20 דקות, בלי נתוני לקוחות).</strong> בערך כמה מכונות וכמה לקוחות, גודל הזמנה רגיל, האם אפשר לייצא היסטוריית הזמנות, איך מטפלים היום בלקוחות שנעלמו, מי מוציא הצעות ומי מחליט. השיחה נגמרת בצעד הבא עם תאריך, בדרך כלל פגישת אסטרטגיה ארוכה יותר עם מי שמחליט.</li>
+    <li><strong>הסכם אחד: פיילוט של 90 יום.</strong> ההיקף, התאריכים, תחומי האחריות, תנאי הנתונים, היציאה המוקדמת והתשלום נכתבים לפני שמשתפים נתונים.</li>
+    <li><strong>קודם בודקים את הנתונים.</strong> ייצוא מצומצם עם השדות ההכרחיים בלבד (עם מזהים במקום שמות, כשאפשר). אני מחבר מכונות, לקוחות והזמנות, מגדיר מה זה ״לא פעיל״ לכל סוג מכונה מול קצב הקנייה הרגיל של כל לקוח, וסופר כמה לקוחות רדומים אפשר להגיע אליהם. השעון מתחיל כשמגיעים נתונים שאפשר לעבוד איתם, לא ביום החתימה.</li>
+    <li><strong>נקודת החלטה.</strong> ממשיכים, או יוצאים לפי תנאי היציאה המוקדמת שסוכמו (בהמשך).</li>
+    <li><strong>מסכמים יעדים והודעות</strong> לפי המספרים שלהם: כמה צרכים מאומתים ובקשות להצעת מחיר אנחנו מכוונים אליהם, ואילו הודעות החברה מאשרת.</li>
+    <li><strong>פנייה בשמם,</strong> במיילים מאושרים ובשיחות של אדם, לפי קצב ומספר ניסיונות שסוכמו. ממיינים תשובות ואוספים את מה שהצוות צריך כדי להוציא הצעה.</li>
+    <li><strong>דוח שבועי וסיכום ביום 90.</strong> בסוף, הזדמנויות פתוחות עוברות לצוות שלהם.</li>
   </ol>
+  <h3>למה אני מתחייב, מה היעד ומה מודדים</h3>
+  <div class="table-wrap"><table>
+    <tr><th>מה אני מתחייב לעשות</th><th>היעד (נקבע לכל לקוח)</th><th>מה מודדים (המטרה, לא הבטחה)</th></tr>
+    <tr><td>בדיקת הנתונים, רשימת לקוחות מדורגת, פנייה מאושרת לפי הקצב שסוכם, מיון תשובות, איסוף פרטים להצעה, דוח שבועי</td><td>צרכים מאומתים ובקשות להצעת מחיר שעוברים לצוות שלהם</td><td>הצעות מחיר, הזמנות וכסף שנכנס מלקוחות הפיילוט, והרווח הגולמי עליהם</td></tr>
+  </table></div>
+  <p class="note">הצעות, הזמנות והכנסות תלויות בצוות של הלקוח (מחיר, מהירות, זמינות) ובלקוחות שלו. אני לא מבטיח אותן.</p>
   <div class="table-wrap"><table>
     <tr><th>באחריותי</th><th>באחריות הלקוח</th></tr>
     <tr><td>ניקוי וחיבור הנתונים, חלוקה ותעדוף</td><td>הזכות להשתמש בנתונים, למי מותר לפנות, רשימת ״לא לפנות״</td></tr>
@@ -611,104 +648,188 @@ Eyal</div>
     <tr><td>איסוף המידע להצעה, ודיווח</td><td>ביצוע, חשבוניות, גבייה וחריגים</td></tr>
   </table></div>
   <p class="note">AI עוזר בחיבור רשומות לא אחידות, מחקר, התאמת ההודעות, מיון תשובות, ניסוח המשך ודיווח. למי מותר לפנות, מה המחיר ומה מותר להבטיח נקבעים לפי כללים ובאישור אנושי.</p>
+  <h3>יציאה מוקדמת (העיקרון מוסכם, התנאים עוד לא נקבעו)</h3>
+  <p>אם בדיקת הנתונים מראה שהפיילוט לא יכול לעבוד (מעט מדי לקוחות רדומים שאפשר להגיע אליהם, או נתונים שאי אפשר לחבר), הלקוח יכול לעצור מוקדם. עוד לא נקבע: מתי נקודת ההחלטה, מה הקריטריונים המדויקים, מה החיוב המקסימלי והאם יש החזר. לא מציגים תנאים שלא נקבעו, ואף פעם לא אומרים שהפיילוט ״בלי סיכון״.</p>
+  <h3>מעקב</h3>
+  <p>בלי מערכת חדשה לקנות או להפעיל. המעקב נשאר ב־CRM של הלקוח, או בגיליון מעקב משותף שנסכם: כל לקוח ולמה נבחר, מיילים, תוצאות שיחות, הצעדים הבאים, הצעות מחיר והזמנות. בסוף הם מקבלים ייצוא מלא. לא כלול: חיבור לכל מערכת ישנה, פיתוח מותאם, או אחסון ותמיכה אחרי הפיילוט. אינטגרציה מורכבת מתומחרת בנפרד.</p>
+  <h3>טיפול בנתונים</h3>
+  <ul>
+    <li>רק השדות ההכרחיים, בהסכמה כתובה לפני שמשהו משותף (הסכם סודיות, ובמקרה הצורך הסכם עיבוד נתונים).</li>
+    <li>הלקוח מאשר שמותר לו להשתמש בנתונים ולפנות לכל לקוח, ומנהל את רשימת ״לא לפנות״.</li>
+    <li>מדייקים לגבי מה שקיים היום: בסיס הנתונים של הפלטפורמה שלנו נמצא בסיאול (אזור ap-northeast-2), והפלטפורמה משתמשת בשירותי AI ונתונים של צד שלישי. לא מבטיחים מיקום נתונים, הסמכות, ״בלי אימון AI״ או תנאי מחיקה עד שנבחרו השירותים ללקוח, נבדקו התנאים שלהם, וזה נכתב בהסכם.</li>
+  </ul>
+  <h3>שיחות AI (אופציונלי)</h3>
+  <p>לא כלול כברירת מחדל. רק באישור כתוב של הלקוח, אחרי בדיקה של כללי השיחות באותה מדינה (בארה״ב יש כללים על קול מלאכותי או קול AI), עם גילוי נאות, הסכמה להקלטה כשנדרש, העברה לאדם, ובדיקה קטנה קודם.</p>
+  <h3>אחרי הפיילוט</h3>
+  <p>ממשיכים רק אם הפיילוט יצר הזדמנויות חדשות ויש עוד עבודה אמיתית (קבוצות, סימנים או לקוחות חדשים). גישה לגיליון המעקב לבד היא לא סיבה להמשיך. המחיר אחרי הפיילוט עוד לא נקבע.</p>
 
   <h2 id="he-price">5. מחיר</h2>
   <div class="table-wrap"><table>
-    <tr><th>שלב</th><th>ישראל</th><th>ארה״ב</th></tr>
-    <tr><td>בדיקת נתונים והזדמנות, שבועיים</td><td>6,000 ₪</td><td><span class="ltr">$2,000</span></td></tr>
-    <tr><td>ביצוע, 90 יום</td><td>15,000 ₪ לחודש, התחייבות ל־3 חודשים</td><td><span class="ltr">$5,000</span> לחודש, התחייבות ל־3 חודשים</td></tr>
+    <tr><th></th><th>ישראל</th><th>ארה״ב</th></tr>
+    <tr><td>שיחת התאמה</td><td>בחינם</td><td>בחינם</td></tr>
+    <tr><td>פיילוט של 90 יום להחזרת לקוחות רדומים</td><td>לקוח ראשון, בהצעה: 30,000 ₪ (10,000 ₪ לחודש)</td><td>15,000 דולר (5,000 דולר לחודש), המחיר שנבדק</td></tr>
   </table></div>
   <ul>
-    <li>מחיר הבדיקה מתקזז מהביצוע, אם זה כתוב בהצעה.</li>
-    <li>אין הנחות אוטומטיות. תנאי מיוחד ללקוח הראשון חייב לקנות משהו ממשי: גישה מהירה לנתונים, זמן של מקבל ההחלטות ואישור לתעד את התוצאות.</li>
-    <li><strong>נקודת יציאה:</strong> אם הבדיקה לא מוצאת הזדמנות אמינה וגדולה מספיק, עוצרים אחרי שבועיים. הלקוח עדיין מקבל תמונה ברורה של הנתונים והפוטנציאל.</li>
-      <li><strong>מחיר אחד בזמן המבחן.</strong> כרגע כל חברה משלמת אותו דבר, כדי שאפשר יהיה להשוות תוצאות. המחיר לא יורד לחברות קטנות; כללי ההתאמה מסננים אותן.</li>
-    <li><strong>אחרי המבחן, מחיר לפי גודל.</strong> בסיס מכונות גדול בהרבה (בערך 2,000 מכונות ומעלה, כמה מותגים או מדינות) מקבל הצעה מותאמת. הלקוח הישראלי הראשון יכול לקבל מחיר של שותף ראשון, בתמורה לאישור לפרסם את מקרה ההצלחה.</li>
+    <li><strong>אלה השערות לבדיקה, לא מחירים סופיים.</strong></li>
+    <li><strong>אין בדיקה נפרדת.</strong> בדיקת הנתונים היא חלק מהפיילוט.</li>
+    <li><strong>עוד לא נקבע:</strong> תנאי היציאה המוקדמת, סדר התשלום (מראש או חודשי), המחיר בישראל אחרי הלקוח הראשון, מחיר מיוחד לשותפים ראשונים בארה״ב, ותמחור לבסיסי מכונות גדולים.</li>
+    <li><strong>בלי חלוקת הכנסות כברירת מחדל, ובלי הנחה על החלטה בשיחה.</strong></li>
+    <li><strong>מחיר של שותף ראשון חייב לקנות משהו ממשי:</strong> גישה מהירה לנתונים, זמן של מקבל ההחלטות, ואישור לפרסם את התוצאות. הוא חל רק על הלקוח הישראלי הראשון.</li>
   </ul>
-  <h3>מחיר לפי גודל, אחרי המבחן</h3>
-  <div class="table-wrap"><table>
-    <tr><th>גודל החברה</th><th>בדיקה</th><th>חודשי (התחייבות ל־3 חודשים)</th></tr>
-    <tr><td><strong>רגיל:</strong> בערך 200–2,000 מכונות, מותג אחד או משפחת מותגים, מדינה אחת</td><td>6,000 ₪ / 2,000 דולר</td><td>15,000 ₪ / 5,000 דולר</td></tr>
-    <tr><td><strong>גדול:</strong> בערך 2,000–5,000 מכונות, או 2–3 מותגים או מדינות</td><td>12,000–18,000 ₪ / 3,500–5,000 דולר</td><td>25,000–35,000 ₪ / 7,500–10,000 דולר</td></tr>
-    <tr><td><strong>גדול מאוד:</strong> יותר מ־5,000 מכונות או הרבה מדינות</td><td colspan="2">הצעה מותאמת, בדרך כלל 10,000–15,000 דולר ומעלה לחודש</td></tr>
-    <tr><td><strong>הלקוח הישראלי הראשון</strong> (שותף ראשון)</td><td>3,000 ₪</td><td>9,000–10,000 ₪, בתמורה לאישור לפרסם את מקרה ההצלחה, ציטוט מהלקוח, גישה מהירה לנתונים וזמן של מקבל ההחלטות</td></tr>
-  </table></div>
-  <p class="note">כלל אצבע: המחיר החודשי צריך להיות בערך 10% או פחות מהרווח הגולמי שהלקוח יכול להחזיר באופן ריאלי. אלה טווחים להתחלה, ומאמתים אותם אחרי הבדיקות הראשונות.</p>
-
+  <h3>איך בודקים שהמחיר הגיוני</h3>
+  <p>משווים את מחיר הפיילוט לרווח הגולמי הנוסף שהלקוח יכול להרוויח באופן סביר מלקוחות הפיילוט, לפי גודל ההזמנות, הרווחיות ומחזורי הקנייה שלו, ומביאים בחשבון את הזמן של הצוות שלו וכמה זמן לוקח להזמנות להגיע. לא מכניסים רווחיות, שיעורי החזרה או ערך לקוח לאורך זמן שלא אומתו. מחיר של פיילוט ל־90 יום הוא לא ריטיינר שנתי: משווים אותו למה שיכול להיכנס בפועל בזמן הפיילוט ובתקופת המעקב שסוכמה.</p>
 
   <h2 id="he-sell">6. איך מוכרים</h2>
-  <p>לפנייה הראשונה יש מטרה אחת: שיחה של 20 דקות. את הבדיקה בתשלום מציעים רק אחרי שהם מזהים את הבעיה ונראה שיש נתונים לעבוד איתם.</p>
+  <p>לפנייה הראשונה יש מטרה אחת: שיחת התאמה של 20 דקות. בלי מחיר בפנייה הראשונה. את הפיילוט אני מציג רק אחרי שהם מזהים את הבעיה והנתונים הבסיסיים מתאימים.</p>
+  <ul>
+    <li><strong>כל שיחה נגמרת בצעד הבא עם תאריך,</strong> למשל פגישת האסטרטגיה עם מי שמחליט. לא משאירים ״אולי״ פתוח, ובלי הנחה מלאכותית על החלטה בשיחה.</li>
+    <li><strong>תמיד נותנים דרך ישירה לקבוע שיחה:</strong> קישור לתיאום או שני מועדים מוצעים.</li>
+    <li><strong>סרטון הדגמה קצר (כ־90 שניות) הוא אופציונלי,</strong> ומתאים למייל 2 כשהוא יהיה מוכן.</li>
+  </ul>
   <p>הרצף: מייל 1 ← שיחה למחרת ← לינקדאין ← מייל 2 (יום 3) ← שיחה (יום 6) ← הודעה בלינקדאין (יום 8) ← מייל 3 (יום 11) ← מייל 4 (יום 16). הכל נרשם ב־CRM, עם תזכורת אחת ביומן לכל ליד לשלב הבא.</p>
 
-  <h3>מייל 1: להראות מה הלקוח שלהם יקבל</h3>
-  <div class="email"><span class="subj">נושא: המכונות שמכרתם לפני כמה שנים</span>
+  <h3>מיילים</h3>
+  <p>למייל 1 יש שתי גרסאות לבדיקה. שולחים לסירוגין את גרסה א׳ ואת גרסה ב׳, לפי חברה, ורושמים ב־CRM איזו גרסה כל חברה קיבלה. שופטים לפי שיחות התאמה עם מקבלי החלטות מתאימים ולפי פגישות, לא לפי כמות תשובות. עם כ־30 חברות בכל שוק, התוצאה מראה כיוון, לא מנצחת מוכחת.</p>
+  <details class="script-disclosure">
+    <summary>מייל 1, גרסה א׳: שאלה קצרה</summary>
+    <div class="email"><span class="subj">נושא: לקוחות שקטים של [סוג מכונה]</span>
 
 היי [שם],
 
-[עובדה אחת שנבדקה, למשל: ראיתי שאתם מייבאים ומתקינים מכונות אריזה למפעלי מזון ונותנים עליהן שירות.]
+[עובדה אחת שנבדקה על המכונות שלהם, או על השירות והחלפים.]
 
-לקוחות שקנו מכונה לפני כמה שנים מפסיקים הרבה פעמים להזמין חלפים ושירות, ואף אחד לא שם לב עד שהם מתקשרים.
+שאלה קצרה: כשלקוח לא מזמין חלפים או שירות 18–24 חודשים, מישהו עובר על הרשימה הזאת, או שמחכים שהוא יתקשר?
 
-אני מוצא את הלקוחות האלה מתוך הנתונים שכבר יש לכם ופונה אליהם בשמכם. לדוגמה, לקוח שלכם יקבל:
+אני עושה את העבודה הזאת בשביל חברות של מכונות מילוי ואריזה. אני מוצא בנתונים שלכם את הלקוחות שלא הזמינו, פונה אליהם בשמכם בהודעות שאתם מאשרים, ומעביר לצוות שלכם בקשות להצעת מחיר.
+
+שווה 20 דקות לדבר על זה?
+
+אייל</div>
+  </details>
+
+  <details class="script-disclosure">
+    <summary>מייל 1, גרסה ב׳: עם דוגמה למה שהלקוח שלהם יכול לקבל</summary>
+    <div class="email"><span class="subj">נושא: המכונות שמכרתם לפני כמה שנים</span>
+
+היי [שם],
+
+[עובדה אחת שנבדקה, למשל: ראיתי שאתם מייבאים ומתקינים מכונות מילוי ואריזה למפעלי מזון ונותנים עליהן שירות.]
+
+לקוחות שקנו מכונה לפני כמה שנים יכולים להפסיק להזמין חלפים ושירות, בלי שמישהו ישים לב.
+
+אני מוצא את הלקוחות האלה מתוך הנתונים שכבר יש לכם ופונה אליהם בשמכם. לדוגמה, כך יכולה להיראות הודעה שלקוח שלכם יקבל:
 
 ״המכונה שלכם מדגם X הותקנה ב־2019. לפי הרישומים שלנו, ערכת האטמים לא הוזמנה מאיתנו מאז 2023. רוצים שנשלח הצעה?״
 
 אתם מאשרים כל הודעה לפני שהיא יוצאת, והלקוחות שמעוניינים עוברים ישר לאיש החלפים שלכם.
 
-שווה 20 דקות לבדוק כמה מהמכונות שלכם שקטות?
+שווה 20 דקות לבדוק אם זה רלוונטי אצלכם?
 
 אייל</div>
+  </details>
 
-  <h3>מייל 2 (יום 3, באותו שרשור): שאלה אחת והחשבון</h3>
-  <div class="email">היי [שם],
+  <details class="script-disclosure">
+    <summary>מייל 2 (יום 3, באותו שרשור): שאלה אחת והחשבון</summary>
+    <div class="email">היי [שם],
 
-שאלה קצרה: בערך כמה מהמכונות שמכרתם לא הזמינו מכם חלק בשנתיים האחרונות?
+שאלה קצרה: בערך כמה מהלקוחות שקנו מכם מכונות לא הזמינו חלפים או שירות בשנתיים האחרונות?
 
-אם אפילו 30 מהן יזמינו ערכת אטמים של 15,000 ₪, זה 450,000 ₪ מלקוחות שכבר קנו מכם. ייצוא אחד לאקסל מספיק כדי לדעת אילו.
+רק כדי להראות את החשבון: אם יש 300 לקוחות לא פעילים ו־5% מהם יזמינו הזמנה של 15,000 ₪, זה 225,000 ₪ בהזמנות. בשיחה נחליף את המספרים האלה בשלכם.
 
-שווה שיחה קצרה?
+שווה 20 דקות?
 
 אייל</div>
+  </details>
 
-  <h3>מייל 3 (יום 11): זווית חדשה</h3>
-  <div class="email">היי [שם],
+  <details class="script-disclosure">
+    <summary>מייל 3 (יום 11): זווית חדשה</summary>
+    <div class="email">היי [שם],
 
 עוד רעיון אחד, ואז אני מפסיק.
 
-במכונות ותיקות יש הרבה פעמים בקר שהיצרן כבר לא תומך בו. כשהוא נופל, הקו יכול לעמוד כמה ימים. לקוחות עם מכונות כאלה בדרך כלל שמחים לתכנן שדרוג לפני שזה קורה. אני מוצא אותם אצלכם ומתאם את השיחות האלה למהנדסים שלכם.
+בחלק מהמכונות הוותיקות יש בקר שהיצרן שלו כבר לא תומך בו. אם הוא נופל וקשה להשיג חלק, הקו יכול לעמוד. כשהמהנדסים שלכם מאשרים מסלול שדרוג, אני יכול למצוא את המכונות האלה אצל הלקוחות שלכם ולתאם את השיחות.
 
 אם זה לא אצלך, מי אחראי אצלכם על החלפים והשירות?
 
 אייל</div>
+  </details>
 
-  <h3>מייל 4 (יום 16): סגירת מעגל</h3>
-  <div class="email">היי [שם],
+  <details class="script-disclosure">
+    <summary>מייל 4 (יום 16): סגירת מעגל</summary>
+    <div class="email">היי [שם],
 
 לא שמעתי ממך, אז אני מניח שהתזמון לא מתאים. לסגור את זה, או שיש מישהו אחר שאחראי אצלכם על החלפים והשירות?
 
 אייל</div>
-  <p class="note">במייל 1 אין סכומים: ההודעה לדוגמה היא ההוכחה. מיילים לארה״ב נכתבים באנגלית, עם כתובת פיזית ושורת הסרה בתחתית.</p>
+  </details>
+  <p class="note">במייל 1 אין סכומים. ההודעה לדוגמה מראה איך השירות עובד, היא לא הוכחה לתוצאות. מיילים לארה״ב נכתבים באנגלית, עם כתובת פיזית ושורת הסרה בתחתית.</p>
 
-  <h3>פתיחת שיחה</h3>
-  <blockquote><p>״היי [שם], מדבר אייל. תפסתי אותך בזמן טוב לחצי דקה? שאלה קצרה: כשלקוח שקנה מכם מכונה מפסיק להזמין חלפים או שירות לשנה־שנתיים, איך אתם מזהים את זה היום?״</p></blockquote>
-  <p class="note">התסריט המלא לכל ליד (הודעה קולית, מזכירה, התנגדויות) מוכן ב־CRM תחת ״Call script״.</p>
+  <h3>לינקדאין</h3>
+  <details class="script-disclosure">
+    <summary>הודעה לבקשת חיבור</summary>
+    <div class="email">היי [שם], ראיתי שאתם [מייצרים / מייבאים] [סוג מכונות]. אני עוסק בהחזרת הזמנות חלפים ושירות מלקוחות קיימים שהפסיקו להזמין. אשמח להתחבר.</div>
+  </details>
+  <details class="script-disclosure">
+    <summary>הודעה ראשונה אחרי אישור החיבור</summary>
+    <div class="email">תודה על החיבור, [שם].
 
-  <h3>שאלות לשיחה הראשונה</h3>
-  <ul>
-    <li>כמה מכונות פעילות וותיקות, או כמה לקוחות קיימים, אתם יכולים לזהות בנתונים?</li>
-    <li>אפשר לקשר מספר סידורי לבעלים ולמיקום הנוכחיים של המכונה?</li>
-    <li>מתי הצוות שלכם פונה ללקוח שכבר יש לו מכונה?</li>
-    <li>איך אתם מזהים לקוחות שלא הזמינו חלפים או שירות הרבה זמן?</li>
-    <li>באילו מערכות שמורים נתוני הלקוחות, ההזמנות, המכונות והשירות?</li>
-    <li>כל כמה זמן לקוח קונה בדרך כלל חלפים או שירות לכל סוג מכונה?</li>
-    <li>מה גודל ההזמנה הממוצע, הרווח הגולמי וזמן הסגירה?</li>
-    <li>מי מאמת את הצורך הטכני, קובע מחיר ומוציא הצעה?</li>
-    <li>אם הביקוש יעלה, הצוות יוכל לספק בזמן סביר?</li>
-    <li>איזו תוצאה תגרום לכם להגיד שפיילוט של 90 יום הצליח?</li>
-  </ul>
+כשלקוח מפסיק להזמין מכם חלפים או שירות, יש אצלכם מישהו שפונה אליו ובודק מה השתנה?
+
+אני עוזר לחברות מכונות מילוי ואריזה לאתר את הלקוחות האלה ולנהל את הפנייה והמעקב בשמן. אתם מאשרים את נוסח הפנייה, והבקשות הרלוונטיות עוברות לצוות החלפים או השירות שלכם.
+
+מתאים לקבוע שיחה של רבע שעה ולראות אם זה רלוונטי ל[שם החברה]?</div>
+  </details>
+  <p class="note">מחליפים את הסוגריים בפרטים שנבדקו. משתמשים בתיאור המדויק של החברה: יצרן, יבואן, מפיץ או נותן שירות.</p>
+
+  <h3>שיחת התאמה של 15 דקות</h3>
+  <details class="script-disclosure">
+    <summary>פתיחת התסריט לשיחת ההתאמה</summary>
+    <div class="script-body">
+      <p class="direction">המטרה: להבין אם יש התאמה, עניין, פוטנציאל כלכלי ותנאים לביצוע, ולקבוע פגישת עבודה להמשך. שואלים שאלה אחת בכל פעם ולא חוזרים על דברים שכבר נענו.</p>
+      <h4>אם זו שיחה ראשונה בהפתעה</h4>
+      <p>״היי [שם], מדבר אייל טייב. ראיתי ש[עובדה שנבדקה על המכונות או השירות שלהם]. יש לך חצי דקה שאסביר למה התקשרתי?״</p>
+      <p>״אני עוסק בהחזרת הזמנות חלפים ושירות מלקוחות קיימים. כשלקוח מפסיק להזמין מכם, איך אתם מזהים את זה ומה עושים אחר כך?״</p>
+      <p>״יש לך עכשיו רבע שעה לראות אם זה רלוונטי, או שנקבע לזמן אחר?״</p>
+      <p class="direction">ממשיכים רק אם יש לו זמן. אישור לחצי דקה לא אומר שאפשר לפתוח ראיון של רבע שעה.</p>
+      <h4>דקה 0–1 · מגדירים את מטרת השיחה</h4>
+      <p>״אני רוצה להבין איך אתם מטפלים בלקוחות שהפסיקו להזמין, לראות אם יש כאן הזדמנות שכדאי לבדוק, ולהחליט אם שווה לקבוע פגישה מעמיקה יותר. לשיחה הזאת אין צורך לשלוח נתוני לקוחות.״</p>
+      <h4>דקות 1–4 · מה קורה היום והאם יש עניין</h4>
+      <p>״כשלקוח מפסיק לקנות חלפים או להזמין שירות, מה בדרך כלל קורה אחר כך?״</p>
+      <p>״יש מישהו שפונה ללקוחות האלה באופן יזום, או שעיקר הקשר נוצר כשהם פונים אליכם?״</p>
+      <p>״עד כמה אתם מרוצים מהדרך שבה זה עובד היום?״</p>
+      <p class="direction">אם יש קושי: ״יש לך דוגמה?״ אם התהליך עובד טוב: ״יש בכל זאת קבוצת לקוחות שהייתם רוצים להגיע אליה יותר?״</p>
+      <h4>דקות 4–7 · היקף וכדאיות</h4>
+      <p>״בערך אצל כמה לקוחות יש היום מכונות שאתם נותנים להן שירות או מספקים להן חלפים?״</p>
+      <p>״מה הם אמורים להזמין שוב בדרך כלל, ובאיזו תדירות?״</p>
+      <p>״מה הסכום של הזמנה טיפוסית כזאת?״</p>
+      <p class="direction">אם יש הערכה: שואלים כמה לקוחות כבר עברו את פרק הזמן שבו היו אמורים להזמין שוב. בשלב הזה מספיק סדר גודל.</p>
+      <h4>דקות 7–10 · מה היו רוצים לשפר ומה נדרש לביצוע</h4>
+      <p>״אם הייתה פנייה מסודרת ללקוחות האלה, והצוות היה מקבל בקשות רלוונטיות להצעת מחיר, מה זה היה משנה אצלכם?״</p>
+      <p>״זה בדיוק התהליך שאני מפעיל: מאתר לקוחות מתאימים ברישומים הקיימים, פונה אליהם בשמכם בנוסח שאתם מאשרים, ומנהל את המעקב. הצוות שלכם מקבל את הפניות הרלוונטיות ורואה מה מתקדם.״</p>
+      <p>״איפה שמורים היום נתוני הלקוחות וההזמנות? מי יכול לעזור לבדוק את מבנה הנתונים או להוציא ייצוא מצומצם?״</p>
+      <p>״מי יטפל בהצעות המחיר, ויש לו יכולת לקבל עוד עבודה?״</p>
+      <h4>דקות 10–12 · עדיפות והתאמה לתקציב</h4>
+      <p>״אז ההזדמנות היא [המצב שתיארו], ומה שחסר היום הוא [הקושי שלהם]. הבנתי נכון?״</p>
+      <p>״אם המספרים יצדיקו את זה, זה משהו שהייתם רוצים לקדם בחודשים הקרובים?״</p>
+      <p>״כדי לתת לך סדר גודל: ללקוח הישראלי הראשון אני מציע פיילוט של 90 יום ב־10,000 ₪ לחודש, 30,000 ₪ בסך הכול. בפגישה נבדוק אם ההזדמנות יכולה להצדיק את ההשקעה. זה תקציב שתוכלו לשקול אם תהיה לכך הצדקה?״</p>
+      <p class="direction">זו הצעת המחיר לשותף הישראלי הראשון, לא מחיר קבוע לכל לקוח. לפני שמצטטים אותה יש לאשר את התנאים, לרבות תיעוד מקרה ההצלחה אם יהיה, ותנאי התשלום במקרה של יציאה מוקדמת. בדיקת הנתונים הראשונית כלולה.</p>
+      <h4>דקות 12–15 · קובעים פגישת המשך</h4>
+      <p>״לדעתי שווה לקבוע פגישת עבודה, בגלל [סיבה ספציפית מתוך הדברים שאמרו]. נעבור על המצב היום, היעד שלכם, קבוצת הלקוחות שכדאי להתחיל ממנה ומה נדרש כדי להפעיל את הפיילוט. אין צורך לשלוח מראש פרטים של לקוחות.״</p>
+      <p>״מי עוד כדאי שיצטרף כדי שנוכל לבדוק את זה ולהחליט?״</p>
+      <p>״נקבע 45 דקות? מתאים לך [מועד פנוי אמיתי] או [מועד פנוי אמיתי]?״</p>
+      <p>״אם יש לך בהישג יד, תביא סדרי גודל של מכירות חלפים ושירות, סכום הזמנה טיפוסית ושמות המערכות שבהן נמצא המידע. הערכות מספיקות. אשלח נושאים קצרים לפגישה.״</p>
+      <h4>אם התזמון או ההתאמה לא נכונים</h4>
+      <p>יש עניין, אבל לא עכשיו: ״מה צריך להשתנות כדי שזה יהפוך לעדיפות?״ אם מתאים, מסכמים מתי לחזור לדבר.</p>
+      <p>אין התאמה: ״לפי מה שתיארת, אני לא חושב שפיילוט במחיר הזה מוצדק כרגע, בגלל [סיבה]. חשוב לי להגיד את זה מראש.״</p>
+    </div>
+  </details>
+  <div class="script-nav">
+    <a href="./strategy/index.html?lang=he">לתסריט המלא של פגישת האסטרטגיה, 45 דקות ←</a>
+    <p class="note">כל 12 שלבי השיחה, הצגת השירות, המחיר והמענה להתנגדויות. בעברית, באנגלית ובגרמנית.</p>
+  </div>
 
   <h2 id="he-cases">7. דוגמאות</h2>
-  <p class="note">החברות, המספרים והמחירים מומצאים לצורך המחשה. אצל לקוח אמיתי משתמשים רק במספרים שנבדקו בבדיקה. הטקסט המצוטט בכל דוגמה הוא ההודעה <strong>שהלקוח שלהם</strong> יקבל, בשם החברה.</p>
+  <p class="note">החברות, המספרים והמחירים מומצאים כדי להראות איך העבודה מתנהלת. הם לא הוכחה לתוצאות או לשיעורי המרה. אצל לקוח אמיתי משתמשים רק במספרים שנבדקו בבדיקת הנתונים של הפיילוט, והלקוח מאשר כל טענה טכנית. הטקסט המצוטט בכל דוגמה הוא ההודעה <strong>שהלקוח שלהם</strong> יקבל, בשם החברה.</p>
 
   <p class="group">לקמפיין הראשון</p>
 
@@ -726,7 +847,7 @@ Eyal</div>
         <li>מעביר כל ״כן״ למנהל החלפים, עם הדגם, המספר הסידורי ומה הלקוח צריך.</li>
       </ol></dd>
       <dt>ההודעה ללקוח</dt><dd><blockquote><p>״מכונת המילוי שלכם מדגם X הותקנה ב־2019. לפי הרישומים שלנו, ערכת האטמים לא הוזמנה מאיתנו מאז 2023. המכונה עדיין עובדת? נשמח לשלוח הצעת מחיר לערכה חדשה.״</p></blockquote></dd>
-      <dt>המחשה</dt><dd>אם 40 מתוך ה־300 יזמינו ערכה ב־5,000 דולר, זה 200,000 דולר.</dd>
+      <dt>המחשה</dt><dd>אם 40 מתוך ה־300 יזמינו ערכה ב־5,000 דולר, זה 200,000 דולר בהזמנות.</dd>
       <dt>לשים לב</dt><dd>זה שלא הזמינו מהיצרן לא אומר שלא החליפו. אולי קנו במקום אחר. לכן ההודעה אומרת ״לא הוזמנה מאיתנו״, אף פעם לא ״לא הוחלפה״. לפני שמתייחסים לשנתיים כסימן, בודקים מה מחזור ההחלפה הרגיל בכל דגם.</dd>
     </dl>
   </div>
@@ -750,7 +871,7 @@ Eyal</div>
       <dt>מה קורה היום</dt><dd>הטכנאים עסוקים בתקלות דחופות. חלק מהמפעלים עברו לטכנאי עצמאי זול יותר ומזמינים חלפים ישר מחו״ל. רשימת ההתקנות נמצאת בפריוריטי (ה־ERP שלהם), אבל אף אחד לא עובר עליה. הייצוא מראה 120 לקוחות או מכונות בלי שירות או חלפים 18 חודשים. זו רשימה לבדיקה, לא רשימת תפוצה אוטומטית.</dd>
       <dt>מה אני עושה</dt><dd>בודק לאילו מותגים ולקוחות היבואן רשאי לפנות (לפעמים היצרן או יבואן אחר מחזיק בזכויות השירות), מדרג את הרשומות, פונה למנהלי האחזקה במפעלים בשם היבואן, ובודק עניין בבדיקה, תחזוקה מונעת, חלפים או חוזה שירות שנתי. מנהל השירות מאשר, מתמחר וסוגר.</dd>
       <dt>ההודעה ללקוח</dt><dd><blockquote><p>״מכונת האריזה שלכם מדגם X קיבלה אצלנו טיפול אחרון באפריל 2024. רוצים לתאם ביקור תחזוקה לפני העונה העמוסה?״</p></blockquote></dd>
-      <dt>המחשה</dt><dd>אם 25 מפעלים יחזרו, בשווי כולל של 400,000 ₪ בשנה, זה יהיה מקרה ההצלחה המתועד לשיחות בארה״ב.</dd>
+      <dt>המחשה</dt><dd>אם 25 מפעלים יחזרו עם הזמנות של 400,000 ₪ בשנה (ערך ההזמנות, לא רווח), זה יהיה מקרה ההצלחה המתועד לשיחות בארה״ב.</dd>
       <dt>לבדוק קודם</dt><dd>שהיבואן באמת מחזיק בקשר השירות, שנתוני המכונות עדכניים, ושלצוות יש זמן לעבודה הנוספת.</dd>
     </dl>
   </div>
@@ -765,7 +886,7 @@ Eyal</div>
       <dt>הסימן</dt><dd>החברה יודעת בדיוק איזה בקר יש בכל מכונה ספציפית (מתיק הבנייה, מהמספר הסידורי או מדוח של טכנאי), ויצרן הבקר אישר שהוא הפסיק לייצר אותו.</dd>
       <dt>מה אני עושה</dt><dd>בונה רשימה של המכונות האלה. המהנדס של החברה מאשר את השדרוג לכל מכונה (רטרופיט: שדרוג של מכונה קיימת במקום להחליף אותה) לפני שפונים ללקוח.</dd>
       <dt>ההודעה ללקוח</dt><dd><blockquote><p>״מכונת התיוג שלכם בקו 2 עובדת עם בקר שהיצרן כבר לא תומך בו. אם הוא יתקלקל, יהיה קשה להשיג חלק. רוצים שהמהנדס שלנו יתכנן שדרוג בזמן שנוח לכם?״</p></blockquote></dd>
-      <dt>המחשה</dt><dd>8 פרויקטים של שדרוג ב־25,000 דולר כל אחד = 200,000 דולר.</dd>
+      <dt>המחשה</dt><dd>8 פרויקטים של שדרוג ב־25,000 דולר כל אחד = 200,000 דולר בהזמנות.</dd>
       <dt>הטון</dt><dd>מציעים לתכנן מראש. בלי להפחיד ובלי טענה טכנית שלא נבדקה. אף פעם לא מנחשים את הבקר לפי גיל המכונה.</dd>
     </dl>
   </div>
@@ -774,11 +895,11 @@ Eyal</div>
     <p class="case-label">דוגמה ה׳ · חלקי פורמט</p>
     <h3>לקוח עובר לבקבוק או לקרטון בגודל חדש</h3>
     <dl>
-      <dt>הרקע</dt><dd>מכונת קרטונים (מכונה שמכניסה מוצרים לקרטונים) מכוונת לגדלים מסוימים. כשלקוח משיק בקבוק או קופסה בגודל חדש, המכונה צריכה חלקי פורמט: מסילות, גלגלים וכלים שמותאמים לגודל החדש, בדרך כלל 8,000–25,000 דולר. הרבה לקוחות לא יודעים שאפשר להתאים את המכונה הקיימת, ומתחילים לחפש מכונה חדשה אצל מישהו אחר.</dd>
+      <dt>הרקע</dt><dd>מכונת קרטונים (מכונה שמכניסה מוצרים לקרטונים) מכוונת לגדלים מסוימים. כשלקוח משיק בקבוק או קופסה בגודל חדש, המכונה צריכה חלקי פורמט: מסילות, גלגלים וכלים שמותאמים לגודל החדש, בדרך כלל 8,000–25,000 דולר. יש לקוחות שלא יודעים שאפשר להתאים את המכונה הקיימת, ומתחילים לחפש מכונה חדשה אצל מישהו אחר.</dd>
       <dt>הסימן</dt><dd>רק אינדיקציה אמיתית: השקה שפורסמה, שינוי אריזה, פנייה קודמת או קריאת שירות. לקוח שקט לבד לא מוכיח כלום.</dd>
       <dt>מה אני עושה</dt><dd>מחבר את המידות החדשות לדגם המותקן, אוסף את דרישות הייצור, ומעביר למהנדס בקשה מסודרת לבדיקת התאמה ולהצעה על חלקי פורמט.</dd>
-      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״ראינו שאתם משיקים פחית חדשה של 330 מ״ל. מכונת הקרטונים שלכם יכולה בדרך כלל לעבוד איתה עם סט חלקי פורמט. לבדוק לכם התאמה?״</p></blockquote></dd>
-      <dt>המחשה</dt><dd>10 הזמנות ב־15,000 דולר = 150,000 דולר, ולפעמים גם שיחה על מכונה חדשה.</dd>
+      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״ראינו שאתם משיקים פחית חדשה של 330 מ״ל. ייתכן שמכונת הקרטונים שלכם תוכל לעבוד איתה עם סט חלקי פורמט. לבדוק לכם התאמה?״</p></blockquote></dd>
+      <dt>המחשה</dt><dd>10 הזמנות ב־15,000 דולר כל אחת = 150,000 דולר בהזמנות, ולפעמים גם שיחה על מכונה חדשה.</dd>
     </dl>
   </div>
 
@@ -859,7 +980,7 @@ Eyal</div>
     <h3>חברה שלא מתאימה</h3>
     <dl>
       <dt>הרקע</dt><dd>8 עובדים, כ־60 מכונות בשטח, הידע רק בראש של הבעלים, ואין מי שיאמת צורך, יוציא הצעות מחיר ויבצע את העבודה.</dd>
-      <dt>מה אני עושה</dt><dd>אם זה ברור כבר בשיחה הראשונה, אומר שזה לא מתאים. בדיקה בתשלום מוצדקת רק כשאיכות הנתונים או הכדאיות באמת לא ברורות.</dd>
+      <dt>מה אני עושה</dt><dd>אם זה ברור כבר בשיחת ההתאמה, אומר שזה לא מתאים. לא מוכרים פיילוט כדי לגלות: פיילוט מתאים רק כשהבסיס מתאים והמספרים יכולים באופן סביר לכסות את המחיר.</dd>
       <dt>למה זה חשוב</dt><dd>היכולת להגיד ״לא״ היא מה שהופך את 5,000 דולר לחודש לאמין.</dd>
     </dl>
   </div>
@@ -875,29 +996,46 @@ Eyal</div>
 
   <h2 id="he-measure">8. מדידה</h2>
   <ul class="ladder">
-    <li>לקוח מתאים</li><li>נוצר קשר</li><li>שיחה</li><li>צורך מאומת</li><li>הצעת מחיר</li><li>הזמנה</li><li>כסף שנכנס</li>
+    <li>לקוח בפיילוט</li><li>נוצר קשר</li><li>שיחה</li><li>צורך מאומת</li><li>בקשה להצעת מחיר</li><li>הצעת מחיר</li><li>הזמנה</li><li>כסף שנכנס</li>
   </ul>
-  <p>התוצאה היא הזמנות וכסף שנכנס (ורווח גולמי כשהנתונים מאפשרים). השלבים שלפני כן מראים התקדמות, הם לא התוצאה.</p>
+  <p>המטרה המסחרית היא הזמנות וכסף שנכנס. השלבים שלפני כן מראים התקדמות, הם לא התוצאה, ואף אחד מהם לא מובטח.</p>
+  <h3>הגדרות (זהות בכל השפות)</h3>
+  <ul>
+    <li><strong>לקוחות הפיילוט:</strong> רשימת הלקוחות הרדומים שנקבעת בתחילת הפנייה. הזדמנויות שכבר היו פתוחות בהתחלה לא נספרות.</li>
+    <li><strong>צורך מאומת:</strong> לקוח מאשר צורך קיים שהחברה יכולה לתת עליו הצעה.</li>
+    <li><strong>בקשה להצעת מחיר:</strong> לצוות של החברה יש את כל הפרטים כדי להוציא הצעה.</li>
+    <li><strong>ערך הצעות:</strong> סך ההצעות שהחברה שלחה ללקוחות הפיילוט.</li>
+    <li><strong>הזמנות:</strong> הזמנות חתומות מלקוחות הפיילוט בזמן הפיילוט ובתקופת המעקב שסוכמה (האורך עוד לא נקבע).</li>
+    <li><strong>כסף שנכנס:</strong> חשבוניות ששולמו על ההזמנות האלה.</li>
+    <li><strong>רווח גולמי:</strong> הרווח הגולמי של החברה על ההזמנות האלה (הכנסה פחות העלות הישירה של החלקים או השירות), לפי המספרים של החברה.</li>
+  </ul>
   <p><strong>הערכת ההזדמנות:</strong> לקוחות מתאימים שאפשר להגיע אליהם × שיעור השיחות × שיעור הצורך המאומת × שיעור הסגירה × הזמנה ממוצעת (או רווח גולמי). משתמשים בנתוני העבר של הלקוח כשאפשר. אחרת מציגים תרחישים שמרניים ומסמנים כל הנחה. זו הערכה, לא תחזית ולא הבטחה.</p>
 
   <h2 id="he-remember">9. מה לזכור</h2>
   <ul>
-    <li>אני מוכר הכנסות שחוזרות מחלפים, שירות ושדרוגים, לא AI.</li>
-    <li>הקמפיין הראשון: לקוחות בלי הזמנת חלפים או שירות 18–24 חודשים.</li>
-    <li>״לא פעיל״ נמדד רק מול מחזור הקנייה הרגיל של אותה מכונה.</li>
+    <li>אני מוכר יותר הזמנות של חלפים, שירות ושדרוגים מלקוחות קיימים, לא AI.</li>
+    <li>הקמפיין הראשון: לקוחות בלי הזמנת חלפים או שירות 18–24 חודשים, מול קצב הקנייה הרגיל שלהם. קצב שנעצר הוא הסימן החזק ביותר.</li>
     <li>אני מפעיל את התהליך; הלקוח מקבל את ההחלטות הטכניות והמסחריות.</li>
+    <li>לעבודה אני מתחייב. צרכים מאומתים ובקשות להצעת מחיר הם יעדים. הזמנות והכנסות הן המטרה, לא הבטחה.</li>
     <li>לא ממציאים מספר מכונות, איכות נתונים, הפסד הכנסה, אנשי קשר או תשואה.</li>
-    <li>הצעד הראשון הוא שיחה קצרה. הבדיקה בתשלום היא מוצר הכניסה.</li>
+    <li>הצעד הראשון הוא שיחת התאמה של 20 דקות, בחינם ובלי נתוני לקוחות. המוצר בתשלום הוא פיילוט של 90 יום, ובדיקת הנתונים היא חלק ממנו.</li>
+    <li>תנאים שעוד לא נקבעו (יציאה מוקדמת, תשלום, תקופת מעקב) לא מוצגים כמוסכמים.</li>
     <li>ארה״ב היא השוק העיקרי; ישראל מייצרת את ההוכחה הראשונה. עובדים בשניהם במקביל.</li>
   </ul>
 
   <h2 id="he-test">10. מבחן 60 הימים</h2>
   <ul>
     <li><strong>ארה״ב:</strong> 30 חברות שנבדקו היטב, הצעה אחת, מיילים מבוססי מחקר ומעקב טלפוני.</li>
-    <li><strong>ישראל:</strong> 10–15 חברות מתאימות, כדי לסגור לקוח ראשון משלם ולקבל אישור לתעד מקרה הצלחה.</li>
+    <li><strong>ישראל:</strong> 10–15 חברות מתאימות, כדי לסגור פיילוט ראשון בתשלום ולקבל אישור לתעד מקרה הצלחה.</li>
   </ul>
-  <p><strong>עובר אם יש:</strong> 5 שיחות רציניות ומעלה · 2 שיחות על הנתונים ומעלה · בדיקה אחת בתשלום · הזדמנות אחת שאפשר לבצע.</p>
-  <p>אלה ספים לקבלת החלטה, לא עובדות על השוק. אם התוצאות חלשות, קודם בודקים את רשימת החברות, מקבל ההחלטות, המחקר, המסר, הבקשה לצעד הבא, הערוץ והמעקב. רק אחר כך שוקלים לשנות נישה.</p>
+  <p>ארבע שאלות נפרדות, שנרשמות בנפרד:</p>
+  <ol>
+    <li><strong>רוצים את זה?</strong> לפחות 5 שיחות התאמה עם מקבלי החלטות מתאימים.</li>
+    <li><strong>ישתפו נתונים שימושיים?</strong> לפחות 2 מסכימים לרשימת שדות או לדוגמת נתונים.</li>
+    <li><strong>ישלמו?</strong> פיילוט אחד חתום ומשולם.</li>
+    <li><strong>זה עובד?</strong> בדיקת הנתונים עברה, הפנייה יצאה לדרך, ואחר כך צרכים מאומתים, הצעות מחיר והזמנות, בסוף הפיילוט ולא בתוך 60 יום.</li>
+  </ol>
+  <p>אלה ספים לקבלת החלטה, לא עובדות על השוק. פיילוט אחד הוא ראיה ראשונה, לא הוכחה לכל הנישה. מדגם הפניות שלנו עד היום קטן מכדי לחזות שיעורי המרה. אם התוצאות חלשות, קודם בודקים את רשימת החברות, מקבל ההחלטות, המחקר, המסר, הבקשה לצעד הבא, הערוץ והמעקב. רק אחר כך שוקלים לשנות נישה.</p>
   <p>אם מכונות מילוי ואריזה לא עוברות את המבחן, שומרים על אותו עסק (יותר הכנסות מחלפים, שירות ושדרוגים מלקוחות קיימים) ובודקים תחום אחר של ציוד תעשייתי. משנים דבר אחד בכל פעם ומתעדים מה למדנו.</p>
 
   </div>
@@ -918,22 +1056,23 @@ Eyal</div>
   <dl class="summary" id="de-top">
     <div><dt>Das Angebot</dt><dd>Ich helfe Herstellern und Händlern von Verpackungs- und Prozessmaschinen, Ersatzteil-, Service- und Nachrüstaufträge von Kunden zurückzugewinnen, die bereits Maschinen bei ihnen gekauft haben. Die Arbeit übernehme ich.</dd></div>
     <div><dt>Für wen</dt><dd>Hersteller, Händler und Importeure von Verpackungs- und Prozessmaschinen (Abfüllen, Verschließen, Etikettieren, Kartonieren, Einschlagen, Palettieren, Inspektion, Lebensmittel- und Pharmaverarbeitung) mit Maschinen im Feld und einem Ersatzteil- oder Serviceteam.</dd></div>
-    <div><dt>Die Lage heute</dt><dd>Der Vertrieb konzentriert sich auf Neumaschinen. Ersatzteile und Service warten, bis der Kunde anruft. Wer nicht mehr anruft, verschwindet: Ansprechpartner wechseln, Maschinen werden weiterverkauft, Teile woanders gekauft. Die Daten liegen verteilt in ERP, Excel-Listen und den Köpfen der Mitarbeiter, also sieht niemand, wer still geworden ist.</dd></div>
+    <div><dt>Die Lage heute</dt><dd>Der Vertrieb konzentriert sich auf Neumaschinen. Ersatzteile und Service warten, bis der Kunde anruft. Wer nicht mehr anruft, verschwindet: Ansprechpartner wechseln, Maschinen werden weiterverkauft, Teile woanders gekauft. Die Daten liegen verteilt in ERP, Excel-Listen und den Köpfen der Mitarbeiter, also übersieht man leicht, wer still geworden ist.</dd></div>
     <div><dt>Was ich tue</dt><dd><ol>
-      <li>Die stillen Kunden in ihren Daten finden (kein Ersatzteil- oder Serviceauftrag seit 18–24 Monaten).</li>
+      <li>Die stillen Kunden in ihren Daten finden: kein Ersatzteil- oder Serviceauftrag seit 18–24 Monaten, gemessen am üblichen Kaufrhythmus jedes Kunden.</li>
       <li>Diese Kunden im Namen des Unternehmens ansprechen, mit Nachrichten, die das Unternehmen freigibt.</li>
-      <li>Den Bedarf klären und fertige Angebotsanfragen an das Ersatzteil- oder Serviceteam übergeben.</li>
-      <li>Jede Chance bis zur bezahlten Rechnung verfolgen und wöchentlich berichten.</li>
+      <li>Den Bedarf klären und dem Ersatzteil- oder Serviceteam bestätigte Anfragen mit allen Angaben für ein Angebot übergeben.</li>
+      <li>Jede Chance im CRM des Kunden oder in einer vereinbarten gemeinsamen Liste verfolgen, wöchentlich berichten und Aufträge dieser Kunden nach dem Piloten für einen vereinbarten Zeitraum nachverfolgen.</li>
     </ol></dd></div>
-    <div><dt>Das Ergebnis</dt><dd>Unterschriebene Aufträge und eingegangener Umsatz von bestehenden Kunden, ohne zusätzliche Vertriebler und ohne neue Software. Das 90-Tage-Ziel wird nach der Analyse aus den eigenen Daten abgeleitet.</dd></div>
-    <div><dt>Preis</dt><dd>Zweiwöchige Analyse: 2.000 $ / 6.000 ₪, angerechnet bei Fortsetzung. Danach 5.000 $ / 15.000 ₪ pro Monat, mindestens drei Monate.</dd></div>
-    <div><dt>Märkte</dt><dd>Die USA sind der Hauptmarkt. Israel dient einem ersten zahlenden Kunden und einer Referenz. Beides läuft parallel.</dd></div>
+    <div><dt>Das Ergebnis</dt><dd>Mehr Ersatzteil-, Service- und Nachrüstaufträge von bestehenden Kunden, ohne zusätzliche Vertriebler und ohne neue Software. Ich verpflichte mich zur vereinbarten Arbeit. Ziel sind bestätigte Bedarfe und Angebotsanfragen. Aufträge und eingegangener Umsatz sind das gemessene Ziel, keine Garantie.</dd></div>
+    <div><dt>Preis</dt><dd>Ein 90-Tage-Pilot zur Reaktivierung inaktiver Kunden. USA, Preis im Test: 5.000 $ pro Monat (15.000 $ für 90 Tage). Erster israelischer Partner, Vorschlag: 10.000 ₪ pro Monat (30.000 ₪). Bedingungen für den frühen Ausstieg noch offen.</dd></div>
+    <div><dt>Erster Schritt</dt><dd>Ein kostenloses 20-minütiges Erstgespräch. Dafür sind keine Kundendaten nötig.</dd></div>
+    <div><dt>Märkte</dt><dd>Die USA sind der Hauptmarkt. Israel dient einem ersten bezahlten Piloten und einer Referenz. Beides läuft parallel.</dd></div>
     <div><dt>Langfristig</dt><dd>Derselbe Service für weitere Industrieausrüster. Verpackungsmaschinen sind der erste Bereich.</dd></div>
-    <div><dt>Status</dt><dd>Eine Hypothese im Test (etwa 60–65 % Zuversicht). Der 60-Tage-Test am Ende dieses Dokuments entscheidet.</dd></div>
+    <div><dt>Status</dt><dd>Eine gezielte Hypothese, die gerade geprüft wird. Der 60-Tage-Test am Ende dieses Dokuments entscheidet.</dd></div>
   </dl>
 
   <p><strong>In einem Satz:</strong></p>
-  <blockquote><p>„Ich helfe Herstellern von Verpackungsmaschinen, Kunden zurückzugewinnen, die keine Ersatzteile und keinen Service mehr bestellen. Ich finde sie in Ihren Daten, spreche sie in Ihrem Namen an und übergebe Ihrem Team fertige Angebotsanfragen.“</p></blockquote>
+  <blockquote><p>„Ich helfe Herstellern von Verpackungsmaschinen, Kunden zurückzugewinnen, die keine Ersatzteile und keinen Service mehr bestellen. Ich finde sie in Ihren Daten, spreche sie in Ihrem Namen an und übergebe Ihrem Team bestätigte Anfragen für Angebote.“</p></blockquote>
   <p class="note">Mit den Aufträgen einsteigen, nicht mit KI. Nicht als Automatisierungsagentur, KI-Telefonie, CRM-Bereinigung, Leadgenerierung oder Software präsentieren. Software ist ein weiteres Werkzeug, das sie bedienen müssen; ich erledige die Arbeit gemeinsam mit ihrem Team.</p>
 
   <h2 id="de-who">1. Zielkunden</h2>
@@ -961,17 +1100,16 @@ Eyal</div>
   <p class="note">Geringere Priorität: Stretchwickler, Kartonverschließer, einfache Förderbänder und Tischsiegelgeräte. Die Teile sind billig und die Aufträge klein.</p>
   <h3>Passt nicht</h3>
   <ul>
-    <li><strong>Zu wenige Maschinen:</strong> weniger als etwa 200 identifizierbare Maschinen im Feld oder weniger als etwa 100 Kundenkonten.</li>
-    <li><strong>Zu kleine Aufträge:</strong> ein durchschnittlicher Ersatzteil- oder Serviceauftrag unter etwa 1.000 $. Die Rechnung: Drei Monate kosten den Kunden etwa 17.000 $ (Analyse plus drei Monate). Damit es sich klar lohnt, braucht er rund 50.000 $ zurückgewonnenen Deckungsbeitrag, also etwa 100.000 $ Aufträge. Bei 1.000 $ pro Auftrag wären das 100 Aufträge in 90 Tagen, und das ist nicht realistisch.</li>
+    <li><strong>Zu wenig zurückzugewinnen:</strong> zu wenige erreichbare inaktive Kunden oder zu kleine Aufträge, sodass der zusätzliche Rohertrag die Pilotgebühr nicht plausibel decken kann. Maschinenzahlen und Auftragsgrößen sind Hinweise, keine Grenzwerte: Einige hundert Maschinen mit großen Aufträgen können besser passen als Tausende mit kleinen.</li>
     <li>Keine direkte, laufende Beziehung zum Endkunden.</li>
     <li>Der OEM oder ein Dritter hält das Ersatzteil- und Servicegeschäft.</li>
     <li>Keine brauchbaren Daten und kein realistischer Weg, sie zu rekonstruieren.</li>
     <li>Ein Aftersales-Team, das das bereits gut macht.</li>
   </ul>
-  <p class="note">Beide Schwellen sind Arbeitsannahmen. Nach den ersten Analysen anpassen.</p>
+  <p class="note">Das ist eine Arbeitsregel. Nach den ersten Erstgesprächen und Piloten anpassen.</p>
   <h3>Wer kauft</h3>
   <p>Im kleineren Unternehmen der Inhaber oder Geschäftsführer. Im größeren der Leiter Aftersales, Service oder Ersatzteile, oder die kaufmännische Leitung, die den Umsatz mit Bestandskunden verantwortet.</p>
-  <p class="note">Die Schwelle von 500 Maschinen ist nur eine Arbeitsannahme. Datenqualität, Kundenbeziehung, Auftragsgröße und eine Person, die abschließen kann, zählen mehr.</p>
+  <p class="note">Keine Maschinenzahl entscheidet allein über die Passung. Datenqualität, Kundenbeziehung, Auftragsgröße und eine Person, die anbieten und abschließen kann, zählen mehr.</p>
 
   <h2 id="de-problem">2. Wo Umsatz verloren geht</h2>
   <ul>
@@ -988,18 +1126,28 @@ Eyal</div>
     <li><strong>Zuerst den normalen Zyklus prüfen.</strong> 18 Monate ohne Auftrag sind bei einer Maschinenfamilie ungewöhnlich, bei einer anderen normal.</li>
     <li><strong>Wenn Besitzer und Standort bekannt sind,</strong> nach letzter Aktivität, Alter, Servicehistorie, wahrscheinlichem Bedarf, erreichbarem Ansprechpartner und Wert priorisieren.</li>
     <li><strong>Wenn der Besitz unklar ist,</strong> bei Kunden beginnen, die nicht mehr bestellen, und bei ihrer Auftragshistorie. Nicht behaupten, man wisse, wo jede Maschine steht.</li>
+    <li><strong>Das stärkste Signal ist ein Kunde, dessen eigener Bestellrhythmus abgebrochen ist</strong> (Beispiel B).</li>
+    <li><strong>Kein Kaufrhythmus zum Vergleich?</strong> Ein festes Zeitfenster verwenden (zum Beispiel 24 Monate) und es in der Liste so kennzeichnen.</li>
   </ul>
   <p>Erst wenn das funktioniert: abgelaufene Serviceverträge, Garantieende, Verschleißteile, vorbeugende Wartung, Nachrüstungen und Retrofits, abgekündigte Komponenten, Maschinenersatz.</p>
 
   <h2 id="de-work">4. Ablauf der Arbeit</h2>
+  <p><strong>Zuerst kostenlose Gespräche, dann ein bezahlter 90-Tage-Pilot.</strong> Es gibt keine separate bezahlte Analyse: Die Datenprüfung ist der erste Teil des Piloten.</p>
   <ol>
-    <li><strong>Erstgespräch.</strong> Wie viele Maschinen im Feld, wie Bestandskunden heute betreut werden, welche Daten es gibt, Auftragsgrößen, wer entscheidet. Keine KI-Demo.</li>
-    <li><strong>Bezahlte Analyse, zwei Wochen.</strong> Datenqualität prüfen, Inaktivität definieren, erreichbare Kunden finden, Chance beziffern, erste Gruppe wählen. Am Ende: weitermachen oder stoppen.</li>
-    <li><strong>90-Tage-Ziel festlegen</strong> aus ihren Daten, Preisen und Lieferkapazität. Kein fixes Versprechen vorab.</li>
-    <li><strong>Priorisierte Arbeitsliste</strong> nach Datenqualität, erreichbarem Kontakt, wahrscheinlichem Bedarf, Wert und nächstem Schritt.</li>
-    <li><strong>Ansprache in ihrem Namen,</strong> mit freigegebenen E-Mails und persönlichen Anrufen. Antworten sortieren, Angebotsinformationen sammeln.</li>
-    <li><strong>Bis zum Geld verfolgen</strong> und berichten: Ansprache, Gespräch, bestätigter Bedarf, Angebot, Auftrag, eingegangener Umsatz.</li>
+    <li><strong>Kostenloses Erstgespräch (20 Minuten, ohne Kundendaten).</strong> Ungefähr wie viele Maschinen und Kunden, üblicher Auftragswert, ob sich die Auftragshistorie exportieren lässt, wie stille Kunden heute behandelt werden, wer Angebote erstellt und wer entscheidet. Es endet mit einem konkreten nächsten Schritt und einem Datum, meist einem längeren Strategiegespräch mit den Entscheidern.</li>
+    <li><strong>Eine Vereinbarung: der 90-Tage-Pilot.</strong> Umfang, Termine, Zuständigkeiten, Datenbedingungen, früher Ausstieg und Zahlung werden festgehalten, bevor Daten geteilt werden.</li>
+    <li><strong>Zuerst die Datenprüfung.</strong> Ein begrenzter Export mit den nötigsten Feldern (wo möglich pseudonymisiert). Ich verknüpfe Maschinen, Kunden und Aufträge, definiere „inaktiv“ je Maschinenfamilie am üblichen Kaufrhythmus jedes Kunden und zähle die erreichbaren inaktiven Kunden. Die Frist beginnt, wenn brauchbare Daten vorliegen, nicht bei Unterzeichnung.</li>
+    <li><strong>Entscheidungspunkt.</strong> Weitermachen oder nach den vereinbarten Bedingungen früh aussteigen (siehe unten).</li>
+    <li><strong>Ziele und Nachrichten vereinbaren,</strong> auf Basis ihrer Zahlen: wie viele bestätigte Bedarfe und Angebotsanfragen wir anstreben und welche Nachrichten das Unternehmen freigibt.</li>
+    <li><strong>Ansprache in ihrem Namen,</strong> mit freigegebenen E-Mails und persönlichen Anrufen, im vereinbarten Rhythmus und mit vereinbarter Zahl von Versuchen. Antworten sortieren, Angebotsinformationen sammeln.</li>
+    <li><strong>Wöchentlicher Bericht und Abschlussbesprechung an Tag 90.</strong> Offene Chancen werden am Ende an ihr Team übergeben.</li>
   </ol>
+  <h3>Wozu ich mich verpflichte, was wir anstreben, was wir messen</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Ich verpflichte mich (die Arbeit)</th><th>Wir streben an (je Kunde vereinbart)</th><th>Wir messen (das Ziel, keine Garantie)</th></tr>
+    <tr><td>Datenprüfung, priorisierte Kundenliste, freigegebene Ansprache im vereinbarten Rhythmus, Antworten sortieren, Angebotsinformationen sammeln, wöchentliche Berichte</td><td>Bestätigte Bedarfe und Angebotsanfragen für ihr Team</td><td>Angebote, Aufträge und eingegangener Umsatz der Pilotkunden sowie der Rohertrag darauf</td></tr>
+  </table></div>
+  <p class="note">Angebote, Aufträge und Umsatz hängen vom Team des Kunden (Preis, Tempo, Verfügbarkeit) und von seinen Kunden ab. Ich garantiere sie nicht.</p>
   <div class="table-wrap"><table>
     <tr><th>Meine Verantwortung</th><th>Verantwortung des Kunden</th></tr>
     <tr><td>Daten bereinigen und verknüpfen, segmentieren, priorisieren</td><td>Recht zur Datennutzung, wer angesprochen werden darf, Sperrliste</td></tr>
@@ -1008,108 +1156,193 @@ Eyal</div>
     <tr><td>Angebotsinformationen sammeln und berichten</td><td>Lieferung, Rechnung, Inkasso und Sonderfälle</td></tr>
   </table></div>
   <p class="note">KI hilft beim Verknüpfen uneinheitlicher Datensätze, bei Recherche, Personalisierung, Sortieren von Antworten, Nachfass-Entwürfen und Berichten. Wer angesprochen werden darf, Preise und Zusagen folgen klaren Regeln und menschlicher Freigabe.</p>
+  <h3>Früher Ausstieg (Prinzip vereinbart, Bedingungen noch offen)</h3>
+  <p>Zeigt die Datenprüfung, dass der Pilot nicht funktionieren kann (zu wenige erreichbare inaktive Kunden oder Daten, die sich nicht verknüpfen lassen), kann der Kunde früh aufhören. Noch offen: wann der Entscheidungspunkt liegt, die genauen Kriterien, die maximale Gebühr und eine mögliche Erstattung. Keine Bedingungen nennen, die nicht entschieden sind, und den Piloten nie „risikofrei“ nennen.</p>
+  <h3>Nachverfolgung</h3>
+  <p>Kein neues System zu kaufen oder zu betreiben. Die Nachverfolgung bleibt im CRM des Kunden oder in einer vereinbarten gemeinsamen Liste: jeder Kunde und warum er ausgewählt wurde, E-Mails, Anrufergebnisse, nächste Schritte, Angebote und Aufträge. Am Ende erhält der Kunde einen vollständigen Export. Nicht enthalten: Anbindung jedes Altsystems, individuelle Entwicklung oder Hosting und Support nach dem Piloten. Komplexe Integrationen werden separat kalkuliert.</p>
+  <h3>Umgang mit Daten</h3>
+  <ul>
+    <li>Nur die nötigsten Felder, schriftlich vereinbart, bevor etwas geteilt wird (Geheimhaltungsvereinbarung und bei Bedarf ein Auftragsverarbeitungsvertrag).</li>
+    <li>Der Kunde bestätigt sein Recht, die Daten zu nutzen und jeden Kunden anzusprechen, und führt die Sperrliste.</li>
+    <li>Genau bleiben, was heute gilt: Die Datenbank unserer Plattform liegt in Seoul (Region ap-northeast-2), und die Plattform nutzt KI- und Datendienste von Drittanbietern. Keinen Datenstandort, keine Zertifizierungen, kein „kein KI-Training“ und keine Löschfristen zusagen, bevor die Dienste für diesen Kunden gewählt, ihre Bedingungen geprüft und im Vertrag festgehalten sind.</li>
+  </ul>
+  <h3>KI-Anrufe (optional)</h3>
+  <p>Standardmäßig nicht enthalten. Nur mit schriftlicher Freigabe des Kunden, nach Prüfung der Regeln für Anrufe im jeweiligen Land (in den USA gibt es Regeln für künstliche oder KI-Stimmen), mit Offenlegung, Einwilligung zur Aufzeichnung wo nötig, Übergabe an einen Menschen und zuerst einem kleinen Test.</p>
+  <h3>Nach dem Piloten</h3>
+  <p>Weitermachen nur, wenn der Pilot neue Chancen gebracht hat und echte Arbeit bleibt (neue Segmente, Signale oder Kunden). Der Zugang zur Liste allein ist kein Grund zu verlängern. Der Preis nach dem Piloten ist noch offen.</p>
 
   <h2 id="de-price">5. Preis</h2>
   <div class="table-wrap"><table>
-    <tr><th>Phase</th><th>USA</th><th>Israel</th></tr>
-    <tr><td>Zweiwöchige Daten- und Potenzialanalyse</td><td>2.000 $</td><td>6.000 ₪</td></tr>
-    <tr><td>Umsetzung, 90 Tage</td><td>5.000 $ / Monat, mindestens 3 Monate</td><td>15.000 ₪ / Monat, mindestens 3 Monate</td></tr>
+    <tr><th></th><th>USA</th><th>Israel</th></tr>
+    <tr><td>Erstgespräch</td><td>kostenlos</td><td>kostenlos</td></tr>
+    <tr><td>90-Tage-Pilot zur Reaktivierung inaktiver Kunden</td><td>15.000 $ (5.000 $ pro Monat), Preis im Test</td><td>Erster Partner, Vorschlag: 30.000 ₪ (10.000 ₪ pro Monat)</td></tr>
   </table></div>
   <ul>
-    <li>Die Analyse wird auf die Umsetzung angerechnet, wenn das Angebot es vorsieht.</li>
-    <li>Keine automatischen Rabatte. Sonderkonditionen für den ersten Kunden müssen etwas Konkretes bringen: schnellen Datenzugang, Zeit des Entscheiders und die Erlaubnis, Ergebnisse zu dokumentieren.</li>
-    <li><strong>Ausstiegspunkt:</strong> Findet die Analyse keine belastbare, ausreichend große Chance, wird nach zwei Wochen gestoppt. Der Kunde erhält trotzdem ein klares Bild seiner Daten und seines Potenzials.</li>
-      <li><strong>Ein Preis während des Tests.</strong> Vorerst zahlt jedes Unternehmen dasselbe, damit die Ergebnisse vergleichbar sind. Für kleine Unternehmen sinkt der Preis nicht; die Passungsregeln filtern sie aus.</li>
-    <li><strong>Nach dem Test Preis nach Größe.</strong> Eine deutlich größere installierte Basis (etwa 2.000+ Maschinen, mehrere Marken oder Länder) erhält ein eigenes Angebot. Der erste israelische Kunde kann einen Pilotpreis erhalten, im Gegenzug für die Erlaubnis, die Referenz zu veröffentlichen.</li>
+    <li><strong>Das sind Hypothesen zum Testen, keine endgültigen Preise.</strong></li>
+    <li><strong>Keine separate Analyse.</strong> Die Datenprüfung ist Teil des Piloten.</li>
+    <li><strong>Noch offen:</strong> die Bedingungen für den frühen Ausstieg, der Zahlungsplan (vorab oder monatlich), spätere Preise in Israel, ein möglicher Preis für erste US-Pilotpartner und Preise für große installierte Basen.</li>
+    <li><strong>Standardmäßig keine Umsatzbeteiligung und kein Rabatt für eine Entscheidung im Gespräch.</strong></li>
+    <li><strong>Ein Preis für den ersten Partner muss etwas Konkretes bringen:</strong> schnellen Datenzugang, Zeit des Entscheiders und die Erlaubnis, die Ergebnisse zu veröffentlichen. Er gilt nur für den ersten israelischen Kunden.</li>
   </ul>
-  <h3>Preis nach Größe, nach dem Test</h3>
-  <div class="table-wrap"><table>
-    <tr><th>Unternehmensgröße</th><th>Analyse</th><th>Monatlich (mindestens 3 Monate)</th></tr>
-    <tr><td><strong>Standard:</strong> etwa 200–2.000 Maschinen, eine Markenfamilie, ein Land</td><td>2.000 $ / 6.000 ₪</td><td>5.000 $ / 15.000 ₪</td></tr>
-    <tr><td><strong>Groß:</strong> etwa 2.000–5.000 Maschinen oder 2–3 Marken bzw. Länder</td><td>3.500–5.000 $ / 12.000–18.000 ₪</td><td>7.500–10.000 $ / 25.000–35.000 ₪</td></tr>
-    <tr><td><strong>Sehr groß:</strong> 5.000+ Maschinen oder viele Länder</td><td colspan="2">Individuelles Angebot, meist 10.000–15.000 $ und mehr pro Monat</td></tr>
-    <tr><td><strong>Erster israelischer Kunde</strong> (Pilotpartner)</td><td>3.000 ₪</td><td>9.000–10.000 ₪, im Gegenzug für die Veröffentlichung der Referenz, ein Kundenzitat, schnellen Datenzugang und Zeit des Entscheiders</td></tr>
-  </table></div>
-  <p class="note">Faustregel: Die Monatsgebühr sollte etwa 10 % oder weniger des Deckungsbeitrags betragen, den der Kunde realistisch zurückgewinnen kann. Diese Spannen sind Startwerte; nach den ersten Analysen bestätigen.</p>
-
+  <h3>Wie man prüft, ob der Preis sinnvoll ist</h3>
+  <p>Die Pilotgebühr mit dem zusätzlichen Rohertrag vergleichen, den der Kunde aus den Pilotkunden plausibel erzielen kann, auf Basis seiner eigenen Auftragswerte, Margen und Kaufzyklen, und die Zeit seines Teams sowie die Dauer bis zum Auftragseingang berücksichtigen. Keine ungeprüften Margen, Rückgewinnungsquoten oder Kundenlebenswerte einsetzen. Eine 90-Tage-Pilotgebühr ist kein Jahresretainer: Sie wird mit dem verglichen, was im Piloten und im vereinbarten Nachverfolgungszeitraum realistisch eingehen kann.</p>
 
   <h2 id="de-sell">6. Verkauf</h2>
-  <p>Die erste Ansprache hat ein Ziel: ein 20-minütiges Gespräch. Die bezahlte Analyse wird erst angeboten, wenn das Problem erkannt ist und brauchbare Daten wahrscheinlich sind.</p>
+  <p>Die erste Ansprache hat ein Ziel: ein 20-minütiges Erstgespräch. Kein Preis in der ersten Ansprache. Den Piloten stelle ich erst vor, wenn das Problem erkannt ist und die Grundlagen passen.</p>
+  <ul>
+    <li><strong>Jedes Gespräch endet mit einem konkreten nächsten Schritt und einem Datum,</strong> zum Beispiel dem Strategiegespräch mit den Entscheidern. Kein offenes „vielleicht“ und kein künstlicher Rabatt für eine Entscheidung im Gespräch.</li>
+    <li><strong>Immer einen direkten Weg zur Terminbuchung anbieten:</strong> den Buchungslink oder zwei vorgeschlagene Termine.</li>
+    <li><strong>Ein kurzes Demo-Video (etwa 90 Sekunden) ist optional</strong> und passt in E-Mail 2, sobald es existiert.</li>
+  </ul>
   <p>Ablauf: E-Mail 1 → Anruf am nächsten Tag → LinkedIn → E-Mail 2 (Tag 3) → Anruf (Tag 6) → LinkedIn-Nachricht (Tag 8) → E-Mail 3 (Tag 11) → E-Mail 4 (Tag 16). Alles wird im CRM erfasst, mit einer Kalendererinnerung pro Lead für den nächsten Schritt.</p>
 
-  <h3>E-Mail 1: zeigen, was deren Kunde erhält</h3>
-  <div class="email"><span class="subj">Betreff: Die Maschinen, die Sie 2019 verkauft haben</span>
+  <h3>E-Mails</h3>
+  <p>E-Mail 1 gibt es in zwei Versionen zum Testen. Version A und Version B abwechselnd je Unternehmen senden und im CRM festhalten, welches Unternehmen welche Version erhalten hat. Beurteilt wird nach Erstgesprächen mit passenden Entscheidern und nach Terminen, nicht nach der Zahl der Antworten. Bei etwa 30 Unternehmen pro Markt zeigt das Ergebnis eine Richtung, keinen bewiesenen Sieger.</p>
+  <details class="script-disclosure">
+    <summary>E-Mail 1, Version A: eine kurze Frage</summary>
+    <div class="email"><span class="subj">Betreff: stille Kunden bei [Maschinentyp]</span>
+
+Guten Tag Herr [Name],
+
+[Eine geprüfte Tatsache zu ihren Maschinen oder zum Ersatzteil- und Servicegeschäft.]
+
+Kurze Frage: Wenn ein Kunde 18–24 Monate keine Ersatzteile und keinen Service bestellt, arbeitet jemand diese Liste ab, oder wartet man auf den nächsten Anruf?
+
+Genau diese Arbeit übernehme ich für Hersteller von Verpackungsmaschinen. Ich finde die inaktiven Kunden in Ihren Daten, spreche sie in Ihrem Namen mit freigegebenen Nachrichten an und übergebe Ihrem Team die Anfragen für Angebote.
+
+Lohnt sich ein 20-minütiger Austausch?
+
+Freundliche Grüße
+Eyal Taieb</div>
+  </details>
+
+  <details class="script-disclosure">
+    <summary>E-Mail 1, Version B: mit einem Beispiel, was deren Kunde erhalten könnte</summary>
+    <div class="email"><span class="subj">Betreff: Die Maschinen, die Sie 2019 verkauft haben</span>
 
 Guten Tag Herr [Name],
 
 [Eine geprüfte Tatsache, z. B.: Sie bauen seit 1998 Abfüll- und Verschließlinien und bieten dafür Ersatzteile und Service an.]
 
-Kunden, die vor Jahren eine Maschine gekauft haben, bestellen oft keine Ersatzteile und keinen Service mehr beim Hersteller, und niemand merkt es, bis sie anrufen.
+Kunden, die vor Jahren eine Maschine gekauft haben, können aufhören, Ersatzteile und Service beim Hersteller zu bestellen, ohne dass es jemand merkt.
 
-Ich finde diese Kunden in Ihren vorhandenen Daten und spreche sie in Ihrem Namen an. Ein Kunde von Ihnen würde zum Beispiel erhalten:
+Ich finde diese Kunden in Ihren vorhandenen Daten und spreche sie in Ihrem Namen an. Zum Beispiel könnte einer Ihrer Kunden diese Nachricht erhalten:
 
 „Ihr Füller Modell X wurde 2019 installiert. Laut unseren Unterlagen wurde der Dichtungssatz seit 2023 nicht mehr bei uns bestellt. Sollen wir Ihnen ein Angebot senden?“
 
 Sie geben jede Nachricht frei, und interessierte Kunden gehen direkt an Ihr Ersatzteilteam.
 
-Lohnen sich 20 Minuten, um zu sehen, wie viele Ihrer Maschinen still geworden sind?
+Lohnen sich 20 Minuten, um zu prüfen, ob das auf Ihre installierte Basis zutrifft?
 
 Freundliche Grüße
 Eyal Taieb</div>
+  </details>
 
-  <h3>E-Mail 2 (Tag 3, gleicher Verlauf): eine Frage und die Rechnung</h3>
-  <div class="email">Guten Tag Herr [Name],
+  <details class="script-disclosure">
+    <summary>E-Mail 2 (Tag 3, gleicher Verlauf): eine Frage und die Rechnung</summary>
+    <div class="email">Guten Tag Herr [Name],
 
-eine kurze Frage: Wie viele der verkauften Maschinen haben in den letzten zwei Jahren kein Teil mehr bei Ihnen bestellt?
+eine kurze Frage: Wie viele Kunden, die Maschinen bei Ihnen gekauft haben, haben in den letzten zwei Jahren keine Ersatzteile und keinen Service mehr bestellt?
 
-Wenn nur 30 davon einen Dichtungssatz für 5.000 $ bestellen, sind das 150.000 $ von Kunden, die bereits bei Ihnen gekauft haben. Ein Datenexport genügt, um herauszufinden, welche es sind.
+Nur zur Veranschaulichung: Wären 300 Konten inaktiv und würden 5 % davon einen Auftrag über 5.000 $ erteilen, wären das 75.000 $ an Aufträgen. Im Gespräch ersetzen wir diese Zahlen durch Ihre.
 
-Wäre ein kurzes Gespräch sinnvoll?
+Lohnen sich 20 Minuten?
 
 Freundliche Grüße
 Eyal Taieb</div>
+  </details>
 
-  <h3>E-Mail 3 (Tag 11): ein neuer Ansatz</h3>
-  <div class="email">Guten Tag Herr [Name],
+  <details class="script-disclosure">
+    <summary>E-Mail 3 (Tag 11): ein neuer Ansatz</summary>
+    <div class="email">Guten Tag Herr [Name],
 
 noch eine Idee, dann lasse ich es gut sein.
 
-Ältere Maschinen laufen oft mit Steuerungen, die der Hersteller nicht mehr unterstützt. Fällt eine aus, kann die Linie tagelang stehen. Kunden mit solchen Maschinen planen eine Modernisierung meist gern vorher. Ich finde sie in Ihrer installierten Basis und bereite diese Gespräche für Ihre Techniker vor.
+Manche älteren Maschinen laufen mit Steuerungen, die ihr Hersteller nicht mehr unterstützt. Fällt eine aus und sind Ersatzteile schwer zu bekommen, kann die Linie stillstehen. Wo Ihre Techniker einen Modernisierungsweg bestätigen, finde ich diese Maschinen in Ihrer installierten Basis und bereite die Gespräche vor.
 
 Falls Sie nicht zuständig sind: Wer verantwortet bei Ihnen den Ersatzteil- und Serviceumsatz?
 
 Freundliche Grüße
 Eyal Taieb</div>
+  </details>
 
-  <h3>E-Mail 4 (Tag 16): Abschluss</h3>
-  <div class="email">Guten Tag Herr [Name],
+  <details class="script-disclosure">
+    <summary>E-Mail 4 (Tag 16): Abschluss</summary>
+    <div class="email">Guten Tag Herr [Name],
 
 da ich nichts von Ihnen gehört habe, gehe ich davon aus, dass der Zeitpunkt nicht passt. Soll ich das Thema schließen, oder gibt es eine andere zuständige Person für Ersatzteile und Service?
 
 Freundliche Grüße
 Eyal Taieb</div>
-  <p class="note">In E-Mail 1 keine Beträge: Die Beispielnachricht ist der Beleg. US-E-Mails sind auf Englisch und brauchen unten eine Postanschrift und eine Abmeldemöglichkeit.</p>
+  </details>
+  <p class="note">In E-Mail 1 keine Beträge. Die Beispielnachricht zeigt, wie der Service funktioniert, sie ist kein Beleg für Ergebnisse. US-E-Mails sind auf Englisch und brauchen unten eine Postanschrift und eine Abmeldemöglichkeit.</p>
 
-  <h3>Gesprächseinstieg</h3>
-  <blockquote><p>„Guten Tag Herr [Name], hier ist Eyal Taieb. Haben Sie 30 Sekunden? Kurze Frage: Wenn ein Kunde, der eine Maschine bei Ihnen gekauft hat, ein oder zwei Jahre keine Teile oder keinen Service mehr bestellt, wie bemerkt Ihr Team das heute?“</p></blockquote>
-  <p class="note">Das vollständige Skript je Lead (Mailbox, Vorzimmer, Einwände) liegt im CRM unter „Call script“.</p>
+  <h3>LinkedIn</h3>
+  <details class="script-disclosure">
+    <summary>Kontaktanfrage</summary>
+    <div class="email">Guten Tag [Name], Sie bauen [Maschinentyp]. Ich beschäftige mich mit der Rückgewinnung inaktiver Ersatzteil- und Servicekunden. Ich würde mich gern mit Ihnen vernetzen.</div>
+  </details>
+  <details class="script-disclosure">
+    <summary>Erste Nachricht nach der Vernetzung</summary>
+    <div class="email">Vielen Dank für die Vernetzung, [Name].
 
-  <h3>Fragen für das Erstgespräch</h3>
-  <ul>
-    <li>Wie viele aktive und ältere Maschinen oder Bestandskunden können Sie in Ihren Daten identifizieren?</li>
-    <li>Lässt sich eine Seriennummer dem aktuellen Besitzer und Standort zuordnen?</li>
-    <li>Wann spricht Ihr Team einen Kunden an, der bereits eine Maschine hat?</li>
-    <li>Wie erkennen Sie Kunden, die lange keine Teile oder keinen Service bestellt haben?</li>
-    <li>In welchen Systemen liegen Kunden-, Auftrags-, Maschinen- und Servicedaten?</li>
-    <li>Wie oft kauft ein Kunde je Maschinenfamilie normalerweise Teile oder Service?</li>
-    <li>Wie groß sind übliche Auftragswerte, Deckungsbeitrag und Verkaufszyklus?</li>
-    <li>Wer prüft den technischen Bedarf, legt den Preis fest und erstellt das Angebot?</li>
-    <li>Kann das Team bei steigender Nachfrage in angemessener Zeit liefern?</li>
-    <li>Welches Ergebnis würde ein 90-Tage-Pilotprojekt für Sie zum Erfolg machen?</li>
-  </ul>
+Wenn ein Kunde keine Ersatzteile und keinen Service mehr bestellt: Geht jemand aus Ihrem Team dem aktiv nach?
+
+Ich helfe Maschinenbauunternehmen, solche Kunden zu identifizieren und im Namen des Unternehmens wieder anzusprechen. Sie geben die Nachrichten frei. Konkrete Anfragen gehen anschließend an Ihr Ersatzteil- oder Serviceteam.
+
+Wäre ein 15-minütiges Gespräch sinnvoll, um zu prüfen, ob dieser Ansatz für [Unternehmen] interessant ist?</div>
+  </details>
+  <p class="note">Platzhalter durch geprüfte Angaben ersetzen. Bei Händlern oder Serviceunternehmen die Tätigkeit entsprechend benennen. Die Anrede an den bisherigen Kontakt anpassen.</p>
+
+  <h3>15-minütiges Erstgespräch</h3>
+  <details class="script-disclosure">
+    <summary>Leitfaden für das Erstgespräch öffnen</summary>
+    <div class="script-body">
+      <p class="direction">Ziel: Bedarf, Interesse, wirtschaftliches Potenzial und Umsetzbarkeit einschätzen. Bei passender Ausgangslage einen Strategietermin vereinbaren. Fragen einzeln stellen und bereits geklärte Punkte überspringen.</p>
+      <h4>Bei einem unangekündigten Anruf</h4>
+      <p>„Guten Tag [Name], mein Name ist Eyal Taieb. Ich habe gesehen, dass Sie [geprüfte Angabe zum Maschinen- oder Servicegeschäft]. Darf ich Ihnen in 30 Sekunden sagen, weshalb ich anrufe?“</p>
+      <p>„Ich beschäftige mich damit, frühere Ersatzteil- und Servicekunden wieder zu gewinnen. Wenn ein Kunde nicht mehr bei Ihnen bestellt: Wie fällt das bei Ihnen auf, und wie gehen Sie anschließend vor?“</p>
+      <p>„Haben Sie jetzt etwa 15 Minuten, um zu sehen, ob das für Sie relevant ist, oder passt ein anderer Termin besser?“</p>
+      <p class="direction">Nur fortfahren, wenn Zeit vorhanden ist. Die Erlaubnis für 30 Sekunden ist keine Zusage für ein längeres Gespräch.</p>
+      <h4>Minute 0–1 · Gesprächsrahmen</h4>
+      <p>„Ich möchte verstehen, wie Sie mit Kunden umgehen, die nicht mehr bestellen. Dann können wir einschätzen, ob sich ein ausführlicheres Gespräch lohnt. Kundendaten müssen Sie dafür noch nicht bereitstellen.“</p>
+      <h4>Minuten 1–4 · Vorgehen und Interesse</h4>
+      <p>„Was geschieht bei Ihnen normalerweise, wenn ein Kunde keine Ersatzteile und keinen Service mehr bestellt?“</p>
+      <p>„Spricht jemand diese Kunden gezielt an, oder entsteht der Kontakt überwiegend auf Kundeninitiative?“</p>
+      <p>„Wie zufrieden sind Sie mit dem bisherigen Vorgehen?“</p>
+      <p class="direction">Bei Schwierigkeiten: „Können Sie mir ein Beispiel nennen?“ Wenn es gut funktioniert: „Gibt es trotzdem Kundengruppen, die Sie gern intensiver betreuen würden?“</p>
+      <h4>Minuten 4–7 · Umfang und Wirtschaftlichkeit</h4>
+      <p>„Bei ungefähr wie vielen Kunden stehen Maschinen, die Sie heute noch betreuen oder mit Ersatzteilen versorgen?“</p>
+      <p>„Was bestellen diese Kunden typischerweise nach, und in welchen Abständen?“</p>
+      <p>„Wie hoch ist der übliche Auftragswert?“</p>
+      <p class="direction">Falls bekannt: Wie viele Kunden haben ihren üblichen Bestellzeitpunkt bereits überschritten? Eine grobe Einschätzung genügt.</p>
+      <h4>Minuten 7–10 · Gewünschter Nutzen und Umsetzung</h4>
+      <p>„Was würde sich für Sie ändern, wenn diese Kunden regelmäßig angesprochen würden und Ihr Team konkrete Anfragen erhielte?“</p>
+      <p>„Genau diesen Ablauf übernehme ich: geeignete Kunden anhand vorhandener Unterlagen auswählen, sie mit freigegebenen Nachrichten in Ihrem Namen ansprechen und nachfassen. Ihr Team erhält die relevanten Anfragen und kann den Fortschritt verfolgen.“</p>
+      <p>„In welchen Systemen liegen Ihre Kunden- und Auftragsdaten? Wer könnte die Datenstruktur mit uns prüfen oder einen begrenzten Export bereitstellen?“</p>
+      <p>„Wer würde die Angebote erstellen, und gibt es Kapazität für zusätzliche Aufträge?“</p>
+      <h4>Minuten 10–12 · Priorität und Budgetrahmen</h4>
+      <p>„Die mögliche Chance liegt also bei [Ausgangslage], und aktuell fehlt vor allem [Hindernis]. Habe ich das richtig verstanden?“</p>
+      <p>„Wenn sich der Ansatz wirtschaftlich trägt: Möchten Sie das in den nächsten Monaten angehen?“</p>
+      <p>„Zur Orientierung: Für den US-Markt ist ein 90-tägiges Pilotprojekt mit einem Honorar von 5.000 US-Dollar pro Monat vorgesehen. Im Strategiegespräch würden wir prüfen, ob das Potenzial eine Investition in dieser Größenordnung rechtfertigt. Wäre das grundsätzlich ein Budgetrahmen, den Sie in Betracht ziehen könnten?“</p>
+      <p class="direction">Das ist der derzeitige US-Referenzpreis, kein festgelegtes Angebot für Deutschland. Währung und Konditionen für den jeweiligen Markt vorab festlegen. Die anfängliche Datenprüfung ist enthalten; die Kosten bei einem vorzeitigen Ausstieg müssen vereinbart werden.</p>
+      <h4>Minuten 12–15 · Strategietermin vereinbaren</h4>
+      <p>„Ein Strategiegespräch halte ich für sinnvoll, weil [konkreter Grund aus dem Gespräch]. Wir besprechen Ihre Ausgangszahlen, das Ziel, eine geeignete erste Kundengruppe und die Voraussetzungen für das Pilotprojekt. Einzelne Kundendatensätze brauchen Sie dafür vorab nicht zu senden.“</p>
+      <p>„Wer sollte teilnehmen, damit wir die Umsetzung beurteilen und über das weitere Vorgehen entscheiden können?“</p>
+      <p>„Planen wir 45 Minuten ein. Passt Ihnen [tatsächlich verfügbarer Termin] oder [tatsächlich verfügbarer Termin] besser?“</p>
+      <p>„Hilfreich wären ungefähre Zahlen zum Ersatzteil- und Serviceumsatz, typische Auftragswerte und die Namen Ihrer Systeme. Schätzungen reichen aus. Ich schicke Ihnen eine kurze Agenda.“</p>
+      <h4>Wenn Zeitpunkt oder Voraussetzungen nicht passen</h4>
+      <p>Interesse, aber später: „Was müsste sich ändern, damit das Thema Priorität bekommt?“ Bei Bedarf einen passenden Zeitpunkt zum Wiederaufnehmen vereinbaren.</p>
+      <p>Keine wirtschaftliche Grundlage: „Nach Ihrer Schilderung halte ich ein Pilotprojekt in dieser Größenordnung derzeit nicht für sinnvoll, weil [Grund]. Das möchte ich offen ansprechen.“</p>
+    </div>
+  </details>
+  <div class="script-nav">
+    <a href="./strategy/index.html?lang=de">Leitfaden für das 45-minütige Strategiegespräch öffnen →</a>
+    <p class="note">Alle zwölf Gesprächsphasen, Angebot, Honorar und Antworten auf Einwände. Auf Deutsch, Englisch und Hebräisch.</p>
+  </div>
 
   <h2 id="de-cases">7. Beispiele</h2>
-  <p class="note">Unternehmen, Zahlen und Preise sind zur Veranschaulichung erfunden. Bei echten Kunden nur Zahlen verwenden, die in der Analyse geprüft wurden. Der zitierte Text in jedem Beispiel ist die Nachricht, die <strong>deren Kunde</strong> im Namen des Unternehmens erhält.</p>
+  <p class="note">Unternehmen, Zahlen und Preise sind erfunden, um zu zeigen, wie die Arbeit abläuft. Sie sind kein Beleg für Ergebnisse oder Quoten. Bei echten Kunden nur Zahlen verwenden, die in der Datenprüfung des Piloten geprüft wurden, und jede technische Aussage vom Kunden bestätigen lassen. Der zitierte Text in jedem Beispiel ist die Nachricht, die <strong>deren Kunde</strong> im Namen des Unternehmens erhält.</p>
 
   <p class="group">Erste Kampagne</p>
 
@@ -1127,7 +1360,7 @@ Eyal Taieb</div>
         <li>Jedes Ja an den Ersatzteilleiter übergeben, mit Modell, Seriennummer und Bedarf.</li>
       </ol></dd>
       <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihr Füller Modell X wurde 2019 installiert. Laut unseren Unterlagen wurde der Dichtungssatz seit 2023 nicht mehr bei uns bestellt. Läuft die Maschine noch? Gerne senden wir Ihnen ein Angebot für einen neuen Satz.“</p></blockquote></dd>
-      <dt>Rechenbeispiel</dt><dd>Wenn 40 der 300 einen Satz für 5.000 $ bestellen, sind das 200.000 $.</dd>
+      <dt>Rechenbeispiel</dt><dd>Wenn 40 der 300 einen Satz für 5.000 $ bestellen, sind das 200.000 $ an Aufträgen.</dd>
       <dt>Achtung</dt><dd>Kein Auftrag beim Hersteller heißt nicht, dass das Teil nie getauscht wurde; der Kunde hat es vielleicht woanders gekauft. Deshalb „nicht bei uns bestellt“, nie „nicht getauscht“. Vorher den normalen Tauschzyklus je Modell prüfen.</dd>
     </dl>
   </div>
@@ -1151,7 +1384,7 @@ Eyal Taieb</div>
       <dt>Die Lage heute</dt><dd>Die Techniker sind mit dringenden Störungen beschäftigt. Manche Betriebe sind zu einem günstigeren freien Techniker gewechselt und bestellen Teile direkt im Ausland. Die Installationsliste liegt in Priority (ihrem ERP), aber niemand geht sie durch. Der Export zeigt 120 Kunden oder Maschinen ohne Service- oder Teilekauf seit 18 Monaten. Das ist die Prüfliste, keine automatische Versandliste.</dd>
       <dt>Was ich tue</dt><dd>Prüfen, welche Marken und Kunden der Importeur ansprechen darf (manchmal hält der Hersteller oder ein anderer Importeur die Servicerechte), priorisieren, Instandhaltungsleiter im Namen des Importeurs ansprechen und Interesse an Inspektion, vorbeugender Wartung, Teilen oder einem Jahresservicevertrag klären. Der Serviceleiter gibt frei, kalkuliert und schließt ab.</dd>
       <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihre Verpackungsmaschine Modell X hatte ihren letzten Servicebesuch bei uns im April 2024. Möchten Sie vor der Hochsaison einen Wartungstermin vereinbaren?“</p></blockquote></dd>
-      <dt>Rechenbeispiel</dt><dd>Wenn 25 Betriebe zurückkommen, zusammen 400.000 ₪ im Jahr, wird daraus die dokumentierte Referenz für Gespräche in den USA.</dd>
+      <dt>Rechenbeispiel</dt><dd>Wenn 25 Betriebe mit zusammen 400.000 ₪ im Jahr an Aufträgen zurückkommen (Auftragswert, kein Gewinn), wird daraus die dokumentierte Referenz für Gespräche in den USA.</dd>
       <dt>Vorab prüfen</dt><dd>Ob der Importeur die Servicebeziehung wirklich hält, ob die Maschinendaten aktuell sind und ob das Team Kapazität für die Zusatzarbeit hat.</dd>
     </dl>
   </div>
@@ -1166,7 +1399,7 @@ Eyal Taieb</div>
       <dt>Signal</dt><dd>Das Unternehmen weiß genau, welche Steuerung in jeder einzelnen Maschine verbaut ist (aus der Bauakte, der Seriennummer oder einem Technikerbericht), und der Steuerungshersteller hat die Abkündigung bestätigt.</dd>
       <dt>Was ich tue</dt><dd>Die Liste dieser Maschinen erstellen. Der Ingenieur des Unternehmens bestätigt die Modernisierung für jede Maschine (ein Retrofit: die bestehende Maschine aufrüsten statt ersetzen), bevor jemand angesprochen wird.</dd>
       <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihre Etikettiermaschine an Linie 2 läuft mit einer Steuerung, die der Hersteller nicht mehr unterstützt. Fällt sie aus, sind Ersatzteile schwer zu bekommen. Sollen wir eine Modernisierung zu einem passenden Zeitpunkt planen?“</p></blockquote></dd>
-      <dt>Rechenbeispiel</dt><dd>8 Modernisierungsprojekte zu je 25.000 $ = 200.000 $.</dd>
+      <dt>Rechenbeispiel</dt><dd>8 Modernisierungsprojekte zu je 25.000 $ = 200.000 $ an Aufträgen.</dd>
       <dt>Tonfall</dt><dd>Vorausplanung anbieten. Keine Angstmacherei und keine ungeprüfte technische Behauptung. Die Steuerung nie aus dem Maschinenalter ableiten.</dd>
     </dl>
   </div>
@@ -1175,11 +1408,11 @@ Eyal Taieb</div>
     <p class="case-label">Beispiel E · Formatteile</p>
     <h3>Kunde stellt auf ein neues Flaschen- oder Kartonformat um</h3>
     <dl>
-      <dt>Hintergrund</dt><dd>Eine Kartoniermaschine (sie verpackt Produkte in Kartons) ist auf bestimmte Formate eingestellt. Bringt ein Kunde eine neue Flaschen- oder Packungsgröße, braucht die Maschine Formatteile: Führungen, Sternräder und Werkzeuge für das neue Format, oft 8.000–25.000 $. Viele Kunden wissen nicht, dass ihre Maschine angepasst werden kann, und suchen woanders nach einer Neumaschine.</dd>
+      <dt>Hintergrund</dt><dd>Eine Kartoniermaschine (sie verpackt Produkte in Kartons) ist auf bestimmte Formate eingestellt. Bringt ein Kunde eine neue Flaschen- oder Packungsgröße, braucht die Maschine Formatteile: Führungen, Sternräder und Werkzeuge für das neue Format, oft 8.000–25.000 $. Manche Kunden wissen nicht, dass ihre Maschine angepasst werden kann, und suchen woanders nach einer Neumaschine.</dd>
       <dt>Signal</dt><dd>Nur ein echter Hinweis: angekündigter Launch, Verpackungswechsel, frühere Anfrage oder Serviceeinsatz. Ein stiller Kunde allein beweist nichts.</dd>
       <dt>Was ich tue</dt><dd>Neue Maße mit dem installierten Modell abgleichen, Produktionsanforderungen sammeln und eine saubere Anfrage für Passungsprüfung und Formatteil-Angebot an die Technik geben.</dd>
-      <dt>Beispielnachricht</dt><dd><blockquote><p>„Wir haben gesehen, dass Sie eine neue 330-ml-Dose einführen. Ihre Kartoniermaschine kann sie in der Regel mit einem Formatteilsatz verarbeiten. Sollen wir die Passung prüfen?“</p></blockquote></dd>
-      <dt>Rechenbeispiel</dt><dd>10 Aufträge zu 15.000 $ = 150.000 $, manchmal mit einem Gespräch über eine Neumaschine.</dd>
+      <dt>Beispielnachricht</dt><dd><blockquote><p>„Wir haben gesehen, dass Sie eine neue 330-ml-Dose einführen. Möglicherweise kann Ihre Kartoniermaschine sie mit einem Formatteilsatz verarbeiten. Sollen wir die Passung prüfen?“</p></blockquote></dd>
+      <dt>Rechenbeispiel</dt><dd>10 Aufträge zu je 15.000 $ = 150.000 $ an Aufträgen, manchmal mit einem Gespräch über eine Neumaschine.</dd>
     </dl>
   </div>
 
@@ -1260,7 +1493,7 @@ Eyal Taieb</div>
     <h3>Ein Unternehmen, das nicht passt</h3>
     <dl>
       <dt>Hintergrund</dt><dd>8 Mitarbeiter, rund 60 Maschinen im Feld, das Wissen nur im Kopf des Inhabers, und niemand, der Bedarf prüfen, Angebote schreiben und die Arbeit liefern kann.</dd>
-      <dt>Was ich tue</dt><dd>Wenn es im ersten Gespräch klar ist, sage ich, dass es nicht passt. Eine bezahlte Analyse lohnt sich nur, wenn Datenqualität oder Wirtschaftlichkeit wirklich unklar sind.</dd>
+      <dt>Was ich tue</dt><dd>Wenn es im Erstgespräch klar ist, sage ich, dass es nicht passt. Kein Pilot, um das erst herauszufinden: Ein Pilot lohnt sich nur, wenn die Grundlagen passen und die Zahlen die Gebühr plausibel decken können.</dd>
       <dt>Warum wichtig</dt><dd>Nein sagen zu können macht 5.000 $ im Monat glaubwürdig.</dd>
     </dl>
   </div>
@@ -1276,29 +1509,46 @@ Eyal Taieb</div>
 
   <h2 id="de-measure">8. Messung</h2>
   <ul class="ladder">
-    <li>Passender Kunde</li><li>Angesprochen</li><li>Gespräch</li><li>Bedarf bestätigt</li><li>Angebot</li><li>Auftrag</li><li>Umsatz eingegangen</li>
+    <li>Pilotkunde</li><li>Kontaktiert</li><li>Gespräch</li><li>Bestätigter Bedarf</li><li>Angebotsanfrage</li><li>Angebot</li><li>Auftrag</li><li>Eingegangener Umsatz</li>
   </ul>
-  <p>Das Ergebnis sind Aufträge und eingegangener Umsatz (und Deckungsbeitrag, wenn die Daten es erlauben). Die Schritte davor zeigen Fortschritt, sie sind nicht das Ergebnis.</p>
-  <p><strong>Potenzial schätzen:</strong> erreichbare passende Kunden × Gesprächsquote × Quote bestätigter Bedarf × Abschlussquote × durchschnittlicher Auftragswert (oder Deckungsbeitrag). Wo möglich die eigene Historie des Kunden nutzen, sonst konservative Szenarien zeigen und jede Annahme kennzeichnen. Eine Schätzung, keine Prognose und kein Versprechen.</p>
+  <p>Das kaufmännische Ziel sind Aufträge und eingegangener Umsatz. Die Schritte davor zeigen Fortschritt, sie sind nicht das Ergebnis, und keiner davon ist garantiert.</p>
+  <h3>Definitionen (in allen Sprachen gleich)</h3>
+  <ul>
+    <li><strong>Pilotkunden:</strong> die Liste der inaktiven Kunden, die zu Beginn der Ansprache festgelegt wird. Chancen, die zu Beginn schon offen waren, zählen nicht.</li>
+    <li><strong>Bestätigter Bedarf:</strong> Ein Kunde bestätigt einen aktuellen Bedarf, den das Unternehmen anbieten kann.</li>
+    <li><strong>Angebotsanfrage:</strong> Das Team des Unternehmens hat alle Angaben, um ein Angebot zu erstellen.</li>
+    <li><strong>Angebotswert:</strong> Summe der Angebote, die das Unternehmen an Pilotkunden geschickt hat.</li>
+    <li><strong>Aufträge:</strong> unterschriebene Aufträge von Pilotkunden während des Piloten und des vereinbarten Nachverfolgungszeitraums (Dauer noch offen).</li>
+    <li><strong>Eingegangener Umsatz:</strong> bezahlte Rechnungen für diese Aufträge.</li>
+    <li><strong>Rohertrag:</strong> der Rohertrag des Unternehmens auf diese Aufträge (Umsatz minus direkte Kosten der Teile oder Leistungen), berechnet mit den eigenen Zahlen des Unternehmens.</li>
+  </ul>
+  <p><strong>Potenzial schätzen:</strong> erreichbare passende Kunden × Gesprächsquote × Quote bestätigter Bedarf × Abschlussquote × durchschnittlicher Auftragswert (oder Rohertrag). Wo möglich die eigene Historie des Kunden nutzen, sonst konservative Szenarien zeigen und jede Annahme kennzeichnen. Eine Schätzung, keine Prognose und kein Versprechen.</p>
 
   <h2 id="de-remember">9. Was man sich merken sollte</h2>
   <ul>
-    <li>Ich verkaufe zurückgewonnenen Ersatzteil-, Service- und Nachrüstumsatz, keine KI.</li>
-    <li>Die erste Kampagne: Kunden ohne Ersatzteil- oder Serviceauftrag seit 18–24 Monaten.</li>
-    <li>Inaktivität bedeutet nur etwas im Vergleich zum normalen Kaufzyklus der Maschine.</li>
+    <li>Ich verkaufe mehr Ersatzteil-, Service- und Nachrüstaufträge von Bestandskunden, keine KI.</li>
+    <li>Die erste Kampagne: Kunden ohne Ersatzteil- oder Serviceauftrag seit 18–24 Monaten, gemessen am üblichen Kaufrhythmus. Ein abgebrochener Rhythmus ist das stärkste Signal.</li>
     <li>Ich betreibe den Prozess; der Kunde trifft die technischen und kaufmännischen Entscheidungen.</li>
+    <li>Zur Arbeit verpflichte ich mich. Bestätigte Bedarfe und Angebotsanfragen sind Ziele. Aufträge und Umsatz sind das Ziel, keine Garantie.</li>
     <li>Nie Maschinenzahlen, Datenqualität, Umsatzverluste, Kontakte oder Renditen erfinden.</li>
-    <li>Der erste Schritt ist ein kurzes Gespräch. Die bezahlte Analyse ist das Einstiegsprodukt.</li>
+    <li>Der erste Schritt ist ein kostenloses 20-minütiges Erstgespräch ohne Kundendaten. Das bezahlte Produkt ist der 90-Tage-Pilot, die Datenprüfung ist Teil davon.</li>
+    <li>Offene Bedingungen (früher Ausstieg, Zahlung, Nachverfolgungszeitraum) nie als vereinbart darstellen.</li>
     <li>Die USA sind der Hauptmarkt; Israel liefert den ersten Nachweis. Beides läuft parallel.</li>
   </ul>
 
   <h2 id="de-test">10. Der 60-Tage-Test</h2>
   <ul>
     <li><strong>USA:</strong> 30 gut geprüfte Unternehmen, ein Angebot, recherchebasierte E-Mails und telefonisches Nachfassen.</li>
-    <li><strong>Israel:</strong> etwa 10–15 passende Unternehmen, um einen ersten zahlenden Kunden zu gewinnen und eine Referenz dokumentieren zu dürfen.</li>
+    <li><strong>Israel:</strong> etwa 10–15 passende Unternehmen, um einen ersten bezahlten Piloten zu gewinnen und eine Referenz dokumentieren zu dürfen.</li>
   </ul>
-  <p><strong>Bestanden mit:</strong> 5+ ernsthafte Gespräche · 2+ Gespräche über die Daten · 1 bezahlte Analyse · 1 umsetzbare Chance.</p>
-  <p>Das sind Entscheidungsschwellen, keine Marktfakten. Bei schwachen Ergebnissen zuerst Firmenliste, Entscheider, Recherche, Botschaft, nächsten Schritt, Kanal und Nachfassen prüfen. Erst dann über einen Nischenwechsel nachdenken.</p>
+  <p>Vier getrennte Fragen, getrennt erfasst:</p>
+  <ol>
+    <li><strong>Wollen sie es?</strong> 5+ Erstgespräche mit passenden Entscheidern.</li>
+    <li><strong>Teilen sie brauchbare Daten?</strong> 2+ stimmen einer Feldliste oder einer Datenprobe zu.</li>
+    <li><strong>Zahlen sie?</strong> 1 unterschriebener und bezahlter Pilot.</li>
+    <li><strong>Funktioniert es?</strong> Datenprüfung bestanden, Ansprache gestartet, dann bestätigte Bedarfe, Angebote und Aufträge, beurteilt am Ende des Piloten, nicht innerhalb von 60 Tagen.</li>
+  </ol>
+  <p>Das sind Entscheidungsschwellen, keine Marktfakten. Ein Pilot ist ein erster Beleg, kein Nachweis für die ganze Nische. Unsere bisherige Stichprobe an Ansprachen ist zu klein, um Quoten vorherzusagen. Bei schwachen Ergebnissen zuerst Firmenliste, Entscheider, Recherche, Botschaft, nächsten Schritt, Kanal und Nachfassen prüfen. Erst dann über einen Nischenwechsel nachdenken.</p>
   <p>Besteht der Bereich Verpackungsmaschinen den Test nicht, bleibt das Geschäft gleich (mehr Ersatzteil-, Service- und Nachrüstumsatz mit Bestandskunden) und ein anderer Industriebereich wird getestet. Immer nur eine Sache ändern und die Erkenntnisse festhalten.</p>
 
   </div>
@@ -1308,43 +1558,6 @@ Eyal Taieb</div>
 
   </main>
 
-  <script>
-    (() => {
-      const buttons = Array.from(document.querySelectorAll('[data-language]'));
-      const panels = { en: document.getElementById('panel-en'), he: document.getElementById('panel-he'), de: document.getElementById('panel-de') };
-      const titles = {
-        en: 'Niche 1: Aftermarket Revenue Recovery',
-        he: 'נישה 1: הכנסות מחלפים ושירות מלקוחות קיימים',
-        de: 'Nische 1: Mehr Ersatzteil- und Serviceumsatz'
-      };
-      function setLanguage(language) {
-        Object.entries(panels).forEach(([key, panel]) => { panel.hidden = key !== language; });
-        document.documentElement.lang = language;
-        document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr';
-        document.title = titles[language];
-        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.language === language)));
-        try { localStorage.setItem('niche-language', language); } catch (e) {}
-        window.scrollTo({ top: 0, behavior: 'auto' });
-      }
-      let initial = 'en';
-      try { initial = localStorage.getItem('niche-language') || 'en'; } catch (e) {}
-      if (!panels[initial]) initial = 'en';
-      setLanguage(initial);
-      buttons.forEach((b) => b.addEventListener('click', () => setLanguage(b.dataset.language)));
-      const links = Array.from(document.querySelectorAll('.toc a'));
-      const byId = new Map(links.map((a) => [a.getAttribute('href').slice(1), a]));
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach((e) => {
-            if (!e.isIntersecting) return;
-            const link = byId.get(e.target.id);
-            if (!link) return;
-            link.closest('ol').querySelectorAll('a').forEach((a) => a.classList.toggle('active', a === link));
-          });
-        }, { rootMargin: '-80px 0px -70% 0px' });
-        byId.forEach((_, id) => { const el = document.getElementById(id); if (el) io.observe(el); });
-      }
-    })();
-  </script>
+  <script src="./niche.js" defer></script>
 </body>
 </html>
