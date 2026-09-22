@@ -51,9 +51,11 @@
     blockquote{margin:16px 0 20px;padding:14px 20px;border-inline-start:3px solid var(--ink);background:var(--faint)}
     blockquote p:last-child{margin:0}
     .note{color:var(--soft);font-size:.95rem}
-    .case{margin:0 0 44px;padding-bottom:8px}
-    .case h3{margin:0 0 4px}
-    .case .tag{color:var(--soft);font-size:.9rem;margin:0 0 12px}
+    .case{border:1px solid var(--line);border-radius:6px;padding:26px 30px;margin:0 0 28px}
+    .case h3{margin:0 0 6px}
+    .case-label{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:0 0 6px}
+    .case dd ol{margin:4px 0 0}
+    @media(max-width:560px){.case{padding:20px 18px}}
     .case dl{margin:0}
     .case dt{font-weight:700;margin-top:14px}
     .case dd{margin:2px 0 0}
@@ -108,11 +110,11 @@
   <p class="meta">Internal working document for Eyal and the team · Updated 22 September 2026</p>
   </header>
   <div class="layout">
-  <nav class="toc" aria-label="Contents"><p class="toc-label">On this page</p><ol><li><a href="#en-top">At a glance</a></li><li><a href="#en-who">1. Who we target</a></li><li><a href="#en-problem">2. Where revenue slips away</a></li><li><a href="#en-campaign">3. The first campaign</a></li><li><a href="#en-cases">4. Examples</a></li><li><a href="#en-work">5. How the work runs</a></li><li><a href="#en-price">6. Price</a></li><li><a href="#en-sell">7. How we sell</a></li><li><a href="#en-measure">8. Measurement</a></li><li><a href="#en-remember">9. What to remember</a></li><li><a href="#en-test">10. The 60-day test</a></li></ol></nav>
+  <nav class="toc" aria-label="Contents"><p class="toc-label">On this page</p><ol><li><a href="#en-top">At a glance</a></li><li><a href="#en-who">1. Who we target</a></li><li><a href="#en-problem">2. Where revenue slips away</a></li><li><a href="#en-campaign">3. The first campaign</a></li><li><a href="#en-work">4. How the work runs</a></li><li><a href="#en-price">5. Price</a></li><li><a href="#en-sell">6. How we sell</a></li><li><a href="#en-cases">7. Examples</a></li><li><a href="#en-measure">8. Measurement</a></li><li><a href="#en-remember">9. What to remember</a></li><li><a href="#en-test">10. The 60-day test</a></li></ol></nav>
   <div class="content">
 
   <dl class="summary" id="en-top">
-    <div><dt>The offer</dt><dd>I bring back parts, service and upgrade orders from customers who already bought machines from the company. Done for them, measured in orders.</dd></div>
+    <div><dt>The offer</dt><dd>I help manufacturers and distributors of packaging and processing machinery win back parts, service and upgrade orders from customers who already bought machines from them. I do the work for them.</dd></div>
     <div><dt>Who it's for</dt><dd>Manufacturers, distributors and importers of packaging and processing machinery (filling, capping, labeling, cartoning, wrapping, palletizing, inspection, food and pharma processing) that have machines in the field and a parts or service team.</dd></div>
     <div><dt>What happens today</dt><dd>New machines get the sales attention. Parts and service wait for the customer to call. Customers who stop calling go quiet: contacts change, machines are resold, parts are bought elsewhere. The data is split across the ERP, spreadsheets and people's heads, so nobody sees who went quiet.</dd></div>
     <div><dt>What I do</dt><dd><ol>
@@ -143,15 +145,28 @@
     <li>Someone inside can validate the need, price it, quote and close.</li>
     <li>The team can deliver if demand goes up.</li>
   </ul>
+  <h3>Machines to focus on</h3>
+  <p>Start where parts wear out predictably and each order is worth real money:</p>
+  <ul>
+    <li><strong>Fillers and cappers</strong> (seals, valves, filling heads, capping heads).</li>
+    <li><strong>Bagging and flow-wrap machines</strong> (form-fill-seal: sealing jaws, knives, heating elements).</li>
+    <li><strong>Thermoformers and tray sealers</strong> (tooling, seal plates, format changes).</li>
+    <li><strong>Labelers</strong> (glue systems, rollers, controls that go out of production).</li>
+    <li><strong>Cartoners and case packers</strong> (change parts for new sizes, grippers, suction cups).</li>
+    <li><strong>Checkweighers, metal detectors and X-ray inspection</strong> (regular testing and certification, service contracts).</li>
+    <li><strong>Food processing equipment</strong> such as slicers, portioners and mixers (blades, wear parts, hygiene maintenance).</li>
+  </ul>
+  <p class="note">Lower priority: stretch wrappers, carton tapers, simple conveyors and tabletop sealers. Their parts are cheap and the orders small.</p>
   <h3>Not a fit</h3>
   <ul>
-    <li>Only a handful of machines in the field.</li>
-    <li>Orders too small to justify the cost.</li>
+    <li><strong>Too few machines:</strong> fewer than about 200 identifiable machines in the field, or fewer than about 100 customer accounts.</li>
+    <li><strong>Orders too small:</strong> an average parts or service order under about $1,000. The math: three months cost the client about $17,000 (audit plus three months). To be clearly worth it, they need roughly $50,000 in recovered gross profit, about $100,000 in orders. At $1,000 per order that's 100 orders in 90 days, which isn't realistic.</li>
     <li>No direct, ongoing relationship with the end customer.</li>
     <li>The OEM or a third party owns the parts and service business.</li>
     <li>No usable data and no realistic way to rebuild it.</li>
     <li>An aftermarket team that already does this well.</li>
   </ul>
+  <p class="note">Both thresholds are working assumptions. Adjust them after the first audits.</p>
   <h3>Who buys</h3>
   <p>In a smaller company, the owner or CEO. In a larger one, the VP or Director of Aftermarket, Service or Parts, or the commercial leader who owns revenue from existing customers.</p>
   <p class="note">The 500-machine threshold is only a working assumption. Data quality, the customer relationship, order size and a person who can close matter more.</p>
@@ -174,143 +189,7 @@
   </ul>
   <p>Only after this works: lapsed service agreements, warranty expiry, wear parts, preventive maintenance, upgrades and retrofits, obsolete components, machine replacement.</p>
 
-  <h2 id="en-cases">4. Examples</h2>
-  <p class="note">Companies, numbers and prices below are invented to illustrate. With a real client, use only figures verified in the audit. The quoted line in each example is the message <em>their customer</em> would receive.</p>
-
-  <p class="group">First campaign</p>
-  <div class="case">
-    <h3>1. Filling-machine builder: customers stopped ordering wear parts</h3>
-    <p class="tag">US · first campaign</p>
-    <dl>
-      <dt>Situation</dt><dd>An Ohio builder with 60 employees has sold about 800 fillers. 300 of them have no parts order from the builder in two years. A seal and valve kit costs $3,000–6,000.</dd>
-      <dt>What I do</dt><dd>Link machines to orders, remove customers who shouldn't be contacted, verify contacts, and send the approved message. Every yes goes to the parts manager.</dd>
-      <dt>Example message</dt><dd><blockquote><p>"Your Model X filler was installed in 2019. Our records show the seal kit hasn't been ordered from us since 2023. Is the machine still running? We can send a quote for a replacement kit."</p></blockquote></dd>
-      <dt>Illustration</dt><dd>40 orders × $5,000 = $200,000.</dd>
-      <dt>Watch out</dt><dd>No order from the builder doesn't mean the part was never replaced. The customer may have bought it elsewhere, so say "not ordered from us", never "not replaced".</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>2. A customer's normal order rhythm stopped</h3>
-    <p class="tag">US or Israel · first campaign</p>
-    <dl>
-      <dt>Situation</dt><dd>A customer used to order a wear kit every 10–14 months and has now missed two expected orders. That's a stronger signal than one fixed rule for everyone.</dd>
-      <dt>What I do</dt><dd>Confirm the machine and the contact, ask whether it's still running, and offer the relevant parts check or service visit. The client approves any technical advice.</dd>
-      <dt>Example message</dt><dd><blockquote><p>"You usually order a wear kit for your capper about once a year. We haven't seen one since March 2024. Should we check what's due before it causes downtime?"</p></blockquote></dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>3. Israeli importer of food-packaging machines: the proof client</h3>
-    <p class="tag">Israel · first campaign · paid first client and case study</p>
-    <dl>
-      <dt>Situation</dt><dd>30 employees and five technicians, about 400 machines in food plants. The ERP export shows 120 customers or machines with no service or parts purchase in 18 months. That's the review list, not an automatic mailing list.</dd>
-      <dt>What I do</dt><dd>Check which brands and customers the importer may contact, rank the records, contact maintenance managers in the importer's name, and gauge interest in an inspection, preventive maintenance, parts or an annual contract. The service manager approves, prices and closes.</dd>
-      <dt>Example message</dt><dd><blockquote><p>"Your Model X packer last had a service visit with us in April 2024. Would you like to book a maintenance visit before the busy season?"</p></blockquote></dd>
-      <dt>Illustration</dt><dd>25 plants come back, worth ₪400,000 a year in total. Documented well, that becomes the case study for the US.</dd>
-      <dt>Check first</dt><dd>That the importer really owns the service relationship, that the machine data is current, and that the team has capacity.</dd>
-    </dl>
-  </div>
-
-  <p class="group">After the first campaign works</p>
-  <div class="case">
-    <h3>4. Labeler with an obsolete controller</h3>
-    <p class="tag">Planned PLC or HMI upgrade</p>
-    <dl>
-      <dt>Signal</dt><dd>The exact installed configuration is known, and the controller is confirmed as no longer made or supported.</dd>
-      <dt>What I do</dt><dd>Build the candidate list. The client's engineer confirms the configuration and the upgrade before anyone is contacted.</dd>
-      <dt>Example message</dt><dd><blockquote><p>"Your labeler on line 2 runs a controller the manufacturer no longer supports. If it fails, spare parts are hard to find. Would you like our engineer to plan an upgrade at a time that suits you?"</p></blockquote></dd>
-      <dt>Illustration</dt><dd>8 projects × $25,000 = $200,000.</dd>
-      <dt>Watch out</dt><dd>Never guess the controller from the machine's age. Verify the configuration and the component's current support status.</dd>
-      <dt>Tone</dt><dd>Offer to plan ahead. No scare tactics and no technical claim that hasn't been checked.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>5. Customer moves to a new bottle or pack size</h3>
-    <p class="tag">Change parts and machine adaptation</p>
-    <dl>
-      <dt>Signal</dt><dd>A real indication only: an announced launch, a packaging change, an earlier inquiry or service call. A quiet account alone proves nothing.</dd>
-      <dt>What I do</dt><dd>Match the new dimensions to the installed model, collect the production requirements, and pass a clean request to the engineer for a fit check and a change-parts quote.</dd>
-      <dt>Example message</dt><dd><blockquote><p>"We saw you're launching a new 330 ml can. Your cartoner can usually run it with a change-parts set. Want our engineers to check the fit?"</p></blockquote></dd>
-      <dt>Illustration</dt><dd>10 orders × $15,000 = $150,000, sometimes opening a new-machine conversation.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>6. Service agreement ended and wasn't renewed</h3>
-    <p class="tag">Renewal or updated maintenance plan</p>
-    <dl>
-      <dt>Signal</dt><dd>A known end date, the machine still running, and no renewal in progress.</dd>
-      <dt>What I do</dt><dd>Confirm the company may still service it and the owner is current, summarize what the old agreement covered, and offer a renewal. The service team sets scope and price.</dd>
-      <dt>Example message</dt><dd><blockquote><p>"Your service agreement for the Model X palletizer ended in June. Would you like the renewal terms, or an updated maintenance plan?"</p></blockquote></dd>
-      <dt>Why it matters</dt><dd>Recurring revenue, not a one-time order.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>7. No critical spares on site</h3>
-    <p class="tag">Machine-specific spares review</p>
-    <dl>
-      <dt>Signal</dt><dd>The model or serial number maps to an approved parts list, and the history shows no purchase of line-stopping or long-lead parts.</dd>
-      <dt>What I do</dt><dd>The client's parts expert approves the list. I check with the plant what's already in stock and what the production plan is.</dd>
-      <dt>Example message</dt><dd><blockquote><p>"For your Model X filler, five parts can stop the line and take weeks to arrive. We have none on record for your plant. Would a recommended spares list and quote help?"</p></blockquote></dd>
-      <dt>Why it matters</dt><dd>For the plant: less downtime risk. For the manufacturer: a planned parts order instead of a rush purchase after a breakdown.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>8. Maintenance before peak season</h3>
-    <p class="tag">Timed outreach before the busy period</p>
-    <dl>
-      <dt>Signal</dt><dd>A known peak is coming, and there's no recent inspection or preventive maintenance on record for the machine.</dd>
-      <dt>What I do</dt><dd>Offer a defined window for inspection, maintenance and recommended parts. First confirm there are enough technicians and parts.</dd>
-      <dt>Example message</dt><dd><blockquote><p>"Your peak season starts in November, and your last preventive maintenance with us was 14 months ago. Should we book an inspection in October?"</p></blockquote></dd>
-      <dt>Why it works</dt><dd>The customer immediately understands why you're calling now: a clear date and a practical reason to act early.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>9. A new maintenance team</h3>
-    <p class="tag">Training that also restores the relationship</p>
-    <dl>
-      <dt>Signal</dt><dd>A verified contact change, plant expansion, new hires, or a service call showing new people run the equipment.</dd>
-      <dt>What I do</dt><dd>Offer operator, maintenance or troubleshooting training for the model, and update the contact and machine records at the same time.</dd>
-      <dt>Example message</dt><dd><blockquote><p>"We understand you have a new maintenance lead at the plant. Would a half-day training on your Model X wrapper be useful?"</p></blockquote></dd>
-      <dt>Why it matters</dt><dd>Training revenue now, and a renewed service relationship for the next need.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>10. A proven efficiency upgrade</h3>
-    <p class="tag">Energy, water, waste, speed or quality</p>
-    <dl>
-      <dt>Signal</dt><dd>The manufacturer has an approved upgrade for a specific model range, with documented benefits, and the eligible machines can be identified.</dd>
-      <dt>What I do</dt><dd>Rank technically eligible customers, collect how they run the line, and hand it to engineering for a savings estimate and quote. The manufacturer, not me, validates fit and savings.</dd>
-      <dt>Example message</dt><dd><blockquote><p>"We now offer a servo upgrade for the Model X that shortens changeovers. Your two machines qualify. Want our engineer to estimate what it would save on your line?"</p></blockquote></dd>
-      <dt>Why it matters</dt><dd>The deal can be larger than a parts order.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>11. Machine moved, resold or near replacement</h3>
-    <p class="tag">Recommissioning, relocation, upgrade or new machine</p>
-    <dl>
-      <dt>Signal</dt><dd>Verified change of owner or location, a used machine in a new plant, or the technical team has found repairs no longer pay off.</dd>
-      <dt>What I do</dt><dd>First update who owns the machine and where it is. Then offer recommissioning, inspection, relocation support, training, parts, an upgrade or a replacement review.</dd>
-      <dt>Example message</dt><dd><blockquote><p>"We understand your Model X capper moved to your Dallas plant. Would you like us to recommission and inspect it there?"</p></blockquote></dd>
-      <dt>Why it matters</dt><dd>One update to the machine record can open several revenue streams, once ownership and condition are confirmed.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>12. A company that isn't a fit</h3>
-    <p class="tag">8 employees, 60 machines, no usable data</p>
-    <dl>
-      <dt>Why not</dt><dd>Too few machines, knowledge only in the owner's head, and nobody who can validate needs, quote and deliver.</dd>
-      <dt>What I do</dt><dd>If it's clear on the first call, say it's not a fit. A paid audit only makes sense when data quality or economics are genuinely unclear. Saying no is what makes $5,000 a month believable.</dd>
-    </dl>
-  </div>
-  <h3>What every good example has</h3>
-  <ol>
-    <li>An existing relationship: the company sold or services the machine.</li>
-    <li>A real reason to reach out: a date, a buying pattern, a configuration or a verified event.</li>
-    <li>An approved offer: the technical and commercial team decides what may be offered.</li>
-    <li>Measurement to the money: contact, quote, order, collected revenue.</li>
-  </ol>
-  <p class="note">The industry proves the revenue streams exist (large OEMs such as <a href="https://www.krones.com/en/products/lifecycle-service.php">Krones</a> and <a href="https://www.syntegon.com/hubfs/02_downloads/horizontal-flow-wrapper-en-2026.pdf">Syntegon</a> sell parts, service contracts, retrofits, upgrades and training). It doesn't prove the conversion rates in these examples.</p>
-
-  <h2 id="en-work">5. How the work runs</h2>
+  <h2 id="en-work">4. How the work runs</h2>
   <ol>
     <li><strong>Fit call.</strong> How many machines are in the field, how existing customers are handled today, what data exists, order sizes, who decides. Not an AI demo.</li>
     <li><strong>Paid two-week audit.</strong> Check data quality, define inactivity, find reachable customers, size the opportunity, pick a first group. It ends with a clear go or stop.</li>
@@ -328,7 +207,7 @@
   </table></div>
   <p class="note">AI helps with matching messy records, research, personalizing messages, sorting replies, drafting follow-ups and reporting. Who may be contacted, prices and what may be promised follow clear rules and human approval.</p>
 
-  <h2 id="en-price">6. Price</h2>
+  <h2 id="en-price">5. Price</h2>
   <div class="table-wrap"><table>
     <tr><th>Stage</th><th>US</th><th>Israel</th></tr>
     <tr><td>Two-week data and opportunity audit</td><td>$2,000</td><td>₪6,000</td></tr>
@@ -338,9 +217,11 @@
     <li>The audit fee is credited toward execution when the proposal says so.</li>
     <li>No automatic discounts. A special deal for the first client must buy something concrete: fast data access, decision-maker time, and permission to document results.</li>
     <li><strong>Exit point:</strong> if the audit finds no credible opportunity big enough, stop after two weeks. The client still gets a clear picture of their data and potential.</li>
+      <li><strong>One price during the test.</strong> Every company pays the same for now, so the results are comparable. The price doesn't drop for small companies; the fit rules filter them out instead.</li>
+    <li><strong>After the test, price by size.</strong> A much larger installed base (about 2,000+ machines, several brands or countries) gets a scoped quote. The first Israeli client may get a design-partner price in exchange for permission to publish the case study.</li>
   </ul>
 
-  <h2 id="en-sell">7. How we sell</h2>
+  <h2 id="en-sell">6. How we sell</h2>
   <p>The first touch has one job: get a 20-minute call. The paid audit is offered only after they recognize the problem and usable data seems to exist.</p>
   <p>Sequence: email 1 → call next day → LinkedIn → email 2 (day 3) → call (day 6) → LinkedIn message (day 8) → email 3 (day 11) → email 4 (day 16). Everything is logged in the CRM, with one calendar reminder per lead for the next step.</p>
 
@@ -411,6 +292,172 @@ Eyal</div>
     <li>What result would make a 90-day pilot a success for you?</li>
   </ul>
 
+  <h2 id="en-cases">7. Examples</h2>
+  <p class="note">Companies, numbers and prices are invented to illustrate. With a real client, use only figures verified in the audit. The quoted text in each example is the message <strong>their customer</strong> would receive, sent in the company's name.</p>
+
+  <p class="group">First campaign</p>
+
+  <div class="case">
+    <p class="case-label">Example A · US · first campaign</p>
+    <h3>Filling-machine builder: customers stopped ordering wear parts</h3>
+    <dl>
+      <dt>Background</dt><dd>An Ohio company with 60 employees builds bottle-filling machines (they fill drinks, sauces or shampoo into bottles). In 15 years it has sold about 800 of them. Every filler has wear parts: the seals, O-rings and small valves in the filling heads. They wear out and cause leaks or inaccurate fills, so they are usually replaced about once a year, sold as a kit for $3,000–6,000.</dd>
+      <dt>What happens today</dt><dd>The parts team answers the phone and ships what customers ask for. Nobody looks at the machines that stopped ordering. An export from their ERP (the system that holds orders, invoices and inventory) shows 300 machines with no parts order in two years.</dd>
+      <dt>What I do</dt><dd><ol>
+        <li>Link each machine to its customer and its orders.</li>
+        <li>Remove customers who shouldn't be contacted (open disputes, opt-outs, accounts the company excludes).</li>
+        <li>Find and verify the current maintenance contact at each plant.</li>
+        <li>Send the approved message in the company's name, and call where it helps.</li>
+        <li>Pass every yes to the parts manager, with the model, serial number and what the customer needs.</li>
+      </ol></dd>
+      <dt>Example message</dt><dd><blockquote><p>"Your Model X filler was installed in 2019. Our records show the seal kit hasn't been ordered from us since 2023. Is the machine still running? We can send a quote for a replacement kit."</p></blockquote></dd>
+      <dt>Illustration</dt><dd>If 40 of the 300 order a kit at $5,000, that's $200,000.</dd>
+      <dt>Watch out</dt><dd>No order from the builder doesn't mean the part was never replaced; the customer may have bought it elsewhere. So the message says "not ordered from us", never "not replaced". Check the normal replacement cycle for each model before treating two years as a signal.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Example B · US or Israel · first campaign</p>
+    <h3>A customer's normal order rhythm stopped</h3>
+    <dl>
+      <dt>Background</dt><dd>A frozen-food plant bought two cappers (machines that screw caps onto bottles) and ordered a wear kit every 10–14 months for six years. Then the orders stopped. It has now missed two expected orders.</dd>
+      <dt>Why it's a strong signal</dt><dd>The customer's own history says something changed: a new maintenance manager, a cheaper parts supplier, or a machine that stopped running. That's more convincing than one fixed rule for every customer.</dd>
+      <dt>What I do</dt><dd>Confirm the machine and the contact, ask whether it's still running, and offer the relevant parts check or service visit. The client approves any technical advice.</dd>
+      <dt>Example message</dt><dd><blockquote><p>"You usually order a wear kit for your capper about once a year. We haven't seen one since March 2024. Should we check what's due before it causes downtime?"</p></blockquote></dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Example C · Israel · first campaign · the proof client</p>
+    <h3>Israeli importer of filling and packaging machines</h3>
+    <dl>
+      <dt>Background</dt><dd>An Israeli company imports filling and packaging machines from Italian and German makers and installs them in food plants. 30 employees, five technicians, about 400 machines installed.</dd>
+      <dt>What happens today</dt><dd>The technicians are busy with urgent breakdowns. Some plants moved to a cheaper independent technician and order parts directly from abroad. The installation list sits in Priority (their ERP), but nobody goes through it. The export shows 120 customers or machines with no service or parts purchase in 18 months. That's the review list, not an automatic mailing list.</dd>
+      <dt>What I do</dt><dd>Check which brands and customers the importer may contact (sometimes the manufacturer or another importer holds the service rights), rank the records, contact plant maintenance managers in the importer's name, and gauge interest in an inspection, preventive maintenance, parts or an annual service contract. The service manager approves, prices and closes.</dd>
+      <dt>Example message</dt><dd><blockquote><p>"Your Model X packer last had a service visit with us in April 2024. Would you like to book a maintenance visit before the busy season?"</p></blockquote></dd>
+      <dt>Illustration</dt><dd>If 25 plants come back, worth ₪400,000 a year in total, that becomes the documented case study for US conversations.</dd>
+      <dt>Check first</dt><dd>That the importer really owns the service relationship, that the machine data is current, and that the team has capacity to do the added work.</dd>
+    </dl>
+  </div>
+
+  <p class="group">After the first campaign works</p>
+
+  <div class="case">
+    <p class="case-label">Example D · planned control upgrade</p>
+    <h3>Labeler with a controller that is no longer made</h3>
+    <dl>
+      <dt>Background</dt><dd>Labeling machines built 12–18 years ago often run on a PLC (the small industrial computer that controls the machine) and an HMI (the touch screen the operator uses) that their maker no longer produces or supports. When one fails, a replacement can take weeks to find, and the line stands still.</dd>
+      <dt>The signal</dt><dd>The company knows exactly which controller is inside each specific machine (from the build record, the serial number or a technician's report), and the controller's maker has confirmed it's discontinued.</dd>
+      <dt>What I do</dt><dd>Build the list of those machines. The company's engineer confirms the upgrade for each one (a retrofit: upgrading the existing machine instead of replacing it) before anyone is contacted.</dd>
+      <dt>Example message</dt><dd><blockquote><p>"Your labeler on line 2 runs a controller the manufacturer no longer supports. If it fails, spare parts are hard to find. Would you like our engineer to plan an upgrade at a time that suits you?"</p></blockquote></dd>
+      <dt>Illustration</dt><dd>8 upgrade projects at $25,000 each = $200,000.</dd>
+      <dt>Tone</dt><dd>Offer to plan ahead. No scare tactics, and no technical claim that hasn't been checked. Never guess the controller from the machine's age.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Example E · change parts</p>
+    <h3>Customer moves to a new bottle or carton size</h3>
+    <dl>
+      <dt>Background</dt><dd>A cartoner (a machine that puts products into cartons) is set up for specific sizes. When a customer launches a new bottle or box size, the machine needs change parts: guides, star wheels and tooling made for the new size, often $8,000–25,000. Many customers don't know their existing machine can be adapted, and start shopping for a new machine elsewhere.</dd>
+      <dt>The signal</dt><dd>Only a real indication: an announced launch, a packaging change, an earlier inquiry or a service call. A quiet customer alone proves nothing.</dd>
+      <dt>What I do</dt><dd>Match the new dimensions to the installed model, collect the production requirements, and pass a clean request to the engineer for a fit check and a change-parts quote.</dd>
+      <dt>Example message</dt><dd><blockquote><p>"We saw you're launching a new 330 ml can. Your cartoner can usually run it with a change-parts set. Want our engineers to check the fit?"</p></blockquote></dd>
+      <dt>Illustration</dt><dd>10 orders at $15,000 = $150,000, sometimes opening a new-machine conversation too.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Example F · service agreements</p>
+    <h3>Service agreement ended and wasn't renewed</h3>
+    <dl>
+      <dt>Background</dt><dd>A service agreement is an annual contract: the plant pays a fixed fee and gets scheduled visits, faster response and sometimes discounted parts. When it ends and nobody calls, the customer often just lets it lapse.</dd>
+      <dt>The signal</dt><dd>A known end date, the machine still running, and no renewal in progress.</dd>
+      <dt>What I do</dt><dd>Confirm the company may still service the machine and the owner is current, summarize what the old agreement covered, and offer a renewal. The service team sets scope and price.</dd>
+      <dt>Example message</dt><dd><blockquote><p>"Your service agreement for the Model X palletizer ended in June. Would you like the renewal terms, or an updated maintenance plan?"</p></blockquote></dd>
+      <dt>Why it matters</dt><dd>Recurring revenue every year, not a one-time order.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Example G · critical spares</p>
+    <h3>No critical spare parts on site</h3>
+    <dl>
+      <dt>Background</dt><dd>Some parts stop the whole line when they fail and take weeks to arrive (special motors, drives, custom-made components). The machine's BOM (bill of materials: the list of every part in that specific machine) shows exactly which ones matter for each model.</dd>
+      <dt>The signal</dt><dd>The model or serial number maps to an approved parts list, and the order history shows none of those parts bought.</dd>
+      <dt>What I do</dt><dd>The company's parts expert approves the list. I check with the plant what's already in stock and what the production plan is.</dd>
+      <dt>Example message</dt><dd><blockquote><p>"For your Model X filler, five parts can stop the line and take weeks to arrive. We have none on record for your plant. Would a recommended spares list and quote help?"</p></blockquote></dd>
+      <dt>Why it matters</dt><dd>For the plant: less risk of downtime. For the manufacturer: a planned parts order instead of a rush purchase after a breakdown.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Example H · timed maintenance</p>
+    <h3>Maintenance before the busy season</h3>
+    <dl>
+      <dt>Background</dt><dd>Many food and drink plants have a known peak: summer for beverages, holidays for sweets. A breakdown then costs the most. Preventive maintenance (a scheduled inspection and parts replacement before something fails) is the natural offer.</dd>
+      <dt>The signal</dt><dd>The peak is coming, and there's no recent inspection or preventive maintenance on record for the machine.</dd>
+      <dt>What I do</dt><dd>Offer a defined window for inspection, maintenance and recommended parts. First confirm there are enough technicians and parts to handle the demand.</dd>
+      <dt>Example message</dt><dd><blockquote><p>"Your peak season starts in November, and your last preventive maintenance with us was 14 months ago. Should we book an inspection in October?"</p></blockquote></dd>
+      <dt>Why it works</dt><dd>The customer immediately understands why you're calling now: a clear date and a practical reason to act early.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Example I · training</p>
+    <h3>A new maintenance team at the plant</h3>
+    <dl>
+      <dt>Background</dt><dd>When the plant's maintenance manager changes, knowledge of the machine leaves with them, and so does the relationship with the supplier. New people often don't know whom to call.</dd>
+      <dt>The signal</dt><dd>A verified contact change, a plant expansion, new hires, or a service call showing new people now run the equipment.</dd>
+      <dt>What I do</dt><dd>Offer operator, maintenance or troubleshooting training for that model, and update the contact and machine records at the same time.</dd>
+      <dt>Example message</dt><dd><blockquote><p>"We understand you have a new maintenance lead at the plant. Would a half-day training on your Model X wrapper be useful?"</p></blockquote></dd>
+      <dt>Why it matters</dt><dd>Training revenue now, and a renewed service relationship for the next need.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Example J · efficiency upgrade</p>
+    <h3>A proven upgrade for an older model</h3>
+    <dl>
+      <dt>Background</dt><dd>Manufacturers develop upgrades for older models, for example servo motors (precise electric motors) that make changeovers faster (switching the line from one product to another), or parts that cut energy, water or waste.</dd>
+      <dt>The signal</dt><dd>An approved upgrade exists for a specific model range, the benefit is documented, and the eligible machines can be identified.</dd>
+      <dt>What I do</dt><dd>Rank the technically eligible customers, collect how they run the line, and hand it to engineering for a savings estimate and quote. The manufacturer, not me, confirms fit and savings.</dd>
+      <dt>Example message</dt><dd><blockquote><p>"We now offer a servo upgrade for the Model X that shortens changeovers. Your two machines qualify. Want our engineer to estimate what it would save on your line?"</p></blockquote></dd>
+      <dt>Why it matters</dt><dd>The deal can be larger than a parts order.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Example K · moved, resold or old</p>
+    <h3>Machine moved, resold or near replacement</h3>
+    <dl>
+      <dt>Background</dt><dd>Machines get moved to another plant, sold to another company, or reach the age where repairs cost more than they're worth. Each situation calls for a different offer: recommissioning (setting the machine up and testing it after a move), inspection, training, parts, an upgrade or a replacement review.</dd>
+      <dt>The signal</dt><dd>A verified change of owner or location, a used machine in a new plant, or the technical team has found that repairs no longer pay off.</dd>
+      <dt>What I do</dt><dd>First update who owns the machine and where it is. Then offer what fits the situation.</dd>
+      <dt>Example message</dt><dd><blockquote><p>"We understand your Model X capper moved to your Dallas plant. Would you like us to recommission and inspect it there?"</p></blockquote></dd>
+      <dt>Why it matters</dt><dd>One update to the machine record can open several revenue streams, once ownership and condition are confirmed.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Example L · not a fit</p>
+    <h3>A company that isn't a fit</h3>
+    <dl>
+      <dt>Background</dt><dd>8 employees, about 60 machines in the field, knowledge only in the owner's head, and nobody who can validate needs, write quotes and deliver the work.</dd>
+      <dt>What I do</dt><dd>If it's clear on the first call, say it's not a fit. A paid audit only makes sense when data quality or economics are genuinely unclear.</dd>
+      <dt>Why it matters</dt><dd>Saying no is what makes $5,000 a month believable.</dd>
+    </dl>
+  </div>
+
+  <h3>What every good example has</h3>
+  <ol>
+    <li><strong>An existing relationship:</strong> the company sold or services the machine.</li>
+    <li><strong>A real reason to reach out:</strong> a date, a buying pattern, a known machine setup or a verified event.</li>
+    <li><strong>An approved offer:</strong> the technical and commercial team decides what may be offered.</li>
+    <li><strong>Measurement to the money:</strong> contact, quote, order, collected revenue.</li>
+  </ol>
+  <p class="note">The industry proves these revenue streams exist: large manufacturers such as <a href="https://www.krones.com/en/products/lifecycle-service.php">Krones</a> and <a href="https://www.syntegon.com/hubfs/02_downloads/horizontal-flow-wrapper-en-2026.pdf">Syntegon</a> sell parts, service contracts, retrofits, upgrades and training. It doesn't prove the conversion rates in these examples.</p>
+
   <h2 id="en-measure">8. Measurement</h2>
   <ul class="ladder">
     <li>Eligible customer</li><li>Contacted</li><li>Conversation</li><li>Confirmed need</li><li>Quote</li><li>Order</li><li>Collected revenue</li>
@@ -450,12 +497,12 @@ Eyal</div>
   <p class="meta">מסמך עבודה פנימי לאייל ולצוות · עודכן ב־22 בספטמבר 2026</p>
   </header>
   <div class="layout">
-  <nav class="toc" aria-label="תוכן העניינים"><p class="toc-label">בעמוד הזה</p><ol><li><a href="#he-top">בקצרה</a></li><li><a href="#he-who">1. למי פונים</a></li><li><a href="#he-problem">2. איפה הכסף הולך לאיבוד</a></li><li><a href="#he-campaign">3. הקמפיין הראשון</a></li><li><a href="#he-cases">4. דוגמאות</a></li><li><a href="#he-work">5. איך העבודה מתנהלת</a></li><li><a href="#he-price">6. מחיר</a></li><li><a href="#he-sell">7. איך מוכרים</a></li><li><a href="#he-measure">8. מדידה</a></li><li><a href="#he-remember">9. מה לזכור</a></li><li><a href="#he-test">10. מבחן 60 הימים</a></li></ol></nav>
+  <nav class="toc" aria-label="תוכן העניינים"><p class="toc-label">בעמוד הזה</p><ol><li><a href="#he-top">בקצרה</a></li><li><a href="#he-who">1. למי פונים</a></li><li><a href="#he-problem">2. איפה הכסף הולך לאיבוד</a></li><li><a href="#he-campaign">3. הקמפיין הראשון</a></li><li><a href="#he-work">4. איך העבודה מתנהלת</a></li><li><a href="#he-price">5. מחיר</a></li><li><a href="#he-sell">6. איך מוכרים</a></li><li><a href="#he-cases">7. דוגמאות</a></li><li><a href="#he-measure">8. מדידה</a></li><li><a href="#he-remember">9. מה לזכור</a></li><li><a href="#he-test">10. מבחן 60 הימים</a></li></ol></nav>
   <div class="content">
 
   <dl class="summary" id="he-top">
-    <div><dt>ההצעה</dt><dd>אני מחזיר הזמנות של חלפים, שירות ושדרוגים מלקוחות שכבר קנו מכונות מהחברה. אני עושה את העבודה בשבילה, והתוצאה נמדדת בהזמנות.</dd></div>
-    <div><dt>למי</dt><dd>יצרנים, מפיצים ויבואנים של מכונות אריזה ועיבוד (מילוי, פקקים וסגירה, תיוג, קרטונים, עטיפה, משטוח, בקרה, עיבוד מזון ותרופות), שיש להם מכונות אצל לקוחות ומחלקת חלפים או שירות.</dd></div>
+    <div><dt>ההצעה</dt><dd>אני עוזר ליצרנים, ליבואנים ולמפיצים של מכונות מילוי ואריזה להחזיר הזמנות של חלפים, שירות ושדרוגים מלקוחות שכבר קנו מהם מכונות. אני עושה את העבודה בשבילם.</dd></div>
+    <div><dt>למי</dt><dd>יצרנים, יבואנים ומפיצים של מכונות מילוי ואריזה וקווי אריזה (מילוי, סגירה ופקקים, תיוג, קרטונים, עטיפה ושרינק, משטוח, שקילה וגלאי מתכות, וציוד לתעשיית המזון והתרופות), שיש להם מכונות אצל לקוחות, שירות טכני ומחסן חלפים.</dd></div>
     <div><dt>המצב היום</dt><dd>המכירות עסוקות במכונות חדשות. החלפים והשירות מחכים שהלקוח יתקשר. לקוח שמפסיק להתקשר נעלם: אנשי קשר מתחלפים, מכונות נמכרות הלאה, וחלפים נקנים אצל מישהו אחר. המידע מפוזר בין ה־ERP, אקסלים והראש של העובדים, ולכן אף אחד לא רואה מי נעלם.</dd></div>
     <div><dt>מה אני עושה</dt><dd><ol>
       <li>מוצא בנתונים שלהם את הלקוחות שנעלמו (בלי הזמנת חלפים או שירות 18–24 חודשים).</li>
@@ -466,16 +513,16 @@ Eyal</div>
     <div><dt>התוצאה</dt><dd>הזמנות חתומות וכסף שנכנס מלקוחות שכבר יש להם, בלי אנשי מכירות חדשים ובלי תוכנה חדשה. היעד ל־90 יום נקבע מהנתונים שלהם, אחרי הבדיקה.</dd></div>
     <div><dt>מחיר</dt><dd>בדיקה של שבועיים: 6,000 ₪ (<span class="ltr">$2,000</span> בארה״ב), מתקזזת אם ממשיכים. אחר כך 15,000 ₪ לחודש (<span class="ltr">$5,000</span> בארה״ב), התחייבות לשלושה חודשים.</dd></div>
     <div><dt>שווקים</dt><dd>ארה״ב היא השוק העיקרי. ישראל נועדה ללקוח ראשון משלם ולמקרה הצלחה. עובדים בשניהם במקביל.</dd></div>
-    <div><dt>לטווח ארוך</dt><dd>אותו שירות לחברות ציוד תעשייתי נוספות. מכונות אריזה הן התחום הראשון.</dd></div>
+    <div><dt>לטווח ארוך</dt><dd>אותו שירות לחברות ציוד תעשייתי נוספות. מכונות מילוי ואריזה הן התחום הראשון.</dd></div>
     <div><dt>סטטוס</dt><dd>השערה שנבדקת (ביטחון של כ־60%–65%). מבחן 60 הימים בסוף המסמך מכריע.</dd></div>
   </dl>
 
   <p><strong>במשפט אחד:</strong></p>
-  <blockquote><p>״אני עוזר לחברות מכונות אריזה להחזיר לקוחות שהפסיקו להזמין חלפים ושירות. אני מוצא אותם בנתונים שלכם, פונה אליהם בשמכם, ומעביר לצוות שלכם בקשות מוכנות להצעת מחיר.״</p></blockquote>
+  <blockquote><p>״אני עוזר לחברות שמוכרות מכונות מילוי ואריזה להחזיר לקוחות שהפסיקו להזמין חלפים ושירות. אני מוצא אותם בנתונים שלכם, פונה אליהם בשמכם, ומעביר לצוות שלכם בקשות מוכנות להצעת מחיר.״</p></blockquote>
   <p class="note">פותחים בהזמנות, לא ב־AI. לא מציגים את זה כסוכנות אוטומציה, שיחות AI, ניקוי CRM, לידים או תוכנה. תוכנה נותנת להם עוד כלי להפעיל; אני מפעיל את העבודה יחד עם הצוות שלהם.</p>
 
   <h2 id="he-who">1. למי פונים</h2>
-  <p>יצרן, מפיץ מתמחה או יבואן־אינטגרטור של מכונות אריזה או עיבוד, שיש לו מכונות אצל לקוחות ומחלקת חלפים או שירות פעילה.</p>
+  <p>יצרן, מפיץ מתמחה או יבואן־אינטגרטור של מכונות מילוי ואריזה, שיש לו מכונות אצל לקוחות ומחלקת חלפים או שירות פעילה.</p>
   <h3>מתאים</h3>
   <ul>
     <li>בערך 25–100 עובדים (אפשר לבדוק גם 20–150).</li>
@@ -485,15 +532,28 @@ Eyal</div>
     <li>יש בחברה מי שמאמת צורך טכני, מתמחר, מוציא הצעה וסוגר.</li>
     <li>לצוות יש יכולת לספק אם הביקוש עולה.</li>
   </ul>
+  <h3>על אילו מכונות להתמקד</h3>
+  <p>מתחילים איפה שחלקים נשחקים באופן צפוי וכל הזמנה שווה כסף אמיתי:</p>
+  <ul>
+    <li><strong>מכונות מילוי ופקקים</strong> (אטמים, שסתומים, ראשי מילוי, ראשי סגירה).</li>
+    <li><strong>מכונות שקיות ועטיפה</strong> (VFFS ופלואו־פאק: לסתות הלחמה, סכינים, גופי חימום).</li>
+    <li><strong>מכונות תרמופורמינג וסגירת מגשים</strong> (תבניות, לוחות הלחמה, החלפות פורמט).</li>
+    <li><strong>מכונות תיוג</strong> (מערכות דבק, גלגלות, בקרים שיוצאים מייצור).</li>
+    <li><strong>מכונות קרטונים ואריזה לקרטונים</strong> (חלקי פורמט לגדלים חדשים, תופסנים, כוסות ואקום).</li>
+    <li><strong>משקלים בודקים, גלאי מתכות ובדיקת רנטגן</strong> (בדיקות והסמכות תקופתיות, חוזי שירות).</li>
+    <li><strong>ציוד לתעשיית המזון</strong> כמו פורסות, מכונות מינון ומערבלים (להבים, חלקי בלאי, תחזוקה היגיינית).</li>
+  </ul>
+  <p class="note">עדיפות נמוכה: מכונות מתיחה (סטרץ׳), מכונות הדבקת סרט לקרטונים, מסועים פשוטים ומכונות הלחמה שולחניות. החלפים זולים וההזמנות קטנות.</p>
   <h3>לא מתאים</h3>
   <ul>
-    <li>רק מעט מכונות בשטח.</li>
-    <li>הזמנות קטנות מדי כדי להצדיק את העלות.</li>
+    <li><strong>מעט מדי מכונות:</strong> פחות מכ־200 מכונות מזוהות בשטח, או פחות מכ־100 לקוחות.</li>
+    <li><strong>הזמנות קטנות מדי:</strong> הזמנת חלפים או שירות ממוצעת מתחת לכ־3,000 ₪. החשבון: שלושה חודשים עולים ללקוח כ־51,000 ₪ (בדיקה ועוד שלושה חודשי ביצוע). כדי שזה ישתלם בבירור, הוא צריך רווח גולמי של כ־150,000 ₪, כלומר הזמנות של כ־300,000 ₪. בהזמנה של 3,000 ₪ זה 100 הזמנות ב־90 יום, וזה לא ריאלי.</li>
     <li>אין קשר ישיר ומתמשך עם לקוח הקצה.</li>
     <li>היצרן או צד שלישי מחזיקים בפועל את החלפים והשירות.</li>
     <li>אין נתונים שימושיים ואין דרך סבירה לשחזר אותם.</li>
     <li>יש כבר צוות שעושה את זה טוב.</li>
   </ul>
+  <p class="note">שני הספים הם הנחות עבודה. מעדכנים אותם אחרי הבדיקות הראשונות.</p>
   <h3>מי מחליט</h3>
   <p>בחברה קטנה: הבעלים או המנכ״ל. בחברה גדולה יותר: מנהל שירות, מנהל חלפים או המנהל המסחרי שאחראי על ההכנסות מלקוחות קיימים.</p>
   <p class="note">הסף של 500 מכונות הוא רק הנחת עבודה. איכות הנתונים, הקשר עם הלקוחות, גודל ההזמנות ומי שסוגר חשובים יותר.</p>
@@ -516,143 +576,7 @@ Eyal</div>
   </ul>
   <p>רק אחרי שזה עובד: חוזי שירות שלא חודשו, סיום אחריות, חלקי בלאי, תחזוקה מונעת, שדרוגים ורטרופיט, רכיבים שיצאו מייצור, החלפת מכונה.</p>
 
-  <h2 id="he-cases">4. דוגמאות</h2>
-  <p class="note">החברות, המספרים והמחירים מומצאים לצורך המחשה. אצל לקוח אמיתי משתמשים רק במספרים שנבדקו בבדיקה. המשפט המצוטט בכל דוגמה הוא ההודעה <strong>שהלקוח שלהם</strong> יקבל.</p>
-
-  <p class="group">לקמפיין הראשון</p>
-  <div class="case">
-    <h3>1. יצרן מכונות מילוי: לקוחות הפסיקו להזמין חלקי בלאי</h3>
-    <p class="tag">ארה״ב · קמפיין ראשון</p>
-    <dl>
-      <dt>המצב</dt><dd>יצרן מאוהיו עם 60 עובדים מכר כ־800 מכונות מילוי. ל־300 מהן אין הזמנת חלפים מהיצרן כבר שנתיים. ערכת אטמים ושסתומים עולה <span class="ltr">$3,000–6,000</span>.</dd>
-      <dt>מה אני עושה</dt><dd>מחבר מכונות להזמנות, מוריד לקוחות שאסור לפנות אליהם, מאמת אנשי קשר ושולח את ההודעה המאושרת. כל ״כן״ עובר למנהל החלפים.</dd>
-      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״מכונת המילוי שלכם מדגם X הותקנה ב־2019. לפי הרישומים שלנו, ערכת האטמים לא הוזמנה מאיתנו מאז 2023. המכונה עדיין עובדת? נשמח לשלוח הצעת מחיר לערכה חדשה.״</p></blockquote></dd>
-      <dt>המחשה</dt><dd>40 הזמנות × <span class="ltr">$5,000</span> = <span class="ltr">$200,000</span>.</dd>
-      <dt>לשים לב</dt><dd>זה שלא הזמינו מהיצרן לא אומר שלא החליפו. אולי קנו במקום אחר. לכן אומרים ״לא הוזמנה מאיתנו״, אף פעם לא ״לא הוחלפה״.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>2. לקוח הפסיק להזמין בקצב הרגיל שלו</h3>
-    <p class="tag">ארה״ב או ישראל · קמפיין ראשון</p>
-    <dl>
-      <dt>המצב</dt><dd>לקוח שהזמין ערכת בלאי כל 10–14 חודשים פספס שתי הזמנות צפויות. זה סימן חזק יותר מכלל אחד לכולם.</dd>
-      <dt>מה אני עושה</dt><dd>מאמת את המכונה ואת איש הקשר, שואל אם היא עדיין עובדת, ומציע בדיקת חלפים או ביקור שירות. כל המלצה טכנית באישור הלקוח.</dd>
-      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״בדרך כלל אתם מזמינים ערכת בלאי למכונת הפקקים פעם בשנה בערך. מאז מרץ 2024 לא ראינו הזמנה. לבדוק מה צריך להחליף לפני שזה עוצר את הקו?״</p></blockquote></dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>3. יבואן ישראלי של מכונות אריזה למזון: לקוח ההוכחה</h3>
-    <p class="tag">ישראל · קמפיין ראשון · לקוח ראשון משלם ומקרה הצלחה</p>
-    <dl>
-      <dt>המצב</dt><dd>30 עובדים, חמישה טכנאים, כ־400 מכונות במפעלי מזון. ייצוא מה־ERP מראה 120 לקוחות או מכונות בלי שירות או חלפים 18 חודשים. זו רשימה לבדיקה, לא רשימת תפוצה אוטומטית.</dd>
-      <dt>מה אני עושה</dt><dd>בודק לאילו מותגים ולקוחות היבואן רשאי לפנות, מדרג, פונה למנהלי האחזקה בשם היבואן ובודק עניין בבדיקה, תחזוקה מונעת, חלפים או חוזה שנתי. מנהל השירות מאשר, מתמחר וסוגר.</dd>
-      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״מכונת האריזה שלכם מדגם X קיבלה אצלנו טיפול אחרון באפריל 2024. רוצים לתאם ביקור תחזוקה לפני העונה העמוסה?״</p></blockquote></dd>
-      <dt>המחשה</dt><dd>25 מפעלים חוזרים, בשווי כולל של 400,000 ₪ בשנה. מתועד כמו שצריך, זה מקרה ההצלחה לשוק האמריקאי.</dd>
-      <dt>לבדוק קודם</dt><dd>שהיבואן באמת מחזיק בקשר השירות, שנתוני המכונות עדכניים, ושלצוות יש זמן לבצע.</dd>
-    </dl>
-  </div>
-
-  <p class="group">אחרי שהקמפיין הראשון עובד</p>
-  <div class="case">
-    <h3>4. מכונת תיוג עם בקר שיצא מייצור</h3>
-    <p class="tag">שדרוג מתוכנן של PLC או מסך הפעלה</p>
-    <dl>
-      <dt>הסימן</dt><dd>התצורה המותקנת ידועה, ומאומת שהבקר כבר לא מיוצר או נתמך.</dd>
-      <dt>מה אני עושה</dt><dd>בונה רשימת מועמדים. המהנדס של החברה מאשר את התצורה ואת השדרוג לפני שפונים ללקוח.</dd>
-      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״מכונת התיוג שלכם בקו 2 עובדת עם בקר שהיצרן כבר לא תומך בו. אם הוא יתקלקל, יהיה קשה להשיג חלק. רוצים שהמהנדס שלנו יתכנן שדרוג בזמן שנוח לכם?״</p></blockquote></dd>
-      <dt>המחשה</dt><dd>8 פרויקטים × <span class="ltr">$25,000</span> = <span class="ltr">$200,000</span>.</dd>
-      <dt>לשים לב</dt><dd>לא מנחשים את הבקר לפי גיל המכונה. בודקים את התצורה בפועל ואת סטטוס התמיכה העדכני.</dd>
-      <dt>הטון</dt><dd>מציעים לתכנן מראש. בלי להפחיד ובלי טענה טכנית שלא נבדקה.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>5. לקוח עובר לבקבוק או לקרטון בגודל חדש</h3>
-    <p class="tag">חלקי פורמט והתאמת המכונה</p>
-    <dl>
-      <dt>הסימן</dt><dd>רק אינדיקציה אמיתית: השקה שפורסמה, שינוי אריזה, פנייה קודמת או קריאת שירות. לקוח שקט לבד לא מוכיח כלום.</dd>
-      <dt>מה אני עושה</dt><dd>מחבר את המידות החדשות לדגם המותקן, אוסף את דרישות הייצור ומעביר למהנדס בקשה מסודרת לבדיקת התאמה ולהצעה על חלקי פורמט.</dd>
-      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״ראינו שאתם משיקים פחית חדשה של 330 מ״ל. מכונת הקרטונים שלכם יכולה בדרך כלל לעבוד איתה עם סט חלקי פורמט. לבדוק לכם התאמה?״</p></blockquote></dd>
-      <dt>המחשה</dt><dd>10 הזמנות × <span class="ltr">$15,000</span> = <span class="ltr">$150,000</span>, ולפעמים גם שיחה על מכונה חדשה.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>6. חוזה שירות הסתיים ולא חודש</h3>
-    <p class="tag">חידוש או תוכנית תחזוקה מעודכנת</p>
-    <dl>
-      <dt>הסימן</dt><dd>תאריך סיום ידוע, המכונה עדיין עובדת, ואין חידוש בתהליך.</dd>
-      <dt>מה אני עושה</dt><dd>מוודא שהחברה עדיין רשאית לתת שירות ושהבעלים עדכני, מסכם מה כלל החוזה הקודם ומציע חידוש. צוות השירות קובע היקף ומחיר.</dd>
-      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״חוזה השירות שלכם למכונת המשטוח מדגם X הסתיים ביוני. לשלוח לכם תנאי חידוש, או תוכנית תחזוקה מעודכנת?״</p></blockquote></dd>
-      <dt>למה זה חשוב</dt><dd>הכנסה חוזרת, לא הזמנה חד־פעמית.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>7. אין במפעל חלפים קריטיים</h3>
-    <p class="tag">רשימת חלפים לפי דגם</p>
-    <dl>
-      <dt>הסימן</dt><dd>הדגם או המספר הסידורי מקושרים לרשימת חלקים מאושרת, ובהיסטוריה אין קנייה של חלקים שעוצרים קו או שלוקח שבועות להביא.</dd>
-      <dt>מה אני עושה</dt><dd>מומחה החלפים של החברה מאשר את הרשימה. אני בודק עם המפעל מה כבר יש במלאי ומה תוכנית הייצור.</dd>
-      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״במכונת המילוי שלכם מדגם X יש חמישה חלקים שעוצרים את הקו ולוקח שבועות להביא. אצלנו לא רשום שיש לכם אחד מהם. לשלוח רשימה מומלצת והצעת מחיר?״</p></blockquote></dd>
-      <dt>למה זה חשוב</dt><dd>למפעל: פחות סיכון להשבתה. ליצרן: הזמנת חלפים מתוכננת במקום קנייה בלחץ אחרי תקלה.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>8. תחזוקה לפני העונה העמוסה</h3>
-    <p class="tag">פנייה מתוזמנת</p>
-    <dl>
-      <dt>הסימן</dt><dd>תקופת עומס ידועה מתקרבת, ואין תיעוד עדכני של בדיקה או תחזוקה מונעת למכונה.</dd>
-      <dt>מה אני עושה</dt><dd>מציע חלון זמן לבדיקה, תחזוקה וחלפים מומלצים. קודם מוודא שיש מספיק טכנאים וחלקים.</dd>
-      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״העונה העמוסה שלכם מתחילה בנובמבר, והתחזוקה המונעת האחרונה אצלנו הייתה לפני 14 חודשים. לקבוע בדיקה באוקטובר?״</p></blockquote></dd>
-      <dt>למה זה עובד</dt><dd>הלקוח מבין מיד למה פונים עכשיו: יש תאריך ברור וסיבה מעשית לטפל מראש.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>9. צוות אחזקה חדש</h3>
-    <p class="tag">הדרכה שמחזירה גם את הקשר</p>
-    <dl>
-      <dt>הסימן</dt><dd>איש קשר חדש מאומת, הרחבת מפעל, גיוס עובדים או קריאת שירות שמראה שאנשים חדשים מפעילים את הציוד.</dd>
-      <dt>מה אני עושה</dt><dd>מציע הדרכת מפעילים, תחזוקה או איתור תקלות לדגם, ובאותה הזדמנות מעדכן אנשי קשר ונתוני מכונה.</dd>
-      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״הבנו שיש לכם מנהל אחזקה חדש במפעל. תעזור הדרכה של חצי יום על מכונת העטיפה מדגם X?״</p></blockquote></dd>
-      <dt>למה זה חשוב</dt><dd>הכנסה מהדרכה עכשיו, וקשר שירות מחודש לקראת הצורך הבא.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>10. שדרוג יעילות מוכח</h3>
-    <p class="tag">אנרגיה, מים, פסולת, מהירות או איכות</p>
-    <dl>
-      <dt>הסימן</dt><dd>ליצרן יש שדרוג מאושר לסדרת דגמים, עם תועלת מתועדת, ואפשר לזהות אילו מכונות מתאימות.</dd>
-      <dt>מה אני עושה</dt><dd>מדרג לקוחות שמתאימים טכנית, אוסף איך הם מפעילים את הקו ומעביר להנדסה לחישוב חיסכון והצעה. היצרן, לא אני, מאמת התאמה וחיסכון.</dd>
-      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״יש לנו עכשיו שדרוג סרוו לדגם X שמקצר החלפות פורמט. שתי המכונות שלכם מתאימות. רוצים שהמהנדס שלנו יעריך כמה זה יחסוך בקו שלכם?״</p></blockquote></dd>
-      <dt>למה זה חשוב</dt><dd>העסקה יכולה להיות גדולה מהזמנת חלפים.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>11. מכונה עברה מפעל, נמכרה או קרובה להחלפה</h3>
-    <p class="tag">התקנה מחדש, העברה, שדרוג או מכונה חדשה</p>
-    <dl>
-      <dt>הסימן</dt><dd>שינוי מאומת של בעלים או מיקום, מכונה משומשת במפעל חדש, או שהצוות הטכני קבע שתיקונים כבר לא משתלמים.</dd>
-      <dt>מה אני עושה</dt><dd>קודם מעדכן מי מחזיק במכונה ואיפה. אחר כך מציע התקנה מחדש, בדיקה, תמיכה במעבר, הדרכה, חלפים, שדרוג או בדיקת כדאיות להחלפה.</dd>
-      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״הבנו שמכונת הפקקים שלכם מדגם X עברה למפעל בקריית גת. רוצים שנתקין ונבדוק אותה שם?״</p></blockquote></dd>
-      <dt>למה זה חשוב</dt><dd>עדכון אחד של נתוני המכונה יכול לפתוח כמה מקורות הכנסה, אחרי שאומתו הבעלות והמצב הטכני.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>12. חברה שלא מתאימה</h3>
-    <p class="tag">8 עובדים, 60 מכונות, אין נתונים</p>
-    <dl>
-      <dt>למה לא</dt><dd>מעט מדי מכונות, הידע רק בראש של הבעלים, ואין מי שיאמת צורך, יתמחר ויבצע.</dd>
-      <dt>מה אני עושה</dt><dd>אם זה ברור כבר בשיחה הראשונה, אומר שזה לא מתאים. בדיקה בתשלום מוצדקת רק כשאיכות הנתונים או הכדאיות באמת לא ברורות. היכולת להגיד ״לא״ היא מה שהופך את <span class="ltr">$5,000</span> לחודש לאמין.</dd>
-    </dl>
-  </div>
-  <h3>מה יש בכל דוגמה טובה</h3>
-  <ol>
-    <li>קשר קיים: החברה מכרה את המכונה או נותנת לה שירות.</li>
-    <li>סיבה אמיתית לפנות: תאריך, דפוס קנייה, תצורה או אירוע מאומת.</li>
-    <li>הצעה מאושרת: הצוות הטכני והמסחרי קובע מה מותר להציע.</li>
-    <li>מדידה עד הכסף: פנייה, הצעת מחיר, הזמנה, כסף שנכנס.</li>
-  </ol>
-  <p class="note">הענף מוכיח שמקורות ההכנסה קיימים (יצרנים גדולים כמו <a href="https://www.krones.com/en/products/lifecycle-service.php">Krones</a> ו־<a href="https://www.syntegon.com/hubfs/02_downloads/horizontal-flow-wrapper-en-2026.pdf">Syntegon</a> מוכרים חלפים, חוזי שירות, שדרוגים והדרכות). הוא לא מוכיח את שיעורי ההצלחה בדוגמאות.</p>
-
-  <h2 id="he-work">5. איך העבודה מתנהלת</h2>
+  <h2 id="he-work">4. איך העבודה מתנהלת</h2>
   <ol>
     <li><strong>שיחת התאמה.</strong> כמה מכונות בשטח, איך מטפלים היום בלקוחות קיימים, אילו נתונים יש, גודל ההזמנות ומי מחליט. לא הדגמת AI.</li>
     <li><strong>בדיקה בתשלום, שבועיים.</strong> בודקים את איכות הנתונים, מגדירים מה זה ״לא פעיל״, מוצאים לקוחות שאפשר להגיע אליהם, מעריכים את ההזדמנות ובוחרים קבוצה ראשונה. בסוף: ממשיכים או עוצרים.</li>
@@ -670,7 +594,7 @@ Eyal</div>
   </table></div>
   <p class="note">AI עוזר בחיבור רשומות לא אחידות, מחקר, התאמת ההודעות, מיון תשובות, ניסוח המשך ודיווח. למי מותר לפנות, מה המחיר ומה מותר להבטיח נקבעים לפי כללים ובאישור אנושי.</p>
 
-  <h2 id="he-price">6. מחיר</h2>
+  <h2 id="he-price">5. מחיר</h2>
   <div class="table-wrap"><table>
     <tr><th>שלב</th><th>ישראל</th><th>ארה״ב</th></tr>
     <tr><td>בדיקת נתונים והזדמנות, שבועיים</td><td>6,000 ₪</td><td><span class="ltr">$2,000</span></td></tr>
@@ -680,9 +604,11 @@ Eyal</div>
     <li>מחיר הבדיקה מתקזז מהביצוע, אם זה כתוב בהצעה.</li>
     <li>אין הנחות אוטומטיות. תנאי מיוחד ללקוח הראשון חייב לקנות משהו ממשי: גישה מהירה לנתונים, זמן של מקבל ההחלטות ואישור לתעד את התוצאות.</li>
     <li><strong>נקודת יציאה:</strong> אם הבדיקה לא מוצאת הזדמנות אמינה וגדולה מספיק, עוצרים אחרי שבועיים. הלקוח עדיין מקבל תמונה ברורה של הנתונים והפוטנציאל.</li>
+      <li><strong>מחיר אחד בזמן המבחן.</strong> כרגע כל חברה משלמת אותו דבר, כדי שאפשר יהיה להשוות תוצאות. המחיר לא יורד לחברות קטנות; כללי ההתאמה מסננים אותן.</li>
+    <li><strong>אחרי המבחן, מחיר לפי גודל.</strong> בסיס מכונות גדול בהרבה (בערך 2,000 מכונות ומעלה, כמה מותגים או מדינות) מקבל הצעה מותאמת. הלקוח הישראלי הראשון יכול לקבל מחיר של שותף ראשון, בתמורה לאישור לפרסם את מקרה ההצלחה.</li>
   </ul>
 
-  <h2 id="he-sell">7. איך מוכרים</h2>
+  <h2 id="he-sell">6. איך מוכרים</h2>
   <p>לפנייה הראשונה יש מטרה אחת: שיחה של 20 דקות. את הבדיקה בתשלום מציעים רק אחרי שהם מזהים את הבעיה ונראה שיש נתונים לעבוד איתם.</p>
   <p>הרצף: מייל 1 ← שיחה למחרת ← לינקדאין ← מייל 2 (יום 3) ← שיחה (יום 6) ← הודעה בלינקדאין (יום 8) ← מייל 3 (יום 11) ← מייל 4 (יום 16). הכל נרשם ב־CRM, עם תזכורת אחת ביומן לכל ליד לשלב הבא.</p>
 
@@ -753,6 +679,172 @@ Eyal</div>
     <li>איזו תוצאה תגרום לכם להגיד שפיילוט של 90 יום הצליח?</li>
   </ul>
 
+  <h2 id="he-cases">7. דוגמאות</h2>
+  <p class="note">החברות, המספרים והמחירים מומצאים לצורך המחשה. אצל לקוח אמיתי משתמשים רק במספרים שנבדקו בבדיקה. הטקסט המצוטט בכל דוגמה הוא ההודעה <strong>שהלקוח שלהם</strong> יקבל, בשם החברה.</p>
+
+  <p class="group">לקמפיין הראשון</p>
+
+  <div class="case">
+    <p class="case-label">דוגמה א׳ · ארה״ב · קמפיין ראשון</p>
+    <h3>יצרן מכונות מילוי: לקוחות הפסיקו להזמין חלקי בלאי</h3>
+    <dl>
+      <dt>הרקע</dt><dd>חברה מאוהיו עם 60 עובדים מייצרת מכונות מילוי לבקבוקים (ממלאות משקאות, רטבים או שמפו). ב־15 שנה היא מכרה כ־800 מכונות. בכל מכונת מילוי יש חלקי בלאי: אטמים, טבעות גומי ושסתומים קטנים בראשי המילוי. הם נשחקים וגורמים לנזילות או למילוי לא מדויק, ולכן מחליפים אותם בערך פעם בשנה, בערכה שעולה 3,000–6,000 דולר.</dd>
+      <dt>מה קורה היום</dt><dd>צוות החלפים עונה לטלפון ושולח מה שהלקוח מבקש. אף אחד לא מסתכל על המכונות שהפסיקו להזמין. ייצוא מה־ERP (המערכת של ההזמנות, החשבוניות והמלאי) מראה 300 מכונות בלי הזמנת חלפים כבר שנתיים.</dd>
+      <dt>מה אני עושה</dt><dd><ol>
+        <li>מחבר כל מכונה ללקוח ולהזמנות שלה.</li>
+        <li>מוריד לקוחות שאסור לפנות אליהם (מחלוקת פתוחה, ביקשו להסיר, לקוחות שהחברה מחריגה).</li>
+        <li>מוצא ומאמת את איש האחזקה הנוכחי בכל מפעל.</li>
+        <li>שולח את ההודעה המאושרת בשם החברה, ומתקשר כשזה עוזר.</li>
+        <li>מעביר כל ״כן״ למנהל החלפים, עם הדגם, המספר הסידורי ומה הלקוח צריך.</li>
+      </ol></dd>
+      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״מכונת המילוי שלכם מדגם X הותקנה ב־2019. לפי הרישומים שלנו, ערכת האטמים לא הוזמנה מאיתנו מאז 2023. המכונה עדיין עובדת? נשמח לשלוח הצעת מחיר לערכה חדשה.״</p></blockquote></dd>
+      <dt>המחשה</dt><dd>אם 40 מתוך ה־300 יזמינו ערכה ב־5,000 דולר, זה 200,000 דולר.</dd>
+      <dt>לשים לב</dt><dd>זה שלא הזמינו מהיצרן לא אומר שלא החליפו. אולי קנו במקום אחר. לכן ההודעה אומרת ״לא הוזמנה מאיתנו״, אף פעם לא ״לא הוחלפה״. לפני שמתייחסים לשנתיים כסימן, בודקים מה מחזור ההחלפה הרגיל בכל דגם.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">דוגמה ב׳ · ארה״ב או ישראל · קמפיין ראשון</p>
+    <h3>לקוח הפסיק להזמין בקצב הרגיל שלו</h3>
+    <dl>
+      <dt>הרקע</dt><dd>מפעל מזון קפוא קנה שתי מכונות פקקים (מכונות שסוגרות פקקים על בקבוקים) והזמין ערכת בלאי כל 10–14 חודשים במשך שש שנים. ואז ההזמנות נעצרו. עכשיו הוא פספס שתי הזמנות צפויות.</dd>
+      <dt>למה זה סימן חזק</dt><dd>ההיסטוריה של הלקוח עצמו אומרת שמשהו השתנה: מנהל אחזקה חדש, ספק חלפים זול יותר, או מכונה שהפסיקה לעבוד. זה משכנע יותר מכלל אחד לכל הלקוחות.</dd>
+      <dt>מה אני עושה</dt><dd>מאמת את המכונה ואת איש הקשר, שואל אם היא עדיין עובדת, ומציע בדיקת חלפים או ביקור שירות. כל המלצה טכנית באישור הלקוח.</dd>
+      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״בדרך כלל אתם מזמינים ערכת בלאי למכונת הפקקים פעם בשנה בערך. מאז מרץ 2024 לא ראינו הזמנה. לבדוק מה צריך להחליף לפני שזה עוצר את הקו?״</p></blockquote></dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">דוגמה ג׳ · ישראל · קמפיין ראשון · לקוח ההוכחה</p>
+    <h3>יבואן ישראלי של מכונות מילוי ואריזה</h3>
+    <dl>
+      <dt>הרקע</dt><dd>חברה ישראלית מייבאת מכונות מילוי ואריזה מיצרנים באיטליה ובגרמניה ומתקינה אותן במפעלי מזון. 30 עובדים, חמישה טכנאים, כ־400 מכונות מותקנות.</dd>
+      <dt>מה קורה היום</dt><dd>הטכנאים עסוקים בתקלות דחופות. חלק מהמפעלים עברו לטכנאי עצמאי זול יותר ומזמינים חלפים ישר מחו״ל. רשימת ההתקנות נמצאת בפריוריטי (ה־ERP שלהם), אבל אף אחד לא עובר עליה. הייצוא מראה 120 לקוחות או מכונות בלי שירות או חלפים 18 חודשים. זו רשימה לבדיקה, לא רשימת תפוצה אוטומטית.</dd>
+      <dt>מה אני עושה</dt><dd>בודק לאילו מותגים ולקוחות היבואן רשאי לפנות (לפעמים היצרן או יבואן אחר מחזיק בזכויות השירות), מדרג את הרשומות, פונה למנהלי האחזקה במפעלים בשם היבואן, ובודק עניין בבדיקה, תחזוקה מונעת, חלפים או חוזה שירות שנתי. מנהל השירות מאשר, מתמחר וסוגר.</dd>
+      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״מכונת האריזה שלכם מדגם X קיבלה אצלנו טיפול אחרון באפריל 2024. רוצים לתאם ביקור תחזוקה לפני העונה העמוסה?״</p></blockquote></dd>
+      <dt>המחשה</dt><dd>אם 25 מפעלים יחזרו, בשווי כולל של 400,000 ₪ בשנה, זה יהיה מקרה ההצלחה המתועד לשיחות בארה״ב.</dd>
+      <dt>לבדוק קודם</dt><dd>שהיבואן באמת מחזיק בקשר השירות, שנתוני המכונות עדכניים, ושלצוות יש זמן לעבודה הנוספת.</dd>
+    </dl>
+  </div>
+
+  <p class="group">אחרי שהקמפיין הראשון עובד</p>
+
+  <div class="case">
+    <p class="case-label">דוגמה ד׳ · שדרוג בקר מתוכנן</p>
+    <h3>מכונת תיוג עם בקר שכבר לא מיוצר</h3>
+    <dl>
+      <dt>הרקע</dt><dd>מכונות תיוג שנבנו לפני 12–18 שנה עובדות הרבה פעמים עם בקר (PLC: המחשב התעשייתי הקטן שמפעיל את המכונה) ומסך הפעלה (HMI) שהיצרן שלהם כבר לא מייצר ולא תומך בהם. כשאחד מהם מתקלקל, לוקח שבועות למצוא חלופה, והקו עומד.</dd>
+      <dt>הסימן</dt><dd>החברה יודעת בדיוק איזה בקר יש בכל מכונה ספציפית (מתיק הבנייה, מהמספר הסידורי או מדוח של טכנאי), ויצרן הבקר אישר שהוא הפסיק לייצר אותו.</dd>
+      <dt>מה אני עושה</dt><dd>בונה רשימה של המכונות האלה. המהנדס של החברה מאשר את השדרוג לכל מכונה (רטרופיט: שדרוג של מכונה קיימת במקום להחליף אותה) לפני שפונים ללקוח.</dd>
+      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״מכונת התיוג שלכם בקו 2 עובדת עם בקר שהיצרן כבר לא תומך בו. אם הוא יתקלקל, יהיה קשה להשיג חלק. רוצים שהמהנדס שלנו יתכנן שדרוג בזמן שנוח לכם?״</p></blockquote></dd>
+      <dt>המחשה</dt><dd>8 פרויקטים של שדרוג ב־25,000 דולר כל אחד = 200,000 דולר.</dd>
+      <dt>הטון</dt><dd>מציעים לתכנן מראש. בלי להפחיד ובלי טענה טכנית שלא נבדקה. אף פעם לא מנחשים את הבקר לפי גיל המכונה.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">דוגמה ה׳ · חלקי פורמט</p>
+    <h3>לקוח עובר לבקבוק או לקרטון בגודל חדש</h3>
+    <dl>
+      <dt>הרקע</dt><dd>מכונת קרטונים (מכונה שמכניסה מוצרים לקרטונים) מכוונת לגדלים מסוימים. כשלקוח משיק בקבוק או קופסה בגודל חדש, המכונה צריכה חלקי פורמט: מסילות, גלגלים וכלים שמותאמים לגודל החדש, בדרך כלל 8,000–25,000 דולר. הרבה לקוחות לא יודעים שאפשר להתאים את המכונה הקיימת, ומתחילים לחפש מכונה חדשה אצל מישהו אחר.</dd>
+      <dt>הסימן</dt><dd>רק אינדיקציה אמיתית: השקה שפורסמה, שינוי אריזה, פנייה קודמת או קריאת שירות. לקוח שקט לבד לא מוכיח כלום.</dd>
+      <dt>מה אני עושה</dt><dd>מחבר את המידות החדשות לדגם המותקן, אוסף את דרישות הייצור, ומעביר למהנדס בקשה מסודרת לבדיקת התאמה ולהצעה על חלקי פורמט.</dd>
+      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״ראינו שאתם משיקים פחית חדשה של 330 מ״ל. מכונת הקרטונים שלכם יכולה בדרך כלל לעבוד איתה עם סט חלקי פורמט. לבדוק לכם התאמה?״</p></blockquote></dd>
+      <dt>המחשה</dt><dd>10 הזמנות ב־15,000 דולר = 150,000 דולר, ולפעמים גם שיחה על מכונה חדשה.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">דוגמה ו׳ · חוזי שירות</p>
+    <h3>חוזה שירות הסתיים ולא חודש</h3>
+    <dl>
+      <dt>הרקע</dt><dd>חוזה שירות הוא הסכם שנתי: המפעל משלם סכום קבוע ומקבל ביקורים מתוכננים, מענה מהיר יותר ולפעמים הנחה על חלפים. כשהוא נגמר ואף אחד לא מתקשר, הלקוח בדרך כלל פשוט לא מחדש.</dd>
+      <dt>הסימן</dt><dd>תאריך סיום ידוע, המכונה עדיין עובדת, ואין חידוש בתהליך.</dd>
+      <dt>מה אני עושה</dt><dd>מוודא שהחברה עדיין רשאית לתת שירות למכונה ושהבעלים עדכני, מסכם מה כלל החוזה הקודם ומציע חידוש. צוות השירות קובע היקף ומחיר.</dd>
+      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״חוזה השירות שלכם למכונת המשטוח מדגם X הסתיים ביוני. לשלוח לכם תנאי חידוש, או תוכנית תחזוקה מעודכנת?״</p></blockquote></dd>
+      <dt>למה זה חשוב</dt><dd>הכנסה שחוזרת כל שנה, לא הזמנה חד־פעמית.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">דוגמה ז׳ · חלפים קריטיים</p>
+    <h3>אין במפעל חלפים קריטיים</h3>
+    <dl>
+      <dt>הרקע</dt><dd>יש חלקים שכשהם מתקלקלים הם עוצרים את כל הקו, ולוקח שבועות להביא אותם (מנועים מיוחדים, בקרי מנוע, רכיבים שמיוצרים לפי הזמנה). רשימת החלקים של המכונה (BOM: כל החלקים שיש במכונה הספציפית) מראה בדיוק אילו מהם חשובים בכל דגם.</dd>
+      <dt>הסימן</dt><dd>הדגם או המספר הסידורי מקושרים לרשימת חלקים מאושרת, ובהיסטוריית ההזמנות לא נקנה אף אחד מהם.</dd>
+      <dt>מה אני עושה</dt><dd>מומחה החלפים של החברה מאשר את הרשימה. אני בודק עם המפעל מה כבר יש במלאי ומה תוכנית הייצור.</dd>
+      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״במכונת המילוי שלכם מדגם X יש חמישה חלקים שעוצרים את הקו ולוקח שבועות להביא. אצלנו לא רשום שיש לכם אחד מהם. לשלוח רשימה מומלצת והצעת מחיר?״</p></blockquote></dd>
+      <dt>למה זה חשוב</dt><dd>למפעל: פחות סיכון להשבתה. ליצרן: הזמנת חלפים מתוכננת במקום קנייה בלחץ אחרי תקלה.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">דוגמה ח׳ · תחזוקה מתוזמנת</p>
+    <h3>תחזוקה לפני העונה העמוסה</h3>
+    <dl>
+      <dt>הרקע</dt><dd>להרבה מפעלי מזון ומשקאות יש עונה עמוסה ידועה: קיץ למשקאות, חגים לממתקים. תקלה בתקופה הזאת עולה הכי הרבה. תחזוקה מונעת (בדיקה והחלפת חלקים מתוכננות לפני שמשהו מתקלקל) היא ההצעה הטבעית.</dd>
+      <dt>הסימן</dt><dd>העונה מתקרבת, ואין תיעוד עדכני של בדיקה או תחזוקה מונעת למכונה.</dd>
+      <dt>מה אני עושה</dt><dd>מציע חלון זמן לבדיקה, תחזוקה וחלפים מומלצים. קודם מוודא שיש מספיק טכנאים וחלקים כדי לעמוד בביקוש.</dd>
+      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״העונה העמוסה שלכם מתחילה בנובמבר, והתחזוקה המונעת האחרונה אצלנו הייתה לפני 14 חודשים. לקבוע בדיקה באוקטובר?״</p></blockquote></dd>
+      <dt>למה זה עובד</dt><dd>הלקוח מבין מיד למה פונים עכשיו: יש תאריך ברור וסיבה מעשית לטפל מראש.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">דוגמה ט׳ · הדרכה</p>
+    <h3>צוות אחזקה חדש במפעל</h3>
+    <dl>
+      <dt>הרקע</dt><dd>כשמנהל האחזקה במפעל מתחלף, הידע על המכונה הולך איתו, וגם הקשר עם הספק. אנשים חדשים הרבה פעמים לא יודעים למי להתקשר.</dd>
+      <dt>הסימן</dt><dd>שינוי מאומת של איש קשר, הרחבת מפעל, גיוס עובדים, או קריאת שירות שמראה שאנשים חדשים מפעילים את הציוד.</dd>
+      <dt>מה אני עושה</dt><dd>מציע הדרכת מפעילים, תחזוקה או איתור תקלות לדגם, ובאותה הזדמנות מעדכן את אנשי הקשר ואת נתוני המכונה.</dd>
+      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״הבנו שיש לכם מנהל אחזקה חדש במפעל. תעזור הדרכה של חצי יום על מכונת העטיפה מדגם X?״</p></blockquote></dd>
+      <dt>למה זה חשוב</dt><dd>הכנסה מהדרכה עכשיו, וקשר שירות מחודש לקראת הצורך הבא.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">דוגמה י׳ · שדרוג יעילות</p>
+    <h3>שדרוג מוכח לדגם ותיק</h3>
+    <dl>
+      <dt>הרקע</dt><dd>יצרנים מפתחים שדרוגים לדגמים ותיקים, למשל מנועי סרוו (מנועים חשמליים מדויקים) שמקצרים החלפת פורמט (מעבר של הקו ממוצר אחד לאחר), או חלקים שחוסכים אנרגיה, מים או פסולת.</dd>
+      <dt>הסימן</dt><dd>יש שדרוג מאושר לסדרת דגמים מסוימת, התועלת מתועדת, ואפשר לזהות אילו מכונות מתאימות.</dd>
+      <dt>מה אני עושה</dt><dd>מדרג את הלקוחות שמתאימים טכנית, אוסף איך הם מפעילים את הקו, ומעביר להנדסה לחישוב חיסכון והצעת מחיר. היצרן, לא אני, מאמת את ההתאמה ואת החיסכון.</dd>
+      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״יש לנו עכשיו שדרוג סרוו לדגם X שמקצר החלפות פורמט. שתי המכונות שלכם מתאימות. רוצים שהמהנדס שלנו יעריך כמה זה יחסוך בקו שלכם?״</p></blockquote></dd>
+      <dt>למה זה חשוב</dt><dd>העסקה יכולה להיות גדולה מהזמנת חלפים.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">דוגמה י״א · מכונה שעברה, נמכרה או הזדקנה</p>
+    <h3>מכונה עברה מפעל, נמכרה או קרובה להחלפה</h3>
+    <dl>
+      <dt>הרקע</dt><dd>מכונות עוברות למפעל אחר, נמכרות לחברה אחרת, או מגיעות לגיל שבו תיקונים עולים יותר ממה שהם שווים. לכל מצב מתאימה הצעה אחרת: התקנה מחדש (הקמה ובדיקה של המכונה אחרי מעבר), בדיקה, הדרכה, חלפים, שדרוג או בדיקת כדאיות להחלפה.</dd>
+      <dt>הסימן</dt><dd>שינוי מאומת של בעלים או מיקום, מכונה משומשת במפעל חדש, או שהצוות הטכני קבע שתיקונים כבר לא משתלמים.</dd>
+      <dt>מה אני עושה</dt><dd>קודם מעדכן מי מחזיק במכונה ואיפה היא. אחר כך מציע את מה שמתאים למצב.</dd>
+      <dt>ההודעה ללקוח</dt><dd><blockquote><p>״הבנו שמכונת הפקקים שלכם מדגם X עברה למפעל בקריית גת. רוצים שנתקין ונבדוק אותה שם?״</p></blockquote></dd>
+      <dt>למה זה חשוב</dt><dd>עדכון אחד של נתוני המכונה יכול לפתוח כמה מקורות הכנסה, אחרי שאומתו הבעלות והמצב הטכני.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">דוגמה י״ב · לא מתאים</p>
+    <h3>חברה שלא מתאימה</h3>
+    <dl>
+      <dt>הרקע</dt><dd>8 עובדים, כ־60 מכונות בשטח, הידע רק בראש של הבעלים, ואין מי שיאמת צורך, יוציא הצעות מחיר ויבצע את העבודה.</dd>
+      <dt>מה אני עושה</dt><dd>אם זה ברור כבר בשיחה הראשונה, אומר שזה לא מתאים. בדיקה בתשלום מוצדקת רק כשאיכות הנתונים או הכדאיות באמת לא ברורות.</dd>
+      <dt>למה זה חשוב</dt><dd>היכולת להגיד ״לא״ היא מה שהופך את 5,000 דולר לחודש לאמין.</dd>
+    </dl>
+  </div>
+
+  <h3>מה יש בכל דוגמה טובה</h3>
+  <ol>
+    <li><strong>קשר קיים:</strong> החברה מכרה את המכונה או נותנת לה שירות.</li>
+    <li><strong>סיבה אמיתית לפנות:</strong> תאריך, דפוס קנייה, מבנה מכונה ידוע או אירוע מאומת.</li>
+    <li><strong>הצעה מאושרת:</strong> הצוות הטכני והמסחרי קובע מה מותר להציע.</li>
+    <li><strong>מדידה עד הכסף:</strong> פנייה, הצעת מחיר, הזמנה, כסף שנכנס.</li>
+  </ol>
+  <p class="note">הענף מוכיח שמקורות ההכנסה האלה קיימים: יצרנים גדולים כמו <a href="https://www.krones.com/en/products/lifecycle-service.php">Krones</a> ו־<a href="https://www.syntegon.com/hubfs/02_downloads/horizontal-flow-wrapper-en-2026.pdf">Syntegon</a> מוכרים חלפים, חוזי שירות, שדרוגים והדרכות. הוא לא מוכיח את שיעורי ההצלחה בדוגמאות.</p>
+
   <h2 id="he-measure">8. מדידה</h2>
   <ul class="ladder">
     <li>לקוח מתאים</li><li>נוצר קשר</li><li>שיחה</li><li>צורך מאומת</li><li>הצעת מחיר</li><li>הזמנה</li><li>כסף שנכנס</li>
@@ -778,7 +870,7 @@ Eyal</div>
   </ul>
   <p><strong>עובר אם יש:</strong> 5 שיחות רציניות ומעלה · 2 שיחות על הנתונים ומעלה · בדיקה אחת בתשלום · הזדמנות אחת שאפשר לבצע.</p>
   <p>אלה ספים לקבלת החלטה, לא עובדות על השוק. אם התוצאות חלשות, קודם בודקים את רשימת החברות, מקבל ההחלטות, המחקר, המסר, הבקשה לצעד הבא, הערוץ והמעקב. רק אחר כך שוקלים לשנות נישה.</p>
-  <p>אם מכונות אריזה לא עוברות את המבחן, שומרים על אותו עסק (יותר הכנסות מחלפים, שירות ושדרוגים מלקוחות קיימים) ובודקים תחום אחר של ציוד תעשייתי. משנים דבר אחד בכל פעם ומתעדים מה למדנו.</p>
+  <p>אם מכונות מילוי ואריזה לא עוברות את המבחן, שומרים על אותו עסק (יותר הכנסות מחלפים, שירות ושדרוגים מלקוחות קיימים) ובודקים תחום אחר של ציוד תעשייתי. משנים דבר אחד בכל פעם ומתעדים מה למדנו.</p>
 
   </div>
   </div>
@@ -792,11 +884,11 @@ Eyal</div>
   <p class="meta">Internes Arbeitsdokument für Eyal und das Team · Stand: 22. September 2026</p>
   </header>
   <div class="layout">
-  <nav class="toc" aria-label="Inhaltsverzeichnis"><p class="toc-label">Auf dieser Seite</p><ol><li><a href="#de-top">Überblick</a></li><li><a href="#de-who">1. Zielkunden</a></li><li><a href="#de-problem">2. Wo Umsatz verloren geht</a></li><li><a href="#de-campaign">3. Die erste Kampagne</a></li><li><a href="#de-cases">4. Beispiele</a></li><li><a href="#de-work">5. Ablauf der Arbeit</a></li><li><a href="#de-price">6. Preis</a></li><li><a href="#de-sell">7. Verkauf</a></li><li><a href="#de-measure">8. Messung</a></li><li><a href="#de-remember">9. Was man sich merken sollte</a></li><li><a href="#de-test">10. Der 60-Tage-Test</a></li></ol></nav>
+  <nav class="toc" aria-label="Inhaltsverzeichnis"><p class="toc-label">Auf dieser Seite</p><ol><li><a href="#de-top">Überblick</a></li><li><a href="#de-who">1. Zielkunden</a></li><li><a href="#de-problem">2. Wo Umsatz verloren geht</a></li><li><a href="#de-campaign">3. Die erste Kampagne</a></li><li><a href="#de-work">4. Ablauf der Arbeit</a></li><li><a href="#de-price">5. Preis</a></li><li><a href="#de-sell">6. Verkauf</a></li><li><a href="#de-cases">7. Beispiele</a></li><li><a href="#de-measure">8. Messung</a></li><li><a href="#de-remember">9. Was man sich merken sollte</a></li><li><a href="#de-test">10. Der 60-Tage-Test</a></li></ol></nav>
   <div class="content">
 
   <dl class="summary" id="de-top">
-    <div><dt>Das Angebot</dt><dd>Ich hole Ersatzteil-, Service- und Nachrüstaufträge von Kunden zurück, die bereits Maschinen beim Unternehmen gekauft haben. Ich übernehme die Arbeit, gemessen wird in Aufträgen.</dd></div>
+    <div><dt>Das Angebot</dt><dd>Ich helfe Herstellern und Händlern von Verpackungs- und Prozessmaschinen, Ersatzteil-, Service- und Nachrüstaufträge von Kunden zurückzugewinnen, die bereits Maschinen bei ihnen gekauft haben. Die Arbeit übernehme ich.</dd></div>
     <div><dt>Für wen</dt><dd>Hersteller, Händler und Importeure von Verpackungs- und Prozessmaschinen (Abfüllen, Verschließen, Etikettieren, Kartonieren, Einschlagen, Palettieren, Inspektion, Lebensmittel- und Pharmaverarbeitung) mit Maschinen im Feld und einem Ersatzteil- oder Serviceteam.</dd></div>
     <div><dt>Die Lage heute</dt><dd>Der Vertrieb konzentriert sich auf Neumaschinen. Ersatzteile und Service warten, bis der Kunde anruft. Wer nicht mehr anruft, verschwindet: Ansprechpartner wechseln, Maschinen werden weiterverkauft, Teile woanders gekauft. Die Daten liegen verteilt in ERP, Excel-Listen und den Köpfen der Mitarbeiter, also sieht niemand, wer still geworden ist.</dd></div>
     <div><dt>Was ich tue</dt><dd><ol>
@@ -827,15 +919,28 @@ Eyal</div>
     <li>Jemand intern kann Bedarf prüfen, kalkulieren, anbieten und abschließen.</li>
     <li>Das Team kann zusätzliche Nachfrage liefern.</li>
   </ul>
+  <h3>Auf welche Maschinen man sich konzentriert</h3>
+  <p>Dort anfangen, wo Teile vorhersehbar verschleißen und jeder Auftrag echtes Geld bringt:</p>
+  <ul>
+    <li><strong>Füller und Verschließmaschinen</strong> (Dichtungen, Ventile, Füllköpfe, Verschließköpfe).</li>
+    <li><strong>Schlauchbeutel- und Flowpack-Maschinen</strong> (Siegelbacken, Messer, Heizelemente).</li>
+    <li><strong>Tiefzieh- und Schalensiegelmaschinen</strong> (Werkzeuge, Siegelplatten, Formatwechsel).</li>
+    <li><strong>Etikettiermaschinen</strong> (Leimsysteme, Rollen, abgekündigte Steuerungen).</li>
+    <li><strong>Kartonier- und Packmaschinen</strong> (Formatteile für neue Größen, Greifer, Saugnäpfe).</li>
+    <li><strong>Kontrollwaagen, Metalldetektoren und Röntgeninspektion</strong> (regelmäßige Prüfung und Zertifizierung, Serviceverträge).</li>
+    <li><strong>Lebensmittelverarbeitung</strong> wie Aufschnittmaschinen, Portionierer und Mischer (Messer, Verschleißteile, Hygienewartung).</li>
+  </ul>
+  <p class="note">Geringere Priorität: Stretchwickler, Kartonverschließer, einfache Förderbänder und Tischsiegelgeräte. Die Teile sind billig und die Aufträge klein.</p>
   <h3>Passt nicht</h3>
   <ul>
-    <li>Nur wenige Maschinen im Feld.</li>
-    <li>Aufträge zu klein für den Aufwand.</li>
+    <li><strong>Zu wenige Maschinen:</strong> weniger als etwa 200 identifizierbare Maschinen im Feld oder weniger als etwa 100 Kundenkonten.</li>
+    <li><strong>Zu kleine Aufträge:</strong> ein durchschnittlicher Ersatzteil- oder Serviceauftrag unter etwa 1.000 $. Die Rechnung: Drei Monate kosten den Kunden etwa 17.000 $ (Analyse plus drei Monate). Damit es sich klar lohnt, braucht er rund 50.000 $ zurückgewonnenen Deckungsbeitrag, also etwa 100.000 $ Aufträge. Bei 1.000 $ pro Auftrag wären das 100 Aufträge in 90 Tagen, und das ist nicht realistisch.</li>
     <li>Keine direkte, laufende Beziehung zum Endkunden.</li>
     <li>Der OEM oder ein Dritter hält das Ersatzteil- und Servicegeschäft.</li>
     <li>Keine brauchbaren Daten und kein realistischer Weg, sie zu rekonstruieren.</li>
     <li>Ein Aftersales-Team, das das bereits gut macht.</li>
   </ul>
+  <p class="note">Beide Schwellen sind Arbeitsannahmen. Nach den ersten Analysen anpassen.</p>
   <h3>Wer kauft</h3>
   <p>Im kleineren Unternehmen der Inhaber oder Geschäftsführer. Im größeren der Leiter Aftersales, Service oder Ersatzteile, oder die kaufmännische Leitung, die den Umsatz mit Bestandskunden verantwortet.</p>
   <p class="note">Die Schwelle von 500 Maschinen ist nur eine Arbeitsannahme. Datenqualität, Kundenbeziehung, Auftragsgröße und eine Person, die abschließen kann, zählen mehr.</p>
@@ -858,143 +963,7 @@ Eyal</div>
   </ul>
   <p>Erst wenn das funktioniert: abgelaufene Serviceverträge, Garantieende, Verschleißteile, vorbeugende Wartung, Nachrüstungen und Retrofits, abgekündigte Komponenten, Maschinenersatz.</p>
 
-  <h2 id="de-cases">4. Beispiele</h2>
-  <p class="note">Unternehmen, Zahlen und Preise sind zur Veranschaulichung erfunden. Bei echten Kunden nur Zahlen verwenden, die in der Analyse geprüft wurden. Der zitierte Satz in jedem Beispiel ist die Nachricht, die <em>deren Kunde</em> erhält.</p>
-
-  <p class="group">Erste Kampagne</p>
-  <div class="case">
-    <h3>1. Hersteller von Abfüllmaschinen: Kunden bestellen keine Verschleißteile mehr</h3>
-    <p class="tag">USA · erste Kampagne</p>
-    <dl>
-      <dt>Ausgangslage</dt><dd>Ein Hersteller aus Ohio mit 60 Mitarbeitern hat rund 800 Füller verkauft. Für 300 davon gab es seit zwei Jahren keinen Ersatzteilauftrag beim Hersteller. Ein Dichtungs- und Ventilsatz kostet 3.000–6.000 $.</dd>
-      <dt>Was ich tue</dt><dd>Maschinen mit Aufträgen verknüpfen, Kunden entfernen, die nicht angesprochen werden dürfen, Kontakte prüfen und die freigegebene Nachricht senden. Jedes Ja geht an den Ersatzteilleiter.</dd>
-      <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihr Füller Modell X wurde 2019 installiert. Laut unseren Unterlagen wurde der Dichtungssatz seit 2023 nicht mehr bei uns bestellt. Läuft die Maschine noch? Gerne senden wir Ihnen ein Angebot für einen neuen Satz.“</p></blockquote></dd>
-      <dt>Rechenbeispiel</dt><dd>40 Aufträge × 5.000 $ = 200.000 $.</dd>
-      <dt>Achtung</dt><dd>Kein Auftrag beim Hersteller heißt nicht, dass das Teil nie getauscht wurde. Deshalb „nicht bei uns bestellt“, nie „nicht getauscht“.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>2. Der gewohnte Bestellrhythmus eines Kunden bricht ab</h3>
-    <p class="tag">USA oder Israel · erste Kampagne</p>
-    <dl>
-      <dt>Ausgangslage</dt><dd>Ein Kunde, der alle 10–14 Monate einen Verschleißsatz bestellt hat, hat zwei erwartete Bestellungen verpasst. Das ist ein stärkeres Signal als eine feste Regel für alle.</dd>
-      <dt>Was ich tue</dt><dd>Maschine und Ansprechpartner bestätigen, fragen, ob sie noch läuft, und eine Teileprüfung oder einen Servicebesuch anbieten. Technische Empfehlungen gibt der Kunde frei.</dd>
-      <dt>Beispielnachricht</dt><dd><blockquote><p>„Normalerweise bestellen Sie etwa einmal im Jahr einen Verschleißsatz für Ihre Verschließmaschine. Seit März 2024 haben wir keine Bestellung gesehen. Sollen wir prüfen, was fällig ist, bevor es zum Stillstand kommt?“</p></blockquote></dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>3. Israelischer Importeur von Lebensmittel-Verpackungsmaschinen: der Referenzkunde</h3>
-    <p class="tag">Israel · erste Kampagne · erster zahlender Kunde und Referenz</p>
-    <dl>
-      <dt>Ausgangslage</dt><dd>30 Mitarbeiter, fünf Techniker, rund 400 Maschinen in Lebensmittelbetrieben. Der ERP-Export zeigt 120 Kunden oder Maschinen ohne Service- oder Teilekauf seit 18 Monaten. Das ist die Prüfliste, keine automatische Versandliste.</dd>
-      <dt>Was ich tue</dt><dd>Prüfen, welche Marken und Kunden der Importeur ansprechen darf, priorisieren, Instandhaltungsleiter im Namen des Importeurs ansprechen und Interesse an Inspektion, Wartung, Teilen oder Jahresvertrag klären. Der Serviceleiter gibt frei, kalkuliert und schließt ab.</dd>
-      <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihre Verpackungsmaschine Modell X hatte ihren letzten Servicebesuch bei uns im April 2024. Möchten Sie vor der Hochsaison einen Wartungstermin vereinbaren?“</p></blockquote></dd>
-      <dt>Rechenbeispiel</dt><dd>25 Betriebe kommen zurück, zusammen 400.000 ₪ im Jahr. Gut dokumentiert wird daraus die Referenz für die USA.</dd>
-      <dt>Vorab prüfen</dt><dd>Ob der Importeur die Servicebeziehung wirklich hält, ob die Maschinendaten aktuell sind und ob das Team Kapazität hat.</dd>
-    </dl>
-  </div>
-
-  <p class="group">Wenn die erste Kampagne funktioniert</p>
-  <div class="case">
-    <h3>4. Etikettiermaschine mit abgekündigter Steuerung</h3>
-    <p class="tag">Geplante SPS- oder HMI-Modernisierung</p>
-    <dl>
-      <dt>Signal</dt><dd>Die installierte Konfiguration ist bekannt, und die Steuerung ist nachweislich abgekündigt oder ohne Support.</dd>
-      <dt>Was ich tue</dt><dd>Kandidatenliste erstellen. Der Ingenieur des Kunden bestätigt Konfiguration und Modernisierung, bevor jemand angesprochen wird.</dd>
-      <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihre Etikettiermaschine an Linie 2 läuft mit einer Steuerung, die der Hersteller nicht mehr unterstützt. Fällt sie aus, sind Ersatzteile schwer zu bekommen. Sollen wir eine Modernisierung zu einem passenden Zeitpunkt planen?“</p></blockquote></dd>
-      <dt>Rechenbeispiel</dt><dd>8 Projekte × 25.000 $ = 200.000 $.</dd>
-      <dt>Achtung</dt><dd>Die Steuerung nie aus dem Maschinenalter ableiten. Konfiguration und aktuellen Supportstatus prüfen.</dd>
-      <dt>Tonfall</dt><dd>Vorausplanung anbieten. Keine Angstmacherei und keine ungeprüfte technische Behauptung.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>5. Kunde stellt auf ein neues Flaschen- oder Packungsformat um</h3>
-    <p class="tag">Formatteile und Anpassung der Maschine</p>
-    <dl>
-      <dt>Signal</dt><dd>Nur ein echter Hinweis: angekündigter Launch, Verpackungswechsel, frühere Anfrage oder Serviceeinsatz. Ein stiller Kunde allein beweist nichts.</dd>
-      <dt>Was ich tue</dt><dd>Neue Maße mit dem installierten Modell abgleichen, Produktionsanforderungen sammeln und eine saubere Anfrage für Passungsprüfung und Formatteil-Angebot an die Technik geben.</dd>
-      <dt>Beispielnachricht</dt><dd><blockquote><p>„Wir haben gesehen, dass Sie eine neue 330-ml-Dose einführen. Ihre Kartoniermaschine kann sie in der Regel mit einem Formatteilsatz verarbeiten. Sollen wir die Passung prüfen?“</p></blockquote></dd>
-      <dt>Rechenbeispiel</dt><dd>10 Aufträge × 15.000 $ = 150.000 $, manchmal mit einem Gespräch über eine Neumaschine.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>6. Servicevertrag ausgelaufen und nicht verlängert</h3>
-    <p class="tag">Verlängerung oder neuer Wartungsplan</p>
-    <dl>
-      <dt>Signal</dt><dd>Bekanntes Enddatum, die Maschine läuft noch, keine Verlängerung in Arbeit.</dd>
-      <dt>Was ich tue</dt><dd>Bestätigen, dass das Unternehmen noch Service leisten darf und der Besitzer aktuell ist, den bisherigen Umfang zusammenfassen und eine Verlängerung anbieten. Das Serviceteam legt Umfang und Preis fest.</dd>
-      <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihr Servicevertrag für den Palettierer Modell X ist im Juni ausgelaufen. Sollen wir Ihnen die Verlängerungskonditionen oder einen aktualisierten Wartungsplan schicken?“</p></blockquote></dd>
-      <dt>Warum wichtig</dt><dd>Wiederkehrender Umsatz statt eines einmaligen Auftrags.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>7. Keine kritischen Ersatzteile vor Ort</h3>
-    <p class="tag">Ersatzteilpaket je Maschine</p>
-    <dl>
-      <dt>Signal</dt><dd>Modell oder Seriennummer sind einer freigegebenen Teileliste zugeordnet, und in der Historie fehlen Teile, die die Linie stoppen oder lange Lieferzeiten haben.</dd>
-      <dt>Was ich tue</dt><dd>Der Ersatzteilexperte des Kunden gibt die Liste frei. Ich kläre mit dem Werk den Lagerbestand und die Produktionsplanung.</dd>
-      <dt>Beispielnachricht</dt><dd><blockquote><p>„Für Ihren Füller Modell X gibt es fünf Teile, die die Linie stoppen und wochenlange Lieferzeiten haben. Bei uns ist für Ihr Werk keines davon verzeichnet. Hilft Ihnen eine empfohlene Ersatzteilliste mit Angebot?“</p></blockquote></dd>
-      <dt>Warum wichtig</dt><dd>Für das Werk: weniger Stillstandsrisiko. Für den Hersteller: ein geplanter Ersatzteilauftrag statt eines Eilkaufs nach einem Ausfall.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>8. Wartung vor der Hochsaison</h3>
-    <p class="tag">Zeitlich passende Ansprache</p>
-    <dl>
-      <dt>Signal</dt><dd>Eine bekannte Spitzenzeit naht, und für die Maschine gibt es keine aktuelle Inspektion oder Wartung.</dd>
-      <dt>Was ich tue</dt><dd>Ein festes Zeitfenster für Inspektion, Wartung und empfohlene Teile anbieten. Vorher sicherstellen, dass genug Techniker und Teile da sind.</dd>
-      <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihre Hochsaison beginnt im November, und die letzte vorbeugende Wartung bei uns liegt 14 Monate zurück. Sollen wir eine Inspektion im Oktober einplanen?“</p></blockquote></dd>
-      <dt>Warum es wirkt</dt><dd>Der Kunde versteht sofort, warum man jetzt anruft: ein klarer Termin und ein praktischer Grund, früh zu handeln.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>9. Ein neues Instandhaltungsteam</h3>
-    <p class="tag">Schulung, die auch die Beziehung erneuert</p>
-    <dl>
-      <dt>Signal</dt><dd>Bestätigter Ansprechpartnerwechsel, Werkserweiterung, Neueinstellungen oder ein Serviceeinsatz zeigt neue Verantwortliche.</dd>
-      <dt>Was ich tue</dt><dd>Bediener-, Wartungs- oder Fehlersuche-Schulung für das Modell anbieten und dabei Kontakt- und Maschinendaten aktualisieren.</dd>
-      <dt>Beispielnachricht</dt><dd><blockquote><p>„Wie wir gehört haben, gibt es in Ihrem Werk einen neuen Instandhaltungsleiter. Wäre eine halbtägige Schulung für Ihre Einschlagmaschine Modell X hilfreich?“</p></blockquote></dd>
-      <dt>Warum wichtig</dt><dd>Schulungsumsatz jetzt und eine erneuerte Servicebeziehung für den nächsten Bedarf.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>10. Eine nachgewiesene Effizienz-Nachrüstung</h3>
-    <p class="tag">Energie, Wasser, Ausschuss, Geschwindigkeit oder Qualität</p>
-    <dl>
-      <dt>Signal</dt><dd>Der Hersteller hat eine freigegebene Nachrüstung für eine Modellreihe mit belegtem Nutzen, und die passenden Maschinen sind identifizierbar.</dd>
-      <dt>Was ich tue</dt><dd>Technisch passende Kunden priorisieren, Betriebsdaten sammeln und an die Technik für Einsparrechnung und Angebot übergeben. Der Hersteller, nicht ich, bestätigt Passung und Einsparung.</dd>
-      <dt>Beispielnachricht</dt><dd><blockquote><p>„Für das Modell X gibt es jetzt eine Servo-Nachrüstung, die Formatwechsel verkürzt. Ihre beiden Maschinen kommen infrage. Sollen wir berechnen, was das an Ihrer Linie einspart?“</p></blockquote></dd>
-      <dt>Warum wichtig</dt><dd>Der Auftrag kann größer sein als eine Ersatzteilbestellung.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>11. Maschine umgezogen, verkauft oder kurz vor dem Ersatz</h3>
-    <p class="tag">Wiederinbetriebnahme, Umzug, Modernisierung oder Neumaschine</p>
-    <dl>
-      <dt>Signal</dt><dd>Bestätigter Besitzer- oder Standortwechsel, eine gebrauchte Maschine in einem neuen Werk, oder die Technik hält weitere Reparaturen für unwirtschaftlich.</dd>
-      <dt>Was ich tue</dt><dd>Zuerst Besitzer und Standort aktualisieren. Dann Wiederinbetriebnahme, Inspektion, Umzugsunterstützung, Schulung, Teile, Modernisierung oder eine Ersatzprüfung anbieten.</dd>
-      <dt>Beispielnachricht</dt><dd><blockquote><p>„Wie wir erfahren haben, steht Ihre Verschließmaschine Modell X jetzt in Ihrem Werk in Dallas. Sollen wir sie dort wieder in Betrieb nehmen und prüfen?“</p></blockquote></dd>
-      <dt>Warum wichtig</dt><dd>Eine Aktualisierung des Maschinendatensatzes kann mehrere Umsatzquellen öffnen, sobald Besitz und Zustand bestätigt sind.</dd>
-    </dl>
-  </div>
-  <div class="case">
-    <h3>12. Ein Unternehmen, das nicht passt</h3>
-    <p class="tag">8 Mitarbeiter, 60 Maschinen, keine brauchbaren Daten</p>
-    <dl>
-      <dt>Warum nicht</dt><dd>Zu wenige Maschinen, das Wissen nur im Kopf des Inhabers, und niemand, der Bedarf prüfen, anbieten und liefern kann.</dd>
-      <dt>Was ich tue</dt><dd>Wenn es im ersten Gespräch klar ist, sage ich, dass es nicht passt. Eine bezahlte Analyse lohnt sich nur, wenn Datenqualität oder Wirtschaftlichkeit wirklich unklar sind. Nein sagen zu können macht 5.000 $ im Monat glaubwürdig.</dd>
-    </dl>
-  </div>
-  <h3>Was jedes gute Beispiel gemeinsam hat</h3>
-  <ol>
-    <li>Eine bestehende Beziehung: Das Unternehmen hat die Maschine verkauft oder betreut sie.</li>
-    <li>Ein echter Anlass: ein Datum, ein Kaufmuster, eine Konfiguration oder ein bestätigtes Ereignis.</li>
-    <li>Ein freigegebenes Angebot: Technik und Vertrieb entscheiden, was angeboten werden darf.</li>
-    <li>Messung bis zum Geld: Ansprache, Angebot, Auftrag, eingegangener Umsatz.</li>
-  </ol>
-  <p class="note">Die Branche zeigt, dass es diese Umsatzquellen gibt (große Hersteller wie <a href="https://www.krones.com/en/products/lifecycle-service.php">Krones</a> und <a href="https://www.syntegon.com/hubfs/02_downloads/horizontal-flow-wrapper-en-2026.pdf">Syntegon</a> verkaufen Ersatzteile, Serviceverträge, Nachrüstungen und Schulungen). Sie beweist nicht die Quoten in diesen Beispielen.</p>
-
-  <h2 id="de-work">5. Ablauf der Arbeit</h2>
+  <h2 id="de-work">4. Ablauf der Arbeit</h2>
   <ol>
     <li><strong>Erstgespräch.</strong> Wie viele Maschinen im Feld, wie Bestandskunden heute betreut werden, welche Daten es gibt, Auftragsgrößen, wer entscheidet. Keine KI-Demo.</li>
     <li><strong>Bezahlte Analyse, zwei Wochen.</strong> Datenqualität prüfen, Inaktivität definieren, erreichbare Kunden finden, Chance beziffern, erste Gruppe wählen. Am Ende: weitermachen oder stoppen.</li>
@@ -1012,7 +981,7 @@ Eyal</div>
   </table></div>
   <p class="note">KI hilft beim Verknüpfen uneinheitlicher Datensätze, bei Recherche, Personalisierung, Sortieren von Antworten, Nachfass-Entwürfen und Berichten. Wer angesprochen werden darf, Preise und Zusagen folgen klaren Regeln und menschlicher Freigabe.</p>
 
-  <h2 id="de-price">6. Preis</h2>
+  <h2 id="de-price">5. Preis</h2>
   <div class="table-wrap"><table>
     <tr><th>Phase</th><th>USA</th><th>Israel</th></tr>
     <tr><td>Zweiwöchige Daten- und Potenzialanalyse</td><td>2.000 $</td><td>6.000 ₪</td></tr>
@@ -1022,9 +991,11 @@ Eyal</div>
     <li>Die Analyse wird auf die Umsetzung angerechnet, wenn das Angebot es vorsieht.</li>
     <li>Keine automatischen Rabatte. Sonderkonditionen für den ersten Kunden müssen etwas Konkretes bringen: schnellen Datenzugang, Zeit des Entscheiders und die Erlaubnis, Ergebnisse zu dokumentieren.</li>
     <li><strong>Ausstiegspunkt:</strong> Findet die Analyse keine belastbare, ausreichend große Chance, wird nach zwei Wochen gestoppt. Der Kunde erhält trotzdem ein klares Bild seiner Daten und seines Potenzials.</li>
+      <li><strong>Ein Preis während des Tests.</strong> Vorerst zahlt jedes Unternehmen dasselbe, damit die Ergebnisse vergleichbar sind. Für kleine Unternehmen sinkt der Preis nicht; die Passungsregeln filtern sie aus.</li>
+    <li><strong>Nach dem Test Preis nach Größe.</strong> Eine deutlich größere installierte Basis (etwa 2.000+ Maschinen, mehrere Marken oder Länder) erhält ein eigenes Angebot. Der erste israelische Kunde kann einen Pilotpreis erhalten, im Gegenzug für die Erlaubnis, die Referenz zu veröffentlichen.</li>
   </ul>
 
-  <h2 id="de-sell">7. Verkauf</h2>
+  <h2 id="de-sell">6. Verkauf</h2>
   <p>Die erste Ansprache hat ein Ziel: ein 20-minütiges Gespräch. Die bezahlte Analyse wird erst angeboten, wenn das Problem erkannt ist und brauchbare Daten wahrscheinlich sind.</p>
   <p>Ablauf: E-Mail 1 → Anruf am nächsten Tag → LinkedIn → E-Mail 2 (Tag 3) → Anruf (Tag 6) → LinkedIn-Nachricht (Tag 8) → E-Mail 3 (Tag 11) → E-Mail 4 (Tag 16). Alles wird im CRM erfasst, mit einer Kalendererinnerung pro Lead für den nächsten Schritt.</p>
 
@@ -1098,6 +1069,172 @@ Eyal Taieb</div>
     <li>Kann das Team bei steigender Nachfrage in angemessener Zeit liefern?</li>
     <li>Welches Ergebnis würde ein 90-Tage-Pilotprojekt für Sie zum Erfolg machen?</li>
   </ul>
+
+  <h2 id="de-cases">7. Beispiele</h2>
+  <p class="note">Unternehmen, Zahlen und Preise sind zur Veranschaulichung erfunden. Bei echten Kunden nur Zahlen verwenden, die in der Analyse geprüft wurden. Der zitierte Text in jedem Beispiel ist die Nachricht, die <strong>deren Kunde</strong> im Namen des Unternehmens erhält.</p>
+
+  <p class="group">Erste Kampagne</p>
+
+  <div class="case">
+    <p class="case-label">Beispiel A · USA · erste Kampagne</p>
+    <h3>Hersteller von Abfüllmaschinen: Kunden bestellen keine Verschleißteile mehr</h3>
+    <dl>
+      <dt>Hintergrund</dt><dd>Ein Unternehmen aus Ohio mit 60 Mitarbeitern baut Abfüllmaschinen für Flaschen (für Getränke, Soßen oder Shampoo). In 15 Jahren hat es rund 800 davon verkauft. Jeder Füller hat Verschleißteile: Dichtungen, O-Ringe und kleine Ventile in den Füllköpfen. Sie nutzen sich ab und führen zu Undichtigkeiten oder ungenauer Füllung, deshalb werden sie etwa jährlich getauscht, als Satz für 3.000–6.000 $.</dd>
+      <dt>Die Lage heute</dt><dd>Das Ersatzteilteam nimmt Anrufe an und liefert, was Kunden bestellen. Niemand schaut auf die Maschinen, für die nichts mehr bestellt wird. Ein Export aus dem ERP (dem System für Aufträge, Rechnungen und Lager) zeigt 300 Maschinen ohne Ersatzteilauftrag seit zwei Jahren.</dd>
+      <dt>Was ich tue</dt><dd><ol>
+        <li>Jede Maschine mit Kunde und Aufträgen verknüpfen.</li>
+        <li>Kunden entfernen, die nicht angesprochen werden dürfen (offene Streitfälle, Abmeldungen, vom Unternehmen ausgeschlossene Konten).</li>
+        <li>Den aktuellen Instandhaltungskontakt in jedem Werk finden und prüfen.</li>
+        <li>Die freigegebene Nachricht im Namen des Unternehmens senden und anrufen, wo es hilft.</li>
+        <li>Jedes Ja an den Ersatzteilleiter übergeben, mit Modell, Seriennummer und Bedarf.</li>
+      </ol></dd>
+      <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihr Füller Modell X wurde 2019 installiert. Laut unseren Unterlagen wurde der Dichtungssatz seit 2023 nicht mehr bei uns bestellt. Läuft die Maschine noch? Gerne senden wir Ihnen ein Angebot für einen neuen Satz.“</p></blockquote></dd>
+      <dt>Rechenbeispiel</dt><dd>Wenn 40 der 300 einen Satz für 5.000 $ bestellen, sind das 200.000 $.</dd>
+      <dt>Achtung</dt><dd>Kein Auftrag beim Hersteller heißt nicht, dass das Teil nie getauscht wurde; der Kunde hat es vielleicht woanders gekauft. Deshalb „nicht bei uns bestellt“, nie „nicht getauscht“. Vorher den normalen Tauschzyklus je Modell prüfen.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Beispiel B · USA oder Israel · erste Kampagne</p>
+    <h3>Der gewohnte Bestellrhythmus eines Kunden bricht ab</h3>
+    <dl>
+      <dt>Hintergrund</dt><dd>Ein Tiefkühlkostwerk hat zwei Verschließmaschinen (sie schrauben Deckel auf Flaschen) gekauft und sechs Jahre lang alle 10–14 Monate einen Verschleißsatz bestellt. Dann hörten die Bestellungen auf. Jetzt fehlen zwei erwartete Bestellungen.</dd>
+      <dt>Warum ein starkes Signal</dt><dd>Die eigene Historie des Kunden zeigt, dass sich etwas geändert hat: ein neuer Instandhaltungsleiter, ein günstigerer Teilelieferant oder eine Maschine, die nicht mehr läuft. Das überzeugt mehr als eine feste Regel für alle.</dd>
+      <dt>Was ich tue</dt><dd>Maschine und Ansprechpartner bestätigen, fragen, ob sie noch läuft, und eine Teileprüfung oder einen Servicebesuch anbieten. Technische Empfehlungen gibt der Kunde frei.</dd>
+      <dt>Beispielnachricht</dt><dd><blockquote><p>„Normalerweise bestellen Sie etwa einmal im Jahr einen Verschleißsatz für Ihre Verschließmaschine. Seit März 2024 haben wir keine Bestellung gesehen. Sollen wir prüfen, was fällig ist, bevor es zum Stillstand kommt?“</p></blockquote></dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Beispiel C · Israel · erste Kampagne · der Referenzkunde</p>
+    <h3>Israelischer Importeur von Abfüll- und Verpackungsmaschinen</h3>
+    <dl>
+      <dt>Hintergrund</dt><dd>Ein israelisches Unternehmen importiert Abfüll- und Verpackungsmaschinen von italienischen und deutschen Herstellern und installiert sie in Lebensmittelbetrieben. 30 Mitarbeiter, fünf Techniker, rund 400 installierte Maschinen.</dd>
+      <dt>Die Lage heute</dt><dd>Die Techniker sind mit dringenden Störungen beschäftigt. Manche Betriebe sind zu einem günstigeren freien Techniker gewechselt und bestellen Teile direkt im Ausland. Die Installationsliste liegt in Priority (ihrem ERP), aber niemand geht sie durch. Der Export zeigt 120 Kunden oder Maschinen ohne Service- oder Teilekauf seit 18 Monaten. Das ist die Prüfliste, keine automatische Versandliste.</dd>
+      <dt>Was ich tue</dt><dd>Prüfen, welche Marken und Kunden der Importeur ansprechen darf (manchmal hält der Hersteller oder ein anderer Importeur die Servicerechte), priorisieren, Instandhaltungsleiter im Namen des Importeurs ansprechen und Interesse an Inspektion, vorbeugender Wartung, Teilen oder einem Jahresservicevertrag klären. Der Serviceleiter gibt frei, kalkuliert und schließt ab.</dd>
+      <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihre Verpackungsmaschine Modell X hatte ihren letzten Servicebesuch bei uns im April 2024. Möchten Sie vor der Hochsaison einen Wartungstermin vereinbaren?“</p></blockquote></dd>
+      <dt>Rechenbeispiel</dt><dd>Wenn 25 Betriebe zurückkommen, zusammen 400.000 ₪ im Jahr, wird daraus die dokumentierte Referenz für Gespräche in den USA.</dd>
+      <dt>Vorab prüfen</dt><dd>Ob der Importeur die Servicebeziehung wirklich hält, ob die Maschinendaten aktuell sind und ob das Team Kapazität für die Zusatzarbeit hat.</dd>
+    </dl>
+  </div>
+
+  <p class="group">Wenn die erste Kampagne funktioniert</p>
+
+  <div class="case">
+    <p class="case-label">Beispiel D · geplante Steuerungsmodernisierung</p>
+    <h3>Etikettiermaschine mit einer Steuerung, die nicht mehr gebaut wird</h3>
+    <dl>
+      <dt>Hintergrund</dt><dd>Etikettiermaschinen, die vor 12–18 Jahren gebaut wurden, laufen oft mit einer SPS (dem kleinen Industrierechner, der die Maschine steuert) und einem HMI (dem Touch-Bedienpanel), die ihr Hersteller nicht mehr produziert oder unterstützt. Fällt eines davon aus, dauert die Ersatzsuche Wochen, und die Linie steht.</dd>
+      <dt>Signal</dt><dd>Das Unternehmen weiß genau, welche Steuerung in jeder einzelnen Maschine verbaut ist (aus der Bauakte, der Seriennummer oder einem Technikerbericht), und der Steuerungshersteller hat die Abkündigung bestätigt.</dd>
+      <dt>Was ich tue</dt><dd>Die Liste dieser Maschinen erstellen. Der Ingenieur des Unternehmens bestätigt die Modernisierung für jede Maschine (ein Retrofit: die bestehende Maschine aufrüsten statt ersetzen), bevor jemand angesprochen wird.</dd>
+      <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihre Etikettiermaschine an Linie 2 läuft mit einer Steuerung, die der Hersteller nicht mehr unterstützt. Fällt sie aus, sind Ersatzteile schwer zu bekommen. Sollen wir eine Modernisierung zu einem passenden Zeitpunkt planen?“</p></blockquote></dd>
+      <dt>Rechenbeispiel</dt><dd>8 Modernisierungsprojekte zu je 25.000 $ = 200.000 $.</dd>
+      <dt>Tonfall</dt><dd>Vorausplanung anbieten. Keine Angstmacherei und keine ungeprüfte technische Behauptung. Die Steuerung nie aus dem Maschinenalter ableiten.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Beispiel E · Formatteile</p>
+    <h3>Kunde stellt auf ein neues Flaschen- oder Kartonformat um</h3>
+    <dl>
+      <dt>Hintergrund</dt><dd>Eine Kartoniermaschine (sie verpackt Produkte in Kartons) ist auf bestimmte Formate eingestellt. Bringt ein Kunde eine neue Flaschen- oder Packungsgröße, braucht die Maschine Formatteile: Führungen, Sternräder und Werkzeuge für das neue Format, oft 8.000–25.000 $. Viele Kunden wissen nicht, dass ihre Maschine angepasst werden kann, und suchen woanders nach einer Neumaschine.</dd>
+      <dt>Signal</dt><dd>Nur ein echter Hinweis: angekündigter Launch, Verpackungswechsel, frühere Anfrage oder Serviceeinsatz. Ein stiller Kunde allein beweist nichts.</dd>
+      <dt>Was ich tue</dt><dd>Neue Maße mit dem installierten Modell abgleichen, Produktionsanforderungen sammeln und eine saubere Anfrage für Passungsprüfung und Formatteil-Angebot an die Technik geben.</dd>
+      <dt>Beispielnachricht</dt><dd><blockquote><p>„Wir haben gesehen, dass Sie eine neue 330-ml-Dose einführen. Ihre Kartoniermaschine kann sie in der Regel mit einem Formatteilsatz verarbeiten. Sollen wir die Passung prüfen?“</p></blockquote></dd>
+      <dt>Rechenbeispiel</dt><dd>10 Aufträge zu 15.000 $ = 150.000 $, manchmal mit einem Gespräch über eine Neumaschine.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Beispiel F · Serviceverträge</p>
+    <h3>Servicevertrag ausgelaufen und nicht verlängert</h3>
+    <dl>
+      <dt>Hintergrund</dt><dd>Ein Servicevertrag ist eine Jahresvereinbarung: Das Werk zahlt eine feste Gebühr und erhält geplante Besuche, schnellere Reaktion und manchmal Teilerabatte. Läuft er aus und niemand ruft an, lässt der Kunde ihn meist einfach auslaufen.</dd>
+      <dt>Signal</dt><dd>Bekanntes Enddatum, die Maschine läuft noch, keine Verlängerung in Arbeit.</dd>
+      <dt>Was ich tue</dt><dd>Bestätigen, dass das Unternehmen die Maschine noch betreuen darf und der Besitzer aktuell ist, den bisherigen Umfang zusammenfassen und eine Verlängerung anbieten. Das Serviceteam legt Umfang und Preis fest.</dd>
+      <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihr Servicevertrag für den Palettierer Modell X ist im Juni ausgelaufen. Sollen wir Ihnen die Verlängerungskonditionen oder einen aktualisierten Wartungsplan schicken?“</p></blockquote></dd>
+      <dt>Warum wichtig</dt><dd>Umsatz, der jedes Jahr wiederkommt, statt eines einmaligen Auftrags.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Beispiel G · kritische Ersatzteile</p>
+    <h3>Keine kritischen Ersatzteile vor Ort</h3>
+    <dl>
+      <dt>Hintergrund</dt><dd>Manche Teile stoppen bei Ausfall die ganze Linie und haben wochenlange Lieferzeiten (Spezialmotoren, Antriebe, Sonderanfertigungen). Die Stückliste der Maschine (BOM: alle Teile genau dieser Maschine) zeigt, welche davon je Modell zählen.</dd>
+      <dt>Signal</dt><dd>Modell oder Seriennummer sind einer freigegebenen Teileliste zugeordnet, und in der Auftragshistorie wurde keines dieser Teile gekauft.</dd>
+      <dt>Was ich tue</dt><dd>Der Ersatzteilexperte des Unternehmens gibt die Liste frei. Ich kläre mit dem Werk den Lagerbestand und die Produktionsplanung.</dd>
+      <dt>Beispielnachricht</dt><dd><blockquote><p>„Für Ihren Füller Modell X gibt es fünf Teile, die die Linie stoppen und wochenlange Lieferzeiten haben. Bei uns ist für Ihr Werk keines davon verzeichnet. Hilft Ihnen eine empfohlene Ersatzteilliste mit Angebot?“</p></blockquote></dd>
+      <dt>Warum wichtig</dt><dd>Für das Werk: weniger Stillstandsrisiko. Für den Hersteller: ein geplanter Ersatzteilauftrag statt eines Eilkaufs nach einem Ausfall.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Beispiel H · zeitlich geplante Wartung</p>
+    <h3>Wartung vor der Hochsaison</h3>
+    <dl>
+      <dt>Hintergrund</dt><dd>Viele Lebensmittel- und Getränkewerke haben eine bekannte Spitzenzeit: Sommer für Getränke, Feiertage für Süßwaren. Ein Ausfall kostet dann am meisten. Vorbeugende Wartung (geplante Inspektion und Teiletausch, bevor etwas ausfällt) ist das naheliegende Angebot.</dd>
+      <dt>Signal</dt><dd>Die Saison naht, und für die Maschine gibt es keine aktuelle Inspektion oder Wartung.</dd>
+      <dt>Was ich tue</dt><dd>Ein festes Zeitfenster für Inspektion, Wartung und empfohlene Teile anbieten. Vorher sicherstellen, dass genug Techniker und Teile da sind.</dd>
+      <dt>Beispielnachricht</dt><dd><blockquote><p>„Ihre Hochsaison beginnt im November, und die letzte vorbeugende Wartung bei uns liegt 14 Monate zurück. Sollen wir eine Inspektion im Oktober einplanen?“</p></blockquote></dd>
+      <dt>Warum es wirkt</dt><dd>Der Kunde versteht sofort, warum man jetzt anruft: ein klarer Termin und ein praktischer Grund, früh zu handeln.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Beispiel I · Schulung</p>
+    <h3>Ein neues Instandhaltungsteam im Werk</h3>
+    <dl>
+      <dt>Hintergrund</dt><dd>Wechselt der Instandhaltungsleiter, geht das Wissen über die Maschine mit ihm, und mit ihm die Beziehung zum Lieferanten. Neue Mitarbeiter wissen oft nicht, wen sie anrufen sollen.</dd>
+      <dt>Signal</dt><dd>Bestätigter Ansprechpartnerwechsel, Werkserweiterung, Neueinstellungen oder ein Serviceeinsatz zeigt neue Verantwortliche.</dd>
+      <dt>Was ich tue</dt><dd>Bediener-, Wartungs- oder Fehlersuche-Schulung für das Modell anbieten und dabei Kontakt- und Maschinendaten aktualisieren.</dd>
+      <dt>Beispielnachricht</dt><dd><blockquote><p>„Wie wir gehört haben, gibt es in Ihrem Werk einen neuen Instandhaltungsleiter. Wäre eine halbtägige Schulung für Ihre Einschlagmaschine Modell X hilfreich?“</p></blockquote></dd>
+      <dt>Warum wichtig</dt><dd>Schulungsumsatz jetzt und eine erneuerte Servicebeziehung für den nächsten Bedarf.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Beispiel J · Effizienz-Nachrüstung</p>
+    <h3>Eine nachgewiesene Nachrüstung für ein älteres Modell</h3>
+    <dl>
+      <dt>Hintergrund</dt><dd>Hersteller entwickeln Nachrüstungen für ältere Modelle, zum Beispiel Servoantriebe (präzise Elektromotoren), die Formatwechsel verkürzen (die Umstellung der Linie von einem Produkt auf ein anderes), oder Teile, die Energie, Wasser oder Ausschuss sparen.</dd>
+      <dt>Signal</dt><dd>Es gibt eine freigegebene Nachrüstung für eine bestimmte Modellreihe, der Nutzen ist belegt, und die passenden Maschinen sind identifizierbar.</dd>
+      <dt>Was ich tue</dt><dd>Technisch passende Kunden priorisieren, Betriebsdaten sammeln und an die Technik für Einsparrechnung und Angebot übergeben. Der Hersteller, nicht ich, bestätigt Passung und Einsparung.</dd>
+      <dt>Beispielnachricht</dt><dd><blockquote><p>„Für das Modell X gibt es jetzt eine Servo-Nachrüstung, die Formatwechsel verkürzt. Ihre beiden Maschinen kommen infrage. Sollen wir berechnen, was das an Ihrer Linie einspart?“</p></blockquote></dd>
+      <dt>Warum wichtig</dt><dd>Der Auftrag kann größer sein als eine Ersatzteilbestellung.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Beispiel K · umgezogen, verkauft oder alt</p>
+    <h3>Maschine umgezogen, verkauft oder kurz vor dem Ersatz</h3>
+    <dl>
+      <dt>Hintergrund</dt><dd>Maschinen ziehen in ein anderes Werk um, werden an ein anderes Unternehmen verkauft oder erreichen ein Alter, in dem Reparaturen mehr kosten, als sie wert sind. Jede Situation braucht ein anderes Angebot: Wiederinbetriebnahme (Aufbau und Test nach einem Umzug), Inspektion, Schulung, Teile, Modernisierung oder eine Ersatzprüfung.</dd>
+      <dt>Signal</dt><dd>Bestätigter Besitzer- oder Standortwechsel, eine gebrauchte Maschine in einem neuen Werk, oder die Technik hält weitere Reparaturen für unwirtschaftlich.</dd>
+      <dt>Was ich tue</dt><dd>Zuerst Besitzer und Standort aktualisieren. Dann anbieten, was zur Situation passt.</dd>
+      <dt>Beispielnachricht</dt><dd><blockquote><p>„Wie wir erfahren haben, steht Ihre Verschließmaschine Modell X jetzt in Ihrem Werk in Dallas. Sollen wir sie dort wieder in Betrieb nehmen und prüfen?“</p></blockquote></dd>
+      <dt>Warum wichtig</dt><dd>Eine Aktualisierung des Maschinendatensatzes kann mehrere Umsatzquellen öffnen, sobald Besitz und Zustand bestätigt sind.</dd>
+    </dl>
+  </div>
+
+  <div class="case">
+    <p class="case-label">Beispiel L · passt nicht</p>
+    <h3>Ein Unternehmen, das nicht passt</h3>
+    <dl>
+      <dt>Hintergrund</dt><dd>8 Mitarbeiter, rund 60 Maschinen im Feld, das Wissen nur im Kopf des Inhabers, und niemand, der Bedarf prüfen, Angebote schreiben und die Arbeit liefern kann.</dd>
+      <dt>Was ich tue</dt><dd>Wenn es im ersten Gespräch klar ist, sage ich, dass es nicht passt. Eine bezahlte Analyse lohnt sich nur, wenn Datenqualität oder Wirtschaftlichkeit wirklich unklar sind.</dd>
+      <dt>Warum wichtig</dt><dd>Nein sagen zu können macht 5.000 $ im Monat glaubwürdig.</dd>
+    </dl>
+  </div>
+
+  <h3>Was jedes gute Beispiel gemeinsam hat</h3>
+  <ol>
+    <li><strong>Eine bestehende Beziehung:</strong> Das Unternehmen hat die Maschine verkauft oder betreut sie.</li>
+    <li><strong>Ein echter Anlass:</strong> ein Datum, ein Kaufmuster, ein bekannter Maschinenaufbau oder ein bestätigtes Ereignis.</li>
+    <li><strong>Ein freigegebenes Angebot:</strong> Technik und Vertrieb entscheiden, was angeboten werden darf.</li>
+    <li><strong>Messung bis zum Geld:</strong> Ansprache, Angebot, Auftrag, eingegangener Umsatz.</li>
+  </ol>
+  <p class="note">Die Branche zeigt, dass es diese Umsatzquellen gibt: große Hersteller wie <a href="https://www.krones.com/en/products/lifecycle-service.php">Krones</a> und <a href="https://www.syntegon.com/hubfs/02_downloads/horizontal-flow-wrapper-en-2026.pdf">Syntegon</a> verkaufen Ersatzteile, Serviceverträge, Nachrüstungen und Schulungen. Sie beweist nicht die Quoten in diesen Beispielen.</p>
 
   <h2 id="de-measure">8. Messung</h2>
   <ul class="ladder">
