@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;family=Noto+Sans+Hebrew:wght@400;600;700&amp;display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#141414;--soft:#5a5a5a;--line:#dedede;--faint:#f5f5f5;--paper:#fdf9fa}
+    :root{--ink:#141414;--soft:#5a5a5a;--line:#dedede;--faint:#f6f6f6;--paper:#fdf9fa;--card:#fff;--edge:#efe4e7}
     *{box-sizing:border-box}
     html{scroll-behavior:smooth;scroll-padding-top:72px}
     body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans","Noto Sans Hebrew",Arial,sans-serif;font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
@@ -23,11 +23,13 @@
     .langs button[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);font-weight:600}
     .langs button:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
     main{max-width:1180px;margin:0 auto;padding:48px 28px 120px}
-    .doc-head{max-width:780px;margin-inline-start:278px}
+    .doc-head{background:var(--card);border:1px solid var(--edge);border-radius:14px;padding:40px 44px;margin:0 0 28px}
     h1{font-size:2.4rem;line-height:1.2;margin:0 0 10px;letter-spacing:-.015em}
-    .meta{color:var(--soft);font-size:.95rem;margin:0 0 40px}
-    .layout{display:grid;grid-template-columns:230px minmax(0,780px);gap:48px;align-items:start}
-    .toc{position:sticky;top:76px;max-height:calc(100vh - 96px);overflow-y:auto;font-size:.92rem;line-height:1.4;padding-inline-end:8px}
+    .meta{color:var(--soft);font-size:.95rem;margin:0}
+    .layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:28px;align-items:start}
+    .content{background:var(--card);border:1px solid var(--edge);border-radius:14px;padding:40px 48px 56px;min-width:0}
+    .content > *{max-width:780px}
+    .toc{position:sticky;top:76px;max-height:calc(100vh - 96px);overflow-y:auto;font-size:.92rem;line-height:1.4;background:var(--card);border:1px solid var(--edge);border-radius:14px;padding:20px 20px}
     .toc-label{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin:4px 0 12px}
     .toc ol{list-style:none;margin:0;padding:0;border-inline-start:1px solid var(--line)}
     .toc li{margin:0}
@@ -36,7 +38,7 @@
     .toc a:hover{color:var(--ink)}
     .toc a.active{color:var(--ink);font-weight:600;border-inline-start-color:var(--ink)}
     h2{font-size:1.75rem;line-height:1.25;margin:72px 0 20px;padding-top:36px;border-top:1px solid var(--line);letter-spacing:-.01em}
-    .content > h2:first-of-type{margin-top:56px}
+    .content > h2:first-of-type{margin-top:48px}
     h3{font-size:1.22rem;line-height:1.35;margin:36px 0 10px}
     p{margin:0 0 16px}
     ul,ol{margin:0 0 20px;padding-inline-start:1.3em}
@@ -74,9 +76,10 @@
     footer{margin-top:72px;padding-top:18px;border-top:1px solid var(--line);color:var(--soft);font-size:.88rem}
     [hidden]{display:none!important}
     @media(max-width:960px){
-      .doc-head{margin-inline-start:0}
+      .doc-head{padding:28px 24px}
+      .content{padding:28px 24px 40px}
       .layout{grid-template-columns:1fr;gap:12px}
-      .toc{position:sticky;top:49px;z-index:4;background:var(--paper);max-height:none;overflow-x:auto;overflow-y:hidden;white-space:nowrap;padding:8px 0;border-bottom:1px solid var(--line)}
+      .toc{position:sticky;top:49px;z-index:4;max-height:none;overflow-x:auto;overflow-y:hidden;white-space:nowrap;padding:8px 16px;border-radius:10px}
       .toc-label{display:none}
       .toc ol{display:flex;gap:18px;border:0}
       .toc a{padding:4px 0;border:0;margin:0}
@@ -84,8 +87,8 @@
       .toc a.active{border:0;text-decoration:underline;text-underline-offset:4px}
       html{scroll-padding-top:110px}
     }
-    @media(max-width:560px){body{font-size:16px}main{padding:32px 16px 96px}.bar-inner{padding:10px 16px}.summary div{grid-template-columns:1fr;gap:2px}h1{font-size:1.8rem}h2{font-size:1.45rem;margin-top:56px}}
-    @media print{.bar,.toc{display:none}.layout{display:block}.doc-head{margin:0}}
+    @media(max-width:560px){body{font-size:16px}main{padding:20px 12px 80px}.doc-head{padding:22px 18px}.content{padding:22px 18px 32px}.bar-inner{padding:10px 16px}.summary div{grid-template-columns:1fr;gap:2px}h1{font-size:1.8rem}h2{font-size:1.45rem;margin-top:56px}}
+    @media print{body{background:#fff}.bar,.toc{display:none}.layout{display:block}.doc-head,.content{border:0;padding:0;margin:0}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   </style>
 </head>
