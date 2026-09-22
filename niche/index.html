@@ -1,0 +1,1109 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Niche One — Aftermarket Revenue Recovery</title>
+  <meta name="description" content="Eyal Shoval's personal field manual for the Aftermarket Revenue Recovery offer.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Noto+Sans+Hebrew:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#1c1c1e;
+      --ink-soft:#6c6c72;
+      --paper:#fdf9fa;
+      --surface:#ffffff;
+      --line:#e4e4e0;
+      --line-dark:#c8c7c3;
+      --navy:#c9536e;
+      --navy-light:#fdf2f4;
+      --amber:#3d6b52;
+      --amber-light:#e8f2ec;
+      --green:#3d6b52;
+      --green-light:#e8f2ec;
+      --red:#a84059;
+      --red-light:#fbf4f5;
+      --shadow:0 1px 2px rgba(28,28,30,.035);
+      --radius:10px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans","Noto Sans Hebrew",Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+    button,a{font:inherit}
+    a{color:inherit}
+    .topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .topbar-inner{direction:ltr;max-width:1200px;height:64px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:700;letter-spacing:-.02em}
+    .brand-mark{width:32px;height:32px;border-radius:7px;display:grid;place-items:center;background:var(--navy);color:#fff;font-family:"IBM Plex Mono",monospace;font-size:.7rem}
+    .brand-text small{display:block;color:var(--ink-soft);font-size:.7rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase}
+    .brand-text span{display:block;font-size:.94rem}
+    .language-switch{display:flex;align-items:center;border:1px solid var(--line-dark);border-radius:8px;background:#f3f3f2;padding:3px;gap:2px}
+    .language-option{min-width:46px;height:32px;border:0;border-radius:6px;background:transparent;color:var(--ink-soft);font-size:.8rem;font-weight:600;cursor:pointer}
+    .language-option:hover{color:var(--ink);background:#fff}
+    .language-option.active{background:#fff;color:var(--navy);box-shadow:0 1px 2px rgba(28,28,30,.09)}
+    .language-option:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid rgba(201,83,110,.24);outline-offset:2px}
+    .shell{max-width:1200px;margin:0 auto;padding:32px 24px 88px}
+    .hero{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-top:3px solid var(--navy);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);position:relative}
+    .hero:after{display:none}
+    .hero-inner{position:relative;z-index:1;padding:34px 38px 32px;max-width:960px}
+    .kicker{font-family:"IBM Plex Mono",monospace;font-size:.78rem;letter-spacing:.11em;text-transform:uppercase;color:var(--navy);font-weight:600}
+    h1,h2,h3,p{margin-top:0}
+    h1{font-size:clamp(2rem,3.5vw,2.8rem);line-height:1.08;letter-spacing:-.04em;margin:12px 0 14px;max-width:22ch}
+    [dir="rtl"] h1{letter-spacing:-.025em;line-height:1.15;max-width:24ch}
+    .hero-copy{max-width:760px;font-size:1.02rem;color:var(--ink-soft);margin-bottom:24px}
+    .hero-meta{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:var(--ink-soft);background:#fafafa;font-size:.8rem}
+    .chip b{color:var(--ink)}
+    .layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:30px;margin-top:30px;align-items:start}
+    .toc{position:sticky;top:84px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:none}
+    .toc-label{font-family:"IBM Plex Mono",monospace;font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin:3px 9px 10px}
+    .toc a{display:flex;gap:9px;padding:8px 9px;border-radius:6px;text-decoration:none;color:var(--ink-soft);font-size:.86rem;line-height:1.35}
+    .toc a:hover{background:var(--navy-light);color:var(--navy)}
+    .toc .num{font-family:"IBM Plex Mono",monospace;color:#8b8f94;font-size:.76rem;min-width:1.7em;padding-top:1px}
+    .content{min-width:0}
+    .section{scroll-margin-top:84px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px;margin-bottom:18px;box-shadow:none}
+    .section-number{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--navy);font-weight:600;letter-spacing:.08em}
+    h2{font-size:clamp(1.45rem,2vw,1.75rem);line-height:1.22;letter-spacing:-.025em;margin:6px 0 16px}
+    h3{font-size:1.04rem;line-height:1.4;margin-bottom:8px}
+    p{color:var(--ink-soft)}
+    .lead{font-size:1.02rem;max-width:72ch}
+    .statement{background:#fafafa;border:1px solid var(--line);border-inline-start:3px solid var(--line-dark);border-radius:7px;padding:18px 20px;margin:22px 0;font-size:1.02rem;color:var(--ink);font-weight:500}
+    .quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:24px}
+    .quick-card{border:0;border-top:1px solid var(--line);border-radius:0;padding:15px 0 4px;background:transparent}
+    .quick-card .label{font-family:"IBM Plex Mono",monospace;font-size:.76rem;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-soft);margin-bottom:6px}
+    .quick-card p{margin:0;color:var(--ink);font-size:.95rem}
+    .status-note{border:1px solid var(--line);border-inline-start:3px solid var(--line-dark);background:#fafafa;border-radius:7px;padding:16px 18px;margin-top:20px;color:var(--ink-soft)}
+    .status-note strong{display:block;margin-bottom:4px}
+    .subhead{margin:28px 0 12px;font-size:1.05rem;color:var(--ink)}
+    .clean-list{list-style:none;padding:0;margin:16px 0;display:grid;gap:10px}
+    .clean-list li{position:relative;padding-inline-start:27px;color:var(--ink-soft)}
+    .clean-list li:before{content:"";position:absolute;inset-inline-start:3px;top:.62em;width:8px;height:8px;border-radius:2px;background:var(--line-dark)}
+    .clean-list.check li:before{width:9px;height:5px;border-inline-start:2px solid var(--ink-soft);border-bottom:2px solid var(--ink-soft);border-radius:0;background:transparent;transform:rotate(-45deg);top:.55em}
+    [dir="rtl"] .clean-list.check li:before{transform:rotate(45deg)}
+    .two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:20px 0}
+    .panel{border:1px solid var(--line);border-radius:8px;padding:20px;background:#fff}
+    .panel.good,.panel.caution,.panel.dark{background:#fafafa;border-color:var(--line);border-inline-start:3px solid var(--line-dark);color:var(--ink)}
+    .panel.dark h3{color:var(--ink)}.panel.dark p,.panel.dark li{color:var(--ink-soft)}
+    .panel p:last-child,.panel ul:last-child{margin-bottom:0}
+    .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+    .tag{display:inline-flex;padding:5px 9px;border:1px solid var(--line);border-radius:999px;background:#fafafa;color:var(--ink-soft);font-size:.8rem;font-weight:500}
+    .flow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:24px 0}
+    .flow-step{position:relative;min-height:68px;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px 8px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink-soft);font-size:.79rem;font-weight:600}
+    .flow-step:last-child{background:#fafafa;border-color:var(--line-dark);color:var(--ink);font-weight:700}
+    .process{counter-reset:process;display:grid;gap:12px;margin-top:22px}
+    .process-step{counter-increment:process;display:grid;grid-template-columns:42px 1fr;gap:15px;align-items:start;border-top:1px solid var(--line);padding-top:18px}
+    .process-step:before{content:counter(process,decimal-leading-zero);width:42px;height:34px;display:grid;place-items:center;border-radius:6px;background:#f3f3f2;color:var(--navy);font-family:"IBM Plex Mono",monospace;font-size:.78rem;font-weight:600}
+    .process-step p{margin:4px 0 0}
+    .price-table{width:100%;border-collapse:collapse;margin:22px 0 12px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+    .price-table th,.price-table td{text-align:start;padding:15px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+    .price-table th{background:#eeeeec;color:var(--ink);font-size:.82rem}
+    .price-table tr:last-child td{border-bottom:0}
+    .price-table td:first-child{font-weight:600;color:var(--ink)}
+    .script{margin:18px 0;padding:22px;border:1px solid var(--line);border-inline-start:3px solid var(--line-dark);border-radius:8px;background:#fafafa;color:var(--ink);font-size:.98rem;line-height:1.68;box-shadow:none}
+    [dir="rtl"] .script{box-shadow:none}
+    .script .subject{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
+    .question-list{columns:2;column-gap:34px;margin:16px 0 0;padding-inline-start:22px}
+    .question-list li{break-inside:avoid;margin:0 0 11px;color:var(--ink-soft)}
+    .formula{font-family:"IBM Plex Mono",monospace;background:#f7f7f6;border:1px solid var(--line);border-radius:7px;padding:17px;overflow-x:auto;color:var(--ink);font-size:.84rem;margin:18px 0}
+    .scorecard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:22px 0}
+    .score{border:1px solid var(--line);border-radius:7px;padding:15px;background:#fff}
+    .score b{display:block;font-size:1.28rem;line-height:1;color:var(--ink);margin-bottom:7px}
+    .score span{font-size:.8rem;color:var(--ink-soft)}
+    .memory-card{background:#fafafa;color:var(--ink);border:1px solid var(--line);border-inline-start:3px solid var(--line-dark);border-radius:8px;padding:24px;margin-top:20px}
+    .memory-card h3{font-size:1.1rem}.memory-card p{color:var(--ink-soft);margin-bottom:0}
+    .case-intro{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,.5fr);gap:16px;align-items:start;margin:20px 0 24px}
+    .case-legend{border:1px solid var(--line);border-radius:8px;padding:15px;background:#fafafa}
+    .case-legend p{margin:0;font-size:.88rem}
+    .case-list{display:grid;gap:13px;margin-top:22px}
+    .case-card{border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}
+    .case-card[open]{box-shadow:none;border-color:var(--line-dark)}
+    .case-card summary{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:20px;cursor:pointer;list-style:none}
+    .case-card summary::-webkit-details-marker{display:none}
+    .case-card summary:after{content:"+";width:28px;height:28px;border-radius:6px;display:grid;place-items:center;background:#f3f3f2;color:var(--ink-soft);font-weight:700}
+    .case-card[open] summary:after{content:"−"}
+    .case-no{width:44px;height:38px;display:grid;place-items:center;border-radius:6px;background:#f3f3f2;color:var(--navy);font-family:"IBM Plex Mono",monospace;font-size:.78rem;font-weight:600}
+    .case-title{font-size:1rem;font-weight:700;color:var(--ink);line-height:1.35}
+    .case-sub{display:block;margin-top:3px;color:var(--ink-soft);font-size:.86rem;font-weight:400}
+    .case-body{border-top:1px solid var(--line);padding:22px 22px 24px;margin-inline:20px}
+    .case-badge{display:inline-flex;align-items:center;padding:4px 8px;border:1px solid var(--line-dark);border-radius:999px;background:#fafafa;color:var(--ink);font-size:.76rem;font-weight:600;margin-bottom:14px}
+    .case-badge.later{background:#fafafa;border-color:var(--line);color:var(--ink-soft)}
+    .case-badge.reject{background:#f3f2f0;color:#5f6064}
+    .case-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .case-block{border-inline-start:3px solid var(--line);padding-inline-start:14px}
+    .case-block h4{font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink);margin:0 0 6px}
+    .case-block p{margin:0;font-size:.95rem}
+    .case-result{margin:17px 0 0;padding:15px;border:1px solid var(--line);border-inline-start:3px solid var(--line-dark);border-radius:7px;background:#fafafa;color:var(--ink);font-weight:500}
+    .case-caution{margin:12px 0 0;color:var(--ink-soft);font-size:.87rem}
+    .case-caution strong{color:var(--ink)}
+    .common-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:22px}
+    .common-item{padding:15px;border:1px solid var(--line);border-radius:7px;background:#fafafa;color:var(--ink-soft);font-size:.88rem}
+    .common-item b{display:block;color:var(--ink);margin-bottom:4px}
+    .footer-note{text-align:center;color:#758089;font-size:.8rem;margin-top:34px}
+    .lang-panel[hidden]{display:none}
+    [dir="rtl"] .lang-panel{font-family:"Noto Sans Hebrew","IBM Plex Sans",Arial,sans-serif}
+    [dir="rtl"] .section,[dir="rtl"] .hero-inner{text-align:right}
+    @media(max-width:860px){
+      .shell{padding-top:24px}.hero-inner{padding:38px 28px 32px}.layout{grid-template-columns:1fr;gap:18px}.toc{position:relative;top:auto;display:flex;overflow-x:auto;white-space:nowrap;padding:10px}.toc-label{display:none}.toc a{flex:0 0 auto}.section{padding:26px}.quick-grid,.two-col,.case-intro{grid-template-columns:1fr}.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.flow-step:last-child{grid-column:1/-1}.scorecard,.common-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.question-list{columns:1}
+    }
+    @media(max-width:520px){
+      .topbar-inner{padding:0 14px}.brand-text small{display:none}.language-option{min-width:40px}.shell{padding-left:14px;padding-right:14px}.hero{border-radius:9px}.hero-inner{padding:28px 22px 26px}.hero-copy{font-size:1rem}.section{padding:22px;border-radius:8px}.quick-card{padding:14px 0 2px}.scorecard,.common-grid{grid-template-columns:1fr}.price-table{font-size:.86rem}.price-table th,.price-table td{padding:12px 10px}.case-card summary{grid-template-columns:38px minmax(0,1fr) auto;padding:16px;gap:10px}.case-no{width:38px}.case-body{margin-inline:14px;padding:18px 4px 20px}.case-columns{grid-template-columns:1fr}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/" aria-label="MeetingScheduled home">
+        <span class="brand-mark">MS</span>
+        <span class="brand-text"><small>Personal field manual</small><span>Niche One</span></span>
+      </a>
+      <div class="language-switch" role="group" aria-label="Language">
+        <button class="language-option" type="button" data-language="en" aria-pressed="true">EN</button>
+        <button class="language-option" type="button" data-language="he" aria-pressed="false">עברית</button>
+        <button class="language-option" type="button" data-language="de" aria-pressed="false">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <article class="lang-panel" id="panel-en" lang="en" dir="ltr">
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="kicker">Internal working document</div>
+          <h1>Niche One: Aftermarket Revenue Recovery</h1>
+          <p class="hero-copy">Reference guide for positioning, qualification, sales conversations, delivery, and the 60-day validation plan.</p>
+          <div class="hero-meta">
+            <span class="chip"><b>Market</b> United States</span>
+            <span class="chip"><b>Proof</b> Israel</span>
+            <span class="chip"><b>Status</b> Focused hypothesis</span>
+          </div>
+        </div>
+      </section>
+      <div class="layout">
+        <nav class="toc" aria-label="English table of contents">
+          <div class="toc-label">In this guide</div>
+          <a href="#en-decision"><span class="num">01</span>Decision</a>
+          <a href="#en-offer"><span class="num">02</span>The offer</a>
+          <a href="#en-client"><span class="num">03</span>Ideal client</a>
+          <a href="#en-problem"><span class="num">04</span>The problem</a>
+          <a href="#en-campaign"><span class="num">05</span>First campaign</a>
+          <a href="#en-cases"><span class="num">06</span>Worked examples</a>
+          <a href="#en-delivery"><span class="num">07</span>Delivery</a>
+          <a href="#en-price"><span class="num">08</span>Pricing</a>
+          <a href="#en-sales"><span class="num">09</span>Selling it</a>
+          <a href="#en-measure"><span class="num">10</span>Measurement</a>
+          <a href="#en-test"><span class="num">11</span>60-day test</a>
+          <a href="#en-remember"><span class="num">12</span>Remember</a>
+        </nav>
+        <div class="content">
+          <section class="section" id="en-decision">
+            <div class="section-number">01 / THE DECISION</div>
+            <h2>The business you are building</h2>
+            <p class="lead">You help packaging and processing machinery companies recover aftermarket revenue from customers and equipment already in their installed base.</p>
+            <div class="statement">This is a done-for-you revenue recovery service—not generic AI consulting and not another software platform.</div>
+            <div class="quick-grid">
+              <div class="quick-card"><div class="label">Long-term category</div><p>Aftermarket revenue recovery for industrial-equipment companies.</p></div>
+              <div class="quick-card"><div class="label">Current vertical</div><p>Packaging and processing machinery manufacturers and distributors.</p></div>
+              <div class="quick-card"><div class="label">Primary market</div><p>The United States, where the long-term business is built.</p></div>
+              <div class="quick-card"><div class="label">Proof market</div><p>Israel, to secure one paid design partner and a credible case study.</p></div>
+            </div>
+            <div class="status-note"><strong>Be honest about certainty.</strong>This is a 60–65% confidence hypothesis. The market test—not debate—decides whether the vertical deserves continued focus.</div>
+          </section>
+          <section class="section" id="en-offer">
+            <div class="section-number">02 / THE OFFER</div>
+            <h2>Your 30-second explanation</h2>
+            <div class="statement">We help packaging and processing machinery companies recover parts, service, and upgrade revenue from customers they have already sold equipment to. We identify inactive accounts in their data, run approved outreach, qualify the opportunity, and help move it toward a quote and order.</div>
+            <div class="two-col">
+              <div class="panel good">
+                <h3>Lead with this</h3>
+                <p>Revenue from existing customers and installed equipment, delivered as a controlled, done-for-you recovery process.</p>
+              </div>
+              <div class="panel caution">
+                <h3>Do not lead with this</h3>
+                <p>AI automation agency, AI calling, CRM cleanup, lead generation, or another installed-base software platform.</p>
+              </div>
+            </div>
+            <p><strong>The difference:</strong> software gives the client another tool. You operate the recovery workflow with their team and help turn the data into qualified commercial opportunities.</p>
+          </section>
+
+          <section class="section" id="en-client">
+            <div class="section-number">03 / THE IDEAL CLIENT</div>
+            <h2>Who you are looking for</h2>
+            <p class="lead">An independent manufacturer, OEM, specialized distributor, or importer-integrator of packaging and processing machinery with an installed base and an existing parts or service function.</p>
+            <div class="tag-row">
+              <span class="tag">Filling</span><span class="tag">Capping</span><span class="tag">Labeling</span><span class="tag">Cartoning</span><span class="tag">Wrapping</span><span class="tag">Palletizing</span><span class="tag">Inspection</span><span class="tag">Food processing</span><span class="tag">Pharma processing</span>
+            </div>
+            <div class="two-col">
+              <div class="panel good">
+                <h3>Strong-fit signals</h3>
+                <ul class="clean-list check">
+                  <li>Approximately 25–100 employees; explore 20–150.</li>
+                  <li>An identifiable installed base.</li>
+                  <li>Meaningful parts, service, retrofit, or upgrade economics.</li>
+                  <li>Exportable customer, order, machine, or service records.</li>
+                  <li>An internal person who can validate, price, quote, and close.</li>
+                  <li>Enough delivery capacity to fulfill recovered demand.</li>
+                </ul>
+              </div>
+              <div class="panel caution">
+                <h3>Weak fit or disqualifiers</h3>
+                <ul class="clean-list">
+                  <li>Only a handful of machines installed.</li>
+                  <li>Low-value commodity parts with weak economics.</li>
+                  <li>No retained relationship with the end customer.</li>
+                  <li>Aftermarket is owned by another manufacturer or third party.</li>
+                  <li>No usable data and no feasible reconstruction path.</li>
+                  <li>A mature global aftermarket operation already does this well.</li>
+                </ul>
+              </div>
+            </div>
+            <h3 class="subhead">Who buys</h3>
+            <p>President, owner, or CEO in a smaller company; VP or Director of Aftermarket; Service Director; Parts Director; or the commercial leader who clearly owns revenue from existing customers.</p>
+            <div class="status-note"><strong>Machine count is not the real qualification rule.</strong>A “500+ machine” threshold is only a hypothesis. Data quality, access to customers, order economics, and an accountable internal owner matter more.</div>
+          </section>
+
+          <section class="section" id="en-problem">
+            <div class="section-number">04 / THE CURRENT SITUATION</div>
+            <h2>Why revenue gets left behind</h2>
+            <p class="lead">New-equipment sales receive attention. Aftermarket activity often stays reactive: the customer calls when something breaks, while quiet accounts receive little systematic follow-up.</p>
+            <div class="quick-grid">
+              <div class="quick-card"><div class="label">Reactive demand</div><p>Parts and service are sold when the customer initiates, rather than through planned lifecycle outreach.</p></div>
+              <div class="quick-card"><div class="label">Fragmented records</div><p>Customer, machine, order, and service data may sit across ERP, CRM, spreadsheets, and employees' knowledge.</p></div>
+              <div class="quick-card"><div class="label">Quiet accounts</div><p>Contacts change, equipment is resold, and some customers begin buying third-party parts without a clear signal.</p></div>
+              <div class="quick-card"><div class="label">Missed lifecycle moments</div><p>Maintenance, retrofits, obsolete components, upgrades, and replacement timing can pass unnoticed.</p></div>
+            </div>
+            <div class="status-note"><strong>These are discovery hypotheses.</strong>Never tell a named prospect that it is losing revenue unless public evidence or the buyer confirms it. Say the pattern may exist and ask how they manage it today.</div>
+          </section>
+
+          <section class="section" id="en-campaign">
+            <div class="section-number">05 / THE FIRST CAMPAIGN</div>
+            <h2>Start with one clean trigger</h2>
+            <div class="statement">A customer account or identifiable installed machine has not purchased parts or service during the previous 18–24 months.</div>
+            <p>First confirm the normal purchasing and service cadence for that machine family. Eighteen months of inactivity can mean opportunity for one product and normal behavior for another.</p>
+            <div class="two-col">
+              <div class="panel">
+                <h3>When machine ownership is reliable</h3>
+                <p>Rank specific installed machines by last activity, age, service history, likely need, reachable contact, and estimated value.</p>
+              </div>
+              <div class="panel">
+                <h3>When machine ownership is messy</h3>
+                <p>Begin with dormant customer accounts and order history. Do not pretend the current owner or location of every machine is known.</p>
+              </div>
+            </div>
+            <h3 class="subhead">Add later—only after the first trigger works</h3>
+            <div class="tag-row">
+              <span class="tag">Lapsed agreements</span><span class="tag">Warranty endings</span><span class="tag">Wear parts</span><span class="tag">Preventive maintenance</span><span class="tag">Retrofits</span><span class="tag">Obsolescence</span><span class="tag">Replacement</span>
+            </div>
+          </section>
+
+          <section class="section" id="en-cases">
+            <div class="section-number">06 / WORKED EXAMPLES</div>
+            <h2>What the opportunity looks like in real life</h2>
+            <div class="case-intro">
+              <p class="lead">Every company, machine count, price, conversion rate, and result below is hypothetical. These examples teach the commercial pattern; a real client's numbers are established only after the audit.</p>
+              <div class="case-legend"><p><strong>Read the badges.</strong><br><span class="case-badge">Start now</span> belongs to the first inactive-account campaign. <span class="case-badge later">Later expansion</span> is added only after that campaign works.</p></div>
+            </div>
+
+            <div class="case-list">
+              <details class="case-card" open>
+                <summary><span class="case-no">01</span><span class="case-title">Bottle-filling machine builder<span class="case-sub">Dormant wear-parts demand · United States</span></span></summary>
+                <div class="case-body">
+                  <span class="case-badge">Start now</span>
+                  <div class="case-columns">
+                    <div class="case-block"><h4>Hypothetical company and signal</h4><p>A 60-person Ohio manufacturer has sold about 800 fillers. Its records show that 300 machines have not generated a parts order from the manufacturer in two years. Seal-and-valve kits may normally sell for $3,000–$6,000, but the expected cadence must be confirmed by model and use.</p></div>
+                    <div class="case-block"><h4>What Eyal does</h4><p>Clean and link machine and order records, exclude ineligible accounts, verify current contacts, and run an approved message: “Our records show the last parts order for model X was in 2023. Would you like us to review the recommended kit and prepare a quote?” Positive replies go to the parts owner.</p></div>
+                  </div>
+                  <div class="case-result">Illustrative math only: if 40 customers place an average $5,000 order, that equals $200,000 in orders.</div>
+                  <p class="case-caution"><strong>Critical correction:</strong> purchase history proves only that the customer did not buy the kit from this manufacturer. It does not prove that the kit was never replaced.</p>
+                </div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">02</span><span class="case-title">Labeling-machine builder with obsolete controls<span class="case-sub">Planned PLC/HMI retrofit · United States</span></span></summary>
+                <div class="case-body">
+                  <span class="case-badge later">Later expansion</span>
+                  <div class="case-columns">
+                    <div class="case-block"><h4>Signal</h4><p>The installed-base data identifies older labeling machines that may contain a controller the component manufacturer has formally marked end-of-life. An unplanned failure could create a long production stop.</p></div>
+                    <div class="case-block"><h4>What Eyal does</h4><p>Build the candidate list, then have the client's engineer validate the exact configuration and approved retrofit before any contact. The customer is approached with a planned-upgrade option rather than a fear claim.</p></div>
+                  </div>
+                  <div class="case-result">Illustrative math only: eight approved projects averaging $25,000 would equal $200,000 in retrofit work.</div>
+                  <p class="case-caution"><strong>Control:</strong> never infer the installed controller from machine age alone, and verify any named component's current lifecycle status.</p>
+                </div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">03</span><span class="case-title">Case-packer customer launching a new format<span class="case-sub">Change parts and tooling · United States</span></span></summary>
+                <div class="case-body">
+                  <span class="case-badge later">Later expansion</span>
+                  <div class="case-columns">
+                    <div class="case-block"><h4>Better trigger</h4><p>Do not contact every quiet account with a generic “new products?” question. Use a verified product launch, packaging change, earlier inquiry, service conversation, or an account review that confirms format changes are planned.</p></div>
+                    <div class="case-block"><h4>What Eyal does</h4><p>Connect the new container or case dimensions to the installed machine record, collect the operating requirements, and route a qualified change-parts request to the client's engineer for feasibility and pricing.</p></div>
+                  </div>
+                  <div class="case-result">Illustrative math only: ten change-parts orders averaging $15,000 would equal $150,000, with possible future equipment conversations.</div>
+                  <p class="case-caution"><strong>Critical correction:</strong> customer inactivity by itself does not prove a product or packaging change.</p>
+                </div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">04</span><span class="case-title">Israeli food-packaging machinery importer<span class="case-sub">Paid design partner and proof case · Israel</span></span></summary>
+                <div class="case-body">
+                  <span class="case-badge">Start now · proof market</span>
+                  <div class="case-columns">
+                    <div class="case-block"><h4>Hypothetical company and signal</h4><p>A 30-person importer has five technicians and roughly 400 machines at Israeli food plants. If its ERP export shows 120 accounts or machines without recorded service or parts activity for 18 months, that becomes the initial review population.</p></div>
+                    <div class="case-block"><h4>What Eyal does</h4><p>Confirm which brands and customers the importer may contact, prioritize the viable records, approach maintenance managers in the importer's name, and qualify interest in inspection, preventive maintenance, parts, or an annual agreement. The service manager approves and closes each proposal.</p></div>
+                  </div>
+                  <div class="case-result">Illustrative scenario only: if 25 plants return and the combined annual value reaches ₪400,000, the documented funnel can become a proof case for US conversations.</div>
+                  <p class="case-caution"><strong>Watch for:</strong> the importer may not own every service relationship, retain every machine record, or have capacity to fulfill the recovered work.</p>
+                </div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">05</span><span class="case-title">The company that should be rejected<span class="case-sub">Eight employees, 60 machines, no usable records</span></span></summary>
+                <div class="case-body">
+                  <span class="case-badge reject">Not a fit</span>
+                  <div class="case-columns">
+                    <div class="case-block"><h4>Why it fails</h4><p>The installed base is probably too small to support the economics, essential information exists only in the owner's memory, and no internal person can handle technical validation, quotes, and fulfillment.</p></div>
+                    <div class="case-block"><h4>What Eyal does</h4><p>Disqualify the company during the initial conversation when these facts are already clear. If data quality or economics are genuinely uncertain, the audit can resolve them—but the audit should not be sold to an obviously unsuitable buyer.</p></div>
+                  </div>
+                  <div class="case-result">A disciplined “no” protects delivery quality and makes the $5,000 monthly offer more credible.</div>
+                </div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">06</span><span class="case-title">A customer's normal order rhythm suddenly stops<span class="case-sub">Pattern break inside an inactive-account campaign</span></span></summary>
+                <div class="case-body"><span class="case-badge">Start now</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>An account historically ordered a wear kit every 10–14 months but has now missed two expected cycles. This is stronger than using one universal 18-month threshold.</p></div><div class="case-block"><h4>Action and offer</h4><p>Verify the equipment and contact, ask whether the machine is still operating, and offer the relevant parts review or service inspection. The client confirms all technical recommendations.</p></div></div><div class="case-result">Why it is strong: the trigger comes from that customer's own buying behavior, not an industry-wide assumption.</div></div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">07</span><span class="case-title">Service agreement expired and never renewed<span class="case-sub">Renewal and preventive-maintenance opportunity</span></span></summary>
+                <div class="case-body"><span class="case-badge later">Later expansion</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>A valid agreement-end date has passed, the machine remains in operation, and no renewal or replacement agreement is open.</p></div><div class="case-block"><h4>Action and offer</h4><p>Confirm eligibility and current owner, summarize the previous coverage, and offer an approved renewal or updated maintenance plan. Route technical scope and price to the service team.</p></div></div><div class="case-result">Potential result: recurring service revenue rather than a one-time order.</div></div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">08</span><span class="case-title">Customer lacks a critical-spares package<span class="case-sub">Installed-model BOM and stock review</span></span></summary>
+                <div class="case-body"><span class="case-badge later">Later expansion</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>The client can map an installed model and serial number to its approved bill of materials, but the order history shows no purchase of critical or long-lead components.</p></div><div class="case-block"><h4>Action and offer</h4><p>The client's parts expert validates a machine-specific critical-spares list. Eyal contacts eligible accounts, qualifies current inventory and operating plans, and collects quote inputs.</p></div></div><div class="case-result">Value to the customer: reduce exposure to downtime; value to the OEM: planned parts revenue.</div></div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">09</span><span class="case-title">Pre-season maintenance before a production peak<span class="case-sub">Timing-based service and parts campaign</span></span></summary>
+                <div class="case-body"><span class="case-badge later">Later expansion</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>A known production season is approaching and an eligible machine has no recent inspection or preventive-maintenance record with the supplier.</p></div><div class="case-block"><h4>Action and offer</h4><p>Run a time-bounded campaign offering an approved inspection window, maintenance work, and any model-specific recommended parts—subject to technician capacity.</p></div></div><div class="case-result">The offer is easier to understand because the timing and operational reason are concrete.</div></div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">10</span><span class="case-title">New maintenance team needs machine training<span class="case-sub">Training and support reactivation</span></span></summary>
+                <div class="case-body"><span class="case-badge later">Later expansion</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>A confirmed contact change, plant expansion, hiring activity, or service conversation indicates that new operators or maintenance personnel now own the equipment.</p></div><div class="case-block"><h4>Action and offer</h4><p>Offer approved model-specific operator, maintenance, or troubleshooting training and use the conversation to update the account and installed-machine record.</p></div></div><div class="case-result">Possible outcome: training revenue today and a restored service relationship for future needs.</div></div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">11</span><span class="case-title">Older line has a verified efficiency upgrade<span class="case-sub">Energy, water, waste, speed, or quality improvement</span></span></summary>
+                <div class="case-body"><span class="case-badge later">Later expansion</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>The OEM has an approved retrofit for a specific model range and can substantiate the operational benefit. Eligible installed machines can be identified reliably.</p></div><div class="case-block"><h4>Action and offer</h4><p>Prioritize technically eligible accounts, gather the client's production context, and route qualified interest to engineering for a client-specific savings model and quote.</p></div></div><div class="case-result">The commercial case can be larger than parts, but the OEM—not Eyal—must validate compatibility and savings.</div></div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">12</span><span class="case-title">Machine moved, resold, or reached replacement age<span class="case-sub">Reactivation, relocation service, or new-equipment opportunity</span></span></summary>
+                <div class="case-body"><span class="case-badge later">Later expansion</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>Verified ownership or location changed, a used machine entered a new plant, or the OEM's technical team identifies an old machine for which continued repair may no longer be economical.</p></div><div class="case-block"><h4>Action and offer</h4><p>Update ownership first. Depending on the verified situation, offer recommissioning, inspection, relocation support, training, parts, retrofit, or a replacement assessment.</p></div></div><div class="case-result">One data-cleaning event can reopen several revenue paths—but only after the current owner and machine status are confirmed.</div></div>
+              </details>
+            </div>
+
+            <h3 class="subhead">The pattern shared by every good example</h3>
+            <div class="common-grid"><div class="common-item"><b>1 · Existing relationship</b>The machinery company already sold or supports the equipment.</div><div class="common-item"><b>2 · Observable signal</b>A date, pattern, configuration, or verified event creates a reason to look.</div><div class="common-item"><b>3 · Approved offer</b>The client's technical and commercial team validates what can be proposed.</div><div class="common-item"><b>4 · Money is measured</b>The opportunity is tracked through quote, signed order, and collected revenue.</div></div>
+            <div class="status-note"><strong>Industry reality, not proof of Eyal's results</strong>Major machinery suppliers publicly sell categories including spare parts, maintenance agreements, overhaul, upgrades, training, line relocation, and data-based services. That validates the revenue categories—not the conversion rates in these examples. See the official <a href="https://www.krones.com/en/products/lifecycle-service.php" target="_blank" rel="noopener">Krones Lifecycle Service</a> and <a href="https://www.syntegon.com/hubfs/02_downloads/horizontal-flow-wrapper-en-2026.pdf" target="_blank" rel="noopener">Syntegon service portfolio</a>.</div>
+          </section>
+
+          <section class="section" id="en-delivery">
+            <div class="section-number">07 / WHAT YOU DO</div>
+            <h2>Audit first. Execute second.</h2>
+            <div class="process">
+              <div class="process-step"><div><h3>Fit and feasibility call</h3><p>Understand the installed base, current process, data, economics, team capacity, and decision process. Do not spend the call demonstrating AI.</p></div></div>
+              <div class="process-step"><div><h3>Two-week paid audit</h3><p>Assess data quality, define inactivity, identify eligible accounts, model the opportunity, select the first segment, and recommend a go or no-go.</p></div></div>
+              <div class="process-step"><div><h3>Agree the 90-day target</h3><p>Set a client-specific target from their numbers. Never apply a universal revenue promise.</p></div></div>
+              <div class="process-step"><div><h3>Build the ranked list</h3><p>Prioritize accounts or machines by confidence, reachability, plausible need, value, exclusions, and next action.</p></div></div>
+              <div class="process-step"><div><h3>Run approved outreach</h3><p>Use company-approved email and appropriate human calls. Qualify replies and capture the information required for the client's quote.</p></div></div>
+              <div class="process-step"><div><h3>Track the commercial result</h3><p>Follow agreed opportunities for a defined period and report movement from identification through collected revenue.</p></div></div>
+            </div>
+            <div class="two-col">
+              <div class="panel dark">
+                <h3>You can own</h3>
+                <ul class="clean-list"><li>Data cleaning, matching, segmentation, and prioritization.</li><li>Approved outreach and agreed follow-up.</li><li>Reply classification and qualification.</li><li>Quote-input preparation and pipeline reporting.</li></ul>
+              </div>
+              <div class="panel">
+                <h3>The client must own or approve</h3>
+                <ul class="clean-list"><li>Data rights, customer eligibility, and suppression.</li><li>Technical diagnosis and recommendations.</li><li>Pricing, availability, terms, and final quotes.</li><li>Fulfillment, invoicing, collection, and exceptions.</li></ul>
+              </div>
+            </div>
+            <p><strong>Where AI helps:</strong> matching messy records, research, message personalization, reply classification, follow-up drafting, and reporting. Exact eligibility, dates, prices, commercial terms, and suppressions should use reliable rules and human approval.</p>
+          </section>
+
+          <section class="section" id="en-price">
+            <div class="section-number">08 / PRICING</div>
+            <h2>The current validation offer</h2>
+            <table class="price-table">
+              <thead><tr><th>Stage</th><th>United States</th><th>Israel</th></tr></thead>
+              <tbody>
+                <tr><td>Two-week audit</td><td>$2,000</td><td>₪6,000</td></tr>
+                <tr><td>90-day execution</td><td>$5,000/month<br>3-month minimum</td><td>₪15,000/month<br>3-month minimum</td></tr>
+              </tbody>
+            </table>
+            <p>The audit fee can be credited toward implementation when that is stated in the proposal. Do not automatically discount. A founding-client exception must buy real value: fast access, clean data, decision-maker time, and permission to document results if successful.</p>
+            <div class="status-note"><strong>The safety net</strong>If the audit does not reveal enough reliable opportunity to justify execution, the project stops there. The client still receives a useful data and opportunity assessment.</div>
+          </section>
+
+          <section class="section" id="en-sales">
+            <div class="section-number">09 / SELLING IT</div>
+            <h2>Sell the opportunity check—not AI</h2>
+            <p class="lead">The cold-outreach goal is a 20-minute feasibility conversation. The $2,000 audit is introduced after the buyer recognizes the problem and you establish that useful data may exist.</p>
+            <div class="script">
+              <div class="subject">Cold email framework</div>
+              Hi [Name],<br><br>
+              [One verified observation about their equipment or aftermarket operation.]<br><br>
+              When customer, parts, and service history sit across different records, older installed accounts can go quiet without a clear follow-up owner. We help machinery companies identify those accounts and run the recovery process through qualified quote opportunities.<br><br>
+              Would it be useful to spend 20 minutes checking whether this is visible in [Company]'s existing data?<br><br>
+              Eyal
+            </div>
+            <h3 class="subhead">The questions that matter on a discovery call</h3>
+            <ul class="question-list">
+              <li>How many active and older machines or customer accounts can you identify?</li>
+              <li>Can you connect a machine or serial number to its current owner and location?</li>
+              <li>What normally causes your team to contact an installed customer?</li>
+              <li>How do you identify accounts with no recent parts or service activity?</li>
+              <li>Which systems hold customer, order, machine, and service history?</li>
+              <li>What is the normal buying cadence for each relevant machine family?</li>
+              <li>What are typical order value, gross margin, and sales cycle?</li>
+              <li>Who validates technical need, approves pricing, and issues the quote?</li>
+              <li>Can the team fulfill additional demand promptly?</li>
+              <li>What evidence would make a 90-day pilot worthwhile?</li>
+            </ul>
+          </section>
+
+          <section class="section" id="en-measure">
+            <div class="section-number">10 / THE RESULT</div>
+            <h2>Measure the path to money</h2>
+            <div class="flow" aria-label="Commercial outcome funnel">
+              <div class="flow-step">Eligible account</div><div class="flow-step">Contacted</div><div class="flow-step">Conversation</div><div class="flow-step">Qualified need</div><div class="flow-step">Quote</div><div class="flow-step">Signed order</div><div class="flow-step">Collected revenue</div>
+            </div>
+            <p>The client ultimately buys signed orders, collected revenue, and—when available—collected gross profit. Earlier stages are leading indicators that show whether the campaign is progressing.</p>
+            <h3 class="subhead">Build the opportunity model transparently</h3>
+            <div class="formula">eligible reachable accounts × conversation rate × qualified-need rate × close rate × average order value or gross profit</div>
+            <p>Use the client's historical numbers whenever possible. Otherwise present conservative scenarios and label every assumption. An opportunity estimate is not a forecast or guarantee.</p>
+          </section>
+
+          <section class="section" id="en-test">
+            <div class="section-number">11 / THE 60-DAY TEST</div>
+            <h2>Prove it in Israel while selling it in America</h2>
+            <div class="two-col">
+              <div class="panel dark"><h3>United States</h3><p>Approach 30 carefully qualified packaging and processing machinery companies with one consistent offer, evidence-based email, and appropriate phone follow-up.</p></div>
+              <div class="panel good"><h3>Israel</h3><p>Approach roughly 10–15 suitable companies to secure one paid design partner and permission to document a credible case study if successful.</p></div>
+            </div>
+            <div class="scorecard">
+              <div class="score"><b>5+</b><span>serious conversations</span></div>
+              <div class="score"><b>2+</b><span>controlled data discussions</span></div>
+              <div class="score"><b>1</b><span>paid audit</span></div>
+              <div class="score"><b>1</b><span>executable opportunity found</span></div>
+            </div>
+            <p>These are decision thresholds, not market facts. If the test is weak, diagnose list quality, buyer selection, evidence, message, CTA, channel, and completed follow-up before changing the niche.</p>
+            <div class="status-note"><strong>If the vertical fails, keep the category.</strong>Test a different industrial-equipment vertical while preserving the aftermarket-revenue result. Change one variable at a time and record what the evidence actually showed.</div>
+          </section>
+
+          <section class="section" id="en-remember">
+            <div class="section-number">12 / THE CHEAT SHEET</div>
+            <h2>What to remember before every prospect or call</h2>
+            <ul class="clean-list check">
+              <li>You sell recovered aftermarket revenue—not AI.</li>
+              <li>Your first trigger is no parts or service purchase for 18–24 months.</li>
+              <li>Inactivity is only meaningful after confirming the normal buying cadence.</li>
+              <li>You do the recovery work; the client approves technical and commercial decisions.</li>
+              <li>Never invent machine counts, data quality, revenue leakage, contacts, or expected returns.</li>
+              <li>The first cold CTA is a short opportunity check; the paid audit is the entry product.</li>
+              <li>America is the commercial focus. Israel is the proof route. Run both in parallel.</li>
+            </ul>
+            <div class="memory-card"><h3>The one sentence to memorize</h3><p>“We recover parts, service, and upgrade revenue from inactive installed customers—done for you and measured through quotes and orders.”</p></div>
+          </section>
+          <p class="footer-note">Niche One · Personal field manual · Strategy reviewed September 22, 2026</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="lang-panel" id="panel-he" lang="he" dir="rtl" hidden>
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="kicker">מסמך עבודה פנימי</div>
+          <h1>נישה אחת: החזרת הכנסות מאפטרמרקט</h1>
+          <p class="hero-copy">מדריך עזר למיצוב, התאמה, שיחות מכירה, ביצוע ותוכנית האימות של 60 יום.</p>
+          <div class="hero-meta">
+            <span class="chip"><b>שוק עיקרי</b> ארצות הברית</span>
+            <span class="chip"><b>שוק הוכחה</b> ישראל</span>
+            <span class="chip"><b>סטטוס</b> השערה ממוקדת</span>
+          </div>
+        </div>
+      </section>
+      <div class="layout">
+        <nav class="toc" aria-label="תוכן עניינים בעברית">
+          <div class="toc-label">במדריך הזה</div>
+          <a href="#he-decision"><span class="num">01</span>ההחלטה</a>
+          <a href="#he-offer"><span class="num">02</span>ההצעה</a>
+          <a href="#he-client"><span class="num">03</span>הלקוח האידיאלי</a>
+          <a href="#he-problem"><span class="num">04</span>הבעיה</a>
+          <a href="#he-campaign"><span class="num">05</span>הקמפיין הראשון</a>
+          <a href="#he-cases"><span class="num">06</span>מקרים לדוגמה</a>
+          <a href="#he-delivery"><span class="num">07</span>ביצוע השירות</a>
+          <a href="#he-price"><span class="num">08</span>תמחור</a>
+          <a href="#he-sales"><span class="num">09</span>איך מוכרים</a>
+          <a href="#he-measure"><span class="num">10</span>מדידה</a>
+          <a href="#he-test"><span class="num">11</span>מבחן 60 הימים</a>
+          <a href="#he-remember"><span class="num">12</span>מה לזכור</a>
+        </nav>
+        <div class="content">
+          <section class="section" id="he-decision">
+            <div class="section-number">01 / ההחלטה</div>
+            <h2>העסק שאתה בונה</h2>
+            <p class="lead">אתה עוזר לחברות מכונות אריזה ועיבוד להחזיר הכנסות מאפטרמרקט מתוך לקוחות וציוד שכבר קיימים בבסיס ההתקנות שלהן.</p>
+            <div class="statement">זהו שירות החזרת הכנסות שמבוצע עבור הלקוח — לא ייעוץ AI כללי ולא עוד פלטפורמת תוכנה.</div>
+            <div class="quick-grid">
+              <div class="quick-card"><div class="label">הקטגוריה לטווח ארוך</div><p>החזרת הכנסות מאפטרמרקט לחברות ציוד תעשייתי.</p></div>
+              <div class="quick-card"><div class="label">הנישה הנוכחית</div><p>יצרנים ומפיצים של מכונות אריזה ועיבוד.</p></div>
+              <div class="quick-card"><div class="label">השוק העיקרי</div><p>ארצות הברית, שבה נבנה העסק לטווח ארוך.</p></div>
+              <div class="quick-card"><div class="label">שוק ההוכחה</div><p>ישראל, כדי להשיג לקוח פיילוט משלם ומקרה בוחן אמין.</p></div>
+            </div>
+            <div class="status-note"><strong>להיות כנים לגבי רמת הוודאות.</strong>זוהי השערה ברמת ביטחון של כ־60%–65%. מבחן השוק — ולא הוויכוח — יקבע אם להמשיך להתמקד בנישה.</div>
+          </section>
+          <section class="section" id="he-offer">
+            <div class="section-number">02 / ההצעה</div>
+            <h2>ההסבר שלך ב־30 שניות</h2>
+            <div class="statement">אנחנו עוזרים לחברות מכונות אריזה ועיבוד להחזיר הכנסות מחלפים, שירות ושדרוגים מלקוחות שכבר רכשו מהן ציוד. אנחנו מאתרים חשבונות לא פעילים מתוך הנתונים הקיימים, מבצעים פנייה מאושרת, מסננים את ההזדמנות ומקדמים אותה להצעת מחיר ולהזמנה.</div>
+            <div class="two-col">
+              <div class="panel good">
+                <h3>להוביל עם זה</h3>
+                <p>הכנסה מלקוחות קיימים ומציוד שכבר הותקן, באמצעות תהליך החזרת הכנסות מבוקר שמבוצע עבור הלקוח.</p>
+              </div>
+              <div class="panel caution">
+                <h3>לא להוביל עם זה</h3>
+                <p>סוכנות אוטומציות AI, שיחות AI, ניקוי CRM, יצירת לידים או עוד פלטפורמה לניהול בסיס ההתקנות.</p>
+              </div>
+            </div>
+            <p><strong>ההבדל:</strong> תוכנה נותנת ללקוח עוד כלי. אתה מפעיל יחד עם הצוות שלו את תהליך החזרת ההכנסות ועוזר להפוך את הנתונים להזדמנויות מסחריות מסוננות.</p>
+          </section>
+
+          <section class="section" id="he-client">
+            <div class="section-number">03 / הלקוח האידיאלי</div>
+            <h2>את מי אתה מחפש</h2>
+            <p class="lead">יצרן עצמאי, יצרן ציוד, מפיץ מתמחה, יבואן או אינטגרטור של מכונות אריזה ועיבוד, עם בסיס התקנות קיים ומחלקת חלפים או שירות פעילה.</p>
+            <div class="tag-row">
+              <span class="tag">מילוי</span><span class="tag">סגירה ופקיקה</span><span class="tag">תוויות</span><span class="tag">קרטונאז׳</span><span class="tag">עטיפה</span><span class="tag">משטוח</span><span class="tag">מערכות בדיקה</span><span class="tag">עיבוד מזון</span><span class="tag">עיבוד פארמה</span>
+            </div>
+            <div class="two-col">
+              <div class="panel good">
+                <h3>סימנים להתאמה טובה</h3>
+                <ul class="clean-list check">
+                  <li>כ־25–100 עובדים; אפשר לבדוק טווח רחב יותר של 20–150.</li>
+                  <li>בסיס התקנות שניתן לזהות.</li>
+                  <li>כלכלה משמעותית של חלפים, שירות, רטרופיט או שדרוגים.</li>
+                  <li>נתוני לקוחות, הזמנות, מכונות או שירות שניתן לייצא.</li>
+                  <li>אדם פנימי שיכול לאמת צורך, לתמחר, להוציא הצעה ולסגור.</li>
+                  <li>יכולת תפעולית לספק את הביקוש שנחזיר.</li>
+                </ul>
+              </div>
+              <div class="panel caution">
+                <h3>התאמה חלשה או סיבות לפסול</h3>
+                <ul class="clean-list">
+                  <li>רק מספר קטן של מכונות מותקנות.</li>
+                  <li>חלפים זולים עם כלכלה חלשה.</li>
+                  <li>אין קשר מתמשך עם לקוח הקצה.</li>
+                  <li>האפטרמרקט נשלט בידי יצרן או צד שלישי.</li>
+                  <li>אין נתונים שימושיים ואין דרך מעשית לשחזר אותם.</li>
+                  <li>מערך אפטרמרקט גלובלי ובשל שכבר עושה זאת היטב.</li>
+                </ul>
+              </div>
+            </div>
+            <h3 class="subhead">מי קונה</h3>
+            <p>נשיא, בעלים או מנכ״ל בחברה קטנה; סמנכ״ל או מנהל אפטרמרקט; מנהל שירות; מנהל חלפים; או מנהל מסחרי שבבירור אחראי על הכנסות מלקוחות קיימים.</p>
+            <div class="status-note"><strong>מספר המכונות אינו כלל הסינון האמיתי.</strong>סף של 500 מכונות ומעלה הוא רק השערה. איכות הנתונים, הגישה ללקוחות, כלכלת העסקאות ובעל תפקיד פנימי אחראי חשובים יותר.</div>
+          </section>
+
+          <section class="section" id="he-problem">
+            <div class="section-number">04 / המצב כיום</div>
+            <h2>למה הכנסות נשארות על הרצפה</h2>
+            <p class="lead">מכירת ציוד חדש מקבלת תשומת לב. פעילות האפטרמרקט נשארת לעיתים קרובות תגובתית: הלקוח מתקשר כשמשהו נשבר, בעוד שלקוחות שקטים אינם מקבלים מעקב שיטתי.</p>
+            <div class="quick-grid">
+              <div class="quick-card"><div class="label">ביקוש תגובתי</div><p>חלפים ושירות נמכרים כשהלקוח פונה, במקום באמצעות פנייה יזומה לאורך חיי המכונה.</p></div>
+              <div class="quick-card"><div class="label">נתונים מפוזרים</div><p>נתוני לקוחות, מכונות, הזמנות ושירות נמצאים ב־ERP, ב־CRM, בגיליונות ובידע של העובדים.</p></div>
+              <div class="quick-card"><div class="label">לקוחות שקטים</div><p>אנשי קשר מתחלפים, ציוד נמכר הלאה, וחלק מהלקוחות עוברים לחלפים מצד שלישי בלי איתות ברור.</p></div>
+              <div class="quick-card"><div class="label">נקודות זמן שמתפספסות</div><p>תחזוקה, רטרופיט, רכיבים שמתיישנים, שדרוגים והחלפת מכונה עלולים לעבור בלי הצעה בזמן.</p></div>
+            </div>
+            <div class="status-note"><strong>אלה השערות לבדיקה בשיחה.</strong>לעולם אל תגיד לחברה מסוימת שהיא מפסידה כסף בלי הוכחה פומבית או אישור מהלקוח. הצג את הדפוס כאפשרות ושאל איך הם מנהלים אותו כיום.</div>
+          </section>
+
+          <section class="section" id="he-campaign">
+            <div class="section-number">05 / הקמפיין הראשון</div>
+            <h2>מתחילים מטריגר אחד וברור</h2>
+            <div class="statement">חשבון לקוח או מכונה מותקנת שניתן לזהות, שלא רכשו חלפים או שירות ב־18–24 החודשים האחרונים.</div>
+            <p>ראשית יש לאמת מהו מחזור הרכישה והשירות הרגיל של אותה משפחת מכונות. 18 חודשים ללא פעילות יכולים להעיד על הזדמנות במוצר אחד ועל התנהגות רגילה במוצר אחר.</p>
+            <div class="two-col">
+              <div class="panel">
+                <h3>כשנתוני הבעלות אמינים</h3>
+                <p>מדרגים מכונות ספציפיות לפי פעילות אחרונה, גיל, היסטוריית שירות, צורך סביר, איש קשר זמין ושווי משוער.</p>
+              </div>
+              <div class="panel">
+                <h3>כשנתוני הבעלות מבולגנים</h3>
+                <p>מתחילים מחשבונות לקוח רדומים ומהיסטוריית הזמנות. לא מעמידים פנים שיודעים מי הבעלים והמיקום הנוכחי של כל מכונה.</p>
+              </div>
+            </div>
+            <h3 class="subhead">מוסיפים אחר כך — רק לאחר שהטריגר הראשון עובד</h3>
+            <div class="tag-row">
+              <span class="tag">הסכמי שירות שפגו</span><span class="tag">סיום אחריות</span><span class="tag">חלקי בלאי</span><span class="tag">תחזוקה מונעת</span><span class="tag">רטרופיט</span><span class="tag">התיישנות רכיבים</span><span class="tag">החלפת מכונה</span>
+            </div>
+          </section>
+
+          <section class="section" id="he-cases">
+            <div class="section-number">06 / מקרים לדוגמה</div>
+            <h2>איך ההזדמנות נראית במציאות</h2>
+            <div class="case-intro">
+              <p class="lead">כל החברות, מספרי המכונות, המחירים, שיעורי ההמרה והתוצאות שלהלן הם היפותטיים. הדוגמאות מלמדות את הדפוס המסחרי; אצל לקוח אמיתי המספרים נקבעים רק לאחר האבחון.</p>
+              <div class="case-legend"><p><strong>שימו לב לתגיות.</strong><br><span class="case-badge">מתחילים עכשיו</span> שייך לקמפיין הראשון של חשבונות לא פעילים. <span class="case-badge later">הרחבה מאוחרת</span> מתווסף רק אחרי שהקמפיין הראשון עובד.</p></div>
+            </div>
+
+            <div class="case-list">
+              <details class="case-card" open>
+                <summary><span class="case-no">01</span><span class="case-title">יצרן מכונות מילוי בקבוקים<span class="case-sub">ביקוש רדום לחלקי בלאי · ארצות הברית</span></span></summary>
+                <div class="case-body">
+                  <span class="case-badge">מתחילים עכשיו</span>
+                  <div class="case-columns">
+                    <div class="case-block"><h4>חברה ואיתות היפותטיים</h4><p>יצרן מאוהיו עם 60 עובדים מכר כ־800 מכונות מילוי. הרשומות מראות ש־300 מכונות לא יצרו הזמנת חלפים מהיצרן במשך שנתיים. ערכות אטמים ושסתומים עשויות להימכר ב־3,000–6,000 דולר, אבל צריך לאמת את תדירות ההחלפה לפי דגם ושימוש.</p></div>
+                    <div class="case-block"><h4>מה אייל עושה</h4><p>מנקה ומקשר בין נתוני המכונות וההזמנות, מחריג לקוחות שאינם מתאימים, מאמת אנשי קשר ומפעיל מסר מאושר: ״לפי הרשומות שלנו, ההזמנה האחרונה לחלפים עבור דגם X הייתה ב־2023. תרצו שנבדוק את הערכה המומלצת ונכין הצעת מחיר?״ תשובות חיוביות עוברות לאחראי החלפים.</p></div>
+                  </div>
+                  <div class="case-result">חישוב להמחשה בלבד: אם 40 לקוחות יבצעו הזמנה ממוצעת של 5,000 דולר, מדובר ב־200,000 דולר בהזמנות.</div>
+                  <p class="case-caution"><strong>תיקון קריטי:</strong> היסטוריית הרכישות מוכיחה רק שהלקוח לא קנה את הערכה מהיצרן הזה. היא אינה מוכיחה שהערכה כלל לא הוחלפה.</p>
+                </div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">02</span><span class="case-title">יצרן מכונות תיוג עם בקרים שהתיישנו<span class="case-sub">שדרוג מתוכנן של PLC או HMI · ארצות הברית</span></span></summary>
+                <div class="case-body">
+                  <span class="case-badge later">הרחבה מאוחרת</span>
+                  <div class="case-columns">
+                    <div class="case-block"><h4>האיתות</h4><p>נתוני בסיס ההתקנות מזהים מכונות תיוג ישנות שעשויות להכיל בקר שיצרן הרכיב הכריז עליו רשמית כסוף־חיים. תקלה לא מתוכננת עלולה להשבית את הייצור לזמן ממושך.</p></div>
+                    <div class="case-block"><h4>מה אייל עושה</h4><p>בונה רשימת מועמדים, ואז מהנדס מטעם הלקוח מאמת את התצורה המדויקת ואת פתרון השדרוג המאושר לפני כל פנייה. פונים ללקוח עם אפשרות לשדרוג מתוכנן ולא עם הפחדה.</p></div>
+                  </div>
+                  <div class="case-result">חישוב להמחשה בלבד: שמונה פרויקטים מאושרים בממוצע של 25,000 דולר שווים 200,000 דולר בעבודות שדרוג.</div>
+                  <p class="case-caution"><strong>בקרה:</strong> לעולם לא מסיקים איזה בקר מותקן רק מגיל המכונה, ומאמתים את סטטוס מחזור החיים העדכני של כל רכיב שמציינים.</p>
+                </div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">03</span><span class="case-title">לקוח של מכונת קרטונאז׳ משיק פורמט חדש<span class="case-sub">חלקי פורמט וכלי עבודה · ארצות הברית</span></span></summary>
+                <div class="case-body">
+                  <span class="case-badge later">הרחבה מאוחרת</span>
+                  <div class="case-columns">
+                    <div class="case-block"><h4>טריגר טוב יותר</h4><p>לא פונים לכל חשבון שקט בשאלה כללית על מוצרים חדשים. משתמשים בהשקת מוצר מאומתת, שינוי אריזה, פנייה קודמת, שיחת שירות או בדיקת חשבון שמאשרת שמתוכננים שינויי פורמט.</p></div>
+                    <div class="case-block"><h4>מה אייל עושה</h4><p>מקשרים בין מידות הבקבוק או הקרטון החדשות לבין נתוני המכונה המותקנת, אוספים את דרישות ההפעלה ומעבירים למהנדס של הלקוח בקשה מסוננת לחלקי פורמט לצורך בדיקת היתכנות ותמחור.</p></div>
+                  </div>
+                  <div class="case-result">חישוב להמחשה בלבד: עשר הזמנות של חלקי פורמט בממוצע של 15,000 דולר שוות 150,000 דולר, עם אפשרות לשיחות עתידיות על ציוד חדש.</div>
+                  <p class="case-caution"><strong>תיקון קריטי:</strong> חוסר פעילות מצד הלקוח אינו מוכיח כשלעצמו שינוי במוצר או באריזה.</p>
+                </div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">04</span><span class="case-title">יבואן ישראלי של מכונות אריזה למזון<span class="case-sub">לקוח פיילוט משלם ומקרה הוכחה · ישראל</span></span></summary>
+                <div class="case-body">
+                  <span class="case-badge">מתחילים עכשיו · שוק הוכחה</span>
+                  <div class="case-columns">
+                    <div class="case-block"><h4>חברה ואיתות היפותטיים</h4><p>יבואן עם 30 עובדים, חמישה טכנאים וכ־400 מכונות במפעלי מזון בישראל. אם ייצוא הנתונים מה־ERP מראה 120 לקוחות או מכונות ללא פעילות שירות או חלפים מתועדת במשך 18 חודשים, זו אוכלוסיית הבדיקה הראשונית.</p></div>
+                    <div class="case-block"><h4>מה אייל עושה</h4><p>מאמת עבור אילו מותגים ולקוחות מותר ליבואן לפנות, מתעדף רשומות מתאימות, פונה למנהלי אחזקה בשם היבואן ומסנן עניין בבדיקה, תחזוקה מונעת, חלפים או הסכם שנתי. מנהל השירות מאשר וסוגר כל הצעה.</p></div>
+                  </div>
+                  <div class="case-result">תרחיש להמחשה בלבד: אם 25 מפעלים יחזרו והערך השנתי המשולב יגיע ל־400,000 ₪, המשפך המתועד יכול להפוך למקרה הוכחה לשיחות בארצות הברית.</div>
+                  <p class="case-caution"><strong>מה לבדוק:</strong> ייתכן שהיבואן אינו מחזיק בזכות השירות לכל לקוח, אינו שומר את כל נתוני המכונות או חסר יכולת לספק את העבודה שנחזיר.</p>
+                </div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">05</span><span class="case-title">החברה שצריך לפסול<span class="case-sub">שמונה עובדים, 60 מכונות וללא נתונים שימושיים</span></span></summary>
+                <div class="case-body">
+                  <span class="case-badge reject">לא מתאים</span>
+                  <div class="case-columns">
+                    <div class="case-block"><h4>למה זה נכשל</h4><p>בסיס ההתקנות כנראה קטן מדי כדי להצדיק את הכלכלה, המידע החיוני נמצא רק בראש של הבעלים, ואין אדם פנימי שיכול לבצע אימות טכני, להוציא הצעות מחיר ולספק את העבודה.</p></div>
+                    <div class="case-block"><h4>מה אייל עושה</h4><p>פוסל את החברה בשיחה הראשונית כאשר העובדות כבר ברורות. אם איכות הנתונים או הכלכלה באמת אינן ידועות, האבחון יכול לפתור זאת — אבל לא מוכרים אבחון לקונה שכבר ברור שאינו מתאים.</p></div>
+                  </div>
+                  <div class="case-result">״לא״ ממושמע מגן על איכות השירות והופך את המחיר של 5,000 דולר בחודש לאמין יותר.</div>
+                </div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">06</span><span class="case-title">מחזור ההזמנות הרגיל של הלקוח נעצר<span class="case-sub">שבירת דפוס בתוך קמפיין החשבונות הלא פעילים</span></span></summary>
+                <div class="case-body"><span class="case-badge">מתחילים עכשיו</span><div class="case-columns"><div class="case-block"><h4>האיתות</h4><p>הלקוח הזמין בעבר ערכת בלאי בכל 10–14 חודשים, וכעת החמיץ שני מחזורים צפויים. זה איתות חזק יותר מסף אחיד של 18 חודשים.</p></div><div class="case-block"><h4>הפעולה וההצעה</h4><p>מאמתים את הציוד ואת איש הקשר, שואלים אם המכונה עדיין פעילה ומציעים בדיקת חלפים או בדיקת שירות רלוונטית. הלקוח מאשר כל המלצה טכנית.</p></div></div><div class="case-result">למה זה חזק: הטריגר מגיע מהתנהגות הרכישה של אותו לקוח, ולא מהנחה כללית על הענף.</div></div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">07</span><span class="case-title">הסכם שירות שפג ולא חודש<span class="case-sub">הזדמנות לחידוש ולתחזוקה מונעת</span></span></summary>
+                <div class="case-body"><span class="case-badge later">הרחבה מאוחרת</span><div class="case-columns"><div class="case-block"><h4>האיתות</h4><p>תאריך סיום אמין של ההסכם עבר, המכונה עדיין פועלת, ואין חידוש או הסכם חלופי פתוח.</p></div><div class="case-block"><h4>הפעולה וההצעה</h4><p>מאמתים זכאות ובעלות נוכחית, מסכמים את הכיסוי הקודם ומציעים חידוש מאושר או תוכנית תחזוקה מעודכנת. היקף טכני ומחיר עוברים לצוות השירות.</p></div></div><div class="case-result">תוצאה אפשרית: הכנסה חוזרת משירות במקום הזמנה חד־פעמית.</div></div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">08</span><span class="case-title">ללקוח אין חבילת חלפים קריטיים<span class="case-sub">בדיקת BOM ומלאי לפי דגם מותקן</span></span></summary>
+                <div class="case-body"><span class="case-badge later">הרחבה מאוחרת</span><div class="case-columns"><div class="case-block"><h4>האיתות</h4><p>היצרן יכול לקשר דגם ומספר סידורי לרשימת החלקים המאושרת, אך היסטוריית ההזמנות אינה מראה רכישה של רכיבים קריטיים או בעלי זמן אספקה ארוך.</p></div><div class="case-block"><h4>הפעולה וההצעה</h4><p>מומחה החלפים של הלקוח מאמת רשימה ספציפית למכונה. אייל פונה לחשבונות מתאימים, מסנן את מצב המלאי ותוכניות ההפעלה ואוסף מידע להצעת מחיר.</p></div></div><div class="case-result">ערך ללקוח הסופי: הקטנת סיכון להשבתה; ערך ליצרן: הכנסה מתוכננת מחלפים.</div></div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">09</span><span class="case-title">תחזוקה לפני עונת ייצור עמוסה<span class="case-sub">קמפיין שירות וחלפים מבוסס תזמון</span></span></summary>
+                <div class="case-body"><span class="case-badge later">הרחבה מאוחרת</span><div class="case-columns"><div class="case-block"><h4>האיתות</h4><p>עונת ייצור מוכרת מתקרבת, ולמכונה מתאימה אין רישום עדכני אצל הספק של בדיקה או תחזוקה מונעת.</p></div><div class="case-block"><h4>הפעולה וההצעה</h4><p>מפעילים קמפיין מוגבל בזמן שמציע חלון בדיקה מאושר, עבודת תחזוקה וחלפים מומלצים לפי דגם — בכפוף לקיבולת הטכנאים.</p></div></div><div class="case-result">ההצעה קלה יותר להבנה כי העיתוי והסיבה התפעולית ברורים.</div></div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">10</span><span class="case-title">צוות אחזקה חדש זקוק להדרכה<span class="case-sub">הדרכה והחזרת קשר השירות</span></span></summary>
+                <div class="case-body"><span class="case-badge later">הרחבה מאוחרת</span><div class="case-columns"><div class="case-block"><h4>האיתות</h4><p>שינוי מאומת באיש הקשר, הרחבת מפעל, גיוס עובדים או שיחת שירות מצביעים על כך שמפעילים או אנשי אחזקה חדשים אחראים כעת לציוד.</p></div><div class="case-block"><h4>הפעולה וההצעה</h4><p>מציעים הדרכה מאושרת וספציפית לדגם עבור מפעילים, אנשי אחזקה או פתרון תקלות, ומשתמשים בשיחה כדי לעדכן את נתוני החשבון והמכונה.</p></div></div><div class="case-result">תוצאה אפשרית: הכנסה מהדרכה היום וקשר שירות מחודש לצרכים עתידיים.</div></div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">11</span><span class="case-title">לקו ישן קיים שדרוג יעילות מאומת<span class="case-sub">שיפור אנרגיה, מים, פסולת, מהירות או איכות</span></span></summary>
+                <div class="case-body"><span class="case-badge later">הרחבה מאוחרת</span><div class="case-columns"><div class="case-block"><h4>האיתות</h4><p>ליצרן יש רטרופיט מאושר לטווח דגמים מסוים והוא יכול להוכיח את התועלת התפעולית. ניתן לזהות באמינות את המכונות המותקנות המתאימות.</p></div><div class="case-block"><h4>הפעולה וההצעה</h4><p>מתעדפים לקוחות שמתאימים טכנית, אוספים את הקשר הייצור שלהם ומעבירים עניין מסונן להנדסה לצורך מודל חיסכון והצעת מחיר ספציפיים ללקוח.</p></div></div><div class="case-result">המקרה המסחרי יכול להיות גדול יותר מחלפים, אך היצרן — ולא אייל — חייב לאמת תאימות וחיסכון.</div></div>
+              </details>
+
+              <details class="case-card">
+                <summary><span class="case-no">12</span><span class="case-title">מכונה הועברה, נמכרה או הגיעה לגיל החלפה<span class="case-sub">הפעלה מחדש, שירות העברה או הזדמנות לציוד חדש</span></span></summary>
+                <div class="case-body"><span class="case-badge later">הרחבה מאוחרת</span><div class="case-columns"><div class="case-block"><h4>האיתות</h4><p>הבעלות או המיקום השתנו באופן מאומת, מכונה משומשת הגיעה למפעל חדש, או שהצוות הטכני של היצרן זיהה מכונה ישנה שתיקון מתמשך שלה כבר אינו כלכלי.</p></div><div class="case-block"><h4>הפעולה וההצעה</h4><p>מעדכנים קודם את הבעלות. בהתאם למצב המאומת, מציעים הפעלה מחדש, בדיקה, תמיכה בהעברה, הדרכה, חלפים, רטרופיט או בדיקת החלפה.</p></div></div><div class="case-result">אירוע אחד של ניקוי נתונים יכול לפתוח כמה מסלולי הכנסה — אבל רק לאחר אימות הבעלים ומצב המכונה.</div></div>
+              </details>
+            </div>
+
+            <h3 class="subhead">הדפוס המשותף לכל דוגמה טובה</h3>
+            <div class="common-grid"><div class="common-item"><b>1 · קשר קיים</b>חברת המכונות כבר מכרה את הציוד או תומכת בו.</div><div class="common-item"><b>2 · איתות שניתן לראות</b>תאריך, דפוס, תצורה או אירוע מאומת יוצרים סיבה לבדוק.</div><div class="common-item"><b>3 · הצעה מאושרת</b>הצוות הטכני והמסחרי של הלקוח מאמת מה ניתן להציע.</div><div class="common-item"><b>4 · הכסף נמדד</b>עוקבים אחר ההזדמנות עד להצעת מחיר, הזמנה חתומה והכנסה שנגבתה.</div></div>
+            <div class="status-note"><strong>מציאות ענפית, לא הוכחה לתוצאות של אייל</strong>ספקי מכונות גדולים מוכרים בפועל חלפים, הסכמי תחזוקה, שיפוץ, שדרוגים, הדרכה, העברת קווים ושירותים מבוססי נתונים. זה מאמת את קטגוריות ההכנסה — לא את שיעורי ההמרה שבדוגמאות. ראו את עמודי השירות הרשמיים של <a href="https://www.krones.com/en/products/lifecycle-service.php" target="_blank" rel="noopener">Krones</a> ושל <a href="https://www.syntegon.com/hubfs/02_downloads/horizontal-flow-wrapper-en-2026.pdf" target="_blank" rel="noopener">Syntegon</a>.</div>
+          </section>
+
+          <section class="section" id="he-delivery">
+            <div class="section-number">07 / מה אתה עושה</div>
+            <h2>קודם אבחון. אחר כך ביצוע.</h2>
+            <div class="process">
+              <div class="process-step"><div><h3>שיחת התאמה והיתכנות</h3><p>מבינים את בסיס ההתקנות, התהליך הנוכחי, הנתונים, הכלכלה, יכולת הצוות ותהליך ההחלטה. לא מבזבזים את השיחה על הדגמת AI.</p></div></div>
+              <div class="process-step"><div><h3>אבחון בתשלום במשך שבועיים</h3><p>בודקים את איכות הנתונים, מגדירים חוסר פעילות, מזהים חשבונות מתאימים, בונים מודל הזדמנות, בוחרים פלח ראשון וממליצים אם להתקדם.</p></div></div>
+              <div class="process-step"><div><h3>מסכימים על יעד ל־90 יום</h3><p>מגדירים יעד ספציפי ללקוח מתוך המספרים שלו. לעולם לא מבטיחים סכום אוניברסלי.</p></div></div>
+              <div class="process-step"><div><h3>בונים רשימה מדורגת</h3><p>מתעדפים חשבונות או מכונות לפי רמת ביטחון, יכולת יצירת קשר, צורך סביר, שווי, החרגות והפעולה הבאה.</p></div></div>
+              <div class="process-step"><div><h3>מבצעים פנייה מאושרת</h3><p>משתמשים באימייל שאושר על ידי החברה ובשיחות אנושיות מתאימות. מסננים תשובות ואוספים את המידע הדרוש להצעת המחיר של הלקוח.</p></div></div>
+              <div class="process-step"><div><h3>עוקבים אחר התוצאה המסחרית</h3><p>עוקבים אחר ההזדמנויות שסוכמו למשך תקופה מוגדרת ומדווחים על ההתקדמות מהזיהוי ועד להכנסה שנגבתה.</p></div></div>
+            </div>
+            <div class="two-col">
+              <div class="panel dark">
+                <h3>אתה יכול להיות אחראי על</h3>
+                <ul class="clean-list"><li>ניקוי, התאמה, פילוח ותעדוף נתונים.</li><li>פנייה מאושרת ומעקב שהוגדר מראש.</li><li>סיווג תשובות וסינון הזדמנויות.</li><li>הכנת המידע להצעת מחיר ודיווח על הצינור.</li></ul>
+              </div>
+              <div class="panel">
+                <h3>הלקוח חייב להיות אחראי או לאשר</h3>
+                <ul class="clean-list"><li>זכויות שימוש בנתונים, זכאות לפנייה ורשימות חסימה.</li><li>אבחון והמלצות טכניות.</li><li>מחיר, זמינות, תנאים והצעת המחיר הסופית.</li><li>אספקה, חשבונית, גבייה ומקרים חריגים.</li></ul>
+              </div>
+            </div>
+            <p><strong>איפה AI עוזר:</strong> התאמת רשומות מבולגנות, מחקר, התאמה אישית של מסרים, סיווג תשובות, ניסוח מעקבים ודיווח. זכאות, תאריכים, מחירים, תנאים מסחריים ורשימות חסימה צריכים להתבסס על כללים אמינים ואישור אנושי.</p>
+          </section>
+
+          <section class="section" id="he-price">
+            <div class="section-number">08 / תמחור</div>
+            <h2>ההצעה הנוכחית לתקופת האימות</h2>
+            <table class="price-table">
+              <thead><tr><th>שלב</th><th>ארצות הברית</th><th>ישראל</th></tr></thead>
+              <tbody>
+                <tr><td>אבחון של שבועיים</td><td>2,000 דולר</td><td>6,000 ₪</td></tr>
+                <tr><td>ביצוע ל־90 יום</td><td>5,000 דולר לחודש<br>מינימום שלושה חודשים</td><td>15,000 ₪ לחודש<br>מינימום שלושה חודשים</td></tr>
+              </tbody>
+            </table>
+            <p>אפשר לקזז את מחיר האבחון ממחיר הביצוע אם הדבר נכתב בהצעה. לא נותנים הנחה אוטומטית. כל הטבה ללקוח ראשון צריכה לקנות ערך ממשי: גישה מהירה, נתונים שימושיים, זמן של מקבל החלטות ורשות לתעד את התוצאות במקרה של הצלחה.</p>
+            <div class="status-note"><strong>רשת הביטחון</strong>אם האבחון לא חושף הזדמנות אמינה וגדולה מספיק כדי להצדיק את הביצוע, הפרויקט נעצר שם. הלקוח עדיין מקבל הערכה שימושית של הנתונים וההזדמנות.</div>
+          </section>
+
+          <section class="section" id="he-sales">
+            <div class="section-number">09 / איך מוכרים</div>
+            <h2>מוכרים בדיקת הזדמנות — לא AI</h2>
+            <p class="lead">המטרה של הפנייה הקרה היא שיחת היתכנות של 20 דקות. את האבחון בתשלום מציגים לאחר שהקונה מזהה את הבעיה ולאחר שהבנת שיש סיכוי לנתונים שימושיים.</p>
+            <div class="script">
+              <div class="subject">מסגרת לאימייל קר</div>
+              היי [שם],<br><br>
+              [תצפית מאומתת אחת על הציוד או פעילות האפטרמרקט של החברה.]<br><br>
+              כשמידע על לקוחות, חלפים ושירות מפוזר בין כמה מערכות, לקוחות ותיקים עם ציוד מותקן יכולים להפוך לשקטים בלי שיהיה בעל תפקיד ברור שאחראי על המעקב. אנחנו עוזרים לחברות מכונות לזהות את החשבונות האלה ולהפעיל תהליך שמקדם אותם להזדמנויות מוכנות להצעת מחיר.<br><br>
+              שווה לבדוק בשיחה של 20 דקות אם אפשר לזהות את ההזדמנות הזו מתוך הנתונים שכבר קיימים אצלכם?<br><br>
+              אייל
+            </div>
+            <h3 class="subhead">השאלות החשובות בשיחת גילוי</h3>
+            <ul class="question-list">
+              <li>כמה מכונות פעילות וישנות או חשבונות לקוח אתם יכולים לזהות?</li>
+              <li>האם ניתן לקשר מכונה או מספר סידורי לבעלים ולמיקום הנוכחיים?</li>
+              <li>מה בדרך כלל גורם לצוות לפנות ללקוח עם מכונה מותקנת?</li>
+              <li>איך אתם מזהים לקוחות ללא פעילות חלפים או שירות עדכנית?</li>
+              <li>באילו מערכות נמצאים נתוני הלקוחות, ההזמנות, המכונות והשירות?</li>
+              <li>מהו מחזור הרכישה הרגיל בכל משפחת מכונות רלוונטית?</li>
+              <li>מהם שווי ההזמנה, הרווח הגולמי ומחזור המכירה הטיפוסיים?</li>
+              <li>מי מאמת את הצורך הטכני, מאשר את המחיר ומוציא הצעת מחיר?</li>
+              <li>האם הצוות יכול לספק ביקוש נוסף בזמן סביר?</li>
+              <li>איזו הוכחה תהפוך פיילוט של 90 יום לכדאי?</li>
+            </ul>
+          </section>
+
+          <section class="section" id="he-measure">
+            <div class="section-number">10 / התוצאה</div>
+            <h2>מודדים את הדרך לכסף</h2>
+            <div class="flow" aria-label="משפך התוצאה המסחרית">
+              <div class="flow-step">חשבון מתאים</div><div class="flow-step">נוצר קשר</div><div class="flow-step">שיחה</div><div class="flow-step">צורך מסונן</div><div class="flow-step">הצעת מחיר</div><div class="flow-step">הזמנה חתומה</div><div class="flow-step">הכנסה שנגבתה</div>
+            </div>
+            <p>בסופו של דבר הלקוח קונה הזמנות חתומות, הכנסה שנגבתה, וכאשר הנתונים מאפשרים — רווח גולמי שנגבה. השלבים המוקדמים הם מדדים מובילים שמראים אם הקמפיין מתקדם.</p>
+            <h3 class="subhead">בונים את מודל ההזדמנות בשקיפות</h3>
+            <div class="formula">חשבונות מתאימים שניתן להגיע אליהם × שיעור שיחות × שיעור צרכים מסוננים × שיעור סגירה × שווי הזמנה או רווח גולמי ממוצע</div>
+            <p>משתמשים במספרים ההיסטוריים של הלקוח ככל שניתן. אחרת מציגים תרחישים שמרניים ומסמנים כל הנחה. הערכת הזדמנות אינה תחזית או הבטחה.</p>
+          </section>
+
+          <section class="section" id="he-test">
+            <div class="section-number">11 / מבחן 60 הימים</div>
+            <h2>מוכיחים בישראל ובמקביל מוכרים באמריקה</h2>
+            <div class="two-col">
+              <div class="panel dark"><h3>ארצות הברית</h3><p>פונים ל־30 חברות מכונות אריזה ועיבוד שנבדקו בקפידה, עם הצעה אחת עקבית, אימייל מבוסס ראיות ומעקב טלפוני מתאים.</p></div>
+              <div class="panel good"><h3>ישראל</h3><p>פונים לכ־10–15 חברות מתאימות כדי להשיג לקוח פיילוט משלם אחד ורשות לתעד מקרה בוחן אמין במקרה של הצלחה.</p></div>
+            </div>
+            <div class="scorecard">
+              <div class="score"><b>5+</b><span>שיחות רציניות</span></div>
+              <div class="score"><b>2+</b><span>דיונים מבוקרים על נתונים</span></div>
+              <div class="score"><b>1</b><span>אבחון בתשלום</span></div>
+              <div class="score"><b>1</b><span>הזדמנות מעשית שנמצאה</span></div>
+            </div>
+            <p>אלה ספי החלטה ולא עובדות שוק. אם התוצאה חלשה, בודקים קודם את איכות הרשימה, בחירת הקונה, הראיות, המסר, הקריאה לפעולה, הערוץ והשלמת המעקבים — ורק אחר כך משנים נישה.</p>
+            <div class="status-note"><strong>אם הוורטיקל נכשל, שומרים על הקטגוריה.</strong>בודקים ורטיקל אחר של ציוד תעשייתי תוך שמירה על התוצאה של החזרת הכנסות מאפטרמרקט. משנים משתנה אחד בכל פעם ומתעדים מה הראיות באמת הראו.</div>
+          </section>
+
+          <section class="section" id="he-remember">
+            <div class="section-number">12 / דף העזר</div>
+            <h2>מה לזכור לפני כל ליד או שיחה</h2>
+            <ul class="clean-list check">
+              <li>אתה מוכר החזרת הכנסות מאפטרמרקט — לא AI.</li>
+              <li>הטריגר הראשון הוא היעדר רכישת חלפים או שירות במשך 18–24 חודשים.</li>
+              <li>חוסר פעילות משמעותי רק לאחר שמאמתים את מחזור הרכישה הרגיל.</li>
+              <li>אתה מבצע את עבודת ההחזרה; הלקוח מאשר החלטות טכניות ומסחריות.</li>
+              <li>לעולם לא ממציאים מספר מכונות, איכות נתונים, אובדן הכנסה, אנשי קשר או תשואה צפויה.</li>
+              <li>הקריאה הראשונה לפעולה היא בדיקת הזדמנות קצרה; האבחון בתשלום הוא מוצר הכניסה.</li>
+              <li>אמריקה היא המיקוד המסחרי. ישראל היא הדרך להוכחה. מפעילים את שני המסלולים במקביל.</li>
+            </ul>
+            <div class="memory-card"><h3>המשפט שצריך לזכור בעל פה</h3><p>״אנחנו מחזירים הכנסות מחלפים, שירות ושדרוגים מלקוחות לא פעילים עם ציוד מותקן — עושים את העבודה עבורכם ומודדים את התוצאה בהצעות מחיר ובהזמנות.״</p></div>
+          </section>
+          <p class="footer-note">נישה אחת · מדריך אישי · האסטרטגיה נבדקה ב־22 בספטמבר 2026</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="lang-panel" id="panel-de" lang="de" dir="ltr" hidden>
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="kicker">Internes Arbeitsdokument</div>
+          <h1>Nische Eins: Umsatzrückgewinnung im Aftermarket</h1>
+          <p class="hero-copy">Nachschlagewerk für Positionierung, Qualifizierung, Verkaufsgespräche, Umsetzung und den 60-Tage-Validierungsplan.</p>
+          <div class="hero-meta">
+            <span class="chip"><b>Hauptmarkt</b> USA</span>
+            <span class="chip"><b>Referenzmarkt</b> Israel</span>
+            <span class="chip"><b>Status</b> Fokussierte Hypothese</span>
+          </div>
+        </div>
+      </section>
+      <div class="layout">
+        <nav class="toc" aria-label="Deutsches Inhaltsverzeichnis">
+          <div class="toc-label">In diesem Leitfaden</div>
+          <a href="#de-decision"><span class="num">01</span>Entscheidung</a>
+          <a href="#de-offer"><span class="num">02</span>Angebot</a>
+          <a href="#de-client"><span class="num">03</span>Idealkunde</a>
+          <a href="#de-problem"><span class="num">04</span>Ausgangslage</a>
+          <a href="#de-campaign"><span class="num">05</span>Erste Kampagne</a>
+          <a href="#de-cases"><span class="num">06</span>Praxisbeispiele</a>
+          <a href="#de-delivery"><span class="num">07</span>Umsetzung</a>
+          <a href="#de-price"><span class="num">08</span>Preise</a>
+          <a href="#de-sales"><span class="num">09</span>Verkauf</a>
+          <a href="#de-measure"><span class="num">10</span>Messung</a>
+          <a href="#de-test"><span class="num">11</span>60-Tage-Test</a>
+          <a href="#de-remember"><span class="num">12</span>Merksätze</a>
+        </nav>
+        <div class="content">
+          <section class="section" id="de-decision">
+            <div class="section-number">01 / DIE ENTSCHEIDUNG</div>
+            <h2>Das Geschäftsmodell</h2>
+            <p class="lead">Du hilfst Herstellern und Händlern von Verpackungs- und Verarbeitungsmaschinen, Aftermarket-Umsatz aus bereits installierten Maschinen und bestehenden Kundenbeziehungen zurückzugewinnen.</p>
+            <div class="statement">Das ist eine umgesetzte Umsatzrückgewinnung als Dienstleistung — keine allgemeine KI-Beratung und keine weitere Softwareplattform.</div>
+            <div class="quick-grid">
+              <div class="quick-card"><div class="label">Langfristige Kategorie</div><p>Aftermarket-Umsatzrückgewinnung für Industrieausrüster.</p></div>
+              <div class="quick-card"><div class="label">Aktueller Vertikalmarkt</div><p>Hersteller und Händler von Verpackungs- und Verarbeitungsmaschinen.</p></div>
+              <div class="quick-card"><div class="label">Hauptmarkt</div><p>Die USA, wo das langfristige Geschäft aufgebaut wird.</p></div>
+              <div class="quick-card"><div class="label">Referenzmarkt</div><p>Israel, um einen bezahlten Designpartner und einen belastbaren Fallnachweis zu gewinnen.</p></div>
+            </div>
+            <div class="status-note"><strong>Unsicherheit offen benennen.</strong>Dies ist eine Hypothese mit etwa 60–65 % Zuversicht. Der Markttest entscheidet, ob der Vertikalmarkt den weiteren Fokus verdient.</div>
+          </section>
+
+          <section class="section" id="de-offer">
+            <div class="section-number">02 / DAS ANGEBOT</div>
+            <h2>Die Erklärung in 30 Sekunden</h2>
+            <div class="statement">Wir helfen Verpackungs- und Verarbeitungsmaschinenunternehmen, Umsatz mit Ersatzteilen, Service und Modernisierungen bei Kunden zurückzugewinnen, an die sie bereits Maschinen verkauft haben. Wir identifizieren inaktive Konten in den vorhandenen Daten, führen freigegebene Ansprache durch, qualifizieren den Bedarf und bringen die Chance bis zur Angebots- und Auftragsreife.</div>
+            <div class="two-col">
+              <div class="panel good"><h3>Damit beginnen</h3><p>Umsatz aus bestehenden Kunden und installierten Maschinen, umgesetzt als kontrollierter Done-for-you-Prozess.</p></div>
+              <div class="panel caution"><h3>Nicht damit beginnen</h3><p>KI-Automatisierungsagentur, KI-Anrufe, CRM-Bereinigung, Leadgenerierung oder eine weitere Installed-Base-Plattform.</p></div>
+            </div>
+            <p><strong>Der Unterschied:</strong> Software liefert dem Kunden ein weiteres Werkzeug. Du betreibst gemeinsam mit seinem Team den Rückgewinnungsprozess und machst aus Daten qualifizierte Vertriebschancen.</p>
+          </section>
+
+          <section class="section" id="de-client">
+            <div class="section-number">03 / DER IDEALKUNDE</div>
+            <h2>Nach wem du suchst</h2>
+            <p class="lead">Ein unabhängiger Hersteller, OEM, spezialisierter Händler oder Importeur-Integrator mit installierter Basis und bestehender Ersatzteil- oder Servicefunktion.</p>
+            <div class="tag-row"><span class="tag">Füllen</span><span class="tag">Verschließen</span><span class="tag">Etikettieren</span><span class="tag">Kartonieren</span><span class="tag">Verpacken</span><span class="tag">Palettieren</span><span class="tag">Inspektion</span><span class="tag">Lebensmittel</span><span class="tag">Pharma</span></div>
+            <div class="two-col">
+              <div class="panel good"><h3>Starke Eignungssignale</h3><ul class="clean-list check"><li>Etwa 25–100 Mitarbeitende; testweise 20–150.</li><li>Identifizierbare installierte Basis.</li><li>Relevante Erlöse mit Teilen, Service, Retrofit oder Upgrades.</li><li>Exportierbare Kunden-, Auftrags-, Maschinen- oder Servicedaten.</li><li>Interne Person für Validierung, Preis, Angebot und Abschluss.</li><li>Kapazität, zusätzliche Nachfrage zu erfüllen.</li></ul></div>
+              <div class="panel caution"><h3>Schwache Eignung oder Ausschluss</h3><ul class="clean-list"><li>Nur wenige installierte Maschinen.</li><li>Niedrigwertige Standardteile ohne ausreichende Marge.</li><li>Keine bestehende Beziehung zum Endkunden.</li><li>Aftermarket liegt beim Hersteller oder einem Dritten.</li><li>Keine nutzbaren Daten und kein realistischer Rekonstruktionsweg.</li><li>Ein reifer globaler Aftermarket-Prozess funktioniert bereits gut.</li></ul></div>
+            </div>
+            <h3 class="subhead">Wer kauft</h3>
+            <p>In kleineren Unternehmen Präsident, Inhaber oder CEO; außerdem VP/Director Aftermarket, Serviceleiter, Teileleiter oder die Führungskraft mit klarer Verantwortung für Umsatz aus Bestandskunden.</p>
+            <div class="status-note"><strong>Die Maschinenzahl ist nicht die eigentliche Regel.</strong>„500+ Maschinen“ ist nur eine Hypothese. Datenqualität, Kundenzugang, Auftragsökonomie und ein verantwortlicher interner Owner sind wichtiger.</div>
+          </section>
+
+          <section class="section" id="de-problem">
+            <div class="section-number">04 / DIE AUSGANGSLAGE</div>
+            <h2>Warum Umsatz liegen bleibt</h2>
+            <p class="lead">Der Neumaschinenverkauf erhält Aufmerksamkeit. Der Aftermarket bleibt oft reaktiv: Der Kunde meldet sich bei einer Störung, während stille Konten kaum systematisch betreut werden.</p>
+            <div class="quick-grid">
+              <div class="quick-card"><div class="label">Reaktive Nachfrage</div><p>Teile und Service werden verkauft, wenn der Kunde anfragt, statt über geplante Lebenszyklusansprache.</p></div>
+              <div class="quick-card"><div class="label">Verteilte Daten</div><p>Kunden-, Maschinen-, Auftrags- und Servicedaten liegen in ERP, CRM, Tabellen und im Wissen einzelner Mitarbeitender.</p></div>
+              <div class="quick-card"><div class="label">Stille Konten</div><p>Ansprechpartner wechseln, Maschinen werden weiterverkauft und manche Kunden kaufen unbemerkt bei Drittanbietern.</p></div>
+              <div class="quick-card"><div class="label">Verpasste Zeitpunkte</div><p>Wartung, Retrofit, Obsoleszenz, Upgrades und Ersatzbeschaffung werden nicht rechtzeitig erkannt.</p></div>
+            </div>
+            <div class="status-note"><strong>Das sind Discovery-Hypothesen.</strong>Einem konkreten Interessenten nie ohne Beleg sagen, dass er Umsatz verliert. Das Muster als Möglichkeit darstellen und fragen, wie es heute gesteuert wird.</div>
+          </section>
+
+          <section class="section" id="de-campaign">
+            <div class="section-number">05 / DIE ERSTE KAMPAGNE</div>
+            <h2>Mit einem klaren Auslöser beginnen</h2>
+            <div class="statement">Ein Kundenkonto oder eine identifizierbare installierte Maschine hat in den vergangenen 18–24 Monaten keine Ersatzteile oder Serviceleistungen gekauft.</div>
+            <p>Zuerst den normalen Kauf- und Servicezyklus der jeweiligen Maschinenfamilie bestätigen. 18 Monate Inaktivität können bei einem Produkt relevant und bei einem anderen völlig normal sein.</p>
+            <div class="two-col">
+              <div class="panel"><h3>Wenn Eigentum und Standort verlässlich sind</h3><p>Einzelne Maschinen nach letzter Aktivität, Alter, Servicehistorie, wahrscheinlichem Bedarf, erreichbarem Kontakt und Wert priorisieren.</p></div>
+              <div class="panel"><h3>Wenn die installierte Basis unklar ist</h3><p>Mit inaktiven Kundenkonten und Auftragshistorie beginnen. Nicht vorgeben, den aktuellen Besitzer oder Standort jeder Maschine zu kennen.</p></div>
+            </div>
+            <h3 class="subhead">Später ergänzen — erst wenn der erste Auslöser funktioniert</h3>
+            <div class="tag-row"><span class="tag">Ausgelaufene Verträge</span><span class="tag">Garantieende</span><span class="tag">Verschleißteile</span><span class="tag">Präventivwartung</span><span class="tag">Retrofits</span><span class="tag">Obsoleszenz</span><span class="tag">Ersatzinvestition</span></div>
+          </section>
+
+          <section class="section" id="de-cases">
+            <div class="section-number">06 / PRAXISBEISPIELE</div>
+            <h2>Wie die Chance konkret aussehen kann</h2>
+            <div class="case-intro">
+              <p class="lead">Alle Firmen, Stückzahlen, Preise, Quoten und Ergebnisse sind hypothetisch. Die Beispiele erklären das wirtschaftliche Muster; echte Zahlen entstehen erst nach der Analyse.</p>
+              <div class="case-legend"><p><strong>Hinweise beachten.</strong><br><span class="case-badge">Jetzt starten</span> gehört zur ersten Inaktivitätskampagne. <span class="case-badge later">Später</span> wird erst nach deren Erfolg ergänzt.</p></div>
+            </div>
+            <div class="case-list">
+              <details class="case-card" open><summary><span class="case-no">01</span><span class="case-title">Hersteller von Flaschenfüllern<span class="case-sub">Inaktive Nachfrage nach Verschleißteilen · USA</span></span></summary><div class="case-body"><span class="case-badge">Jetzt starten</span><div class="case-columns"><div class="case-block"><h4>Hypothetisches Signal</h4><p>Ein Hersteller mit 60 Mitarbeitenden und rund 800 ausgelieferten Füllern findet 300 Maschinen ohne Teilekauf beim OEM in zwei Jahren. Dichtungssätze könnten 3.000–6.000 US-Dollar kosten; der normale Zyklus muss je Modell bestätigt werden.</p></div><div class="case-block"><h4>Was Eyal tut</h4><p>Maschinen- und Auftragsdaten verbinden, ungeeignete Konten ausschließen, Kontakte prüfen und eine freigegebene Anfrage zu Teileprüfung oder Angebot ausführen. Positive Antworten gehen an den Teileverantwortlichen.</p></div></div><div class="case-result">Nur Rechenbeispiel: 40 Aufträge zu durchschnittlich 5.000 US-Dollar wären 200.000 US-Dollar Auftragswert.</div><p class="case-caution"><strong>Wichtig:</strong> Kein OEM-Kauf beweist nicht, dass das Teil nie ersetzt wurde.</p></div></details>
+              <details class="case-card"><summary><span class="case-no">02</span><span class="case-title">Etikettierer mit veralteter Steuerung<span class="case-sub">Geplanter PLC/HMI-Retrofit · USA</span></span></summary><div class="case-body"><span class="case-badge later">Später</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>Exakte installierte Konfiguration und End-of-Life-Status der Komponente sind verifiziert.</p></div><div class="case-block"><h4>Vorgehen</h4><p>Der Kundeningenieur bestätigt Konfiguration und freigegebenen Retrofit, bevor eine geplante Upgrade-Option angeboten wird.</p></div></div><div class="case-result">Nur Rechenbeispiel: acht Projekte zu 25.000 US-Dollar wären 200.000 US-Dollar.</div></div></details>
+              <details class="case-card"><summary><span class="case-no">03</span><span class="case-title">Neues Produktformat beim Case-Packer-Kunden<span class="case-sub">Formatteile und Werkzeuge · USA</span></span></summary><div class="case-body"><span class="case-badge later">Später</span><div class="case-columns"><div class="case-block"><h4>Besseres Signal</h4><p>Ein verifizierter Produktstart, eine Verpackungsänderung, frühere Anfrage oder bestätigte Planung — nicht bloß Inaktivität.</p></div><div class="case-block"><h4>Vorgehen</h4><p>Neue Maße mit der installierten Maschine verbinden, Betriebsanforderungen erfassen und eine qualifizierte Anfrage an das Engineering übergeben.</p></div></div><div class="case-result">Nur Rechenbeispiel: zehn Aufträge zu 15.000 US-Dollar wären 150.000 US-Dollar.</div></div></details>
+              <details class="case-card"><summary><span class="case-no">04</span><span class="case-title">Israelischer Importeur für Lebensmittelverpackung<span class="case-sub">Bezahlter Designpartner und Referenzfall · Israel</span></span></summary><div class="case-body"><span class="case-badge">Jetzt starten · Referenzmarkt</span><div class="case-columns"><div class="case-block"><h4>Hypothetisches Signal</h4><p>Ein Importeur mit 30 Mitarbeitenden, fünf Technikern und etwa 400 Maschinen findet 120 Konten oder Maschinen ohne dokumentierte Aktivität seit 18 Monaten.</p></div><div class="case-block"><h4>Vorgehen</h4><p>Kontaktrechte und Marken klären, Datensätze priorisieren, Instandhaltungsleiter im Namen des Importeurs ansprechen und Interesse für den Serviceleiter qualifizieren.</p></div></div><div class="case-result">Nur Szenario: ₪400.000 Jahreswert könnten als dokumentierter Referenzfall dienen.</div></div></details>
+              <details class="case-card"><summary><span class="case-no">05</span><span class="case-title">Das abzulehnende Unternehmen<span class="case-sub">Acht Mitarbeitende, 60 Maschinen, keine nutzbaren Daten</span></span></summary><div class="case-body"><span class="case-badge reject">Nicht passend</span><div class="case-columns"><div class="case-block"><h4>Warum es scheitert</h4><p>Zu geringe wirtschaftliche Basis, Wissen nur im Kopf des Inhabers und niemand für technische Prüfung, Angebote und Erfüllung.</p></div><div class="case-block"><h4>Entscheidung</h4><p>Ablehnen, wenn die Fakten bereits klar sind. Eine bezahlte Analyse nur nutzen, wenn Datenqualität oder Wirtschaftlichkeit wirklich unklar sind.</p></div></div></div></details>
+              <details class="case-card"><summary><span class="case-no">06</span><span class="case-title">Der normale Bestellrhythmus stoppt<span class="case-sub">Musterbruch in der Inaktivitätskampagne</span></span></summary><div class="case-body"><span class="case-badge">Jetzt starten</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>Ein Konto bestellte bisher alle 10–14 Monate, hat aber zwei erwartete Zyklen verpasst.</p></div><div class="case-block"><h4>Vorgehen</h4><p>Maschine und Kontakt prüfen, Betrieb bestätigen und Teileprüfung oder Inspektion anbieten.</p></div></div><div class="case-result">Stärker als ein pauschaler Grenzwert, weil das Signal aus der eigenen Historie stammt.</div></div></details>
+              <details class="case-card"><summary><span class="case-no">07</span><span class="case-title">Servicevertrag ist ausgelaufen<span class="case-sub">Verlängerung und Präventivwartung</span></span></summary><div class="case-body"><span class="case-badge later">Später</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>Vertragsende ist überschritten, die Maschine läuft weiter und keine Verlängerung ist offen.</p></div><div class="case-block"><h4>Angebot</h4><p>Freigegebene Verlängerung oder aktualisierten Wartungsplan anbieten; Umfang und Preis bleiben beim Serviceteam.</p></div></div><div class="case-result">Möglicher Effekt: wiederkehrender Serviceumsatz.</div></div></details>
+              <details class="case-card"><summary><span class="case-no">08</span><span class="case-title">Kein Paket kritischer Ersatzteile<span class="case-sub">Stücklisten- und Bestandsprüfung</span></span></summary><div class="case-body"><span class="case-badge later">Später</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>Modell und Seriennummer lassen sich einer freigegebenen Stückliste zuordnen, aber kritische Langläufer fehlen in der Kaufhistorie.</p></div><div class="case-block"><h4>Angebot</h4><p>Der Teileexperte des Kunden validiert eine maschinenspezifische Liste; Eyal qualifiziert Bestand und Betriebsplan.</p></div></div><div class="case-result">Weniger Ausfallrisiko für den Betreiber, planbarer Teileumsatz für den OEM.</div></div></details>
+              <details class="case-card"><summary><span class="case-no">09</span><span class="case-title">Wartung vor der Hochsaison<span class="case-sub">Zeitbezogene Service- und Teilekampagne</span></span></summary><div class="case-body"><span class="case-badge later">Später</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>Eine bekannte Produktionsspitze nähert sich und es gibt keine aktuelle Inspektion oder Wartung beim Lieferanten.</p></div><div class="case-block"><h4>Angebot</h4><p>Zeitlich begrenztes Inspektionsfenster, Wartung und freigegebene modellspezifische Teile — nur bei ausreichender Kapazität.</p></div></div></div></details>
+              <details class="case-card"><summary><span class="case-no">10</span><span class="case-title">Neues Instandhaltungsteam benötigt Schulung<span class="case-sub">Training und Reaktivierung</span></span></summary><div class="case-body"><span class="case-badge later">Später</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>Bestätigter Kontaktwechsel, Werkserweiterung, Einstellung oder Servicegespräch zeigt neue Verantwortliche.</p></div><div class="case-block"><h4>Angebot</h4><p>Freigegebenes, modellspezifisches Bediener- oder Wartungstraining und zugleich Aktualisierung des Datensatzes.</p></div></div></div></details>
+              <details class="case-card"><summary><span class="case-no">11</span><span class="case-title">Verifiziertes Effizienz-Upgrade<span class="case-sub">Energie, Wasser, Ausschuss, Geschwindigkeit oder Qualität</span></span></summary><div class="case-body"><span class="case-badge later">Später</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>Der OEM hat einen belastbaren Retrofit für eine identifizierbare Modellreihe.</p></div><div class="case-block"><h4>Angebot</h4><p>Technisch passende Konten priorisieren und Interesse an Engineering für ein kundenspezifisches Modell und Angebot übergeben.</p></div></div><div class="case-result">Der OEM — nicht Eyal — bestätigt Kompatibilität und Einsparung.</div></div></details>
+              <details class="case-card"><summary><span class="case-no">12</span><span class="case-title">Maschine wurde versetzt, verkauft oder ist ersatzreif<span class="case-sub">Reaktivierung, Umzug oder Neumaschinenchance</span></span></summary><div class="case-body"><span class="case-badge later">Später</span><div class="case-columns"><div class="case-block"><h4>Signal</h4><p>Besitz oder Standort hat sich verifiziert geändert, oder das Technikteam bewertet weitere Reparaturen als unwirtschaftlich.</p></div><div class="case-block"><h4>Angebot</h4><p>Nach Bestätigung des aktuellen Besitzers: Wiederinbetriebnahme, Inspektion, Umzug, Schulung, Teile, Retrofit oder Ersatzprüfung.</p></div></div></div></details>
+            </div>
+            <h3 class="subhead">Das gemeinsame Muster guter Beispiele</h3>
+            <div class="common-grid"><div class="common-item"><b>1 · Bestehende Beziehung</b>Das Maschinenunternehmen hat die Anlage verkauft oder unterstützt sie.</div><div class="common-item"><b>2 · Beobachtbares Signal</b>Datum, Muster, Konfiguration oder bestätigtes Ereignis begründet die Prüfung.</div><div class="common-item"><b>3 · Freigegebenes Angebot</b>Technisches und kaufmännisches Team bestätigen, was angeboten werden darf.</div><div class="common-item"><b>4 · Messbares Geld</b>Die Chance wird bis Angebot, Auftrag und Zahlung verfolgt.</div></div>
+          </section>
+
+          <section class="section" id="de-delivery">
+            <div class="section-number">07 / UMSETZUNG</div>
+            <h2>Erst Diagnose, dann Ausführung</h2>
+            <div class="process">
+              <div class="process-step"><div><h3>Eignungs- und Machbarkeitsgespräch</h3><p>Installierte Basis, Prozess, Daten, Wirtschaftlichkeit, Kapazität und Entscheidungsweg verstehen. Keine KI-Demo.</p></div></div>
+              <div class="process-step"><div><h3>Zweiwöchige bezahlte Analyse</h3><p>Datenqualität prüfen, Inaktivität definieren, geeignete Konten erkennen, Chancenmodell bauen und ersten Abschnitt auswählen.</p></div></div>
+              <div class="process-step"><div><h3>90-Tage-Ziel vereinbaren</h3><p>Ein kundenspezifisches Ziel aus dessen Zahlen ableiten; keinen universellen Betrag versprechen.</p></div></div>
+              <div class="process-step"><div><h3>Priorisierte Liste erstellen</h3><p>Nach Sicherheit, Erreichbarkeit, wahrscheinlichem Bedarf, Wert, Ausschlüssen und nächster Aktion ordnen.</p></div></div>
+              <div class="process-step"><div><h3>Freigegebene Ansprache ausführen</h3><p>Genehmigte E-Mails und geeignete menschliche Anrufe nutzen, Antworten qualifizieren und Angebotsinformationen erfassen.</p></div></div>
+              <div class="process-step"><div><h3>Wirtschaftliches Ergebnis verfolgen</h3><p>Vereinbarte Chancen für einen definierten Zeitraum bis zu Zahlung oder Abschluss dokumentieren.</p></div></div>
+            </div>
+            <div class="two-col"><div class="panel dark"><h3>Du kannst verantworten</h3><ul class="clean-list"><li>Datenbereinigung, Zuordnung, Segmentierung und Priorisierung.</li><li>Freigegebene Ansprache und definierte Nachverfolgung.</li><li>Antwortklassifizierung und Chancenqualifizierung.</li><li>Angebotsvorbereitung und Pipeline-Bericht.</li></ul></div><div class="panel"><h3>Der Kunde verantwortet oder genehmigt</h3><ul class="clean-list"><li>Datennutzungsrechte, Kontaktberechtigung und Sperrlisten.</li><li>Technische Diagnose und Empfehlung.</li><li>Preis, Verfügbarkeit, Bedingungen und finales Angebot.</li><li>Lieferung, Rechnung, Einzug und Ausnahmen.</li></ul></div></div>
+            <p><strong>Wo KI hilft:</strong> Datensatzabgleich, Recherche, Personalisierung, Antwortklassifizierung, Follow-up-Entwürfe und Reporting. Berechtigung, Fristen, Preise, Bedingungen und Sperrlisten benötigen verlässliche Regeln und menschliche Freigabe.</p>
+          </section>
+
+          <section class="section" id="de-price">
+            <div class="section-number">08 / PREISE</div>
+            <h2>Das aktuelle Angebot in der Validierungsphase</h2>
+            <table class="price-table"><thead><tr><th>Phase</th><th>USA</th><th>Israel</th></tr></thead><tbody><tr><td>Zweiwöchige Analyse</td><td>2.000 US-Dollar</td><td>₪6.000</td></tr><tr><td>90-Tage-Umsetzung</td><td>5.000 US-Dollar pro Monat<br>Mindestens drei Monate</td><td>₪15.000 pro Monat<br>Mindestens drei Monate</td></tr></tbody></table>
+            <p>Die Analyse kann auf die Umsetzung angerechnet werden, wenn dies im Angebot festgehalten ist. Kein automatischer Rabatt. Ein Vorteil für den ersten Kunden muss echten Gegenwert bringen: schnellen Zugang, nutzbare Daten, Zeit von Entscheidern und bei Erfolg die Erlaubnis zur Dokumentation.</p>
+            <div class="status-note"><strong>Sicherheitsnetz</strong>Wenn die Analyse keine ausreichend glaubwürdige und große Chance zeigt, endet das Projekt dort. Der Kunde erhält dennoch eine verwertbare Daten- und Chancenbewertung.</div>
+          </section>
+
+          <section class="section" id="de-sales">
+            <div class="section-number">09 / VERKAUF</div>
+            <h2>Eine Chancenprüfung verkaufen — nicht KI</h2>
+            <p class="lead">Ziel der Kaltansprache ist ein 20-minütiges Machbarkeitsgespräch. Die bezahlte Analyse folgt erst, wenn der Käufer das Problem erkennt und nutzbare Daten wahrscheinlich sind.</p>
+            <div class="script"><div class="subject">Rahmen für eine Kalt-E-Mail</div>Hallo [Name],<br><br>[Eine verifizierte Beobachtung zu Maschinen oder Aftermarket-Aktivität.]<br><br>Wenn Kunden-, Teile- und Servicedaten auf mehrere Systeme verteilt sind, können Bestandskunden mit installierten Maschinen still werden, ohne dass jemand klar für die Nachverfolgung verantwortlich ist. Wir helfen Maschinenunternehmen, diese Konten zu identifizieren und einen Prozess zu betreiben, der sie zu angebotsreifen Chancen entwickelt.<br><br>Wäre es sinnvoll, in 20 Minuten zu prüfen, ob sich diese Chance in den vorhandenen Daten von [Unternehmen] erkennen lässt?<br><br>Eyal</div>
+            <h3 class="subhead">Die wichtigsten Discovery-Fragen</h3>
+            <ul class="question-list"><li>Wie viele aktive und ältere Maschinen oder Kundenkonten sind identifizierbar?</li><li>Lässt sich eine Maschine oder Seriennummer aktuellem Besitzer und Standort zuordnen?</li><li>Was löst heute eine proaktive Kontaktaufnahme aus?</li><li>Wie werden Konten ohne aktuelle Teile- oder Serviceaktivität erkannt?</li><li>Wo liegen Kunden-, Auftrags-, Maschinen- und Servicedaten?</li><li>Was ist der normale Kaufzyklus je relevanter Maschinenfamilie?</li><li>Wie hoch sind typischer Auftragswert, Bruttomarge und Verkaufszyklus?</li><li>Wer bestätigt Bedarf, Preis und Angebot?</li><li>Kann das Team zusätzliche Nachfrage zeitnah erfüllen?</li><li>Welcher Nachweis würde einen 90-Tage-Pilot rechtfertigen?</li></ul>
+          </section>
+
+          <section class="section" id="de-measure">
+            <div class="section-number">10 / DAS ERGEBNIS</div>
+            <h2>Den Weg zum Umsatz messen</h2>
+            <div class="flow" aria-label="Kommerzieller Ergebnistrichter"><div class="flow-step">Geeignetes Konto</div><div class="flow-step">Kontakt</div><div class="flow-step">Gespräch</div><div class="flow-step">Qualifizierter Bedarf</div><div class="flow-step">Angebot</div><div class="flow-step">Auftrag</div><div class="flow-step">Zahlung</div></div>
+            <p>Der Kunde kauft letztlich Aufträge, vereinnahmten Umsatz und — wenn die Daten es erlauben — realisierte Bruttomarge. Frühere Schritte sind Vorlaufindikatoren.</p>
+            <h3 class="subhead">Das Chancenmodell transparent aufbauen</h3>
+            <div class="formula">Erreichbare geeignete Konten × Gesprächsquote × Quote qualifizierter Bedarfe × Abschlussquote × durchschnittlicher Auftragswert oder Bruttogewinn</div>
+            <p>Soweit möglich historische Kundenzahlen verwenden. Sonst konservative Szenarien zeigen und jede Annahme markieren. Eine Chancenbewertung ist keine Prognose oder Garantie.</p>
+          </section>
+
+          <section class="section" id="de-test">
+            <div class="section-number">11 / DER 60-TAGE-TEST</div>
+            <h2>In Israel beweisen und gleichzeitig in den USA verkaufen</h2>
+            <div class="two-col"><div class="panel dark"><h3>USA</h3><p>30 sorgfältig geprüfte Verpackungs- und Verarbeitungsmaschinenunternehmen mit einem konsistenten Angebot, evidenzbasierter E-Mail und angemessener telefonischer Nachverfolgung ansprechen.</p></div><div class="panel good"><h3>Israel</h3><p>Etwa 10–15 passende Unternehmen ansprechen, um einen zahlenden Pilotkunden und bei Erfolg die Erlaubnis für einen belastbaren Fallnachweis zu gewinnen.</p></div></div>
+            <div class="scorecard"><div class="score"><b>5+</b><span>Ernsthafte Gespräche</span></div><div class="score"><b>2+</b><span>Geprüfte Datengespräche</span></div><div class="score"><b>1</b><span>Bezahlte Analyse</span></div><div class="score"><b>1</b><span>Handelbare Chance</span></div></div>
+            <p>Das sind Entscheidungsschwellen, keine Marktkenntnisse. Bei schwachem Ergebnis zuerst Liste, Käufer, Beleg, Botschaft, CTA, Kanal und Follow-up prüfen; erst danach die Nische ändern.</p>
+            <div class="status-note"><strong>Wenn der Vertikalmarkt scheitert, die Kategorie behalten.</strong>Einen anderen Industrieausrüstungsmarkt testen und das Ergebnis Aftermarket-Umsatzrückgewinnung beibehalten. Nur eine Variable zugleich ändern.</div>
+          </section>
+
+          <section class="section" id="de-remember">
+            <div class="section-number">12 / MERKBLATT</div>
+            <h2>Vor jedem Interessenten und Gespräch beachten</h2>
+            <ul class="clean-list check"><li>Du verkaufst Aftermarket-Umsatzrückgewinnung — nicht KI.</li><li>Der erste Auslöser ist 18–24 Monate ohne Teile- oder Servicekauf.</li><li>Inaktivität ist erst nach Bestätigung des normalen Kaufzyklus relevant.</li><li>Du führst den Rückgewinnungsprozess aus; der Kunde genehmigt technische und kaufmännische Entscheidungen.</li><li>Niemals Maschinenzahl, Datenqualität, entgangenen Umsatz, Kontakte oder erwartete Rendite erfinden.</li><li>Der erste CTA ist eine kurze Chancenprüfung; die bezahlte Analyse ist das Einstiegsprodukt.</li><li>Die USA sind der kommerzielle Fokus. Israel liefert den Nachweis. Beide Wege laufen parallel.</li></ul>
+            <div class="memory-card"><h3>Der Satz zum Auswendiglernen</h3><p>„Wir gewinnen Ersatzteil-, Service- und Modernisierungsumsatz bei inaktiven Bestandskunden mit installierten Maschinen zurück — wir setzen den Prozess für Sie um und messen das Ergebnis in Angeboten und Aufträgen.“</p></div>
+          </section>
+          <p class="footer-note">Nische Eins · Persönlicher Leitfaden · Strategie geprüft am 22. September 2026</p>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    (() => {
+      const languageButtons = Array.from(document.querySelectorAll('[data-language]'));
+      const panels = {
+        en: document.getElementById('panel-en'),
+        he: document.getElementById('panel-he'),
+        de: document.getElementById('panel-de')
+      };
+      const titles = {
+        en: 'Niche One — Aftermarket Revenue Recovery',
+        he: 'נישה אחת — החזרת הכנסות מאפטרמרקט',
+        de: 'Nische Eins — Umsatzrückgewinnung im Aftermarket'
+      };
+
+      function setLanguage(language) {
+        const isHebrew = language === 'he';
+        Object.entries(panels).forEach(([key, panel]) => {
+          panel.hidden = key !== language;
+        });
+        document.documentElement.lang = language;
+        document.documentElement.dir = isHebrew ? 'rtl' : 'ltr';
+        document.title = titles[language];
+        languageButtons.forEach((button) => {
+          const active = button.dataset.language === language;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+        try { localStorage.setItem('niche-language', language); } catch (error) {}
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }
+
+      let initialLanguage = 'en';
+      try { initialLanguage = localStorage.getItem('niche-language') || 'en'; } catch (error) {}
+      if (!panels[initialLanguage]) initialLanguage = 'en';
+      setLanguage(initialLanguage);
+      languageButtons.forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.language)));
+    })();
+  </script>
+</body>
+</html>
