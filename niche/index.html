@@ -10,12 +10,17 @@
   <link rel="icon" type="image/svg+xml" href="/logo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;family=Noto+Sans+Hebrew:wght@400;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Noto+Sans+Hebrew:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
     :root{--ink:#141414;--soft:#5a5a5a;--line:#dedede;--faint:#f6f6f6;--paper:#fdf9fa;--card:#fff;--edge:#efe4e7}
     *{box-sizing:border-box}
     html{scroll-behavior:smooth;scroll-padding-top:72px}
     body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans","Noto Sans Hebrew",Arial,sans-serif;font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+    [lang="he"]{font-family:"Noto Sans Hebrew","IBM Plex Sans",Arial,sans-serif}
+    .toc-label,.case-label,.group,.meta,.bar-inner>span{font-family:"IBM Plex Mono","Noto Sans Hebrew",monospace}
+    h1{letter-spacing:-.035em}
+    h2,h3{letter-spacing:-.02em}
+    [dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3{letter-spacing:-.015em}
     .bar{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
     .bar-inner{direction:ltr;max-width:1180px;margin:0 auto;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.85rem;color:var(--soft)}
     .langs{display:flex;gap:4px}
