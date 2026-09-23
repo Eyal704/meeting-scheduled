@@ -63,12 +63,14 @@ html[lang="he"] h1,html[lang="he"] h2{letter-spacing:-.01em;line-height:1.22;}
 .hero .lede{font-size:17px;color:var(--muted);line-height:1.65;margin-top:22px;max-width:560px;}
 .hero .for-line{margin-top:18px;font-size:14px;font-weight:500;color:var(--ink);}
 .hero-cta{margin-top:32px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;}
-.meet{display:flex;align-items:center;gap:12px;}
-.meet img{width:108px;height:108px;border-radius:50%;object-fit:cover;object-position:50% 18%;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.12);}
-.meet{gap:20px;}
-.meet p{font-size:13.5px;color:var(--muted);line-height:1.45;max-width:420px;}
-.meet strong{display:block;color:var(--ink);font-weight:600;font-size:16px;margin-bottom:4px;}
-
+.see-link{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600;color:var(--rose);}
+.see-link:hover{color:var(--rose-dark);}
+.meet-card{margin-top:28px;max-width:560px;display:flex;align-items:center;gap:22px;padding:20px 22px;border:1px solid var(--border);border-radius:20px;background:#fff;box-shadow:0 8px 24px rgba(28,28,30,.06);}
+.meet-card img{width:104px;height:104px;border-radius:50%;object-fit:cover;object-position:50% 18%;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.12);}
+.meet-title{font-size:16px;font-weight:600;line-height:1.35;}
+.meet-desc{margin-top:4px;font-size:13.5px;color:var(--muted);line-height:1.5;}
+.btn-md{height:42px;padding:0 20px;font-size:13.5px;margin-top:14px;}
+@media(max-width:480px){.meet-card{align-items:flex-start;gap:14px;padding:16px;}.meet-card img{width:72px;height:72px;}}
 
 /* Hero footage: soft, behind the message card, which sits on top */
 .stack-wrap{display:flex;flex-direction:column;min-height:470px;}
