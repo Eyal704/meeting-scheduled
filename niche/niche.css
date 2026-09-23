@@ -117,3 +117,21 @@ html{scroll-padding-top:calc(var(--bar-height) + 24px)}
 @media(max-width:960px){html{scroll-padding-top:calc(var(--bar-height) + 72px)}.toc{top:var(--bar-height);max-height:none}}
 @media(max-width:560px){.script-disclosure>summary{padding:13px 14px}.email,.script-body{padding:16px}.session .doc-head h1{font-size:1.65rem}.bar-inner{gap:6px 10px}}
 @media print{.script-disclosure{break-inside:auto}.back-link,.script-nav{display:none}.session .content h2{break-after:avoid}}
+
+/* Simple visitor gate, using the guide's existing palette and typography. */
+.access-gate{min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:28px 16px}
+.access-card{width:100%;max-width:440px;padding:32px;background:var(--card);border:1px solid var(--edge);border-radius:14px}
+.access-brand{font-size:.9rem;font-weight:600;color:var(--soft);margin:0 0 18px;text-align:start}
+.access-langs{direction:ltr;flex-wrap:wrap;margin:0 0 28px;font-size:.875rem}
+.access-card h1,.session .access-card h1{font-size:1.55rem;line-height:1.3;margin:0 0 10px}
+.access-card p{font-size:1rem}
+.access-form{display:grid;gap:10px;margin-top:24px}
+.access-form label{font-size:.9375rem;font-weight:600}
+.access-form input{width:100%;min-width:0;font:inherit;font-size:1rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:5px;padding:10px 12px}
+.access-form button{font:inherit;font-size:1rem;font-weight:600;min-height:44px;padding:9px 16px;border:1px solid var(--ink);border-radius:5px;background:var(--ink);color:var(--card);cursor:pointer}
+.access-form input:focus-visible,.access-form button:focus-visible,.access-lock:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+#access-error{font-size:.9rem;margin:0;color:var(--ink)}
+.access-lock{font:inherit;min-height:36px;padding:4px 10px;background:transparent;color:var(--soft);border:1px solid var(--line);border-radius:4px;cursor:pointer}
+.access-noscript{max-width:440px;margin:60px auto;padding:24px}
+@media(max-width:560px){.access-card{padding:26px 22px}}
+@media print{.access-lock{display:none}}
