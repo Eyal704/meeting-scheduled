@@ -61,6 +61,7 @@ html[lang="he"] h1,html[lang="he"] h2{letter-spacing:-.01em;line-height:1.22;}
 .hero-grid{position:relative;display:grid;grid-template-columns:1fr;gap:48px;align-items:center;}
 @media(min-width:960px){.hero-grid{grid-template-columns:1.05fr .95fr;gap:56px;}}
 .hero .lede{font-size:17px;color:var(--muted);line-height:1.65;margin-top:22px;max-width:560px;}
+.hero .lede strong{color:var(--ink);font-weight:600;}
 .hero .for-line{margin-top:18px;font-size:14px;font-weight:500;color:var(--ink);}
 .hero-cta{margin-top:32px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;}
 .see-link{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:14px;font-weight:600;color:var(--rose);}
