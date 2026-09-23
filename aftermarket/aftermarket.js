@@ -3,6 +3,23 @@
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
+  // Background footage: the hero loops; the meeting clip plays once when scrolled into view and
+  // stays on its last frame. Visitors who prefer reduced motion get the still frame instead.
+  document.querySelectorAll('.hero-media video, .story-media video').forEach(function (video) {
+    if (reduce) {
+      var still = document.createElement('img');
+      still.src = video.poster; still.alt = '';
+      video.parentNode.replaceChild(still, video);
+      return;
+    }
+    function play() { var p = video.play && video.play(); if (p && p.catch) p.catch(function () {}); }
+    if (video.loop || !('IntersectionObserver' in window)) { play(); return; }
+    var io = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { play(); io.disconnect(); }
+    }, { threshold: 0.5 });
+    io.observe(video);
+  });
+
   // Hero: a stack of example messages; the front one leaves and the next comes forward.
   var stack = document.getElementById('stack');
   if (stack) {
