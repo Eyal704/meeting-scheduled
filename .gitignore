@@ -6,3 +6,13 @@ test-results/
 portfolio/.env*.local
 portfolio/tsconfig.tsbuildinfo
 portfolio/out/
+
+# Prospect research and campaign files contain personal data: never publish them.
+# Campaign folders belong in ~/outreach-campaigns/, outside every repository.
+outputs/
+output/
+tmp/
+/*prospects*.json
+/*prospects*.csv
+/new-york-*
+/israel-*
