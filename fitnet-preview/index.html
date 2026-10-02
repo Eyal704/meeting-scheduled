@@ -12,7 +12,9 @@
 body{font-family:Rubik,Arial,sans-serif}
 .annotation{text-align:center}
 .kicker{justify-content:center}
-.annotation h1{font-weight:700;letter-spacing:-.5px}
+.annotation h1.kicker{font-size:16px;font-weight:500;letter-spacing:0;line-height:1.5;margin:0 0 14px}
+.annotation>.instruction{display:block;font-size:16px;line-height:1.8;margin:0;color:#666158;text-wrap:balance}
+.annotation>.feedback:empty{display:none}
 .phone{min-height:680px;display:flex;flex-direction:column;background:#fffefa}
 .status{flex-shrink:0}
 .app-header{padding-bottom:28px}
@@ -42,7 +44,7 @@ fieldset{margin-bottom:28px}
 <body>
 <header class="presenter"><span>Fitnet · כיוון עיצובי ראשון</span><span class="maker">MEETING<span>SCHEDULED</span></span></header>
 <main class="layout">
-<section class="annotation"><div class="kicker">01 / תחילת הדרך</div><h1>מתחילים במה<br>שחשוב לך.</h1><p>שאלה אחת, שלוש אפשרויות.<br>הצעד הראשון בדרך למסלול אימונים שמתאים לחיים שלך.</p><div class="note"><strong>בחירת המטרה</strong>אפשר ללחוץ על האפשרויות במסך ולראות את מצב הבחירה. זהו המסך הראשון להמחשה; המשך הסדרה יתווסף לאחר אישור העיצוב.</div><p id="feedback" class="feedback" role="status" aria-live="polite"></p></section>
+<section class="annotation"><h1 class="kicker">01 / תחילת הדרך</h1><p class="instruction">אפשר ללחוץ על האפשרויות ולראות את מצב הבחירה.</p><p id="feedback" class="feedback" role="status" aria-live="polite"></p></section>
 <figure class="stage"><div class="phone" aria-label="הדמיית מסך אייפון של Fitnet">
 <div class="status" aria-hidden="true"><span>9:41</span><span class="island"></span><span class="signals"><svg viewBox="0 0 18 14"><rect x="1" y="9" width="3" height="5" rx="1"/><rect x="6" y="5" width="3" height="9" rx="1"/><rect x="11" width="3" height="14" rx="1"/></svg><span class="battery"></span></span></div>
 <div class="app-header"><img class="logo" src="assets/fitnet-logo.png" alt="fitNET.online"><button class="login" id="login">כבר יש לי חשבון</button></div>
