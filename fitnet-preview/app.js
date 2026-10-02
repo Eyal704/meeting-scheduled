@@ -71,18 +71,34 @@ function renderQuestion(i){
  const [label,q,options,icons,measure]=questions[i];
  screen.innerHTML=`<div class="step">${i?btn('→ חזרה',i-1,'back'):'<strong>קצת עליך</strong>'}<span>שאלה ${i+1} מתוך 9</span></div><div class="progress" aria-label="שאלה ${i+1} מתוך 9"><span style="width:${(i+1)/9*100}%"></span></div><section class="question">${title(q)}</section><form class="question-form" id="question-form">${options?`<fieldset><legend>${q.replace(/<br>/g,' ')}</legend>${options.map((text,n)=>`<label class="option"><input type="radio" name="answer" value="${n}" ${state.answers[i]===n?'checked':''}><span class="choice"><span class="icon number-icon" aria-hidden="true">${icons[n]}</span><span class="copy"><strong ${i===1?'dir="auto"':''}>${text}</strong></span><span class="radio" aria-hidden="true"></span></span></label>`).join('')}</fieldset>`:`<label class="field measure"><span>${measure.unit}</span><input type="number" inputmode="decimal" id="measure" min="${measure.min}" max="${measure.max}" step="${measure.step}" value="${state.answers[i]??''}" aria-label="${label}" placeholder="—"></label><p class="optional">לא חובה. אפשר גם לדלג.</p>`}<button class="next" type="submit" ${options&&state.answers[i]===null?'disabled':''}>${i===8?'למציאת מסלול':'ממשיכים'}${arrow}</button>${measure?btn('דלג על השאלה','skip-measure','text-button'):''}</form>`;
 }
+function advanceQuestion(){
+ const i=state.current;
+ if(i<7&&state.answers[i]===null)return;
+ if(i>=7)state.answers[i]=$('#measure').value?Number($('#measure').value):null;
+ log('מענה לשאלה: '+questions[i][0]);
+ if(i===4)state.days=state.answers[4]===0?[0,3]:state.answers[4]===1?[0,2,4]:[0,1,3,4];
+ go(i+1);
+}
+function selectAnswer(input){
+ clearTimeout(timer);
+ const question=state.current;
+ state.answers[question]=Number(input.value);
+ $('#question-form .next').disabled=false;
+ timer=setTimeout(()=>{if(state.current===question)advanceQuestion();},280);
+}
 document.addEventListener('change',e=>{
- if(e.target.name==='answer'){state.answers[state.current]=Number(e.target.value);$('#question-form .next').disabled=false;}
+ if(e.target.name==='answer')selectAnswer(e.target);
  if(e.target.id==='training-time')state.time=e.target.value;
  if(e.target.id==='reminders')state.reminders=e.target.checked;
  if(e.target.id==='updates')state.updates=e.target.checked;
 });
 document.addEventListener('submit',e=>{
  e.preventDefault();
- if(e.target.id==='question-form'){const i=state.current;if(i<7&&state.answers[i]===null)return;if(i>=7)state.answers[i]=$('#measure').value?Number($('#measure').value):null;log('מענה לשאלה: '+questions[i][0]);if(i===4)state.days=state.answers[4]===0?[0,3]:state.answers[4]===1?[0,2,4]:[0,1,3,4];go(i+1);}
+ if(e.target.id==='question-form')advanceQuestion();
  if(e.target.id==='broadcast-form'){state.broadcast={title:$('#broadcast-title').value,body:$('#broadcast-body').value,audience:$('#audience').value};go(19);}
 });
 document.addEventListener('click',e=>{
+ if(e.target.matches('input[name="answer"]')){selectAnswer(e.target);return;}
  const target=e.target.closest('button');if(!target)return;
  if(target.dataset.go!==undefined){go(Number(target.dataset.go));return;}
  if(target.dataset.day!==undefined){const day=Number(target.dataset.day);state.days=state.days.includes(day)?state.days.filter(d=>d!==day):[...state.days,day].sort();target.setAttribute('aria-pressed',state.days.includes(day));return;}
