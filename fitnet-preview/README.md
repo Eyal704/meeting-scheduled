@@ -4,7 +4,7 @@ Static Hebrew RTL demo, served directly by GitHub Pages. Open index.html or serv
 
 ## Scope
 
-25 preview states: nine onboarding questions, a brief matching animation, program suggestion, simulated enrollment/login, reminder preferences, weekly schedule, home, workout placeholder, completion feedback, progress, group classes, coach updates, contact, and coach views.
+24 preview states: eight onboarding questions, a brief matching animation, program suggestion, simulated enrollment/login, reminder preferences, weekly schedule, home, workout placeholder, completion feedback, progress, group classes, coach updates, contact, and coach views. Training-format preferences route either to an online program or to contact with Boaz about in-person coaching or guidance.
 
 All state is in memory and resets on refresh. No backend, tracking, checkout, authentication, notifications, booking or message delivery. Contact links open the visitor's phone/email application; email text is reviewed and sent by the visitor. The video player is an explicitly labeled placeholder, not a fabricated Fitnet video.
 
@@ -19,7 +19,7 @@ Mobile uses the available small viewport height minus the preview navigation. De
 - Portrait: https://static.wixstatic.com/media/4c49ed_4cc10504d7ae435aa23de49874dd82b8~mv2.jpg
 - Logo: https://static.wixstatic.com/media/ff4170_f2f2404fbc0a41468bbf8d10065de099.png
 
-The recommendation is an illustrative goal-based routing example, not an approved personalized training prescription. An adaptation request routes toward contact with the coach. Height and weight are optional. Group timetables and coach records are labeled examples.
+The recommendation is an illustrative goal-based routing example, not an approved personalized training prescription. In-person and undecided preferences route toward contact with the coach. Height and weight are optional. Group timetables and coach records are labeled examples.
 
 ## Validation
 
