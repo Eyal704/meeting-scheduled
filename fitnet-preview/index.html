@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light"><meta name="robots" content="noindex,nofollow">
-<title>Fitnet · מסך ראשון להמחשה</title>
+<title>Fitnet · מסע ההיכרות</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -38,13 +38,22 @@ fieldset{gap:12px}
 .next:disabled{background:#ece9e1;color:#797469;box-shadow:none}
 fieldset{margin-bottom:28px}
 .home-bar{margin:26px auto 10px;flex-shrink:0}
+.preview-nav{display:flex;direction:ltr;justify-content:center;gap:9px;margin-top:22px}
+.preview-nav button{width:38px;height:38px;border:1px solid #dedad1;border-radius:50%;background:transparent;color:#77746d;font-size:12px}
+.preview-nav button[aria-current="step"]{background:#2d322e;border-color:#2d322e;color:#edc477}
+.back{border:0;background:none;color:#666158;font-size:11px;padding:0;display:flex;align-items:center;gap:5px}
+.back svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.7}
+.number-icon{font-size:15px;font-weight:500;direction:ltr}
+.demo-end{font-size:12px;text-align:center;color:#666158;line-height:1.6;margin:10px 0 0}
+.demo-end:empty{display:none}
+.question h2:focus{outline:none}
 @media(max-width:760px){.question h2{font-size:28px}.choice{gap:9px;padding:14px 10px}.copy strong{font-size:15px}.annotation>.feedback{display:block}.annotation>.feedback:empty{display:none}}
 </style>
 </head>
 <body>
 <header class="presenter"><span>Fitnet · כיוון עיצובי ראשון</span><span class="maker">MEETING<span>SCHEDULED</span></span></header>
 <main class="layout">
-<section class="annotation"><h1 class="kicker">01 / תחילת הדרך</h1><p class="instruction">אפשר ללחוץ על האפשרויות ולראות את מצב הבחירה.</p><p id="feedback" class="feedback" role="status" aria-live="polite"></p></section>
+<section class="annotation"><h1 class="kicker">01 / תחילת הדרך</h1><p class="instruction">אפשר ללחוץ על האפשרויות ולראות את מצב הבחירה.</p><nav class="preview-nav" aria-label="מסכי ההמחשה"><button type="button" data-screen="0" aria-label="מסך 1: בחירת מטרה" aria-current="step">01</button><button type="button" data-screen="1" aria-label="מסך 2: גיל">02</button><button type="button" data-screen="2" aria-label="מסך 3: שגרת אימונים">03</button><button type="button" data-screen="3" aria-label="מסך 4: זמן לאימון">04</button></nav><p id="feedback" class="feedback" role="status" aria-live="polite"></p></section>
 <figure class="stage"><div class="phone" aria-label="הדמיית מסך אייפון של Fitnet">
 <div class="status" aria-hidden="true"><span>9:41</span><span class="island"></span><span class="signals"><svg viewBox="0 0 18 14"><rect x="1" y="9" width="3" height="5" rx="1"/><rect x="6" y="5" width="3" height="9" rx="1"/><rect x="11" width="3" height="14" rx="1"/></svg><span class="battery"></span></span></div>
 <div class="app-header"><img class="logo" src="assets/fitnet-logo.png" alt="fitNET.online"><button class="login" id="login">כבר יש לי חשבון</button></div>
@@ -59,7 +68,38 @@ fieldset{margin-bottom:28px}
 </main><footer class="footer">הצעה לחוויית Fitnet · עיצוב והמחשה: MeetingScheduled</footer>
 <script>
 const form=document.querySelector('#goal-form'),feedback=document.querySelector('#feedback');
-form.addEventListener('change',()=>{document.querySelector('#next').disabled=false;feedback.textContent='';});
-form.addEventListener('submit',event=>{event.preventDefault();feedback.textContent='נבחרה המטרה: '+new FormData(form).get('goal')+'. במסע המתוכנן, השאלה הבאה תהיה על הגיל. כרגע מוצג רק המסך הראשון לאישור העיצוב.';feedback.scrollIntoView({behavior:'smooth',block:'nearest'});});
-document.querySelector('#login').addEventListener('click',()=>{feedback.textContent='באפליקציה, משתמש קיים יוכל להיכנס ישירות לתוכנית שלו. ההתחברות אינה מחוברת בהמחשה הזו.';feedback.scrollIntoView({behavior:'smooth',block:'nearest'});});
+const fieldset=form.querySelector('fieldset'),next=document.querySelector('#next'),heading=document.querySelector('.question h2');
+const arrow=next.querySelector('svg').outerHTML;
+const goalIcons=[...fieldset.querySelectorAll('.icon')].map(icon=>icon.innerHTML);
+const clock='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+const screens=[
+ {title:'תחילת הדרך',caption:'בחירת מטרה',question:'מה הכי חשוב לך<br>להשיג כרגע?',options:['להיכנס לשגרת אימונים','להתחזק ולהרגיש בכושר','לשפר שיווי משקל ויציבות'],icons:goalIcons},
+ {title:'קצת עליך',caption:'גיל',question:'מה טווח<br>הגיל שלך?',options:['18–39','40–59','60–74','75 ומעלה'],icons:['18+','40+','60+','75+'],numeric:true},
+ {title:'השגרה שלך',caption:'שגרת אימונים',question:'כמה אימונים יש<br>בשבוע שלך כיום?',options:['כרגע לא מתאמנים','אימון אחד או שניים','שלושה אימונים ומעלה'],icons:[goalIcons[0],goalIcons[1],goalIcons[2]]},
+ {title:'זמן לעצמך',caption:'זמן לאימון',question:'כמה זמן נוח לך<br>להקדיש לכל אימון?',options:['10 דקות','20 דקות','30 דקות ומעלה'],icons:[clock,clock,clock]}
+];
+const answers=[1,null,null,null];
+let current=0;
+const end=document.createElement('p');end.className='demo-end';end.setAttribute('role','status');end.setAttribute('aria-live','polite');form.after(end);
+heading.tabIndex=-1;
+function render(focus=false){
+ const screen=screens[current],number=String(current+1).padStart(2,'0');
+ heading.innerHTML=screen.question;
+ fieldset.innerHTML='<legend>'+heading.textContent+'</legend>'+screen.options.map((label,index)=>'<label class="option"><input type="radio" name="answer" value="'+index+'"'+(answers[current]===index?' checked':'')+'><span class="choice"><span class="icon'+(screen.numeric?' number-icon':'')+'" aria-hidden="true">'+screen.icons[index]+'</span><span class="copy"><strong'+(screen.numeric?' dir="auto"':'')+'>'+label+'</strong></span><span class="radio" aria-hidden="true"></span></span></label>').join('');
+ fieldset.querySelector('legend').textContent=screen.question.replace(/<br>/g,' ');
+ document.querySelector('.kicker').textContent=number+' / '+screen.title;
+ document.querySelector('.step').innerHTML=(current?'<button class="back" type="button" aria-label="חזרה לשאלה הקודמת"><svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>חזרה</button>':'<strong>קצת עליך</strong>')+'<span>שאלה '+(current+1)+' מתוך 9</span>';
+ document.querySelector('.back')?.addEventListener('click',()=>{current--;render(true);});
+ const progress=document.querySelector('.progress');progress.setAttribute('aria-label','שאלה '+(current+1)+' מתוך 9');progress.firstElementChild.style.width=((current+1)/9*100)+'%';
+ next.innerHTML=(current===3?'סיום ההמחשה':'ממשיכים')+arrow;next.disabled=answers[current]===null;
+ document.querySelector('figcaption').innerHTML='מסך '+number+' · '+screen.caption+'<br>המחשה בלבד · הבחירות נשמרות רק עד לרענון ואינן נשלחות לבועז';
+ document.querySelectorAll('[data-screen]').forEach(button=>{if(Number(button.dataset.screen)===current)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');});
+ feedback.textContent='';end.textContent='';
+ if(focus)heading.focus({preventScroll:true});
+}
+form.addEventListener('change',event=>{answers[current]=Number(event.target.value);next.disabled=false;feedback.textContent='';end.textContent='';});
+form.addEventListener('submit',event=>{event.preventDefault();if(answers[current]===null)return;if(current<3){current++;render(true);}else{end.textContent='עד כאן ארבעת מסכי ההמחשה. המשך השאלון יתווסף בהמשך.';}});
+document.querySelectorAll('[data-screen]').forEach(button=>button.addEventListener('click',()=>{current=Number(button.dataset.screen);render(true);}));
+document.querySelector('#login').addEventListener('click',()=>{end.textContent='הכניסה לחשבון אינה מחוברת בהמחשה הזו.';});
+render();
 </script></body></html>
