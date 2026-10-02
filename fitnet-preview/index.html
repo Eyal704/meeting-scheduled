@@ -40,7 +40,7 @@ fieldset{gap:12px}
 fieldset{margin-bottom:28px}
 .home-bar{margin:26px auto 10px;flex-shrink:0}
 .preview-nav{display:flex;direction:ltr;justify-content:center;gap:9px;margin-top:22px}
-.preview-nav button{width:38px;height:38px;border:1px solid #dedad1;border-radius:50%;background:transparent;color:#77746d;font-size:12px}
+.preview-nav button{width:44px;height:44px;border:1px solid #dedad1;border-radius:50%;background:transparent;color:#77746d;font-size:14px}
 .preview-nav button[aria-current="step"]{background:#2d322e;border-color:#2d322e;color:#edc477}
 .back{border:0;background:none;color:#666158;font-size:11px;padding:0;display:flex;align-items:center;gap:5px}
 .back svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.7}
@@ -54,7 +54,7 @@ fieldset{margin-bottom:28px}
 <body>
 <header class="presenter"><span>Fitnet · כיוון עיצובי ראשון</span><span class="maker">MEETING<span>SCHEDULED</span></span></header>
 <main class="layout">
-<section class="annotation"><h1 class="kicker">01 / תחילת הדרך</h1><p class="instruction">בוחרים אפשרות ולוחצים על ״ממשיכים״ כדי לעבור למסך הבא.</p><nav class="preview-nav" aria-label="מסכי ההמחשה"><button type="button" data-screen="0" aria-label="מסך 1: בחירת מטרה" aria-current="step">01</button><button type="button" data-screen="1" aria-label="מסך 2: גיל">02</button><button type="button" data-screen="2" aria-label="מסך 3: שגרת אימונים">03</button><button type="button" data-screen="3" aria-label="מסך 4: זמן לאימון">04</button></nav><p id="feedback" class="feedback" role="status" aria-live="polite"></p></section>
+<section class="annotation"><h1 class="kicker">01 / תחילת הדרך</h1><p class="instruction">הכפתורים במסך לחיצים. לחצו עליהם כדי להתנסות ולגלות איך האפליקציה עובדת.</p><p id="feedback" class="feedback" role="status" aria-live="polite"></p></section>
 <figure class="stage"><div class="phone" aria-label="הדמיית מסך אייפון של Fitnet">
 <div class="status" aria-hidden="true"><span>9:41</span><span class="island"></span><span class="signals"><svg viewBox="0 0 18 14"><rect x="1" y="9" width="3" height="5" rx="1"/><rect x="6" y="5" width="3" height="9" rx="1"/><rect x="11" width="3" height="14" rx="1"/></svg><span class="battery"></span></span></div>
 <div class="app-header"><img class="logo" src="assets/fitnet-logo.png" alt="fitNET.online"><button class="login" id="login">כבר יש לי חשבון</button></div>
@@ -65,7 +65,7 @@ fieldset{margin-bottom:28px}
 <label class="option"><input type="radio" name="goal" value="להתחזק ולהרגיש בכושר" checked><span class="choice"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 8 9 9M5 5l3-3 3 3-3 3zm8 14 3-3 3 3-3 3zM2 8l3-3m14 14 3-3M5 11l6-6m2 14 6-6"/></svg></span><span class="copy"><strong>להתחזק ולהרגיש בכושר</strong></span><span class="radio" aria-hidden="true"></span></span></label>
 <label class="option"><input type="radio" name="goal" value="לשפר שיווי משקל ויציבות"><span class="choice"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="4" r="2"/><path d="M12 8v6m-7-4 7-2 7 2m-7 4-4 6m4-6 5 2 2 4M4 22h16"/></svg></span><span class="copy"><strong>לשפר שיווי משקל ויציבות</strong></span><span class="radio" aria-hidden="true"></span></span></label>
 </fieldset><button class="next" id="next" type="submit">ממשיכים<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button></form><div class="home-bar" aria-hidden="true"></div>
-</div><figcaption>מסך 01 · בחירת מטרה<br>המחשה בלבד · הבחירה אינה נשמרת ואינה נשלחת לבועז</figcaption></figure>
+</div><nav class="preview-nav" aria-label="מסכי ההמחשה"><button type="button" data-screen="0" aria-label="מסך 1: בחירת מטרה" aria-current="step">01</button><button type="button" data-screen="1" aria-label="מסך 2: גיל">02</button><button type="button" data-screen="2" aria-label="מסך 3: שגרת אימונים">03</button><button type="button" data-screen="3" aria-label="מסך 4: זמן לאימון">04</button></nav></figure>
 </main><footer class="footer">הצעה לחוויית Fitnet · עיצוב והמחשה: MeetingScheduled</footer>
 <script>
 const form=document.querySelector('#goal-form'),feedback=document.querySelector('#feedback');
@@ -89,12 +89,10 @@ function render(focus=false){
  fieldset.innerHTML='<legend>'+heading.textContent+'</legend>'+screen.options.map((label,index)=>'<label class="option"><input type="radio" name="answer" value="'+index+'"'+(answers[current]===index?' checked':'')+'><span class="choice"><span class="icon'+(screen.numeric?' number-icon':'')+'" aria-hidden="true">'+screen.icons[index]+'</span><span class="copy"><strong'+(screen.numeric?' dir="auto"':'')+'>'+label+'</strong></span><span class="radio" aria-hidden="true"></span></span></label>').join('');
  fieldset.querySelector('legend').textContent=screen.question.replace(/<br>/g,' ');
  document.querySelector('.kicker').textContent=number+' / '+screen.title;
- document.querySelector('.instruction').textContent=current===3?'בוחרים אפשרות ולוחצים על ״סיום ההמחשה״.':'בוחרים אפשרות ולוחצים על ״ממשיכים״ כדי לעבור למסך הבא.';
  document.querySelector('.step').innerHTML=(current?'<button class="back" type="button" aria-label="חזרה לשאלה הקודמת"><svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>חזרה</button>':'<strong>קצת עליך</strong>')+'<span>שאלה '+(current+1)+' מתוך 9</span>';
  document.querySelector('.back')?.addEventListener('click',()=>{current--;render(true);});
  const progress=document.querySelector('.progress');progress.setAttribute('aria-label','שאלה '+(current+1)+' מתוך 9');progress.firstElementChild.style.width=((current+1)/9*100)+'%';
  next.innerHTML=(current===3?'סיום ההמחשה':'ממשיכים')+arrow;next.disabled=answers[current]===null;
- document.querySelector('figcaption').innerHTML='מסך '+number+' · '+screen.caption+'<br>המחשה בלבד · הבחירות נשמרות רק עד לרענון ואינן נשלחות לבועז';
  document.querySelectorAll('[data-screen]').forEach(button=>{if(Number(button.dataset.screen)===current)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');});
  feedback.textContent='';end.textContent='';
  if(focus)heading.focus({preventScroll:true});
