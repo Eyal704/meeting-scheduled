@@ -13,7 +13,8 @@ body{font-family:Rubik,Arial,sans-serif}
 .annotation{text-align:center}
 .kicker{justify-content:center}
 .annotation h1.kicker{font-size:16px;font-weight:500;letter-spacing:0;line-height:1.5;margin:0 0 14px}
-.annotation>.instruction{display:block;font-size:16px;line-height:1.8;margin:0;color:#666158;text-wrap:balance}
+.annotation>.instruction{display:block;font-size:26px;font-weight:500;line-height:1.55;margin:0;color:#292824;text-wrap:balance}
+@media(max-width:760px){.annotation>.instruction{font-size:21px}}
 .annotation>.feedback:empty{display:none}
 .phone{min-height:821px;display:flex;flex-direction:column;background:#fffefa}
 .status{flex-shrink:0}
@@ -53,7 +54,7 @@ fieldset{margin-bottom:28px}
 <body>
 <header class="presenter"><span>Fitnet · כיוון עיצובי ראשון</span><span class="maker">MEETING<span>SCHEDULED</span></span></header>
 <main class="layout">
-<section class="annotation"><h1 class="kicker">01 / תחילת הדרך</h1><p class="instruction">אפשר ללחוץ על האפשרויות ולראות את מצב הבחירה.</p><nav class="preview-nav" aria-label="מסכי ההמחשה"><button type="button" data-screen="0" aria-label="מסך 1: בחירת מטרה" aria-current="step">01</button><button type="button" data-screen="1" aria-label="מסך 2: גיל">02</button><button type="button" data-screen="2" aria-label="מסך 3: שגרת אימונים">03</button><button type="button" data-screen="3" aria-label="מסך 4: זמן לאימון">04</button></nav><p id="feedback" class="feedback" role="status" aria-live="polite"></p></section>
+<section class="annotation"><h1 class="kicker">01 / תחילת הדרך</h1><p class="instruction">בוחרים אפשרות ולוחצים על ״ממשיכים״ כדי לעבור למסך הבא.</p><nav class="preview-nav" aria-label="מסכי ההמחשה"><button type="button" data-screen="0" aria-label="מסך 1: בחירת מטרה" aria-current="step">01</button><button type="button" data-screen="1" aria-label="מסך 2: גיל">02</button><button type="button" data-screen="2" aria-label="מסך 3: שגרת אימונים">03</button><button type="button" data-screen="3" aria-label="מסך 4: זמן לאימון">04</button></nav><p id="feedback" class="feedback" role="status" aria-live="polite"></p></section>
 <figure class="stage"><div class="phone" aria-label="הדמיית מסך אייפון של Fitnet">
 <div class="status" aria-hidden="true"><span>9:41</span><span class="island"></span><span class="signals"><svg viewBox="0 0 18 14"><rect x="1" y="9" width="3" height="5" rx="1"/><rect x="6" y="5" width="3" height="9" rx="1"/><rect x="11" width="3" height="14" rx="1"/></svg><span class="battery"></span></span></div>
 <div class="app-header"><img class="logo" src="assets/fitnet-logo.png" alt="fitNET.online"><button class="login" id="login">כבר יש לי חשבון</button></div>
@@ -88,6 +89,7 @@ function render(focus=false){
  fieldset.innerHTML='<legend>'+heading.textContent+'</legend>'+screen.options.map((label,index)=>'<label class="option"><input type="radio" name="answer" value="'+index+'"'+(answers[current]===index?' checked':'')+'><span class="choice"><span class="icon'+(screen.numeric?' number-icon':'')+'" aria-hidden="true">'+screen.icons[index]+'</span><span class="copy"><strong'+(screen.numeric?' dir="auto"':'')+'>'+label+'</strong></span><span class="radio" aria-hidden="true"></span></span></label>').join('');
  fieldset.querySelector('legend').textContent=screen.question.replace(/<br>/g,' ');
  document.querySelector('.kicker').textContent=number+' / '+screen.title;
+ document.querySelector('.instruction').textContent=current===3?'בוחרים אפשרות ולוחצים על ״סיום ההמחשה״.':'בוחרים אפשרות ולוחצים על ״ממשיכים״ כדי לעבור למסך הבא.';
  document.querySelector('.step').innerHTML=(current?'<button class="back" type="button" aria-label="חזרה לשאלה הקודמת"><svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>חזרה</button>':'<strong>קצת עליך</strong>')+'<span>שאלה '+(current+1)+' מתוך 9</span>';
  document.querySelector('.back')?.addEventListener('click',()=>{current--;render(true);});
  const progress=document.querySelector('.progress');progress.setAttribute('aria-label','שאלה '+(current+1)+' מתוך 9');progress.firstElementChild.style.width=((current+1)/9*100)+'%';
