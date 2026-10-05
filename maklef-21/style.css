@@ -14,3 +14,5 @@
 /* Make the preview-day control easy to spot beneath the phone. */
 .demo-tools{color:#344938;gap:14px}.demo-tools>label{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:500;color:#24364a}.demo-tools select{min-height:40px;padding:8px 12px;border:1.5px solid #b38a47;border-radius:11px;background:#f2dfb9;color:#24364a;font-size:13px;font-weight:500;cursor:pointer;box-shadow:0 2px 5px #80603712}.demo-tools select:hover{background:#ecd09b}.demo-tools button{color:#626b60;font-size:11px;min-height:36px;text-underline-offset:3px}
 @media(max-width:760px){.demo-tools{height:50px;gap:15px;padding:4px 10px}.demo-tools>label{gap:8px;font-size:12px}.demo-tools select{min-height:39px;padding:7px 9px;font-size:12px}.phone{height:calc(100svh - 99px)}}
+.home-screen-label{display:block;flex:none;font-size:11px;line-height:1.55;font-weight:500;text-align:center;color:#6b705f;background:#eee8db;border:1px solid #dfd5c2;border-radius:11px;padding:7px 9px;cursor:default;user-select:text}
+@media(max-width:380px){.home-screen-label{font-size:10px;padding:6px 7px}}
