@@ -16,3 +16,5 @@
 @media(max-width:760px){.demo-tools{height:50px;gap:15px;padding:4px 10px}.demo-tools>label{gap:8px;font-size:12px}.demo-tools select{min-height:39px;padding:7px 9px;font-size:12px}.phone{height:calc(100svh - 99px)}}
 .home-screen-label{display:block;flex:none;font-size:11px;line-height:1.55;font-weight:500;text-align:center;color:#6b705f;background:#eee8db;border:1px solid #dfd5c2;border-radius:11px;padding:7px 9px;cursor:default;user-select:text}
 @media(max-width:380px){.home-screen-label{font-size:10px;padding:6px 7px}}
+.home-screen-label{font-size:10px;font-weight:400;line-height:1.4;color:#8a7f6b;background:transparent;border:1px solid #dfd7c9;border-radius:12px;padding:4px 7px}
+@media(max-width:380px){.home-screen-label{font-size:9px;padding:4px 6px}}
