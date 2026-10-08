@@ -19,13 +19,13 @@ test("homepage is accessible, responsive and does not preload video", async ({
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "I build and deploy AI systems that turn business workflows into revenue.",
+    "I build and deploy AI systems that connect business workflows to revenue.",
   );
   await expect(
-    page.getByRole("heading", { name: "90 Seconds of My Work." }),
+    page.getByRole("heading", { name: "A 90-second product overview." }),
   ).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "Watch 90 Seconds of My Work" }),
+    page.getByRole("button", { name: "Watch 90-Second Product Overview" }),
   ).toBeVisible();
   await expect(page.locator("video")).toHaveCount(0);
   await page.locator("footer").scrollIntoViewIfNeeded();
@@ -59,10 +59,10 @@ test("all case studies contain the requested sections and working media", async 
       "Problem",
       "What I Built",
       "How It Works",
-      "Technical / Workflow Architecture",
+      "Technical Architecture",
       "Demo",
       "Business Value",
-      "What I Learned",
+      "Key Takeaway",
     ]) {
       await expect(
         page.getByRole("heading", { name: section, exact: true }),
@@ -73,9 +73,7 @@ test("all case studies contain the requested sections and working media", async 
         () => document.documentElement.scrollWidth <= window.innerWidth,
       ),
     ).toBe(true);
-    await expect(
-      page.getByText("ARCHITECTURE DETAILS — TO BE ADDED"),
-    ).toBeVisible();
+    await expect(page.getByText("CORE COMPONENTS")).toBeVisible();
     const image = page.locator("#demo img");
     await image.scrollIntoViewIfNeeded();
     await expect
@@ -161,7 +159,7 @@ test("evidence expands and full source images open in accessible dialogs", async
   await expect(page.locator(".evidence-card")).toHaveCount(10);
   await page
     .getByRole("button", {
-      name: "View evidence: $367K. Recorded in Salesforce.",
+      name: "View evidence: $367K closed business, recorded in Salesforce.",
     })
     .click();
   const dialog = page.getByRole("dialog");
@@ -219,7 +217,7 @@ test("the edited reel plays for 90 seconds and unloads on close", async ({
 }) => {
   await page.goto("/");
   await page
-    .getByRole("button", { name: "Watch 90 Seconds of My Work" })
+    .getByRole("button", { name: "Watch 90-Second Product Overview" })
     .click();
   const video = page.getByRole("dialog").locator("video");
   await expect
@@ -242,4 +240,38 @@ test("the edited reel plays for 90 seconds and unloads on close", async ({
   const response = await request.get("/transcripts/reel-transcript.txt");
   expect(response.status()).toBe(200);
   expect(await response.text()).toContain("MeetingScheduled");
+});
+
+test("Hebrew version is right-to-left, accessible and linked both ways", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "הצגת הדף בעברית" }).click();
+  await expect(page).toHaveURL(/\/he\/?$/);
+  const shell = page.locator(".site-shell");
+  await expect(shell).toHaveAttribute("dir", "rtl");
+  await expect(shell).toHaveAttribute("lang", "he");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "אני בונה ומטמיע מערכות AI שמחברות תהליכים עסקיים להכנסות.",
+  );
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  const accessibility = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+    .analyze();
+  expect(accessibility.violations).toEqual([]);
+
+  for (const slug of slugs) {
+    const response = await page.goto(`/he/projects/${slug}`);
+    expect(response?.status()).toBe(200);
+    await expect(
+      page.getByRole("heading", { name: "ארכיטקטורה טכנית", exact: true }),
+    ).toHaveCount(1);
+  }
+  await page.getByRole("link", { name: "View this page in English" }).click();
+  await expect(page).toHaveURL(/\/projects\/crm-revenue-systems\/?$/);
+  await expect(page.locator(".site-shell")).toHaveAttribute("dir", "ltr");
 });

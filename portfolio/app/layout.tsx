@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/dm-sans";
+import "@fontsource-variable/heebo";
 import "./globals.css";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
   title: {
@@ -10,13 +9,13 @@ export const metadata: Metadata = {
     template: "%s | Eyal Taieb",
   },
   description:
-    "I build and deploy AI systems that turn business workflows into revenue. Explore Eyal Taieb’s outbound platforms, voice agents, calling systems and CRM workflows.",
+    "I design, build and deploy AI systems that connect business workflows to revenue. Explore Eyal Taieb’s outbound platforms, voice agents, calling systems and CRM workflows.",
   applicationName: "Eyal Taieb Portfolio",
   authors: [{ name: "Eyal Taieb" }],
   openGraph: {
     title: "Eyal Taieb — AI Deployment & GTM Builder",
     description:
-      "Working systems, commercial context, real business value. Explore the work.",
+      "Production AI systems with a clear link to commercial outcomes.",
     type: "website",
     locale: "en_US",
   },
@@ -27,8 +26,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a1018",
-  colorScheme: "dark",
+  themeColor: "#ffffff",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -36,14 +35,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>
-        <a className="skip-link" href="#main-content">
-          Skip to content
-        </a>
-        <Header />
-        {children}
-        <Footer />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

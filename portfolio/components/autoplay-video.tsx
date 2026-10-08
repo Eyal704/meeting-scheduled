@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Play, Volume2 } from "lucide-react";
+import { ui } from "@/lib/i18n";
+import { useLocale } from "@/lib/use-locale";
 
 export function AutoplayVideo({
   src,
@@ -15,6 +17,7 @@ export function AutoplayVideo({
   const video = useRef<HTMLVideoElement>(null);
   const [needsSound, setNeedsSound] = useState(false);
   const [needsPlay, setNeedsPlay] = useState(false);
+  const t = ui[useLocale()];
 
   useEffect(() => {
     const element = video.current;
@@ -80,20 +83,15 @@ export function AutoplayVideo({
         onPlaying={() => setNeedsPlay(false)}
       >
         <source src={src} type="video/mp4" />
-        Your browser does not support embedded video.{" "}
-        <a href={src}>Open the demo.</a>
+        {t.noVideo} <a href={src}>{t.openDemo}</a>
       </video>
       {(needsSound || needsPlay) && (
         <div className="playback-notice">
           <button className="button button-primary" onClick={playWithSound}>
             {needsPlay ? <Play size={17} /> : <Volume2 size={17} />}
-            {needsPlay ? "Play video with sound" : "Turn sound on"}
+            {needsPlay ? t.playWithSound : t.soundOn}
           </button>
-          <p role="status">
-            {needsPlay
-              ? "Your browser needs a tap to start playback."
-              : "Playing muted. Your browser needs a tap to enable sound."}
-          </p>
+          <p role="status">{needsPlay ? t.needsTap : t.playingMuted}</p>
         </div>
       )}
     </>

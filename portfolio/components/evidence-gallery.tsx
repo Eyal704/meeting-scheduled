@@ -5,11 +5,14 @@ import { assetPath } from "@/lib/paths";
 import Image from "next/image";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useState } from "react";
-import { evidence } from "@/lib/content";
+import type { Evidence } from "@/lib/content";
+import { ui } from "@/lib/i18n";
+import { useLocale } from "@/lib/use-locale";
 import { EvidenceZoom, MediaDialog } from "./media-dialog";
 
-export function EvidenceGallery() {
+export function EvidenceGallery({ evidence }: { evidence: Evidence[] }) {
   const [expanded, setExpanded] = useState(false);
+  const t = ui[useLocale()];
   return (
     <>
       <div id="evidence-gallery" className="evidence-grid">
@@ -51,7 +54,7 @@ export function EvidenceGallery() {
         aria-controls="evidence-gallery"
         onClick={() => setExpanded(!expanded)}
       >
-        {expanded ? "Show less evidence" : "View all 10 evidence images"}
+        {expanded ? t.showLess : t.showAll(evidence.length)}
         {expanded ? <ArrowUp size={16} /> : <ArrowDown size={16} />}
       </button>
     </>

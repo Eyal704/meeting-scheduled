@@ -3,6 +3,8 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { ArrowUpRight, Play, X, ZoomIn } from "lucide-react";
 import { AutoplayVideo } from "@/components/autoplay-video";
+import { ui } from "@/lib/i18n";
+import { useLocale } from "@/lib/use-locale";
 
 type Props = {
   title: string;
@@ -30,6 +32,7 @@ export function MediaDialog({
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const titleId = useId();
+  const t = ui[useLocale()];
 
   useEffect(() => {
     if (!autoOpenHash || type !== "video") return;
@@ -77,12 +80,12 @@ export function MediaDialog({
           setFailed(false);
           setOpen(true);
         }}
-        aria-label={`${type === "video" ? "Watch" : "View evidence:"} ${title}`}
+        aria-label={`${type === "video" ? t.watch : t.viewEvidence} ${title}`}
         aria-haspopup="dialog"
       >
         {children || (
           <>
-            <Play size={15} fill="currentColor" /> Watch demo
+            <Play size={15} fill="currentColor" /> {t.watchDemo}
           </>
         )}
       </button>
@@ -116,15 +119,13 @@ export function MediaDialog({
             <div className="dialog-header">
               <div>
                 <span className="eyebrow">
-                  {type === "video"
-                    ? "PRODUCT WALKTHROUGH"
-                    : "COMMERCIAL EVIDENCE"}
+                  {type === "video" ? t.walkthrough : t.evidence}
                 </span>
                 <h2 id={titleId}>{title}</h2>
               </div>
               <button
                 className="icon-button"
-                aria-label="Close dialog"
+                aria-label={t.closeDialog}
                 onClick={close}
                 autoFocus
               >
@@ -139,14 +140,9 @@ export function MediaDialog({
               <img className="dialog-image" src={src} alt={caption || title} />
             )}
             <div className="dialog-footer">
-              <p>
-                {failed
-                  ? "This browser could not play the demo. Open the video directly using the link."
-                  : caption ||
-                    "Full product recording. Use the player controls to pause, seek or enter full screen."}
-              </p>
+              <p>{failed ? t.playFailed : caption || t.playerHelp}</p>
               <a href={src} target="_blank" rel="noopener noreferrer">
-                Open {type === "video" ? "video" : "image"}{" "}
+                {type === "video" ? t.openVideo : t.openImage}{" "}
                 <ArrowUpRight size={15} />
               </a>
             </div>

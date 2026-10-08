@@ -1,37 +1,40 @@
 import Link from "next/link";
 
 import { assetPath } from "@/lib/paths";
+import { copy } from "@/lib/copy";
+import { localePath, type Locale } from "@/lib/i18n";
 import { ArrowUpRight, Mail, Phone } from "lucide-react";
 
-export function Footer() {
+export function Footer({ locale }: { locale: Locale }) {
+  const t = copy[locale];
   return (
     <footer id="contact" className="site-footer">
       <div className="container">
         <div className="contact-grid">
           <div>
-            <span className="eyebrow">LET’S BUILD WHAT’S NEXT</span>
+            <span className="eyebrow">{t.contactEyebrow}</span>
             <h2>
-              Good technology.
+              {t.contactTitle}
               <br />
-              <span className="muted">Real business value.</span>
+              <span className="muted">{t.contactMuted}</span>
             </h2>
-            <p>
-              Open to AI Deployment, Deployment Strategist, Forward Deployed AI,
-              GTM Engineering, AI Solutions Engineering, AI Automation and
-              technical GTM roles.
-            </p>
+            <p>{t.contactText}</p>
           </div>
           <div className="contact-actions">
             <a
               className="button button-primary"
               href="mailto:eyal.growth@gmail.com"
             >
-              <Mail size={17} /> Get in touch <ArrowUpRight size={18} />
+              <Mail size={17} /> {t.contactButton} <ArrowUpRight size={18} />
             </a>
             <a className="contact-email" href="mailto:eyal.growth@gmail.com">
               eyal.growth@gmail.com
             </a>
-            <a className="text-link contact-phone" href="tel:+4367762921189">
+            <a
+              className="text-link contact-phone"
+              href="tel:+4367762921189"
+              dir="ltr"
+            >
               <Phone size={16} aria-hidden="true" /> +43 677 62921189
             </a>
             <a
@@ -40,21 +43,23 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Connect on LinkedIn <ArrowUpRight size={16} />
+              {t.linkedin} <ArrowUpRight size={16} />
             </a>
           </div>
         </div>
         <div className="footer-bottom">
-          <Link href="/" className="footer-name">
-            EYAL TAIEB<span>AI Deployment & GTM Builder</span>
+          <Link href={localePath(locale, "/")} className="footer-name">
+            EYAL TAIEB<span>{t.footerRole}</span>
           </Link>
-          <p>Built around the work. Measured by the outcome.</p>
+          <p>
+            © {new Date().getFullYear()} {t.owner}
+          </p>
           <a
             href={assetPath("/documents/eyal-taieb-cv.pdf")}
             target="_blank"
             rel="noopener noreferrer"
           >
-            View CV <ArrowUpRight size={14} />
+            {t.viewCvShort} <ArrowUpRight size={14} />
           </a>
         </div>
       </div>
