@@ -41,3 +41,5 @@ case 'reset':modal('<h2>לאפס את תרחיש ההדגמה?</h2><p>רק הפ�
 case 'confirm-reset':s=fresh();desk='brief';persist();$('#dialog').close();render();view('office');break;
 }});
 render();
+
+const demoVideo=document.getElementById('demo-video'),videoPlay=document.getElementById('video-play');videoPlay.addEventListener('click',()=>{demoVideo.play().catch(()=>{videoPlay.hidden=false})});demoVideo.addEventListener('play',()=>{videoPlay.hidden=true});demoVideo.addEventListener('ended',()=>{videoPlay.hidden=false});
