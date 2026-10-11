@@ -130,7 +130,7 @@ main section[id]{scroll-margin-top:80px;}
 @keyframes aura2{to{transform:translate(-120px,-50px) scale(1.15);}}
 .hero-orbits{position:absolute;z-index:0;left:50%;top:50%;width:min(1280px,118%);height:96%;transform:translate(-50%,-50%);pointer-events:none;overflow:visible;}
 @media(min-width:640px){.hero{padding:128px 0 120px;}}
-@media(max-width:640px){.hero-orbits{width:170%;height:94%;}}
+@media(max-width:640px){.hero-orbits{display:none;}}
 .hero-orbits ellipse{fill:none;vector-effect:non-scaling-stroke;}
 .hero-orbits .track{stroke-width:1.8;}
 .hero-orbits .comet{stroke-linecap:round;animation:orbit var(--d) linear infinite;animation-delay:calc(var(--base) - var(--d) * var(--k));}
@@ -326,21 +326,21 @@ footer .container{padding-left:32px;}
 .mo-label{position:absolute;right:14px;bottom:24px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--rose-dark);background:var(--rose-tint);border-radius:6px;padding:3px 7px;opacity:0;animation:moLabel 9s infinite both;}
 @keyframes moLabel{0%,60%{opacity:0;transform:translateY(4px);}66%,90%{opacity:1;transform:none;}97%,100%{opacity:0;}}
 
-/* Journeys: when one scrolls into view, its steps light up in order, like work moving through the system. */
-.js .journey .j-step{opacity:.4;transform:translateY(6px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1),box-shadow .6s ease;}
-.js .journey.is-on .j-step{opacity:1;transform:none;}
-.js .journey.is-on .j-step:nth-child(2){transition-delay:.35s;}
-.js .journey.is-on .j-step:nth-child(3){transition-delay:.7s;}
-.js .journey.is-on .j-step:nth-child(4){transition-delay:1.05s;}
-.js .journey.is-on .j-step:nth-child(5){transition-delay:1.4s;}
-.js .journey.is-on .j-step.is-outcome{box-shadow:0 0 0 4px rgba(201,83,110,.07),0 8px 22px rgba(201,83,110,.10);}
-
-/* Sections ease in once as they scroll into view. */
-.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1);}
-.js .reveal.is-on{opacity:1;transform:none;}
-.js .reveal-d1{transition-delay:.12s;}
-.js .f-card.reveal.is-on:hover{transform:translateY(-2px);}
-.js .f-card.reveal{transition:opacity .8s ease,transform .5s cubic-bezier(.2,.8,.2,1),border-color .15s,box-shadow .15s;}
+/* Journeys and section reveals: desktop only. On phones, fast scrolling would outrun them and show blank space. */
+@media(min-width:768px){
+  .js .journey .j-step{opacity:.4;transform:translateY(6px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s ease;}
+  .js .journey.is-on .j-step{opacity:1;transform:none;}
+  .js .journey.is-on .j-step:nth-child(2){transition-delay:.25s;}
+  .js .journey.is-on .j-step:nth-child(3){transition-delay:.5s;}
+  .js .journey.is-on .j-step:nth-child(4){transition-delay:.75s;}
+  .js .journey.is-on .j-step:nth-child(5){transition-delay:1s;}
+  .js .journey.is-on .j-step.is-outcome{box-shadow:0 0 0 4px rgba(201,83,110,.07),0 8px 22px rgba(201,83,110,.10);}
+  .js .reveal{opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1);}
+  .js .reveal.is-on{opacity:1;transform:none;}
+  .js .reveal-d1{transition-delay:.08s;}
+  .js .f-card.reveal.is-on:hover{transform:translateY(-2px);}
+  .js .f-card.reveal{transition:opacity .55s ease,transform .5s cubic-bezier(.2,.8,.2,1),border-color .15s,box-shadow .15s;}
+}
 .mr-flow::after{animation-play-state:paused;}
 .mini.is-on .mr-flow::after{animation-play-state:running;}
 
@@ -807,10 +807,13 @@ mGroupBtn.addEventListener('click', () => {
   if (!('IntersectionObserver' in window)) {
     once.forEach(el => el.classList.add('is-on')); loops.forEach(el => el.classList.add('is-on')); return;
   }
-  const io = new IntersectionObserver(entries => entries.forEach(e => {
+  let seen = false;
+  const io = new IntersectionObserver(entries => { seen = true; entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('is-on'); io.unobserve(e.target); }
-  }), { threshold: .18, rootMargin: '0px 0px -8% 0px' });
+  }); }, { threshold: 0, rootMargin: '0px 0px 15% 0px' });
   once.forEach(el => io.observe(el));
+  // Safety net: if the browser never reports visibility, show everything rather than leave gaps.
+  setTimeout(() => { if (!seen && !document.hidden) once.forEach(el => el.classList.add('is-on')); }, 2500);
   const lo = new IntersectionObserver(entries => entries.forEach(e => e.target.classList.toggle('is-on', e.isIntersecting)), { threshold: .3 });
   loops.forEach(el => lo.observe(el));
 })();
