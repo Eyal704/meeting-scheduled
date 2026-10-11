@@ -119,7 +119,36 @@ main section[id]{scroll-margin-top:80px;}
 .hero{position:relative;overflow:hidden;text-align:center;padding:80px 0 64px;}
 @media(min-width:640px){.hero{padding-top:104px;}}
 .hero-glow{pointer-events:none;position:absolute;inset:0;background:radial-gradient(ellipse 80% 45% at 50% 0%,rgba(201,83,110,.06) 0%,transparent 60%);}
-.hero-inner{position:relative;max-width:760px;margin:0 auto;}
+.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;}
+
+/* Hero orbits: two faint rings, each carrying a slow point of light. Ambient, behind the text. */
+.hero-aura{position:absolute;inset:0;pointer-events:none;transform:translate3d(var(--mx,0px),var(--my,0px),0);transition:transform 1.2s cubic-bezier(.2,.8,.2,1);}
+.hero-aura span{position:absolute;border-radius:50%;will-change:transform;}
+.hero-aura .a1{width:620px;height:620px;top:-260px;left:8%;background:radial-gradient(circle,rgba(201,83,110,.13) 0%,rgba(201,83,110,.05) 38%,transparent 66%);animation:aura1 23s ease-in-out infinite alternate;}
+.hero-aura .a2{width:560px;height:560px;bottom:-300px;right:6%;background:radial-gradient(circle,rgba(61,107,82,.10) 0%,rgba(61,107,82,.04) 40%,transparent 66%);animation:aura2 29s ease-in-out infinite alternate;}
+@keyframes aura1{to{transform:translate(140px,70px) scale(1.12);}}
+@keyframes aura2{to{transform:translate(-120px,-50px) scale(1.15);}}
+.hero-orbits{position:absolute;z-index:0;left:50%;top:50%;width:min(1280px,118%);height:96%;transform:translate(-50%,-50%);pointer-events:none;overflow:visible;}
+@media(min-width:640px){.hero{padding:128px 0 120px;}}
+@media(max-width:640px){.hero-orbits{width:170%;height:94%;}}
+.hero-orbits ellipse{fill:none;vector-effect:non-scaling-stroke;}
+.hero-orbits .track{stroke-width:1.8;}
+.hero-orbits .comet{stroke-linecap:round;animation:orbit var(--d) linear infinite;animation-delay:calc(var(--base) - var(--d) * var(--k));}
+.hero-orbits .o1{--d:17s;--base:0s;}
+.hero-orbits .o2{--d:26s;--base:-9s;}
+/* Each layer is one dash; its delay shifts it back so every layer ends at the same point: one light, fading trail. */
+.hero-orbits .tail{--k:0;stroke-dasharray:300 700;stroke-width:2.2;opacity:.14;}
+.hero-orbits .mid{--k:.17;stroke-dasharray:130 870;stroke-width:2.6;opacity:.3;}
+.hero-orbits .near{--k:.255;stroke-dasharray:45 955;stroke-width:3;opacity:.6;}
+.hero-orbits .halo{--k:.295;stroke-dasharray:5 995;stroke-width:18;opacity:.22;}
+.hero-orbits .head{--k:.2975;stroke-dasharray:2.5 997.5;stroke-width:5.5;opacity:1;}
+@keyframes orbit{from{stroke-dashoffset:0;}to{stroke-dashoffset:-1000;}}
+.hero.is-still .hero-orbits .comet,.hero.is-still .hero-aura span{animation-play-state:paused;}
+@media (prefers-reduced-motion: reduce){
+  .hero-orbits .comet{display:none;}
+  .hero-aura span{animation:none;}
+  .hero-aura{transform:none;}
+}
 .hero p.lede{font-size:17px;color:var(--muted);line-height:1.6;margin-top:24px;max-width:620px;margin-left:auto;margin-right:auto;}
 .hero .btn-row{margin-top:36px;}
 .hero p.domain-line{margin-top:28px;font-size:14px;color:var(--muted);line-height:1.5;}
@@ -247,6 +276,84 @@ footer .container{padding-left:32px;}
 .about-copy .direct a{color:var(--rose);font-weight:600;display:inline-flex;align-items:center;gap:5px;}
 .about-copy .direct a:hover{color:var(--rose-dark);}
 
+/* Motion layer: everything below runs only once JS has marked the page (.js), and rests for reduced motion. */
+
+/* Mini illustration: a field form fills in, the report appears, then gets approved. 9s loop while in view. */
+.mini{position:relative;margin-top:22px;height:128px;border:1px solid var(--border-subtle);border-radius:16px;background:var(--canvas);overflow:hidden;display:flex;align-items:center;gap:14px;padding:14px 16px;}
+.mini *{animation-play-state:paused;}
+.mini.is-on *{animation-play-state:running;}
+.mr-form{flex:1.25;min-width:0;display:flex;flex-direction:column;gap:6px;}
+.mr-row{display:flex;align-items:center;gap:8px;height:28px;padding:0 10px;border-radius:9px;background:#fff;border:1px solid var(--border-subtle);font-size:12px;}
+.mr-k{color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mr-v{font-weight:600;color:var(--ink);white-space:nowrap;animation:mrVal 9s infinite both;}
+.mr-row .tick{width:16px;height:16px;border-radius:50%;background:var(--green);flex-shrink:0;position:relative;transform:scale(0);animation:mrTick 9s infinite both;}
+.mr-row .tick::after{content:'';position:absolute;left:5px;top:3px;width:4px;height:7px;border:solid #fff;border-width:0 1.8px 1.8px 0;transform:rotate(45deg);}
+.mr-row.r2 .mr-v,.mr-row.r2 .tick{animation-delay:.8s;}
+.mr-row.r3 .mr-v,.mr-row.r3 .tick{animation-delay:1.6s;}
+@keyframes mrVal{0%,8%{opacity:0;transform:translateX(-4px);}14%,90%{opacity:1;transform:none;}97%,100%{opacity:0;}}
+@keyframes mrTick{0%,10%{transform:scale(0);}16%{transform:scale(1.15);}19%,90%{transform:scale(1);}97%,100%{transform:scale(0);}}
+.mr-flow{width:26px;height:2px;flex-shrink:0;position:relative;background:linear-gradient(90deg,var(--border),var(--border));}
+.mr-flow::after{content:'';position:absolute;top:-2px;left:0;width:6px;height:6px;border-radius:50%;background:var(--rose);box-shadow:0 0 8px rgba(201,83,110,.6);opacity:0;animation:mrFlow 9s infinite;}
+@keyframes mrFlow{0%,36%{left:0;opacity:0;}38%{opacity:1;}46%{left:20px;opacity:1;}48%,100%{left:20px;opacity:0;}}
+.mr-doc{position:relative;flex:1;min-width:0;height:100px;border-radius:10px;background:#fff;border:1px solid var(--border);box-shadow:0 6px 18px rgba(28,28,30,.06);padding:10px 11px;opacity:.35;animation:mrDoc 9s infinite both;}
+@keyframes mrDoc{0%,44%{opacity:.35;transform:translateY(4px);}52%,90%{opacity:1;transform:none;}97%,100%{opacity:.35;transform:translateY(4px);}}
+.mr-doc-t{display:block;font-size:10.5px;font-weight:600;color:var(--ink);}
+.mr-lines{display:flex;flex-direction:column;gap:6px;margin-top:9px;}
+.mr-lines b{display:block;height:5px;border-radius:3px;background:var(--slate-tint);transform-origin:left;transform:scaleX(0);animation:mrLine 9s infinite both;}
+.mr-lines b:nth-child(1){width:92%;animation-delay:0s;}
+.mr-lines b:nth-child(2){width:74%;animation-delay:.25s;}
+.mr-lines b:nth-child(3){width:84%;animation-delay:.5s;}
+@keyframes mrLine{0%,48%{transform:scaleX(0);}56%,90%{transform:scaleX(1);}97%,100%{transform:scaleX(0);}}
+.mr-stamp{position:absolute;right:8px;bottom:9px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green);border:1.5px solid var(--green);border-radius:6px;padding:3px 7px;background:rgba(232,242,236,.9);opacity:0;transform:rotate(-8deg) scale(1.5);animation:mrStamp 9s infinite both;}
+@keyframes mrStamp{0%,62%{opacity:0;transform:rotate(-8deg) scale(1.5);}67%{opacity:1;transform:rotate(-8deg) scale(.95);}70%,90%{opacity:1;transform:rotate(-8deg) scale(1);}97%,100%{opacity:0;transform:rotate(-8deg) scale(1);}}
+
+@media(max-width:480px){
+  .mini{gap:10px;padding:12px;}
+  .mr-flow{display:none;}
+  .mr-doc{flex:.75;}
+  .mr-row{gap:6px;padding:0 8px;font-size:11.5px;}
+  .mr-v{display:none;}
+}
+/* Mini illustration: orders stop, a short message goes out, an order comes back. 9s loop while in view. */
+.mo-bars{position:relative;flex:1;height:100%;display:flex;align-items:flex-end;gap:7px;padding-bottom:16px;}
+.mo-bars > span{flex:1;height:var(--h);border-radius:4px 4px 0 0;background:var(--rose);opacity:.75;}
+.mo-bars > span.gap{height:86%;background:repeating-linear-gradient(45deg,var(--border-subtle),var(--border-subtle) 4px,#fff 4px,#fff 8px);border:1px dashed var(--border);border-bottom:0;opacity:1;}
+.mo-bars > span.new{height:0;background:var(--rose);opacity:1;box-shadow:0 0 0 rgba(201,83,110,0);animation:moNew 9s infinite both;}
+@keyframes moNew{0%,48%{height:0;box-shadow:0 0 0 rgba(201,83,110,0);}58%{height:74%;box-shadow:0 0 16px rgba(201,83,110,.45);}66%,90%{height:70%;box-shadow:0 0 8px rgba(201,83,110,.2);}97%,100%{height:0;}}
+.mo-axis{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;font-size:10px;color:var(--faint);}
+.mo-bubble{position:absolute;top:12px;right:14px;max-width:62%;font-size:11.5px;line-height:1.4;background:#fff;border:1px solid #e9cfd6;border-radius:12px 12px 4px 12px;padding:7px 10px;box-shadow:0 6px 18px rgba(28,28,30,.07);opacity:0;transform:translateY(6px) scale(.96);animation:moBubble 9s infinite both;}
+@keyframes moBubble{0%,16%{opacity:0;transform:translateY(6px) scale(.96);}24%,90%{opacity:1;transform:none;}97%,100%{opacity:0;}}
+.mo-label{position:absolute;right:14px;bottom:24px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--rose-dark);background:var(--rose-tint);border-radius:6px;padding:3px 7px;opacity:0;animation:moLabel 9s infinite both;}
+@keyframes moLabel{0%,60%{opacity:0;transform:translateY(4px);}66%,90%{opacity:1;transform:none;}97%,100%{opacity:0;}}
+
+/* Journeys: when one scrolls into view, its steps light up in order, like work moving through the system. */
+.js .journey .j-step{opacity:.4;transform:translateY(6px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1),box-shadow .6s ease;}
+.js .journey.is-on .j-step{opacity:1;transform:none;}
+.js .journey.is-on .j-step:nth-child(2){transition-delay:.35s;}
+.js .journey.is-on .j-step:nth-child(3){transition-delay:.7s;}
+.js .journey.is-on .j-step:nth-child(4){transition-delay:1.05s;}
+.js .journey.is-on .j-step:nth-child(5){transition-delay:1.4s;}
+.js .journey.is-on .j-step.is-outcome{box-shadow:0 0 0 4px rgba(201,83,110,.07),0 8px 22px rgba(201,83,110,.10);}
+
+/* Sections ease in once as they scroll into view. */
+.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1);}
+.js .reveal.is-on{opacity:1;transform:none;}
+.js .reveal-d1{transition-delay:.12s;}
+.js .f-card.reveal.is-on:hover{transform:translateY(-2px);}
+.js .f-card.reveal{transition:opacity .8s ease,transform .5s cubic-bezier(.2,.8,.2,1),border-color .15s,box-shadow .15s;}
+.mr-flow::after{animation-play-state:paused;}
+.mini.is-on .mr-flow::after{animation-play-state:running;}
+
+@media (prefers-reduced-motion: reduce){
+  .mini *{animation:none !important;}
+  .mr-flow::after{display:none;}
+  .mr-v,.mr-doc,.mr-stamp,.mo-bubble,.mo-label{opacity:1 !important;transform:none !important;}
+  .mr-row .tick,.mr-lines b{transform:none !important;}
+  .mr-stamp{transform:rotate(-8deg) !important;}
+  .mo-bars > span.new{height:70% !important;}
+  .js .journey .j-step,.js .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+}
+
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 
 @media (prefers-reduced-motion: reduce){
@@ -315,6 +422,42 @@ footer .container{padding-left:32px;}
 
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-aura" id="heroAura" aria-hidden="true"><span class="a1"></span><span class="a2"></span></div>
+    <svg class="hero-orbits" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="trackRose" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#c9536e" stop-opacity=".38"/>
+          <stop offset=".45" stop-color="#c9536e" stop-opacity=".06"/>
+          <stop offset="1" stop-color="#c9536e" stop-opacity=".30"/>
+        </linearGradient>
+        <linearGradient id="trackGreen" x1="1" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3d6b52" stop-opacity=".30"/>
+          <stop offset=".5" stop-color="#3d6b52" stop-opacity=".04"/>
+          <stop offset="1" stop-color="#3d6b52" stop-opacity=".22"/>
+        </linearGradient>
+        <filter id="orbitGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1.2" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="orbitHalo" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+      </defs>
+      <g class="o1" transform="rotate(-4 600 300)">
+        <ellipse class="track" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="url(#trackRose)"/>
+        <ellipse class="comet tail" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#c9536e"/>
+        <ellipse class="comet mid" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#c9536e"/>
+        <ellipse class="comet near" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#d9667f"/>
+        <ellipse class="comet halo" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#d9667f" filter="url(#orbitHalo)"/>
+        <ellipse class="comet head" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#b8405b" filter="url(#orbitGlow)"/>
+      </g>
+      <g class="o2" transform="translate(1200 0) scale(-1 1) rotate(-7 600 300)">
+        <ellipse class="track" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="url(#trackGreen)"/>
+        <ellipse class="comet tail" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#3d6b52"/>
+        <ellipse class="comet mid" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#3d6b52"/>
+        <ellipse class="comet near" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#4f8a69"/>
+        <ellipse class="comet halo" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#4f8a69" filter="url(#orbitHalo)"/>
+        <ellipse class="comet head" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#2f5a43" filter="url(#orbitGlow)"/>
+      </g>
+    </svg>
     <div class="container hero-inner">
       <p class="eyebrow">Software and AI for equipment businesses</p>
       <h1 id="hero-title">Systems for the companies that keep equipment running.</h1>
@@ -329,20 +472,29 @@ footer .container{padding-left:32px;}
 
   <section id="solutions" class="section section-border-top" aria-labelledby="value-title">
     <div class="container">
-      <div class="section-head center grid-head">
+      <div class="section-head center grid-head reveal">
         <p class="eyebrow">Solutions</p>
         <h2 id="value-title">Time lost after the visit. Revenue lost after the sale.</h2>
         <p class="subtitle">Equipment businesses tend to leak in the same two places: the paperwork between a technician’s visit and the customer’s report, and the customers who quietly stop ordering parts and service. That is where we focus.</p>
       </div>
       <div class="f-grid">
 
-        <a href="/field-service/" class="f-card">
+        <a href="/field-service/" class="f-card reveal">
           <span class="f-chip green">For testing, inspection and service companies</span>
           <div class="v-icon" style="background:var(--green-tint)">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
           </div>
           <h3>Field Service Reports</h3>
           <p class="desc">Technicians fill in the test on a phone. The report reaches the office ready to approve, and every customer’s history sits in one place.</p>
+          <div class="mini" aria-hidden="true">
+            <div class="mr-form">
+              <div class="mr-row r1"><span class="mr-k">Customer</span><span class="mr-v">Filled in</span><i class="tick"></i></div>
+              <div class="mr-row r2"><span class="mr-k">Readings</span><span class="mr-v">All pass</span><i class="tick"></i></div>
+              <div class="mr-row r3"><span class="mr-k">Photos</span><span class="mr-v">2 added</span><i class="tick"></i></div>
+            </div>
+            <span class="mr-flow"></span>
+            <div class="mr-doc"><span class="mr-doc-t">Report #0418</span><span class="mr-lines"><b></b><b></b><b></b></span><span class="mr-stamp">Approved</span></div>
+          </div>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Phone forms with the customer and equipment already filled in</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Report drafts in your own layout, signed off by your reviewer</li>
@@ -351,13 +503,21 @@ footer .container{padding-left:32px;}
           <span class="f-link green">Explore field service reports <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </a>
 
-        <a href="/aftermarket/" class="f-card">
+        <a href="/aftermarket/" class="f-card reveal reveal-d1">
           <span class="f-chip">For machinery manufacturers and distributors</span>
           <div class="v-icon" style="background:var(--rose-tint)">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
           </div>
           <h3>Aftermarket Revenue Recovery</h3>
           <p class="desc">We reconnect you with customers whose parts and service orders have gone quiet, and hand your team requests ready to quote.</p>
+          <div class="mini" aria-hidden="true">
+            <div class="mo-bars">
+              <span style="--h:46%"></span><span style="--h:60%"></span><span style="--h:52%"></span><span style="--h:68%"></span><span style="--h:58%"></span><span class="gap"></span><span class="gap"></span><span class="new"></span>
+              <div class="mo-axis"><span>2019</span><span>2022</span><span>2025</span></div>
+            </div>
+            <div class="mo-bubble">“Still running your Model X filler?”</div>
+            <span class="mo-label">Quote request</span>
+          </div>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Quiet accounts found in your own order records</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Short, approved messages sent in your company’s name</li>
@@ -367,7 +527,7 @@ footer .container{padding-left:32px;}
         </a>
 
       </div>
-      <div class="more-row">
+      <div class="more-row reveal">
         <div class="more">
           <h3>Custom systems</h3>
           <p>Something else slows your team down? We build one workflow at a time, around the systems you already use. <a href="#workflow-examples" class="btn-ghost-rose">See examples <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></p>
@@ -382,7 +542,7 @@ footer .container{padding-left:32px;}
 
   <section id="workflow-examples" class="section section-border-top bg-canvas" aria-labelledby="examples-title">
     <div class="container">
-      <div class="section-head grid-head">
+      <div class="section-head grid-head reveal">
         <p class="eyebrow">Workflows end to end</p>
         <h2 id="examples-title">From the moment work arrives to the moment it's done</h2>
         <p class="subtitle">Every system we build follows the same shape: it starts when something real happens, gathers the context a good employee would gather, prepares the work, and stops for a person wherever judgement matters.</p>
@@ -451,12 +611,12 @@ footer .container{padding-left:32px;}
 
   <section id="how-we-work" class="section section-border-top" aria-labelledby="how-title">
     <div class="container">
-      <div class="section-head grid-head">
+      <div class="section-head grid-head reveal">
         <p class="eyebrow">How we work</p>
         <h2 id="how-title">Built around your process, not around a demo</h2>
         <p class="subtitle">The hard part is rarely the model. It's knowing which workflow is worth the effort, how the work really gets done, and where the information actually lives. That understanding is part of what we deliver.</p>
       </div>
-      <div class="work-grid">
+      <div class="work-grid reveal">
         <div class="w-step">
           <div class="w-num" aria-hidden="true">1</div>
           <h3>Find the right workflow</h3>
@@ -483,11 +643,11 @@ footer .container{padding-left:32px;}
 
   <section class="section section-border-top bg-canvas" aria-labelledby="principles-title">
     <div class="container">
-      <div class="section-head grid-head">
+      <div class="section-head grid-head reveal">
         <h2 id="principles-title">What stays true in every system</h2>
         <p class="subtitle">A system only gets used if the people who own the work trust it. These are the commitments behind every system we put into production.</p>
       </div>
-      <div class="principle-grid">
+      <div class="principle-grid reveal">
 
         <div class="principle">
           <div class="p-ic" aria-hidden="true">
@@ -524,7 +684,7 @@ footer .container{padding-left:32px;}
   </section>
 
   <section id="about" class="section section-border-top" aria-labelledby="about-title">
-    <div class="container about">
+    <div class="container about reveal">
       <div class="about-photo">
         <img src="/aftermarket/eyal-taieb.jpg" alt="Eyal Taieb" width="720" height="1082" loading="lazy">
         <div class="tag"><strong>Eyal Taieb</strong><span>Founder, MeetingScheduled</span></div>
@@ -591,6 +751,7 @@ footer .container{padding-left:32px;}
 </footer>
 
 <script>
+document.documentElement.classList.add('js');
 document.getElementById('year').textContent = new Date().getFullYear();
 
 const menuBtn = document.getElementById('menuBtn');
@@ -638,6 +799,43 @@ mGroupBtn.addEventListener('click', () => {
   mGroup.hidden = !mGroup.hidden;
   mGroupBtn.setAttribute('aria-expanded', String(!mGroup.hidden));
 });
+
+// Scroll-in: sections ease in once, journeys light up step by step once, mini illustrations loop only while visible.
+(() => {
+  const once = document.querySelectorAll('.reveal, .journey');
+  const loops = document.querySelectorAll('.mini');
+  if (!('IntersectionObserver' in window)) {
+    once.forEach(el => el.classList.add('is-on')); loops.forEach(el => el.classList.add('is-on')); return;
+  }
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('is-on'); io.unobserve(e.target); }
+  }), { threshold: .18, rootMargin: '0px 0px -8% 0px' });
+  once.forEach(el => io.observe(el));
+  const lo = new IntersectionObserver(entries => entries.forEach(e => e.target.classList.toggle('is-on', e.isIntersecting)), { threshold: .3 });
+  loops.forEach(el => lo.observe(el));
+})();
+
+// Hero: the light leans gently toward the pointer, and the orbits rest while the hero is off screen.
+(() => {
+  const hero = document.querySelector('.hero');
+  const aura = document.getElementById('heroAura');
+  if (!hero || !aura) return;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => hero.classList.toggle('is-still', !e.isIntersecting)).observe(hero);
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(pointer: fine)').matches) return;
+  let raf = 0;
+  hero.addEventListener('pointermove', e => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      const r = hero.getBoundingClientRect();
+      aura.style.setProperty('--mx', ((e.clientX - r.left) / r.width - .5) * 60 + 'px');
+      aura.style.setProperty('--my', ((e.clientY - r.top) / r.height - .5) * 40 + 'px');
+    });
+  });
+  hero.addEventListener('pointerleave', () => { aura.style.setProperty('--mx', '0px'); aura.style.setProperty('--my', '0px'); });
+})();
 
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
