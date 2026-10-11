@@ -9,3 +9,6 @@ Proposed workflow: mobile field engineer records a sample test -> office reviewe
 Three fictional instruments in one fictional project. Data persists locally under ips-project-demo-v1. Both visible panels use the same in-page state; this is not real cross-device synchronization. Reset uses confirmation. The report exports an HTML draft, with explicit review/approval limitations; browser printing can save PDF. No messaging, accounts or backend.
 
 Delivery: /ips-preview/ on MeetingScheduled through a dedicated Cloudflare Worker. Keep Itai's worker paused and do not alter other routes. Canonical files live here; worker assets must be synced separately before deployment.
+
+## Walkthrough video
+A 26-second captioned walkthrough is embedded above the interactive demo. Actual UI screenshots are sequenced with a cursor in Remotion; no voiceover or music. Local video source and captures are preserved in /Users/eyalshoval/ips-preview-domain-worker/video-source. Final H.264 MP4 is 1440x1000, 26 seconds, 560090 bytes, with fast-start. The dedicated worker serves byte ranges for mobile playback. Native controls, a play button, an HTML transcript and a jump link to the demo are included.
