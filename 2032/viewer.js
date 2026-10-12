@@ -1,0 +1,26 @@
+'use strict';
+const scenes = [
+ {id:'world',name:'World',title:'Every journey starts with a possibility.',description:'Choose a destination to open its separately illustrated close-up.'},
+ {id:'canada',name:'Canada',title:'Long roads. Mountains. A place to stay.',description:'Forest-green pickup · Toy-hauler travel trailer · Red, white and blue Africa Twin'},
+ {id:'mediterranean',name:'Mediterranean',title:'A little more room for the horizon.',description:'Wide luxury catamaran · A Vespa on deck · Mediterranean bays'},
+ {id:'israel',name:'Israel',title:'Another road. A familiar feeling.',description:'Black and gold Africa Twin · Warm stone · The Mediterranean coast'},
+ {id:'thailand',name:'Thailand',title:'Island roads and open water.',description:'Koh Phangan: Honda 750 · Koh Samui: Blue touring jet ski'}
+];
+const $=id=>document.getElementById(id), canvas=$('view'),stage=$('stage'),ctx=canvas.getContext('2d');
+const cache=new Map(),points=new Map();let current='world',image=null,w=0,h=0,scale=1,base=1,x=0,y=0,request=0;
+for(const scene of scenes){const button=document.createElement('button');button.textContent=scene.name;button.id='tab-'+scene.id;button.setAttribute('aria-pressed','false');button.onclick=()=>show(scene.id);$('destinations').append(button)}
+function draw(){ctx.clearRect(0,0,w,h);if(image){ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(image,x,y,image.width*scale,image.height*scale)}$('zoom').textContent=(scale/base).toFixed(1).replace('.0','')+'×'}
+function constrain(){if(!image)return;const iw=image.width*scale,ih=image.height*scale;x=iw<=w?(w-iw)/2:Math.min(0,Math.max(w-iw,x));y=ih<=h?(h-ih)/2:Math.min(0,Math.max(h-ih,y))}
+function fit(){if(!image)return;base=Math.min(w/image.width,h/image.height);scale=base;constrain();draw()}
+function resize(){const box=stage.getBoundingClientRect();w=box.width;h=box.height;const dpr=Math.min(devicePixelRatio||1,3);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);fit()}
+function load(id){if(!cache.has(id)){const promise=new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('Image unavailable'));img.src=id+'.png'});cache.set(id,promise);promise.catch(()=>cache.delete(id))}return cache.get(id)}
+async function show(id){const token=++request;current=id;points.clear();$('loading').textContent='Opening '+scenes.find(s=>s.id===id).name+'…';$('retry').hidden=true;try{const next=await load(id);if(token!==request)return;image=next;const scene=scenes.find(s=>s.id===id);for(const s of scenes)$('tab-'+s.id).setAttribute('aria-pressed',String(s.id===id));$('title').textContent=scene.title;$('description').textContent=scene.description;$('scene-label').textContent=scene.name.toUpperCase();$('download').href=id+'.png';$('download').download='travel-'+id+'.png';$('loading').textContent='';fit();const url=new URL(location.href);url.hash=id==='world'?'':id;history.replaceState(null,'',url)}catch(error){if(token!==request)return;$('loading').textContent='This image could not load. Check your connection and try again.';$('retry').hidden=false}}
+function zoom(f,cx=w/2,cy=h/2){if(!image)return;const next=Math.max(base,Math.min(base*8,scale*f));x=cx-(cx-x)*next/scale;y=cy-(cy-y)*next/scale;scale=next;constrain();draw()}
+function local(e){const b=canvas.getBoundingClientRect();return [e.clientX-b.left,e.clientY-b.top]}
+canvas.addEventListener('wheel',e=>{e.preventDefault();const p=local(e);zoom(Math.exp(-e.deltaY*.002),...p)},{passive:false});
+canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;canvas.setPointerCapture(e.pointerId);points.set(e.pointerId,local(e))});
+canvas.addEventListener('pointermove',e=>{if(!points.has(e.pointerId))return;const before=[...points.values()],old=points.get(e.pointerId),p=local(e);points.set(e.pointerId,p);if(points.size===1){x+=p[0]-old[0];y+=p[1]-old[1]}else{const after=[...points.values()],a=before[0],b=before[1],c=after[0],d=after[1],oldDistance=Math.hypot(a[0]-b[0],a[1]-b[1]),distance=Math.hypot(c[0]-d[0],c[1]-d[1]);const ox=(a[0]+b[0])/2,oy=(a[1]+b[1])/2,nx=(c[0]+d[0])/2,ny=(c[1]+d[1])/2;if(oldDistance>0){zoom(distance/oldDistance,ox,oy);x+=nx-ox;y+=ny-oy}}constrain();draw()});
+for(const name of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(name,e=>points.delete(e.pointerId));
+canvas.addEventListener('dblclick',e=>zoom(scale>base*1.1?base/scale:2,...local(e)));
+canvas.addEventListener('keydown',e=>{if(['+','=','-','Escape','0','ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))e.preventDefault();if(e.key==='+'||e.key==='=')zoom(1.4);if(e.key==='-')zoom(1/1.4);if(e.key==='0')fit();if(e.key==='Escape')show('world');if(e.key.startsWith('Arrow')){x+=e.key==='ArrowLeft'?50:e.key==='ArrowRight'?-50:0;y+=e.key==='ArrowUp'?50:e.key==='ArrowDown'?-50:0;constrain();draw()}});
+$('plus').onclick=()=>zoom(1.5);$('minus').onclick=()=>zoom(1/1.5);$('fit').onclick=fit;$('retry').onclick=()=>show(current);new ResizeObserver(resize).observe(stage);resize();show(scenes.some(s=>s.id===location.hash.slice(1))?location.hash.slice(1):'world');
