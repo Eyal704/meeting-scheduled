@@ -63,7 +63,7 @@ export function HomePage({ locale }: { locale: Locale }) {
               src={assetPath("/media/headshot.webp")}
               alt={t.portraitAlt}
               width={900}
-              height={1352}
+              height={1125}
               sizes="(max-width: 680px) 90vw, (max-width: 1100px) 40vw, 440px"
               priority
             />

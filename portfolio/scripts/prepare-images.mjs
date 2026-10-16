@@ -8,7 +8,7 @@ const source = process.argv[2] || "/Users/eyalshoval/Downloads";
 const output = resolve(import.meta.dirname, "../public/media");
 await mkdir(output, { recursive: true });
 const images = [
-  ["headshot", "ChatGPT Image Aug 11, 2026, 07_29_17 AM (1).png"],
+  ["headshot", "b502dfe4-113a-4ffa-af2a-d52fd6e2b753 2.JPG"],
   ["gdc", "1680018223806.jpeg"],
   ["event", "1768889173050.jpeg"],
   ["closed-won", "Closed 367K Win (1).png"],
