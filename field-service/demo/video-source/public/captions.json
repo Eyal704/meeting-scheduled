@@ -1,0 +1,16 @@
+[
+{"text": "Follow one annual sprinkler inspection from the field to the customer.", "startMs": 0, "endMs": 5000, "timestampMs": null, "confidence": null},
+{"text": "Three visits today. Riverside Medical Center is first.", "startMs": 5000, "endMs": 11000, "timestampMs": null, "confidence": null},
+{"text": "The technician starts with site details and last year’s results already in place.", "startMs": 11000, "endMs": 18000, "timestampMs": null, "confidence": null},
+{"text": "Check the items and record current test readings.", "startMs": 18000, "endMs": 23000, "timestampMs": null, "confidence": null},
+{"text": "Document the painted sprinkler head with a photo, then send for review.", "startMs": 23000, "endMs": 30000, "timestampMs": null, "confidence": null},
+{"text": "The office receives a report draft from the same inspection record.", "startMs": 30000, "endMs": 34000, "timestampMs": null, "confidence": null},
+{"text": "Review the report in the company’s own layout and logo.", "startMs": 34000, "endMs": 40000, "timestampMs": null, "confidence": null},
+{"text": "Residual pressure is 12% below last year, past the 10% line where NFPA 25 asks you to find the cause.", "startMs": 40000, "endMs": 46000, "timestampMs": null, "confidence": null},
+{"text": "Create a repair quote from the finding. Sample total: $285.", "startMs": 46000, "endMs": 55000, "timestampMs": null, "confidence": null},
+{"text": "Approve the report. The open deficiency remains visible until addressed.", "startMs": 55000, "endMs": 60000, "timestampMs": null, "confidence": null},
+{"text": "The reviewed report is ready for the customer’s building record.", "startMs": 60000, "endMs": 65000, "timestampMs": null, "confidence": null},
+{"text": "Results, photo evidence, the NICET inspector’s signature and a copy for the AHJ.", "startMs": 65000, "endMs": 71000, "timestampMs": null, "confidence": null},
+{"text": "The building owner approves the repair quote right from the report.", "startMs": 71000, "endMs": 77000, "timestampMs": null, "confidence": null},
+{"text": "Open past reports and see which inspections are due next month.", "startMs": 77000, "endMs": 81000, "timestampMs": null, "confidence": null}
+]

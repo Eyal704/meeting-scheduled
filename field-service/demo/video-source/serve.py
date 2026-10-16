@@ -50,6 +50,8 @@ class RangeHandler(SimpleHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+    import os
     root = Path(__file__).resolve().parents[3]
-    print("Preview: http://127.0.0.1:8769/field-service/demo-codex/", flush=True)
-    ThreadingHTTPServer(("127.0.0.1", 8769), partial(RangeHandler, directory=str(root))).serve_forever()
+    port = int(os.environ.get("PORT", "8769"))
+    print(f"Preview: http://127.0.0.1:{port}/field-service/demo/", flush=True)
+    ThreadingHTTPServer(("127.0.0.1", port), partial(RangeHandler, directory=str(root))).serve_forever()

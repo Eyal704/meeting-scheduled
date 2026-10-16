@@ -1,8 +1,8 @@
 # Fire protection product demo
 
-A static, responsive product presentation for small US fire protection contractors. The page opens with a **75-second, 1920×1080 guided walkthrough**, followed by the same clickable workflow.
+A static, responsive product presentation for small US fire protection contractors. The page opens with a **81-second, 1920×1080 guided walkthrough**, followed by the same clickable workflow.
 
-Open `/field-service/demo-codex/`. There is no build step for the page: serve the repository with `python3 field-service/demo-codex/video-source/serve.py` and visit http://127.0.0.1:8769/field-service/demo-codex/.
+Open `/field-service/demo/`. There is no build step for the page: serve the repository with `python3 field-service/demo/video-source/serve.py` and visit http://127.0.0.1:8769/field-service/demo/.
 
 ## Presentation
 
