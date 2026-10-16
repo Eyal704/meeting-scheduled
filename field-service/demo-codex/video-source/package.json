@@ -1,0 +1,16 @@
+{
+  "name": "fire-inspection-walkthrough",
+  "private": true,
+  "scripts": {
+    "capture": "node capture.cjs",
+    "render": "remotion render src/index.tsx FireInspection ../walkthrough.mp4 --public-dir=public --codec=h264 --crf=21 --concurrency=4"
+  },
+  "dependencies": {
+    "remotion": "4.0.516",
+    "@remotion/cli": "4.0.516",
+    "@remotion/captions": "4.0.516",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "playwright": "1.58.2"
+  }
+}
