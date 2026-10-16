@@ -169,7 +169,8 @@ html[lang="he"] .doc th{letter-spacing:0;font-size:10.5px;}
 .fu-field textarea{resize:vertical;min-height:64px;}
 .fu-field input:focus,.fu-field textarea:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3px var(--rose-tint);}
 .fu-field input[aria-invalid=true]{border-color:#c0392b;}
-.fu-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;}
+/* Honeypot: clipped in place, not pushed off-screen (left:-9999px widened the RTL page to ~11000px). */
+.fu-hp{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;opacity:0;}
 .fu-actions{margin-top:18px;}
 .fu-actions .btn[disabled]{opacity:.6;cursor:progress;}
 .fu-status{margin-top:10px;font-size:13.5px;color:var(--muted);min-height:1em;}
@@ -180,3 +181,10 @@ html[lang="he"] .doc th{letter-spacing:0;font-size:10.5px;}
 .fu-done{margin-top:28px;max-width:640px;padding:22px;border:1px solid #cfe3d6;border-radius:20px;background:#f3faf5;font-size:15px;color:var(--ink);}
 .fu-done:focus{outline:none;}
 .fu-done-t{font-size:18px;font-weight:700;color:#2f5d43;margin-bottom:6px;}
+
+/* Standalone brand in the header: the offer, then the person. */
+.logo-by{font-weight:400;color:var(--muted);font-size:13px;margin-inline-start:6px;}
+@media(max-width:560px){.logo-by{display:none;}}
+
+/* .foot{padding:36px 0} wiped the container gutter, so footer text touched the screen edge. */
+footer .container.foot{padding-left:24px;padding-right:24px;}
