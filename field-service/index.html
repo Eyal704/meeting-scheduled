@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/aftermarket/aftermarket.css?v=22">
-<link rel="stylesheet" href="/field-service/field-service.css?v=2">
+<link rel="stylesheet" href="/field-service/field-service.css?v=3">
 </head>
 <body>
 
@@ -314,11 +314,35 @@
           <p>A short call: what fits, what’s missing, and which forms come next. Then you get a fixed scope and a price in writing.</p>
         </div>
       </div>
-      <div class="hero-cta">
-        <a href="mailto:sales@meeting-scheduled.com?subject=A%20form%20for%20a%20working%20example" class="btn btn-rose">Email me your form</a>
-        <a href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener" class="btn btn-outline">Book a 15-min call</a>
+      <form class="fu" id="form-upload" data-lang="en" novalidate>
+        <div class="fu-drop">
+          <input type="file" id="fu-files" name="files" accept="image/*,application/pdf" multiple>
+          <label for="fu-files" class="fu-pick">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span class="fu-pick-t">Add a photo or PDF of your form</span>
+            <span class="fu-pick-s">Up to 3 files. A phone photo is fine.</span>
+          </label>
+          <ul class="fu-list" aria-live="polite"></ul>
+        </div>
+        <div class="fu-grid">
+          <label class="fu-field"><span>Email <em>for your example</em></span><input type="email" name="email" autocomplete="email" inputmode="email" required></label>
+          <label class="fu-field"><span>Phone <em>optional</em></span><input type="tel" name="phone" autocomplete="tel"></label>
+          <label class="fu-field"><span>Name <em>optional</em></span><input type="text" name="name" autocomplete="name"></label>
+          <label class="fu-field"><span>Company <em>optional</em></span><input type="text" name="company" autocomplete="organization"></label>
+          <label class="fu-field fu-wide"><span>Anything I should know? <em>optional</em></span><textarea name="note" rows="2" placeholder="For example: annual sprinkler inspection, NFPA 25"></textarea></label>
+        </div>
+        <input type="text" name="website" class="fu-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="hero-cta fu-actions">
+          <button type="submit" class="btn btn-rose">Send my form</button>
+          <a href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener" class="btn btn-outline">Book a 15-min call</a>
+        </div>
+        <p class="fu-status" role="status" aria-live="polite"></p>
+        <p class="cta-note">Only used to build your example. Deleted if you ask. Prefer email? Send it to <a href="mailto:eyal@meeting-scheduled.com?subject=A%20form%20for%20a%20working%20example">eyal@meeting-scheduled.com</a>.</p>
+      </form>
+      <div class="fu-done" id="form-upload-done" hidden tabindex="-1">
+        <p class="fu-done-t">Got it, thank you.</p>
+        <p>I’ll build your example and email you within a few working days. If you’d like to talk first, <a href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener">book a 15-min call</a>.</p>
       </div>
-      <p class="cta-note">sales@meeting-scheduled.com · Your form is used only to build your example.</p>
     </div>
   </section>
 
@@ -334,7 +358,7 @@
         <h2 id="about-title">The person you talk to is the person who builds it.</h2>
         <p>I build business software and AI systems: a CRM, a multi-line calling system, voice agents and outreach tools that run in production every day. Before that, I spent eight years in B2B sales, so I start from how your customers and your team actually work.</p>
         <p>I’m not a test engineer, and I won’t pretend to be. You know your standards and your customers. I turn the way you already work into a system your technicians and your office actually use.</p>
-        <div class="direct"><a href="mailto:sales@meeting-scheduled.com?subject=A%20form%20for%20a%20working%20example">Email me your form →</a><a href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener">Book 15 minutes with Eyal →</a><a href="tel:+12029524617">Call +1 (202) 952-4617 →</a></div>
+        <div class="direct"><a href="#start">Send me your form →</a><a href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener">Book 15 minutes with Eyal →</a><a href="tel:+12029524617">Call +1 (202) 952-4617 →</a></div>
       </div>
     </div>
   </section>
@@ -384,7 +408,7 @@
       <h2 id="cta-title">Send me one form. I’ll show you what it looks like on a phone.</h2>
       <p class="subtitle">One test form and one report you send to customers. I’ll come back with a working example built on them.</p>
       <div class="hero-cta">
-        <a href="mailto:sales@meeting-scheduled.com?subject=A%20form%20for%20a%20working%20example" class="btn btn-rose">Email me your form</a>
+        <a href="#start" class="btn btn-rose">Send me your form</a>
         <a href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener" class="btn btn-outline">Book a 15-min call</a>
       </div>
     </div>
@@ -405,6 +429,6 @@
   </div>
 </footer>
 
-<script src="/field-service/field-service.js?v=1" defer></script>
+<script src="/field-service/field-service.js?v=2" defer></script>
 </body>
 </html>
