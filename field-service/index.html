@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/aftermarket/aftermarket.css?v=22">
-<link rel="stylesheet" href="/field-service/field-service.css?v=4">
+<link rel="stylesheet" href="/field-service/field-service.css?v=5">
 </head>
 <body>
 
@@ -56,7 +56,7 @@
           <a href="#start" class="btn btn-rose">Send me one of your forms</a>
           <a href="/field-service/demo/" class="btn btn-outline">▶ Watch the 81-second demo</a>
         </div>
-        <p class="cta-note">A photo from your phone is enough. I’ll build a working example on it, so you can judge something real before committing to anything.</p>
+        <p class="cta-note">A photo from your phone is enough. Within 3 working days you get a working example built on it, so you can judge something real before committing to anything.</p>
         <div class="byline">
           <img src="/aftermarket/eyal-taieb.jpg" alt="" width="44" height="44">
           <span><strong>Eyal Taieb.</strong> You talk to the person who builds the system.</span>
@@ -307,7 +307,7 @@
         <div class="step">
           <div class="step-num" aria-hidden="true">2</div>
           <h3>I build a working example</h3>
-          <p>Your form on a phone, and the report draft it produces. You can open it and try it yourself.</p>
+          <p>Within 3 working days: your form on a phone, and the report draft it produces. You can open it and try it yourself.</p>
         </div>
         <div class="step">
           <div class="step-num" aria-hidden="true">3</div>
@@ -320,29 +320,29 @@
           <input type="file" id="fu-files" name="files" accept="image/*,application/pdf" multiple>
           <label for="fu-files" class="fu-pick">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            <span class="fu-pick-t">Add a photo or PDF of your form</span>
-            <span class="fu-pick-s">Up to 3 files. A phone photo is fine.</span>
+            <span class="fu-pick-t">Upload one inspection form</span>
+            <span class="fu-pick-s">A phone photo or a PDF. A blank form is fine.</span>
           </label>
           <ul class="fu-list" aria-live="polite"></ul>
         </div>
-        <div class="fu-grid">
-          <label class="fu-field"><span>Email <em>for your example</em></span><input type="email" name="email" autocomplete="email" inputmode="email" required></label>
-          <label class="fu-field"><span>Phone <em>optional</em></span><input type="tel" name="phone" autocomplete="tel"></label>
-          <label class="fu-field"><span>Name <em>optional</em></span><input type="text" name="name" autocomplete="name"></label>
-          <label class="fu-field"><span>Company <em>optional</em></span><input type="text" name="company" autocomplete="organization"></label>
-          <label class="fu-field fu-wide"><span>Anything I should know? <em>optional</em></span><textarea name="note" rows="2" placeholder="For example: annual sprinkler inspection, NFPA 25"></textarea></label>
+        <div class="fu-step2" hidden>
+          <p class="fu-step2-t">Got it. Where should I send your example?</p>
+          <p class="fu-step2-s">Within 3 working days. No call needed until you’ve seen it.</p>
+          <div class="fu-grid">
+            <label class="fu-field"><span>Email</span><input type="email" name="email" autocomplete="email" inputmode="email" required></label>
+            <label class="fu-field"><span>Phone <em>optional</em></span><input type="tel" name="phone" autocomplete="tel"></label>
+          </div>
+          <div class="hero-cta fu-actions">
+            <button type="submit" class="btn btn-rose">Send my form</button>
+          </div>
         </div>
         <input type="text" name="website" class="fu-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <div class="hero-cta fu-actions">
-          <button type="submit" class="btn btn-rose">Send my form</button>
-          <a href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener" class="btn btn-outline">Book a 15-min call</a>
-        </div>
         <p class="fu-status" role="status" aria-live="polite"></p>
-        <p class="cta-note">Only used to build your example. Deleted if you ask. Prefer email? Send it to <a href="mailto:eyal@meeting-scheduled.com?subject=A%20form%20for%20a%20working%20example">eyal@meeting-scheduled.com</a>.</p>
+        <p class="cta-note">Rather talk first? <a href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener">Book 15 minutes</a>. Prefer email? <a href="mailto:eyal@meeting-scheduled.com?subject=A%20form%20for%20a%20working%20example">eyal@meeting-scheduled.com</a>. Your form is only used to build your example, and deleted if you ask.</p>
       </form>
       <div class="fu-done" id="form-upload-done" hidden tabindex="-1">
         <p class="fu-done-t">Got it, thank you.</p>
-        <p>I’ll build your example and email you within a few working days. If you’d like to talk first, <a href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener">book a 15-min call</a>.</p>
+        <p>I’ll build your example and email it to you within 3 working days. Want to put the 15-minute walkthrough on the calendar now? <a href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener">Pick a time</a>.</p>
       </div>
     </div>
   </section>
@@ -381,7 +381,7 @@
         </details>
         <details>
           <summary>How soon do we see the example?</summary>
-          <p>Usually within a few working days of receiving your form. If your form is long or unusual, I’ll tell you when to expect it.</p>
+          <p>Within 3 working days of receiving your form. If your form is long or unusual, I’ll tell you up front.</p>
         </details>
         <details>
           <summary>How much does it cost?</summary>
@@ -428,6 +428,6 @@
   </div>
 </footer>
 
-<script src="/field-service/field-service.js?v=2" defer></script>
+<script src="/field-service/field-service.js?v=3" defer></script>
 </body>
 </html>

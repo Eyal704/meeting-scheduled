@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/aftermarket/aftermarket.css?v=22">
-<link rel="stylesheet" href="/field-service/field-service.css?v=4">
+<link rel="stylesheet" href="/field-service/field-service.css?v=5">
 </head>
 <body>
 
@@ -57,7 +57,7 @@
           <a href="https://wa.me/972538276288?text=%D7%94%D7%99%D7%99%20%D7%90%D7%99%D7%99%D7%9C%2C%20%D7%94%D7%A0%D7%94%20%D7%98%D7%95%D7%A4%D7%A1%20%D7%91%D7%93%D7%99%D7%A7%D7%94%20%D7%A9%D7%9C%D7%A0%D7%95%20%D7%9C%D7%93%D7%95%D7%92%D7%9E%D7%94" target="_blank" rel="noopener" class="btn btn-rose">שלחו לי טופס בוואטסאפ</a>
           <a href="/field-service/demo/he/" class="btn btn-outline">▶ צפו בהדגמה (75 שניות)</a>
         </div>
-        <p class="cta-note">מספיק צילום של הטופס מהטלפון. אני אבנה עליו דוגמה עובדת, וככה תראו משהו אמיתי לפני שאתם מתחייבים למשהו.</p>
+        <p class="cta-note">מספיק צילום של הטופס מהטלפון. תוך 3 ימי עבודה תקבלו דוגמה עובדת שבנויה עליו, וככה תראו משהו אמיתי לפני שאתם מתחייבים למשהו.</p>
         <div class="byline">
           <img src="/aftermarket/eyal-taieb.jpg" alt="" width="44" height="44">
           <span><strong>אייל טייב.</strong> אתם מדברים ישירות עם מי שבונה לכם את המערכת.</span>
@@ -310,7 +310,7 @@
         <div class="step">
           <div class="step-num" aria-hidden="true">2</div>
           <h3>אני בונה דוגמה עובדת</h3>
-          <p>הטופס שלכם בטלפון, וטיוטת הדוח שיוצאת ממנו. אפשר לפתוח אותה ולנסות בעצמכם.</p>
+          <p>תוך 3 ימי עבודה: הטופס שלכם בטלפון, וטיוטת הדוח שיוצאת ממנו. אפשר לפתוח אותה ולנסות בעצמכם.</p>
         </div>
         <div class="step">
           <div class="step-num" aria-hidden="true">3</div>
@@ -328,28 +328,29 @@
           <input type="file" id="fu-files" name="files" accept="image/*,application/pdf" multiple>
           <label for="fu-files" class="fu-pick">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            <span class="fu-pick-t">הוסיפו צילום או PDF של הטופס</span>
-            <span class="fu-pick-s">עד 3 קבצים. מספיק צילום מהטלפון.</span>
+            <span class="fu-pick-t">העלו טופס בדיקה אחד</span>
+            <span class="fu-pick-s">צילום מהטלפון או PDF. גם טופס ריק מתאים.</span>
           </label>
           <ul class="fu-list" aria-live="polite"></ul>
         </div>
-        <div class="fu-grid">
-          <label class="fu-field"><span>אימייל <em>לשליחת הדוגמה</em></span><input type="email" name="email" autocomplete="email" inputmode="email" dir="ltr" required></label>
-          <label class="fu-field"><span>טלפון <em>לא חובה</em></span><input type="tel" name="phone" autocomplete="tel" dir="ltr"></label>
-          <label class="fu-field"><span>שם <em>לא חובה</em></span><input type="text" name="name" autocomplete="name"></label>
-          <label class="fu-field"><span>חברה <em>לא חובה</em></span><input type="text" name="company" autocomplete="organization"></label>
-          <label class="fu-field fu-wide"><span>משהו שכדאי שאדע? <em>לא חובה</em></span><textarea name="note" rows="2" placeholder="לדוגמה: תסקיר שנתי לציוד הרמה"></textarea></label>
+        <div class="fu-step2" hidden>
+          <p class="fu-step2-t">קיבלתי. לאן לשלוח לכם את הדוגמה?</p>
+          <p class="fu-step2-s">תוך 3 ימי עבודה. בלי שיחה עד שתראו אותה.</p>
+          <div class="fu-grid">
+            <label class="fu-field"><span>אימייל</span><input type="email" name="email" autocomplete="email" inputmode="email" dir="ltr" required></label>
+            <label class="fu-field"><span>טלפון <em>לא חובה</em></span><input type="tel" name="phone" autocomplete="tel" dir="ltr"></label>
+          </div>
+          <div class="hero-cta fu-actions">
+            <button type="submit" class="btn btn-rose">שליחת הטופס</button>
+          </div>
         </div>
         <input type="text" name="website" class="fu-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <div class="hero-cta fu-actions">
-          <button type="submit" class="btn btn-outline">שליחת הטופס</button>
-        </div>
         <p class="fu-status" role="status" aria-live="polite"></p>
-        <p class="cta-note">הטופס משמש רק לבניית הדוגמה, ונמחק לפי בקשה. מעדיפים מייל? <a href="mailto:eyal@meeting-scheduled.com?subject=%D7%98%D7%95%D7%A4%D7%A1%20%D7%9C%D7%93%D7%95%D7%92%D7%9E%D7%94%20%D7%A2%D7%95%D7%91%D7%93%D7%AA" dir="ltr">eyal@meeting-scheduled.com</a></p>
+        <p class="cta-note">מעדיפים מייל? <a href="mailto:eyal@meeting-scheduled.com?subject=%D7%98%D7%95%D7%A4%D7%A1%20%D7%9C%D7%93%D7%95%D7%92%D7%9E%D7%94%20%D7%A2%D7%95%D7%91%D7%93%D7%AA" dir="ltr">eyal@meeting-scheduled.com</a>. הטופס משמש רק לבניית הדוגמה, ונמחק לפי בקשה.</p>
       </form>
       <div class="fu-done" id="form-upload-done" hidden tabindex="-1">
         <p class="fu-done-t">קיבלתי, תודה.</p>
-        <p>אבנה את הדוגמה ואחזור אליכם במייל תוך כמה ימי עבודה. רוצים לדבר קודם? <a href="https://wa.me/972538276288" target="_blank" rel="noopener">וואטסאפ לאייל</a> או בטלפון <a href="tel:+972538276288" dir="ltr">053-8276288</a></p>
+        <p>אבנה את הדוגמה ואשלח לכם אותה במייל תוך 3 ימי עבודה. רוצים כבר לקבוע שיחה קצרה לעבור עליה יחד? <a href="https://wa.me/972538276288" target="_blank" rel="noopener">וואטסאפ לאייל</a> או בטלפון <a href="tel:+972538276288" dir="ltr">053-8276288</a>.</p>
       </div>
     </div>
   </section>
@@ -388,7 +389,7 @@
         </details>
         <details>
           <summary>תוך כמה זמן נראה את הדוגמה?</summary>
-          <p>בדרך כלל תוך כמה ימי עבודה מהרגע שהטופס מגיע אליי. אם הטופס ארוך או מורכב, אגיד לכם מראש מתי לצפות לה.</p>
+          <p>תוך 3 ימי עבודה מהרגע שהטופס מגיע אליי. אם הטופס ארוך או מורכב, אגיד לכם מראש.</p>
         </details>
         <details>
           <summary>כמה זה עולה?</summary>
@@ -435,6 +436,6 @@
   </div>
 </footer>
 
-<script src="/field-service/field-service.js?v=2" defer></script>
+<script src="/field-service/field-service.js?v=3" defer></script>
 </body>
 </html>

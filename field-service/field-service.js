@@ -76,7 +76,9 @@
   var status = form.querySelector('.fu-status');
   var button = form.querySelector('button[type=submit]');
   var email = form.elements.email;
+  var step2 = form.querySelector('.fu-step2');
   var files = [];
+  function val(name) { var el = form.elements[name]; return el ? el.value : ''; }
 
   function say(text, isError) {
     status.textContent = text || '';
@@ -97,6 +99,8 @@
       li.appendChild(n); li.appendChild(s); li.appendChild(x);
       list.appendChild(li);
     });
+    // Step 2 (where to send the example) only appears once a form is picked.
+    if (step2) step2.hidden = files.length === 0;
   }
 
   function add(picked) {
@@ -106,8 +110,10 @@
       if (files.length >= MAX_FILES) return say(T.errors.too_many_files, true);
       files.push(f);
     });
+    var opened = step2 && step2.hidden;
     input.value = '';
     render();
+    if (opened && files.length) email.focus();
   }
 
   input.addEventListener('change', function () { add(input.files); });
@@ -177,8 +183,8 @@
       if (ready.some(function (f) { return f.size > MAX_BYTES; })) throw new Error('file_too_large');
       return post({
         action: 'start', lang: lang,
-        email: email.value, phone: form.elements.phone.value, name: form.elements.name.value,
-        company: form.elements.company.value, note: form.elements.note.value, website: form.elements.website.value,
+        email: email.value, phone: val('phone'), name: val('name'),
+        company: val('company'), note: val('note'), website: val('website'),
         files: ready.map(function (f) { return { name: f.name, type: f.type, size: f.size }; })
       });
     }).then(function (started) {

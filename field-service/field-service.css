@@ -188,3 +188,9 @@ html[lang="he"] .doc th{letter-spacing:0;font-size:10.5px;}
 
 /* .foot{padding:36px 0} wiped the container gutter, so footer text touched the screen edge. */
 footer .container.foot{padding-left:24px;padding-right:24px;}
+
+/* Two-step form: the upload first, then only where to send the example. */
+.fu-step2{margin-top:16px;padding-top:16px;border-top:1px solid var(--border-subtle);}
+.fu-step2-t{font-size:16px;font-weight:700;color:var(--ink);}
+.fu-step2-s{margin-top:2px;font-size:13.5px;color:var(--muted);}
+.fu-step2 .fu-grid{margin-top:12px;}
