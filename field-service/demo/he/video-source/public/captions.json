@@ -1,0 +1,93 @@
+[
+  {
+    "text": "בדיקה שנתית אחת: מהטכנאי בשטח, דרך המשרד, ועד הדוח אצל הלקוח.",
+    "startMs": 0,
+    "endMs": 5000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "שלושה ביקורים מתוכננים להיום. מתחילים במרכז רפואי נחלון.",
+    "startMs": 5000,
+    "endMs": 11000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "פרטי האתר, המערכת ותוצאות הבדיקה הקודמת כבר מולאו מראש.",
+    "startMs": 11000,
+    "endMs": 18000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "מסמנים את סעיפי הבדיקה ומזינים את המדידות העדכניות.",
+    "startMs": 18000,
+    "endMs": 23000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "מתעדים מתז צבוע, מצרפים תמונה ושולחים לבדיקת המשרד.",
+    "startMs": 23000,
+    "endMs": 30000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "במשרד מתקבלת טיוטת דוח מתוך אותה בדיקה, בלי להקליד מחדש.",
+    "startMs": 30000,
+    "endMs": 34000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "בודקים את הדוח במבנה של החברה ועם הלוגו שלה.",
+    "startMs": 34000,
+    "endMs": 40000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "הליקוי מסומן, ולצדו לחץ של 3 בר בזמן זרימה לעומת 3.4 בר בשנה הקודמת.",
+    "startMs": 40000,
+    "endMs": 46000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "מכינים הצעת מחיר לתיקון מתוך הליקוי. המחיר לדוגמה: 950 ש״ח לפני מע״מ.",
+    "startMs": 46000,
+    "endMs": 55000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "מאשרים את הדוח. הליקוי נשאר פתוח עד להשלמת הטיפול.",
+    "startMs": 55000,
+    "endMs": 60000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "הדוח המאושר נשמר בתיק האתר וזמין ללקוח.",
+    "startMs": 60000,
+    "endMs": 65000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "תוצאות, תמונת הליקוי, חתימת הבודק ומועד הבדיקה השנתית הבאה.",
+    "startMs": 65000,
+    "endMs": 71000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "פותחים דוחות קודמים ורואים אילו בדיקות מתוכננות לחודש הבא.",
+    "startMs": 71000,
+    "endMs": 75000,
+    "timestampMs": null,
+    "confidence": null
+  }
+]
