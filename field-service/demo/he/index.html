@@ -61,10 +61,88 @@ h1,h2,h3,.brand{letter-spacing:0!important}.eyebrow,.brand small{letter-spacing:
 .cta-band a.cta-secondary:hover{border-color:var(--rose)}
 .closing.cta-band{display:block;max-width:880px;margin:30px auto 50px}
 @media(max-width:560px){.cta-band{padding:24px 18px}.cta-band h2{font-size:22px}.cta-actions a{width:100%}}
+
+/* Upload form inside the demo, same as /field-service/#start (rules copied from field-service.css). */
+.cta-band .fu,.cta-band .fu-done{margin:22px auto 0;max-width:560px;text-align:start}
+.cta-band .fu{--canvas:#fdf9fa;--rose-tint:#fdf2f4;--border-subtle:#f0eeec;--faint:#a0a0a8}
+.fu .btn{display:inline-flex;height:48px;align-items:center;justify-content:center;border-radius:10px;padding:0 24px;font-size:14px;font-weight:600;border:0;cursor:pointer;font-family:inherit}
+.fu .btn-rose{background:var(--rose);color:#fff}.fu .btn-rose:hover{background:#b84a62}
+.fu .cta-note{font-size:13px;line-height:1.55;color:var(--muted)}
+.fu-or{margin-top:22px;font-size:14px;font-weight:600}
+.fu{margin-top:28px;max-width:640px;padding:20px;border:1px solid var(--border);border-radius:20px;background:#fff;box-shadow:0 8px 24px rgba(28,28,30,.05);}
+.fu-or{margin-top:26px;font-size:14px;font-weight:600;color:var(--ink);}
+.fu-or + .fu{margin-top:12px;}
+.fu-drop input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;}
+.fu-pick{display:flex;flex-direction:column;align-items:center;gap:4px;padding:22px 16px;border:1.5px dashed #d9d5d0;border-radius:14px;background:var(--canvas);color:var(--rose);text-align:center;cursor:pointer;transition:border-color .15s,background .15s;}
+.fu-pick:hover,.fu-drop.drag .fu-pick{border-color:var(--rose);background:var(--rose-tint);}
+.fu-drop input[type=file]:focus-visible + .fu-pick{outline:2px solid var(--rose);outline-offset:2px;}
+.fu-pick-t{font-size:15px;font-weight:600;color:var(--ink);}
+.fu-pick-s{font-size:13px;color:var(--muted);}
+.fu-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.fu-list:empty{display:none;}
+.fu-list li{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--border-subtle);border-radius:10px;font-size:13.5px;}
+.fu-list .n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.fu-list .s{color:var(--faint);font-size:12.5px;}
+.fu-list button{border:0;background:none;color:var(--muted);font-size:18px;line-height:1;cursor:pointer;padding:2px 6px;border-radius:6px;}
+.fu-list button:hover{color:var(--rose);background:var(--rose-tint);}
+.fu-grid{margin-top:16px;display:grid;grid-template-columns:1fr;gap:12px;}
+@media(min-width:560px){.fu-grid{grid-template-columns:1fr 1fr;}.fu-wide{grid-column:1 / -1;}}
+.fu-field{display:flex;flex-direction:column;gap:5px;font-size:13.5px;font-weight:600;color:var(--ink);}
+.fu-field em{font-style:normal;font-weight:400;color:var(--faint);margin-inline-start:4px;}
+.fu-field input,.fu-field textarea{font:inherit;font-weight:400;font-size:16px;color:var(--ink);background:#fff;border:1px solid var(--border);border-radius:10px;padding:11px 12px;width:100%;}
+.fu-field textarea{resize:vertical;min-height:64px;}
+.fu-field input:focus,.fu-field textarea:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3px var(--rose-tint);}
+.fu-field input[aria-invalid=true]{border-color:#c0392b;}
+.fu-hp{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;opacity:0;}
+.fu-actions{margin-top:18px;}
+.fu-actions .btn[disabled]{opacity:.6;cursor:progress;}
+.fu-status{margin-top:10px;font-size:13.5px;color:var(--muted);min-height:1em;}
+.fu-status:empty{display:none;}
+.fu-status.err{color:#b03a2e;}
+.fu .cta-note{margin-top:10px;}
+.fu .cta-note a,.fu-done a{color:var(--rose);font-weight:600;}
+.fu-done{margin-top:28px;max-width:640px;padding:22px;border:1px solid #cfe3d6;border-radius:20px;background:#f3faf5;font-size:15px;color:var(--ink);}
+.fu-done:focus{outline:none;}
+.fu-done-t{font-size:18px;font-weight:700;color:#2f5d43;margin-bottom:6px;}
+.fu-step2{margin-top:16px;padding-top:16px;border-top:1px solid var(--border-subtle);}
+.fu-step2-t{font-size:16px;font-weight:700;color:var(--ink);}
+.fu-step2-s{margin-top:2px;font-size:13.5px;color:var(--muted);}
+.fu-step2 .fu-grid{margin-top:12px;}
+/* Demo navigation: small and neutral, so rose is kept for the real next step. */
+.bottom-actions button{min-height:36px;padding:0 14px;font-size:12px}
+.bottom button.primary{background:#fff;color:var(--ink);border-color:var(--ink)}
+.bottom button.primary:hover{background:var(--ink);color:#fff}
 </style></head><body>
 <header><a class="brand" href="/field-service/he/"><span class="mark">↖</span> מערכת לחברות עם טכנאים<span class="muted" style="font-weight:400"> · אייל טייב</span></a><span class="demo-label">הדגמה שאפשר לנסות</span><a class="toplink" href="/field-service/he/">→ חזרה לעמוד הראשי</a></header>
-<section class="watch" aria-labelledby="watch-title"><div class="watch-heading"><div><span class="eyebrow">בדיקה אחת, מתחילתה ועד סופה · סרטון של 75 שניות</span><h1 id="watch-title">מהבדיקה בשטח לדוח ללקוח.<br>ומשם לטיפול בליקויים.</h1><p>הטכנאי ממלא את הבדיקה בשטח. המשרד בודק את הדוח ומכין הצעת מחיר לתיקון הליקויים. ולכל אתר נשמרת ההיסטוריה.</p></div><a class="try-link" href="#interactive">להתנסות במערכת ↓</a></div><div class="video-shell"><video id="walkthrough" controls playsinline preload="metadata" poster="walkthrough-poster.jpg" aria-label="סרטון הדרכה של 75 שניות על מערכת לחברת גילוי וכיבוי אש"><source src="walkthrough.mp4" type="video/mp4"><track kind="captions" src="walkthrough.vtt" srclang="he" dir="rtl" label="עברית"></video><div class="video-foot"><span>1 · צופים בתהליך</span><span>טכנאי בשטח ← בדיקה במשרד ← דוח ללקוח</span></div></div><div class="cta-band"><h2>רוצים לראות את זה על הטופס שלכם?</h2><p>שלחו טופס בדיקה אחד. אבנה עליו דוגמה עובדת ואשלח לכם אותה במייל תוך 3 ימי עבודה. בחינם, ובלי שיחה עד שתראו אותה.</p><div class="cta-actions"><a class="cta-primary" href="https://wa.me/972538276288?text=%D7%94%D7%99%D7%99%20%D7%90%D7%99%D7%99%D7%9C%2C%20%D7%94%D7%A0%D7%94%20%D7%98%D7%95%D7%A4%D7%A1%20%D7%91%D7%93%D7%99%D7%A7%D7%94%20%D7%A9%D7%9C%D7%A0%D7%95%20%D7%9C%D7%93%D7%95%D7%92%D7%9E%D7%94" target="_blank" rel="noopener">שליחה בוואטסאפ</a><a class="cta-secondary" href="/field-service/he/#start">העלאת הטופס באתר</a></div></div></section><div class="intro" id="interactive"><div><span class="eyebrow">2 · מתנסים במערכת · אפשר לעבור בין השלבים</span><h1 id="headline">Less paperwork. More fieldwork.</h1><p id="subhead">Follow one inspection from the riser room to the customer's inbox.</p></div><nav class="steps" aria-label="שלבי ההדגמה"><button class="step active" data-stage="0"><span>1</span>טכנאי</button><button class="step" data-stage="1"><span>2</span>משרד</button><button class="step" data-stage="2"><span>3</span>לקוח</button></nav></div>
-<main id="stage" class="stage"></main><div class="bottom"><div class="guide"><span class="guide-number" id="guide-number">01</span><div><strong id="guide-title"></strong><p id="guide-text"></p></div></div><div class="bottom-actions"><button id="restart">↺ התחלה מחדש</button><button class="primary" id="next"></button></div></div><div class="footer-note"><span>להמחשה בלבד · חברה ואתרים לדוגמה · הנתונים נשמרים בהדגמה בלבד, ללא שליחה.</span><span>מותאם לעבודה של חברת גילוי וכיבוי אש.</span></div><section class="closing cta-band"><h2>רוצים לראות את זה על הטופס שלכם?</h2><p>שלחו טופס בדיקה אחד. אבנה עליו דוגמה עובדת ואשלח לכם אותה במייל תוך 3 ימי עבודה. בחינם, ובלי שיחה עד שתראו אותה.</p><div class="cta-actions"><a class="cta-primary" href="https://wa.me/972538276288?text=%D7%94%D7%99%D7%99%20%D7%90%D7%99%D7%99%D7%9C%2C%20%D7%94%D7%A0%D7%94%20%D7%98%D7%95%D7%A4%D7%A1%20%D7%91%D7%93%D7%99%D7%A7%D7%94%20%D7%A9%D7%9C%D7%A0%D7%95%20%D7%9C%D7%93%D7%95%D7%92%D7%9E%D7%94" target="_blank" rel="noopener">שליחה בוואטסאפ</a><a class="cta-secondary" href="/field-service/he/#start">העלאת הטופס באתר</a></div></section><dialog id="workspace-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h3 id="dialog-title"></h3><button data-action="close-dialog" aria-label="סגירת החלונית">✕</button></div><div class="dialog-body" id="dialog-body"></div></dialog><div id="toast" class="toast hidden" role="status"></div>
+<section class="watch" aria-labelledby="watch-title"><div class="watch-heading"><div><span class="eyebrow">בדיקה אחת, מתחילתה ועד סופה · סרטון של 75 שניות</span><h1 id="watch-title">מהבדיקה בשטח לדוח ללקוח.<br>ומשם לטיפול בליקויים.</h1><p>הטכנאי ממלא את הבדיקה בשטח. המשרד בודק את הדוח ומכין הצעת מחיר לתיקון הליקויים. ולכל אתר נשמרת ההיסטוריה.</p></div><a class="try-link" href="#interactive">להתנסות במערכת ↓</a></div><div class="video-shell"><video id="walkthrough" controls playsinline preload="metadata" poster="walkthrough-poster.jpg" aria-label="סרטון הדרכה של 75 שניות על מערכת לחברת גילוי וכיבוי אש"><source src="walkthrough.mp4" type="video/mp4"><track kind="captions" src="walkthrough.vtt" srclang="he" dir="rtl" label="עברית"></video><div class="video-foot"><span>1 · צופים בתהליך</span><span>טכנאי בשטח ← בדיקה במשרד ← דוח ללקוח</span></div></div><div class="cta-band"><h2>רוצים לראות את זה על הטופס שלכם?</h2><p>שלחו טופס בדיקה אחד. אבנה עליו דוגמה עובדת ואשלח לכם אותה במייל תוך 3 ימי עבודה. בחינם, ובלי שיחה עד שתראו אותה.</p><div class="cta-actions"><a class="cta-primary" href="https://wa.me/972538276288?text=%D7%94%D7%99%D7%99%20%D7%90%D7%99%D7%99%D7%9C%2C%20%D7%94%D7%A0%D7%94%20%D7%98%D7%95%D7%A4%D7%A1%20%D7%91%D7%93%D7%99%D7%A7%D7%94%20%D7%A9%D7%9C%D7%A0%D7%95%20%D7%9C%D7%93%D7%95%D7%92%D7%9E%D7%94" target="_blank" rel="noopener">שליחה בוואטסאפ</a><a class="cta-secondary" href="#send-form">העלאת הטופס כאן</a></div></div></section><div class="intro" id="interactive"><div><span class="eyebrow">2 · מתנסים במערכת · אפשר לעבור בין השלבים</span><h1 id="headline">Less paperwork. More fieldwork.</h1><p id="subhead">Follow one inspection from the riser room to the customer's inbox.</p></div><nav class="steps" aria-label="שלבי ההדגמה"><button class="step active" data-stage="0"><span>1</span>טכנאי</button><button class="step" data-stage="1"><span>2</span>משרד</button><button class="step" data-stage="2"><span>3</span>לקוח</button></nav></div>
+<main id="stage" class="stage"></main><div class="bottom"><div class="guide"><span class="guide-number" id="guide-number">01</span><div><strong id="guide-title"></strong><p id="guide-text"></p></div></div><div class="bottom-actions"><button id="restart">↺ התחלה מחדש</button><button class="primary" id="next"></button></div></div><div class="footer-note"><span>להמחשה בלבד · חברה ואתרים לדוגמה · הנתונים נשמרים בהדגמה בלבד, ללא שליחה.</span><span>מותאם לעבודה של חברת גילוי וכיבוי אש.</span></div><section class="closing cta-band" id="send-form"><h2>רוצים לראות את זה על הטופס שלכם?</h2><p>שלחו טופס בדיקה אחד. אבנה עליו דוגמה עובדת ואשלח לכם אותה במייל תוך 3 ימי עבודה. בחינם, ובלי שיחה עד שתראו אותה.</p><div class="cta-actions"><a class="cta-primary" href="https://wa.me/972538276288?text=%D7%94%D7%99%D7%99%20%D7%90%D7%99%D7%99%D7%9C%2C%20%D7%94%D7%A0%D7%94%20%D7%98%D7%95%D7%A4%D7%A1%20%D7%91%D7%93%D7%99%D7%A7%D7%94%20%D7%A9%D7%9C%D7%A0%D7%95%20%D7%9C%D7%93%D7%95%D7%92%D7%9E%D7%94" target="_blank" rel="noopener">שליחה בוואטסאפ</a></div><p class="fu-or">או העלו את הטופס כאן:</p><form class="fu" id="form-upload" data-lang="he" novalidate>
+        <div class="fu-drop">
+          <input type="file" id="fu-files" name="files" accept="image/*,application/pdf" multiple>
+          <label for="fu-files" class="fu-pick">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span class="fu-pick-t">העלו טופס בדיקה אחד</span>
+            <span class="fu-pick-s">צילום מהטלפון או PDF. גם טופס ריק מתאים.</span>
+          </label>
+          <ul class="fu-list" aria-live="polite"></ul>
+        </div>
+        <div class="fu-step2" hidden>
+          <p class="fu-step2-t">קיבלתי. לאן לשלוח לכם את הדוגמה?</p>
+          <p class="fu-step2-s">תוך 3 ימי עבודה. בלי שיחה עד שתראו אותה.</p>
+          <div class="fu-grid">
+            <label class="fu-field"><span>אימייל</span><input type="email" name="email" autocomplete="email" inputmode="email" dir="ltr" required></label>
+            <label class="fu-field"><span>טלפון <em>לא חובה</em></span><input type="tel" name="phone" autocomplete="tel" dir="ltr"></label>
+          </div>
+          <div class="hero-cta fu-actions">
+            <button type="submit" class="btn btn-rose">שליחת הטופס</button>
+          </div>
+        </div>
+        <input type="text" name="website" class="fu-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="fu-status" role="status" aria-live="polite"></p>
+        <p class="cta-note">מעדיפים מייל? <a href="mailto:eyal@meeting-scheduled.com?subject=%D7%98%D7%95%D7%A4%D7%A1%20%D7%9C%D7%93%D7%95%D7%92%D7%9E%D7%94%20%D7%A2%D7%95%D7%91%D7%93%D7%AA" dir="ltr">eyal@meeting-scheduled.com</a>. הטופס משמש רק לבניית הדוגמה, ונמחק לפי בקשה.</p>
+      </form><div class="fu-done" id="form-upload-done" hidden tabindex="-1">
+        <p class="fu-done-t">קיבלתי, תודה.</p>
+        <p>אבנה את הדוגמה ואשלח לכם אותה במייל תוך 3 ימי עבודה. רוצים כבר לקבוע שיחה קצרה לעבור עליה יחד? <a href="https://wa.me/972538276288" target="_blank" rel="noopener">וואטסאפ לאייל</a> או בטלפון <a href="tel:+972538276288" dir="ltr">053-8276288</a>.</p>
+      </div></section><dialog id="workspace-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h3 id="dialog-title"></h3><button data-action="close-dialog" aria-label="סגירת החלונית">✕</button></div><div class="dialog-body" id="dialog-body"></div></dialog><div id="toast" class="toast hidden" role="status"></div>
 <script>
 const $=s=>document.querySelector(s);let stage=0,view='route',deficiency=false,sent=false,approved=false,quote=false,returned=false,historyYear=2026;const checks={valves:false,alarm:false,gauges:false,fdc:false,cabinet:false};const values={alarm:42,static:5.4,residual:3.0};let defectNote='מתז צבוע בחדר 214. נדרשת החלפה ובדיקה חוזרת לאחר התיקון.',reviewNote='';
 const logo=`<div class="brand"><span class="mark"><svg width="17" height="21" viewBox="0 0 24 30" aria-hidden="true"><path fill="currentColor" d="M13 1c2 8-4 9-2 14 3-1 4-4 4-6 6 6 8 11 4 16-4 6-14 4-16-2C0 17 5 12 7 10c-1 6 1 6 2 7C7 10 13 7 13 1z"/></svg></span><div>להב<small>מערכות אש</small></div></div>`;
@@ -92,4 +170,5 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
 function openPanel(which){const title=which==='buildings'?'תיק האתר':which==='deficiencies'?'ליקויים פתוחים':'הצעת מחיר לתיקון';$('#dialog-title').textContent=title;$('#dialog-body').innerHTML=which==='buildings'?`<span class="eyebrow">קבוצת נחלון</span><h2>מרכז רפואי נחלון</h2><p class="muted">רחוב הנחל 12, פתח תקווה</p><div class="site-card">מערכת רטובה · תחנת שליטה 2<br>מועד הבדיקה השנתית: 16.10.2026<br>הבדיקה השנתית הבאה: 16.10.2027</div><h3>היסטוריית בדיקות</h3><div class="context-row">בדיקה שנתית 2026 · ${approved?'אושר':'ממתין לבדיקה'} · ליקוי אחד</div><div class="context-row">בדיקה שנתית 2025 · לא נרשמו ליקויים</div><div class="context-row">בדיקה שנתית 2024 · לא נרשמו ליקויים</div>`:which==='deficiencies'?`<span class="eyebrow">ליקוי 001 · פתוח</span><h2>מתז צבוע</h2><p>מרכז רפואי נחלון · תחנת שליטה 2 · חדר 214</p><div class="paper-def">${photoImg}<div><b>תיעוד הטכנאי</b><p>${escapeHtml(defectNote)}</p></div></div><div class="site-card">${quote?'הוכנה הצעת מחיר 1048 · 950 ₪':'טרם הוכנה הצעת מחיר לתיקון'}<br>נדרשת בדיקה חוזרת לאחר התיקון.</div><p class="small muted">הליקוי נשאר פתוח גם לאחר אישור דוח הבדיקה.</p>`:quote?`<div class="between">${logo}<span class="pill amber">טיוטה · לא נשלח</span></div><div class="line"></div><span class="eyebrow">הצעת מחיר 1048 · תמחור להמחשה</span><h2>החלפת מתז</h2><p class="muted">מרכז רפואי נחלון · חדר 214</p><div class="paper-def">${photoImg}<div><b>מתוך ליקוי 001</b><p>${escapeHtml(defectNote)}</p></div></div><table class="report-table"><thead><tr><th>תיאור העבודה</th><th>סכום</th></tr></thead><tbody><tr><td>מתז חלופי וחומרים</td><td>250 ₪</td></tr><tr><td>עבודה · החלפת מתז אחד</td><td>550 ₪</td></tr><tr><td>בדיקה חוזרת</td><td>150 ₪</td></tr></tbody></table><div class="quote-total"><span>סה״כ להצעת המחיר</span><span>950 ₪</span></div><p class="quote-draft">היקף העבודה והמחירים להמחשה בלבד. המחיר לפני מע״מ וכפוף לבדיקת תנאי האתר. ההדגמה אינה שולחת הצעות ללקוח.</p>`:`<h2>עדיין לא הוכנה הצעת מחיר.</h2><p>אפשר להכין הצעת מחיר מתוך הליקוי בנחלון, בחלונית בדיקת הדוח.</p>`;$('#workspace-dialog').showModal()}
 $('#workspace-dialog').addEventListener('click',e=>{if(e.target===$('#workspace-dialog'))$('#workspace-dialog').close()});
 $('#restart').onclick=reset;$('#next').onclick=()=>{if(stage===0){if(view==='route'){view='inspection';render(true)}else if(view==='inspection'){sample();render(true);notify('סעיפי הדוגמה מולאו · הבדיקה נשלחה למשרד')}else setStage(1)}else if(stage===1){approved=true;setStage(2)}else reset()};render();
-</script></body></html>
+</script><script src="/field-service/field-service.js?v=3" defer></script>
+</body></html>

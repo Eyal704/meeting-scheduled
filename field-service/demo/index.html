@@ -50,10 +50,88 @@
 .cta-band a.cta-secondary:hover{border-color:var(--rose)}
 .closing.cta-band{display:block;max-width:880px;margin:30px auto 50px}
 @media(max-width:560px){.cta-band{padding:24px 18px}.cta-band h2{font-size:22px}.cta-actions a{width:100%}}
+
+/* Upload form inside the demo, same as /field-service/#start (rules copied from field-service.css). */
+.cta-band .fu,.cta-band .fu-done{margin:22px auto 0;max-width:560px;text-align:start}
+.cta-band .fu{--canvas:#fdf9fa;--rose-tint:#fdf2f4;--border-subtle:#f0eeec;--faint:#a0a0a8}
+.fu .btn{display:inline-flex;height:48px;align-items:center;justify-content:center;border-radius:10px;padding:0 24px;font-size:14px;font-weight:600;border:0;cursor:pointer;font-family:inherit}
+.fu .btn-rose{background:var(--rose);color:#fff}.fu .btn-rose:hover{background:#b84a62}
+.fu .cta-note{font-size:13px;line-height:1.55;color:var(--muted)}
+.fu-or{margin-top:22px;font-size:14px;font-weight:600}
+.fu{margin-top:28px;max-width:640px;padding:20px;border:1px solid var(--border);border-radius:20px;background:#fff;box-shadow:0 8px 24px rgba(28,28,30,.05);}
+.fu-or{margin-top:26px;font-size:14px;font-weight:600;color:var(--ink);}
+.fu-or + .fu{margin-top:12px;}
+.fu-drop input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;}
+.fu-pick{display:flex;flex-direction:column;align-items:center;gap:4px;padding:22px 16px;border:1.5px dashed #d9d5d0;border-radius:14px;background:var(--canvas);color:var(--rose);text-align:center;cursor:pointer;transition:border-color .15s,background .15s;}
+.fu-pick:hover,.fu-drop.drag .fu-pick{border-color:var(--rose);background:var(--rose-tint);}
+.fu-drop input[type=file]:focus-visible + .fu-pick{outline:2px solid var(--rose);outline-offset:2px;}
+.fu-pick-t{font-size:15px;font-weight:600;color:var(--ink);}
+.fu-pick-s{font-size:13px;color:var(--muted);}
+.fu-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.fu-list:empty{display:none;}
+.fu-list li{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--border-subtle);border-radius:10px;font-size:13.5px;}
+.fu-list .n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.fu-list .s{color:var(--faint);font-size:12.5px;}
+.fu-list button{border:0;background:none;color:var(--muted);font-size:18px;line-height:1;cursor:pointer;padding:2px 6px;border-radius:6px;}
+.fu-list button:hover{color:var(--rose);background:var(--rose-tint);}
+.fu-grid{margin-top:16px;display:grid;grid-template-columns:1fr;gap:12px;}
+@media(min-width:560px){.fu-grid{grid-template-columns:1fr 1fr;}.fu-wide{grid-column:1 / -1;}}
+.fu-field{display:flex;flex-direction:column;gap:5px;font-size:13.5px;font-weight:600;color:var(--ink);}
+.fu-field em{font-style:normal;font-weight:400;color:var(--faint);margin-inline-start:4px;}
+.fu-field input,.fu-field textarea{font:inherit;font-weight:400;font-size:16px;color:var(--ink);background:#fff;border:1px solid var(--border);border-radius:10px;padding:11px 12px;width:100%;}
+.fu-field textarea{resize:vertical;min-height:64px;}
+.fu-field input:focus,.fu-field textarea:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3px var(--rose-tint);}
+.fu-field input[aria-invalid=true]{border-color:#c0392b;}
+.fu-hp{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;opacity:0;}
+.fu-actions{margin-top:18px;}
+.fu-actions .btn[disabled]{opacity:.6;cursor:progress;}
+.fu-status{margin-top:10px;font-size:13.5px;color:var(--muted);min-height:1em;}
+.fu-status:empty{display:none;}
+.fu-status.err{color:#b03a2e;}
+.fu .cta-note{margin-top:10px;}
+.fu .cta-note a,.fu-done a{color:var(--rose);font-weight:600;}
+.fu-done{margin-top:28px;max-width:640px;padding:22px;border:1px solid #cfe3d6;border-radius:20px;background:#f3faf5;font-size:15px;color:var(--ink);}
+.fu-done:focus{outline:none;}
+.fu-done-t{font-size:18px;font-weight:700;color:#2f5d43;margin-bottom:6px;}
+.fu-step2{margin-top:16px;padding-top:16px;border-top:1px solid var(--border-subtle);}
+.fu-step2-t{font-size:16px;font-weight:700;color:var(--ink);}
+.fu-step2-s{margin-top:2px;font-size:13.5px;color:var(--muted);}
+.fu-step2 .fu-grid{margin-top:12px;}
+/* Demo navigation: small and neutral, so rose is kept for the real next step. */
+.bottom-actions button{min-height:36px;padding:0 14px;font-size:12px}
+.bottom button.primary{background:#fff;color:var(--ink);border-color:var(--ink)}
+.bottom button.primary:hover{background:var(--ink);color:#fff}
 </style></head><body>
 <header><a class="brand" href="/field-service/"><span class="mark">↗</span> Field Service Reports<span class="muted" style="font-weight:400"> · by Eyal Taieb</span></a><span class="demo-label">INTERACTIVE PRODUCT DEMO</span><a class="toplink" href="/field-service/">← Back to overview</a></header>
-<section class="watch" aria-labelledby="watch-title"><div class="watch-heading"><div><span class="eyebrow">See one inspection through · 81-second walkthrough</span><h1 id="watch-title">From the riser room to a report.<br>And the repair work that follows.</h1><p>Your technician records the inspection. Your office reviews the report and quotes the repair. Every building keeps its history.</p></div><a class="try-link" href="#interactive">Try the system yourself ↓</a></div><div class="video-shell"><video id="walkthrough" controls playsinline preload="metadata" poster="walkthrough-poster.jpg" aria-label="81-second guided fire inspection software walkthrough"><source src="walkthrough.mp4" type="video/mp4"><track kind="captions" src="walkthrough.vtt" srclang="en" label="English"></video><div class="video-foot"><span>1 · Watch the workflow</span><span>Phone in the field → Office workspace → Customer report</span></div></div><div class="cta-band"><h2>Want to see this on your own form?</h2><p>Send one inspection form. I’ll build it as a working example and email it to you within 3 working days. Free. No call needed until you’ve seen it.</p><div class="cta-actions"><a class="cta-primary" href="/field-service/#start">Send me your form</a><a class="cta-secondary" href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener">Book 15 minutes</a></div></div></section><div class="intro" id="interactive"><div><span class="eyebrow">2 · Try the workflow · Click any stage</span><h1 id="headline">Less paperwork. More fieldwork.</h1><p id="subhead">Follow one inspection from the riser room to the customer's inbox.</p></div><nav class="steps" aria-label="Demo stages"><button class="step active" data-stage="0"><span>1</span>Technician</button><button class="step" data-stage="1"><span>2</span>Office</button><button class="step" data-stage="2"><span>3</span>Customer</button></nav></div>
-<main id="stage" class="stage"></main><div class="bottom"><div class="guide"><span class="guide-number" id="guide-number">01</span><div><strong id="guide-title"></strong><p id="guide-text"></p></div></div><div class="bottom-actions"><button id="restart">↺ Restart</button><button class="primary" id="next"></button></div></div><div class="footer-note"><span>Illustrative example · Fictional company and sample ITM data · Local demo only; nothing is sent.</span><span>Built around the way your fire protection company works.</span></div><section class="closing cta-band"><h2>Want to see this on your own form?</h2><p>Send one inspection form. I’ll build it as a working example and email it to you within 3 working days. Free. No call needed until you’ve seen it.</p><div class="cta-actions"><a class="cta-primary" href="/field-service/#start">Send me your form</a><a class="cta-secondary" href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener">Book 15 minutes</a></div></section><dialog id="workspace-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h3 id="dialog-title"></h3><button data-action="close-dialog" aria-label="Close panel">✕</button></div><div class="dialog-body" id="dialog-body"></div></dialog><div id="toast" class="toast hidden" role="status"></div>
+<section class="watch" aria-labelledby="watch-title"><div class="watch-heading"><div><span class="eyebrow">See one inspection through · 81-second walkthrough</span><h1 id="watch-title">From the riser room to a report.<br>And the repair work that follows.</h1><p>Your technician records the inspection. Your office reviews the report and quotes the repair. Every building keeps its history.</p></div><a class="try-link" href="#interactive">Try the system yourself ↓</a></div><div class="video-shell"><video id="walkthrough" controls playsinline preload="metadata" poster="walkthrough-poster.jpg" aria-label="81-second guided fire inspection software walkthrough"><source src="walkthrough.mp4" type="video/mp4"><track kind="captions" src="walkthrough.vtt" srclang="en" label="English"></video><div class="video-foot"><span>1 · Watch the workflow</span><span>Phone in the field → Office workspace → Customer report</span></div></div><div class="cta-band"><h2>Want to see this on your own form?</h2><p>Send one inspection form. I’ll build it as a working example and email it to you within 3 working days. Free. No call needed until you’ve seen it.</p><div class="cta-actions"><a class="cta-primary" href="#send-form">Send me your form</a><a class="cta-secondary" href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener">Book 15 minutes</a></div></div></section><div class="intro" id="interactive"><div><span class="eyebrow">2 · Try the workflow · Click any stage</span><h1 id="headline">Less paperwork. More fieldwork.</h1><p id="subhead">Follow one inspection from the riser room to the customer's inbox.</p></div><nav class="steps" aria-label="Demo stages"><button class="step active" data-stage="0"><span>1</span>Technician</button><button class="step" data-stage="1"><span>2</span>Office</button><button class="step" data-stage="2"><span>3</span>Customer</button></nav></div>
+<main id="stage" class="stage"></main><div class="bottom"><div class="guide"><span class="guide-number" id="guide-number">01</span><div><strong id="guide-title"></strong><p id="guide-text"></p></div></div><div class="bottom-actions"><button id="restart">↺ Restart</button><button class="primary" id="next"></button></div></div><div class="footer-note"><span>Illustrative example · Fictional company and sample ITM data · Local demo only; nothing is sent.</span><span>Built around the way your fire protection company works.</span></div><section class="closing cta-band" id="send-form"><h2>Want to see this on your own form?</h2><p>Send one inspection form. I’ll build it as a working example and email it to you within 3 working days. Free. No call needed until you’ve seen it.</p><form class="fu" id="form-upload" data-lang="en" novalidate>
+        <div class="fu-drop">
+          <input type="file" id="fu-files" name="files" accept="image/*,application/pdf" multiple>
+          <label for="fu-files" class="fu-pick">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span class="fu-pick-t">Upload one inspection form</span>
+            <span class="fu-pick-s">A phone photo or a PDF. A blank form is fine.</span>
+          </label>
+          <ul class="fu-list" aria-live="polite"></ul>
+        </div>
+        <div class="fu-step2" hidden>
+          <p class="fu-step2-t">Got it. Where should I send your example?</p>
+          <p class="fu-step2-s">Within 3 working days. No call needed until you’ve seen it.</p>
+          <div class="fu-grid">
+            <label class="fu-field"><span>Email</span><input type="email" name="email" autocomplete="email" inputmode="email" required></label>
+            <label class="fu-field"><span>Phone <em>optional</em></span><input type="tel" name="phone" autocomplete="tel"></label>
+          </div>
+          <div class="hero-cta fu-actions">
+            <button type="submit" class="btn btn-rose">Send my form</button>
+          </div>
+        </div>
+        <input type="text" name="website" class="fu-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="fu-status" role="status" aria-live="polite"></p>
+        <p class="cta-note">Rather talk first? <a href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener">Book 15 minutes</a>. Prefer email? <a href="mailto:eyal@meeting-scheduled.com?subject=A%20form%20for%20a%20working%20example">eyal@meeting-scheduled.com</a>. Your form is only used to build your example, and deleted if you ask.</p>
+      </form><div class="fu-done" id="form-upload-done" hidden tabindex="-1">
+        <p class="fu-done-t">Got it, thank you.</p>
+        <p>I’ll build your example and email it to you within 3 working days. Want to put the 15-minute walkthrough on the calendar now? <a href="https://cal.com/meeting-scheduled/15min" target="_blank" rel="noopener">Pick a time</a>.</p>
+      </div></section><dialog id="workspace-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h3 id="dialog-title"></h3><button data-action="close-dialog" aria-label="Close panel">✕</button></div><div class="dialog-body" id="dialog-body"></div></dialog><div id="toast" class="toast hidden" role="status"></div>
 <script>
 const $=s=>document.querySelector(s);let ownerApproved=false,stage=0,view='route',deficiency=false,sent=false,approved=false,quote=false,returned=false,historyYear=2026;const checks={valves:false,alarm:false,gauges:false,fdc:false,cabinet:false};const values={alarm:42,static:78,residual:44};let defectNote='Painted sprinkler head in Room 214. Replace and re-inspect.',reviewNote='';
 const logo=`<div class="brand"><span class="mark"><svg width="17" height="21" viewBox="0 0 24 30" aria-hidden="true"><path fill="currentColor" d="M13 1c2 8-4 9-2 14 3-1 4-4 4-6 6 6 8 11 4 16-4 6-14 4-16-2C0 17 5 12 7 10c-1 6 1 6 2 7C7 10 13 7 13 1z"/></svg></span><div>EMBER<small>FIRE PROTECTION</small></div></div>`;
@@ -81,4 +159,5 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
 function openPanel(which){const title=which==='buildings'?'Building record':which==='deficiencies'?'Open deficiencies':'Repair quote';$('#dialog-title').textContent=title;$('#dialog-body').innerHTML=which==='buildings'?`<span class="eyebrow">Riverside Health Group</span><h2>Riverside Medical Center</h2><p class="muted">480 Riverside Dr, Dayton, OH</p><div class="site-card">Wet pipe · Riser 2<br>Annual inspected: October 16, 2026<br>Next annual: October 16, 2027</div><h3>Inspection history</h3><div class="context-row">2026 annual · ${approved?'Approved':'In review'} · 1 deficiency</div><div class="context-row">2025 annual · No deficiencies recorded</div><div class="context-row">2024 annual · No deficiencies recorded</div>`:which==='deficiencies'?`<span class="eyebrow">D-001 · Open</span><h2>Painted sprinkler head</h2><p>Riverside Medical Center · Riser 2 · Room 214</p><div class="paper-def">${photoImg}<div><b>Technician evidence</b><p>${escapeHtml(defectNote)}</p></div></div><div class="site-card">${quote?'Repair quote RQ-1048 drafted · $285':'Repair quote not yet created'}<br>Re-inspection remains due after repair.</div><p class="small muted">Approving the inspection report keeps this deficiency open.</p>`:quote?`<div class="between">${logo}<span class="pill amber">Draft · Not sent</span></div><div class="line"></div><span class="eyebrow">RQ-1048 · Illustrative pricing</span><h2>Sprinkler head replacement</h2><p class="muted">Riverside Medical Center · Room 214</p><div class="paper-def">${photoImg}<div><b>From deficiency D-001</b><p>${escapeHtml(defectNote)}</p></div></div><table class="report-table"><thead><tr><th>Scope</th><th>Amount</th></tr></thead><tbody><tr><td>Replacement sprinkler head & materials</td><td>$85.00</td></tr><tr><td>Labor · Replace one head</td><td>$150.00</td></tr><tr><td>Re-inspection</td><td>$50.00</td></tr></tbody></table><div class="quote-total"><span>Quote total</span><span>$285.00</span></div><p class="quote-draft">Sample scope and pricing. Final scope, tax and site conditions require review. Nothing is sent from this demo.</p>`:`<h2>No repair quote yet.</h2><p>Create a repair quote from the Riverside deficiency in the review panel.</p>`;$('#workspace-dialog').showModal()}
 $('#workspace-dialog').addEventListener('click',e=>{if(e.target===$('#workspace-dialog'))$('#workspace-dialog').close()});
 $('#restart').onclick=reset;$('#next').onclick=()=>{if(stage===0){if(view==='route'){view='inspection';render(true)}else if(view==='inspection'){sample();render(true);notify('Sample checks completed · Inspection sent for review')}else setStage(1)}else if(stage===1){approved=true;setStage(2)}else reset()};render();
-</script></body></html>
+</script><script src="/field-service/field-service.js?v=3" defer></script>
+</body></html>
