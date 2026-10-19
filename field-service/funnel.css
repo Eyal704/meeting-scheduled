@@ -5,3 +5,12 @@ html{scroll-behavior:smooth;scroll-padding-top:90px}html[lang=he] body{font-fami
 
 .funnel-hero h1{text-wrap:balance}
 @media(max-width:700px){.funnel-hero h1{font-size:32px}.funnel-hero{padding-top:30px;padding-bottom:28px}.watch-heading p{font-size:14px}}
+/* Keep the first decision focused on the demonstration. */
+.funnel-hero .lede{max-width:745px;color:#55555a;font-size:19px;line-height:1.7}
+.funnel-hero .hero-cta{margin-top:24px}.nav-right .btn-outline{border-color:#e4d5d9;color:#8f344a;background:white}
+.watch-heading h2{font-size:23px;line-height:1.35}.watch-heading p{margin-top:8px}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:30px}
+.proof-grid .pain{padding:0 22px;background:transparent;border:0;border-radius:0;box-shadow:none;border-inline-start:2px solid #e8d6dc}
+.proof-grid .num{display:none}.proof-grid h3{font-size:17px;margin:0 0 8px}.proof-grid p{font-size:14px;line-height:1.65;color:#66666b}
+.watch-links{margin-top:28px}.offer-section .section-head{max-width:790px}.sector-note{color:#65656b}.fit-panel ul{margin-bottom:0}
+@media(max-width:700px){.funnel-hero .lede{font-size:17px}.watch-heading h2{font-size:21px}.proof-grid{grid-template-columns:1fr;gap:18px;margin-top:24px}.proof-grid .pain{padding:0 16px}.proof-grid h3{font-size:16px;margin-bottom:4px}.nav-right .btn-outline{max-width:145px;line-height:1.3;text-align:center}.nav-inner .logo{font-size:15px}.watch-block{margin-bottom:40px}}

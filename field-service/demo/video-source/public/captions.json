@@ -1,83 +1,83 @@
 [
   {
-    "text": "A reporting workflow built around your forms and your review process.",
+    "text": "Readings, photos and findings flow into a draft for review and approval.",
     "startMs": 0,
     "endMs": 8000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "Start with one handoff: from the technician’s record to the office’s draft.",
+    "text": "See field entries become a report draft for the office.",
     "startMs": 8000,
     "endMs": 16000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "Previous readings are a reference. They do not become today’s results.",
+    "text": "Previous readings are shown for comparison alongside the new entry fields.",
     "startMs": 16000,
     "endMs": 25000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "These sample entries will populate the draft report.",
+    "text": "The same values appear in the draft, without retyping them in the office.",
     "startMs": 25000,
     "endMs": 34000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "This sample finding is a painted sprinkler in Room 214.",
+    "text": "The reviewer can see which finding the photo documents.",
     "startMs": 34000,
     "endMs": 43000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "The report is still a draft. It has not been approved or sent.",
+    "text": "The office checks the draft and resolves missing details before approval.",
     "startMs": 43000,
     "endMs": 50000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "Office amendments are recorded separately, with a reason for the change.",
+    "text": "Office amendments retain a reason and the previous values.",
     "startMs": 50000,
     "endMs": 59000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "The question goes back with the inspection, ready for the technician to answer.",
+    "text": "The technician receives the note inside the same inspection.",
     "startMs": 59000,
     "endMs": 68000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "The office receives the updated field record and can review it again.",
+    "text": "The office sees the updated entries and continues the review.",
     "startMs": 68000,
     "endMs": 77000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "Approving the report does not mean the deficiency has been repaired.",
+    "text": "Report approval does not close the deficiency. Its status stays visible.",
     "startMs": 77000,
     "endMs": 85000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "One site, one system and its inspection history.",
+    "text": "Open an earlier report to see what was inspected and what has changed.",
     "startMs": 85000,
     "endMs": 92000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "Free one-form example within 3 business days. I’ll flag complex forms up front.",
+    "text": "Send a form and sample report. Within 3 business days; complex forms get an agreed delivery date.",
     "startMs": 92000,
     "endMs": 100000,
     "timestampMs": null,

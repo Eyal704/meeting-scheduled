@@ -4,107 +4,107 @@
     "end": 8,
     "type": "intro",
     "id": "draft",
-    "title": "From field readings\nto a report draft.",
-    "sub": "Without retyping the same data in the office.",
-    "caption": "A reporting workflow built around your forms and your review process."
+    "title": "Inspection reports,\nready for review.",
+    "sub": "Without retyping your field notes.",
+    "caption": "Readings, photos and findings flow into a draft for review and approval."
   },
   {
     "start": 8,
     "end": 16,
     "type": "intro",
     "id": "draft",
-    "title": "The inspection is done.\nThe reporting work isn’t.",
-    "sub": "Readings, photos and follow-up questions can still be spread across separate files.",
-    "caption": "Start with one handoff: from the technician’s record to the office’s draft."
+    "title": "The inspection is done.\nIs the report still waiting?",
+    "sub": "The readings are recorded. The photo is taken. Someone still has to assemble the report.",
+    "caption": "See field entries become a report draft for the office."
   },
   {
     "start": 16,
     "end": 25,
     "type": "phone",
     "id": "prefilled",
-    "title": "1. Reuse the site details.\nRecord fresh results.",
-    "sub": "The site and system are already identified. New reading fields start empty.",
-    "caption": "Previous readings are a reference. They do not become today’s results."
+    "title": "Site details are ready.\nAdd this inspection’s results.",
+    "sub": "Open the site and system, then record the new readings.",
+    "caption": "Previous readings are shown for comparison alongside the new entry fields."
   },
   {
     "start": 25,
     "end": 34,
     "type": "phone",
     "id": "readings",
-    "title": "Enter the readings\nonce, on site.",
-    "sub": "Here, the technician records the waterflow alarm time and main drain readings.",
-    "caption": "These sample entries will populate the draft report."
+    "title": "Record it in the field.\nCarry it into the report.",
+    "sub": "The technician enters the waterflow alarm time and main drain readings.",
+    "caption": "The same values appear in the draft, without retyping them in the office."
   },
   {
     "start": 34,
     "end": 43,
     "type": "phone",
     "id": "finding",
-    "title": "2. Keep the finding\nwith the inspection.",
-    "sub": "Attach the photo, location and field note to the same record.",
-    "caption": "This sample finding is a painted sprinkler in Room 214."
+    "title": "The photo comes\nwith the finding and location.",
+    "sub": "A painted sprinkler in Room 214. The photo and note stay with the inspection.",
+    "caption": "The reviewer can see which finding the photo documents."
   },
   {
     "start": 43,
     "end": 50,
     "type": "pair",
     "id": "draft",
-    "title": "The office gets a draft\nfrom those entries.",
-    "sub": "The same readings and finding appear in the report.",
-    "caption": "The report is still a draft. It has not been approved or sent."
+    "title": "The data is in the draft.\nReview can begin.",
+    "sub": "Readings, findings and photos appear together in the report.",
+    "caption": "The office checks the draft and resolves missing details before approval."
   },
   {
     "start": 50,
     "end": 59,
     "type": "dialog",
     "id": "source",
-    "title": "3. Review the source\nbefore release.",
-    "sub": "Open the submitted record to check what the technician entered.",
-    "caption": "Office amendments are recorded separately, with a reason for the change."
+    "title": "Check each entry\nagainst the field record.",
+    "sub": "Open the submitted record and compare it with the draft.",
+    "caption": "Office amendments retain a reason and the previous values."
   },
   {
     "start": 59,
     "end": 68,
     "type": "review",
     "id": "request",
-    "title": "Missing a detail?\nAsk on the same record.",
-    "sub": "The reviewer asks where the sprinkler is located within Room 214.",
-    "caption": "The question goes back with the inspection, ready for the technician to answer."
+    "title": "A detail is missing?\nKeep the request with the job.",
+    "sub": "The reviewer asks for the sprinkler location within Room 214.",
+    "caption": "The technician receives the note inside the same inspection."
   },
   {
     "start": 68,
     "end": 77,
     "type": "phone",
     "id": "returned",
-    "title": "The technician gets\nthe review note.",
-    "sub": "Add the missing location and resubmit the inspection.",
-    "caption": "The office receives the updated field record and can review it again."
+    "title": "Complete the detail.\nUpdate the report.",
+    "sub": "The technician adds the location and resubmits the inspection.",
+    "caption": "The office sees the updated entries and continues the review."
   },
   {
     "start": 77,
     "end": 85,
     "type": "pair",
     "id": "report",
-    "title": "Approve the report.\nKeep the finding open.",
-    "sub": "After review, release the report to the customer view.",
-    "caption": "Approving the report does not mean the deficiency has been repaired."
+    "title": "Approved for release.\nReady for the customer.",
+    "sub": "The report includes the inspection results and the outstanding deficiency.",
+    "caption": "Report approval does not close the deficiency. Its status stays visible."
   },
   {
     "start": 85,
     "end": 92,
     "type": "history",
     "id": "history",
-    "title": "The report stays\nwith the system.",
-    "sub": "Open this year’s report or return to a previous inspection.",
-    "caption": "One site, one system and its inspection history."
+    "title": "Start the next visit\nwith the history at hand.",
+    "sub": "The current report and previous inspections stay with the same site.",
+    "caption": "Open an earlier report to see what was inspected and what has changed."
   },
   {
     "start": 92,
     "end": 100,
     "type": "end",
     "id": "report",
-    "title": "See it with\nyour own form.",
-    "sub": "Send one inspection form and a sample customer report.",
-    "caption": "Free one-form example within 3 business days. I’ll flag complex forms up front."
+    "title": "See it work\nwith your own report.",
+    "sub": "Get a mobile form and the report draft it produces.",
+    "caption": "Send a form and sample report. Within 3 business days; complex forms get an agreed delivery date."
   }
 ]

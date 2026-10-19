@@ -35,9 +35,9 @@
   var T = {
     en: {
       preparing: 'Preparing your files…', uploading: 'Uploading file {i} of {n}…', finishing: 'Almost done…',
-      remove: 'Remove', send: 'Send my examples', sending: 'Sending…',
+      remove: 'Remove', send: 'Send files & request my example', sending: 'Sending…',
       errors: {
-        invalid_email: 'Please enter a valid email so I can send you the example.',
+        invalid_email: 'Enter a valid email address to receive your example.',
         missing_file: 'Please add a photo or PDF of your form.',
         too_many_files: 'You can add up to 3 files.',
         file_too_large: 'That file is over 20 MB. A phone photo of the form works well.',
@@ -49,9 +49,9 @@
     },
     he: {
       preparing: 'מכין את הקבצים…', uploading: 'מעלה קובץ {i} מתוך {n}…', finishing: 'כמעט סיימנו…',
-      remove: 'הסרה', send: 'שליחת הדוגמאות', sending: 'שולח…',
+      remove: 'הסרה', send: 'שליחה וקבלת דוגמה אישית', sending: 'שולח…',
       errors: {
-        invalid_email: 'נא להזין כתובת אימייל תקינה, כדי שאוכל לשלוח לכם את הדוגמה.',
+        invalid_email: 'נא להזין כתובת אימייל תקינה לקבלת הדוגמה.',
         missing_file: 'נא להוסיף צילום או PDF של הטופס.',
         too_many_files: 'אפשר לצרף עד 3 קבצים.',
         file_too_large: 'הקובץ גדול מ-20MB. צילום של הטופס מהטלפון יספיק.',
