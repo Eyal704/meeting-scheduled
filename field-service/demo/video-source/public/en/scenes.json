@@ -1,0 +1,110 @@
+[
+  {
+    "start": 0,
+    "end": 8,
+    "type": "intro",
+    "id": "draft",
+    "title": "From field readings\nto a report draft.",
+    "sub": "Without retyping the same data in the office.",
+    "caption": "A reporting workflow built around your forms and your review process."
+  },
+  {
+    "start": 8,
+    "end": 16,
+    "type": "intro",
+    "id": "draft",
+    "title": "The inspection is done.\nThe reporting work isn’t.",
+    "sub": "Readings, photos and follow-up questions can still be spread across separate files.",
+    "caption": "Start with one handoff: from the technician’s record to the office’s draft."
+  },
+  {
+    "start": 16,
+    "end": 25,
+    "type": "phone",
+    "id": "prefilled",
+    "title": "1. Reuse the site details.\nRecord fresh results.",
+    "sub": "The site and system are already identified. New reading fields start empty.",
+    "caption": "Previous readings are a reference. They do not become today’s results."
+  },
+  {
+    "start": 25,
+    "end": 34,
+    "type": "phone",
+    "id": "readings",
+    "title": "Enter the readings\nonce, on site.",
+    "sub": "Here, the technician records the waterflow alarm time and main drain readings.",
+    "caption": "These sample entries will populate the draft report."
+  },
+  {
+    "start": 34,
+    "end": 43,
+    "type": "phone",
+    "id": "finding",
+    "title": "2. Keep the finding\nwith the inspection.",
+    "sub": "Attach the photo, location and field note to the same record.",
+    "caption": "This sample finding is a painted sprinkler in Room 214."
+  },
+  {
+    "start": 43,
+    "end": 50,
+    "type": "pair",
+    "id": "draft",
+    "title": "The office gets a draft\nfrom those entries.",
+    "sub": "The same readings and finding appear in the report.",
+    "caption": "The report is still a draft. It has not been approved or sent."
+  },
+  {
+    "start": 50,
+    "end": 59,
+    "type": "dialog",
+    "id": "source",
+    "title": "3. Review the source\nbefore release.",
+    "sub": "Open the submitted record to check what the technician entered.",
+    "caption": "Office amendments are recorded separately, with a reason for the change."
+  },
+  {
+    "start": 59,
+    "end": 68,
+    "type": "review",
+    "id": "request",
+    "title": "Missing a detail?\nAsk on the same record.",
+    "sub": "The reviewer asks where the sprinkler is located within Room 214.",
+    "caption": "The question goes back with the inspection, ready for the technician to answer."
+  },
+  {
+    "start": 68,
+    "end": 77,
+    "type": "phone",
+    "id": "returned",
+    "title": "The technician gets\nthe review note.",
+    "sub": "Add the missing location and resubmit the inspection.",
+    "caption": "The office receives the updated field record and can review it again."
+  },
+  {
+    "start": 77,
+    "end": 85,
+    "type": "pair",
+    "id": "report",
+    "title": "Approve the report.\nKeep the finding open.",
+    "sub": "After review, release the report to the customer view.",
+    "caption": "Approving the report does not mean the deficiency has been repaired."
+  },
+  {
+    "start": 85,
+    "end": 92,
+    "type": "history",
+    "id": "history",
+    "title": "The report stays\nwith the system.",
+    "sub": "Open this year’s report or return to a previous inspection.",
+    "caption": "One site, one system and its inspection history."
+  },
+  {
+    "start": 92,
+    "end": 100,
+    "type": "end",
+    "id": "report",
+    "title": "See it with\nyour own form.",
+    "sub": "Send one inspection form and a sample customer report.",
+    "caption": "Free one-form example within 3 business days. I’ll flag complex forms up front."
+  }
+]

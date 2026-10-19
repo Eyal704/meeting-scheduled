@@ -35,7 +35,7 @@
   var T = {
     en: {
       preparing: 'Preparing your files…', uploading: 'Uploading file {i} of {n}…', finishing: 'Almost done…',
-      remove: 'Remove', send: 'Send my form', sending: 'Sending…',
+      remove: 'Remove', send: 'Send my examples', sending: 'Sending…',
       errors: {
         invalid_email: 'Please enter a valid email so I can send you the example.',
         missing_file: 'Please add a photo or PDF of your form.',
@@ -49,7 +49,7 @@
     },
     he: {
       preparing: 'מכין את הקבצים…', uploading: 'מעלה קובץ {i} מתוך {n}…', finishing: 'כמעט סיימנו…',
-      remove: 'הסרה', send: 'שליחת הטופס', sending: 'שולח…',
+      remove: 'הסרה', send: 'שליחת הדוגמאות', sending: 'שולח…',
       errors: {
         invalid_email: 'נא להזין כתובת אימייל תקינה, כדי שאוכל לשלוח לכם את הדוגמה.',
         missing_file: 'נא להוסיף צילום או PDF של הטופס.',

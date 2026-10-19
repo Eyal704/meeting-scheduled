@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "capture": "node capture.cjs",
-    "render": "remotion render src/index.tsx FireInspection ../walkthrough.mp4 --public-dir=public --codec=h264 --crf=21 --concurrency=4"
+    "render:en": "remotion render src/index.tsx ReportEN ../walkthrough-render.mp4 --public-dir=public --codec=h264 --crf=21 --concurrency=3",
+    "render:he": "remotion render src/index.tsx ReportHE ../he/walkthrough-render.mp4 --public-dir=public --codec=h264 --crf=21 --concurrency=3"
   },
   "dependencies": {
     "remotion": "4.0.516",

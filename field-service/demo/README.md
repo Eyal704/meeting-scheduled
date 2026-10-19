@@ -1,43 +1,28 @@
-# Fire protection product demo
+# Inspection reporting demo — revised 19 October 2026
 
-A static, responsive product presentation for small US fire protection contractors. The page opens with a **81-second, 1920×1080 guided walkthrough**, followed by the same clickable workflow.
+English: `/field-service/demo/`. Hebrew: `/field-service/demo/he/`.
+Both overview pages embed the corresponding 100-second walkthrough. Videos are intentionally silent, with on-screen explanations, optional VTT captions and a complete text transcript on the demo page.
 
-Open `/field-service/demo/`. There is no build step for the page: serve the repository with `python3 field-service/demo/video-source/serve.py` and visit http://127.0.0.1:8769/field-service/demo/.
+## Workflow
 
-## Presentation
+A deliberately partial sprinkler inspection illustrates the handoff from field readings to a reviewed report. Site details are prefilled; new readings start empty. The technician records five sample checks and a finding, submits, receives a reviewer question and resubmits. The reviewer can inspect submitted source values, make an amendment with a reason, and approve release. The customer view is gated on approval. The open finding remains visible. Repair quotes are optional and only appear to the customer after being created in the office.
 
-1. Technician: today's three visits, a pre-filled wet-pipe inspection, previous readings, current checks and a photographed deficiency.
-2. Office: familiar company workspace with review queue, branded report, flagged findings, return note, approval and a repair quote. Buildings, Deficiencies and Quotes open useful detail panels.
-3. Customer: approved report, prior annuals, open follow-up and inspections due next month. Print / Save PDF uses a report-only browser print layout.
+The explicit sample-data button fills the illustrative record. Stage navigation does not silently fabricate a submission or approval. Browser-only state resets on reload. No report, approval or quote is transmitted. The upload form below the demo is the real existing lead submission flow, separate from the simulated inspection.
 
-The phone is full width on mobile. Desktop uses a phone frame for the technician and a browser-style company workspace for the office. The video enlarges the evidence and repair quote, uses tap indicators on the phone and a moving cursor on desktop, and includes short written explanations. It is intentionally silent and understandable without audio. Captions are burned in; an English WebVTT track is also provided.
+All company/site names, data, identities and approvals are illustrative. The source photo is AI-generated. The example is not a complete inspection form, technical instruction or evidence of code compliance. Pressure comparisons are shown for human review, without an automated compliance verdict. US labels use ITM, waterflow, main drain, riser and psi. Hebrew uses בדיקה ותחזוקה, תחנת שליטה, מתזים, מגופים and בר.
 
-## Data and behavior
+## Rebuild both videos
 
-All company names, inspections, signatures and prices are illustrative. Changes exist only in the current browser session and reset on reload. Nothing is transmitted. The AI-generated sample photo is embedded in the HTML. Only Google Fonts uses an external service; the MP4, poster and VTT are local files.
+The shared source for BOTH languages is `video-source/`. Do not render the former independent Hebrew composition.
 
-Stage buttons allow free navigation and prepare sample data when skipping ahead. The bottom Next flow can complete the sample checks. Restart clears the story. Sending back requires a note, returns to the technician and retains the editable inspection. Creating a repair quote opens an itemized $285 draft. Approval retains the open deficiency. Entering the customer stage directly prepares an approved example.
+1. From the repository root: `PORT=8772 python3 field-service/demo/video-source/serve.py`.
+2. In `field-service/demo/video-source/`: `npm ci` and, if necessary, `npx playwright install chromium`.
+3. `BASE_URL=http://127.0.0.1:8772 npm run capture` captures the current interactive screens for both languages.
+4. `npm run render:en` and `npm run render:he` render intermediate MP4s.
+5. Use FFmpeg with `-c:v copy -an -movflags +faststart` to write each intermediate as `walkthrough.mp4` in the respective demo directory; extract the two-second frame as `walkthrough-poster.jpg`.
 
-Sample inspection scope, scheduling, findings, pricing and signatures are not a complete NFPA inspection form or an assertion of AHJ acceptance. The parent landing page and `/field-service/demo/` are untouched.
+Scene timing and copy: `video-source/public/{en,he}/scenes.json`. Caption data: `video-source/public/{en,he}/captions.json`. Keep the VTT tracks and the HTML transcripts in sync when editing. Generated screenshots and shot dimensions are ignored; reproduce them using the capture script. Dependencies are pinned in the existing lockfile.
 
-## Walkthrough timing
+## Verification
 
-- 0–5s: The completed report and connected workflow.
-- 5–34s: Route, pre-filled inspection, checks, evidence and submission on the phone.
-- 34–46s: Office report review, photo evidence and the residual-pressure comparison.
-- 46–65s: Itemized repair quote, report approval and customer handoff.
-- 65–75s: Branded report, building history and upcoming inspections.
-
-## Rebuild the video (optional)
-
-The static demo does not require Node or Remotion. For video maintenance only, `video-source/` contains the composition, JSON captions, capture script and pinned dependencies.
-
-1. Start the included Python preview server from the repository root on port 8769. It supports byte-range requests for video scrubbing; the ordinary Python simple server does not.
-2. In `video-source/`, run `npm install`, then `npx playwright install chromium` if needed.
-3. Run `npm run capture` to capture the actual demo screens and extract its embedded sample photo. Generated capture assets are ignored by Git.
-4. Run `npm run render` to create `../walkthrough.mp4`.
-5. The shipped MP4 has its silent audio track removed and `faststart` enabled. Use FFmpeg `-c:v copy -an -movflags +faststart` to apply the same treatment to a new render. The poster comes from the video at two seconds. Caption timing and text are in `public/captions.json`; keep `../walkthrough.vtt` in sync.
-
-## Validation
-
-Full technician → office → customer workflow verified at desktop and mobile sizes, including required checks, photo capture, submission, return note, quote line items, modal close/Escape, workspace panels, approval, history and restart. Layout and image loading checked at 320, 390, 768, 1024 and 1600px. Video playback, seeking and duration checked in desktop and mobile viewports. No JavaScript errors. Six stage screenshots and video QA frames are delivered separately.
+The October 19 revision was checked at 320, 390, 768 and 1440 pixels for both languages and both page types. Checks cover new-reading validation, approval gating, two-document upload (mocked transport; no real lead sent), return/resubmit, source record, reason-required office amendments, approval, report history, restart and optional quote. Videos are checked for metadata, playback and seeking on mobile and desktop. No measured business outcome is claimed.

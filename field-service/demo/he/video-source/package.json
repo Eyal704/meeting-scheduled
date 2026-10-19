@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "capture": "node capture.cjs",
-    "render": "remotion render src/index.tsx FireInspection ../walkthrough.mp4 --public-dir=public --codec=h264 --crf=21 --concurrency=4"
+    "render": "cd ../../video-source && npm run render:he"
   },
   "dependencies": {
     "remotion": "4.0.516",

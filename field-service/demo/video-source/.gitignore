@@ -1,4 +1,4 @@
-node_modules/
-public/*.png
-public/*.jpg
-public/shots.json
+node_modules
+public/**/*.png
+public/**/*.jpg
+public/**/shots.json

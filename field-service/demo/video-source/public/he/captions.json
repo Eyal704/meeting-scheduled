@@ -1,0 +1,86 @@
+[
+  {
+    "text": "תהליך שנבנה לפי טופסי הבדיקה והבקרה שלכם.",
+    "startMs": 0,
+    "endMs": 8000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "מתחילים במעבר אחד: מהתיעוד בשטח לטיוטה במשרד.",
+    "startMs": 8000,
+    "endMs": 16000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "המדידות הקודמות הן להשוואה. הן אינן תוצאות הבדיקה החדשה.",
+    "startMs": 16000,
+    "endMs": 25000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "נתוני הדוגמה האלה יעברו לטיוטת הדוח.",
+    "startMs": 25000,
+    "endMs": 34000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "בדוגמה: מתז צבוע בחדר 214.",
+    "startMs": 34000,
+    "endMs": 43000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "זו עדיין טיוטה. הדוח טרם אושר או נשלח.",
+    "startMs": 43000,
+    "endMs": 50000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "שינויים של המשרד מתועדים בנפרד, עם הסיבה לשינוי.",
+    "startMs": 50000,
+    "endMs": 59000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "הבקשה נשמרת עם הבדיקה ומופיעה אצל איש השטח.",
+    "startMs": 59000,
+    "endMs": 68000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "המשרד מקבל את הנתונים המעודכנים ויכול לבדוק אותם מחדש.",
+    "startMs": 68000,
+    "endMs": 77000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "אישור הדוח אינו אישור לכך שהליקוי תוקן.",
+    "startMs": 77000,
+    "endMs": 85000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "אותו אתר, אותה מערכת והבדיקות שבוצעו בה.",
+    "startMs": 85000,
+    "endMs": 92000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "דוגמה לטופס אחד ללא עלות, בתוך 3 ימי עבודה. אם נדרש יותר זמן, אעדכן מראש.",
+    "startMs": 92000,
+    "endMs": 100000,
+    "timestampMs": null,
+    "confidence": null
+  }
+]
