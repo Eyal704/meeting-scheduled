@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MeetingScheduled — Systems for the companies that keep equipment running</title>
-<meta name="description" content="Software and AI for testing, inspection and service companies, and the machinery manufacturers and dealers behind them: field reports ready to approve, and quiet customers back to ordering.">
+<meta name="description" content="Software for inspection and service companies, machinery manufacturers and dealers. Prepare field reports for review and follow up with past parts and service customers.">
 <meta name="robots" content="index, follow">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MeetingScheduled">
 <meta property="og:title" content="MeetingScheduled — Systems for the companies that keep equipment running">
-<meta property="og:description" content="Field service reports that reach the office ready to approve, and parts and service orders recovered from customers who went quiet.">
+<meta property="og:description" content="Less time on reports. Fewer missed follow-ups. Systems for field reporting and parts and service customer follow-up.">
 <meta property="og:url" content="https://www.meeting-scheduled.com">
 <meta property="og:image" content="https://www.meeting-scheduled.com/og-home.png">
 <meta property="og:image:width" content="1200">
@@ -18,7 +18,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MeetingScheduled — Systems for the companies that keep equipment running">
-<meta name="twitter:description" content="Field service reports ready to approve, and parts and service orders recovered from quiet customers. Built around how your team already works.">
+<meta name="twitter:description" content="Less time on reports. Fewer missed follow-ups. Systems built around your forms, approval steps and customer records.">
 <meta name="twitter:image" content="https://www.meeting-scheduled.com/og-home.png">
 
 <link rel="icon" type="image/svg+xml" href="/logo.svg">
@@ -129,7 +129,7 @@ main section[id]{scroll-margin-top:80px;}
 @keyframes aura1{to{transform:translate(140px,70px) scale(1.12);}}
 @keyframes aura2{to{transform:translate(-120px,-50px) scale(1.15);}}
 .hero-orbits{position:absolute;z-index:0;left:50%;top:50%;width:min(1280px,118%);height:96%;transform:translate(-50%,-50%);pointer-events:none;overflow:visible;}
-@media(min-width:640px){.hero{padding:128px 0 120px;}}
+@media(min-width:640px){.hero{padding:80px 0 72px;}}
 @media(max-width:640px){.hero-orbits{display:none;}}
 .hero-orbits ellipse{fill:none;vector-effect:non-scaling-stroke;}
 .hero-orbits .track{stroke-width:1.8;}
@@ -174,7 +174,12 @@ main section[id]{scroll-margin-top:80px;}
 .journey{border:1px solid var(--border);border-radius:22px;background:#fff;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,.03);}
 @media(min-width:640px){.journey{padding:32px;}}
 .journey + .journey{margin-top:24px;}
-.journey-head{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+.journey-head{display:flex;align-items:center;gap:12px;cursor:pointer;list-style:none;}
+.journey-head::-webkit-details-marker{display:none;}
+.journey-head::after{content:"+";margin-left:auto;font-size:26px;line-height:1;flex-shrink:0;color:var(--green);}
+.journey[open] .journey-head{margin-bottom:28px;}
+.journey[open] .journey-head::after{content:"−";}
+.journey-head:focus-visible{outline:2px solid var(--green);outline-offset:8px;border-radius:4px;}
 .j-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .j-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;}
 .j-title{margin-top:2px;font-size:16px;font-weight:600;}
@@ -278,7 +283,7 @@ footer .container{padding-left:32px;}
 
 /* Motion layer: everything below runs only once JS has marked the page (.js), and rests for reduced motion. */
 
-/* Mini illustration: a field form fills in, the report appears, then gets approved. 9s loop while in view. */
+/* Mini illustration: a field form fills in and a report draft appears for review. 9s loop while in view. */
 .mini{position:relative;margin-top:22px;height:128px;border:1px solid var(--border-subtle);border-radius:16px;background:var(--canvas);overflow:hidden;display:flex;align-items:center;gap:14px;padding:14px 16px;}
 .mini *{animation-play-state:paused;}
 .mini.is-on *{animation-play-state:running;}
@@ -354,6 +359,17 @@ footer .container{padding-left:32px;}
   .js .journey .j-step,.js .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
 }
 
+@media(max-width:639px){
+  .hero{padding:48px 0;}
+  .hero h1{font-size:34px;line-height:1.16;}
+  .hero p.lede{font-size:16px;margin-top:20px;}
+  .hero .btn-row{margin-top:26px;}
+  .section{padding:56px 0;}
+  .f-card{padding:24px;}
+  .journey{padding:20px;}
+  .about-photo{margin-inline:auto;}
+}
+.about-copy{max-width:680px;}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 
 @media (prefers-reduced-motion: reduce){
@@ -460,8 +476,8 @@ footer .container{padding-left:32px;}
     </svg>
     <div class="container hero-inner">
       <p class="eyebrow">Software and AI for equipment businesses</p>
-      <h1 id="hero-title">Systems for the companies that keep equipment running.</h1>
-      <p class="lede">For testing, inspection and service companies, and the manufacturers and dealers behind the machines. We build the systems that turn field work into signed reports, and quiet customers back into orders.</p>
+      <h1 id="hero-title">Less time on reports.<br>Fewer missed follow-ups.</h1>
+      <p class="lede">For testing, inspection and service companies, and machinery manufacturers and dealers. Turn field readings into reports ready for review, and reconnect with customers who have stopped ordering parts and service.</p>
       <div class="btn-row">
         <a href="#solutions" class="btn btn-rose">See the solutions</a>
         <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-secondary">Let’s talk</a>
@@ -474,8 +490,8 @@ footer .container{padding-left:32px;}
     <div class="container">
       <div class="section-head center grid-head reveal">
         <p class="eyebrow">Solutions</p>
-        <h2 id="value-title">Time lost after the visit. Revenue lost after the sale.</h2>
-        <p class="subtitle">Equipment businesses tend to leak in the same two places: the paperwork between a technician’s visit and the customer’s report, and the customers who quietly stop ordering parts and service. That is where we focus.</p>
+        <h2 id="value-title">Which part of your business needs attention?</h2>
+        <p class="subtitle">Reports waiting to be written. Customers waiting for a follow-up. Choose the workflow you want to improve.</p>
       </div>
       <div class="f-grid">
 
@@ -485,20 +501,20 @@ footer .container{padding-left:32px;}
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
           </div>
           <h3>Field Service Reports</h3>
-          <p class="desc">Technicians fill in the test on a phone. The report reaches the office ready to approve, and every customer’s history sits in one place.</p>
+          <p class="desc">Technicians record readings and photos on site. The office receives a report draft in your format, ready for review and sign-off.</p>
           <div class="mini" aria-hidden="true">
             <div class="mr-form">
               <div class="mr-row r1"><span class="mr-k">Customer</span><span class="mr-v">Filled in</span><i class="tick"></i></div>
-              <div class="mr-row r2"><span class="mr-k">Readings</span><span class="mr-v">All pass</span><i class="tick"></i></div>
+              <div class="mr-row r2"><span class="mr-k">Readings</span><span class="mr-v">Recorded</span><i class="tick"></i></div>
               <div class="mr-row r3"><span class="mr-k">Photos</span><span class="mr-v">2 added</span><i class="tick"></i></div>
             </div>
             <span class="mr-flow"></span>
-            <div class="mr-doc"><span class="mr-doc-t">Report #0418</span><span class="mr-lines"><b></b><b></b><b></b></span><span class="mr-stamp">Approved</span></div>
+            <div class="mr-doc"><span class="mr-doc-t">Report #0418</span><span class="mr-lines"><b></b><b></b><b></b></span><span class="mr-stamp">For review</span></div>
           </div>
           <ul>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Phone forms with the customer and equipment already filled in</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Report drafts in your own layout, signed off by your reviewer</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Every report per customer and unit, and what is due next month</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Reports, equipment history and upcoming inspections in one place</li>
           </ul>
           <span class="f-link green">Explore field service reports <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </a>
@@ -509,7 +525,7 @@ footer .container{padding-left:32px;}
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
           </div>
           <h3>Aftermarket Revenue Recovery</h3>
-          <p class="desc">We reconnect you with customers whose parts and service orders have gone quiet, and hand your team requests ready to quote.</p>
+          <p class="desc">Identify customers whose parts and service orders have stopped. Follow up with approved messages and route their requests to your team.</p>
           <div class="mini" aria-hidden="true">
             <div class="mo-bars">
               <span style="--h:46%"></span><span style="--h:60%"></span><span style="--h:52%"></span><span style="--h:68%"></span><span style="--h:58%"></span><span class="gap"></span><span class="gap"></span><span class="new"></span>
@@ -544,12 +560,12 @@ footer .container{padding-left:32px;}
     <div class="container">
       <div class="section-head grid-head reveal">
         <p class="eyebrow">Workflows end to end</p>
-        <h2 id="examples-title">From the moment work arrives to the moment it's done</h2>
-        <p class="subtitle">Every system we build follows the same shape: it starts when something real happens, gathers the context a good employee would gather, prepares the work, and stops for a person wherever judgement matters.</p>
+        <h2 id="examples-title">See how the work moves forward</h2>
+        <p class="subtitle">Open an example to see the steps, what the system prepares and where your team reviews the work.</p>
       </div>
 
-      <div class="journey">
-        <div class="journey-head">
+      <details class="journey">
+        <summary class="journey-head">
           <div class="j-icon" style="background:var(--green-tint)" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
           </div>
@@ -557,7 +573,7 @@ footer .container{padding-left:32px;}
             <p class="j-eyebrow" style="color:var(--green)">Field service</p>
             <h3 class="j-title">A periodic test, from the visit to the signed report</h3>
           </div>
-        </div>
+        </summary>
         <ol class="j-track">
           <li class="j-step"><p class="j-kicker">Trigger</p><p class="j-text">A test is due at a customer site.</p></li>
           <li class="j-step"><p class="j-kicker">Context</p><p class="j-text">The customer, the site, the equipment and last year’s results are already on the technician’s phone.</p></li>
@@ -565,10 +581,10 @@ footer .container{padding-left:32px;}
           <li class="j-step is-human"><p class="j-kicker">Your team</p><p class="j-text">The qualified reviewer approves the report or sends it back with a note.</p></li>
           <li class="j-step is-outcome"><p class="j-kicker">Outcome</p><p class="j-text">The customer gets the report, and the unit’s history and next due date are updated.</p></li>
         </ol>
-      </div>
+      </details>
 
-      <div class="journey">
-        <div class="journey-head">
+      <details class="journey">
+        <summary class="journey-head">
           <div class="j-icon" style="background:var(--rose-tint)" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
           </div>
@@ -576,7 +592,7 @@ footer .container{padding-left:32px;}
             <p class="j-eyebrow" style="color:var(--rose)">Aftermarket</p>
             <h3 class="j-title">A quiet customer, back to a quote request</h3>
           </div>
-        </div>
+        </summary>
         <ol class="j-track">
           <li class="j-step"><p class="j-kicker">Trigger</p><p class="j-text">A customer who ordered parts every year stops ordering.</p></li>
           <li class="j-step"><p class="j-kicker">Context</p><p class="j-text">Order history, installed machines and past contacts are reviewed.</p></li>
@@ -584,10 +600,10 @@ footer .container{padding-left:32px;}
           <li class="j-step is-human"><p class="j-kicker">Your team</p><p class="j-text">Your team approves the account and the wording before anything is sent.</p></li>
           <li class="j-step is-outcome"><p class="j-kicker">Outcome</p><p class="j-text">The customer’s need reaches your parts or service team, ready to quote.</p></li>
         </ol>
-      </div>
+      </details>
 
-      <div class="journey">
-        <div class="journey-head">
+      <details class="journey">
+        <summary class="journey-head">
           <div class="j-icon" style="background:var(--rose-tint)" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
           </div>
@@ -595,7 +611,7 @@ footer .container{padding-left:32px;}
             <p class="j-eyebrow" style="color:var(--rose)">Custom system · sales engineering</p>
             <h3 class="j-title">Quoting a technical requirement</h3>
           </div>
-        </div>
+        </summary>
         <ol class="j-track">
           <li class="j-step"><p class="j-kicker">Trigger</p><p class="j-text">A customer sends technical requirements by email.</p></li>
           <li class="j-step"><p class="j-kicker">Context</p><p class="j-text">Specifications, past quotes, supplier documents, and pricing rules are pulled together.</p></li>
@@ -603,9 +619,9 @@ footer .container{padding-left:32px;}
           <li class="j-step is-human"><p class="j-kicker">Your team</p><p class="j-text">An engineer checks the assumptions, adjusts, and approves.</p></li>
           <li class="j-step is-outcome"><p class="j-kicker">Outcome</p><p class="j-text">The proposal goes out and the CRM and quote record are updated.</p></li>
         </ol>
-      </div>
+      </details>
 
-      <p class="journey-note">What changes from company to company is the trigger, the context that matters and who signs off. That is exactly the part we design around how your business actually works.</p>
+      <p class="journey-note">These examples show possible workflows. Your forms, approval steps and available data determine what gets built.</p>
     </div>
   </section>
 
@@ -613,29 +629,29 @@ footer .container{padding-left:32px;}
     <div class="container">
       <div class="section-head grid-head reveal">
         <p class="eyebrow">How we work</p>
-        <h2 id="how-title">Built around your process, not around a demo</h2>
-        <p class="subtitle">The hard part is rarely the model. It's knowing which workflow is worth the effort, how the work really gets done, and where the information actually lives. That understanding is part of what we deliver.</p>
+        <h2 id="how-title">Start with one workflow your team can test</h2>
+        <p class="subtitle">Bring an existing form, report or customer follow-up process. Together, we define the steps, the people involved and what a useful result would look like.</p>
       </div>
       <div class="work-grid reveal">
         <div class="w-step">
           <div class="w-num" aria-hidden="true">1</div>
           <h3>Find the right workflow</h3>
-          <p>We look for work that happens often, costs skilled people hours, and has a clear finish line. One workflow, bounded, worth doing.</p>
+          <p>Choose a recurring task and agree on the result to measure: reporting time, manual re-entry or customer follow-up.</p>
         </div>
         <div class="w-step">
           <div class="w-num" aria-hidden="true">2</div>
-          <h3>Design it around the real thing</h3>
+          <h3>Use your actual process</h3>
           <p>We sit with the people who do the work today — the exceptions, the judgement calls, the steps nobody wrote down — and design around that.</p>
         </div>
         <div class="w-step">
           <div class="w-num" aria-hidden="true">3</div>
           <h3>Connect the systems</h3>
-          <p>Email, phone, documents, CRM, ERP, and internal knowledge. The workflow reads from where your information already lives and writes back to it.</p>
+          <p>Confirm which records are needed, how they can be accessed and which connections are feasible before agreeing on the build.</p>
         </div>
         <div class="w-step">
           <div class="w-num" aria-hidden="true">4</div>
           <h3>Deploy, measure, improve</h3>
-          <p>We put it in front of real work, watch what it gets wrong, and tighten it. Then we look at the next workflow with everything we learned.</p>
+          <p>Your team tests the workflow with real examples before rollout. Compare the results with the agreed measure, then decide what to improve next.</p>
         </div>
       </div>
     </div>
@@ -654,8 +670,8 @@ footer .container{padding-left:32px;}
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6"/><path d="M15 2v6"/><path d="M6 8h12v3a6 6 0 0 1-12 0V8z"/><path d="M12 17v5"/></svg>
           </div>
           <div>
-            <h3>Works with what you already run</h3>
-            <p>You don't need to replace the systems your team already uses. We connect to your CRM, ERP, phone system, inboxes, and shared drives.</p>
+            <h3>Start with your existing tools</h3>
+            <p>We review your CRM, ERP, inboxes and shared files, then agree which connections or imports the workflow needs.</p>
           </div>
         </div>
 
@@ -693,7 +709,7 @@ footer .container{padding-left:32px;}
         <p class="eyebrow">Who you’ll work with</p>
         <h2 id="about-title">You talk to the person who builds it.</h2>
         <p>MeetingScheduled is run by Eyal Taieb. Eyal builds business software and AI systems that run in production every day: a CRM, a multi-line calling system, voice agents and outreach tools.</p>
-        <p>Before building, he spent eight years in B2B sales and go-to-market. So the systems start from how your customers buy and how your team actually works, not from a demo.</p>
+        <p>Before building, he spent eight years in B2B sales and go-to-market. That experience shapes the work around how your customers buy and how your team operates.</p>
         <div class="direct"><a href="/field-service/">See the field service system <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener">Book a time with Eyal <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
       </div>
     </div>
@@ -702,7 +718,7 @@ footer .container{padding-left:32px;}
   <section class="section section-border-top bg-canvas" style="text-align:center;" aria-labelledby="cta-title">
     <div class="container">
       <h2 id="cta-title">Where does work slow down in your business?</h2>
-      <p class="subtitle" style="max-width:600px;margin-left:auto;margin-right:auto;">A report that takes days, customers nobody follows up with, a process that waits on one person. Tell us about it, and we’ll tell you whether it’s worth building and what it would take.</p>
+      <p class="subtitle" style="max-width:600px;margin-left:auto;margin-right:auto;">Walk us through one report or customer follow-up process. We’ll discuss where the work gets held up, whether a system could help and what a first version would involve.</p>
       <div class="btn-row" style="margin-top:32px;">
         <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-rose">Book a call</a>
         <a href="mailto:sales@meeting-scheduled.com" class="btn btn-secondary">Email us</a>
