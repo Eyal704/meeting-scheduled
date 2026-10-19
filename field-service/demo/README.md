@@ -51,3 +51,10 @@ The post-demo bridge explains adaptation to the visitor’s forms, calculations 
 Rationale: Sam’s supplied Direct Response cheatsheet and Setting up your funnel emphasize a specific audience, useful proof, a specific offer and a clear next action. The existing niche research and customer-language review guide the localized copy; no consulting benchmarks, new savings figures, client endorsements or integration promises were added. This is a messaging hypothesis, not measured conversion improvement.
 
 Verification: both demo pages at 320/390/768/1440 px, covering mobile layout, two-file upload against mocked transport, manual entry, return/resubmit, source record, reason-required amendments, approval gating, customer history, restart and optional repair quote. The actual lead endpoint is not submitted by QA.
+
+
+## Layout alignment pass — 19 October 2026
+
+Demo and overview players now share a centered 960 px desktop width. The mobile player keeps its full available width and independent 4:5 asset for readable on-screen text. The demo's prose and offer use a consistent reading column, aligned to the start of each language (right in Hebrew, left in English). Headlines and short navigation prompts remain centered. Captions, stage actions and form blocks are centered within their sections; the stage's working form/report is not scaled down.
+
+The overview introduction uses a smaller headline and tighter spacing. The redundant scroll-to-video control and repeated video-section headline are hidden; the actual player and its play control remain immediately available, along with the existing example description. Overview upload and FAQ sections are centered and aligned with their explanatory text. Media, offer terms and workflow logic are unchanged. QA covers all four pages at 320/390/768/1440 px, mocked upload, review workflow, playback/seek/rotation, plus WebKit mobile rendering.
