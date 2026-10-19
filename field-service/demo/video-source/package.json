@@ -2,9 +2,11 @@
   "name": "fire-inspection-walkthrough",
   "private": true,
   "scripts": {
-    "capture": "node capture.cjs",
-    "render:en": "remotion render src/index.tsx ReportEN ../walkthrough-render.mp4 --public-dir=public --codec=h264 --crf=21 --concurrency=3",
-    "render:he": "remotion render src/index.tsx ReportHE ../he/walkthrough-render.mp4 --public-dir=public --codec=h264 --crf=21 --concurrency=3"
+    "capture": "node capture-focus.cjs",
+    "render:en": "remotion render src/index.tsx ReportEN ../walkthrough-render.mp4 --public-dir=public --codec=h264 --crf=21 --concurrency=2",
+    "render:he": "remotion render src/index.tsx ReportHE ../he/walkthrough-render.mp4 --public-dir=public --codec=h264 --crf=21 --concurrency=2",
+    "render:en:mobile": "remotion render src/index.tsx ReportENMobile ../walkthrough-mobile-render.mp4 --public-dir=public --codec=h264 --crf=21 --concurrency=2",
+    "render:he:mobile": "remotion render src/index.tsx ReportHEMobile ../he/walkthrough-mobile-render.mp4 --public-dir=public --codec=h264 --crf=21 --concurrency=2"
   },
   "dependencies": {
     "remotion": "4.0.516",

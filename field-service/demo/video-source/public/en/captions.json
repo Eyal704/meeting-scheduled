@@ -1,85 +1,50 @@
 [
   {
-    "text": "Readings, photos and findings flow into a draft for review and approval.",
+    "text": "A close-up of the report draft in the demo.",
     "startMs": 0,
-    "endMs": 8000,
+    "endMs": 4000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "See field entries become a report draft for the office.",
-    "startMs": 8000,
+    "text": "Site details are ready. The technician adds fresh readings.",
+    "startMs": 4000,
+    "endMs": 10000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "The photo, location and finding stay with the inspection.",
+    "startMs": 10000,
     "endMs": 16000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "Previous readings are shown for comparison alongside the new entry fields.",
+    "text": "Readings, the photo and the finding are ready for office review.",
     "startMs": 16000,
-    "endMs": 25000,
+    "endMs": 22000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "The same values appear in the draft, without retyping them in the office.",
-    "startMs": 25000,
+    "text": "Missing a detail? Return the inspection for clarification.",
+    "startMs": 22000,
+    "endMs": 28000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "Approving the report does not close the deficiency.",
+    "startMs": 28000,
     "endMs": 34000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "The reviewer can see which finding the photo documents.",
+    "text": "Use the sample readings and see the report they produce.",
     "startMs": 34000,
-    "endMs": 43000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "The office checks the draft and resolves missing details before approval.",
-    "startMs": 43000,
-    "endMs": 50000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "Office amendments retain a reason and the previous values.",
-    "startMs": 50000,
-    "endMs": 59000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "The technician receives the note inside the same inspection.",
-    "startMs": 59000,
-    "endMs": 68000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "The office sees the updated entries and continues the review.",
-    "startMs": 68000,
-    "endMs": 77000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "Report approval does not close the deficiency. Its status stays visible.",
-    "startMs": 77000,
-    "endMs": 85000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "Open an earlier report to see what was inspected and what has changed.",
-    "startMs": 85000,
-    "endMs": 92000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "Send a form and sample report. Within 3 business days; complex forms get an agreed delivery date.",
-    "startMs": 92000,
-    "endMs": 100000,
+    "endMs": 40000,
     "timestampMs": null,
     "confidence": null
   }

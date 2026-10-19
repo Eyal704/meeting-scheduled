@@ -1,85 +1,50 @@
 [
   {
-    "text": "התוצאות, התמונות והממצאים מרוכזים בטיוטה לבקרה ולאישור.",
+    "text": "תקריב מתוך טיוטת הדוח בדמו.",
     "startMs": 0,
-    "endMs": 8000,
+    "endMs": 4000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "כאן תראו איך התיעוד בשטח הופך לטיוטת דוח במשרד.",
-    "startMs": 8000,
+    "text": "פרטי האתר כבר בטופס. הבודק מוסיף את המדידות.",
+    "startMs": 4000,
+    "endMs": 10000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "התמונה, המיקום והממצא נשמרים עם הבדיקה.",
+    "startMs": 10000,
     "endMs": 16000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "המדידות הקודמות מוצגות להשוואה, לצד שדות הבדיקה החדשה.",
+    "text": "הטיוטה מרכזת את התוצאות, התמונה והממצא לבדיקת המשרד.",
     "startMs": 16000,
-    "endMs": 25000,
+    "endMs": 22000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "אותם ערכים יופיעו בטיוטה, בלי להקליד אותם שוב במשרד.",
-    "startMs": 25000,
+    "text": "חסר פרט? אפשר להחזיר את הבדיקה להשלמה.",
+    "startMs": 22000,
+    "endMs": 28000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": "אישור הדוח אינו סוגר את הליקוי.",
+    "startMs": 28000,
     "endMs": 34000,
     "timestampMs": null,
     "confidence": null
   },
   {
-    "text": "מי שבודק את הדוח רואה לאיזה ממצא שייכת התמונה.",
+    "text": "אפשר להשתמש בנתוני דוגמה ולראות את הדוח שנבנה מהם.",
     "startMs": 34000,
-    "endMs": 43000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "במשרד עוברים על הדוח ומשלימים פרטים לפני האישור.",
-    "startMs": 43000,
-    "endMs": 50000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "שינוי במשרד נשמר עם סיבה ועם תיעוד הערכים הקודמים.",
-    "startMs": 50000,
-    "endMs": 59000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "הבודק מקבל את ההערה בתוך אותה בדיקה.",
-    "startMs": 59000,
-    "endMs": 68000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "במשרד רואים מה הושלם וממשיכים בבקרה.",
-    "startMs": 68000,
-    "endMs": 77000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "אישור הדוח אינו סוגר את הליקוי. מצב הטיפול מוצג בנפרד.",
-    "startMs": 77000,
-    "endMs": 85000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "אפשר לחזור לדוח קודם ולראות מה נבדק ומה השתנה.",
-    "startMs": 85000,
-    "endMs": 92000,
-    "timestampMs": null,
-    "confidence": null
-  },
-  {
-    "text": "שלחו טופס ודוח לדוגמה. בתוך 3 ימי עבודה; לטופס מורכב יתואם מועד מראש.",
-    "startMs": 92000,
-    "endMs": 100000,
+    "endMs": 40000,
     "timestampMs": null,
     "confidence": null
   }

@@ -2,3 +2,4 @@ node_modules
 public/**/*.png
 public/**/*.jpg
 public/**/shots.json
+public/**/focus-shots.json

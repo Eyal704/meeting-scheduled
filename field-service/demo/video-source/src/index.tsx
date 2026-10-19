@@ -1,17 +1,36 @@
 import React from 'react';
-import {AbsoluteFill,Composition,Img,interpolate,registerRoot,staticFile,useCurrentFrame} from 'remotion';
+import {AbsoluteFill,Composition,Img,interpolate,registerRoot,staticFile,useCurrentFrame,useVideoConfig} from 'remotion';
 import type {Caption} from '@remotion/captions';
 import enScenes from '../public/en/scenes.json';import heScenes from '../public/he/scenes.json';
-import enShots from '../public/en/shots.json';import heShots from '../public/he/shots.json';
+import enShots from '../public/en/focus-shots.json';import heShots from '../public/he/focus-shots.json';
 import enCaptions from '../public/en/captions.json';import heCaptions from '../public/he/captions.json';
-const rose='#be4662',ink='#252525',muted='#65656a';
-function Video({lang}:{lang:'en'|'he'}){const f=useCurrentFrame(),sec=f/30,rtl=lang==='he';const scenes=rtl?heScenes:enScenes;const shots=(rtl?heShots:enShots) as Record<string,{width:number;height:number}>;const scene=scenes.find(s=>sec>=s.start&&sec<s.end)||scenes.at(-1)!;const local=sec-scene.start;const fade=interpolate(local,[0,.22],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});const caption=((rtl?heCaptions:enCaptions) as Caption[]).find(c=>sec*1000>=c.startMs&&sec*1000<c.endMs);
-function shot(id:string,x:number,y:number,w:number,h:number){const s=shots[id];const scale=Math.min(w/s.width,h/s.height);const width=s.width*scale,height=s.height*scale;const left=x+(w-width)/2;return <Img key={id+x} src={staticFile(lang+'/'+id+'.png')} style={{position:'absolute',left:rtl?1920-left-width:left,top:y+(h-height)/2,width,height,borderRadius:14,boxShadow:'0 12px 42px #22222215'}}/>}
-const pair=scene.type==='pair';const phase=sec<43?0:sec<85?1:2;
-return <AbsoluteFill style={{background:'#f7f6f3',color:ink,fontFamily:'Arial, sans-serif',direction:rtl?'rtl':'ltr'}}>
-<div style={{position:'absolute',top:34,left:65,right:65,display:'flex',justifyContent:'space-between',alignItems:'center',borderBottom:'1px solid #dedbd6',paddingBottom:23}}><div style={{fontSize:22,fontWeight:700}}>{rtl?'דוחות בדיקה':'Inspection Reports'} <span style={{fontWeight:400,color:muted}}> / {rtl?'אייל טייב':'Eyal Taieb'}</span></div><div style={{display:'flex',gap:18,fontSize:18}}>{(rtl?['שטח','בקרה','דוח ללקוח']:['Field','Review','Customer report']).map((v,i)=><span key={v} style={{color:phase===i?rose:muted,fontWeight:phase===i?700:400}}>{i+1} · {v}</span>)}</div></div>
-<div style={{opacity:fade}}>
-{pair?<><div style={{position:'absolute',top:116,left:80,right:80,textAlign:'center'}}><h1 style={{fontSize:48,lineHeight:1.12,margin:0,whiteSpace:'pre-line'}}>{scene.title.replace('\n',' ')}</h1><p style={{fontSize:25,color:muted,margin:'14px 0'}}>{scene.sub}</p></div>{shot(scene.id,230,232,920,690)}{shot(scene.id==='report'?'approved':'review',1220,240,460,670)}</>:<><div style={{position:'absolute',...(rtl?{right:105}:{left:105}),top:scene.type==='end'?240:245,width:850}}><p style={{fontSize:20,fontWeight:700,color:rose,margin:'0 0 25px'}}>{scene.type==='end'?(rtl?'השלב הבא':'YOUR NEXT STEP'):(rtl?'הדגמה של תהליך אחד':'ONE INSPECTION WORKFLOW')}</p><h1 style={{fontSize:scene.type==='intro'||scene.type==='end'?66:59,lineHeight:1.13,whiteSpace:'pre-line',letterSpacing:rtl?0:-2,margin:0}}>{scene.title}</h1><p style={{fontSize:29,lineHeight:1.55,color:muted,marginTop:28,maxWidth:790}}>{scene.sub}</p>{scene.type==='end'&&<div style={{marginTop:30,fontSize:23,fontWeight:700,color:rose}}>{rtl?'ללא עלות · ללא התחייבות':'Free example · No obligation'}</div>}</div>{shot(scene.id,1050,145,760,770)}</>}
-</div><div style={{position:'absolute',left:80,right:80,bottom:48,borderTop:'1px solid #dedbd6',paddingTop:22,display:'flex',gap:40,justifyContent:'space-between',alignItems:'center'}}><div style={{fontSize:24,lineHeight:1.4,maxWidth:1430}}>{caption?.text}</div><div style={{fontSize:14,color:muted,maxWidth:210,lineHeight:1.4}}>{rtl?'הדגמה ערוכה · חברה ונתונים לדוגמה':'Edited walkthrough · Fictional company and sample data'}</div></div><div style={{position:'absolute',bottom:0,left:0,height:5,width:sec+'%',background:rose}}/>
-</AbsoluteFill>}
-registerRoot(()=> <><Composition id="ReportEN" component={Video} defaultProps={{lang:'en' as const}} durationInFrames={3000} fps={30} width={1920} height={1080}/><Composition id="ReportHE" component={Video} defaultProps={{lang:'he' as const}} durationInFrames={3000} fps={30} width={1920} height={1080}/></>);
+const ink='#242427',muted='#5a5a60',rose='#b74460';
+function Proof({lang,mobile}:{lang:'en'|'he';mobile:boolean}){
+ const frame=useCurrentFrame(),{fps,width,height}=useVideoConfig(),sec=frame/fps,rtl=lang==='he';
+ const scenes=rtl?heScenes:enScenes;const scene=scenes.find(s=>sec>=s.start&&sec<s.end)||scenes.at(-1)!;
+ const shots=(rtl?heShots:enShots) as Record<string,{width:number;height:number}>;
+ const caption=((rtl?heCaptions:enCaptions) as Caption[]).find(c=>sec*1000>=c.startMs&&sec*1000<c.endMs);
+ const local=sec-scene.start;const opacity=interpolate(local,[0,.18],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
+ // Real UI crops: one detail at a time, with equal scales in the two viewport layouts.
+ let id=scene.id;if(scene.start===16&&local>=3.3)id='focus-report-finding';if(scene.start===28&&local>=2.7)id='focus-ready';
+ const shot=shots[id];const maxW=mobile?952:900,maxH=mobile?610:690;
+ const scale=Math.min(maxW/shot.width,maxH/shot.height);const w=shot.width*scale,h=shot.height*scale;
+ const panelX=mobile?(width-w)/2:rtl?75:width-75-w;
+ const panelY=mobile?400+(610-h)/2:245+(690-h)/2;
+ const textStyle:React.CSSProperties=mobile?{left:62,right:62,top:138,textAlign:rtl?'right':'left'}:{...(rtl?{right:85}:{left:85}),width:790,top:285};
+ return <AbsoluteFill style={{background:'#f7f6f3',fontFamily:'Arial,sans-serif',color:ink,direction:rtl?'rtl':'ltr'}}>
+  <div style={{position:'absolute',top:mobile?46:42,left:mobile?62:75,right:mobile?62:75,display:'flex',alignItems:'center',justifyContent:'space-between',borderBottom:'2px solid #e0ded9',paddingBottom:24,fontSize:mobile?31:28,fontWeight:700}}><span>{rtl?'דוחות בדיקה':'Inspection Reports'}</span><span style={{fontSize:mobile?27:24,color:rose}}>{scene.label}</span></div>
+  <div style={{opacity}}>
+   <div style={{position:'absolute',...textStyle}}>
+    <h1 style={{fontSize:mobile?64:78,lineHeight:1.15,letterSpacing:rtl?0:-2,margin:0,fontWeight:700}}>{scene.title}</h1>
+    <p style={{fontSize:mobile?45:43,lineHeight:1.4,color:muted,margin:'23px 0 0'}}>{scene.sub}</p>
+   </div>
+   <Img key={id} src={staticFile(lang+'/'+id+'.png')} style={{position:'absolute',left:panelX,top:panelY,width:w,height:h,borderRadius:14,boxShadow:'0 10px 35px #24242714',outline:'2px solid #e0ded9'}}/>
+   {scene.start===28&&local<2.7&&<div style={{position:'absolute',left:panelX+w*.5,top:panelY+h*.55,width:50,height:50,borderRadius:'50%',border:'5px solid white',background:'#ffffff55',transform:`scale(${interpolate(local,[1.3,1.7,2],[1,1.5,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'})})`,opacity:local>1.3?1:0}}/>}
+  </div>
+  <div style={{position:'absolute',left:mobile?62:75,right:mobile?62:75,bottom:mobile?170:75,fontSize:mobile?44:36,lineHeight:1.35,color:muted,borderTop:'2px solid #e0ded9',paddingTop:22}}>{caption?.text}</div>
+  <div style={{position:'absolute',left:62,right:62,bottom:mobile?105:22,fontSize:mobile?27:22,color:'#77777b',textAlign:'center'}}>{rtl?'תקריבים מהדמו · בדיקה ונתונים להמחשה':'Demo close-ups · Sample inspection and data'}</div>
+  <div style={{position:'absolute',bottom:0,left:0,height:7,width:`${sec/40*100}%`,background:rose}}/>
+ </AbsoluteFill>
+}
+registerRoot(()=> <>{(['en','he'] as const).flatMap(lang=>[false,true].map(mobile=><Composition key={lang+mobile} id={'Report'+lang.toUpperCase()+(mobile?'Mobile':'')} component={Proof} defaultProps={{lang,mobile}} durationInFrames={1200} fps={30} width={mobile?1080:1920} height={mobile?1350:1080}/>))}</>);

@@ -1,110 +1,65 @@
 [
   {
     "start": 0,
-    "end": 8,
-    "type": "intro",
-    "id": "draft",
-    "title": "Inspection reports,\nready for review.",
-    "sub": "Without retyping your field notes.",
-    "caption": "Readings, photos and findings flow into a draft for review and approval."
+    "end": 4,
+    "id": "focus-values",
+    "label": "THE RESULT",
+    "title": "The data is in the report.",
+    "sub": "No retyping in the office.",
+    "caption": "A close-up of the report draft in the demo."
   },
   {
-    "start": 8,
+    "start": 4,
+    "end": 10,
+    "id": "focus-readings",
+    "label": "1 · IN THE FIELD",
+    "title": "Enter the readings once.",
+    "sub": "Record this inspection’s results.",
+    "caption": "Site details are ready. The technician adds fresh readings."
+  },
+  {
+    "start": 10,
     "end": 16,
-    "type": "intro",
-    "id": "draft",
-    "title": "The inspection is done.\nIs the report still waiting?",
-    "sub": "The readings are recorded. The photo is taken. Someone still has to assemble the report.",
-    "caption": "See field entries become a report draft for the office."
+    "id": "focus-finding",
+    "label": "1 · IN THE FIELD",
+    "title": "The photo has context.",
+    "sub": "Painted sprinkler. Room 214.",
+    "caption": "The photo, location and finding stay with the inspection."
   },
   {
     "start": 16,
-    "end": 25,
-    "type": "phone",
-    "id": "prefilled",
-    "title": "Site details are ready.\nAdd this inspection’s results.",
-    "sub": "Open the site and system, then record the new readings.",
-    "caption": "Previous readings are shown for comparison alongside the new entry fields."
+    "end": 22,
+    "id": "focus-values",
+    "label": "2 · IN THE REPORT",
+    "title": "Same readings. In the report.",
+    "sub": "Field entries become a draft.",
+    "caption": "Readings, the photo and the finding are ready for office review."
   },
   {
-    "start": 25,
+    "start": 22,
+    "end": 28,
+    "id": "focus-source",
+    "label": "3 · REVIEW",
+    "title": "Check the source record.",
+    "sub": "See what the technician submitted.",
+    "caption": "Missing a detail? Return the inspection for clarification."
+  },
+  {
+    "start": 28,
     "end": 34,
-    "type": "phone",
-    "id": "readings",
-    "title": "Record it in the field.\nCarry it into the report.",
-    "sub": "The technician enters the waterflow alarm time and main drain readings.",
-    "caption": "The same values appear in the draft, without retyping them in the office."
+    "id": "focus-approve",
+    "label": "3 · APPROVAL",
+    "title": "Approval stays with you.",
+    "sub": "Reviewed first. Then released.",
+    "caption": "Approving the report does not close the deficiency."
   },
   {
     "start": 34,
-    "end": 43,
-    "type": "phone",
-    "id": "finding",
-    "title": "The photo comes\nwith the finding and location.",
-    "sub": "A painted sprinkler in Room 214. The photo and note stay with the inspection.",
-    "caption": "The reviewer can see which finding the photo documents."
-  },
-  {
-    "start": 43,
-    "end": 50,
-    "type": "pair",
-    "id": "draft",
-    "title": "The data is in the draft.\nReview can begin.",
-    "sub": "Readings, findings and photos appear together in the report.",
-    "caption": "The office checks the draft and resolves missing details before approval."
-  },
-  {
-    "start": 50,
-    "end": 59,
-    "type": "dialog",
-    "id": "source",
-    "title": "Check each entry\nagainst the field record.",
-    "sub": "Open the submitted record and compare it with the draft.",
-    "caption": "Office amendments retain a reason and the previous values."
-  },
-  {
-    "start": 59,
-    "end": 68,
-    "type": "review",
-    "id": "request",
-    "title": "A detail is missing?\nKeep the request with the job.",
-    "sub": "The reviewer asks for the sprinkler location within Room 214.",
-    "caption": "The technician receives the note inside the same inspection."
-  },
-  {
-    "start": 68,
-    "end": 77,
-    "type": "phone",
-    "id": "returned",
-    "title": "Complete the detail.\nUpdate the report.",
-    "sub": "The technician adds the location and resubmits the inspection.",
-    "caption": "The office sees the updated entries and continues the review."
-  },
-  {
-    "start": 77,
-    "end": 85,
-    "type": "pair",
-    "id": "report",
-    "title": "Approved for release.\nReady for the customer.",
-    "sub": "The report includes the inspection results and the outstanding deficiency.",
-    "caption": "Report approval does not close the deficiency. Its status stays visible."
-  },
-  {
-    "start": 85,
-    "end": 92,
-    "type": "history",
-    "id": "history",
-    "title": "Start the next visit\nwith the history at hand.",
-    "sub": "The current report and previous inspections stay with the same site.",
-    "caption": "Open an earlier report to see what was inspected and what has changed."
-  },
-  {
-    "start": 92,
-    "end": 100,
-    "type": "end",
-    "id": "report",
-    "title": "See it work\nwith your own report.",
-    "sub": "Get a mobile form and the report draft it produces.",
-    "caption": "Send a form and sample report. Within 3 business days; complex forms get an agreed delivery date."
+    "end": 40,
+    "id": "focus-ready",
+    "label": "TRY IT YOURSELF",
+    "title": "Now try the same inspection.",
+    "sub": "Open the interactive demo.",
+    "caption": "Use the sample readings and see the report they produce."
   }
 ]
