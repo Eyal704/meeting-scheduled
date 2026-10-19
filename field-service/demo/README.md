@@ -1,7 +1,7 @@
 # Inspection reporting demo — revised 19 October 2026
 
 English: `/field-service/demo/`. Hebrew: `/field-service/demo/he/`.
-Both overview pages embed the corresponding 40-second close-up walkthrough. Videos are intentionally silent, with on-screen explanations, optional VTT captions and a complete text transcript on the demo page.
+Both overview pages embed the corresponding 40-second close-up walkthrough. Videos include the user-approved original instrumental soundtrack at a quiet background level. On-screen explanations, optional VTT captions and the demo-page transcript keep the walkthrough understandable when muted. Playback starts only after a user gesture; native controls provide volume and mute.
 
 ## Workflow
 
@@ -19,7 +19,7 @@ The shared source for BOTH languages is `video-source/`. Do not render the forme
 2. In `field-service/demo/video-source/`: `npm ci` and, if necessary, `npx playwright install chromium`.
 3. `BASE_URL=http://127.0.0.1:8772 npm run capture` captures the current interactive screens for both languages.
 4. `npm run render:en`, `npm run render:he`, `npm run render:en:mobile` and `npm run render:he:mobile` render the four intermediate MP4s.
-5. Use FFmpeg with `-c:v copy -an -movflags +faststart` to write each intermediate as `walkthrough.mp4` (desktop) or `walkthrough-mobile.mp4` (mobile) in its language directory. Extract the 1.5-second frame as `walkthrough-poster.jpg` or `walkthrough-mobile-poster.jpg`.
+5. Mux each intermediate with the approved `video-source/audio/warm-progress.mp3`: `ffmpeg -i INPUT.mp4 -i AUDIO.mp3 -t 40 -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 192k -movflags +faststart OUTPUT.mp4`. Write `walkthrough.mp4` (desktop) or `walkthrough-mobile.mp4` (mobile) in its language directory. Extract the 1.5-second frame as `walkthrough-poster.jpg` or `walkthrough-mobile-poster.jpg`.
 
 Scene timing and copy: `video-source/public/{en,he}/scenes.json`. Caption data: `video-source/public/{en,he}/captions.json`. Keep the VTT tracks and the HTML transcripts in sync when editing. Generated screenshots and shot dimensions are ignored; reproduce them using the capture script. Dependencies are pinned in the existing lockfile.
 
@@ -34,3 +34,7 @@ The short, ungated video comes before the interactive example. It introduces the
 Desktop video: 1920×1080. Mobile video: 1080×1350, independently composed at 4:5. These are not automatic crops of the wide video. `capture-focus.cjs` captures actual responsive UI elements at a 390 px viewport and 3× device pixel ratio. The inspection table's two reading rows are cropped together; no values are fabricated for the video. Pressure comparisons remain in the report note/review area rather than competing with the core readings in the table.
 
 `/field-service/video-player.js` selects the corresponding source and poster at 700 px, preserves position when the viewport changes, and starts playback only after a user gesture. Native source media queries and controls provide fallback behavior. Mobile form labels, readings and report rows use larger text, and the office queue is hidden so the report appears first.
+
+## Approved soundtrack
+
+`video-source/audio/warm-progress.mp3` is the approved 40-second original instrumental, used identically in both languages and both aspect ratios. Its source composition is `audio/compose.py` (Python + NumPy); normalize the generated WAV with FFmpeg `loudnorm=I=-24:TP=-6:LRA=7`, 44.1 kHz, MP3 192 kbps to reproduce the approved audio asset. There is no voiceover or notification/compliance-success sound. The initial mix measured approximately -24.5 LUFS with a gentle ending. The soundtrack update preserves all four compressed video streams byte for byte.
