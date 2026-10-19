@@ -38,3 +38,16 @@ Desktop video: 1920×1080. Mobile video: 1080×1350, independently composed at 4
 ## Approved soundtrack
 
 `video-source/audio/warm-progress.mp3` is the approved 40-second original instrumental, used identically in both languages and both aspect ratios. Its source composition is `audio/compose.py` (Python + NumPy); normalize the generated WAV with FFmpeg `loudnorm=I=-24:TP=-6:LRA=7`, 44.1 kHz, MP3 192 kbps to reproduce the approved audio asset. There is no voiceover or notification/compliance-success sound. The initial mix measured approximately -24.5 LUFS with a gentle ending. The soundtrack update preserves all four compressed video streams byte for byte.
+
+
+## LinkedIn demo-entry copy review — 19 October 2026
+
+Both Featured cards promise a hands-on sprinkler example. Preserve these demo URLs and that example; do not redirect them to the overview. The opening now states the reporting outcome and avoided retyping before explaining the mechanics. Video playback remains optional, with a secondary skip-to-demo link. The approved 40-second video and soundtrack files are unchanged.
+
+Three short benefits connect the video to the live workflow: field entry once, human review, and report history. The sample-data button explicitly describes filling sample readings and opening a draft. Review guidance asks the visitor to compare the source and resolve missing details before approval. The amendment dialog now shows localized field labels and before/after values (including finding/status/note edits) instead of JSON keys; source preservation and approval gating are unchanged.
+
+The post-demo bridge explains adaptation to the visitor’s forms, calculations and review process. The one-form offer states what to send, what they receive, the existing delivery terms and the separate scope of a production system. Three compact FAQs address other inspection types, existing systems and the next step. The Hebrew conversation link now uses the same concise WhatsApp wording as the overview. The scoped stylesheet is `demo-funnel.css`; it does not affect the overview pages.
+
+Rationale: Sam’s supplied Direct Response cheatsheet and Setting up your funnel emphasize a specific audience, useful proof, a specific offer and a clear next action. The existing niche research and customer-language review guide the localized copy; no consulting benchmarks, new savings figures, client endorsements or integration promises were added. This is a messaging hypothesis, not measured conversion improvement.
+
+Verification: both demo pages at 320/390/768/1440 px, covering mobile layout, two-file upload against mocked transport, manual entry, return/resubmit, source record, reason-required amendments, approval gating, customer history, restart and optional repair quote. The actual lead endpoint is not submitted by QA.
