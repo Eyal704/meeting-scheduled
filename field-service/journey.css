@@ -1,0 +1,49 @@
+/* A shared, accessible watch → try hierarchy for both languages and entry pages. */
+:root{--journey-accent:#97364f;--journey-hover:#7e2b41;--journey-tint:#fbf3f5}
+.journey-heading{display:flex;justify-content:center;align-items:center;gap:12px;margin:0 auto 14px;text-align:start}
+.journey-heading .journey-badge{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex-shrink:0;border-radius:999px;padding:7px 13px;background:var(--journey-accent);color:white;font-size:13px;font-weight:700;white-space:nowrap}
+.watch-heading .journey-heading h2,.journey-heading h2,.intro .journey-heading h2{display:block;font-size:21px;line-height:1.4;margin:0;letter-spacing:0}
+.watch-heading>p{margin:0}
+.video-shell{border-color:#e8d0d7;background:var(--journey-tint);box-shadow:0 12px 36px #97364f0d}
+.video-cover[hidden]{display:none!important}
+.video-cover{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:30px;background:var(--journey-tint)}
+.preview-heading{text-align:center}
+.preview-heading .preview-kicker{display:block;color:var(--journey-accent);font-size:13px;font-weight:600;margin-bottom:8px}
+.preview-heading>strong{display:block;font-size:clamp(23px,3vw,34px);line-height:1.25;color:#1c1c1e}
+.preview-report{width:100%;max-width:610px;background:white;border:1px solid #e4d6da;border-radius:12px;box-shadow:0 8px 24px #54243209;text-align:start;overflow:hidden}
+.preview-report-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #ece3e6;font-size:16px}
+.preview-report-top>span{color:var(--journey-accent);background:var(--journey-tint);border-radius:5px;padding:3px 8px;font-size:12px}
+.preview-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #f1ebed;font-size:18px;line-height:1.5}
+.preview-row b{white-space:nowrap;color:#1c1c1e}
+.preview-report-note{padding:10px 20px;color:#66616a;font-size:12px}
+.video-cover .video-play{position:static;display:inline-flex;align-items:center;justify-content:center;gap:12px;border:0;border-radius:12px;padding:12px 22px;background:var(--journey-accent);color:white;font:inherit;font-size:17px;line-height:1.3;font-weight:600;cursor:pointer;box-shadow:0 5px 16px #97364f22}
+.video-cover .video-play small{display:block;font-size:12px;font-weight:400;margin-top:3px}
+.play-symbol{font-family:Arial,sans-serif;font-size:22px}
+.video-cover .video-play:hover,.watch-links .btn-rose:hover{background:var(--journey-hover);color:white}
+.video-cover .video-play:focus-visible,.watch-links .btn-rose:focus-visible{outline:3px solid var(--journey-accent);outline-offset:5px}
+.watch-links{flex-direction:column;gap:12px;padding:28px 24px;background:var(--journey-tint);border:1px solid #ead7dd;border-radius:16px}
+.watch-links .journey-heading{margin:0}
+.watch-links .journey-hint{font-size:15px;line-height:1.6;color:#5c555c;margin:0;text-align:center}
+.watch-links .btn-rose{background:var(--journey-accent);color:white;min-height:48px;height:auto;padding:13px 24px;border:0;white-space:normal;text-align:center}
+.intro .journey-heading{margin-bottom:12px}
+@media(max-width:700px){
+ .journey-heading{gap:9px;margin-bottom:10px}
+ .watch-heading .journey-heading h2,.journey-heading h2,.intro .journey-heading h2{font-size:18px}
+ .journey-heading .journey-badge{font-size:12px;padding:6px 10px}
+ .video-cover{padding:20px 14px;gap:22px}
+ .preview-heading>strong{font-size:25px}
+ .preview-heading .preview-kicker{font-size:12px}
+ .preview-report-top{padding:12px;font-size:14px}
+ .preview-row{padding:15px 12px;font-size:15px;gap:8px}
+ .preview-report-note{padding:10px 12px;font-size:10px}
+ .video-cover .video-play{font-size:16px;padding:11px 20px}
+ .watch-links{padding:22px 16px}
+ .watch-links .journey-hint{font-size:14px}
+}
+@media(max-width:360px){
+ .video-cover{gap:14px;padding:14px 10px}
+ .preview-heading>strong{font-size:22px}
+ .preview-row{font-size:13px;padding:12px 10px}
+ .preview-report-top{font-size:12px}
+ .watch-heading .journey-heading h2{font-size:16px}
+}

@@ -34,10 +34,25 @@
     choose();
     query.addEventListener('change', choose);
     var play = video.parentElement.querySelector('.video-play');
+    var cover = video.parentElement.querySelector('.video-cover');
+    if (cover) {
+      cover.hidden = false;
+      video.controls = false;
+    }
     if (play) {
       play.addEventListener('click', function () { video.play().catch(function () {}); });
-      video.addEventListener('play', function () { play.hidden = true; });
-      video.addEventListener('ended', function () { play.hidden = false; });
+      video.addEventListener('play', function () {
+        play.hidden = true;
+        if (cover) cover.hidden = true;
+        video.controls = true;
+      });
+      video.addEventListener('ended', function () {
+        play.hidden = false;
+        if (cover) {
+          cover.hidden = false;
+          video.controls = false;
+        }
+      });
     }
     document.querySelectorAll('[data-play-video="' + video.id + '"]').forEach(function (link) {
       link.addEventListener('click', function () { video.play().catch(function () {}); });
