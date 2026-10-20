@@ -47,3 +47,13 @@
  .preview-report-top{font-size:12px}
  .watch-heading .journey-heading h2{font-size:16px}
 }
+
+/* Compact founder identity beneath the landing-page introduction. */
+.hero-person{display:flex;align-items:center;justify-content:center;gap:12px;max-width:680px;margin:20px auto 0;text-align:start}
+.hero-person img{display:block;width:52px;height:52px;flex:0 0 52px;border-radius:50%;object-fit:cover;object-position:center 18%;border:1px solid #e4d6da}
+.hero-person strong{display:block;font-size:14px;font-weight:600;line-height:1.5;color:var(--ink)}
+.hero-person span{display:block;font-size:13px;line-height:1.5;color:#646068}
+@media(max-width:700px){.hero-person{margin-top:16px;gap:10px}.hero-person span{font-size:12px}.hero-person>div{max-width:270px}}
+
+.hero-person .hero-avatar{display:block;width:52px;height:52px;flex:0 0 52px;overflow:hidden;border-radius:50%;border:1px solid #e4d6da}
+.hero-person .hero-avatar img{border:0;border-radius:0;transform:scale(1.6);transform-origin:50% 24%}
