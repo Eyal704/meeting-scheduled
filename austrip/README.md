@@ -12,7 +12,7 @@ Hebrew RTL, responsive static redesign requested by Eyal Taieb on 21 October 202
 - Original WordPress forms are linked on the original domain because their backend/CSRF handling belongs to Austrip. No form data is collected, stored, or sent by this static redesign. No simulated success messages.
 - 31 native expandable FAQ items, preserved in-page anchors, and full schedule graphics with links to full-size images. Schedules are a snapshot dated 21 October 2026; each schedule page links to the live original.
 - The no-entry-to-Hallstatt condition is highlighted both on the lakes page and before its booking handoff. Prices identify their source and are not live availability claims.
-- No analytics, tracking pixels, backend keys, or payment code. `noindex,nofollow` prevents duplicate indexing of this demonstration under Meeting Scheduled.
+- No analytics, tracking pixels, backend keys, or payment code. `noindex,follow,max-image-preview:large` prevents duplicate indexing of this demonstration under Meeting Scheduled.
 
 ## Files and rebuild
 
@@ -33,3 +33,12 @@ Serve from the repository root, not the austrip subdirectory, since links use `/
 - Browser checks: city filter returns three Bratislava experiences; empty results and reset; booking selection and actual Checkfront destination; mobile menu navigation; FAQ expansion; schedule images.
 - 390px mobile checks show no document-level horizontal overflow for home, tour detail, FAQ, and schedule.
 - No bookings, payments, forms, or messages were submitted during testing.
+
+
+## SEO and social sharing (21 October 2026)
+
+All 59 generated pages have a unique title and non-empty, unique description; full Open Graph and Twitter Card metadata; Hebrew locale; absolute HTTPS sharing URLs; and valid WebPage/WebSite/Organization/BreadcrumbList JSON-LD. Source-copy canonicals point to their corresponding original austrip.co.il pages. New preview-only navigation pages use self canonicals.
+
+The Meeting Scheduled preview intentionally remains `noindex` and is not added to the production sitemap. This is a design preview, not an SEO migration or a replacement of the original domain. No changes were made to austrip.co.il, its WordPress settings, robots.txt, sitemap, or Search Console. On a future production migration, metadata URLs, canonicals, indexing rules and sitemaps must be rebuilt for the actual deployment domain.
+
+The social image is `/austrip/assets/austrip-share-v1.jpg`: 1200×630 JPEG, authored in `_source/share-card.html` and rendered in a browser. Its branding, logo and original landscape photography come from Austrip. Do not overwrite this URL when changing the card; bump its version to reduce stale social-preview caches. Platform-specific cache refreshes or live WhatsApp/Facebook previews were not submitted/tested.
