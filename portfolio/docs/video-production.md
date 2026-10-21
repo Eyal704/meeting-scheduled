@@ -46,3 +46,9 @@ Validation covers caption word retention, rendered frames, complete video/audio 
 Revision 2 shortens the opening to one second, gives the standalone Voice Agent a two-second introduction and persistent large title, and replaces the previous music with a quieter ambient bed. Narration remains unchanged; subtitle timings are realigned to the revised edit. The PDF links directly to this revised reel.
 
 This credit is displayed on the closing frame and included in the MP4 metadata, linked transcript and download package. The homepage does not display a separate music-credit line. Include it in the description when reposting the reel, including on YouTube.
+
+## Portrait refresh — 21 October 2026
+
+The current overview is `eyal-90-seconds-v3.mp4`. The supplied green-jacket portrait replaces the old portrait at 0–1 seconds and 86–90 seconds. The original audio stream, captions, timing and product footage are preserved. The poster and social preview use the revised opening frame. The four full product walkthroughs contain screen recordings and have no separate portrait panels to replace.
+
+Recreate with `node portfolio/scripts/refresh-reel-portrait.mjs /path/to/new-portrait.jpg`, then regenerate the downloadable portfolio with `npm run build:pdf --workspace=portfolio` and the site with `npm run build:pages --workspace=portfolio`. Copy `portfolio/out/` into `eyal/` for publication. Source PDFs used for job applications are separate from this portfolio refresh.

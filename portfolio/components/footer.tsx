@@ -39,7 +39,7 @@ export function Footer({ locale }: { locale: Locale }) {
             </a>
             <a
               className="text-link"
-              href="https://www.linkedin.com/in/eyalshoval/"
+              href="https://www.linkedin.com/in/eyaltaieb/"
               target="_blank"
               rel="noopener noreferrer"
             >

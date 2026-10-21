@@ -23,7 +23,7 @@ export const watchVideos = [
       "Watch Eyal Taieb’s AI outbound system, voice agent, calling app and CRM workflows in action. Real product footage, English subtitles and commercial evidence.",
     src: workReel.src,
     poster: workReel.poster,
-    image: "/social/eyal-90-seconds.jpg",
+    image: "/social/eyal-90-seconds-v3.jpg",
     duration: "1:30",
     href: "/#projects",
     linkLabel: "Explore all projects",
