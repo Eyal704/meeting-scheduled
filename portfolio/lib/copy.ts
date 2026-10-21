@@ -20,7 +20,7 @@ export const copy = {
     heroTitle: "I build and deploy AI systems that connect business workflows",
     heroAccent: "to revenue.",
     heroDescription:
-      "Outbound platforms, voice agents, calling systems and CRM workflows: designed, built and deployed in production, with a clear link to commercial outcomes.",
+      "I know how to make the phone ring and generate consistent replies to email campaigns—and I build systems that make those results repeatable.",
     overviewTitle: "90-Second Overview",
     overviewCaption: "90 seconds of product demos, with English subtitles.",
     watchOverview: "Watch the 90-second overview",
