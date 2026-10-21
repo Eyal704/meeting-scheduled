@@ -20,10 +20,10 @@ export const watchVideos = [
     title: "90 Seconds of My Work",
     subtitle: "AI Deployment & GTM Builder",
     description:
-      "Watch Eyal Taieb’s AI outbound system, voice agent, calling app and CRM workflows in action. Real product footage, English subtitles and commercial evidence.",
+      "See how AI research, relevant emails, faster lead responses and connected follow-up can reduce manual work and support more sales conversations. Real product footage, original narration and English subtitles.",
     src: workReel.src,
     poster: workReel.poster,
-    image: "/social/eyal-90-seconds-v3.jpg",
+    image: "/social/eyal-90-seconds-v4.jpg",
     duration: "1:30",
     href: "/#projects",
     linkLabel: "Explore all projects",

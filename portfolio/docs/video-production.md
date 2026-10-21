@@ -52,3 +52,13 @@ This credit is displayed on the closing frame and included in the MP4 metadata, 
 The current overview is `eyal-90-seconds-v3.mp4`. The supplied green-jacket portrait replaces the old portrait at 0–1 seconds and 86–90 seconds. The original audio stream, captions, timing and product footage are preserved. The poster and social preview use the revised opening frame. The four full product walkthroughs contain screen recordings and have no separate portrait panels to replace.
 
 Recreate with `node portfolio/scripts/refresh-reel-portrait.mjs /path/to/new-portrait.jpg`, then regenerate the downloadable portfolio with `npm run build:pdf --workspace=portfolio` and the site with `npm run build:pages --workspace=portfolio`. Copy `portfolio/out/` into `eyal/` for publication. Source PDFs used for job applications are separate from this portfolio refresh.
+
+## Benefit-led overview — revision 4
+
+The active overview is `eyal-90-seconds-v4.mp4`, with its own poster and social card. It remains exactly 90 seconds / 2,700 frames. The opening lasts four seconds and introduces the value: more replies, more calls and less manual work. Each product section now leads with a business benefit, supported by the original product recording. The closing invites viewers to build a repeatable sales system.
+
+The original narration is retained and shifted three seconds to accommodate the opening. Downloadable captions and transcript timestamps match that shift. Historical commercial evidence remains explicitly separate from the AI project results. The four complete walkthroughs are still available unchanged.
+
+`portfolio/scripts/rebuild-benefit-overview.py` is the reproducible edit. It takes the revision-3 overview, the original normalized speech stem, and the licensed music source as explicit arguments. It checks text widths, assembles integer-frame segments, keeps speech samples unchanged, and produces an edit/audio report. Local master and QA: `output/video/benefit-overview-v4/`. Music is normalized to -18 LUFS before mixing, reduced to 0.16 gain beneath narration and raised to 0.50 during title/closing segments, with fades. Final mixed sample peak is approximately -1.11 dBFS without scaling the speech stem.
+
+Music: “Cylinder Seven” by Chris Zabriskie, from *Cylinders*, CC BY 4.0. License reverified 21 October 2026 at https://chriszabriskie.com/use/. The 30–120 second excerpt is trimmed, faded and mixed under speech; credit appears in the video, metadata and transcript.

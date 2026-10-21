@@ -24,7 +24,7 @@ export const projects: Project[] = [
     name: "MeetingScheduled",
     subtitle: "AI Outbound Operating System",
     description:
-      "An AI-powered outbound system that identifies relevant companies and decision-makers, researches prospects, generates signals and personalized outreach, and manages a complete outbound cadence.",
+      "Spend less time researching prospects and give each person a relevant reason to reply. Company research, decision-maker discovery and personalized outreach connect in one repeatable workflow.",
     tags: ["AI research", "Outbound", "Workflow automation"],
     media: "meetingscheduled",
     duration: "4:01",
@@ -58,7 +58,7 @@ export const projects: Project[] = [
     name: "AI Voice Agent",
     subtitle: "Inbound & Outbound Calling",
     description:
-      "A production voice workflow that handles inbound calls, qualifies leads, answers questions, books meetings and can automatically call new leads generated through a website.",
+      "Respond to enquiries while interest is fresh and help callers when your team is busy. The voice agent follows up with website leads, answers questions, qualifies enquiries and books meetings.",
     tags: ["Voice AI", "Lead qualification", "Meeting booking"],
     media: "voice-agent",
     duration: "1:47",
@@ -92,7 +92,7 @@ export const projects: Project[] = [
     name: "Speed Dialer",
     subtitle: "Multi-Line Outbound Calling",
     description:
-      "A calling system connected to multiple phone numbers with lead queues, dialing workflows, call-status tracking and structured follow-up.",
+      "Spend less time switching tools and more time on conversations. Call, email or WhatsApp with company context, then use call history and recordings to prepare your follow-up.",
     tags: ["Calling systems", "Lead queues", "Sales operations"],
     media: "speed-dialer",
     duration: "1:49",
@@ -127,7 +127,7 @@ export const projects: Project[] = [
     name: "CRM & Revenue Systems",
     subtitle: "From Workflow to Revenue",
     description:
-      "Custom CRM and sales workflows connecting prospecting, calling, follow-up, pipeline management and reporting.",
+      "Keep the context from each sales conversation. Connected prospecting, call recordings, transcripts and pipeline workflows help you review what happened and prepare the next action.",
     tags: ["CRM", "Pipeline management", "Revenue operations"],
     media: "crm",
     duration: "0:48",
@@ -286,6 +286,6 @@ export const evidence: Evidence[] = [
 
 // Edited from the supplied product recordings, with matching English subtitles.
 export const workReel = {
-  src: "/media/eyal-90-seconds-v3.mp4",
-  poster: "/media/eyal-90-seconds-v3-poster.webp",
+  src: "/media/eyal-90-seconds-v4.mp4",
+  poster: "/media/eyal-90-seconds-v4-poster.webp",
 };

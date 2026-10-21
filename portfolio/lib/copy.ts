@@ -22,7 +22,7 @@ export const copy = {
     heroDescription:
       "I know how to make the phone ring and generate consistent replies to email campaigns—and I build systems that make those results repeatable.",
     overviewTitle: "90-Second Overview",
-    overviewCaption: "90 seconds of product demos, with English subtitles.",
+    overviewCaption: "90 seconds on the business benefits: relevant outreach, faster responses and easier follow-up. Original narration, English subtitles and music.",
     watchOverview: "Watch the 90-second overview",
     viewProjects: "View projects",
     portraitAlt: "Eyal Taieb, AI Deployment and GTM Builder",
@@ -42,7 +42,7 @@ export const copy = {
     reelTitle: "A 90-second",
     reelTitle2: "product overview",
     reelText:
-      "AI outbound, voice agents, calling systems and connected revenue workflows.",
+      "See what each system does for your business: less manual research, more relevant outreach, faster responses and follow-up with the full context.",
     reelDialogTitle: "90-Second Product Overview",
     reelCaption:
       "A 90-second edit of product demos, with English subtitles and commercial evidence.",
