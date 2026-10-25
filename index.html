@@ -23,6 +23,9 @@
 
 <link rel="icon" type="image/svg+xml" href="/logo.svg">
 <link rel="canonical" href="https://www.meeting-scheduled.com">
+<link rel="alternate" hreflang="en" href="https://www.meeting-scheduled.com/">
+<link rel="alternate" hreflang="he" href="https://www.meeting-scheduled.com/he/">
+<link rel="alternate" hreflang="x-default" href="https://www.meeting-scheduled.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -376,6 +379,10 @@ footer .container{padding-left:32px;}
   html{scroll-behavior:auto;}
   *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
 }
+
+/* Language switch */
+.lang-switch{display:inline-flex;align-items:center;gap:6px;height:48px;padding:0 10px;font-size:14px;font-weight:600;color:var(--muted);border-radius:10px;}
+.lang-switch:hover{color:var(--rose);}
 </style>
 </head>
 <body>
@@ -407,6 +414,7 @@ footer .container{padding-left:32px;}
       <a href="#about">About</a>
     </nav>
     <div class="nav-actions">
+      <a href="/he/" class="nav-login" lang="he" hreflang="he">עברית</a>
       <a href="https://reach.meeting-scheduled.com" class="nav-login">Login</a>
       <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-rose btn-sm">Let’s talk</a>
     </div>
@@ -428,6 +436,7 @@ footer .container{padding-left:32px;}
       <a href="#workflow-examples">Examples</a>
       <a href="#how-we-work">How It Works</a>
       <a href="#about">About</a>
+      <a href="/he/" lang="he" hreflang="he">עברית</a>
       <a href="https://reach.meeting-scheduled.com">Login</a>
       <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-rose">Let’s talk</a>
     </div>
@@ -481,6 +490,7 @@ footer .container{padding-left:32px;}
       <div class="btn-row">
         <a href="#solutions" class="btn btn-rose">See the solutions</a>
         <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-secondary">Let’s talk</a>
+        <a href="/he/" class="lang-switch" lang="he" hreflang="he"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>עברית</a>
       </div>
       <p class="domain-line">Field service reports · Aftermarket revenue recovery · Custom systems</p>
     </div>
@@ -758,6 +768,7 @@ footer .container{padding-left:32px;}
         <p class="footer-col-title">Legal</p>
         <a href="/privacy">Privacy Policy</a>
         <a href="/terms.html">Terms of Service</a>
+        <a href="/he/" lang="he" hreflang="he">עברית</a>
       </div>
     </div>
   </div>

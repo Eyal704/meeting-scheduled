@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MeetingScheduled | מערכות לחברות שמחזיקות ציוד בפעולה</title>
+<meta name="description" content="תוכנה לחברות בדיקה ושירות, ליצרני מכונות ולמפיצים. דוחות שטח מוכנים לאישור, ומעקב אחרי לקוחות חלפים ושירות שהפסיקו להזמין.">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MeetingScheduled">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="MeetingScheduled | מערכות לחברות שמחזיקות ציוד בפעולה">
+<meta property="og:description" content="פחות זמן על דוחות. פחות מעקבים שמתפספסים. מערכות לדוחות שטח ולמעקב אחרי לקוחות חלפים ושירות.">
+<meta property="og:url" content="https://www.meeting-scheduled.com/he/">
+<meta property="og:image" content="https://www.meeting-scheduled.com/og-home.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MeetingScheduled | מערכות לחברות שמחזיקות ציוד בפעולה">
+<meta name="twitter:description" content="פחות זמן על דוחות. פחות מעקבים שמתפספסים. מערכות שנבנות סביב הטפסים, שלבי האישור ורשומות הלקוחות שלכם.">
+<meta name="twitter:image" content="https://www.meeting-scheduled.com/og-home.png">
+
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="canonical" href="https://www.meeting-scheduled.com/he/">
+<link rel="alternate" hreflang="en" href="https://www.meeting-scheduled.com/">
+<link rel="alternate" hreflang="he" href="https://www.meeting-scheduled.com/he/">
+<link rel="alternate" hreflang="x-default" href="https://www.meeting-scheduled.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1c1e;--muted:#6c6c72;--faint:#a0a0a8;--border:#e4e4e0;--border-subtle:#f0eeec;--canvas:#fdf9fa;
+  --rose:#c9536e;--rose-dark:#b84a62;--rose-darker:#a84059;--rose-tint:#fdf2f4;
+  --green:#3d6b52;--green-dark:#325943;--green-tint:#e8f2ec;
+  --slate-tint:#f3f2f0;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.5;letter-spacing:-0.01em;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;}
+.container{max-width:1152px;margin:0 auto;padding:0 24px;}
+
+/* Header */
+header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border-subtle);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:var(--ink);}
+.logo-mark{width:32px;height:32px;border-radius:9px;background:var(--rose);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo-mark svg{width:16px;height:16px;}
+.nav-links{display:none;align-items:center;gap:28px;}
+.nav-links > a,.nav-dd-btn{font-size:14px;font-weight:500;color:#4a4a50;}
+.nav-links > a:hover,.nav-dd-btn:hover,.nav-dd-btn[aria-expanded="true"]{color:var(--rose);}
+@media(min-width:900px){.nav-links{display:flex;}}
+.nav-dd{position:relative;}
+.nav-dd-btn{display:inline-flex;align-items:center;gap:5px;height:40px;padding:0;border:0;background:none;cursor:pointer;font-family:inherit;letter-spacing:inherit;}
+.nav-dd-btn svg{transition:transform .15s;}
+.nav-dd-btn[aria-expanded="true"] svg{transform:rotate(180deg);}
+.nav-dd-panel{position:absolute;top:calc(100% + 10px);left:-14px;width:360px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 32px rgba(0,0,0,.08);padding:8px;}
+.nav-dd-panel ul{list-style:none;}
+.dd-item{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:11px;}
+.dd-item:hover,.dd-item:focus-visible{background:var(--canvas);}
+.dd-icon{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.dd-title{display:block;font-size:14px;font-weight:600;color:var(--ink);}
+.dd-desc{display:block;margin-top:3px;font-size:12.5px;line-height:1.45;color:var(--muted);}
+.nav-actions{display:none;align-items:center;gap:16px;}
+@media(min-width:640px){.nav-actions{display:flex;}}
+.nav-login{font-size:14px;font-weight:500;color:var(--muted);}
+.nav-login:hover{color:var(--rose);}
+.menu-btn{display:flex;width:40px;height:40px;align-items:center;justify-content:center;border:0;background:none;cursor:pointer;color:var(--ink);}
+@media(min-width:900px){.menu-btn{display:none;}}
+.mobile-nav{display:none;border-top:1px solid var(--border-subtle);background:#fff;}
+.mobile-nav.open{display:block;}
+.mobile-nav .container{display:flex;flex-direction:column;gap:2px;padding-top:16px;padding-bottom:16px;}
+.mobile-nav a{display:block;padding:12px;border-radius:8px;font-weight:500;font-size:15px;color:var(--ink);}
+.mobile-nav a:hover{background:var(--rose-tint);color:var(--rose);}
+.mobile-nav .btn{margin-top:8px;}
+.mobile-nav a.btn-rose{color:#fff;}
+.mobile-nav a.btn-rose:hover{background:var(--rose-dark);color:#fff;}
+.m-group-btn{display:flex;width:100%;align-items:center;justify-content:space-between;padding:12px;border:0;border-radius:8px;background:none;cursor:pointer;font-family:inherit;font-weight:500;font-size:15px;letter-spacing:inherit;color:var(--ink);text-align:left;}
+.m-group-btn,.nav-dd-btn{-webkit-tap-highlight-color:transparent;}
+.m-group-btn:hover{background:var(--rose-tint);color:var(--rose);}
+.m-group-btn svg{transition:transform .15s;}
+.m-group-btn[aria-expanded="true"] svg{transform:rotate(180deg);}
+.m-group{margin:2px 0 6px 12px;padding-left:8px;border-left:1px solid var(--border);}
+.m-group a{font-size:14.5px;color:var(--muted);padding:10px 12px;}
+
+/* Buttons */
+.btn{display:inline-flex;height:48px;align-items:center;justify-content:center;gap:6px;border-radius:10px;padding:0 24px;font-size:14px;font-weight:600;white-space:nowrap;transition:background .15s;border:0;cursor:pointer;}
+.btn-rose{background:var(--rose);color:#fff;}
+.btn-rose:hover{background:var(--rose-dark);}
+.btn-secondary{background:#f5f3f2;color:var(--ink);}
+.btn-secondary:hover{background:#edebe8;}
+.btn-ghost-rose{color:var(--rose);height:auto;padding:0;background:none;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:4px;}
+.btn-ghost-rose:hover{color:var(--rose-dark);}
+.btn-ghost-green{color:var(--green);height:auto;padding:0;background:none;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:4px;}
+.btn-ghost-green:hover{color:var(--green-dark);}
+.btn-sm{height:40px;padding:0 20px;font-size:13px;}
+.btn-row{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+@media(min-width:640px){.btn-row{flex-direction:row;}}
+:focus-visible{outline:2px solid var(--rose);outline-offset:3px;border-radius:4px;}
+
+/* Typography */
+.eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;margin-bottom:16px;color:var(--rose);}
+h1{font-size:38px;font-weight:600;line-height:1.08;letter-spacing:-.025em;}
+@media(min-width:640px){h1{font-size:56px;}}
+h2{font-size:30px;font-weight:600;line-height:1.15;letter-spacing:-.02em;}
+@media(min-width:640px){h2{font-size:38px;}}
+.section-head{max-width:680px;}
+.section-head.center{margin:0 auto;text-align:center;}
+.subtitle{font-size:16px;color:var(--muted);line-height:1.6;margin-top:16px;}
+.section{padding:80px 0;}
+.section-border-top{border-top:1px solid var(--border-subtle);}
+.bg-canvas{background:var(--canvas);}
+main section[id]{scroll-margin-top:80px;}
+.grid-head{margin-bottom:40px;}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;text-align:center;padding:80px 0 64px;}
+@media(min-width:640px){.hero{padding-top:104px;}}
+.hero-glow{pointer-events:none;position:absolute;inset:0;background:radial-gradient(ellipse 80% 45% at 50% 0%,rgba(201,83,110,.06) 0%,transparent 60%);}
+.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;}
+
+/* Hero orbits: two faint rings, each carrying a slow point of light. Ambient, behind the text. */
+.hero-aura{position:absolute;inset:0;pointer-events:none;transform:translate3d(var(--mx,0px),var(--my,0px),0);transition:transform 1.2s cubic-bezier(.2,.8,.2,1);}
+.hero-aura span{position:absolute;border-radius:50%;will-change:transform;}
+.hero-aura .a1{width:620px;height:620px;top:-260px;left:8%;background:radial-gradient(circle,rgba(201,83,110,.13) 0%,rgba(201,83,110,.05) 38%,transparent 66%);animation:aura1 23s ease-in-out infinite alternate;}
+.hero-aura .a2{width:560px;height:560px;bottom:-300px;right:6%;background:radial-gradient(circle,rgba(61,107,82,.10) 0%,rgba(61,107,82,.04) 40%,transparent 66%);animation:aura2 29s ease-in-out infinite alternate;}
+@keyframes aura1{to{transform:translate(140px,70px) scale(1.12);}}
+@keyframes aura2{to{transform:translate(-120px,-50px) scale(1.15);}}
+.hero-orbits{position:absolute;z-index:0;left:50%;top:50%;width:min(1280px,118%);height:96%;transform:translate(-50%,-50%);pointer-events:none;overflow:visible;}
+@media(min-width:640px){.hero{padding:80px 0 72px;}}
+@media(max-width:640px){.hero-orbits{display:none;}}
+.hero-orbits ellipse{fill:none;vector-effect:non-scaling-stroke;}
+.hero-orbits .track{stroke-width:1.8;}
+.hero-orbits .comet{stroke-linecap:round;animation:orbit var(--d) linear infinite;animation-delay:calc(var(--base) - var(--d) * var(--k));}
+.hero-orbits .o1{--d:17s;--base:0s;}
+.hero-orbits .o2{--d:26s;--base:-9s;}
+/* Each layer is one dash; its delay shifts it back so every layer ends at the same point: one light, fading trail. */
+.hero-orbits .tail{--k:0;stroke-dasharray:300 700;stroke-width:2.2;opacity:.14;}
+.hero-orbits .mid{--k:.17;stroke-dasharray:130 870;stroke-width:2.6;opacity:.3;}
+.hero-orbits .near{--k:.255;stroke-dasharray:45 955;stroke-width:3;opacity:.6;}
+.hero-orbits .halo{--k:.295;stroke-dasharray:5 995;stroke-width:18;opacity:.22;}
+.hero-orbits .head{--k:.2975;stroke-dasharray:2.5 997.5;stroke-width:5.5;opacity:1;}
+@keyframes orbit{from{stroke-dashoffset:0;}to{stroke-dashoffset:-1000;}}
+.hero.is-still .hero-orbits .comet,.hero.is-still .hero-aura span{animation-play-state:paused;}
+@media (prefers-reduced-motion: reduce){
+  .hero-orbits .comet{display:none;}
+  .hero-aura span{animation:none;}
+  .hero-aura{transform:none;}
+}
+.hero p.lede{font-size:17px;color:var(--muted);line-height:1.6;margin-top:24px;max-width:620px;margin-left:auto;margin-right:auto;}
+.hero .btn-row{margin-top:36px;}
+.hero p.domain-line{margin-top:28px;font-size:14px;color:var(--muted);line-height:1.5;}
+
+/* Areas of value */
+.value-grid{display:grid;grid-template-columns:1fr;gap:20px;}
+@media(min-width:900px){.value-grid{grid-template-columns:repeat(3,1fr);}}
+.v-card{border:1px solid var(--border);border-radius:20px;background:#fff;padding:28px;display:flex;flex-direction:column;box-shadow:0 4px 16px rgba(0,0,0,.03);}
+@media(min-width:640px){.v-card{padding:32px;}}
+.v-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:22px;}
+.v-card h3{font-size:21px;font-weight:600;letter-spacing:-.01em;}
+.v-card p.desc{margin-top:10px;font-size:15px;color:var(--muted);line-height:1.6;}
+.v-card ul{margin-top:22px;list-style:none;display:flex;flex-direction:column;gap:11px;}
+.v-card li{display:flex;align-items:flex-start;gap:11px;font-size:14px;line-height:1.5;}
+.v-card li .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:7px;}
+.sub-card{display:block;margin-top:24px;padding:16px 18px;border:1px solid #e9cfd6;border-radius:14px;background:var(--rose-tint);transition:border-color .15s,box-shadow .15s;}
+.sub-card:hover{border-color:var(--rose);box-shadow:0 4px 14px rgba(201,83,110,.12);}
+.sub-card-title{display:block;font-size:14.5px;font-weight:600;color:var(--ink);}
+.sub-card-desc{display:block;margin-top:6px;font-size:13.5px;line-height:1.55;color:var(--muted);}
+.sub-card .btn-ghost-rose{margin-top:10px;font-size:13.5px;}
+
+/* Journeys */
+.journey{border:1px solid var(--border);border-radius:22px;background:#fff;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,.03);}
+@media(min-width:640px){.journey{padding:32px;}}
+.journey + .journey{margin-top:24px;}
+.journey-head{display:flex;align-items:center;gap:12px;cursor:pointer;list-style:none;}
+.journey-head::-webkit-details-marker{display:none;}
+.journey-head::after{content:"+";margin-left:auto;font-size:26px;line-height:1;flex-shrink:0;color:var(--green);}
+.journey[open] .journey-head{margin-bottom:28px;}
+.journey[open] .journey-head::after{content:"−";}
+.journey-head:focus-visible{outline:2px solid var(--green);outline-offset:8px;border-radius:4px;}
+.j-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.j-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;}
+.j-title{margin-top:2px;font-size:16px;font-weight:600;}
+.j-track{list-style:none;display:flex;flex-direction:column;gap:22px;}
+.j-step{position:relative;border:1px solid var(--border-subtle);border-radius:14px;background:#fff;padding:16px 18px;}
+.j-step .j-kicker{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--faint);}
+.j-step .j-text{margin-top:6px;font-size:14px;line-height:1.55;color:var(--ink);}
+.j-step.is-human{border-color:#cfe0d5;background:var(--green-tint);}
+.j-step.is-human .j-kicker{color:var(--green);}
+.j-step.is-outcome{border-color:#e9cfd6;background:var(--rose-tint);}
+.j-step.is-outcome .j-kicker{color:var(--rose);}
+.j-step:not(:last-child)::after{content:'';position:absolute;left:50%;top:100%;width:1px;height:22px;background:var(--border);}
+.j-step:not(:last-child)::before{content:'';position:absolute;left:50%;top:calc(100% + 8px);width:6px;height:6px;border-right:1px solid var(--faint);border-bottom:1px solid var(--faint);transform:translate(-50%,0) rotate(45deg);}
+@media(min-width:900px){
+  .j-track{flex-direction:row;align-items:stretch;gap:0;}
+  .j-step{flex:1;min-width:0;margin-right:22px;}
+  .j-step:last-child{margin-right:0;}
+  .j-step:not(:last-child)::after{left:100%;top:50%;width:22px;height:1px;}
+  .j-step:not(:last-child)::before{left:calc(100% + 8px);top:50%;transform:translate(0,-50%) rotate(-45deg);}
+}
+.journey-note{margin-top:32px;font-size:15px;color:var(--muted);line-height:1.6;max-width:680px;}
+
+/* How we work */
+.work-grid{display:grid;grid-template-columns:1fr;gap:20px;}
+@media(min-width:640px){.work-grid{grid-template-columns:1fr 1fr;}}
+@media(min-width:1024px){.work-grid{grid-template-columns:repeat(4,1fr);}}
+.w-step{border:1px solid var(--border);border-radius:18px;background:#fff;padding:26px;box-shadow:0 4px 16px rgba(0,0,0,.03);}
+.w-num{width:34px;height:34px;border-radius:11px;background:var(--rose-tint);color:var(--rose);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.w-step h3{font-size:16.5px;font-weight:600;}
+.w-step p{margin-top:8px;font-size:14px;color:var(--muted);line-height:1.6;}
+
+/* Principles */
+.principle-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:900px){
+  .principle-grid{grid-template-columns:repeat(3,1fr);}
+}
+.principle{display:flex;gap:16px;align-items:flex-start;padding:22px;border:1px solid var(--border-subtle);border-radius:16px;background:#fff;}
+.principle .p-ic{width:38px;height:38px;border-radius:11px;background:var(--green-tint);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.principle h3{font-size:15.5px;font-weight:600;}
+.principle p{margin-top:6px;font-size:14px;color:var(--muted);line-height:1.55;}
+
+/* Footer */
+footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
+.footer-top{display:flex;flex-direction:column;gap:40px;padding:56px 0;}
+@media(min-width:640px){.footer-top{flex-direction:row;justify-content:space-between;}}
+.footer-brand{max-width:300px;}
+.footer-brand p{margin-top:16px;font-size:14px;color:var(--muted);line-height:1.6;}
+.footer-cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+@media(min-width:480px){.footer-cols{grid-template-columns:repeat(3,auto);gap:56px;}}
+.footer-col-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);margin-bottom:12px;}
+.footer-col a{display:block;font-size:14px;color:var(--muted);margin-bottom:10px;}
+.footer-col a:hover{color:var(--rose);}
+.footer-email{display:inline-block;margin-top:16px;font-size:14px;color:#2563eb;}
+.footer-email:hover{color:#1d4ed8;}
+.footer-bottom{border-top:1px solid var(--border-subtle);padding:24px 0;display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--faint);}
+@media(min-width:640px){.footer-bottom{flex-direction:row;justify-content:space-between;}}
+footer .container{padding-left:32px;}
+
+
+/* Dropdown: secondary products */
+.dd-sep{height:1px;background:var(--border-subtle);margin:6px 12px;}
+.dd-label{padding:8px 12px 2px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);}
+.dd-small{display:flex;gap:4px;padding:2px 4px 6px;}
+.dd-small a{padding:8px;border-radius:9px;font-size:13.5px;font-weight:500;color:var(--muted);}
+.dd-small a:hover{background:var(--canvas);color:var(--rose);}
+
+/* Flagship solutions */
+.f-grid{display:grid;grid-template-columns:1fr;gap:20px;}
+@media(min-width:900px){.f-grid{grid-template-columns:1fr 1fr;gap:24px;}}
+.f-card{position:relative;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:22px;background:#fff;padding:28px;box-shadow:0 4px 16px rgba(0,0,0,.03);transition:border-color .15s,box-shadow .15s,transform .15s;}
+@media(min-width:640px){.f-card{padding:36px;}}
+.f-card:hover{border-color:#e2dcd8;box-shadow:0 14px 34px rgba(28,28,30,.08);transform:translateY(-2px);}
+.f-chip{align-self:flex-start;font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--rose-tint);color:var(--rose);margin-bottom:22px;}
+.f-chip.green{background:var(--green-tint);color:var(--green);}
+.f-card h3{font-size:24px;font-weight:600;letter-spacing:-.015em;}
+.f-card p.desc{margin-top:10px;font-size:15.5px;color:var(--muted);line-height:1.6;}
+.f-card ul{margin-top:22px;list-style:none;display:flex;flex-direction:column;gap:11px;}
+.f-card li{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;line-height:1.5;}
+.f-card li svg{flex-shrink:0;margin-top:2px;}
+.f-link{margin-top:auto;padding-top:26px;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--rose);}
+.f-link.green{color:var(--green);}
+.more-row{display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px;}
+@media(min-width:900px){.more-row{grid-template-columns:1fr 1fr;gap:24px;}}
+.more{border:1px solid var(--border-subtle);border-radius:16px;background:var(--canvas);padding:20px 24px;}
+.more h3{font-size:15.5px;font-weight:600;}
+.more p{margin-top:6px;font-size:14px;color:var(--muted);line-height:1.6;}
+.more .btn-ghost-rose,.more .btn-ghost-green{font-size:14px;}
+
+/* About */
+.about{display:grid;grid-template-columns:1fr;gap:36px;align-items:center;}
+@media(min-width:820px){.about{grid-template-columns:300px 1fr;gap:56px;}}
+.about-photo{position:relative;max-width:300px;}
+.about-photo img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 20%;border-radius:22px;box-shadow:0 16px 40px rgba(28,28,30,.12);}
+.about-photo .tag{position:absolute;bottom:16px;left:16px;background:rgba(255,255,255,.94);border-radius:12px;padding:10px 14px;box-shadow:0 4px 14px rgba(0,0,0,.08);}
+.about-photo .tag strong{display:block;font-size:14px;}
+.about-photo .tag span{font-size:12px;color:var(--muted);}
+.about-copy p:not(.eyebrow){font-size:16px;line-height:1.7;color:#3a3a40;margin-top:14px;}
+.about-copy .direct{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px 22px;font-size:14px;}
+.about-copy .direct a{color:var(--rose);font-weight:600;display:inline-flex;align-items:center;gap:5px;}
+.about-copy .direct a:hover{color:var(--rose-dark);}
+
+/* Motion layer: everything below runs only once JS has marked the page (.js), and rests for reduced motion. */
+
+/* Mini illustration: a field form fills in and a report draft appears for review. 9s loop while in view. */
+.mini{position:relative;margin-top:22px;height:128px;border:1px solid var(--border-subtle);border-radius:16px;background:var(--canvas);overflow:hidden;display:flex;align-items:center;gap:14px;padding:14px 16px;}
+.mini *{animation-play-state:paused;}
+.mini.is-on *{animation-play-state:running;}
+.mr-form{flex:1.25;min-width:0;display:flex;flex-direction:column;gap:6px;}
+.mr-row{display:flex;align-items:center;gap:8px;height:28px;padding:0 10px;border-radius:9px;background:#fff;border:1px solid var(--border-subtle);font-size:12px;}
+.mr-k{color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mr-v{font-weight:600;color:var(--ink);white-space:nowrap;animation:mrVal 9s infinite both;}
+.mr-row .tick{width:16px;height:16px;border-radius:50%;background:var(--green);flex-shrink:0;position:relative;transform:scale(0);animation:mrTick 9s infinite both;}
+.mr-row .tick::after{content:'';position:absolute;left:5px;top:3px;width:4px;height:7px;border:solid #fff;border-width:0 1.8px 1.8px 0;transform:rotate(45deg);}
+.mr-row.r2 .mr-v,.mr-row.r2 .tick{animation-delay:.8s;}
+.mr-row.r3 .mr-v,.mr-row.r3 .tick{animation-delay:1.6s;}
+@keyframes mrVal{0%,8%{opacity:0;transform:translateX(-4px);}14%,90%{opacity:1;transform:none;}97%,100%{opacity:0;}}
+@keyframes mrTick{0%,10%{transform:scale(0);}16%{transform:scale(1.15);}19%,90%{transform:scale(1);}97%,100%{transform:scale(0);}}
+.mr-flow{width:26px;height:2px;flex-shrink:0;position:relative;background:linear-gradient(90deg,var(--border),var(--border));}
+.mr-flow::after{content:'';position:absolute;top:-2px;left:0;width:6px;height:6px;border-radius:50%;background:var(--rose);box-shadow:0 0 8px rgba(201,83,110,.6);opacity:0;animation:mrFlow 9s infinite;}
+@keyframes mrFlow{0%,36%{left:0;opacity:0;}38%{opacity:1;}46%{left:20px;opacity:1;}48%,100%{left:20px;opacity:0;}}
+.mr-doc{position:relative;flex:1;min-width:0;height:100px;border-radius:10px;background:#fff;border:1px solid var(--border);box-shadow:0 6px 18px rgba(28,28,30,.06);padding:10px 11px;opacity:.35;animation:mrDoc 9s infinite both;}
+@keyframes mrDoc{0%,44%{opacity:.35;transform:translateY(4px);}52%,90%{opacity:1;transform:none;}97%,100%{opacity:.35;transform:translateY(4px);}}
+.mr-doc-t{display:block;font-size:10.5px;font-weight:600;color:var(--ink);}
+.mr-lines{display:flex;flex-direction:column;gap:6px;margin-top:9px;}
+.mr-lines b{display:block;height:5px;border-radius:3px;background:var(--slate-tint);transform-origin:left;transform:scaleX(0);animation:mrLine 9s infinite both;}
+.mr-lines b:nth-child(1){width:92%;animation-delay:0s;}
+.mr-lines b:nth-child(2){width:74%;animation-delay:.25s;}
+.mr-lines b:nth-child(3){width:84%;animation-delay:.5s;}
+@keyframes mrLine{0%,48%{transform:scaleX(0);}56%,90%{transform:scaleX(1);}97%,100%{transform:scaleX(0);}}
+.mr-stamp{position:absolute;right:8px;bottom:9px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green);border:1.5px solid var(--green);border-radius:6px;padding:3px 7px;background:rgba(232,242,236,.9);opacity:0;transform:rotate(-8deg) scale(1.5);animation:mrStamp 9s infinite both;}
+@keyframes mrStamp{0%,62%{opacity:0;transform:rotate(-8deg) scale(1.5);}67%{opacity:1;transform:rotate(-8deg) scale(.95);}70%,90%{opacity:1;transform:rotate(-8deg) scale(1);}97%,100%{opacity:0;transform:rotate(-8deg) scale(1);}}
+
+@media(max-width:480px){
+  .mini{gap:10px;padding:12px;}
+  .mr-flow{display:none;}
+  .mr-doc{flex:.75;}
+  .mr-row{gap:6px;padding:0 8px;font-size:11.5px;}
+  .mr-v{display:none;}
+}
+/* Mini illustration: orders stop, a short message goes out, an order comes back. 9s loop while in view. */
+.mo-bars{position:relative;flex:1;height:100%;display:flex;align-items:flex-end;gap:7px;padding-bottom:16px;}
+.mo-bars > span{flex:1;height:var(--h);border-radius:4px 4px 0 0;background:var(--rose);opacity:.75;}
+.mo-bars > span.gap{height:86%;background:repeating-linear-gradient(45deg,var(--border-subtle),var(--border-subtle) 4px,#fff 4px,#fff 8px);border:1px dashed var(--border);border-bottom:0;opacity:1;}
+.mo-bars > span.new{height:0;background:var(--rose);opacity:1;box-shadow:0 0 0 rgba(201,83,110,0);animation:moNew 9s infinite both;}
+@keyframes moNew{0%,48%{height:0;box-shadow:0 0 0 rgba(201,83,110,0);}58%{height:74%;box-shadow:0 0 16px rgba(201,83,110,.45);}66%,90%{height:70%;box-shadow:0 0 8px rgba(201,83,110,.2);}97%,100%{height:0;}}
+.mo-axis{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;font-size:10px;color:var(--faint);}
+.mo-bubble{position:absolute;top:12px;right:14px;max-width:62%;font-size:11.5px;line-height:1.4;background:#fff;border:1px solid #e9cfd6;border-radius:12px 12px 4px 12px;padding:7px 10px;box-shadow:0 6px 18px rgba(28,28,30,.07);opacity:0;transform:translateY(6px) scale(.96);animation:moBubble 9s infinite both;}
+@keyframes moBubble{0%,16%{opacity:0;transform:translateY(6px) scale(.96);}24%,90%{opacity:1;transform:none;}97%,100%{opacity:0;}}
+.mo-label{position:absolute;right:14px;bottom:24px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--rose-dark);background:var(--rose-tint);border-radius:6px;padding:3px 7px;opacity:0;animation:moLabel 9s infinite both;}
+@keyframes moLabel{0%,60%{opacity:0;transform:translateY(4px);}66%,90%{opacity:1;transform:none;}97%,100%{opacity:0;}}
+
+/* Journeys and section reveals: desktop only. On phones, fast scrolling would outrun them and show blank space. */
+@media(min-width:768px){
+  .js .journey .j-step{opacity:.4;transform:translateY(6px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s ease;}
+  .js .journey.is-on .j-step{opacity:1;transform:none;}
+  .js .journey.is-on .j-step:nth-child(2){transition-delay:.25s;}
+  .js .journey.is-on .j-step:nth-child(3){transition-delay:.5s;}
+  .js .journey.is-on .j-step:nth-child(4){transition-delay:.75s;}
+  .js .journey.is-on .j-step:nth-child(5){transition-delay:1s;}
+  .js .journey.is-on .j-step.is-outcome{box-shadow:0 0 0 4px rgba(201,83,110,.07),0 8px 22px rgba(201,83,110,.10);}
+  .js .reveal{opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1);}
+  .js .reveal.is-on{opacity:1;transform:none;}
+  .js .reveal-d1{transition-delay:.08s;}
+  .js .f-card.reveal.is-on:hover{transform:translateY(-2px);}
+  .js .f-card.reveal{transition:opacity .55s ease,transform .5s cubic-bezier(.2,.8,.2,1),border-color .15s,box-shadow .15s;}
+}
+.mr-flow::after{animation-play-state:paused;}
+.mini.is-on .mr-flow::after{animation-play-state:running;}
+
+@media (prefers-reduced-motion: reduce){
+  .mini *{animation:none !important;}
+  .mr-flow::after{display:none;}
+  .mr-v,.mr-doc,.mr-stamp,.mo-bubble,.mo-label{opacity:1 !important;transform:none !important;}
+  .mr-row .tick,.mr-lines b{transform:none !important;}
+  .mr-stamp{transform:rotate(-8deg) !important;}
+  .mo-bars > span.new{height:70% !important;}
+  .js .journey .j-step,.js .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+}
+
+@media(max-width:639px){
+  .hero{padding:48px 0;}
+  .hero h1{font-size:34px;line-height:1.16;}
+  .hero p.lede{font-size:16px;margin-top:20px;}
+  .hero .btn-row{margin-top:26px;}
+  .section{padding:56px 0;}
+  .f-card{padding:24px;}
+  .journey{padding:20px;}
+  .about-photo{margin-inline:auto;}
+}
+.about-copy{max-width:680px;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
+}
+
+/* Language switch */
+.lang-switch{display:inline-flex;align-items:center;gap:6px;height:48px;padding:0 10px;font-size:14px;font-weight:600;color:var(--muted);border-radius:10px;}
+.lang-switch:hover{color:var(--rose);}
+
+/* Hebrew / RTL */
+:root{--sans:'Heebo','Inter',-apple-system,BlinkMacSystemFont,sans-serif;}
+body{letter-spacing:0;}
+h1,h2{letter-spacing:-.01em;}
+.eyebrow,.j-eyebrow,.j-step .j-kicker,.footer-col-title,.dd-label{letter-spacing:.04em;}
+.nav-dd-panel{left:auto;right:-14px;}
+.m-group-btn{text-align:right;}
+.m-group{margin:2px 12px 6px 0;padding-left:0;padding-right:8px;border-left:0;border-right:1px solid var(--border);}
+.journey-head::after{margin-left:0;margin-right:auto;}
+@media(min-width:900px){
+  .j-step{margin-right:0;margin-left:22px;}
+  .j-step:last-child{margin-left:0;}
+  .j-step:not(:last-child)::after{left:auto;right:100%;}
+  .j-step:not(:last-child)::before{left:auto;right:calc(100% + 8px);transform:translate(0,-50%) rotate(135deg);}
+}
+.about-photo .tag{left:auto;right:16px;}
+.mr-lines b{transform-origin:right;}
+.mr-flow{transform:scaleX(-1);}
+.mo-bars{direction:ltr;}
+.f-link svg,.btn-ghost-rose svg,.btn-ghost-green svg,.about-copy .direct svg{transform:scaleX(-1);}
+footer .container{padding-left:24px;padding-right:32px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav-inner">
+    <a href="/he/" class="logo" aria-label="דף הבית של MeetingScheduled">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="white"/></svg>
+      </span>
+      MeetingScheduled
+    </a>
+    <nav class="nav-links" aria-label="ראשי">
+      <div class="nav-dd" id="solutionsDD">
+        <button type="button" class="nav-dd-btn" id="solutionsBtn" aria-expanded="false" aria-controls="solutionsMenu">פתרונות <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="nav-dd-panel" id="solutionsMenu" hidden>
+          <ul>
+            <li><a href="/field-service/" class="dd-item"><span class="dd-icon" style="background:var(--green-tint)" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg></span><span><span class="dd-title">דוחות בדיקה</span><span class="dd-desc">הטכנאי ממלא את הבדיקה בטלפון. הדוח מגיע למשרד מוכן לאישור.</span></span></a></li>
+            <li><a href="/aftermarket/" class="dd-item"><span class="dd-icon" style="background:var(--rose-tint)" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></span><span><span class="dd-title">החזרת הזמנות חלפים ושירות</span><span class="dd-desc">מחזירים הזמנות חלפים ושירות מלקוחות מכונות שהפסיקו להזמין.</span></span></a></li>
+            <li><a href="#workflow-examples" class="dd-item"><span class="dd-icon" style="background:var(--slate-tint)" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1c1c1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span><span><span class="dd-title">מערכות בהתאמה אישית</span><span class="dd-desc">תהליך אחד בכל פעם, סביב המערכות שכבר יש לכם.</span></span></a></li>
+            <li class="dd-sep" aria-hidden="true"></li>
+            <li class="dd-label">מוצרים נוספים</li>
+            <li class="dd-small"><a href="/receptionist/">AI Receptionist</a><a href="/outbound/">Outbound Sales</a></li>
+          </ul>
+        </div>
+      </div>
+      <a href="#workflow-examples">דוגמאות</a>
+      <a href="#how-we-work">איך זה עובד</a>
+      <a href="#about">מי אנחנו</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="/" class="nav-login" lang="en" hreflang="en">English</a>
+      <a href="https://reach.meeting-scheduled.com" class="nav-login">כניסה</a>
+      <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-rose btn-sm">בואו נדבר</a>
+    </div>
+    <button class="menu-btn" id="menuBtn" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mobileNav">
+      <svg id="menuIconOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      <svg id="menuIconClose" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <div class="container">
+      <button type="button" class="m-group-btn" id="mSolutionsBtn" aria-expanded="false" aria-controls="mSolutionsList">פתרונות <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="m-group" id="mSolutionsList" hidden>
+        <a href="/field-service/he/">דוחות בדיקה</a>
+        <a href="/aftermarket/he/">החזרת הזמנות חלפים ושירות</a>
+        <a href="#workflow-examples">מערכות בהתאמה אישית</a>
+        <a href="/receptionist/">AI Receptionist</a>
+        <a href="/outbound/">Outbound Sales</a>
+      </div>
+      <a href="#workflow-examples">דוגמאות</a>
+      <a href="#how-we-work">איך זה עובד</a>
+      <a href="#about">מי אנחנו</a>
+      <a href="/" lang="en" hreflang="en">English</a>
+      <a href="https://reach.meeting-scheduled.com">כניסה</a>
+      <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-rose">בואו נדבר</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-aura" id="heroAura" aria-hidden="true"><span class="a1"></span><span class="a2"></span></div>
+    <svg class="hero-orbits" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="trackRose" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#c9536e" stop-opacity=".38"/>
+          <stop offset=".45" stop-color="#c9536e" stop-opacity=".06"/>
+          <stop offset="1" stop-color="#c9536e" stop-opacity=".30"/>
+        </linearGradient>
+        <linearGradient id="trackGreen" x1="1" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3d6b52" stop-opacity=".30"/>
+          <stop offset=".5" stop-color="#3d6b52" stop-opacity=".04"/>
+          <stop offset="1" stop-color="#3d6b52" stop-opacity=".22"/>
+        </linearGradient>
+        <filter id="orbitGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1.2" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="orbitHalo" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+      </defs>
+      <g class="o1" transform="rotate(-4 600 300)">
+        <ellipse class="track" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="url(#trackRose)"/>
+        <ellipse class="comet tail" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#c9536e"/>
+        <ellipse class="comet mid" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#c9536e"/>
+        <ellipse class="comet near" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#d9667f"/>
+        <ellipse class="comet halo" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#d9667f" filter="url(#orbitHalo)"/>
+        <ellipse class="comet head" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#b8405b" filter="url(#orbitGlow)"/>
+      </g>
+      <g class="o2" transform="translate(1200 0) scale(-1 1) rotate(-7 600 300)">
+        <ellipse class="track" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="url(#trackGreen)"/>
+        <ellipse class="comet tail" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#3d6b52"/>
+        <ellipse class="comet mid" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#3d6b52"/>
+        <ellipse class="comet near" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#4f8a69"/>
+        <ellipse class="comet halo" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#4f8a69" filter="url(#orbitHalo)"/>
+        <ellipse class="comet head" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#2f5a43" filter="url(#orbitGlow)"/>
+      </g>
+    </svg>
+    <div class="container hero-inner">
+      <p class="eyebrow">תוכנה ו-AI לעסקי ציוד</p>
+      <h1 id="hero-title">פחות זמן על דוחות.<br>פחות מעקבים שמתפספסים.</h1>
+      <p class="lede">לחברות בדיקה, ביקורת ושירות, וליצרני ומפיצי מכונות. הופכים מדידות מהשטח לדוחות מוכנים לאישור, ומחדשים קשר עם לקוחות שהפסיקו להזמין חלפים ושירות.</p>
+      <div class="btn-row">
+        <a href="#solutions" class="btn btn-rose">לפתרונות</a>
+        <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-secondary">בואו נדבר</a>
+        <a href="/" class="lang-switch" lang="en" hreflang="en"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>English</a>
+      </div>
+      <p class="domain-line">דוחות בדיקה · החזרת הזמנות חלפים ושירות · מערכות בהתאמה אישית</p>
+    </div>
+  </section>
+
+  <section id="solutions" class="section section-border-top" aria-labelledby="value-title">
+    <div class="container">
+      <div class="section-head center grid-head reveal">
+        <p class="eyebrow">פתרונות</p>
+        <h2 id="value-title">איזה חלק בעסק צריך תשומת לב?</h2>
+        <p class="subtitle">דוחות שמחכים שיכתבו אותם. לקוחות שמחכים לחזרה. בחרו את התהליך שאתם רוצים לשפר.</p>
+      </div>
+      <div class="f-grid">
+
+        <a href="/field-service/he/" class="f-card reveal">
+          <span class="f-chip green">לחברות בדיקה, ביקורת ושירות</span>
+          <div class="v-icon" style="background:var(--green-tint)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
+          </div>
+          <h3>דוחות בדיקה</h3>
+          <p class="desc">הטכנאים מזינים מדידות ותמונות אצל הלקוח. המשרד מקבל טיוטת דוח בפורמט שלכם, מוכנה לבדיקה ולחתימה.</p>
+          <div class="mini" aria-hidden="true">
+            <div class="mr-form">
+              <div class="mr-row r1"><span class="mr-k">לקוח</span><span class="mr-v">מולא</span><i class="tick"></i></div>
+              <div class="mr-row r2"><span class="mr-k">מדידות</span><span class="mr-v">נרשמו</span><i class="tick"></i></div>
+              <div class="mr-row r3"><span class="mr-k">תמונות</span><span class="mr-v">2 נוספו</span><i class="tick"></i></div>
+            </div>
+            <span class="mr-flow"></span>
+            <div class="mr-doc"><span class="mr-doc-t">דוח #0418</span><span class="mr-lines"><b></b><b></b><b></b></span><span class="mr-stamp">לאישור</span></div>
+          </div>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>טפסים בטלפון, עם פרטי הלקוח והציוד כבר ממולאים</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>טיוטות דוח בתבנית שלכם, בחתימת הבודק שלכם</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>דוחות, היסטוריית ציוד ובדיקות קרובות במקום אחד</li>
+          </ul>
+          <span class="f-link green">לדוחות הבדיקה <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+
+        <a href="/aftermarket/he/" class="f-card reveal reveal-d1">
+          <span class="f-chip">ליצרני מכונות ולמפיצים</span>
+          <div class="v-icon" style="background:var(--rose-tint)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          </div>
+          <h3>החזרת הזמנות חלפים ושירות</h3>
+          <p class="desc">מאתרים לקוחות שהפסיקו להזמין חלפים ושירות. פונים אליהם בהודעות שאישרתם, ומעבירים את הבקשות שלהם לצוות שלכם.</p>
+          <div class="mini" aria-hidden="true">
+            <div class="mo-bars">
+              <span style="--h:46%"></span><span style="--h:60%"></span><span style="--h:52%"></span><span style="--h:68%"></span><span style="--h:58%"></span><span class="gap"></span><span class="gap"></span><span class="new"></span>
+              <div class="mo-axis"><span>2019</span><span>2022</span><span>2025</span></div>
+            </div>
+            <div class="mo-bubble" dir="rtl">"מכונת המילוי Model X עדיין עובדת אצלכם?"</div>
+            <span class="mo-label">בקשת הצעת מחיר</span>
+          </div>
+          <ul>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>לקוחות רדומים שמזוהים מתוך רשומות ההזמנות שלכם</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>הודעות קצרות ומאושרות שיוצאות בשם החברה שלכם</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>בקשות רלוונטיות שמועברות לצוות החלפים או השירות</li>
+          </ul>
+          <span class="f-link">להחזרת הזמנות חלפים ושירות <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
+
+      </div>
+      <div class="more-row reveal">
+        <div class="more">
+          <h3>מערכות בהתאמה אישית</h3>
+          <p>משהו אחר מעכב את הצוות? אנחנו בונים תהליך אחד בכל פעם, סביב המערכות שכבר יש לכם. <a href="#workflow-examples" class="btn-ghost-rose">לדוגמאות <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></p>
+        </div>
+        <div class="more">
+          <h3>מוצרים נוספים</h3>
+          <p>כלים מוכנים לצוותי מכירות (באנגלית): <a href="/receptionist/" class="btn-ghost-green">AI Receptionist</a> וגם <a href="/outbound/" class="btn-ghost-rose">Outbound Sales</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="workflow-examples" class="section section-border-top bg-canvas" aria-labelledby="examples-title">
+    <div class="container">
+      <div class="section-head grid-head reveal">
+        <p class="eyebrow">תהליכים מקצה לקצה</p>
+        <h2 id="examples-title">כך העבודה מתקדמת</h2>
+        <p class="subtitle">פתחו דוגמה כדי לראות את השלבים, מה המערכת מכינה ואיפה הצוות שלכם בודק את העבודה.</p>
+      </div>
+
+      <details class="journey">
+        <summary class="journey-head">
+          <div class="j-icon" style="background:var(--green-tint)" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
+          </div>
+          <div>
+            <p class="j-eyebrow" style="color:var(--green)">שירות שטח</p>
+            <h3 class="j-title">בדיקה תקופתית, מהביקור ועד הדוח החתום</h3>
+          </div>
+        </summary>
+        <ol class="j-track">
+          <li class="j-step"><p class="j-kicker">נקודת פתיחה</p><p class="j-text">מגיע מועד בדיקה אצל לקוח.</p></li>
+          <li class="j-step"><p class="j-kicker">הקשר</p><p class="j-text">הלקוח, האתר, הציוד ותוצאות השנה שעברה כבר נמצאים בטלפון של הטכנאי.</p></li>
+          <li class="j-step"><p class="j-kicker">טיוטה</p><p class="j-text">הטכנאי מזין מדידות ותמונות, וטיוטת דוח נבנית בפורמט שלכם.</p></li>
+          <li class="j-step is-human"><p class="j-kicker">הצוות שלכם</p><p class="j-text">הבודק המוסמך מאשר את הדוח או מחזיר אותו עם הערה.</p></li>
+          <li class="j-step is-outcome"><p class="j-kicker">תוצאה</p><p class="j-text">הלקוח מקבל את הדוח, והיסטוריית היחידה ומועד הבדיקה הבא מתעדכנים.</p></li>
+        </ol>
+      </details>
+
+      <details class="journey">
+        <summary class="journey-head">
+          <div class="j-icon" style="background:var(--rose-tint)" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          </div>
+          <div>
+            <p class="j-eyebrow" style="color:var(--rose)">חלפים ושירות</p>
+            <h3 class="j-title">לקוח רדום שחוזר לבקשת הצעת מחיר</h3>
+          </div>
+        </summary>
+        <ol class="j-track">
+          <li class="j-step"><p class="j-kicker">נקודת פתיחה</p><p class="j-text">לקוח שהזמין חלפים כל שנה מפסיק להזמין.</p></li>
+          <li class="j-step"><p class="j-kicker">הקשר</p><p class="j-text">עוברים על היסטוריית ההזמנות, המכונות המותקנות ואנשי הקשר מהעבר.</p></li>
+          <li class="j-step"><p class="j-kicker">טיוטה</p><p class="j-text">מוכנה הודעה קצרה על המכונה שלהם, עם שאלה אחת פשוטה.</p></li>
+          <li class="j-step is-human"><p class="j-kicker">הצוות שלכם</p><p class="j-text">הצוות שלכם מאשר את הלקוח ואת הנוסח לפני שמשהו נשלח.</p></li>
+          <li class="j-step is-outcome"><p class="j-kicker">תוצאה</p><p class="j-text">הצורך של הלקוח מגיע לצוות החלפים או השירות, מוכן להצעת מחיר.</p></li>
+        </ol>
+      </details>
+
+      <details class="journey">
+        <summary class="journey-head">
+          <div class="j-icon" style="background:var(--rose-tint)" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+          </div>
+          <div>
+            <p class="j-eyebrow" style="color:var(--rose)">מערכת בהתאמה אישית · הנדסת מכירות</p>
+            <h3 class="j-title">הצעת מחיר לדרישה טכנית</h3>
+          </div>
+        </summary>
+        <ol class="j-track">
+          <li class="j-step"><p class="j-kicker">נקודת פתיחה</p><p class="j-text">לקוח שולח דרישות טכניות במייל.</p></li>
+          <li class="j-step"><p class="j-kicker">הקשר</p><p class="j-text">מפרטים, הצעות מחיר קודמות, מסמכי ספקים וכללי תמחור נאספים למקום אחד.</p></li>
+          <li class="j-step"><p class="j-kicker">טיוטה</p><p class="j-text">נכתבים סיכום מסודר ותצורה מומלצת, עם רשימת ההנחות.</p></li>
+          <li class="j-step is-human"><p class="j-kicker">הצוות שלכם</p><p class="j-text">מהנדס בודק את ההנחות, מתקן ומאשר.</p></li>
+          <li class="j-step is-outcome"><p class="j-kicker">תוצאה</p><p class="j-text">ההצעה נשלחת, וה-CRM ורשומת ההצעה מתעדכנים.</p></li>
+        </ol>
+      </details>
+
+      <p class="journey-note">הדוגמאות מציגות תהליכים אפשריים. הטפסים, שלבי האישור והנתונים הזמינים אצלכם קובעים מה ייבנה בפועל.</p>
+    </div>
+  </section>
+
+  <section id="how-we-work" class="section section-border-top" aria-labelledby="how-title">
+    <div class="container">
+      <div class="section-head grid-head reveal">
+        <p class="eyebrow">איך אנחנו עובדים</p>
+        <h2 id="how-title">מתחילים בתהליך אחד שהצוות יכול לבדוק</h2>
+        <p class="subtitle">הביאו טופס, דוח או תהליך מעקב לקוחות שכבר קיים. יחד נגדיר את השלבים, את האנשים שמעורבים ואיך נראית תוצאה מועילה.</p>
+      </div>
+      <div class="work-grid reveal">
+        <div class="w-step">
+          <div class="w-num" aria-hidden="true">1</div>
+          <h3>בוחרים את התהליך הנכון</h3>
+          <p>בוחרים משימה שחוזרת על עצמה ומסכימים מה מודדים: זמן כתיבת דוחות, הקלדה ידנית כפולה או מעקב אחרי לקוחות.</p>
+        </div>
+        <div class="w-step">
+          <div class="w-num" aria-hidden="true">2</div>
+          <h3>עובדים לפי התהליך האמיתי</h3>
+          <p>אנחנו יושבים עם האנשים שעושים את העבודה היום, כולל החריגים, שיקולי הדעת והשלבים שאף אחד לא כתב, ומתכננים סביב זה.</p>
+        </div>
+        <div class="w-step">
+          <div class="w-num" aria-hidden="true">3</div>
+          <h3>מחברים את המערכות</h3>
+          <p>מוודאים אילו רשומות נדרשות, איך אפשר לגשת אליהן ואילו חיבורים אפשריים, לפני שמסכמים על הבנייה.</p>
+        </div>
+        <div class="w-step">
+          <div class="w-num" aria-hidden="true">4</div>
+          <h3>מטמיעים, מודדים, משפרים</h3>
+          <p>הצוות שלכם בודק את התהליך עם דוגמאות אמיתיות לפני ההטמעה. משווים את התוצאות למדד שסיכמנו, ואז מחליטים מה לשפר בהמשך.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-border-top bg-canvas" aria-labelledby="principles-title">
+    <div class="container">
+      <div class="section-head grid-head reveal">
+        <h2 id="principles-title">מה נשאר קבוע בכל מערכת</h2>
+        <p class="subtitle">מערכת נכנסת לשימוש רק אם האנשים שאחראים על העבודה סומכים עליה. אלה ההתחייבויות שלנו בכל מערכת שעולה לעבודה שוטפת.</p>
+      </div>
+      <div class="principle-grid reveal">
+
+        <div class="principle">
+          <div class="p-ic" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6"/><path d="M15 2v6"/><path d="M6 8h12v3a6 6 0 0 1-12 0V8z"/><path d="M12 17v5"/></svg>
+          </div>
+          <div>
+            <h3>מתחילים מהכלים שכבר יש לכם</h3>
+            <p>אנחנו עוברים על ה-CRM, ה-ERP, תיבות המייל והקבצים המשותפים, ומסכמים אילו חיבורים או ייבואים התהליך צריך.</p>
+          </div>
+        </div>
+
+        <div class="principle">
+          <div class="p-ic" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+          </div>
+          <div>
+            <h3>אנשים מקבלים את ההחלטות החשובות</h3>
+            <p>בכל מקום שבו נדרשים שיקול דעת מקצועי או אחריות, העבודה עוצרת לבדיקה של אדם. המומחים שלכם נשארים המומחים.</p>
+          </div>
+        </div>
+
+        <div class="principle">
+          <div class="p-ic" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+          </div>
+          <div>
+            <h3>מתחילים באחד, מתרחבים לפי תוצאות</h3>
+            <p>מתחילים בתהליך אחד ומוגדר שאפשר לשפוט ביושר. מה שבא אחריו נקבע לפי מה שהתהליך הזה באמת נתן.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section section-border-top" aria-labelledby="about-title">
+    <div class="container about reveal">
+      <div class="about-photo">
+        <img src="/aftermarket/eyal-taieb.jpg" alt="אייל טייב" width="720" height="900" loading="lazy">
+        <div class="tag"><strong>אייל טייב</strong><span>מייסד, MeetingScheduled</span></div>
+      </div>
+      <div class="about-copy">
+        <p class="eyebrow">עם מי תעבדו</p>
+        <h2 id="about-title">מדברים ישירות עם מי שבונה את המערכת.</h2>
+        <p>את MeetingScheduled מנהל אייל טייב. אייל בונה תוכנה עסקית ומערכות AI שעובדות כל יום בשימוש אמיתי: CRM, מערכת חיוג מרובת קווים, סוכנים קוליים וכלים לפנייה ללקוחות.</p>
+        <p>לפני כן עבד שמונה שנים במכירות B2B ובהבאת מוצרים לשוק. הניסיון הזה מכוון את העבודה לפי האופן שבו הלקוחות שלכם קונים והצוות שלכם עובד.</p>
+        <div class="direct"><a href="/field-service/he/">למערכת דוחות הבדיקה <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener">לקביעת שיחה עם אייל <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-border-top bg-canvas" style="text-align:center;" aria-labelledby="cta-title">
+    <div class="container">
+      <h2 id="cta-title">איפה העבודה נתקעת אצלכם?</h2>
+      <p class="subtitle" style="max-width:600px;margin-left:auto;margin-right:auto;">ספרו לנו על דוח אחד או תהליך מעקב לקוחות אחד. נדבר על המקום שבו העבודה נתקעת, אם מערכת יכולה לעזור ומה תכלול גרסה ראשונה.</p>
+      <div class="btn-row" style="margin-top:32px;">
+        <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-rose">לקביעת שיחה</a>
+        <a href="mailto:sales@meeting-scheduled.com" class="btn btn-secondary">שלחו לנו מייל</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-top">
+    <div class="footer-brand">
+      <a href="/he/" class="logo">
+        <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="white"/></svg></span>
+        MeetingScheduled
+      </a>
+      <p>מערכות לחברות שמחזיקות ציוד בפעולה: דוחות בדיקה, החזרת הזמנות חלפים ושירות ותהליכים בהתאמה אישית, שנבנים סביב הכלים והאנשים שכבר יש לכם.</p>
+      <a href="mailto:sales@meeting-scheduled.com" class="footer-email">sales@meeting-scheduled.com</a>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <p class="footer-col-title">פתרונות</p>
+        <a href="/field-service/he/">דוחות בדיקה</a>
+        <a href="/aftermarket/he/">החזרת הזמנות חלפים ושירות</a>
+        <a href="/he/#workflow-examples">מערכות בהתאמה אישית</a>
+        <a href="/receptionist/">AI Receptionist</a>
+        <a href="/outbound/">Outbound Sales</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">החברה</p>
+        <a href="/he/#how-we-work">איך אנחנו עובדים</a>
+        <a href="/he/#about">מי אנחנו</a>
+        <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener">בואו נדבר</a>
+        <a href="https://reach.meeting-scheduled.com">כניסה</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">משפטי</p>
+        <a href="/privacy">מדיניות פרטיות</a>
+        <a href="/terms.html">תנאי שימוש</a>
+        <a href="/" lang="en" hreflang="en">English</a>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© <span id="year"></span> MeetingScheduled. כל הזכויות שמורות.</p>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const menuBtn = document.getElementById('menuBtn');
+const mobileNav = document.getElementById('mobileNav');
+const iconOpen = document.getElementById('menuIconOpen');
+const iconClose = document.getElementById('menuIconClose');
+menuBtn.addEventListener('click', () => {
+  const isOpen = mobileNav.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', String(isOpen));
+  menuBtn.setAttribute('aria-label', isOpen ? 'סגירת תפריט' : 'פתיחת תפריט');
+  iconOpen.style.display = isOpen ? 'none' : 'block';
+  iconClose.style.display = isOpen ? 'block' : 'none';
+});
+mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mobileNav.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  menuBtn.setAttribute('aria-label', 'פתיחת תפריט');
+  iconOpen.style.display = 'block';
+  iconClose.style.display = 'none';
+}));
+
+const ddWrap = document.getElementById('solutionsDD');
+const ddBtn = document.getElementById('solutionsBtn');
+const ddMenu = document.getElementById('solutionsMenu');
+function setDropdown(open, returnFocus) {
+  ddMenu.hidden = !open;
+  ddBtn.setAttribute('aria-expanded', String(open));
+  if (!open && returnFocus) ddBtn.focus();
+}
+ddBtn.addEventListener('click', () => setDropdown(ddMenu.hidden));
+ddWrap.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !ddMenu.hidden) { e.preventDefault(); setDropdown(false, true); }
+});
+ddWrap.addEventListener('focusout', e => {
+  if (!ddWrap.contains(e.relatedTarget)) setDropdown(false);
+});
+document.addEventListener('pointerdown', e => {
+  if (!ddMenu.hidden && !ddWrap.contains(e.target)) setDropdown(false);
+});
+ddMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setDropdown(false)));
+
+const mGroupBtn = document.getElementById('mSolutionsBtn');
+const mGroup = document.getElementById('mSolutionsList');
+mGroupBtn.addEventListener('click', () => {
+  mGroup.hidden = !mGroup.hidden;
+  mGroupBtn.setAttribute('aria-expanded', String(!mGroup.hidden));
+});
+
+// Scroll-in: sections ease in once, journeys light up step by step once, mini illustrations loop only while visible.
+(() => {
+  const once = document.querySelectorAll('.reveal, .journey');
+  const loops = document.querySelectorAll('.mini');
+  if (!('IntersectionObserver' in window)) {
+    once.forEach(el => el.classList.add('is-on')); loops.forEach(el => el.classList.add('is-on')); return;
+  }
+  let seen = false;
+  const io = new IntersectionObserver(entries => { seen = true; entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('is-on'); io.unobserve(e.target); }
+  }); }, { threshold: 0, rootMargin: '0px 0px 15% 0px' });
+  once.forEach(el => io.observe(el));
+  // Safety net: if the browser never reports visibility, show everything rather than leave gaps.
+  setTimeout(() => { if (!seen && !document.hidden) once.forEach(el => el.classList.add('is-on')); }, 2500);
+  const lo = new IntersectionObserver(entries => entries.forEach(e => e.target.classList.toggle('is-on', e.isIntersecting)), { threshold: .3 });
+  loops.forEach(el => lo.observe(el));
+})();
+
+// Hero: the light leans gently toward the pointer, and the orbits rest while the hero is off screen.
+(() => {
+  const hero = document.querySelector('.hero');
+  const aura = document.getElementById('heroAura');
+  if (!hero || !aura) return;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => hero.classList.toggle('is-still', !e.isIntersecting)).observe(hero);
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(pointer: fine)').matches) return;
+  let raf = 0;
+  hero.addEventListener('pointermove', e => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      const r = hero.getBoundingClientRect();
+      aura.style.setProperty('--mx', ((e.clientX - r.left) / r.width - .5) * 60 + 'px');
+      aura.style.setProperty('--my', ((e.clientY - r.top) / r.height - .5) * 40 + 'px');
+    });
+  });
+  hero.addEventListener('pointerleave', () => { aura.style.setProperty('--mx', '0px'); aura.style.setProperty('--my', '0px'); });
+})();
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href').slice(1);
+    const el = id ? document.getElementById(id) : null;
+    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+
+<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345c5509-5794-4f9b-9fca-729075f9eea3";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+
+</body>
+</html>
