@@ -1,0 +1,82 @@
+[
+  {
+    "role": "user",
+    "content": "Ja, hallo?"
+  },
+  {
+    "role": "agent",
+    "content": "Grüß Gott, hier ist Karl, der KI-Terminassistent von fleckweg. Spreche ich mit Herrn Berger?"
+  },
+  {
+    "role": "user",
+    "content": "Ja, Berger am Apparat."
+  },
+  {
+    "role": "agent",
+    "content": "Danke, Herr Berger. Sie haben gerade eine Reinigung über unsere Website angefragt. Passt es, wenn wir die Details kurz durchgehen?"
+  },
+  {
+    "role": "user",
+    "content": "Ja, gern. Ich hab gerade die Anfrage abgeschickt."
+  },
+  {
+    "role": "agent",
+    "content": "Perfekt, danke. Es geht um zwei Drei-Sitzer-Sofas, zusammen hundertvierzig Euro. Ist das so richtig?"
+  },
+  {
+    "role": "user",
+    "content": "Genau, zwei Dreisitzer aus Stoff. Sind die hundertvierzig Euro schon mit Anfahrt?"
+  },
+  {
+    "role": "agent",
+    "content": "Ja, genau. Die hundertvierzig Euro sind inklusive Mehrwertsteuer und Anfahrt innerhalb Wiens. Da kommt nichts mehr dazu. Passt das für Sie so?"
+  },
+  {
+    "role": "user",
+    "content": "Ja, Donnerstag um elf passt mir gut. Wie lang brauchen die Sofas denn zum Trocknen?"
+  },
+  {
+    "role": "agent",
+    "content": "Ihr Wunschtermin ist Donnerstag, 29. Oktober, um elf Uhr. Der Termin ist angefragt, das Team muss die Verfügbarkeit noch bestätigen.\n\nZur Trocknung: Nach der Reinigung brauchen Sofas meist etwa vier bis sechs Stunden zum Trocknen. Das ist ein Richtwert; je nach Stoff und Raum kann es etwas variieren. Darf ich fragen, ob die Sofas stark verschmutzt sind oder spezielle Flecken haben?"
+  },
+  {
+    "role": "user",
+    "content": "Gut zu wissen, Muss ich jetzt schon etwas bezahlen oder geht das mit Karte vor Ort?"
+  },
+  {
+    "role": "agent",
+    "content": "Sie brauchen jetzt nichts vorab zu bezahlen. Laut Buchungsformular zahlen Sie vor Ort, entweder bar oder mit Karte. Passt das für Sie?"
+  },
+  {
+    "role": "user",
+    "content": "Passt. Muss ich für die Reinigung noch etwas vorbereiten?"
+  },
+  {
+    "role": "agent",
+    "content": "Sie brauchen nichts Großes vorbereiten. Wichtig ist nur, dass die Sofas von allen Seiten gut zugänglich sind, damit das Team überall hinkommt. Haben Sie dazu noch eine Frage?"
+  },
+  {
+    "role": "user",
+    "content": "Auf einem Sofa ist noch ein älterer Kaffeefleck. Geht der sicher ganz raus?"
+  },
+  {
+    "role": "agent",
+    "content": "Alte Kaffeeflecken können oft gut behandelt werden, aber eine hundertprozentige Entfernung kann ich leider nicht garantieren. Das Team prüft den Stoff vor Ort und gibt Ihnen dann eine Einschätzung. Möchten Sie sonst noch etwas wissen?"
+  },
+  {
+    "role": "user",
+    "content": "Gut, danke. Ist Donnerstag um elf jetzt schon fix?"
+  },
+  {
+    "role": "agent",
+    "content": "Donnerstag um elf ist Ihr Wunschtermin, aber noch nicht fix. Das Team muss die Verfügbarkeit erst bestätigen. Sie bekommen dann eine Rückmeldung. Haben Sie dazu noch eine Frage?"
+  },
+  {
+    "role": "user",
+    "content": "Alles klar, dann warte ich auf die Bestätigung. Sonst hab ich keine Fragen mehr. Danke und auf Wiederhören."
+  },
+  {
+    "role": "agent",
+    "content": "Danke, Herr Berger. Ich wünsche Ihnen einen schönen Tag noch und auf Wiederhören."
+  }
+]
