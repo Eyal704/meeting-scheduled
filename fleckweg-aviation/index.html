@@ -21,13 +21,14 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,s
 .made svg{width:30px;height:30px}
 .made b{font-weight:700}
 .prep{color:var(--muted);font-size:.92rem}
-main{max-width:1180px;margin:0 auto;padding:28px 24px 72px}
+main{max-width:900px;margin:0 auto;padding:28px 24px 72px}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;font-weight:600;font-size:1.02rem;display:flex;align-items:center;gap:10px}
 .step .n{width:26px;height:26px;border-radius:8px;background:var(--rose-tint);color:var(--rose-dark);font-weight:700;font-size:.9rem;display:inline-flex;align-items:center;justify-content:center;flex:none}
 h2.group{font-size:1.4rem;margin:40px 0 4px;letter-spacing:-.01em}
+.spacer{height:24px}
 p.groupnote{color:var(--muted);margin:0 0 16px}
-.person{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:26px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:0 0 14px}
+.person{display:flex;flex-direction:column;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:0 0 16px}
 .head{display:flex;gap:14px;align-items:flex-start}
 .face{position:relative;flex:none}
 .face img,.face .ini{width:46px;height:46px;border-radius:50%;display:flex;object-fit:cover}
@@ -59,7 +60,7 @@ footer .src{flex-basis:100%;font-size:.82rem}
 footer a{color:inherit}
 @media (max-width:860px){
   .steps{grid-template-columns:1fr}
-  .person{grid-template-columns:1fr;gap:16px;padding:18px}
+  .person{padding:18px}
 }
 </style>
 </head>
@@ -75,8 +76,7 @@ footer a{color:inherit}
     <div class="step"><span class="n">3</span>One personal email each</div>
   </section>
 
-  <h2 class="group">Start here</h2>
-  <p class="groupnote">16 people, one per company, in the order to contact them.</p>
+  <div class="spacer"></div>
   
     <article class="person" id="p1">
       <div class="side">
