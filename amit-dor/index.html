@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="darkreader-lock">
+<title>מעקב לקוחות · דמו לעמית דור</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #12305f;
+    --navy-2: #1c4483;
+    --sky: #2a8fd6;
+    --sky-soft: #e6f2fc;
+    --bg: #f3f6fa;
+    --card: #ffffff;
+    --line: #e2e8f0;
+    --text: #1a2433;
+    --muted: #64748b;
+    --green: #16a34a;
+    --green-soft: #e8f7ee;
+    --amber: #b45309;
+    --amber-soft: #fdf3e3;
+    --red: #b91c1c;
+    --red-soft: #fdecec;
+    --wa: #e7fbe9;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Heebo", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* Demo ribbon */
+  .ribbon {
+    background: #fff7e0;
+    color: #7a5200;
+    text-align: center;
+    font-size: 13px;
+    padding: 6px 16px;
+    border-bottom: 1px solid #f2e1b0;
+  }
+
+  /* Header */
+  header {
+    background: linear-gradient(90deg, var(--navy), var(--navy-2));
+    color: #fff;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(255,255,255,0.12);
+    display: grid; place-items: center;
+  }
+  .brand h1 { margin: 0; font-size: 19px; font-weight: 700; }
+  .brand p { margin: 0; font-size: 13px; opacity: 0.8; }
+  .sync {
+    font-size: 13px;
+    background: rgba(255,255,255,0.12);
+    padding: 6px 12px;
+    border-radius: 999px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; }
+
+  main { max-width: 1180px; margin: 0 auto; padding: 22px 24px 40px; }
+
+  .hello { display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .hello h2 { margin: 0; font-size: 24px; font-weight: 800; }
+  .hello .date { color: var(--muted); font-size: 14px; }
+
+  /* KPI tiles */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .kpi {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 14px 16px;
+  }
+  .kpi .label { font-size: 13px; color: var(--muted); }
+  .kpi .value { font-size: 28px; font-weight: 800; color: var(--navy); line-height: 1.2; margin-top: 2px; }
+  .kpi .sub { font-size: 12.5px; color: var(--muted); }
+  .kpi.hot { border-color: var(--sky); box-shadow: 0 0 0 3px var(--sky-soft); }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 6px; border-bottom: 1px solid var(--line); margin-bottom: 18px; overflow-x: auto; }
+  .tab {
+    background: none; border: none; padding: 10px 14px; font-size: 15px; font-weight: 600;
+    color: var(--muted); border-bottom: 3px solid transparent; white-space: nowrap;
+  }
+  .tab.active { color: var(--navy); border-bottom-color: var(--sky); }
+  .tab .count {
+    display: inline-block; min-width: 20px; padding: 0 6px; margin-inline-start: 6px;
+    border-radius: 999px; background: var(--sky-soft); color: var(--navy); font-size: 12px;
+  }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* Layout with side preview */
+  .split { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 18px; align-items: start; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+  .card-head { padding: 14px 18px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .card-head h3 { margin: 0; font-size: 16px; }
+  .card-head .hint { font-size: 13px; color: var(--muted); }
+
+  /* Call list rows */
+  .row {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px;
+    padding: 14px 18px; border-bottom: 1px solid var(--line); cursor: pointer;
+    transition: background 0.15s;
+  }
+  .row:last-child { border-bottom: none; }
+  .row:hover { background: #f8fbfe; }
+  .row.selected { background: var(--sky-soft); }
+  .row .name { font-weight: 700; }
+  .row .meta { font-size: 13px; color: var(--muted); }
+  .row .history { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  .tag {
+    display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 999px;
+    margin-inline-start: 6px; vertical-align: 1px;
+  }
+  .tag.winter { background: var(--sky-soft); color: var(--navy-2); }
+  .tag.contract { background: #efe9fd; color: #5b3cc4; }
+  .tag.check { background: var(--amber-soft); color: var(--amber); }
+  .tag.first { background: var(--green-soft); color: var(--green); }
+  .actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+  .btn {
+    border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 5px 10px;
+    font-size: 13px; font-weight: 600; color: var(--text);
+  }
+  .btn:hover { border-color: var(--sky); }
+  .btn.ok { color: var(--green); }
+  .btn.no { color: var(--muted); }
+  .status {
+    font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 8px;
+  }
+  .status.booked { background: var(--green-soft); color: var(--green); }
+  .status.noanswer { background: var(--amber-soft); color: var(--amber); }
+  .status.declined { background: #f1f5f9; color: var(--muted); }
+  .undo { background: none; border: none; color: var(--muted); font-size: 12px; text-decoration: underline; padding: 0 4px; }
+
+  /* Phone preview */
+  .preview { position: sticky; top: 16px; }
+  .phone {
+    background: #fff; border: 1px solid var(--line); border-radius: 22px; overflow: hidden;
+  }
+  .phone-top { background: #075e54; color: #fff; padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.2); display: grid; place-items: center; font-weight: 700; }
+  .phone-top .who { font-weight: 600; font-size: 14px; }
+  .phone-top .sub { font-size: 12px; opacity: 0.8; }
+  .chat { background: #efeae2; padding: 16px 12px; min-height: 230px; display: flex; flex-direction: column; gap: 8px; }
+  .bubble {
+    max-width: 88%; background: var(--wa); padding: 8px 10px; border-radius: 10px; font-size: 14px;
+    align-self: flex-start; box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+  }
+  .bubble.reminder { opacity: 0.92; }
+  .bubble .time { display: block; text-align: left; font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .preview-note { font-size: 12.5px; color: var(--muted); padding: 10px 4px 0; }
+
+  /* Installations */
+  .install { padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .install:last-child { border-bottom: none; }
+  .install .top { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .install .when { font-size: 13px; color: var(--muted); }
+  .steps { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .step {
+    font-size: 12.5px; padding: 3px 10px; border-radius: 999px; background: var(--green-soft); color: var(--green); font-weight: 600;
+  }
+  .step.pending { background: #f1f5f9; color: var(--muted); }
+  .new-badge { background: var(--sky); color: #fff; font-size: 11px; font-weight: 700; padding: 1px 8px; border-radius: 999px; margin-inline-start: 6px; }
+
+  /* Season funnel */
+  .season-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+  .funnel { padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+  .bar-row .lbl { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 4px; }
+  .bar-row .lbl b { color: var(--navy); }
+  .bar { height: 12px; background: #eef2f7; border-radius: 999px; overflow: hidden; }
+  .bar span { display: block; height: 100%; background: var(--sky); border-radius: 999px; }
+  .bar.green span { background: var(--green); }
+  .bar.amber span { background: #f59e0b; }
+  .bar.gray span { background: #94a3b8; }
+  .timeline { padding: 16px 18px; display: flex; flex-direction: column; gap: 14px; }
+  .tl-item { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 10px; }
+  .tl-item .d { font-weight: 700; color: var(--navy); font-size: 14px; }
+  .tl-item .t { font-size: 14px; }
+  .tl-item .t small { display: block; color: var(--muted); font-size: 12.5px; }
+  .tl-item.future .d, .tl-item.future .t { opacity: 0.6; }
+
+  /* Contracts table */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: right; font-size: 12.5px; color: var(--muted); font-weight: 600; padding: 10px 18px; border-bottom: 1px solid var(--line); }
+  td { padding: 12px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td .small { font-size: 12.5px; color: var(--muted); }
+  .due-soon { color: var(--red); font-weight: 700; }
+
+  /* Rules */
+  .rule { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .rule:last-child { border-bottom: none; }
+  .rule .t { font-weight: 700; }
+  .rule .d { font-size: 13px; color: var(--muted); }
+  .switch { position: relative; width: 44px; height: 24px; flex: none; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider { position: absolute; inset: 0; background: #cbd5e1; border-radius: 999px; transition: 0.2s; cursor: pointer; }
+  .slider::before { content: ""; position: absolute; width: 18px; height: 18px; top: 3px; right: 3px; background: #fff; border-radius: 50%; transition: 0.2s; }
+  .switch input:checked + .slider { background: var(--sky); }
+  .switch input:checked + .slider::before { transform: translateX(-20px); }
+  .source { padding: 14px 18px; font-size: 14px; display: flex; flex-direction: column; gap: 6px; }
+  .source b { color: var(--navy); }
+
+  footer { text-align: center; font-size: 13px; color: var(--muted); padding: 10px 16px 30px; }
+  footer a { color: var(--navy-2); }
+
+  @media (max-width: 900px) {
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .split, .season-grid { grid-template-columns: minmax(0, 1fr); }
+    .preview { position: static; }
+  }
+  @media (max-width: 560px) {
+    header { padding: 12px 16px; }
+    main { padding: 16px 16px 32px; }
+    .kpi .value { font-size: 24px; }
+    .row { grid-template-columns: minmax(0, 1fr); }
+    .actions { justify-content: flex-start; }
+    th, td { padding: 10px 12px; }
+    .hide-sm { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon">דמו להמחשה · כל השמות והנתונים בעמוד הם לדוגמה בלבד</div>
+
+<header>
+  <div class="brand">
+    <div class="logo" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v20M4.9 6l14.2 12M19.1 6 4.9 18M9 3.5l3 2.5 3-2.5M9 20.5l3-2.5 3 2.5"/></svg>
+    </div>
+    <div>
+      <h1>עמית דור · מעקב לקוחות</h1>
+      <p>תזכורות טיפול, התקנות וחוזי אחזקה במקום אחד</p>
+    </div>
+  </div>
+  <div class="sync"><span class="dot"></span>מסונכרן עם בינה · היום 06:00</div>
+</header>
+
+<main>
+  <div class="hello">
+    <h2>בוקר טוב אתי</h2>
+    <div class="date">יום שלישי, 3 בנובמבר 2026</div>
+  </div>
+
+  <section class="kpis">
+    <div class="kpi hot">
+      <div class="label">לקוחות לשיחה היום</div>
+      <div class="value" id="kpi-today">9</div>
+      <div class="sub">קיבלו הודעה ולא ענו</div>
+    </div>
+    <div class="kpi">
+      <div class="label">התקנות חדשות השבוע</div>
+      <div class="value">4</div>
+      <div class="sub">כולן קיבלו מועד לטיפול ראשון</div>
+    </div>
+    <div class="kpi">
+      <div class="label">טיפולי חורף שנקבעו</div>
+      <div class="value" id="kpi-booked">52</div>
+      <div class="sub">מתוך 214 לקוחות שקיבלו תזכורת</div>
+    </div>
+    <div class="kpi">
+      <div class="label">חוזי אחזקה לחידוש</div>
+      <div class="value">5</div>
+      <div class="sub">ב-60 הימים הקרובים</div>
+    </div>
+  </section>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="today">לשיחה היום<span class="count" id="tab-today-count">9</span></button>
+    <button class="tab" data-tab="installs">התקנות חדשות<span class="count">4</span></button>
+    <button class="tab" data-tab="season">טיפולי חורף</button>
+    <button class="tab" data-tab="contracts">חוזים ובדיקות<span class="count">6</span></button>
+    <button class="tab" data-tab="rules">מה רץ אוטומטית</button>
+  </nav>
+
+  <!-- TODAY -->
+  <section class="panel active" id="panel-today">
+    <div class="split">
+      <div class="card">
+        <div class="card-head">
+          <h3>למי להתקשר היום</h3>
+          <span class="hint">לקוחות שקיבלו הודעה ולא ענו. לחצי על לקוח כדי לראות מה נשלח.</span>
+        </div>
+        <div id="call-list"></div>
+      </div>
+      <aside class="preview">
+        <div class="phone">
+          <div class="phone-top">
+            <div class="avatar" id="pv-avatar">מ</div>
+            <div>
+              <div class="who" id="pv-name">משה לוי</div>
+              <div class="sub">וואטסאפ מעמית דור</div>
+            </div>
+          </div>
+          <div class="chat" id="pv-chat"></div>
+        </div>
+        <div class="preview-note">ההודעות יוצאות אוטומטית בשם עמית דור. מי שלא עונה עובר לרשימת השיחות שלך.</div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- INSTALLS -->
+  <section class="panel" id="panel-installs">
+    <div class="card">
+      <div class="card-head">
+        <h3>התקנות שבוצעו השבוע</h3>
+        <span class="hint">נמשך מבינה כל בוקר. כל התקנה נכנסת למעקב בלי שמישהו יזין אותה.</span>
+      </div>
+      <div id="install-list"></div>
+    </div>
+  </section>
+
+  <!-- SEASON -->
+  <section class="panel" id="panel-season">
+    <div class="season-grid">
+      <div class="card">
+        <div class="card-head">
+          <h3>תזכורות לטיפול חורף 2026</h3>
+          <span class="hint">לקוחות שהטיפול האחרון שלהם היה לפני יותר מ-10 חודשים</span>
+        </div>
+        <div class="funnel">
+          <div class="bar-row"><div class="lbl"><span>קיבלו תזכורת בוואטסאפ</span><b>214</b></div><div class="bar"><span style="width:100%"></span></div></div>
+          <div class="bar-row"><div class="lbl"><span>קבעו טיפול</span><b id="season-booked">52</b></div><div class="bar green"><span id="season-booked-bar" style="width:24%"></span></div></div>
+          <div class="bar-row"><div class="lbl"><span>ביקשו לחזור אליהם אחר כך</span><b>17</b></div><div class="bar amber"><span style="width:8%"></span></div></div>
+          <div class="bar-row"><div class="lbl"><span>לא מעוניינים</span><b>9</b></div><div class="bar gray"><span style="width:4%"></span></div></div>
+          <div class="bar-row"><div class="lbl"><span>לא ענו גם אחרי תזכורת שנייה, ממתינים לשיחה</span><b id="season-waiting">61</b></div><div class="bar amber"><span id="season-waiting-bar" style="width:28.5%"></span></div></div>
+          <div class="bar-row"><div class="lbl"><span>עדיין בתוך חלון התשובה</span><b>75</b></div><div class="bar"><span style="width:35%;opacity:.45"></span></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>איך העונה רצה</h3></div>
+        <div class="timeline">
+          <div class="tl-item"><div class="d">15.10</div><div class="t">המערכת שולפת מבינה את כל מי שלא קיבל טיפול מאז דצמבר 2025<small>214 לקוחות פרטיים ועסקיים</small></div></div>
+          <div class="tl-item"><div class="d">20.10</div><div class="t">נשלחה תזכורת בוואטסאפ לכל לקוח, עם תאריך הטיפול האחרון שלו<small>מי שעונה "כן" מופיע אצלך לתיאום</small></div></div>
+          <div class="tl-item"><div class="d">27.10</div><div class="t">תזכורת שנייה, רק למי שלא ענה</div></div>
+          <div class="tl-item"><div class="d">מ-1.11</div><div class="t">מי שעדיין לא ענה עובר לרשימת השיחות, 9 ביום<small>כדי שהמשרד לא יקבל 60 שיחות ביום אחד</small></div></div>
+          <div class="tl-item future"><div class="d">1.4.27</div><div class="t">אותו תהליך רץ שוב לפני הקיץ</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTRACTS -->
+  <section class="panel" id="panel-contracts">
+    <div class="card">
+      <div class="card-head">
+        <h3>חוזי אחזקה ובדיקות תקופתיות</h3>
+        <span class="hint">לקוחות עסקיים, ועדי בית ומוסדות. תזכורת יוצאת 45 יום לפני המועד.</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>לקוח</th><th>מה</th><th>מועד</th><th class="hide-sm">מה קרה עד עכשיו</th></tr></thead>
+          <tbody>
+            <tr><td><b>ועד בית "הדקל 12"</b><div class="small">תל אביב · VRF</div></td><td>חידוש חוזה אחזקה שנתי</td><td class="due-soon">30.11.2026</td><td class="hide-sm">הודעה נשלחה 19.10, לא ענו. ברשימת השיחות היום.</td></tr>
+            <tr><td><b>מסעדת הגפן</b><div class="small">רמת גן · מטבח מסחרי</div></td><td>בדיקה שנתית למערכת פינוי עשן</td><td class="due-soon">20.11.2026</td><td class="hide-sm">הודעה נשלחה 21.10, לא ענו. ברשימת השיחות היום.</td></tr>
+            <tr><td><b>אופק ייעוץ</b><div class="small">פתח תקווה · 3 מיני מרכזי</div></td><td>חידוש חוזה אחזקה שנתי</td><td>15.12.2026</td><td class="hide-sm">הודעה נשלחה 31.10, לא ענו. ברשימת השיחות היום.</td></tr>
+            <tr><td><b>גן ילדים שקד</b><div class="small">הרצליה · סינון אוויר</div></td><td>בדיקה תקופתית לסינון אוויר</td><td>25.11.2026</td><td class="hide-sm">הודעה נשלחה 22.10, לא ענו. ברשימת השיחות היום.</td></tr>
+            <tr><td><b>בית מלון "חוף הים"</b><div class="small">בת ים · צ'ילר</div></td><td>חידוש חוזה אחזקה שנתי</td><td>31.12.2026</td><td class="hide-sm">ביקשו הצעה מעודכנת. הועבר אלייך 28.10.</td></tr>
+            <tr><td><b>מרפאת שיניים רמות</b><div class="small">גבעתיים · מיני מרכזי</div></td><td>טיפול חצי שנתי</td><td>10.12.2026</td><td class="hide-sm">נקבע טיפול ל-8.12.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- RULES -->
+  <section class="panel" id="panel-rules">
+    <div class="split">
+      <div class="card">
+        <div class="card-head">
+          <h3>מה רץ אוטומטית</h3>
+          <span class="hint">כל כלל אפשר לכבות, לשנות תזמון או לשנות את נוסח ההודעה</span>
+        </div>
+        <div class="rule"><div><div class="t">התראה על התקנה חדשה</div><div class="d">כל התקנה שנסגרת בבינה מגיעה אלייך, נשלחת ללקוח הודעת תודה ונקבע לו מועד לטיפול ראשון</div></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="rule"><div><div class="t">תזכורת לטיפול לפני הקיץ</div><div class="d">יוצאת ב-1 באפריל לכל מי שלא קיבל טיפול ב-10 החודשים האחרונים</div></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="rule"><div><div class="t">תזכורת לטיפול לפני החורף</div><div class="d">יוצאת ב-20 באוקטובר, באותו כלל</div></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="rule"><div><div class="t">בדיקות תקופתיות</div><div class="d">תזכורת ללקוח 45 יום לפני מועד הבדיקה (פינוי עשן, סינון אוויר וכדומה)</div></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="rule"><div><div class="t">חידוש חוזה אחזקה</div><div class="d">45 יום לפני סוף החוזה. אם הלקוח מבקש הצעה, זה מגיע אלייך</div></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="rule"><div><div class="t">תזכורת שנייה למי שלא ענה</div><div class="d">שבוע אחרי ההודעה הראשונה, ואז הלקוח עובר לרשימת השיחות</div></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>מה נשאר כמו היום</h3></div>
+        <div class="source">
+          <div><b>בינה נשארת המערכת הראשית.</b> הנתונים נמשכים ממנה כל בוקר, ולא צריך להזין שום דבר פעמיים.</div>
+          <div><b>הטכנאים לא משנים כלום.</b> הם ממשיכים לעבוד כמו היום.</div>
+          <div><b>קביעת התור נשארת אצלכם.</b> המערכת רק דואגת שאף לקוח לא ייפול בין הכיסאות.</div>
+          <div><b>מי שביקש לא לקבל הודעות</b> לא מקבל אותן.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>דמו שהוכן עבור עמית דור על ידי אייל טייב · <a href="tel:0538276288">053-8276288</a></footer>
+
+<script>
+  const customers = [
+    { id: 1, name: 'משה לוי', city: 'רמת גן', kind: 'winter', kindLabel: 'טיפול חורף',
+      detail: '3 מזגנים מפוצלים · טיפול אחרון נובמבר 2025', history: 'הודעה 20.10 · תזכורת 27.10 · לא ענה',
+      msgs: [
+        { t: 'היי משה, כאן עמית דור מיזוג אוויר. הטיפול האחרון במזגנים אצלך היה בנובמבר 2025. לפני החורף כדאי לנקות פילטרים ולבדוק את החימום. לתאם טכנאי? אפשר פשוט לענות כאן.', d: '20.10 · 10:02' },
+        { t: 'היי משה, רק מזכירים לגבי טיפול לפני החורף. אם נוח, תענה "כן" ונחזור אליך לתאם.', d: '27.10 · 10:05', r: true } ] },
+    { id: 2, name: 'ועד בית "הדקל 12"', city: 'תל אביב', kind: 'contract', kindLabel: 'חידוש חוזה',
+      detail: 'מערכת VRF · חוזה אחזקה עד 30.11.2026', history: 'הודעה 19.10 · תזכורת 26.10 · לא ענו',
+      msgs: [
+        { t: 'שלום, כאן עמית דור. חוזה האחזקה של מערכת המיזוג בבניין מסתיים ב-30.11. לשלוח לכם את תנאי החידוש לשנה הבאה?', d: '19.10 · 09:30' },
+        { t: 'שלום, מזכירים שהחוזה מסתיים בסוף החודש. נשמח לשלוח הצעה לחידוש.', d: '26.10 · 09:31', r: true } ] },
+    { id: 3, name: 'מסעדת הגפן', city: 'רמת גן', kind: 'check', kindLabel: 'בדיקה תקופתית',
+      detail: 'פינוי עשן במטבח · בדיקה אחרונה נובמבר 2025', history: 'הודעה 21.10 · תזכורת 28.10 · לא ענו',
+      msgs: [
+        { t: 'שלום, כאן עמית דור. הגיע מועד הבדיקה השנתית למערכת פינוי העשן במטבח (האחרונה הייתה בנובמבר 2025). לתאם ביקור טכנאי בשבועיים הקרובים?', d: '21.10 · 11:15' } ] },
+    { id: 4, name: 'יוסי אברהם', city: 'חולון', kind: 'first', kindLabel: 'טיפול ראשון',
+      detail: 'מזגן אינוורטר 1.5 כ"ס · הותקן מאי 2026', history: 'הודעה 25.10 · לא ענה',
+      msgs: [
+        { t: 'היי יוסי, כאן עמית דור. עברו כמעט חצי שנה מההתקנה של המזגן החדש. לפני החורף כדאי לעשות טיפול ראשון. לתאם טכנאי?', d: '25.10 · 10:40' } ] },
+    { id: 5, name: 'רונית כהן', city: 'גבעתיים', kind: 'winter', kindLabel: 'טיפול חורף',
+      detail: 'מיני מרכזי · טיפול אחרון אוקטובר 2025', history: 'הודעה 20.10 · תזכורת 27.10 · לא ענתה',
+      msgs: [
+        { t: 'היי רונית, כאן עמית דור מיזוג אוויר. הטיפול האחרון במיני מרכזי אצלך היה באוקטובר 2025. לפני החורף כדאי לבדוק את המערכת. לתאם טכנאי?', d: '20.10 · 10:02' },
+        { t: 'היי רונית, רק מזכירים לגבי טיפול לפני החורף. אפשר לענות "כן" ונחזור אלייך.', d: '27.10 · 10:05', r: true } ] },
+    { id: 6, name: 'אופק ייעוץ', city: 'פתח תקווה', kind: 'contract', kindLabel: 'חידוש חוזה',
+      detail: '3 מיני מרכזי במשרדים · חוזה עד 15.12.2026', history: 'הודעה 31.10 · לא ענו',
+      msgs: [
+        { t: 'שלום, כאן עמית דור. חוזה האחזקה למערכות המיזוג במשרד מסתיים ב-15.12. לשלוח לכם את תנאי החידוש?', d: '31.10 · 09:20' } ] },
+    { id: 7, name: 'דנה שפירא', city: 'רמת השרון', kind: 'winter', kindLabel: 'טיפול חורף',
+      detail: '4 מזגנים מפוצלים · טיפול אחרון ספטמבר 2025', history: 'הודעה 20.10 · תזכורת 27.10 · לא ענתה',
+      msgs: [
+        { t: 'היי דנה, כאן עמית דור מיזוג אוויר. הטיפול האחרון במזגנים אצלך היה בספטמבר 2025. לפני החורף כדאי לנקות פילטרים ולבדוק את החימום. לתאם טכנאי?', d: '20.10 · 10:02' },
+        { t: 'היי דנה, רק מזכירים לגבי טיפול לפני החורף. אפשר לענות "כן" ונחזור אלייך.', d: '27.10 · 10:05', r: true } ] },
+    { id: 8, name: 'אבי מזרחי', city: 'בת ים', kind: 'winter', kindLabel: 'טיפול חורף',
+      detail: '2 מזגנים · טיפול אחרון דצמבר 2024 (פספס את קיץ 2026)', history: 'הודעה 20.10 · תזכורת 27.10 · לא ענה',
+      msgs: [
+        { t: 'היי אבי, כאן עמית דור מיזוג אוויר. עבר כמעט שנתיים מהטיפול האחרון במזגנים אצלך (דצמבר 2024). לפני החורף כדאי לבדוק אותם. לתאם טכנאי?', d: '20.10 · 10:02' },
+        { t: 'היי אבי, רק מזכירים לגבי טיפול לפני החורף. אפשר לענות "כן" ונחזור אליך.', d: '27.10 · 10:05', r: true } ] },
+    { id: 9, name: 'גן ילדים שקד', city: 'הרצליה', kind: 'check', kindLabel: 'בדיקה תקופתית',
+      detail: 'סינון אוויר · בדיקה אחרונה נובמבר 2025', history: 'הודעה 22.10 · תזכורת 29.10 · לא ענו',
+      msgs: [
+        { t: 'שלום, כאן עמית דור. הגיע מועד הבדיקה התקופתית למערכת סינון האוויר בגן (האחרונה הייתה בנובמבר 2025). לתאם ביקור טכנאי?', d: '22.10 · 08:45' },
+        { t: 'שלום, מזכירים לגבי הבדיקה התקופתית. נשמח לתאם מועד שנוח לכם.', d: '29.10 · 08:50', r: true } ] }
+  ];
+
+  const installs = [
+    { when: 'היום, 08:12', isNew: true, name: 'נועה ברק', city: 'רמת גן', what: '2 מזגנים מפוצלים · טכנאי: שרון',
+      steps: ['התראה אלייך', 'הודעת תודה נשלחה ללקוחה', 'טיפול ראשון נקבע לאפריל 2027 (לפני הקיץ)'] },
+    { when: 'אתמול', isNew: true, name: 'משפחת גולן', city: 'כפר סבא', what: 'מיני מרכזי · טכנאי: אלון',
+      steps: ['התראה אלייך', 'הודעת תודה נשלחה', 'טיפול ראשון נקבע לאפריל 2027'] },
+    { when: 'יום ראשון, 1.11', isNew: false, name: 'קפה בוקר טוב', city: 'תל אביב', what: '3 מזגנים + פינוי עשן · טכנאי: שרון',
+      steps: ['התראה אלייך', 'הודעת תודה נשלחה', 'בדיקה תקופתית לפינוי עשן נקבעה לנובמבר 2027', 'הצעה לחוזה אחזקה תצא בעוד 30 יום'] },
+    { when: 'חמישי, 29.10', isNew: false, name: 'עו"ד שרון טל', city: 'הרצליה', what: 'מזגן אינוורטר במשרד · טכנאי: אלון',
+      steps: ['התראה אלייך', 'הודעת תודה נשלחה', 'טיפול ראשון נקבע לאפריל 2027'] }
+  ];
+
+  const tagClass = { winter: 'winter', contract: 'contract', check: 'check', first: 'first' };
+  const statusText = { booked: 'נקבע טיפול', noanswer: 'לא ענה, ננסה מחר', declined: 'לא מעוניין' };
+  const state = {};
+  let selected = 1;
+  let booked = 52;
+
+  function renderCalls() {
+    const box = document.getElementById('call-list');
+    box.innerHTML = customers.map(c => {
+      const s = state[c.id];
+      const actions = s
+        ? `<span class="status ${s}">${statusText[s]}</span><button class="undo" data-undo="${c.id}">ביטול</button>`
+        : `<button class="btn ok" data-act="booked" data-id="${c.id}">נקבע</button>
+           <button class="btn" data-act="noanswer" data-id="${c.id}">לא ענה</button>
+           <button class="btn no" data-act="declined" data-id="${c.id}">לא מעוניין</button>`;
+      return `<div class="row ${c.id === selected ? 'selected' : ''}" data-row="${c.id}">
+        <div>
+          <div class="name">${c.name}<span class="tag ${tagClass[c.kind]}">${c.kindLabel}</span></div>
+          <div class="meta">${c.city} · ${c.detail}</div>
+          <div class="history">${c.history}</div>
+        </div>
+        <div class="actions">${actions}</div>
+      </div>`;
+    }).join('');
+    const open = customers.filter(c => !state[c.id]).length;
+    document.getElementById('kpi-today').textContent = open;
+    document.getElementById('tab-today-count').textContent = open;
+    document.getElementById('kpi-booked').textContent = booked;
+    document.getElementById('season-booked').textContent = booked;
+    document.getElementById('season-booked-bar').style.width = (booked / 214 * 100) + '%';
+    const waiting = 61 - (booked - 52);
+    document.getElementById('season-waiting').textContent = waiting;
+    document.getElementById('season-waiting-bar').style.width = (waiting / 214 * 100) + '%';
+  }
+
+  function renderPreview() {
+    const c = customers.find(x => x.id === selected);
+    document.getElementById('pv-name').textContent = c.name;
+    document.getElementById('pv-avatar').textContent = c.name.replace(/^(ועד בית |מסעדת |גן ילדים )/, '').replace(/"/g, '').charAt(0);
+    document.getElementById('pv-chat').innerHTML = c.msgs.map(m =>
+      `<div class="bubble ${m.r ? 'reminder' : ''}">${m.t}<span class="time">${m.d} ✓✓</span></div>`).join('');
+  }
+
+  function renderInstalls() {
+    document.getElementById('install-list').innerHTML = installs.map(i => `
+      <div class="install">
+        <div class="top">
+          <div><b>${i.name}</b>${i.isNew ? '<span class="new-badge">חדש</span>' : ''} · ${i.city}<div class="when">${i.what}</div></div>
+          <div class="when">${i.when}</div>
+        </div>
+        <div class="steps">${i.steps.map(s => `<span class="step">✓ ${s}</span>`).join('')}</div>
+      </div>`).join('');
+  }
+
+  document.getElementById('call-list').addEventListener('click', e => {
+    const act = e.target.closest('[data-act]');
+    const undo = e.target.closest('[data-undo]');
+    if (act) {
+      const id = +act.dataset.id;
+      state[id] = act.dataset.act;
+      if (act.dataset.act === 'booked' && customers.find(c => c.id === id).kind === 'winter') booked++;
+      selected = id;
+    } else if (undo) {
+      const id = +undo.dataset.undo;
+      if (state[id] === 'booked' && customers.find(c => c.id === id).kind === 'winter') booked--;
+      delete state[id];
+    } else {
+      const row = e.target.closest('[data-row]');
+      if (!row) return;
+      selected = +row.dataset.row;
+    }
+    renderCalls();
+    renderPreview();
+  });
+
+  document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t === tab));
+    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + tab.dataset.tab));
+  }));
+
+  renderCalls();
+  renderPreview();
+  renderInstalls();
+</script>
+</body>
+</html>
