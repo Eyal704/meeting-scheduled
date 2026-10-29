@@ -138,6 +138,10 @@
   .tag.check { background: var(--amber-soft); color: var(--amber); }
   .tag.first { background: var(--green-soft); color: var(--green); }
   .actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-start; }
+  @media (min-width: 1100px) {
+    .row { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 14px; }
+    .actions { justify-content: flex-end; flex-wrap: nowrap; }
+  }
   .btn {
     border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 5px 10px;
     font-size: 13px; font-weight: 600; color: var(--text);
@@ -250,6 +254,20 @@
     th, td { padding: 10px 12px; }
     .hide-sm { display: none; }
   }
+  /* Calm palette: navy + gray, color only on the reply lights */
+  .btn.wa, .btn.ok, .btn.no { background: #fff; color: var(--text); border-color: var(--line); }
+  .btn.wa svg { color: #25a35a; }
+  .light, .light.green, .light.amber, .light.red { color: #475569; font-weight: 600; }
+  .light .bulb, .light.green .bulb, .light.amber .bulb, .light.red .bulb { box-shadow: none; background: transparent; border: 2px solid; }
+  .light.green .bulb { background: var(--navy); border-color: var(--navy); }
+  .light.amber .bulb { border-color: var(--navy); }
+  .light.red .bulb { border-color: #94a3b8; }
+  .light.green { color: var(--navy); }
+  .status.booked, .status.declined { background: #eef2f7; color: var(--navy); }
+  .step { background: #f1f5f9; color: #475569; font-weight: 500; }
+  .bar span, .bar.green span, .bar.amber span, .bar.gray span { background: var(--navy-2); }
+  .due-soon { color: var(--navy); }
+  .ribbon { background: #eef2f7; color: #475569; border-bottom-color: var(--line); }
 </style>
 </head>
 <body>
@@ -312,7 +330,7 @@
       <div class="card">
         <div class="card-head">
           <h3>למי להתקשר היום</h3>
-          <span class="hint">הנורה מתעדכנת לבד לפי התשובה בוואטסאפ: ירוק ענה, כתום ביקש לחזור אליו, אדום לא ענה. לחצי על לקוח כדי לראות את ההתכתבות.</span>
+          <span class="hint">הסטטוס מתעדכן לבד לפי התשובה בוואטסאפ. לחצי על לקוח כדי לראות את ההתכתבות.</span>
         </div>
         <div id="call-list"></div>
       </div>
