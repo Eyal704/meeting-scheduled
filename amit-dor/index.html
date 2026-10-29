@@ -119,7 +119,7 @@
 
   /* Call list rows */
   .row {
-    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px;
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px;
     padding: 14px 18px; border-bottom: 1px solid var(--line); cursor: pointer;
     transition: background 0.15s;
   }
@@ -137,12 +137,14 @@
   .tag.contract { background: #efe9fd; color: #5b3cc4; }
   .tag.check { background: var(--amber-soft); color: var(--amber); }
   .tag.first { background: var(--green-soft); color: var(--green); }
-  .actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+  .actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-start; }
   .btn {
     border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 5px 10px;
     font-size: 13px; font-weight: 600; color: var(--text);
   }
   .btn:hover { border-color: var(--sky); }
+  a.btn { text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+  .btn.wa { color: #128c4a; border-color: #bfe8cf; background: #f1fbf4; }
   .btn.ok { color: var(--green); }
   .btn.no { color: var(--muted); }
   .status {
@@ -168,6 +170,15 @@
     align-self: flex-start; box-shadow: 0 1px 0 rgba(0,0,0,0.06);
   }
   .bubble.reminder { opacity: 0.92; }
+  .bubble.in { background: #fff; align-self: flex-end; }
+  .light { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; margin-bottom: 2px; }
+  .bulb { width: 10px; height: 10px; border-radius: 50%; }
+  .light.green { color: var(--green); }
+  .light.green .bulb { background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.2); }
+  .light.amber { color: var(--amber); }
+  .light.amber .bulb { background: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.2); }
+  .light.red { color: var(--red); }
+  .light.red .bulb { background: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.2); }
   .bubble .time { display: block; text-align: left; font-size: 11px; color: var(--muted); margin-top: 2px; }
   .preview-note { font-size: 12.5px; color: var(--muted); padding: 10px 4px 0; }
 
@@ -223,7 +234,7 @@
   .source b { color: var(--navy); }
 
   footer { text-align: center; font-size: 13px; color: var(--muted); padding: 10px 16px 30px; }
-  footer a { color: var(--navy-2); }
+  footer a { color: var(--navy-2); white-space: nowrap; direction: ltr; unicode-bidi: isolate; }
 
   @media (max-width: 900px) {
     .kpis { grid-template-columns: repeat(2, 1fr); }
@@ -268,7 +279,7 @@
     <div class="kpi hot">
       <div class="label">לקוחות לשיחה היום</div>
       <div class="value" id="kpi-today">9</div>
-      <div class="sub">קיבלו הודעה ולא ענו</div>
+      <div class="sub">2 ענו ומחכים לתיאום</div>
     </div>
     <div class="kpi">
       <div class="label">התקנות חדשות השבוע</div>
@@ -301,7 +312,7 @@
       <div class="card">
         <div class="card-head">
           <h3>למי להתקשר היום</h3>
-          <span class="hint">לקוחות שקיבלו הודעה ולא ענו. לחצי על לקוח כדי לראות מה נשלח.</span>
+          <span class="hint">הנורה מתעדכנת לבד לפי התשובה בוואטסאפ: ירוק ענה, כתום ביקש לחזור אליו, אדום לא ענה. לחצי על לקוח כדי לראות את ההתכתבות.</span>
         </div>
         <div id="call-list"></div>
       </div>
@@ -316,7 +327,7 @@
           </div>
           <div class="chat" id="pv-chat"></div>
         </div>
-        <div class="preview-note">ההודעות יוצאות אוטומטית בשם עמית דור. מי שלא עונה עובר לרשימת השיחות שלך.</div>
+        <div class="preview-note">ההודעות יוצאות אוטומטית בשם עמית דור. מי שלא עונה עובר לרשימת השיחות שלך.<br><b>לנסות בעצמך:</b> הכפתורים "וואטסאפ" ו"מייל" ליד כל לקוח פותחים את ההודעה שלו מוכנה לשליחה. בדמו היא נשלחת לאייל.</div>
       </aside>
     </div>
   </section>
@@ -375,7 +386,7 @@
           <tbody>
             <tr><td><b>ועד בית "הדקל 12"</b><div class="small">תל אביב · VRF</div></td><td>חידוש חוזה אחזקה שנתי</td><td class="due-soon">30.11.2026</td><td class="hide-sm">הודעה נשלחה 19.10, לא ענו. ברשימת השיחות היום.</td></tr>
             <tr><td><b>מסעדת הגפן</b><div class="small">רמת גן · מטבח מסחרי</div></td><td>בדיקה שנתית למערכת פינוי עשן</td><td class="due-soon">20.11.2026</td><td class="hide-sm">הודעה נשלחה 21.10, לא ענו. ברשימת השיחות היום.</td></tr>
-            <tr><td><b>אופק ייעוץ</b><div class="small">פתח תקווה · 3 מיני מרכזי</div></td><td>חידוש חוזה אחזקה שנתי</td><td>15.12.2026</td><td class="hide-sm">הודעה נשלחה 31.10, לא ענו. ברשימת השיחות היום.</td></tr>
+            <tr><td><b>אופק ייעוץ</b><div class="small">פתח תקווה · 3 מיני מרכזי</div></td><td>חידוש חוזה אחזקה שנתי</td><td>15.12.2026</td><td class="hide-sm">ענו 31.10: מבקשים הצעת חידוש. ברשימת השיחות היום.</td></tr>
             <tr><td><b>גן ילדים שקד</b><div class="small">הרצליה · סינון אוויר</div></td><td>בדיקה תקופתית לסינון אוויר</td><td>25.11.2026</td><td class="hide-sm">הודעה נשלחה 22.10, לא ענו. ברשימת השיחות היום.</td></tr>
             <tr><td><b>בית מלון "חוף הים"</b><div class="small">בת ים · צ'ילר</div></td><td>חידוש חוזה אחזקה שנתי</td><td>31.12.2026</td><td class="hide-sm">ביקשו הצעה מעודכנת. הועבר אלייך 28.10.</td></tr>
             <tr><td><b>מרפאת שיניים רמות</b><div class="small">גבעתיים · מיני מרכזי</div></td><td>טיפול חצי שנתי</td><td>10.12.2026</td><td class="hide-sm">נקבע טיפול ל-8.12.</td></tr>
@@ -435,20 +446,22 @@
       detail: 'מזגן אינוורטר 1.5 כ"ס · הותקן מאי 2026', history: 'הודעה 25.10 · לא ענה',
       msgs: [
         { t: 'היי יוסי, כאן עמית דור. עברו כמעט חצי שנה מההתקנה של המזגן החדש. לפני החורף כדאי לעשות טיפול ראשון. לתאם טכנאי?', d: '25.10 · 10:40' } ] },
-    { id: 5, name: 'רונית כהן', city: 'גבעתיים', kind: 'winter', kindLabel: 'טיפול חורף',
-      detail: 'מיני מרכזי · טיפול אחרון אוקטובר 2025', history: 'הודעה 20.10 · תזכורת 27.10 · לא ענתה',
+    { id: 5, name: 'רונית כהן', city: 'גבעתיים', kind: 'winter', kindLabel: 'טיפול חורף', reply: 'yes',
+      detail: 'מיני מרכזי · טיפול אחרון אוקטובר 2025', history: 'ענתה 28.10: "כן, אחרי 16:00"',
       msgs: [
         { t: 'היי רונית, כאן עמית דור מיזוג אוויר. הטיפול האחרון במיני מרכזי אצלך היה באוקטובר 2025. לפני החורף כדאי לבדוק את המערכת. לתאם טכנאי?', d: '20.10 · 10:02' },
-        { t: 'היי רונית, רק מזכירים לגבי טיפול לפני החורף. אפשר לענות "כן" ונחזור אלייך.', d: '27.10 · 10:05', r: true } ] },
-    { id: 6, name: 'אופק ייעוץ', city: 'פתח תקווה', kind: 'contract', kindLabel: 'חידוש חוזה',
-      detail: '3 מיני מרכזי במשרדים · חוזה עד 15.12.2026', history: 'הודעה 31.10 · לא ענו',
+        { t: 'היי רונית, רק מזכירים לגבי טיפול לפני החורף. אפשר לענות "כן" ונחזור אלייך.', d: '27.10 · 10:05', r: true },
+        { t: 'כן, אפשר בשבוע הבא. רק אחרי 16:00', d: '28.10 · 18:22', c: true } ] },
+    { id: 6, name: 'אופק ייעוץ', city: 'פתח תקווה', kind: 'contract', kindLabel: 'חידוש חוזה', reply: 'yes',
+      detail: '3 מיני מרכזי במשרדים · חוזה עד 15.12.2026', history: 'ענו 31.10: מבקשים הצעת חידוש',
       msgs: [
-        { t: 'שלום, כאן עמית דור. חוזה האחזקה למערכות המיזוג במשרד מסתיים ב-15.12. לשלוח לכם את תנאי החידוש?', d: '31.10 · 09:20' } ] },
-    { id: 7, name: 'דנה שפירא', city: 'רמת השרון', kind: 'winter', kindLabel: 'טיפול חורף',
-      detail: '4 מזגנים מפוצלים · טיפול אחרון ספטמבר 2025', history: 'הודעה 20.10 · תזכורת 27.10 · לא ענתה',
+        { t: 'שלום, כאן עמית דור. חוזה האחזקה למערכות המיזוג במשרד מסתיים ב-15.12. לשלוח לכם את תנאי החידוש?', d: '31.10 · 09:20' },
+        { t: 'כן תשלחו. ואם אפשר גם לבדוק את המזגן בחדר הישיבות, הוא מטפטף', d: '31.10 · 13:05', c: true } ] },
+    { id: 7, name: 'דנה שפירא', city: 'רמת השרון', kind: 'winter', kindLabel: 'טיפול חורף', reply: 'later',
+      detail: '4 מזגנים מפוצלים · טיפול אחרון ספטמבר 2025', history: 'ענתה 20.10: לחזור אליה בתחילת נובמבר',
       msgs: [
         { t: 'היי דנה, כאן עמית דור מיזוג אוויר. הטיפול האחרון במזגנים אצלך היה בספטמבר 2025. לפני החורף כדאי לנקות פילטרים ולבדוק את החימום. לתאם טכנאי?', d: '20.10 · 10:02' },
-        { t: 'היי דנה, רק מזכירים לגבי טיפול לפני החורף. אפשר לענות "כן" ונחזור אלייך.', d: '27.10 · 10:05', r: true } ] },
+        { t: 'אני בחו"ל עד סוף החודש, תחזרו אליי בתחילת נובמבר', d: '20.10 · 12:40', c: true } ] },
     { id: 8, name: 'אבי מזרחי', city: 'בת ים', kind: 'winter', kindLabel: 'טיפול חורף',
       detail: '2 מזגנים · טיפול אחרון דצמבר 2024 (פספס את קיץ 2026)', history: 'הודעה 20.10 · תזכורת 27.10 · לא ענה',
       msgs: [
@@ -472,23 +485,41 @@
       steps: ['התראה אלייך', 'הודעת תודה נשלחה', 'טיפול ראשון נקבע לאפריל 2027'] }
   ];
 
+  // In the demo every message goes to Eyal's number, so clicking really sends it
+  const DEMO_PHONE = '972538276288';
+  const DEMO_EMAIL = 'eyal@meeting-scheduled.com';
+  const waIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>';
+  const waLink = c => `https://wa.me/${DEMO_PHONE}?text=${encodeURIComponent(c.msgs[0].t)}`;
+  const mailLink = c => `mailto:${DEMO_EMAIL}?subject=${encodeURIComponent('עמית דור · ' + c.kindLabel)}&body=${encodeURIComponent(c.msgs[0].t)}`;
+
   const tagClass = { winter: 'winter', contract: 'contract', check: 'check', first: 'first' };
-  const statusText = { booked: 'נקבע טיפול', noanswer: 'לא ענה, ננסה מחר', declined: 'לא מעוניין' };
+  const statusText = { booked: 'נקבע', declined: 'לא מעוניין' };
+  const light = {
+    yes: { cls: 'green', text: 'ענה, מחכה לתיאום' },
+    later: { cls: 'amber', text: 'ביקש לחזור אליו' },
+    none: { cls: 'red', text: 'לא ענה להודעות' }
+  };
+  const lightOrder = { yes: 0, later: 1, none: 2 };
+  customers.forEach(c => { c.reply = c.reply || 'none'; });
+  customers.sort((a, b) => lightOrder[a.reply] - lightOrder[b.reply]);
   const state = {};
-  let selected = 1;
+  let selected = customers[0].id;
   let booked = 52;
 
   function renderCalls() {
     const box = document.getElementById('call-list');
     box.innerHTML = customers.map(c => {
       const s = state[c.id];
+      const send = `<a class="btn wa" href="${waLink(c)}" target="_blank" rel="noopener" title="שליחת ההודעה בוואטסאפ">${waIcon} וואטסאפ</a>
+           <a class="btn" href="${mailLink(c)}" title="שליחת ההודעה במייל">✉ מייל</a>`;
       const actions = s
-        ? `<span class="status ${s}">${statusText[s]}</span><button class="undo" data-undo="${c.id}">ביטול</button>`
-        : `<button class="btn ok" data-act="booked" data-id="${c.id}">נקבע</button>
-           <button class="btn" data-act="noanswer" data-id="${c.id}">לא ענה</button>
+        ? `${send}<span class="status ${s}">${statusText[s]}</span><button class="undo" data-undo="${c.id}">ביטול</button>`
+        : `${send}<button class="btn ok" data-act="booked" data-id="${c.id}">נקבע</button>
            <button class="btn no" data-act="declined" data-id="${c.id}">לא מעוניין</button>`;
+      const l = light[c.reply];
       return `<div class="row ${c.id === selected ? 'selected' : ''}" data-row="${c.id}">
         <div>
+          <div class="light ${l.cls}"><span class="bulb"></span>${l.text}</div>
           <div class="name">${c.name}<span class="tag ${tagClass[c.kind]}">${c.kindLabel}</span></div>
           <div class="meta">${c.city} · ${c.detail}</div>
           <div class="history">${c.history}</div>
@@ -512,7 +543,7 @@
     document.getElementById('pv-name').textContent = c.name;
     document.getElementById('pv-avatar').textContent = c.name.replace(/^(ועד בית |מסעדת |גן ילדים )/, '').replace(/"/g, '').charAt(0);
     document.getElementById('pv-chat').innerHTML = c.msgs.map(m =>
-      `<div class="bubble ${m.r ? 'reminder' : ''}">${m.t}<span class="time">${m.d} ✓✓</span></div>`).join('');
+      `<div class="bubble ${m.r ? 'reminder' : ''} ${m.c ? 'in' : ''}">${m.t}<span class="time">${m.d}${m.c ? '' : ' ✓✓'}</span></div>`).join('');
   }
 
   function renderInstalls() {
