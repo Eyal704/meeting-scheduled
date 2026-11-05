@@ -73,9 +73,9 @@ h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
 .psec:first-of-type{border-top:0}
 .psec-h{display:flex;align-items:baseline;gap:8px;padding:0 4px 8px}
 .psec-h b{font-size:14px}.psec-h span{font-size:12px;color:var(--faint)}
-.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .tiles.one{grid-template-columns:1fr}
-.tile{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid transparent;border-radius:14px;padding:10px;text-align:right;transition:background .15s,border-color .15s}
+.tile{min-width:0;display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid transparent;border-radius:14px;padding:10px;text-align:right;transition:background .15s,border-color .15s}
 .tile:hover{background:#fff;border-color:var(--line)}
 .tile:active{transform:scale(.98)}
 .tav{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:16px;flex:none;color:#fff;background:var(--brand)}
@@ -93,7 +93,7 @@ h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
 .reset-l{font-size:12px;color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:2px}
 .pnote{text-align:center;font-size:12px;color:var(--faint);margin-top:14px}
 /* stats */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 .stat b{display:block;font-size:22px;font-weight:800;line-height:1.2}
 .stat span{font-size:12px;color:var(--muted)}
@@ -167,7 +167,7 @@ textarea.in{min-height:96px;resize:vertical}
 .choices{display:flex;flex-wrap:wrap;gap:7px}
 .choice{border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:9px 12px;font-size:14px;font-weight:500}
 .choice.on{border-color:var(--teal);background:var(--teal-t);color:var(--teal);font-weight:700}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .kv{background:#fff;border:1px solid var(--line);border-radius:11px;padding:8px 10px}
 .kv span{display:block;font-size:11.5px;color:var(--faint)}
 .kv b{font-weight:600;font-size:14px}
@@ -387,7 +387,7 @@ function seed(){
 const db={calls:{},memos:{},quotes:{},meta:{}};
 const KEY=new URLSearchParams(location.search).get('k')||localStorage.getItem('zk')||'';
 if(KEY)localStorage.setItem('zk',KEY);
-let remote=false,online=navigator.onLine,lastSync=0,pending=JSON.parse(localStorage.getItem('zq')||'[]');
+let keyRefused=false,remote=false,online=navigator.onLine,lastSync=0,pending=JSON.parse(localStorage.getItem('zq')||'[]');
 const bc='BroadcastChannel' in window?new BroadcastChannel('zameret-field'):null;
 function loadLocal(){try{const s=JSON.parse(localStorage.getItem('zdb')||'null');if(s){Object.assign(db,s);return true}}catch(e){}return false}
 function saveLocal(){localStorage.setItem('zdb',JSON.stringify(db))}
@@ -396,9 +396,10 @@ const API_BASE=/(^localhost$|workers\.dev$)/.test(location.hostname)?'':'https:/
 async function api(path,opt={}){const r=await fetch(API_BASE+'/api'+path,Object.assign({headers:{'content-type':'application/json','x-key':KEY}},opt));if(!r.ok)throw new Error(r.status);return r.json()}
 async function initStore(){
  try{const s=await api('/state');remote=true;
-   if(!s.docs.length){const docs=seed();await api('/reset',{method:'POST',body:JSON.stringify({docs})});applyDocs(docs)}else applyDocs(s.docs);
+   const seedAt=s.docs.find(d=>d.kind==='meta'&&d.id==='seed')?.data?.at||0;
+   if(!s.docs.length||seedAt<dayStart(0)){const docs=seed();await api('/reset',{method:'POST',body:JSON.stringify({docs})});for(const k of ['calls','memos','quotes','meta'])db[k]={};applyDocs(docs)}else applyDocs(s.docs);
    lastSync=s.now||Date.now();saveLocal();
- }catch(e){remote=false;if(!loadLocal()){applyDocs(seed());saveLocal()}}
+ }catch(e){remote=false;keyRefused=String(e.message)==='403';if(!loadLocal()){applyDocs(seed());saveLocal()}}
 }
 function put(kind,obj){obj.updatedAt=Date.now();db[kind][String(obj.id)]=obj;saveLocal();bc&&bc.postMessage('sync');
  if(remote){pending.push({kind,id:String(obj.id),data:obj});localStorage.setItem('zq',JSON.stringify(pending));flush()}render()}
@@ -441,8 +442,9 @@ function openMe(){const p=PEOPLE[me];sheet(`<div><b style="font-size:17px">${esc
 /* ========= sheet ========= */
 function sheet(head,body){const had=!!$('#sheet');removeSheet();const bg=document.createElement('div');bg.className='sheet-bg';bg.id='sheet';bg.innerHTML=`<div class="sheet" onclick="event.stopPropagation()"><div class="sheet-head">${head}<button class="x" onclick="closeSheet()" aria-label="סגירה">✕</button></div><div class="sheet-body">${body}</div></div>`;bg.onclick=closeSheet;document.body.appendChild(bg);document.body.style.overflow='hidden';if(!had)history.pushState({tab,sheet:1},'')}
 function removeSheet(){$('#sheet')?.remove();document.body.style.overflow='';openCall=null}
-function closeSheet(){const open=!!$('#sheet');removeSheet();if(open&&history.state?.sheet)history.back()}
+function closeSheet(){removeSheet();if(history.state?.sheet)history.replaceState({tab},'')}
 function goTab(id){if(tab===id)return;tab=id;history.pushState({tab:id},'');render();scrollTo(0,0)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#sheet'))closeSheet()});
 window.addEventListener('popstate',e=>{if($('#sheet')){removeSheet();draft=null;return}tab=e.state?.tab||'';render()});
 let openCall=null;
 
@@ -459,6 +461,7 @@ function picker(){
   ${sec('משרד','קריאות, שיבוץ וחיוב',`<div class="tiles">${['kristy','or'].map(id=>tile(id)).join('')}</div>`)}
  </div>
  <div class="tip"><span class="tip-i">${ICON.bell}</span><span><b>כדאי לנסות בשני טלפונים.</b> באחד נכנסים כטכנאי ובשני כגיא. דיווח מהשטח מגיע לגיא תוך כמה שניות.</span></div>
+ ${keyRefused?'<div class="warn" style="margin-top:12px">הקישור חסר את קוד הגישה, ולכן העדכונים לא עוברים בין טלפונים. כדאי לפתוח את הקישור המלא שקיבלתם.</div>':''}
  <div class="pnote">נתונים לדוגמה עד לחיבור לפריוריטי · <button class="reset-l" onclick="if(confirm('להחזיר את כל הקריאות למצב ההתחלתי? זה משפיע על כל מי שמחובר.'))resetAll()">איפוס הנתונים</button></div>
  <div class="foot">נבנה עבור צמרת מעליות · MeetingScheduled</div></div></div>`}
 
@@ -522,7 +525,7 @@ function renderReport(){const c=db.calls[draft.id];const m=memoOf(c);const area=
  <label class="f">תמונות</label><div class="photos">${draft.photos.map((s,i)=>`<img src="${s}" alt="" onclick="draft.photos.splice(${i},1);renderReport()">`).join('')}${draft.photos.length<3?`<label class="addph">${ICON.cam}<input type="file" accept="image/*" capture="environment" hidden onchange="addPhoto(this)"></label>`:''}</div>
  ${m&&!m.missing&&m.defects.some(d=>d.owner==='צמרת'&&!d.done)?`<label class="f">ליקויים מהתזכיר שטופלו בביקור הזה</label><div class="box" style="margin-top:0">${m.defects.map((d,i)=>d.owner==='צמרת'&&!d.done?`<label class="def"><input type="checkbox" ${draft.defects[i]?'checked':''} onchange="draft.defects[${i}]=this.checked"><span>${esc(d.t)}</span></label>`:'').join('')}</div>`:''}
  <label class="def" style="border:0;margin-top:8px"><input type="checkbox" ${draft.damage?'checked':''} onchange="draft.damage=this.checked"><span>נמצאה חבלה או נזק מים</span></label>
- <button class="btn primary block mt" onclick="submitReport()" ${!draft.outcome||(draft.outcome==='follow'&&(!draft.reason||!draft.when))?'disabled':''}>${draft.outcome==='follow'?'שליחת הדיווח לגיא':draft.outcome==='closed'?'סגירת הקריאה':'בחרו מה המצב כדי לשלוח'}</button>
+ <button class="btn primary block mt" onclick="submitReport()" ${!draft.outcome||(draft.outcome==='follow'&&(!draft.reason||!draft.when))?'disabled':''}>${draft.outcome==='follow'?'שליחת הדיווח לגיא':draft.outcome==='closed'?'סגירת הקריאה':'יש לבחור מה המצב'}</button>
  ${draft.outcome==='follow'?'<div class="sub small mt">הדיווח מגיע ישר למסך של גיא, בלי וואטסאפ.</div>':draft.outcome==='closed'?'<div class="sub small mt">הקריאה נסגרת ועוברת לקריסטי. גיא לא צריך לאשר.</div>':''}</div>`;
 }
 function partQty(pid,d){draft.parts[pid]=(draft.parts[pid]||0)+d;if(draft.parts[pid]<=0)delete draft.parts[pid];renderReport()}
@@ -534,7 +537,7 @@ function toggleMic(){const SR=window.SpeechRecognition||window.webkitSpeechRecog
  rec.onend=()=>{rec=null;$('#micbtn')?.classList.remove('rec')};rec.onerror=()=>{rec=null;$('#micbtn')?.classList.remove('rec');toast('ההכתבה לא זמינה כרגע. אפשר להשתמש במיקרופון של המקלדת')};
  rec.start();$('#micbtn')?.classList.add('rec')}
 function submitReport(){if(rec)rec.stop();const c=db.calls[draft.id];const name=PEOPLE[me].name;const m=memoOf(c);
- if(!draft.text.trim()){toast('כתוב או הכתב בקצרה מה עשית');$('#rtext')?.focus();return}
+ if(!draft.text.trim()){toast('צריך לכתוב בקצרה מה נעשה');$('#rtext')?.focus();return}
  c.report={text:draft.text.trim(),outcome:draft.outcome,reason:draft.reason,when:draft.when,parts:Object.entries(draft.parts),damage:draft.damage,at:Date.now(),by:me};
  c.photos=draft.photos.slice();
  if(m&&Object.values(draft.defects).some(Boolean)){m.defects.forEach((d,i)=>{if(draft.defects[i]){d.done=true;d.doneBy=name;d.doneAt=Date.now()}});put('memos',m)}
@@ -579,7 +582,7 @@ function openGuyCall(id){const c=db.calls[id];openCall=id;const q=c.quote?db.quo
  sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${c.priority==='stopped'?'red':''}">${c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span>${statusPill(c)}</div><div class="addr" style="margin-top:6px">${esc(c.address)}</div><div class="sub">#${c.id} · ${esc(c.issue)} · ${COVER[c.cover]}</div></div>`,`
  ${c.report?`<div class="box" style="margin-top:0"><h4>דיווח ${esc(PEOPLE[c.report.by]?.name)} · ${hhmm(c.report.at)}</h4><div>${esc(c.report.text)}</div>${partsHtml?`<div class="small muted mt">חלקים: ${partsHtml}</div>`:''}${c.report.damage?'<div class="pill red mt" style="display:inline-block">חבלה או נזק מים</div>':''}${c.photos?.length?`<div class="photos">${c.photos.map(s=>`<img src="${s}" alt="">`).join('')}</div>`:''}</div>`:`<div class="box" style="margin-top:0"><div class="detail" style="color:var(--ink)">${esc(c.detail)}</div></div>`}
  ${(c.history||[]).length?`<div class="warn"><b>היסטוריה בכתובת:</b> ${c.history.map(h=>`${dayLabel(h.t)}: ${esc(h.repair)}`).join(' · ')}</div>`:''}
- ${c.status==='needs_guy'?`<div class="box"><h4>מה עושים?</h4>
+ ${reassignBox(c)}${c.status==='needs_guy'?`<div class="box"><h4>מה עושים?</h4>
   <label class="f">שיבוץ המשך טיפול</label><select class="in" id="gTech">${[...TECHS,'mech'].map(t=>`<option value="${t}" ${t===(c.report.reason==='צוות מכני'?'mech':c.tech)?'selected':''}>${PEOPLE[t].name} · ${PEOPLE[t].area}</option>`).join('')}</select>
   <div class="choices mt" id="gWhen">${WHEN.map(([k,l])=>`<button class="choice ${k===c.report.when?'on':''}" data-k="${k}" onclick="[...this.parentNode.children].forEach(b=>b.classList.remove('on'));this.classList.add('on')">${l}</button>`).join('')}</div>
   <button class="btn primary block mt" onclick="guySchedule(${c.id})">שיבוץ</button>
@@ -587,6 +590,8 @@ function openGuyCall(id){const c=db.calls[id];openCall=id;const q=c.quote?db.quo
  ${(c.history||[]).length>=2&&c.status!=='needs_guy'&&!c.guyAck?`<button class="btn block dark mt" onclick="guyAck(${c.id})">בדקתי, להמשיך כרגיל</button>`:''}
  ${q?`<div class="box"><h4>הצעת מחיר #${q.id}</h4>${quoteTable(q)}<div class="small muted mt">${q.status==='sent'?'נשלחה ללקוח, ממתינה לאישור בכתב':'אושרה'}</div>${q.status==='sent'?`<button class="btn primary block mt" onclick="quoteApproved(${c.id})">הלקוח אישר בכתב: פתיחת הזמנת עבודה</button>`:''}</div>`:''}
  <div class="box"><h4>מה קרה בקריאה</h4><div class="log">${c.log.slice().reverse().map(l=>`<div><b>${hhmm(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')}</div></div>`)}
+function reassignBox(c){if(['new','needs_guy','closed'].includes(c.status))return'';return `<div class="box"><h4>העברה לטכנאי אחר</h4><div class="row" style="gap:8px"><select class="in" id="rTech">${[...TECHS,'mech'].map(t=>`<option value="${t}" ${t===c.tech?'selected':''}>${PEOPLE[t].name} · ${PEOPLE[t].area}</option>`).join('')}</select><button class="btn ghost" onclick="reassign(${c.id})">העברה</button></div></div>`}
+function reassign(id){const c=db.calls[id];const t=$('#rTech').value;if(t===c.tech){toast('הקריאה כבר אצל '+PEOPLE[t].name);return}c.tech=t;if(['enroute','onsite'].includes(c.status))c.status='assigned';c.log.push({t:Date.now(),who:PEOPLE[me].name,text:'הועברה ל'+PEOPLE[t].name});put('calls',c);closeSheet();toast(PEOPLE[t].name+' קיבל את הקריאה')}
 function guySchedule(id){const c=db.calls[id];const t=$('#gTech').value;const w=$('#gWhen .on')?.dataset.k||'today';const add=WHEN.find(x=>x[0]===w)[2];
  c.tech=t;c.due=todayAt(8,0,add);c.status=add===0?'assigned':'scheduled';c.viaGuy=true;c.log.push({t:Date.now(),who:'גיא',text:`שובצה ל${PEOPLE[t].name} ${WHEN.find(x=>x[0]===w)[1]}`});put('calls',c);closeSheet();toast(`${PEOPLE[t].name} קיבל את הקריאה`)}
 function guyClose(id){const c=db.calls[id];c.status='closed';c.viaGuy=true;c.log.push({t:Date.now(),who:'גיא',text:'הקריאה נסגרה'});put('calls',c);closeSheet();toast('הקריאה נסגרה ועברה למשרד')}
@@ -627,7 +632,7 @@ function openOfficeCall(id){const c=db.calls[id];openCall=id;const m=memoOf(c);c
  ${m?.missing?`<div class="warn">התזכיר של המעלית לא התקבל. מועד הבדיקה היה ${new Date(m.next).toLocaleDateString('he-IL')}. כדאי לבקש אותו מהלקוח.</div>`:''}
  <div class="two"><div class="box"><h4>התקלה</h4><div class="issue">${esc(c.issue)}</div><div class="detail">${esc(c.detail)}</div></div><div class="box"><h4>התיקון</h4>${c.report?`<div>${esc(c.report.text)}</div><div class="small muted mt">${esc(PEOPLE[c.report.by]?.name)} · ${hhmm(c.report.at)}</div>`:'<div class="muted">עוד לא דווח</div>'}</div></div>
  ${c.photos?.length?`<div class="photos">${c.photos.map(s=>`<img src="${s}" alt="">`).join('')}</div>`:''}
- ${c.status==='new'?`<div class="box"><h4>שיבוץ</h4><select class="in" id="oTech">${TECHS.map(t=>`<option value="${t}" ${t===sug?'selected':''}>${PEOPLE[t].name} · ${PEOPLE[t].area}${t===sug?' (לפי האזור)':''}</option>`).join('')}</select><button class="btn primary block mt" onclick="officeAssign(${c.id})">שיבוץ ושליחה לטכנאי</button></div>`:''}
+ ${reassignBox(c)}${c.status==='new'?`<div class="box"><h4>שיבוץ</h4><select class="in" id="oTech">${TECHS.map(t=>`<option value="${t}" ${t===sug?'selected':''}>${PEOPLE[t].name} · ${PEOPLE[t].area}${t===sug?' (לפי האזור)':''}</option>`).join('')}</select><button class="btn primary block mt" onclick="officeAssign(${c.id})">שיבוץ ושליחה לטכנאי</button></div>`:''}
  ${c.status==='closed'?`<div class="box"><h4>חיוב לפי ${COVER[c.cover]}</h4>${lines.length?`<table class="lines">${lines.map(l=>`<tr><td>${esc(l.name)} × ${l.qty}${l.charge?'':' <span class="muted small">(${money(l.price*l.qty)} בכיסוי)</span>'}</td><td>${money(l.charge)}</td></tr>`).join('')}<tr class="tot"><td>לחיוב</td><td>${money(tot)}</td></tr></table>`:'<div class="muted">ללא חלקים</div>'}
    ${c.billed?'<div class="ok">מוכן להפקת חשבונית עסקה.</div>':`<button class="btn primary block mt" onclick="markBilled(${c.id})">${tot?'אישור החיוב':'סגירה ללא חיוב'}</button>`}</div>
    <div class="box"><h4>מה הלקוח מקבל במייל</h4><div class="small"><b>דוח קריאת שירות #${c.id}</b><br>${esc(c.address)}<br>תקלה: ${esc(c.issue)}<br>תיקון: ${esc(c.report?.text||'')}</div><div class="small muted mt">ההערה הפנימית לא מופיעה בדוח ללקוח.</div></div>`:''}
