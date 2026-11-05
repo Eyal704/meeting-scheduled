@@ -57,6 +57,38 @@ h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
 .kpi.hot{background:var(--red-t);border-color:transparent;color:var(--red)}.kpi.hot b{color:var(--red)}
 .offline[hidden]{display:none}
 .head{margin:0 0 10px}h1{font-size:20px}
+/* landing */
+.hero{background:linear-gradient(160deg,#183b4a 0%,#1d4d5c 55%,#1e6b62 100%);color:#fff;padding:calc(18px + env(safe-area-inset-top)) 20px 78px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.06);left:-140px;bottom:-230px}
+.hero-in{max-width:560px;margin:0 auto;position:relative;z-index:1}
+.logo.big svg{width:34px;height:34px}.logo.big{font-size:18px}
+.hero-t{font-size:34px;line-height:1.12;font-weight:800;letter-spacing:-.6px;margin-top:34px}
+.hero-p{font-size:15px;line-height:1.55;color:#cfe3e6;margin-top:10px;max-width:420px}
+.pick2{max-width:560px;margin:-54px auto 0;padding:0 14px 30px;position:relative;z-index:2}
+.pcard{background:#fff;border-radius:20px;box-shadow:0 10px 30px rgba(16,35,43,.12);padding:18px 14px 6px}
+.pcard-h{font-size:20px;font-weight:800;padding:0 4px 4px}
+.psec{padding:10px 0 12px;border-top:1px solid var(--line2)}
+.psec:first-of-type{border-top:0}
+.psec-h{display:flex;align-items:baseline;gap:8px;padding:0 4px 8px}
+.psec-h b{font-size:14px}.psec-h span{font-size:12px;color:var(--faint)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tiles.one{grid-template-columns:1fr}
+.tile{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid transparent;border-radius:14px;padding:10px;text-align:right;transition:background .15s,border-color .15s}
+.tile:hover{background:#fff;border-color:var(--line)}
+.tile:active{transform:scale(.98)}
+.tav{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:16px;flex:none;color:#fff;background:var(--brand)}
+.tav-tech{background:var(--teal)}.tav-guy{background:#b7791f}.tav-office{background:var(--blue)}
+.tt{display:flex;flex-direction:column;min-width:0;flex:1}
+.tt b{font-size:15px;line-height:1.2}.tt span{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tdesc{font-size:12.5px;color:var(--muted);margin-inline-start:auto}
+.tgo{color:var(--faint);font-size:20px;line-height:1;margin-inline-start:4px}
+.tiles:not(.one) .tgo{display:none}
+@media(max-width:360px){.tdesc{display:none}}
+.tip{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:12px;font-size:13.5px;color:var(--muted)}
+.tip b{color:var(--ink)}
+.tip-i{width:30px;height:30px;border-radius:9px;background:var(--teal-t);color:var(--teal);display:grid;place-items:center;flex:none}
+.tip-i svg{width:17px;height:17px}
+.pnote{text-align:center;font-size:12px;color:var(--faint);margin-top:14px}
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
@@ -348,11 +380,19 @@ function closeSheet(){$('#sheet')?.remove();document.body.style.overflow='';open
 let openCall=null;
 
 /* ========= login picker ========= */
-function picker(){const g=(t,ids)=>`<div class="grp">${t}</div><div class="ppl">${ids.map(id=>{const p=PEOPLE[id];return `<button class="person" onclick="login('${id}')"><span class="av">${p.name[0]}</span><span><b>${p.name}</b><span>${p.title}${p.area?' · '+p.area:''}</span></span></button>`}).join('')}</div>`;
- return `<div class="top" style="position:static"><div class="top-row"><div class="logo">${ICON.logo}<div>צמרת מעליות<small>שירות ושטח</small></div></div></div></div>
- <div class="pick"><h1>מי נכנס?</h1><div class="sub">כל אחד רואה רק את מה שרלוונטי לו. אפשר לפתוח את המערכת בכמה טלפונים במקביל, והעדכונים עוברים ביניהם מיד.</div>
- ${g('טכנאים',['ofer','kosta','dror','moshe','patrick'])}${g('ניהול השירות',['guy'])}${g('משרד',['kristy','or'])}
- <div class="info" style="margin-top:18px">נתונים לדוגמה עד לחיבור לפריוריטי.</div><div class="foot">נבנה עבור צמרת מעליות · MeetingScheduled</div></div>`}
+function picker(){
+ const tile=(id,wide)=>{const p=PEOPLE[id];return `<button class="tile ${wide?'wide':''}" onclick="login('${id}')"><span class="tav tav-${p.role}">${p.name[0]}</span><span class="tt"><b>${p.name}</b><span>${p.area||p.title}</span></span>${wide?`<span class="tdesc">${p.role==='guy'?'רואה רק מה שצריך החלטה שלו':''}</span>`:''}<span class="tgo">‹</span></button>`};
+ const sec=(t,sub,body)=>`<section class="psec"><div class="psec-h"><b>${t}</b><span>${sub}</span></div>${body}</section>`;
+ return `<div class="hero"><div class="hero-in"><div class="logo big">${ICON.logo}<div>צמרת מעליות<small>שירות, אחזקה ושיפוץ מעליות</small></div></div>
+  <h1 class="hero-t">שירות ושטח<br>במקום אחד</h1><p class="hero-p">הטכנאי מדווח מהאתר, גיא מקבל רק את מה שצריך החלטה, והמשרד רואה מה לחייב.</p></div></div>
+ <div class="pick2"><div class="pcard"><div class="pcard-h">מי נכנס?</div>
+  ${sec('טכנאים','אפליקציית שטח',`<div class="tiles">${['ofer','kosta','dror','moshe','patrick'].map(id=>tile(id)).join('')}</div>`)}
+  ${sec('ניהול השירות','החלטות, שיבוץ ומחירון',`<div class="tiles one">${tile('guy',true)}</div>`)}
+  ${sec('משרד','קריאות, שיבוץ וחיוב',`<div class="tiles">${['kristy','or'].map(id=>tile(id)).join('')}</div>`)}
+ </div>
+ <div class="tip"><span class="tip-i">${ICON.bell}</span><span><b>כדאי לנסות בשני טלפונים.</b> באחד נכנסים כטכנאי ובשני כגיא. דיווח מהשטח מגיע לגיא תוך כמה שניות.</span></div>
+ <div class="pnote">נתונים לדוגמה עד לחיבור לפריוריטי</div>
+ <div class="foot">נבנה עבור צמרת מעליות · MeetingScheduled</div></div>`}
 
 /* ========= TECHNICIAN ========= */
 function techView(){
