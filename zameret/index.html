@@ -79,7 +79,7 @@ h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
 .tile:hover{background:#fff;border-color:var(--line)}
 .tile:active{transform:scale(.98)}
 .tav{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:16px;flex:none;color:#fff;background:var(--brand)}
-.tav-tech{background:var(--teal)}.tav-guy{background:#b7791f}.tav-office{background:var(--blue)}
+.tav-tech{background:var(--teal)}.tav-owner{background:#183b4a}.tav-guy{background:#b7791f}.tav-office{background:var(--blue)}
 .tt{display:flex;flex-direction:column;min-width:0;flex:1}
 .tt b{font-size:15px;line-height:1.2}.tt span{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tdesc{font-size:12.5px;color:var(--muted);margin-inline-start:auto}
@@ -296,6 +296,32 @@ a.link{color:var(--blue);text-decoration:none;font-weight:600}
   .app.is-tech .nav button{flex:1;flex-direction:column;justify-content:center;gap:2px;font-size:12px;padding:6px 2px}
   .app.is-tech .badge{position:absolute;top:2px;left:calc(50% - 22px);margin:0}
 }
+
+/* dashboards */
+.seg{margin:-2px 0 12px}.seg .choice{padding:7px 14px;font-size:13.5px}
+.dash{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.dtile{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;text-align:right;display:flex;flex-direction:column;gap:2px;box-shadow:var(--shadow);min-height:112px}
+.dtile .dl{font-size:13px;font-weight:600;color:var(--muted)}.dtile b{font-size:34px;font-weight:800;line-height:1.1;margin-top:4px}.dtile .ds{font-size:12px;color:var(--faint);margin-top:auto}
+.dtile.red{border-color:transparent;background:var(--red-t)}.dtile.red b{color:var(--red)}
+.dtile.amber b{color:var(--amber)}.dtile.green b{color:var(--green)}
+.dtile:active{transform:scale(.98)}
+.money{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px}
+.mtile{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.mtile span{font-size:12.5px;color:var(--muted);font-weight:600}.mtile b{font-size:22px;font-weight:800}.mtile small{font-size:11.5px;color:var(--faint)}
+.mtile.hero2{background:var(--brand);border-color:var(--brand);color:#fff}.mtile.hero2 span,.mtile.hero2 small{color:#cfe3e6}
+.mtile.warnt{background:var(--amber-t);border-color:transparent;cursor:pointer}.mtile.warnt b{color:#7a5212}
+.bars{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:10px;height:130px;align-items:end}
+.bar{display:flex;flex-direction:column;align-items:center;gap:4px;height:100%}
+.bb{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:3px}
+.bb i{width:40%;border-radius:4px 4px 0 0;display:block}.bb i.bi,.lg.lgi{background:var(--teal)}.bb i.bo,.lg.lgo{background:#c9d6da}
+.bar span{font-size:10.5px;color:var(--faint)}
+.lg{display:inline-block;width:9px;height:9px;border-radius:2px;margin:0 6px 0 3px;vertical-align:-1px}
+.agerow{display:grid;grid-template-columns:72px 1fr auto;gap:10px;align-items:center;margin-top:9px;font-size:13px}
+.ag{height:10px;background:var(--line2);border-radius:99px;overflow:hidden}.ag i{display:block;height:100%;background:var(--amber);border-radius:99px}
+.mini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px;text-align:center}
+.mini div{background:var(--bg);border-radius:12px;padding:8px 4px}.mini b{display:block;font-size:20px}.mini span{font-size:11px;color:var(--muted);line-height:1.25;display:block}
+.mini .red b{color:var(--red)}.mini .amber b{color:var(--amber)}.mini .green b{color:var(--green)}
+@media(min-width:900px){.dash{grid-template-columns:repeat(4,minmax(0,1fr))}.money{grid-template-columns:repeat(4,minmax(0,1fr))}main>.dash,main>.money{grid-column:1/-1}main>.card:has(.bars),main>.card:has(.agerow),main>.card:has(.mini){grid-column:span 1}}
 @keyframes slideL{from{transform:translateX(-40px);opacity:.4}to{transform:none;opacity:1}}
 </style>
 </head>
@@ -311,6 +337,8 @@ const dayLabel=t=>{if(!t)return'';const d=new Date(t),n=new Date();const a=new D
 const todayAt=(h,m,addDays=0)=>{const d=new Date();d.setDate(d.getDate()+addDays);d.setHours(h,m,0,0);return d.getTime()};
 const dayStart=(add=0)=>todayAt(0,0,add);
 const ICON={
+ grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>',
+ wallet:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H3z"/><path d="M3 7V5.5A1.5 1.5 0 0 1 4.5 4H17v3M16 13.5h2"/></svg>',
  list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>',
  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
  bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>',
@@ -333,7 +361,9 @@ const PEOPLE={
  mech:{name:'צוות מכני',role:'team',title:'עבודות גדולות',area:'כל האזורים'},
  guy:{name:'גיא',role:'guy',title:'מנהל שירות'},
  kristy:{name:'קריסטי',role:'office',title:'שירות ואדמיניסטרציה'},
- or:{name:'אור',role:'office',title:'ניהול משרד'}
+ or:{name:'אור',role:'office',title:'ניהול משרד'},
+ karin:{name:'קרין',role:'office',title:'הנהלת חשבונות'},
+ shmaya:{name:'שמעיה',role:'owner',title:'בעלים'}
 };
 const TECHS=['ofer','kosta','dror','moshe','patrick'];
 const CITY_TECH={'חיפה':'ofer','קריית ים':'kosta','קריית מוצקין':'kosta','קריית ביאליק':'kosta','קריית אתא':'kosta','עכו':'dror','כרמיאל':'dror','נשר':'moshe','טירת כרמל':'moshe'};
@@ -389,18 +419,32 @@ function seed(){
   base({id:8449,address:'ניסנבוים 4, חיפה',entrance:'כניסה ראשית',city:'חיפה',issue:'מעלית עומדת',detail:'המעלית לא מגיבה לקריאה מקומת הקרקע.',priority:'stopped',status:'closed',tech:'ofer',cover:'full',contact:'אלי רז',elevator:{type:'חשמלית',mol:'31-0302',contract:'1414'},createdAt:T(7,50),
      report:{text:'הוחלף מגע בטיחות בדלת קומת הקרקע. המעלית נבדקה ועובדת.',outcome:'closed',parts:[['p4',1]],at:T(9,10),by:'ofer'},
      log:[{t:T(7,50),who:'מוקד',text:'קריאה התקבלה'},{t:T(7,55),who:'קריסטי',text:'שובצה לעופר'},{t:T(9,10),who:'עופר',text:'הקריאה נסגרה'}]}),
-  base({id:8448,address:'השיקמה 2, נשר',entrance:'כניסה ראשית',city:'נשר',issue:'תאורה ולחצן לא תקינים',detail:'התאורה בתא חלשה ולחצן קומה 2 לא מגיב.',priority:'normal',status:'closed',tech:'moshe',cover:'regular',contact:'יוסי גולן',elevator:{type:'חשמלית',mol:'31-0845',contract:'555'},createdAt:T(7,30),debt:{months:7,amount:37952},
+  base({id:8448,address:'השיקמה 2, נשר',entrance:'כניסה ראשית',city:'נשר',issue:'תאורה ולחצן לא תקינים',detail:'התאורה בתא חלשה ולחצן קומה 2 לא מגיב.',priority:'normal',status:'closed',tech:'moshe',cover:'regular',contact:'יוסי גולן',elevator:{type:'חשמלית',mol:'31-0845',contract:'555'},createdAt:T(7,30),debt:{months:7,amount:3640},
      report:{text:'הוחלפו נורת LED ולחצן קומה 2. המעלית נבדקה ועובדת.',outcome:'closed',parts:[['p1',1],['p2',1]],at:T(9,48),by:'moshe'},
      log:[{t:T(7,30),who:'מוקד',text:'קריאה התקבלה'},{t:T(7,34),who:'קריסטי',text:'שובצה למשה'},{t:T(9,48),who:'משה',text:'הקריאה נסגרה'}]}),
   base({id:8457,address:'התשבי 12, חיפה',entrance:'כניסה מהחניון',city:'חיפה',issue:'רעש מהפיר',detail:'רעש חריג מהפיר בלילה. המעלית פועלת.',priority:'normal',status:'new',tech:null,cover:'full',contact:'מיכל הדר',elevator:{type:'הידראולית',mol:'31-1620',contract:'1374'},createdAt:T(12,58),log:[{t:T(12,58),who:'מוקד',text:'קריאה התקבלה'}]})
  ];
  const docs=[];calls.forEach(c=>docs.push({kind:'calls',id:String(c.id),data:c}));[memoA,memoB,memoC,memoD,memoE,memoF].forEach(m=>docs.push({kind:'memos',id:m.id,data:m}));quotes.forEach(q=>docs.push({kind:'quotes',id:String(q.id),data:q}));
- docs.push({kind:'meta',id:'seed',data:{id:'seed',at:Date.now(),nextId:8458,nextQuote:182,updatedAt:Date.now()}});
+ docs.push({kind:'meta',id:'seed',data:{id:'seed',at:Date.now(),nextId:8458,nextQuote:182,hist:{week:{opened:41,closed:38},month:{opened:173,closed:166}},updatedAt:Date.now()}});
+ const acc=(id,address,contact,city,pay,fee,unpaid,status,reason,extra)=>({id,address,contact,city,pay,fee,invoices:Array.from({length:unpaid},(_,i)=>({m:unpaid-1-i,amount:fee,paid:false})),status,reason,log:[],reminder:'none',...(extra||{}),updatedAt:Date.now()});
+ [acc('a1515','ספיר 27, קריית ים','רונית לוי','קריית ים','cash',425,3,'todo','התחלף ועד הבית'),
+  acc('a818','חיים בר לב 7, חיפה','דני כהן','חיפה','transfer',800,3,'todo','מייל שגוי'),
+  acc('a555','השיקמה 2, נשר','יוסי גולן','נשר','checks',520,7,'dispute','מחלוקת על חיוב'),
+  acc('a1290','הרופא 42, חיפה','אבי לוי','חיפה','cash',600,9,'todo','ללא מענה'),
+  acc('a2201','חשמונאים 72, קריית מוצקין','תמר לוין','קריית מוצקין','transfer',650,3,'promise','הבטיח לשלם',{promise:T(9,0,3)}),
+  acc('a3302','הגליל 30, כרמיאל','שלמה פרץ','כרמיאל','checks',480,4,'arrangement','הסדר תשלומים בהנהלת החשבונות'),
+  acc('a1207','העצמאות 118, חיפה','משה אזולאי','חיפה','transfer',700,1,'todo',''),
+  acc('a1020','הרצל 40, קריית ביאליק','אבי צור','קריית ביאליק','checks',550,2,'todo','חשבוניות לא התקבלו'),
+  acc('a1414','ניסנבוים 4, חיפה','אלי רז','חיפה','cash',390,0,'paid',''),
+  acc('a1151','הנמל 2, חיפה','אורי רחמים','חיפה','masav',720,0,'paid',''),
+  acc('a200192','תמרי 3, קריית מוצקין','ענת קדם','קריית מוצקין','masav',820,0,'paid',''),
+  acc('a1133','דרך הארבעה 20, עכו','שי ישראלי','עכו','masav',690,0,'paid','')
+ ].forEach(a=>docs.push({kind:'accounts',id:a.id,data:a}));
  return docs;
 }
 
 /* ========= store + sync ========= */
-const db={calls:{},memos:{},quotes:{},meta:{}};
+const db={calls:{},memos:{},quotes:{},accounts:{},meta:{}};
 const KEY=new URLSearchParams(location.search).get('k')||localStorage.getItem('zk')||'';
 if(KEY)localStorage.setItem('zk',KEY);
 let keyRefused=false,remote=false,online=navigator.onLine,lastSync=0,pending=JSON.parse(localStorage.getItem('zq')||'[]');
@@ -413,7 +457,7 @@ async function api(path,opt={}){const r=await fetch(API_BASE+'/api'+path,Object.
 async function initStore(){
  try{const s=await api('/state');remote=true;
    const seedAt=s.docs.find(d=>d.kind==='meta'&&d.id==='seed')?.data?.at||0;
-   if(!s.docs.length||seedAt<dayStart(0)){const docs=seed();await api('/reset',{method:'POST',body:JSON.stringify({docs})});for(const k of ['calls','memos','quotes','meta'])db[k]={};applyDocs(docs)}else applyDocs(s.docs);
+   if(!s.docs.length||seedAt<dayStart(0)){const docs=seed();await api('/reset',{method:'POST',body:JSON.stringify({docs})});for(const k of ['calls','memos','quotes','accounts','meta'])db[k]={};applyDocs(docs)}else applyDocs(s.docs);
    lastSync=s.now||Date.now();saveLocal();
  }catch(e){remote=false;keyRefused=String(e.message)==='403';if(!loadLocal()){applyDocs(seed());saveLocal()}}
 }
@@ -424,7 +468,7 @@ async function poll(){if(!remote||document.hidden)return;try{await flush();const
 bc&&(bc.onmessage=()=>{const before=snapshotFor();loadLocal();notifyChanges(before);render()});
 window.addEventListener('storage',e=>{if(e.key==='zdb'&&!bc){loadLocal();render()}});
 window.addEventListener('online',()=>{online=true;flush();renderSync()});window.addEventListener('offline',()=>{online=false;renderSync()});
-async function resetAll(){const docs=seed();for(const k of ['calls','memos','quotes','meta'])db[k]={};applyDocs(docs);saveLocal();bc&&bc.postMessage('sync');if(remote){try{await api('/reset',{method:'POST',body:JSON.stringify({docs})})}catch(e){}}closeSheet();toast('הנתונים חזרו למצב ההתחלתי');render()}
+async function resetAll(){const docs=seed();for(const k of ['calls','memos','quotes','accounts','meta'])db[k]={};applyDocs(docs);saveLocal();bc&&bc.postMessage('sync');if(remote){try{await api('/reset',{method:'POST',body:JSON.stringify({docs})})}catch(e){}}closeSheet();toast('הנתונים חזרו למצב ההתחלתי');render()}
 
 /* ========= session ========= */
 let me=localStorage.getItem('zme')||'';let tab='';let filter='all';
@@ -448,7 +492,7 @@ const kpis=items=>`<div class="kpis">${items.map(([n,l,hot])=>`<span class="kpi 
 const pageHead=(title,sub,action='')=>`<div class="head"><div><h1>${title}</h1>${sub?`<div class="sub">${sub}</div>`:''}</div>${action}</div>`;
 function toast(t,action,fn){document.querySelectorAll('.toast').forEach(x=>x.remove());const el=document.createElement('div');el.className='toast';el.textContent=t;if(action){const b=document.createElement('button');b.className='toast-a';b.textContent=action;b.onclick=()=>{el.remove();fn()};el.appendChild(b)}document.body.appendChild(el);setTimeout(()=>el.remove(),action?6000:3200)}
 function renderSync(){const el=$('#sync');if(!el)return;const show=remote&&!online;el.hidden=!show;el.textContent=show?'אין קליטה. הדיווחים יישלחו לבד כשהקליטה תחזור':''}
-function shell(inner,navItems){const p=PEOPLE[me];return `<div class="app ${p.role==='tech'||p.role==='team'?'is-tech':''}"><div class="top"><div class="top-row"><div class="logo">${ICON.logo}<div>צמרת מעליות<small>${p.role==='tech'||p.role==='team'?'אפליקציית שטח':p.role==='guy'?'ניהול השירות':'מוקד השירות'}</small></div></div>
+function shell(inner,navItems){const p=PEOPLE[me];return `<div class="app ${p.role==='tech'||p.role==='team'?'is-tech':''}"><div class="top"><div class="top-row"><div class="logo">${ICON.logo}<div>צמרת מעליות<small>${p.role==='tech'||p.role==='team'?'אפליקציית שטח':p.role==='guy'?'ניהול השירות':p.role==='owner'?'מבט על':'מוקד השירות'}</small></div></div>
  <button class="who" onclick="openMe()">${esc(p.name)}<span class="av">${esc(p.name[0])}</span></button></div></div><div class="offline" id="sync" hidden></div>
  <main>${inner}</main>${navItems?`<nav class="nav"><div class="nav-in">${navItems.map(([id,label,ic,b])=>`<button class="${tab===id?'on':''}" onclick="goTab('${id}')">${b?`<span class="badge">${b}</span>`:''}${ICON[ic]}${label}</button>`).join('')}</div></nav>`:''}</div>`}
 function openMe(){const p=PEOPLE[me];sheet(`<div><b style="font-size:17px">${esc(p.name)}</b><div class="sub">${esc(p.title)}${p.area?' · '+esc(p.area):''}</div></div>`,`
@@ -467,7 +511,7 @@ let openCall=null;
 
 /* ========= login picker ========= */
 function picker(){
- const tile=(id,wide)=>{const p=PEOPLE[id];return `<button class="tile ${wide?'wide':''}" onclick="login('${id}')"><span class="tav tav-${p.role}">${p.name[0]}</span><span class="tt"><b>${p.name}</b><span>${p.area||p.title}</span></span>${wide?`<span class="tdesc">${p.role==='guy'?'רואה רק מה שצריך החלטה שלו':''}</span>`:''}<span class="tgo">‹</span></button>`};
+ const tile=(id,wide)=>{const p=PEOPLE[id];return `<button class="tile ${wide?'wide':''}" onclick="login('${id}')"><span class="tav tav-${p.role}">${p.name[0]}</span><span class="tt"><b>${p.name}</b><span>${p.area||p.title}</span></span>${wide?`<span class="tdesc">${p.role==='guy'?'רואה רק מה שצריך החלטה שלו':p.role==='owner'?'כסף, גבייה וקריאות במבט אחד':''}</span>`:''}<span class="tgo">‹</span></button>`};
  const sec=(t,sub,body)=>`<section class="psec"><div class="psec-h"><b>${t}</b><span>${sub}</span></div>${body}</section>`;
  return `<div class="landing"><div class="hero"><div class="hero-in"><div class="logo big">${ICON.logo}<div>צמרת מעליות<small>שירות, אחזקה ושיפוץ מעליות</small></div></div>
   <h1 class="hero-t">שירות ושטח<br>במקום אחד</h1><p class="hero-p">הטכנאי מדווח מהאתר, גיא מקבל רק את מה שצריך החלטה, והמשרד רואה מה לחייב.</p>
@@ -475,7 +519,8 @@ function picker(){
  <div class="pick2"><div class="pcard"><div class="pcard-h">מי נכנס?</div>
   ${sec('טכנאים','אפליקציית שטח',`<div class="tiles">${['ofer','kosta','dror','moshe','patrick'].map(id=>tile(id)).join('')}</div>`)}
   ${sec('ניהול השירות','החלטות, שיבוץ ומחירון',`<div class="tiles one">${tile('guy',true)}</div>`)}
-  ${sec('משרד','קריאות, שיבוץ וחיוב',`<div class="tiles">${['kristy','or'].map(id=>tile(id)).join('')}</div>`)}
+  ${sec('משרד','קריאות, גבייה וחיוב',`<div class="tiles">${['kristy','or','karin'].map(id=>tile(id)).join('')}</div>`)}
+  ${sec('הנהלה','מבט על',`<div class="tiles one">${tile('shmaya',true)}</div>`)}
  </div>
  <div class="tip"><span class="tip-i">${ICON.bell}</span><span><b>כדאי לנסות בשני טלפונים.</b> באחד נכנסים כטכנאי ובשני כגיא. דיווח מהשטח מגיע לגיא תוך כמה שניות.</span></div>
  ${keyRefused?'<div class="warn" style="margin-top:12px">הקישור חסר את קוד הגישה, ולכן העדכונים לא עוברים בין טלפונים. כדאי לפתוח את הקישור המלא שקיבלתם.</div>':''}
@@ -569,7 +614,7 @@ function openMemo(mid,callId){const m=db.memos[mid];sheet(`<div><div class="sub"
 
 /* ========= GUY ========= */
 function guyView(){
- if(!tab)tab='decide';
+ if(!tab)tab='dash';
  const all=calls();
  const decide=all.filter(c=>c.status==='needs_guy');
  const repeats=all.filter(c=>(c.history||[]).length>=2&&!['closed'].includes(c.status)&&!c.guyAck);
@@ -580,7 +625,8 @@ function guyView(){
  const field=TECHS.map(id=>{const mine=all.filter(c=>c.tech===id);const now=mine.find(c=>c.status==='onsite')||mine.find(c=>c.status==='enroute');const open=mine.filter(c=>['assigned','enroute','onsite'].includes(c.status)).length;return{id,now,open}});
  const closedNoGuy=all.filter(c=>c.status==='closed'&&c.report&&c.report.at>=dayStart(0)&&!c.viaGuy).length;
  let inner='';
- if(tab==='decide'){
+ if(tab==='dash'){inner=callsDash();}
+ else if(tab==='decide'){
   inner=`${pageHead('לטיפול שלך',DATE())}${kpis([[todo,'להחלטה',1],[repeats.length,'חוזרות'],[closedNoGuy,'נסגרו בלעדיך']])}
   <div class="section-t">דיווחים מהשטח <span class="n">${decide.length}</span></div>
   ${decide.length?decide.map(c=>`<div class="card tap ${c.priority==='stopped'?'stopped':'flag'}" onclick="openGuyCall(${c.id})"><div class="row"><span class="pill amber">${esc(c.report.reason)} · ${WHEN.find(w=>w[0]===c.report.when)?.[1]||''}</span><span class="time">${esc(PEOPLE[c.report.by]?.name)} · ${hhmm(c.report.at)}</span></div><div class="addr mt">${esc(c.address)}</div><div class="detail" style="color:var(--ink)">${esc(c.report.text)}</div>${c.photos?.length?`<div class="photos">${c.photos.map(s=>`<img src="${s}" alt="">`).join('')}</div>`:''}</div>`).join(''):`<div class="empty">אין דיווחים מהשטח שמחכים לך.</div>`}
@@ -597,7 +643,7 @@ function guyView(){
   <div class="card">${PARTS.map(p=>`<div class="live"><span style="flex:1">${esc(p.name)}</span><b>${money(p.price)}</b></div>`).join('')}</div>
   <div class="info">אחרי החיבור, המחירון נבנה מחשבוניות הספקים לפי המק״טים, עם המכפיל ששמעיה יקבע, ומתעדכן כל חצי שנה.</div>`;
  }
- return shell(inner,[['decide','לטיפול שלי','bell',todo||''],['field','השטח','map',''],['price','מחירון','tag','']]);
+ return shell(inner,[['dash','תמונת מצב','grid',''],['decide','לטיפול שלי','bell',todo||''],['field','השטח','map',''],['price','מחירון','tag','']]);
 }
 function openGuyCall(id){const c=db.calls[id];openCall=id;const q=c.quote?db.quotes[c.quote]:null;
  const partsHtml=(c.report?.parts||[]).map(([pid,qty])=>`${esc(partById(pid).name)} × ${qty}`).join(' · ');
@@ -695,6 +741,7 @@ function officeView(){
   inner=`${pageHead('קריאות שירות',DATE(),`<button class=\"btn primary sm\" onclick=\"newCall()\">${ICON.plus} קריאה חדשה</button>`)}
   <div class="filters">${Object.entries(F).map(([k,[l,f]])=>`<button class="choice ${filter===k?'on':''}" onclick="filter='${k}';render()">${l} · ${all.filter(f).length}</button>`).join('')}</div>
   <div class="office-grid">${list.map(officeCard).join('')||'<div class="empty">אין קריאות בסינון הזה.</div>'}</div>`;
+ }else if(tab==='collect'){inner=collectView();
  }else if(tab==='memos'){
   const ms=Object.values(db.memos);const order={inbox:0,missing:1,processed:2};ms.sort((a,b)=>(order[a.status]-order[b.status])||((b.receivedAt||0)-(a.receivedAt||0)));
   const qs=Object.values(db.quotes).sort((a,b)=>(b.sentAt||b.createdAt||0)-(a.sentAt||a.createdAt||0));
@@ -707,7 +754,7 @@ function officeView(){
   inner=`${pageHead('לחיוב',DATE())}${closed.map(c=>{const lines=linesFor(c,c.report?.parts||[]);const tot=lines.reduce((a,l)=>a+l.charge,0);return `<div class="card tap" onclick="openOfficeCall(${c.id})"><div class="row"><div class="addr">${esc(c.address)}</div>${c.billed?'<span class="pill green">מוכן להפקה</span>':tot?`<span class="pill blue">${money(tot)}</span>`:'<span class="pill">ללא חיוב</span>'}</div><div class="detail">${COVER[c.cover]} · ${lines.map(l=>esc(l.name)).join(', ')||'ללא חלקים'}</div></div>`}).join('')||'<div class="empty">אין קריאות סגורות.</div>'}
   <div class="info">בביטוח רגיל כל חלק מחויב לפי המחירון. בביטוח מקיף החלק מופיע במחיר אפס. חבלה ונזק מים מחויבים תמיד.</div>`;
  }
- return shell(inner,[['board','קריאות','list',all.filter(c=>c.status==='new').length||''],['memos','תזכירים','doc',Object.values(db.memos).filter(m=>m.status==='inbox').length||''],['bill','לחיוב','tag','']]);
+ return shell(inner,[['board','קריאות','list',all.filter(c=>c.status==='new').length||''],['memos','תזכירים','doc',Object.values(db.memos).filter(m=>m.status==='inbox').length||''],['collect','גבייה','wallet',''],['bill','לחיוב','tag','']]);
 }
 function officeCard(c){const repeat=(c.history||[]).length>=2;return `<div class="card tap ${c.priority==='stopped'&&c.status!=='closed'?'stopped':''}" onclick="openOfficeCall(${c.id})">
  <div class="row"><div class="addr">${esc(c.address)}</div>${statusPill(c)}</div><div class="issue">${esc(c.issue)}</div>
@@ -722,6 +769,7 @@ function openOfficeCall(id){const c=db.calls[id];openCall=id;const m=memoOf(c);c
  ${c.status==='closed'?`<div class="box"><h4>חיוב לפי ${COVER[c.cover]}</h4>${lines.length?`<table class="lines">${lines.map(l=>`<tr><td>${esc(l.name)} × ${l.qty}${l.charge?'':' <span class="muted small">(${money(l.price*l.qty)} בכיסוי)</span>'}</td><td>${money(l.charge)}</td></tr>`).join('')}<tr class="tot"><td>לחיוב</td><td>${money(tot)}</td></tr></table>`:'<div class="muted">ללא חלקים</div>'}
    ${c.billed?'<div class="ok">מוכן להפקת חשבונית עסקה.</div>':`<button class="btn primary block mt" onclick="markBilled(${c.id})">${tot?'אישור החיוב':'סגירה ללא חיוב'}</button>`}</div>
    <div class="box"><h4>מה הלקוח מקבל במייל</h4><div class="small"><b>דוח קריאת שירות #${c.id}</b><br>${esc(c.address)}<br>תקלה: ${esc(c.issue)}<br>תיקון: ${esc(c.report?.text||'')}</div><div class="small muted mt">ההערה הפנימית לא מופיעה בדוח ללקוח.</div></div>`:''}
+ ${accountByAddress(c.address)?`<button class="btn ghost block mt" onclick="openAccount('${accountByAddress(c.address).id}')">${ICON.doc} תיק לקוח</button>`:''}
  <label class="f">הערה פנימית (לא נשלחת ללקוח)</label><textarea class="in" id="oNote" placeholder="למשל: הוועד התחלף, לדבר עם אבי">${esc(c.internal)}</textarea><button class="btn ghost block mt" onclick="saveNote(${c.id})">שמירת ההערה</button>
  ${m?`<button class="btn ghost block mt" onclick="openMemo('${m.id}',${c.id})">${ICON.doc} תזכיר וליקויים</button>`:''}
  <div class="box"><h4>מה קרה בקריאה</h4><div class="log">${c.log.slice().reverse().map(l=>`<div><b>${hhmm(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')}</div></div>`)}
@@ -742,9 +790,110 @@ function createCall(){const addr=$('#nAddr').value.trim(),issue=$('#nIssue').val
   log:[{t:Date.now(),who:PEOPLE[me].name,text:'קריאה נפתחה'},{t:Date.now(),who:'מערכת',text:'שובצה ל'+PEOPLE[t].name+' לפי האזור'}]};
  put('calls',c);closeSheet();toast('הקריאה שובצה ל'+PEOPLE[t].name)}
 
+/* ========= CALLS DASHBOARD (Guy, Shmaya) ========= */
+let dashPeriod='day',drill=null;
+const PERIOD={day:['היום',0],week:['השבוע',6],month:['החודש',29]};
+function inPeriod(t){return t>=dayStart(-PERIOD[dashPeriod][1])}
+function dashSets(){const all=calls();const h=dashPeriod==='day'?{opened:0,closed:0}:(db.meta.seed?.hist?.[dashPeriod]||{opened:0,closed:0});
+ return{
+  open:{label:'קריאות פתוחות',sub:'נפתחו '+PERIOD[dashPeriod][0],list:all.filter(c=>c.status!=='closed'&&inPeriod(c.createdAt)),extra:h.opened-0,tone:''},
+  closed:{label:'קריאות סגורות',sub:'נסגרו '+PERIOD[dashPeriod][0],list:all.filter(c=>c.status==='closed'&&inPeriod(c.report?.at||c.createdAt)),extra:h.closed,tone:'green'},
+  follow:{label:'ממתינות להמשך טיפול',sub:'עכשיו',list:all.filter(c=>['needs_guy','scheduled','quote'].includes(c.status)),extra:0,tone:'amber'},
+  stopped:{label:'מעליות מושבתות',sub:'עכשיו',list:all.filter(c=>c.priority==='stopped'&&c.status!=='closed'),extra:0,tone:'red'}}}
+function callsDash(){const S=dashSets();
+ if(drill&&S[drill]){const d=S[drill];return `${pageHead(d.label,d.sub,`<button class="btn ghost sm" onclick="drill=null;render()">חזרה לתמונת מצב</button>`)}
+  ${d.list.length?d.list.map(c=>`<div class="card tap ${c.priority==='stopped'&&c.status!=='closed'?'stopped':''}" onclick="${PEOPLE[me].role==='guy'?`openGuyCall(${c.id})`:`openOfficeCall(${c.id})`}"><div class="row"><div class="addr">${esc(c.address)}</div>${statusPill(c)}</div><div class="issue">${esc(c.issue)}</div><div class="meta"><span class="chip">${c.tech?esc(PEOPLE[c.tech].name):'לא שובצה'}</span><span class="chip">${hhmm(c.createdAt)}</span></div></div>`).join(''):'<div class="empty">אין קריאות כאן.</div>'}
+  ${d.extra?`<div class="info">ועוד ${d.extra} קריאות מימים קודמים. אחרי החיבור לפריוריטי הן יופיעו כאן.</div>`:''}`}
+ return `${pageHead('תמונת מצב',DATE())}
+ <div class="choices seg">${Object.entries(PERIOD).map(([k,[l]])=>`<button class="choice ${dashPeriod===k?'on':''}" onclick="dashPeriod='${k}';render()">${l==='היום'?'יומי':l==='השבוע'?'שבועי':'חודשי'}</button>`).join('')}</div>
+ <div class="dash">${Object.entries(S).map(([k,d])=>`<button class="dtile ${d.tone}" onclick="drill='${k}';render();scrollTo(0,0)"><span class="dl">${d.label}</span><b>${d.list.length+d.extra}</b><span class="ds">${d.sub}</span></button>`).join('')}</div>`}
+
+/* ========= OWNER (Shmaya) ========= */
+let ownPeriod='day';
+const MONEY={day:{in:27839,out:12450,prev:24120,prevLabel:'אתמול'},month:{in:412600,out:296300,prev:389400,prevLabel:'החודש הקודם'},year:{in:4380000,out:3120000,prev:3910000,prevLabel:'אשתקד באותה תקופה'}};
+const WEEK=[[31,14],[26,11],[22,9],[35,16],[29,12],[18,8],[28,12]];
+function ownerView(){if(!tab)tab='over';let inner='';
+ if(tab==='over'){const M=MONEY[ownPeriod];const net=M.in-M.out;const ch=Math.round((M.in-M.prev)/M.prev*100);
+  const debtors=accounts().filter(a=>openSum(a)>0);const due=debtors.reduce((s,a)=>s+openSum(a),0);
+  const B=[['חודש אחד',a=>openCount(a)===1],['2 חודשים',a=>openCount(a)===2],['3 עד 6',a=>openCount(a)>=3&&openCount(a)<=6],['מעל 6',a=>openCount(a)>6]];
+  const maxB=Math.max(1,...B.map(([,f])=>debtors.filter(f).reduce((s,a)=>s+openSum(a),0)));
+  const maxW=Math.max(...WEEK.flat());const S=dashSets();
+  inner=`${pageHead('מבט על',DATE())}
+  <div class="choices seg">${[['day','היום'],['month','החודש'],['year','השנה']].map(([k,l])=>`<button class="choice ${ownPeriod===k?'on':''}" onclick="ownPeriod='${k}';render()">${l}</button>`).join('')}</div>
+  <div class="money"><div class="mtile hero2"><span>נכנס לבנק</span><b>${money(M.in)}</b><small>${ch>=0?'▲':'▼'} ${Math.abs(ch)}% לעומת ${M.prevLabel}</small></div><div class="mtile"><span>יצא</span><b>${money(M.out)}</b><small>ספקים והוצאות</small></div><div class="mtile"><span>תזרים נטו</span><b>${money(net)}</b><small>נכנס פחות יצא</small></div><div class="mtile warnt" onclick="goTab('collect')"><span>לגבייה עכשיו</span><b>${money(due)}</b><small>${debtors.length} לקוחות · חוזי שירות בלבד ›</small></div></div>
+  <div class="card"><div class="row"><b>שבעת הימים האחרונים</b><span class="small muted"><i class="lg lgi"></i>נכנס <i class="lg lgo"></i>יצא · אלפי ₪</span></div><div class="bars">${WEEK.map(([a,b],i)=>`<div class="bar"><div class="bb"><i class="bi" style="height:${a/maxW*100}%"></i><i class="bo" style="height:${b/maxW*100}%"></i></div><span>${new Date(dayStart(i-6)).toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})}</span></div>`).join('')}</div></div>
+  <div class="card"><div class="row"><b>גיול חובות של חוזי השירות</b><span class="small muted">בלי שיפוצים וחלקים</span></div>${B.map(([l,f])=>{const v=debtors.filter(f).reduce((s,a)=>s+openSum(a),0);return `<div class="agerow"><span>${l}</span><div class="ag"><i style="width:${v/maxB*100}%"></i></div><b>${money(v)}</b></div>`}).join('')}</div>
+  <div class="card"><div class="row"><b>קריאות שירות</b><span class="small muted">היום</span></div><div class="mini">${Object.entries(S).map(([k,d])=>`<div class="${d.tone}"><b>${d.list.length}</b><span>${d.label}</span></div>`).join('')}</div></div>
+  <div class="info">המספרים של הכסף לדוגמה. אחרי החיבור הם יגיעו מחשבון הבנק, והקבלות מפריוריטי.</div>`;
+ }else if(tab==='calls'){inner=callsDash()}
+ else inner=collectView(true);
+ return shell(inner,[['over','מבט על','grid',''],['calls','קריאות','list',''],['collect','גבייה','wallet','']]);}
+
+/* ========= ACCOUNTS, COLLECTION, MONTHLY REMINDER ========= */
+const PAY={cash:'מזומן',checks:'צ׳קים',transfer:'העברה בנקאית',masav:'הרשאה לחיוב (מס״ב)'};
+const ASTATUS={todo:['לטיפול','red'],promise:['הבטיח לשלם','blue'],arrangement:['בהסדר','teal'],dispute:['בבירור','amber'],paid:['שולם','green']};
+const REASONS_D=['','ללא מענה','מייל שגוי','חשבוניות לא התקבלו','התחלף ועד הבית','אין כסף בקופה','מחלוקת על חיוב','סכסוך בין הוועד למחזיק','הבטיח לשלם'];
+const BANK='[פרטי החשבון של צמרת להעברה]';
+const accounts=()=>Object.values(db.accounts);
+const openInv=a=>(a.invoices||[]).filter(i=>!i.paid);
+const openSum=a=>openInv(a).reduce((s,i)=>s+i.amount,0);
+const openCount=a=>openInv(a).length;
+const monthName=m=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-m);return d.toLocaleDateString('he-IL',{month:'long'})};
+const accountByAddress=addr=>accounts().find(a=>a.address===addr);
+let collectMode='debts',collectFilter='all';
+function collectView(readOnly){
+ const seg=`<div class="choices seg">${[['debts','חובות'],['monthly','תזכורת חודשית']].map(([k,l])=>`<button class="choice ${collectMode===k?'on':''}" onclick="collectMode='${k}';render()">${l}</button>`).join('')}</div>`;
+ if(collectMode==='monthly')return monthlyView(seg,readOnly);
+ const debtors=accounts().filter(a=>openSum(a)>0).sort((a,b)=>openSum(b)-openSum(a));
+ const F={all:['הכל',()=>true],over3:['3 חודשים ומעלה',a=>openCount(a)>=3],todo:['לטיפול',a=>a.status==='todo'],promise:['הבטיח לשלם',a=>a.status==='promise'],arrangement:['בהסדר',a=>a.status==='arrangement'],dispute:['בבירור',a=>a.status==='dispute']};
+ const list=debtors.filter(F[collectFilter]?.[1]||(()=>true));
+ return `${pageHead('גבייה',DATE())}${seg}${kpis([[money(debtors.reduce((s,a)=>s+openSum(a),0)),'פתוח'],[debtors.filter(a=>openCount(a)>=3).length,'3 חודשים ומעלה',1],[debtors.filter(a=>a.status==='promise').length,'הבטיחו לשלם']])}
+ <div class="filters">${Object.entries(F).map(([k,[l,f]])=>`<button class="choice ${collectFilter===k?'on':''}" onclick="collectFilter='${k}';render()">${l} · ${debtors.filter(f).length}</button>`).join('')}</div>
+ ${list.map(a=>`<div class="card tap ${openCount(a)>=3?'flag':''}" onclick="openDebt('${a.id}')"><div class="row"><div class="addr">${esc(a.address)}</div><b>${money(openSum(a))}</b></div><div class="meta"><span class="pill ${ASTATUS[a.status][1]}">${ASTATUS[a.status][0]}${a.status==='promise'&&a.promise?' · '+dayLabel(a.promise):''}</span><span class="chip">${openCount(a)} חודשים</span><span class="chip">${PAY[a.pay]}</span>${a.reason?`<span class="chip">${esc(a.reason)}</span>`:''}</div></div>`).join('')||'<div class="empty">אין חובות בסינון הזה.</div>'}
+ <div class="info">רק חוזי שירות, לפי המק״ט של החשבונית. חובות על שיפוצים וחלקים לא נכנסים לכאן.</div>`}
+function debtMsg(a){const inv=openInv(a);return `שלום ${a.contact}, כאן צמרת מעליות. לפי הרישומים שלנו פתוחות ${inv.length} חשבוניות שירות עבור המעלית ב${a.address} (${inv.map(i=>monthName(i.m)).join(', ')}), בסך ${money(openSum(a))}. אפשר להסדיר בהעברה בנקאית: ${BANK}. אחרי ההעברה נשמח לאישור בהודעה. תודה!`}
+function openDebt(id){const a=db.accounts[id];const inv=openInv(a);const txt=debtMsg(a);const ro=PEOPLE[me].role==='owner';
+ sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${ASTATUS[a.status][1]}">${ASTATUS[a.status][0]}</span><span class="pill">${PAY[a.pay]}</span></div><div class="addr" style="margin-top:6px">${esc(a.address)}</div><div class="sub">${esc(a.contact)} · ${money(a.fee)} לחודש</div></div>`,`
+ <div class="box" style="margin-top:0"><h4>חשבוניות שירות פתוחות</h4>${inv.length?`<table class="lines">${inv.map(i=>`<tr><td>שירות ${monthName(i.m)}</td><td>${money(i.amount)}</td></tr>`).join('')}<tr class="tot"><td>סה״כ</td><td>${money(openSum(a))}</td></tr></table>`:'<div class="muted">אין חוב פתוח</div>'}</div>
+ ${!ro&&inv.length?`<div class="btns mt"><a class="btn primary" href="https://wa.me/?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener" onclick="logAcc('${a.id}','נשלחה הודעת וואטסאפ')">וואטסאפ עם פירוט החוב</a><a class="btn ghost" href="mailto:?subject=${encodeURIComponent('צמרת מעליות · חשבוניות שירות פתוחות')}&body=${encodeURIComponent(txt)}" onclick="logAcc('${a.id}','נשלח מייל')">מייל</a></div>
+  <div class="small muted mt">ההודעה מוכנה עם הסכום. בוואטסאפ בוחרים את איש הקשר ושולחים.</div>
+  <div class="box"><h4>מצב</h4><div class="choices" id="aSt">${Object.entries(ASTATUS).map(([k,[l]])=>`<button class="choice ${a.status===k?'on':''}" data-k="${k}" onclick="pick(this);document.getElementById('aPro').hidden=this.dataset.k!=='promise'">${l}</button>`).join('')}</div>
+   <div id="aPro" ${a.status==='promise'?'':'hidden'}><label class="f">ישלם עד</label><input class="in" type="date" id="aDate" value="${a.promise?new Date(a.promise).toISOString().slice(0,10):new Date(Date.now()+3*864e5).toISOString().slice(0,10)}"></div>
+   <label class="f">סיבה</label><select class="in" id="aWhy">${REASONS_D.map(r=>`<option ${r===a.reason?'selected':''}>${r}</option>`).join('')}</select>
+   <button class="btn dark block mt" onclick="saveDebt('${a.id}')">שמירה</button></div>`:''}
+ <div class="info">אחרי החיבור, הסוכן הקולי מתקשר ללקוחות מהרשימה הזו, והסטטוס מתעדכן לבד לפי השיחה ולפי התשלום בפריוריטי.</div>
+ <button class="btn ghost block mt" onclick="openAccount('${a.id}')">${ICON.doc} תיק לקוח</button>
+ <div class="box"><h4>יומן קשר</h4><div class="log">${(a.log||[]).slice().reverse().map(l=>`<div><b>${dayLabel(l.t)==='היום'?hhmm(l.t):dayLabel(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')||'<div>עוד אין</div>'}</div></div>`)}
+function logAcc(id,text){const a=db.accounts[id];a.log=(a.log||[]).concat({t:Date.now(),who:PEOPLE[me].name,text});put('accounts',a)}
+function saveDebt(id){const a=db.accounts[id];const st=$('#aSt .on').dataset.k;a.reason=$('#aWhy').value;
+ if(st==='paid'){a.invoices.forEach(i=>i.paid=true);a.status='paid';a.log.push({t:Date.now(),who:PEOPLE[me].name,text:'סומן ששולם'})}
+ else{a.status=st;if(st==='promise'){a.promise=new Date($('#aDate').value+'T08:00').getTime()}a.log.push({t:Date.now(),who:PEOPLE[me].name,text:ASTATUS[st][0]+(st==='promise'?' עד '+new Date(a.promise).toLocaleDateString('he-IL'):'')+(a.reason?' · '+a.reason:'')})}
+ put('accounts',a);closeSheet();toast('נשמר')}
+const RSTAT={none:['טרם נשלחה','',],sent:['התזכורת נשלחה','blue'],forms:['ביקש פרטים · נשלחו טפסים','amber'],joined:['עבר לתשלום קבוע','green'],declined:['לא מעוניין כרגע','']};
+function monthlyView(seg,readOnly){const list=accounts().filter(a=>a.pay!=='masav'||a.reminder==='joined');const notSent=list.filter(a=>a.reminder==='none').length;
+ return `${pageHead('גבייה',DATE())}${seg}${kpis([[list.length,'בלי מס״ב'],[list.filter(a=>a.reminder==='sent').length,'קיבלו תזכורת'],[list.filter(a=>a.reminder==='forms').length,'ביקשו פרטים'],[list.filter(a=>a.reminder==='joined').length,'עברו לקבוע']])}
+ <div class="card"><b>תזכורת עם הוצאת החשבוניות</b><div class="detail" style="-webkit-line-clamp:unset">ב-16 לחודש, בנוסף למייל, הלקוחות שמשלמים במזומן, בצ׳קים או בהעברות מקבלים שיחה: "הגיע מועד התשלום החודשי עבור המעלית, יש להעביר תשלום באופן מסודר", ושאלה אם לשלוח פרטים לתשלום קבוע.</div>${!readOnly&&notSent?`<button class="btn primary block mt" onclick="sendReminders()">שליחת תזכורת ל-${notSent} לקוחות</button>`:''}</div>
+ ${list.map(a=>`<div class="card"><div class="row"><div class="addr">${esc(a.address)}</div><span class="pill ${RSTAT[a.reminder][1]}">${RSTAT[a.reminder][0]}</span></div><div class="meta"><span class="chip">${PAY[a.pay]}</span><span class="chip">${money(a.fee)} לחודש</span>${openCount(a)?`<span class="chip">${openCount(a)} פתוחות</span>`:''}</div>
+  ${!readOnly&&a.reminder==='sent'?`<div class="btns mt"><button class="btn ghost sm" onclick="setRem('${a.id}','forms')">ביקש פרטים</button><button class="btn ghost sm" onclick="setRem('${a.id}','declined')">לא מעוניין</button></div>`:''}
+  ${!readOnly&&a.reminder==='forms'?`<button class="btn ghost sm block mt" onclick="setRem('${a.id}','joined')">ההרשאה נקלטה: עבר לתשלום קבוע</button>`:''}</div>`).join('')}
+ <div class="info">אחרי החיבור, השיחות יוצאות לבד מהסוכן הקולי, ומי שעונה "כן" מקבל מיד את טופס ההרשאה, דף ההנחיות וקוד המוסד.</div>`}
+function sendReminders(){const list=accounts().filter(a=>a.pay!=='masav'&&a.reminder==='none');list.forEach(a=>{a.reminder='sent';a.log=(a.log||[]).concat({t:Date.now(),who:PEOPLE[me].name,text:'נשלחה תזכורת חודשית'});put('accounts',a)});toast('נשלחה תזכורת ל-'+list.length+' לקוחות')}
+function setRem(id,st){const a=db.accounts[id];a.reminder=st;const txt={forms:'ביקש פרטים לתשלום קבוע. נשלחו טופס הרשאה, דף הנחיות וקוד מוסד',declined:'לא מעוניין בתשלום קבוע כרגע',joined:'ההרשאה לחיוב נקלטה. עבר לתשלום קבוע'}[st];if(st==='joined')a.pay='masav';a.log=(a.log||[]).concat({t:Date.now(),who:PEOPLE[me].name,text:txt});put('accounts',a);toast(st==='forms'?'נשלחו הטפסים':'עודכן')}
+
+/* ========= CUSTOMER FILE ========= */
+function openAccount(id){const a=db.accounts[id];const cs=calls().filter(c=>c.address===a.address);const ms=Object.values(db.memos).filter(m=>m.address===a.address);const qs=Object.values(db.quotes).filter(q=>q.address===a.address);const role=PEOPLE[me].role;
+ const callClick=c=>role==='guy'?`openGuyCall(${c.id})`:`openOfficeCall(${c.id})`;
+ sheet(`<div><div class="sub">תיק לקוח</div><div class="addr">${esc(a.address)}</div><div class="sub">${esc(a.contact)} · ${PAY[a.pay]} · ${money(a.fee)} לחודש</div></div>`,`
+ <div class="grid2" style="margin-top:0"><div class="kv"><span>חוב פתוח</span><b>${openSum(a)?money(openSum(a))+' · '+openCount(a)+' חודשים':'אין'}</b></div><div class="kv"><span>מצב גבייה</span><b>${ASTATUS[a.status][0]}</b></div></div>
+ ${openSum(a)&&role!=='tech'?`<button class="btn ghost block mt" onclick="openDebt('${a.id}')">פירוט החוב ופנייה ללקוח</button>`:''}
+ <div class="box"><h4>קריאות שירות</h4>${cs.length?cs.map(c=>`<div class="def" style="cursor:pointer" onclick="${callClick(c)}"><span style="flex:1"><b>${esc(c.issue)}</b><div class="who2">#${c.id} · ${dayLabel(c.createdAt)} ${hhmm(c.createdAt)}${c.report?' · '+esc(c.report.text):''}</div></span>${statusPill(c)}</div>`).join(''):'<div class="muted small">אין קריאות</div>'}</div>
+ <div class="box"><h4>תזכירי בודק</h4>${ms.length?ms.map(m=>`<div class="def" style="cursor:pointer" onclick="${role==='guy'?`openMemo('${m.id}')`:`openMemoOffice('${m.id}')`}"><span style="flex:1">${m.status==='missing'?'תזכיר לא התקבל':'בדיקה '+new Date(m.last).toLocaleDateString('he-IL')} · ${m.defects.length} ליקויים</span><span class="pill">${m.status==='inbox'?'חדש':m.status==='missing'?'חסר':'טופל'}</span></div>`).join(''):'<div class="muted small">אין תזכירים</div>'}</div>
+ <div class="box"><h4>הצעות מחיר</h4>${qs.length?qs.map(q=>`<div class="def" style="cursor:pointer" onclick="${role==='guy'?`openGuyQuote(${q.id})`:`officeQuoteSheet(${q.id})`}"><span style="flex:1">#${q.id} · ${money(qTotal(q))}</span>${qPill(q)}</div>`).join(''):'<div class="muted small">אין הצעות</div>'}</div>
+ <div class="box"><h4>יומן קשר</h4><div class="log">${(a.log||[]).slice().reverse().map(l=>`<div><b>${dayLabel(l.t)==='היום'?hhmm(l.t):dayLabel(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')||'<div>עוד אין</div>'}</div><div class="small muted mt">אחרי החיבור יופיעו כאן גם המיילים מ-Gmail.</div></div>`)}
+
 /* ========= render ========= */
 function render(){const keep=openCall;let html;
- if(!me||!PEOPLE[me])html=picker();else{const r=PEOPLE[me].role;html=r==='tech'||r==='team'?techView():r==='guy'?guyView():officeView()}
+ if(!me||!PEOPLE[me])html=picker();else{const r=PEOPLE[me].role;html=r==='tech'||r==='team'?techView():r==='guy'?guyView():r==='owner'?ownerView():officeView()}
  $('#app').innerHTML=html;renderSync();
  if(keep&&$('#sheet')&&!draft){/* sheet content refresh handled by explicit calls */}
 }
