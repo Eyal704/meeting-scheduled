@@ -88,6 +88,7 @@ h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
 .tip b{color:var(--ink)}
 .tip-i{width:30px;height:30px;border-radius:9px;background:var(--teal-t);color:var(--teal);display:grid;place-items:center;flex:none}
 .tip-i svg{width:17px;height:17px}
+.reset-l{font-size:12px;color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:2px}
 .pnote{text-align:center;font-size:12px;color:var(--faint);margin-top:14px}
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
@@ -371,7 +372,7 @@ function shell(inner,navItems){const p=PEOPLE[me];return `<div class="app"><div 
  <main>${inner}</main>${navItems?`<nav class="nav"><div class="nav-in">${navItems.map(([id,label,ic,b])=>`<button class="${tab===id?'on':''}" onclick="tab='${id}';render();scrollTo(0,0)">${b?`<span class="badge">${b}</span>`:''}${ICON[ic]}${label}</button>`).join('')}</div></nav>`:''}</div>`}
 function openMe(){const p=PEOPLE[me];sheet(`<div><b style="font-size:17px">${esc(p.name)}</b><div class="sub">${esc(p.title)}${p.area?' · '+esc(p.area):''}</div></div>`,`
  <button class="btn block dark" onclick="logout()">החלפת משתמש</button>
- ${p.role!=='tech'?`<button class="btn block ghost mt" onclick="if(confirm('להחזיר את כל הקריאות למצב ההתחלתי?'))resetAll()">איפוס הנתונים למצב ההתחלתי</button>`:''}
+ <button class="btn block ghost mt" onclick="if(confirm('להחזיר את כל הקריאות למצב ההתחלתי? זה משפיע על כל מי שמחובר.'))resetAll()">איפוס הנתונים למצב ההתחלתי</button>
  <div class="info">הנתונים כאן הם לדוגמה. אחרי החיבור לפריוריטי יופיעו הקריאות, הלקוחות והתזכירים האמיתיים.</div><div class="foot">נבנה עבור צמרת מעליות · MeetingScheduled</div>`)}
 
 /* ========= sheet ========= */
@@ -391,7 +392,7 @@ function picker(){
   ${sec('משרד','קריאות, שיבוץ וחיוב',`<div class="tiles">${['kristy','or'].map(id=>tile(id)).join('')}</div>`)}
  </div>
  <div class="tip"><span class="tip-i">${ICON.bell}</span><span><b>כדאי לנסות בשני טלפונים.</b> באחד נכנסים כטכנאי ובשני כגיא. דיווח מהשטח מגיע לגיא תוך כמה שניות.</span></div>
- <div class="pnote">נתונים לדוגמה עד לחיבור לפריוריטי</div>
+ <div class="pnote">נתונים לדוגמה עד לחיבור לפריוריטי · <button class="reset-l" onclick="if(confirm('להחזיר את כל הקריאות למצב ההתחלתי? זה משפיע על כל מי שמחובר.'))resetAll()">איפוס הנתונים</button></div>
  <div class="foot">נבנה עבור צמרת מעליות · MeetingScheduled</div></div>`}
 
 /* ========= TECHNICIAN ========= */
