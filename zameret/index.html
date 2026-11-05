@@ -318,6 +318,7 @@ a.link{color:var(--blue);text-decoration:none;font-weight:600}
 .lg{display:inline-block;width:9px;height:9px;border-radius:2px;margin:0 6px 0 3px;vertical-align:-1px}
 .agerow{display:grid;grid-template-columns:72px 1fr auto;gap:10px;align-items:center;margin-top:9px;font-size:13px}
 .ag{height:10px;background:var(--line2);border-radius:99px;overflow:hidden}.ag i{display:block;height:100%;background:var(--amber);border-radius:99px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.split div{background:var(--bg);border-radius:12px;padding:8px 10px}.split span{display:block;font-size:11.5px;color:var(--muted)}.split b{font-size:17px}
 .mini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px;text-align:center}
 .mini div{background:var(--bg);border-radius:12px;padding:8px 4px}.mini b{display:block;font-size:20px}.mini span{font-size:11px;color:var(--muted);line-height:1.25;display:block}
 .mini .red b{color:var(--red)}.mini .amber b{color:var(--amber)}.mini .green b{color:var(--green)}
@@ -366,7 +367,7 @@ const PEOPLE={
  shmaya:{name:'שמעיה',role:'owner',title:'בעלים'}
 };
 const TECHS=['ofer','kosta','dror','moshe','patrick'];
-const CITY_TECH={'חיפה':'ofer','קריית ים':'kosta','קריית מוצקין':'kosta','קריית ביאליק':'kosta','קריית אתא':'kosta','עכו':'dror','כרמיאל':'dror','נשר':'moshe','טירת כרמל':'moshe'};
+const CITY_TECH={'חיפה':'ofer','קריית חיים':'kosta','נהריה':'dror','צפת':'dror','טבריה':'dror','קריית ים':'kosta','קריית מוצקין':'kosta','קריית ביאליק':'kosta','קריית אתא':'kosta','עכו':'dror','כרמיאל':'dror','נשר':'moshe','טירת כרמל':'moshe'};
 const PARTS=[
  {id:'p1',name:'נורת LED לתא',price:45},{id:'p2',name:'לחצן קומה',price:180},{id:'p3',name:'לחצן בתא',price:220},
  {id:'p4',name:'מגע בטיחות לדלת',price:260},{id:'p5',name:'מנעול דלת חיצונית',price:950},{id:'p6',name:'גלגלת דלת',price:140},
@@ -378,67 +379,82 @@ const LABOR_VISIT=450;
 const partById=id=>PARTS.find(p=>p.id===id);
 const REASONS=['הזמנת חלק','צוות מכני','מעלית במעקב','הצעת מחיר','העברה לטכנאי אחר'];
 const WHEN=[['today','היום',0],['tomorrow','מחר',1],['after','מחרתיים',2]];
-const STATUS={new:['ממתינה לשיבוץ','red'],assigned:['שובצה','blue'],enroute:['בדרך','amber'],onsite:['באתר','teal'],needs_guy:['ממתינה להחלטת גיא','amber'],scheduled:['המשך טיפול מתוכנן','blue'],quote:['הצעת מחיר אצל הלקוח','blue'],closed:['נסגרה','green']};
+const STATUS={new:['ממתין לשיבוץ','red'],assigned:['לטיפול טכנאי','blue'],enroute:['בדרך','amber'],onsite:['באתר','teal'],needs_guy:['ממתין להחלטת גיא','amber'],scheduled:['המשך טיפול','blue'],quote:['הצעת מחיר אצל הלקוח','blue'],closed:['סופית','green']};
+const callNo=c=>'SC2600'+c.id, quoteNo=q=>'PQ26000'+q.id;
+const FAULTS=['מעלית עומדת','דלת נתקעת/לא נסגרת/לא נפתחת','דלת נטרקת','דלת רועדת','נתקעת לסירוגין','רועשת/חורקת','הפרשי גובה','פועלת חלקית','נורה','מאוורר','בדיקת מעלית','אחר'];
+const VAT=.18;
 const COVER={regular:'ביטוח רגיל',full:'ביטוח מקיף',ext:'ביטוח מורחב'};
 
 /* ========= seed ========= */
 function seed(){
  const end=todayAt(12,58),anchor=Math.min(end,Date.now()-5*60000),k=anchor<end?.5:1;const T=(h,m,d=0)=>d?todayAt(h,m,d)+(anchor-end):anchor-(end-todayAt(h,m))*k;
- const memoA={id:'m1',address:'העצמאות 118, חיפה',maker:'Schindler',year:2004,load:'630 ק״ג · 8 נוסעים',stops:7,last:T(9,0,-34),next:T(9,0,149),
+ const memoA={id:'m1',address:'הנרקיס 22, חיפה',maker:'Schindler',year:2004,load:'630 ק״ג · 8 נוסעים',stops:7,last:T(9,0,-34),next:T(9,0,149),
    defects:[{t:'רעידות בזמן נסיעה, יש לבדוק ולתקן',owner:'צמרת',done:false},{t:'השלמת שילוט אזהרה בתא',owner:'צמרת',done:false},{t:'תיקון תאורה בחדר המכונות והתקנת מפסק',owner:'ועד הבית',done:false}]};
- const memoB={id:'m2',address:'הנמל 2, חיפה',maker:'Otis',year:1998,load:'450 ק״ג · 6 נוסעים',stops:5,last:T(9,0,-70),next:T(9,0,113),
+ const memoB={id:'m2',address:'הגליל 31, חיפה',maker:'Otis',year:1998,load:'450 ק״ג · 6 נוסעים',stops:5,last:T(9,0,-70),next:T(9,0,113),
    defects:[{t:'כיוון מנעול דלת חיצונית בקומה 3',owner:'צמרת',done:false},{t:'ניקוי תחתית הפיר',owner:'צמרת',done:false}]};
  memoA.status='processed';memoB.status='processed';
- const memoC={id:'m3',status:'missing',address:'הגפן 15, קריית מוצקין',missing:true,maker:'—',year:2011,load:'630 ק״ג · 8 נוסעים',stops:9,last:T(9,0,-190),next:T(9,0,-8),defects:[]};
- const memoD={id:'m4',status:'inbox',address:'ספיר 27, קריית ים',city:'קריית ים',cover:'regular',contact:'רונית לוי',receivedAt:T(7,12),maker:'Kone',year:2009,load:'630 ק״ג · 8 נוסעים',stops:8,last:T(9,0,-1),next:T(9,0,182),
+ const memoC={id:'m3',status:'missing',address:'הדקל 6, קריית מוצקין',missing:true,maker:'—',year:2011,load:'630 ק״ג · 8 נוסעים',stops:9,last:T(9,0,-190),next:T(9,0,-8),defects:[]};
+ const memoD={id:'m4',status:'inbox',address:'האלון 14, קריית ים',city:'קריית ים',cover:'regular',contact:'רונית לוי',receivedAt:T(7,12),maker:'Kone',year:2009,load:'630 ק״ג · 8 נוסעים',stops:8,last:T(9,0,-1),next:T(9,0,182),
    raw:'סעיף 4.2: מגע בטיחות בדלת קומה 2 אינו תקין. סעיף 6.1: אין שלט אזהרה בתא. סעיף 9.3: אין תאורה תקינה בחדר המכונות.',
    defects:[{t:'החלפת מגע בטיחות בדלת קומה 2',owner:'צמרת',parts:[['p4',1]],done:false},{t:'השלמת שלט אזהרה בתא',owner:'צמרת',parts:[['p11',1]],done:false},{t:'תיקון התאורה בחדר המכונות',owner:'ועד הבית',done:false}]};
- const memoE={id:'m5',status:'inbox',address:'תמרי 3, קריית מוצקין',city:'קריית מוצקין',cover:'full',contact:'ענת קדם',receivedAt:T(8,3),maker:'Schindler',year:2016,load:'1000 ק״ג · 13 נוסעים',stops:10,last:T(9,0,-2),next:T(9,0,181),
+ const memoE={id:'m5',status:'inbox',address:'הרימון 19, קריית מוצקין',city:'קריית מוצקין',cover:'full',contact:'ענת קדם',receivedAt:T(8,3),maker:'Schindler',year:2016,load:'1000 ק״ג · 13 נוסעים',stops:10,last:T(9,0,-2),next:T(9,0,181),
    raw:'סעיף 3.4: יש לכוון את מנעול הדלת החיצונית בקומה 1. סעיף 7.2: סוללת תאורת החירום חלשה. סעיף 9.1: דלת חדר המכונות אינה ננעלת.',
    defects:[{t:'כיוון מנעול הדלת החיצונית בקומה 1',owner:'צמרת',parts:[],done:false},{t:'החלפת סוללת תאורת חירום',owner:'צמרת',parts:[['p8',1]],done:false},{t:'תיקון נעילת דלת חדר המכונות',owner:'ועד הבית',done:false}]};
- const memoF={id:'m6',status:'processed',address:'השיקמה 2, נשר',city:'נשר',cover:'regular',contact:'יוסי גולן',receivedAt:T(7,40),maker:'Otis',year:2001,load:'450 ק״ג · 6 נוסעים',stops:6,last:T(9,0,-3),next:T(9,0,180),
+ const memoF={id:'m6',status:'processed',address:'האורן 8, נשר',city:'נשר',cover:'regular',contact:'יוסי גולן',receivedAt:T(7,40),maker:'Otis',year:2001,load:'450 ק״ג · 6 נוסעים',stops:6,last:T(9,0,-3),next:T(9,0,180),
    defects:[{t:'החלפת לחצני קומה שחוקים',owner:'צמרת',parts:[['p2',3]],done:false},{t:'מחוון הקומה אינו תקין',owner:'צמרת',parts:[['p10',1]],done:false},{t:'ניקוי חדר המכונות',owner:'ועד הבית',done:false}],result:{quote:181,subCalls:[],owner:['ניקוי חדר המכונות']}};
  const quotes=[
-  {id:181,source:'memo',memo:'m6',address:'השיקמה 2, נשר',city:'נשר',contact:'יוסי גולן',lines:[{name:'לחצן קומה',qty:3,price:180},{name:'מחוון קומה',qty:1,price:640}],labor:LABOR_VISIT,discountPct:0,owner:['ניקוי חדר המכונות'],status:'draft',createdAt:T(7,41),log:[{t:T(7,41),who:'מערכת',text:'הצעה נבנתה מהתזכיר'}],updatedAt:Date.now()},
-  {id:180,source:'call',address:'זלמן שזר 29, קריית ים',city:'קריית ים',contact:'דורון משה',lines:[{name:'מנעול דלת חיצונית',qty:2,price:950},{name:'רצועת דלת',qty:2,price:380}],labor:900,discountPct:0,status:'discount_req',discount:{pct:10,reason:'ועד ותיק, ביקש הנחה כדי לאשר החודש',by:'אור',at:T(9,30)},createdAt:T(8,50,-1),sentAt:T(9,0,-1),log:[{t:T(9,0,-1),who:'גיא',text:'נשלחה ללקוח'},{t:T(9,30),who:'אור',text:'הלקוח ביקש 10% הנחה'}],updatedAt:Date.now()}
+  {id:181,source:'memo',memo:'m6',address:'האורן 8, נשר',city:'נשר',contact:'יוסי גולן',lines:[{name:'לחצן קומה',qty:3,price:180},{name:'מחוון קומה',qty:1,price:640}],labor:LABOR_VISIT,discountPct:0,owner:['ניקוי חדר המכונות'],status:'draft',createdAt:T(7,41),log:[{t:T(7,41),who:'מערכת',text:'הצעה נבנתה מהתזכיר'}],updatedAt:Date.now()},
+  {id:180,source:'call',address:'התאנה 12, קריית ים',city:'קריית ים',contact:'דורון משה',lines:[{name:'מנעול דלת חיצונית',qty:2,price:950},{name:'רצועת דלת',qty:2,price:380}],labor:900,discountPct:0,status:'discount_req',discount:{pct:10,reason:'ועד ותיק, ביקש הנחה כדי לאשר החודש',by:'אור',at:T(9,30)},createdAt:T(8,50,-1),sentAt:T(9,0,-1),log:[{t:T(9,0,-1),who:'גיא',text:'נשלחה ללקוח'},{t:T(9,30),who:'אור',text:'הלקוח ביקש 10% הנחה'}],updatedAt:Date.now()}
  ];
  const base=(o)=>Object.assign({log:[],report:null,internal:'',history:[],photos:[],updatedAt:Date.now()},o);
  const calls=[
-  base({id:8456,address:'ספיר 27, קריית ים',entrance:'כניסה ב׳, ליד החניה',city:'קריית ים',issue:'מעלית עומדת',detail:'המעלית עומדת בקומה הראשונה. הדלת הפנימית פתוחה, החיצונית סגורה. התאורה בלחצנים פועלת. אין לכודים.',priority:'stopped',status:'assigned',tech:'kosta',cover:'regular',contact:'רונית לוי',elevator:{type:'חשמלית',mol:'31-0457',contract:'1515'},createdAt:T(12,34),debt:{months:3,amount:1275},log:[{t:T(12,34),who:'מוקד',text:'קריאה התקבלה'},{t:T(12,36),who:'קריסטי',text:'שובצה לקוסטה'}]}),
-  base({id:8455,address:'הנמל 2, חיפה',entrance:'כניסה ראשית',city:'חיפה',issue:'דלת חיצונית אינה נפתחת',detail:'קומה 3: דלת התא נפתחת, הדלת החיצונית נשארת סגורה. אין לכודים. איש הקשר ממתין בכניסה.',priority:'stopped',status:'assigned',tech:'ofer',cover:'full',contact:'אורי רחמים',elevator:{type:'חשמלית',mol:'31-0212',contract:'1151'},memo:'m2',createdAt:T(11,48),log:[{t:T(11,48),who:'מוקד',text:'קריאה התקבלה'},{t:T(11,50),who:'קריסטי',text:'שובצה לעופר'}]}),
-  base({id:8454,address:'חיים בר לב 7, חיפה',entrance:'כניסה מהחזית',city:'חיפה',issue:'תאורה בתא אינה פועלת',detail:'התאורה בתא כבתה שוב. דווח על הבהובים בשבוע האחרון.',priority:'normal',status:'assigned',tech:'ofer',cover:'regular',contact:'דני כהן',elevator:{type:'הידראולית',mol:'31-1188',contract:'818'},createdAt:T(10,52),debt:{months:3,amount:2400},
+  base({id:8456,address:'האלון 14, קריית ים',entrance:'כניסה ב׳, ליד החניה',city:'קריית ים',issue:'מעלית עומדת',detail:'המעלית עומדת בקומה הראשונה. הדלת הפנימית פתוחה, החיצונית סגורה. התאורה בלחצנים פועלת. אין לכודים.',priority:'stopped',status:'assigned',tech:'kosta',cover:'regular',contact:'רונית לוי',elevator:{type:'חשמלית',mol:'31-0457',contract:'4101'},createdAt:T(12,34),log:[{t:T(12,34),who:'מוקד',text:'קריאה התקבלה'},{t:T(12,36),who:'קריסטי',text:'שובצה לקוסטה'}]}),
+  base({id:8455,address:'הגליל 31, חיפה',entrance:'כניסה ראשית',city:'חיפה',issue:'דלת חיצונית אינה נפתחת',detail:'קומה 3: דלת התא נפתחת, הדלת החיצונית נשארת סגורה. אין לכודים. איש הקשר ממתין בכניסה.',priority:'stopped',status:'assigned',tech:'ofer',cover:'full',contact:'נועם ברק',elevator:{type:'חשמלית',mol:'31-0212',contract:'4119'},memo:'m2',createdAt:T(11,48),log:[{t:T(11,48),who:'מוקד',text:'קריאה התקבלה'},{t:T(11,50),who:'קריסטי',text:'שובצה לעופר'}]}),
+  base({id:8454,address:'הזית 9, חיפה',entrance:'כניסה מהחזית',city:'חיפה',issue:'תאורה בתא אינה פועלת',detail:'התאורה בתא כבתה שוב. דווח על הבהובים בשבוע האחרון.',priority:'normal',status:'assigned',tech:'ofer',cover:'regular',contact:'דני כהן',elevator:{type:'הידראולית',mol:'31-1188',contract:'4113'},createdAt:T(10,52),
      history:[{t:T(9,0,-6),issue:'תאורה בתא אינה פועלת',repair:'הוחלפה נורת LED'},{t:T(9,0,-19),issue:'תאורה בתא אינה פועלת',repair:'הוחלפה נורת LED'}],log:[{t:T(10,52),who:'מוקד',text:'קריאה התקבלה'},{t:T(10,55),who:'קריסטי',text:'שובצה לעופר'}]}),
-  base({id:8453,address:'העצמאות 118, חיפה',entrance:'כניסה א׳',city:'חיפה',issue:'רעידות בזמן נסיעה',detail:'דיירים מדווחים על רעידה חזקה בין הקומות 3 ל-5. המעלית פועלת.',priority:'normal',status:'assigned',tech:'ofer',cover:'regular',contact:'ועד הבית, משה אזולאי',elevator:{type:'חשמלית',mol:'31-0934',contract:'1207'},memo:'m1',createdAt:T(9,40),log:[{t:T(9,40),who:'מוקד',text:'קריאה התקבלה'},{t:T(9,44),who:'קריסטי',text:'שובצה לעופר'}]}),
-  base({id:8452,address:'הגפן 15, קריית מוצקין',entrance:'כניסה ראשית',city:'קריית מוצקין',issue:'חריקה בנסיעה',detail:'חריקה בעלייה ובירידה. ייתכן שנדרש שימון.',priority:'normal',status:'assigned',tech:'patrick',cover:'ext',contact:'ענת קדם',elevator:{type:'חשמלית',mol:'31-1450',contract:'200192'},memo:'m3',createdAt:T(9,15),log:[{t:T(9,15),who:'מוקד',text:'קריאה התקבלה'},{t:T(9,20),who:'קריסטי',text:'הועברה לטיפול מונע'}]}),
-  base({id:8451,address:'דרך הארבעה 20, עכו',entrance:'כניסה ראשית',city:'עכו',issue:'המעלית נעצרת בין קומות',detail:'המעלית נעצרה פעמיים השבוע. חולצו דיירים ביום ראשון.',priority:'stopped',status:'needs_guy',tech:'dror',cover:'regular',contact:'שי ישראלי',elevator:{type:'חשמלית',mol:'31-0777',contract:'1133'},createdAt:T(8,5),
+  base({id:8453,address:'הנרקיס 22, חיפה',entrance:'כניסה א׳',city:'חיפה',issue:'רעידות בזמן נסיעה',detail:'דיירים מדווחים על רעידה חזקה בין הקומות 3 ל-5. המעלית פועלת.',priority:'normal',status:'assigned',tech:'ofer',cover:'regular',contact:'ועד הבית, משה אזולאי',elevator:{type:'חשמלית',mol:'31-0934',contract:'4120'},memo:'m1',createdAt:T(9,40),log:[{t:T(9,40),who:'מוקד',text:'קריאה התקבלה'},{t:T(9,44),who:'קריסטי',text:'שובצה לעופר'}]}),
+  base({id:8452,address:'הדקל 6, קריית מוצקין',entrance:'כניסה ראשית',city:'קריית מוצקין',issue:'חריקה בנסיעה',detail:'חריקה בעלייה ובירידה. ייתכן שנדרש שימון.',priority:'normal',status:'assigned',tech:'patrick',cover:'ext',contact:'ענת קדם',elevator:{type:'חשמלית',mol:'31-1450',contract:'4118'},memo:'m3',createdAt:T(9,15),log:[{t:T(9,15),who:'מוקד',text:'קריאה התקבלה'},{t:T(9,20),who:'קריסטי',text:'הועברה לטיפול מונע'}]}),
+  base({id:8451,address:'השושנים 11, עכו',entrance:'כניסה ראשית',city:'עכו',issue:'המעלית נעצרת בין קומות',detail:'המעלית נעצרה פעמיים השבוע. חולצו דיירים ביום ראשון.',priority:'stopped',status:'needs_guy',tech:'dror',cover:'regular',contact:'אסף מרום',elevator:{type:'חשמלית',mol:'31-0777',contract:'4112'},createdAt:T(8,5),
      report:{text:'המנוע מתחמם ונעצר. נדרשת החלפת מנוע, עבודה של צוות מכני. המעלית הושבתה עד להחלפה.',outcome:'follow',reason:'צוות מכני',when:'tomorrow',parts:[],at:T(10,20),by:'dror'},
      log:[{t:T(8,5),who:'מוקד',text:'קריאה התקבלה'},{t:T(8,9),who:'קריסטי',text:'שובצה לדרור'},{t:T(9,2),who:'דרור',text:'הגיע לאתר'},{t:T(10,20),who:'דרור',text:'דיווח: נדרש צוות מכני'}]}),
-  base({id:8450,address:'הרצל 40, קריית ביאליק',entrance:'כניסה ג׳',city:'קריית ביאליק',issue:'דלת נסגרת בכוח',detail:'הדלת החיצונית בקומת הקרקע נטרקת. חשש לפגיעה בדיירים מבוגרים.',priority:'normal',status:'needs_guy',tech:'kosta',cover:'regular',contact:'אבי צור',elevator:{type:'חשמלית',mol:'31-1302',contract:'1020'},createdAt:T(8,40),
+  base({id:8450,address:'הברוש 17, קריית ביאליק',entrance:'כניסה ג׳',city:'קריית ביאליק',issue:'דלת נסגרת בכוח',detail:'הדלת החיצונית בקומת הקרקע נטרקת. חשש לפגיעה בדיירים מבוגרים.',priority:'normal',status:'needs_guy',tech:'kosta',cover:'regular',contact:'אבי צור',elevator:{type:'חשמלית',mol:'31-1302',contract:'4102'},createdAt:T(8,40),
      report:{text:'מנגנון הסגירה של הדלת החיצונית שחוק. צריך להחליף מנעול דלת חיצונית ורצועת דלת. כיוונתי זמני, הדלת עובדת.',outcome:'follow',reason:'הצעת מחיר',when:'after',parts:[['p5',1],['p9',1]],at:T(10,5),by:'kosta'},
      log:[{t:T(8,40),who:'מוקד',text:'קריאה התקבלה'},{t:T(8,44),who:'קריסטי',text:'שובצה לקוסטה'},{t:T(10,5),who:'קוסטה',text:'דיווח: נדרשת הצעת מחיר'}]}),
-  base({id:8449,address:'ניסנבוים 4, חיפה',entrance:'כניסה ראשית',city:'חיפה',issue:'מעלית עומדת',detail:'המעלית לא מגיבה לקריאה מקומת הקרקע.',priority:'stopped',status:'closed',tech:'ofer',cover:'full',contact:'אלי רז',elevator:{type:'חשמלית',mol:'31-0302',contract:'1414'},createdAt:T(7,50),
+  base({id:8449,address:'הכרמל 53, חיפה',entrance:'כניסה ראשית',city:'חיפה',issue:'מעלית עומדת',detail:'המעלית לא מגיבה לקריאה מקומת הקרקע.',priority:'stopped',status:'closed',tech:'ofer',cover:'full',contact:'אלי רז',elevator:{type:'חשמלית',mol:'31-0302',contract:'4116'},createdAt:T(7,50),
      report:{text:'הוחלף מגע בטיחות בדלת קומת הקרקע. המעלית נבדקה ועובדת.',outcome:'closed',parts:[['p4',1]],at:T(9,10),by:'ofer'},
      log:[{t:T(7,50),who:'מוקד',text:'קריאה התקבלה'},{t:T(7,55),who:'קריסטי',text:'שובצה לעופר'},{t:T(9,10),who:'עופר',text:'הקריאה נסגרה'}]}),
-  base({id:8448,address:'השיקמה 2, נשר',entrance:'כניסה ראשית',city:'נשר',issue:'תאורה ולחצן לא תקינים',detail:'התאורה בתא חלשה ולחצן קומה 2 לא מגיב.',priority:'normal',status:'closed',tech:'moshe',cover:'regular',contact:'יוסי גולן',elevator:{type:'חשמלית',mol:'31-0845',contract:'555'},createdAt:T(7,30),debt:{months:7,amount:3640},
+  base({id:8448,address:'האורן 8, נשר',entrance:'כניסה ראשית',city:'נשר',issue:'תאורה ולחצן לא תקינים',detail:'התאורה בתא חלשה ולחצן קומה 2 לא מגיב.',priority:'normal',status:'closed',tech:'moshe',cover:'regular',contact:'יוסי גולן',elevator:{type:'חשמלית',mol:'31-0845',contract:'4115'},createdAt:T(7,30),
      report:{text:'הוחלפו נורת LED ולחצן קומה 2. המעלית נבדקה ועובדת.',outcome:'closed',parts:[['p1',1],['p2',1]],at:T(9,48),by:'moshe'},
      log:[{t:T(7,30),who:'מוקד',text:'קריאה התקבלה'},{t:T(7,34),who:'קריסטי',text:'שובצה למשה'},{t:T(9,48),who:'משה',text:'הקריאה נסגרה'}]}),
-  base({id:8457,address:'התשבי 12, חיפה',entrance:'כניסה מהחניון',city:'חיפה',issue:'רעש מהפיר',detail:'רעש חריג מהפיר בלילה. המעלית פועלת.',priority:'normal',status:'new',tech:null,cover:'full',contact:'מיכל הדר',elevator:{type:'הידראולית',mol:'31-1620',contract:'1374'},createdAt:T(12,58),log:[{t:T(12,58),who:'מוקד',text:'קריאה התקבלה'}]})
+  base({id:8457,address:'הסביון 3, חיפה',entrance:'כניסה מהחניון',city:'חיפה',issue:'רעש מהפיר',detail:'רעש חריג מהפיר בלילה. המעלית פועלת.',priority:'normal',status:'new',tech:null,cover:'full',contact:'מיכל הדר',elevator:{type:'הידראולית',mol:'31-1620',contract:'4103'},createdAt:T(12,58),log:[{t:T(12,58),who:'מוקד',text:'קריאה התקבלה'}]})
  ];
  const docs=[];calls.forEach(c=>docs.push({kind:'calls',id:String(c.id),data:c}));[memoA,memoB,memoC,memoD,memoE,memoF].forEach(m=>docs.push({kind:'memos',id:m.id,data:m}));quotes.forEach(q=>docs.push({kind:'quotes',id:String(q.id),data:q}));
  docs.push({kind:'meta',id:'seed',data:{id:'seed',at:Date.now(),nextId:8458,nextQuote:182,hist:{week:{opened:41,closed:38},month:{opened:173,closed:166}},updatedAt:Date.now()}});
- const acc=(id,address,contact,city,pay,fee,unpaid,status,reason,extra)=>({id,address,contact,city,pay,fee,invoices:Array.from({length:unpaid},(_,i)=>({m:unpaid-1-i,amount:fee,paid:false})),status,reason,log:[],reminder:'none',...(extra||{}),updatedAt:Date.now()});
- [acc('a1515','ספיר 27, קריית ים','רונית לוי','קריית ים','cash',425,3,'todo','התחלף ועד הבית'),
-  acc('a818','חיים בר לב 7, חיפה','דני כהן','חיפה','transfer',800,3,'todo','מייל שגוי'),
-  acc('a555','השיקמה 2, נשר','יוסי גולן','נשר','checks',520,7,'dispute','מחלוקת על חיוב'),
-  acc('a1290','הרופא 42, חיפה','אבי לוי','חיפה','cash',600,9,'todo','ללא מענה'),
-  acc('a2201','חשמונאים 72, קריית מוצקין','תמר לוין','קריית מוצקין','transfer',650,3,'promise','הבטיח לשלם',{promise:T(9,0,3)}),
-  acc('a3302','הגליל 30, כרמיאל','שלמה פרץ','כרמיאל','checks',480,4,'arrangement','הסדר תשלומים בהנהלת החשבונות'),
-  acc('a1207','העצמאות 118, חיפה','משה אזולאי','חיפה','transfer',700,1,'todo',''),
-  acc('a1020','הרצל 40, קריית ביאליק','אבי צור','קריית ביאליק','checks',550,2,'todo','חשבוניות לא התקבלו'),
-  acc('a1414','ניסנבוים 4, חיפה','אלי רז','חיפה','cash',390,0,'paid',''),
-  acc('a1151','הנמל 2, חיפה','אורי רחמים','חיפה','masav',720,0,'paid',''),
-  acc('a200192','תמרי 3, קריית מוצקין','ענת קדם','קריית מוצקין','masav',820,0,'paid',''),
-  acc('a1133','דרך הארבעה 20, עכו','שי ישראלי','עכו','masav',690,0,'paid','')
+ // amounts from the debt-aging report of 2.11.2026; service = חוזה שירות, work = עבודות, שיפוצים וחוב קודם
+ const S=(m,amount)=>({m,amount,kind:'service',paid:false}), W=(m,amount,what)=>({m,amount,kind:'work',what,paid:false});
+ const M26=['ינו׳ 26','פבר׳ 26','מרץ 26','אפר׳ 26','מאי 26','יוני 26','יולי 26','אוג׳ 26','ספט׳ 26','אוק׳ 26'];
+ const run=(from,vals)=>vals.map((v,i)=>S(M26[from+i],v));
+ const acc=(no,address,name,contact,city,pay,fee,invoices,status,reason,extra)=>({id:'a'+no,no,address,name,contact,city,pay,fee,invoices,status,reason,log:[],reminder:'none',...(extra||{}),updatedAt:Date.now()});
+ [acc('4101','האלון 14, קריית ים','','רונית לוי','קריית ים','cash',2395,[...run(2,[2345,2385,2395]),W('יוני 26',142070,'שיפוץ מעלית'),...run(6,[2395,2395,2415,1225])],'todo','התחלף ועד הבית'),
+  acc('4102','האורן 8, נשר','','יוסי גולן','נשר','checks',5575,run(3,[5405,5575,5575,5575,5575,4990,5615]),'dispute','מחלוקת על חיוב'),
+  acc('4103','הצבר 5, ירושלים','','מיכל הדר','ירושלים','transfer',510,[...run(0,[130,505,505,510,510,510,510,510,515]),W('אוק׳ 26',63230,'החלפת לוח פיקוד')],'todo','חשבוניות לא התקבלו'),
+  acc('4104','הגפן 40, חיפה','','ועד הבית','חיפה','cash',400,[W('יוני 25',17745,'חוב קודם'),...run(0,[395,395,395,395,400,400,400,400,400,400])],'todo','ללא מענה'),
+  acc('4105','הערבה 16, חיפה','','ועד הבית','חיפה','transfer',745,run(0,[735,735,735,740,745,745,745,745,750,750]),'promise','הבטיח לשלם',{promise:T(9,0,3)}),
+  acc('4106','המעיין 7 ב׳, חיפה','','ועד הבית','חיפה','checks',675,[S('ספט׳ 25',670),S('אוק׳ 25',670),S('נוב׳ 25',1335),...run(0,[670,1065,670,670,675,675,675,675,680,680])],'arrangement','הסדר תשלומים בהנהלת החשבונות'),
+  acc('4107','החרוב 21, עכו','','ועד הבית','עכו','cash',520,[...run(0,[510,510,515,515,520,520,520,520,520,520]),W('אוק׳ 26',5760,'החלפת דלת')],'todo','מייל שגוי'),
+  acc('4108','הדולב 4, כרמיאל','','ועד הבית','כרמיאל','transfer',800,[S('נוב׳ 25',790),...run(0,[790,790,790]),...run(4,[800,800,800,800,805,805])],'todo','אין כסף בקופה'),
+  acc('4109','הלוטם 30 א׳, עכו','','ועד הבית','עכו','checks',615,run(0,[580,1385,610,610,615,615,615,615,620,1855]),'todo',''),
+  acc('4110','הכלנית 13, חיפה','','ועד הבית','חיפה','cash',1310,run(4,[1310,1310,1310,1310,1320,1320]),'todo',''),
+  acc('4111','האיריס 27, חיפה','','ועד הבית','חיפה','transfer',980,run(2,[970,975,980,980,980,980,990]),'promise','הבטיח לשלם',{promise:T(9,0,5)}),
+  acc('4112','השושנים 11, עכו','','אסף מרום','עכו','transfer',635,[W('פבר׳ 26',113905,'שיפוץ מעלית'),...run(8,[635,635])],'todo',''),
+  acc('4113','הזית 9, חיפה','','דני כהן','חיפה','transfer',770,run(7,[770,770,770]),'todo','מייל שגוי'),
+  acc('4114','התאנה 12, קריית ים','','דורון משה','קריית ים','masav',660,[W('מאי 26',139095,'שיפוץ מעלית')],'paid',''),
+  acc('4115','השקד 45, חיפה','','ועד הבית','חיפה','cash',575,[W('ינו׳ 26',36435,'החלפת מנוע')],'paid',''),
+  acc('4116','הכרמל 53, חיפה','','אלי רז','חיפה','cash',375,[W('חוב קודם',35985,'חוב קודם'),S('יולי 26',160)],'todo',''),
+  acc('4117','התמר 60, קריית מוצקין','','תמר לוין','קריית מוצקין','transfer',625,[W('אוק׳ 26',30215,'הצעת מחיר שאושרה'),S('ספט׳ 26',20)],'todo',''),
+  acc('4118','הרימון 19, קריית מוצקין','','ענת קדם','קריית מוצקין','masav',785,[W('יולי 26',75475,'שיפוץ מעלית')],'paid',''),
+  acc('4119','הגליל 31, חיפה','','נועם ברק','חיפה','masav',690,[],'paid',''),
+  acc('4120','הנרקיס 22, חיפה','','משה אזולאי','חיפה','transfer',670,[],'paid','')
  ].forEach(a=>docs.push({kind:'accounts',id:a.id,data:a}));
  return docs;
 }
@@ -548,14 +564,14 @@ function techView(){
 }
 function statusPill(c){const s=STATUS[c.status]||['',''];let t=s[0];if(c.status==='scheduled'&&c.due)t='המשך טיפול '+dayLabel(c.due);return `<span class="pill ${s[1]}">${t}</span>`}
 function techCard(c){const m=memoOf(c);const repeat=(c.history||[]).length>=2;return `<div class="card tap ${c.priority==='stopped'?'stopped':''}" onclick="openTechCall(${c.id})">
- <div class="row"><span class="pill ${c.priority==='stopped'?'red':''}">${c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span><span class="time">#${c.id} · ${hhmm(c.createdAt)}</span></div>
+ <div class="row"><span class="pill ${c.priority==='stopped'?'red':''}">${c.rescue?'חילוץ':c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span><span class="time">${callNo(c)} · ${hhmm(c.createdAt)}</span></div>
  <div class="addr mt">${esc(c.address)}</div><div class="issue">${esc(c.issue)}</div><div class="detail">${esc(c.detail)}</div>
  <div class="meta">${c.status!=='assigned'?statusPill(c):''}${repeat?`<span class="pill amber">קריאה ${(c.history.length+1)} החודש</span>`:''}${m&&!m.missing?`<span class="chip">תזכיר: ${m.defects.filter(d=>d.owner==='צמרת'&&!d.done).length} ליקויים פתוחים</span>`:''}</div></div>`}
 let draft=null;
 function openTechCall(id){const c=db.calls[id];openCall=id;const m=memoOf(c);const st=c.status;
  const canWork=['assigned','enroute','onsite','scheduled'].includes(st)&&c.tech===me;
  const repeat=(c.history||[]).length>=2;
- sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${c.priority==='stopped'?'red':''}">${c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span>${statusPill(c)}</div><div class="addr" style="margin-top:6px">${esc(c.address)}</div><div class="sub">#${c.id} · ${esc(c.entrance)}</div></div>`,`
+ sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${c.priority==='stopped'?'red':''}">${c.rescue?'חילוץ':c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span>${statusPill(c)}</div><div class="addr" style="margin-top:6px">${esc(c.address)}</div><div class="sub">${callNo(c)} · ${esc(c.entrance)}</div></div>`,`
  <div class="box" style="margin-top:0"><div class="issue">${esc(c.issue)}</div><div class="detail" style="color:var(--ink)">${esc(c.detail)}</div>
   <div class="grid2 mt"><div class="kv"><span>איש קשר</span><b>${esc(c.contact)}</b></div><div class="kv"><span>סוג מעלית</span><b>${esc(c.elevator.type)}</b></div><div class="kv"><span>מס׳ במשרד העבודה</span><b>${esc(c.elevator.mol)}</b></div><div class="kv"><span>כיסוי</span><b>${COVER[c.cover]}</b></div></div>
   <div class="btns mt"><a class="btn ghost" href="https://waze.com/ul?q=${encodeURIComponent(c.address)}&navigate=yes" target="_blank" rel="noopener">${ICON.map} ניווט ב-Waze</a>${m?`<button class="btn ghost" onclick="openMemo('${m.id}',${c.id})">${ICON.doc} תזכיר אחרון</button>`:''}</div>
@@ -647,7 +663,7 @@ function guyView(){
 }
 function openGuyCall(id){const c=db.calls[id];openCall=id;const q=c.quote?db.quotes[c.quote]:null;
  const partsHtml=(c.report?.parts||[]).map(([pid,qty])=>`${esc(partById(pid).name)} × ${qty}`).join(' · ');
- sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${c.priority==='stopped'?'red':''}">${c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span>${statusPill(c)}</div><div class="addr" style="margin-top:6px">${esc(c.address)}</div><div class="sub">#${c.id} · ${esc(c.issue)} · ${COVER[c.cover]}</div></div>`,`
+ sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${c.priority==='stopped'?'red':''}">${c.rescue?'חילוץ':c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span>${statusPill(c)}</div><div class="addr" style="margin-top:6px">${esc(c.address)}</div><div class="sub">${callNo(c)} · ${esc(c.issue)} · ${COVER[c.cover]}</div></div>`,`
  ${c.report?`<div class="box" style="margin-top:0"><h4>דיווח ${esc(PEOPLE[c.report.by]?.name)} · ${hhmm(c.report.at)}</h4><div>${esc(c.report.text)}</div>${partsHtml?`<div class="small muted mt">חלקים: ${partsHtml}</div>`:''}${c.report.damage?'<div class="pill red mt" style="display:inline-block">חבלה או נזק מים</div>':''}${c.photos?.length?`<div class="photos">${c.photos.map(s=>`<img src="${s}" alt="">`).join('')}</div>`:''}</div>`:`<div class="box" style="margin-top:0"><div class="detail" style="color:var(--ink)">${esc(c.detail)}</div></div>`}
  ${(c.history||[]).length?`<div class="warn"><b>היסטוריה בכתובת:</b> ${c.history.map(h=>`${dayLabel(h.t)}: ${esc(h.repair)}`).join(' · ')}</div>`:''}
  ${reassignBox(c)}${c.status==='needs_guy'?`<div class="box"><h4>מה עושים?</h4>
@@ -656,7 +672,7 @@ function openGuyCall(id){const c=db.calls[id];openCall=id;const q=c.quote?db.quo
   <button class="btn primary block mt" onclick="guySchedule(${c.id})">שיבוץ</button>
   <div class="btns mt"><button class="btn ghost" onclick="openQuote(${c.id})">${ICON.doc} הצעת מחיר</button><button class="btn ghost" onclick="guyClose(${c.id})">סגירה</button></div></div>`:''}
  ${(c.history||[]).length>=2&&c.status!=='needs_guy'&&!c.guyAck?`<button class="btn block dark mt" onclick="guyAck(${c.id})">בדקתי, להמשיך כרגיל</button>`:''}
- ${q?`<div class="box"><h4>הצעת מחיר #${q.id} ${qPill(q)}</h4>${quoteTable(q)}${q.status==='sent'?`<button class="btn primary block mt" onclick="quoteApproved(${c.id})">הלקוח אישר בכתב: פתיחת הזמנת עבודה</button>`:''}</div>`:''}
+ ${q?`<div class="box"><h4>${quoteNo(q)} ${qPill(q)}</h4>${quoteTable(q)}${q.status==='sent'?`<button class="btn primary block mt" onclick="quoteApproved(${c.id})">הלקוח אישר בכתב: פתיחת הזמנת עבודה</button>`:''}</div>`:''}
  <div class="box"><h4>מה קרה בקריאה</h4><div class="log">${c.log.slice().reverse().map(l=>`<div><b>${hhmm(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')}</div></div>`)}
 function reassignBox(c){if(['new','needs_guy','closed'].includes(c.status))return'';return `<div class="box"><h4>העברה לטכנאי אחר</h4><div class="row" style="gap:8px"><select class="in" id="rTech">${[...TECHS,'mech'].map(t=>`<option value="${t}" ${t===c.tech?'selected':''}>${PEOPLE[t].name} · ${PEOPLE[t].area}</option>`).join('')}</select><button class="btn ghost" onclick="reassign(${c.id})">העברה</button></div></div>`}
 function reassign(id){const c=db.calls[id];const t=$('#rTech').value;if(t===c.tech){toast('הקריאה כבר אצל '+PEOPLE[t].name);return}c.tech=t;if(['enroute','onsite'].includes(c.status))c.status='assigned';c.log.push({t:Date.now(),who:PEOPLE[me].name,text:'הועברה ל'+PEOPLE[t].name});put('calls',c);closeSheet();toast(PEOPLE[t].name+' קיבל את הקריאה')}
@@ -667,7 +683,7 @@ function guyAck(id){const c=db.calls[id];c.guyAck=true;c.log.push({t:Date.now(),
 function linesFor(c,parts){const charge=c.cover==='regular'||c.report?.damage;return parts.map(([pid,q])=>{const p=partById(pid);return{name:p.name,qty:q,price:p.price,charge:charge?p.price*q:0}})}
 const qSub=q=>q.lines.reduce((a,l)=>a+l.price*l.qty,0)+(+q.labor||0);
 const qTotal=(q,pct=q.discountPct)=>Math.round(qSub(q)*(1-(pct||0)/100));
-function quoteTable(q,pct=q.discountPct){return `<table class="lines">${q.lines.map(l=>`<tr><td>${esc(l.name)} × ${l.qty}</td><td>${money(l.price*l.qty)}</td></tr>`).join('')}${q.labor?`<tr><td>עבודה</td><td>${money(q.labor)}</td></tr>`:''}${pct?`<tr><td>הנחה ${pct}%</td><td>−${money(qSub(q)-qTotal(q,pct))}</td></tr>`:''}<tr class="tot"><td>סה״כ לפני מע״מ</td><td>${money(qTotal(q,pct))}</td></tr></table>`}
+function quoteTable(q,pct=q.discountPct){return `<table class="lines">${q.lines.map(l=>`<tr><td>${esc(l.name)} × ${l.qty}</td><td>${money(l.price*l.qty)}</td></tr>`).join('')}${q.labor?`<tr><td>עבודה</td><td>${money(q.labor)}</td></tr>`:''}${pct?`<tr><td>הנחה ${pct}%</td><td>−${money(qSub(q)-qTotal(q,pct))}</td></tr>`:''}<tr class="tot"><td>מחיר כולל</td><td>${money(qTotal(q,pct))}</td></tr><tr><td>מע״מ (18%)</td><td>${money(qTotal(q,pct)*VAT)}</td></tr><tr class="tot"><td>סה״כ מחיר</td><td>${money(qTotal(q,pct)*(1+VAT))}</td></tr></table>`}
 const qPill=q=>`<span class="pill ${QSTATUS[q.status]?.[1]||''}">${QSTATUS[q.status]?.[0]||''}</span>`;
 function nextQuoteId(){const m=db.meta.seed;const id=m.nextQuote||Date.now()%100000;m.nextQuote=id+1;put('meta',m);return id}
 function openQuote(callId){const c=db.calls[callId];const lines=(c.report?.parts||[]).map(([pid,qty])=>{const p=partById(pid);return{name:p.name,qty,price:p.price}});
@@ -677,7 +693,7 @@ function editQuote(q){window._q=q;const m=q.memo?db.memos[q.memo]:null;
  const draw=()=>{const x=window._q;$('#qlines').innerHTML=x.lines.length?x.lines.map((l,i)=>`<div class="part"><span>${esc(l.name)} × ${l.qty} <span class="muted small">${money(l.price*l.qty)}</span></span><button class="x" style="width:30px;height:30px;font-size:14px" onclick="window._q.lines.splice(${i},1);window._qd()" aria-label="הסרה">✕</button></div>`).join(''):'<div class="muted small">אין שורות</div>';
   $('#qtot').innerHTML=quoteTable(x);[...document.querySelectorAll('#qdisc .choice')].forEach(b=>b.classList.toggle('on',+b.dataset.p===(+x.discountPct||0)))};
  window._qd=draw;
- sheet(`<div><div class="sub">הצעת מחיר${q.id?' #'+q.id:''}</div><div class="addr">${esc(q.address)}</div></div>`,`
+ sheet(`<div><div class="sub">הצעת מחיר${q.id?' '+quoteNo(q):''}</div><div class="addr">${esc(q.address)}</div></div>`,`
  <div class="info" style="margin-top:0">${q.source==='memo'?`ההצעה נבנתה אוטומטית מתזכיר הבודק${m?.receivedAt?' שהתקבל '+dayLabel(m.receivedAt)+' ב-'+hhmm(m.receivedAt):''}, לפי המחירון. נשארו בה רק הליקויים שלא בכיסוי.`:'ההצעה נבנתה אוטומטית מהחלקים שהטכנאי דיווח ומהמחירון.'}</div>
  <label class="f">שורות בהצעה</label><div class="parts" id="qlines"></div>
  <select class="in mt" onchange="if(this.value){const p=partById(this.value);window._q.lines.push({name:p.name,qty:1,price:p.price});this.value='';window._qd()}"><option value="">+ הוספת חלק מהמחירון</option>${PARTS.map(p=>`<option value="${p.id}">${esc(p.name)} · ${money(p.price)}</option>`).join('')}</select>
@@ -685,13 +701,14 @@ function editQuote(q){window._q=q;const m=q.memo?db.memos[q.memo]:null;
  <label class="f">הנחה</label><div class="choices" id="qdisc">${[0,5,10,15].map(p=>`<button class="choice" data-p="${p}" onclick="window._q.discountPct=${p};window._qd()">${p?p+'%':'ללא'}</button>`).join('')}</div>
  ${q.owner?.length?`<div class="warn">לטיפול הוועד, לא בהצעה: ${q.owner.map(esc).join(' · ')}</div>`:''}
  <div class="box" id="qtot"></div>
+ <div class="small muted mt">לכבוד: ${esc(q.contact||'ועד הבית')}, ${esc(q.address)} · בתוקף עד ${new Date(Date.now()+30*864e5).toLocaleDateString('he-IL')} · "יש לאשר הצעת מחיר במייל חוזר לביצוע העבודה"</div>
  <button class="btn primary block mt" onclick="sendQuote()">אישור ושליחה ללקוח</button>
  ${q.callId?`<button class="btn block ghost mt" onclick="openGuyCall(${q.callId})">חזרה לקריאה</button>`:''}`);draw()}
 function sendQuote(){const q=window._q;if(!q.lines.length&&!q.labor){toast('ההצעה ריקה');return}
  if(!q.id)q.id=nextQuoteId();q.status='sent';q.sentAt=Date.now();q.by='גיא';q.log=(q.log||[]).concat({t:Date.now(),who:'גיא',text:`אישר ושלח ללקוח ${money(qTotal(q))}`});put('quotes',q);
  if(q.callId){const c=db.calls[q.callId];c.quote=q.id;c.status='quote';c.viaGuy=true;c.log.push({t:Date.now(),who:'גיא',text:`נשלחה הצעת מחיר ${money(qTotal(q))}`});put('calls',c)}
  closeSheet();toast('ההצעה נשלחה ללקוח כ-PDF לאישור בכתב')}
-function discountSheet(id){const q=db.quotes[id];const d=q.discount||{};sheet(`<div><div class="sub">בקשת הנחה · הצעה #${q.id}</div><div class="addr">${esc(q.address)}</div></div>`,`
+function discountSheet(id){const q=db.quotes[id];const d=q.discount||{};sheet(`<div><div class="sub">בקשת הנחה · ${quoteNo(q)}</div><div class="addr">${esc(q.address)}</div></div>`,`
  <div class="warn" style="margin-top:0"><b>${esc(d.by||'')} מבקשת ${d.pct}% הנחה.</b> ${esc(d.reason||'')}</div>
  <div class="two"><div class="box"><h4>עכשיו</h4>${money(qTotal(q))}</div><div class="box"><h4>אחרי ההנחה</h4><b>${money(qTotal(q,d.pct))}</b></div></div>
  <div class="box">${quoteTable(q,d.pct)}</div>
@@ -701,9 +718,9 @@ function quoteApproved(id){const c=db.calls[id];approveQuote(c.quote)}
 function approveQuote(qid){const q=db.quotes[qid];q.status='approved';q.approvedAt=Date.now();q.log.push({t:Date.now(),who:PEOPLE[me].name,text:'הלקוח אישר בכתב. נפתחה הזמנת עבודה'});put('quotes',q);
  if(q.callId){const c=db.calls[q.callId];c.status='scheduled';c.tech=c.tech||'kosta';c.due=todayAt(8,0,2);c.log.push({t:Date.now(),who:PEOPLE[me].name,text:'הלקוח אישר בכתב. נפתחה הזמנת עבודה'});put('calls',c)}
  else{const meta=db.meta.seed;const cid=meta.nextId++;put('meta',meta);const t=CITY_TECH[q.city]||'ofer';
-  put('calls',{id:cid,address:q.address,entrance:'כניסה ראשית',city:q.city,issue:'ביצוע הצעת מחיר #'+q.id,detail:q.lines.map(l=>l.name+' × '+l.qty).join(', '),priority:'normal',status:'scheduled',due:todayAt(8,0,2),tech:t,cover:'regular',contact:q.contact||'—',elevator:{type:'—',mol:'—',contract:'—'},memo:q.memo||null,createdAt:Date.now(),history:[],photos:[],report:null,internal:'',log:[{t:Date.now(),who:PEOPLE[me].name,text:'הזמנת עבודה מהצעה #'+q.id+' שאושרה בכתב'},{t:Date.now(),who:'מערכת',text:'שובצה ל'+PEOPLE[t].name+' מחרתיים'}]})}
+  put('calls',{id:cid,address:q.address,entrance:'כניסה ראשית',city:q.city,issue:'ביצוע הצעת מחיר '+quoteNo(q),detail:q.lines.map(l=>l.name+' × '+l.qty).join(', '),priority:'normal',status:'scheduled',due:todayAt(8,0,2),tech:t,cover:'regular',contact:q.contact||'—',elevator:{type:'—',mol:'—',contract:'—'},memo:q.memo||null,createdAt:Date.now(),history:[],photos:[],report:null,internal:'',log:[{t:Date.now(),who:PEOPLE[me].name,text:'הזמנת עבודה מהצעה '+quoteNo(q)+' שאושרה בכתב'},{t:Date.now(),who:'מערכת',text:'שובצה ל'+PEOPLE[t].name+' מחרתיים'}]})}
  closeSheet();toast('נפתחה הזמנת עבודה ושובצה לטכנאי')}
-function officeQuoteSheet(id){const q=db.quotes[id];sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px">${qPill(q)}</div><div class="addr" style="margin-top:6px">${esc(q.address)}</div><div class="sub">הצעה #${q.id} · ${esc(q.contact||'')}</div></div>`,`
+function officeQuoteSheet(id){const q=db.quotes[id];sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px">${qPill(q)}</div><div class="addr" style="margin-top:6px">${esc(q.address)}</div><div class="sub">${quoteNo(q)} · ${esc(q.contact||'')}</div></div>`,`
  <div class="box" style="margin-top:0">${quoteTable(q)}</div>
  ${q.owner?.length?`<div class="warn">לטיפול הוועד: ${q.owner.map(esc).join(' · ')}</div>`:''}
  ${q.status==='sent'&&PEOPLE[me].role!=='tech'?`<button class="btn primary block mt" onclick="approveQuote(${q.id})">הלקוח אישר בכתב: פתיחת הזמנת עבודה</button>
@@ -736,7 +753,7 @@ function officeView(){
  if(!tab)tab='board';
  const all=calls();let inner='';
  if(tab==='board'){
-  const F={all:['הכל',()=>true],new:['ממתינות לשיבוץ',c=>c.status==='new'],work:['בטיפול',c=>['assigned','enroute','onsite','scheduled'].includes(c.status)],guy:['אצל גיא',c=>['needs_guy','quote'].includes(c.status)],closed:['נסגרו',c=>c.status==='closed'],debt:['לקוח עם חוב',c=>c.debt&&c.debt.months>=3]};
+  const F={all:['הכל',()=>true],new:['ממתינות לשיבוץ',c=>c.status==='new'],work:['בטיפול',c=>['assigned','enroute','onsite','scheduled'].includes(c.status)],guy:['אצל גיא',c=>['needs_guy','quote'].includes(c.status)],closed:['נסגרו',c=>c.status==='closed'],debt:['לקוח עם חוב',c=>debtOf(c).months>=3]};
   const list=all.filter(F[filter]?.[1]||(()=>true));
   inner=`${pageHead('קריאות שירות',DATE(),`<button class=\"btn primary sm\" onclick=\"newCall()\">${ICON.plus} קריאה חדשה</button>`)}
   <div class="filters">${Object.entries(F).map(([k,[l,f]])=>`<button class="choice ${filter===k?'on':''}" onclick="filter='${k}';render()">${l} · ${all.filter(f).length}</button>`).join('')}</div>
@@ -747,7 +764,7 @@ function officeView(){
   const qs=Object.values(db.quotes).sort((a,b)=>(b.sentAt||b.createdAt||0)-(a.sentAt||a.createdAt||0));
   inner=`${pageHead('תזכירים והצעות',DATE())}${kpis([[ms.filter(m=>m.status==='inbox').length,'תזכירים חדשים',1],[qs.filter(q=>['draft','discount_req'].includes(q.status)).length,'אצל גיא'],[qs.filter(q=>q.status==='sent').length,'אצל לקוחות']])}
   <div class="section-t">תזכירי בודק</div>${ms.map(memoCard).join('')}
-  <div class="section-t">הצעות מחיר</div>${qs.map(q=>`<div class="card tap" onclick="officeQuoteSheet(${q.id})"><div class="row"><div class="addr">${esc(q.address)}</div>${qPill(q)}</div><div class="meta"><span class="chip">#${q.id}</span><span class="chip">${money(qTotal(q))}</span><span class="chip">${q.source==='memo'?'מתזכיר':'מדיווח טכנאי'}</span></div></div>`).join('')||'<div class="empty">אין הצעות.</div>'}
+  <div class="section-t">הצעות מחיר</div>${qs.map(q=>`<div class="card tap" onclick="officeQuoteSheet(${q.id})"><div class="row"><div class="addr">${esc(q.address)}</div>${qPill(q)}</div><div class="meta"><span class="chip">${quoteNo(q)}</span><span class="chip">${money(qTotal(q))}</span><span class="chip">${q.source==='memo'?'מתזכיר':'מדיווח טכנאי'}</span></div></div>`).join('')||'<div class="empty">אין הצעות.</div>'}
   <div class="info">אחרי החיבור, תזכיר שמגיע למייל נקלט לבד: המערכת קוראת את ה-PDF, מפרקת לליקויים ובונה הצעה לפי המחירון.</div>`;
  }else{
   const closed=all.filter(c=>c.status==='closed');
@@ -758,17 +775,17 @@ function officeView(){
 }
 function officeCard(c){const repeat=(c.history||[]).length>=2;return `<div class="card tap ${c.priority==='stopped'&&c.status!=='closed'?'stopped':''}" onclick="openOfficeCall(${c.id})">
  <div class="row"><div class="addr">${esc(c.address)}</div>${statusPill(c)}</div><div class="issue">${esc(c.issue)}</div>
- <div class="meta"><span class="chip">#${c.id} · ${hhmm(c.createdAt)}</span><span class="chip">${c.tech?esc(PEOPLE[c.tech].name):'לא שובצה'}</span>${c.debt&&c.debt.months>=3?`<span class="pill red">חוב ${c.debt.months} חודשים</span>`:''}${repeat?'<span class="pill amber">קריאה חוזרת</span>':''}${memoOf(c)?.missing?'<span class="pill amber">תזכיר חסר</span>':''}</div></div>`}
+ <div class="meta"><span class="chip">${callNo(c)} · ${hhmm(c.createdAt)}</span><span class="chip">${c.tech?esc(PEOPLE[c.tech].name):'לא שובצה'}</span>${debtOf(c).months>=3?`<span class="pill red">חוב ${debtOf(c).months} חודשים</span>`:''}${repeat?'<span class="pill amber">קריאה חוזרת</span>':''}${memoOf(c)?.missing?'<span class="pill amber">תזכיר חסר</span>':''}</div></div>`}
 function openOfficeCall(id){const c=db.calls[id];openCall=id;const m=memoOf(c);const lines=linesFor(c,c.report?.parts||[]);const tot=lines.reduce((a,l)=>a+l.charge,0);const sug=CITY_TECH[c.city];
- sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${c.priority==='stopped'?'red':''}">${c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span>${statusPill(c)}</div><div class="addr" style="margin-top:6px">${esc(c.address)}</div><div class="sub">#${c.id} · ${esc(c.contact)} · ${COVER[c.cover]}</div></div>`,`
- ${c.debt&&c.debt.months>=3?`<div class="danger" style="margin-top:0"><b>ללקוח חוב פתוח של ${c.debt.months} חודשים (${money(c.debt.amount)}).</b> הטיפול בקריאה ממשיך כרגיל. כדאי להזכיר ללקוח להסדיר.</div>`:''}
+ sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${c.priority==='stopped'?'red':''}">${c.rescue?'חילוץ':c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span>${statusPill(c)}</div><div class="addr" style="margin-top:6px">${esc(c.address)}</div><div class="sub">${callNo(c)} · ${esc(c.contact)} · ${COVER[c.cover]}</div></div>`,`
+ ${debtOf(c).months>=3?`<div class="danger" style="margin-top:0"><b>ללקוח חוב פתוח של ${debtOf(c).months} חודשים (${money(debtOf(c).amount)}).</b> הטיפול בקריאה ממשיך כרגיל. כדאי להזכיר ללקוח להסדיר.</div>`:''}
  ${m?.missing?`<div class="warn">התזכיר של המעלית לא התקבל. מועד הבדיקה היה ${new Date(m.next).toLocaleDateString('he-IL')}. כדאי לבקש אותו מהלקוח.</div>`:''}
  <div class="two"><div class="box"><h4>התקלה</h4><div class="issue">${esc(c.issue)}</div><div class="detail">${esc(c.detail)}</div></div><div class="box"><h4>התיקון</h4>${c.report?`<div>${esc(c.report.text)}</div><div class="small muted mt">${esc(PEOPLE[c.report.by]?.name)} · ${hhmm(c.report.at)}</div>`:'<div class="muted">עוד לא דווח</div>'}</div></div>
  ${c.photos?.length?`<div class="photos">${c.photos.map(s=>`<img src="${s}" alt="">`).join('')}</div>`:''}
  ${reassignBox(c)}${c.status==='new'?`<div class="box"><h4>שיבוץ</h4><select class="in" id="oTech">${TECHS.map(t=>`<option value="${t}" ${t===sug?'selected':''}>${PEOPLE[t].name} · ${PEOPLE[t].area}${t===sug?' (לפי האזור)':''}</option>`).join('')}</select><button class="btn primary block mt" onclick="officeAssign(${c.id})">שיבוץ ושליחה לטכנאי</button></div>`:''}
  ${c.status==='closed'?`<div class="box"><h4>חיוב לפי ${COVER[c.cover]}</h4>${lines.length?`<table class="lines">${lines.map(l=>`<tr><td>${esc(l.name)} × ${l.qty}${l.charge?'':' <span class="muted small">(${money(l.price*l.qty)} בכיסוי)</span>'}</td><td>${money(l.charge)}</td></tr>`).join('')}<tr class="tot"><td>לחיוב</td><td>${money(tot)}</td></tr></table>`:'<div class="muted">ללא חלקים</div>'}
    ${c.billed?'<div class="ok">מוכן להפקת חשבונית עסקה.</div>':`<button class="btn primary block mt" onclick="markBilled(${c.id})">${tot?'אישור החיוב':'סגירה ללא חיוב'}</button>`}</div>
-   <div class="box"><h4>מה הלקוח מקבל במייל</h4><div class="small"><b>דוח קריאת שירות #${c.id}</b><br>${esc(c.address)}<br>תקלה: ${esc(c.issue)}<br>תיקון: ${esc(c.report?.text||'')}</div><div class="small muted mt">ההערה הפנימית לא מופיעה בדוח ללקוח.</div></div>`:''}
+   <div class="box"><h4>מה הלקוח מקבל במייל</h4><div class="small" style="line-height:1.7"><b>צמרת מעליות 1987 בע״מ</b><br><u>קריאת שירות מספר ${callNo(c)} - סופית</u><br>פרטי הלקוח: ${esc(c.address)} · ${esc(c.contact)}<br>סוג שרות: ${COVER[c.cover].replace('ביטוח ','')} · תאור מוצר: ${esc(c.elevator.type)}<br><b>תאור התקלה:</b> ${esc(c.issue)}<br><b>תאור התיקון:</b> ${new Date(c.report?.at||Date.now()).toLocaleDateString('he-IL')} ${esc(c.report?.text||'')}<br>בברכה, ${esc(PEOPLE[c.report?.by]?.name||'')}</div><div class="small muted mt">ההערה הפנימית והדו שיח הפנימי לא מופיעים בדוח ללקוח.</div></div>`:''}
  ${accountByAddress(c.address)?`<button class="btn ghost block mt" onclick="openAccount('${accountByAddress(c.address).id}')">${ICON.doc} תיק לקוח</button>`:''}
  <label class="f">הערה פנימית (לא נשלחת ללקוח)</label><textarea class="in" id="oNote" placeholder="למשל: הוועד התחלף, לדבר עם אבי">${esc(c.internal)}</textarea><button class="btn ghost block mt" onclick="saveNote(${c.id})">שמירת ההערה</button>
  ${m?`<button class="btn ghost block mt" onclick="openMemo('${m.id}',${c.id})">${ICON.doc} תזכיר וליקויים</button>`:''}
@@ -776,17 +793,22 @@ function openOfficeCall(id){const c=db.calls[id];openCall=id;const m=memoOf(c);c
 function officeAssign(id){const c=db.calls[id];const t=$('#oTech').value;c.tech=t;c.status='assigned';c.log.push({t:Date.now(),who:PEOPLE[me].name,text:'שובצה ל'+PEOPLE[t].name});put('calls',c);closeSheet();toast(PEOPLE[t].name+' קיבל את הקריאה בטלפון')}
 function saveNote(id){const c=db.calls[id];c.internal=$('#oNote').value;put('calls',c);toast('ההערה נשמרה')}
 function markBilled(id){const c=db.calls[id];c.billed=true;c.log.push({t:Date.now(),who:PEOPLE[me].name,text:'החיוב אושר'});put('calls',c);openOfficeCall(id)}
-function newCall(){window._n={priority:'normal',cover:'regular'};sheet(`<div><div class="addr">קריאה חדשה</div><div class="sub">אחרי החיבור, הסוכן הקולי ימלא את זה לבד מהשיחה</div></div>`,`
- <label class="f">כתובת</label><input class="in" id="nAddr" placeholder="רחוב ומספר"><label class="f">עיר</label><select class="in" id="nCity">${Object.keys(CITY_TECH).map(c=>`<option>${c}</option>`).join('')}</select>
- <label class="f">כניסה</label><input class="in" id="nEnt" placeholder="למשל: כניסה ב׳ מהחניה"><label class="f">מי מדבר</label><input class="in" id="nContact" placeholder="שם איש הקשר">
+function newCall(){sheet(`<div><div class="addr">קריאה חדשה</div><div class="sub">אחרי החיבור, הסוכן הקולי ממלא את זה לבד מהשיחה</div></div>`,`
+ <label class="f">סוג הפנייה</label><div class="choices" id="nKind"><button class="choice on" data-k="fault" onclick="pick(this)">תקלה (לא חילוץ)</button><button class="choice" data-k="rescue" onclick="pick(this)">חילוץ: יש לכודים</button></div>
+ <label class="f">כתובת</label><input class="in" id="nAddr" placeholder="רחוב ומספר" oninput="priorCalls()"><div class="small muted" id="nPrior"></div>
+ <label class="f">עיר</label><select class="in" id="nCity" onchange="priorCalls()">${Object.keys(CITY_TECH).map(c=>`<option>${c}</option>`).join('')}</select>
+ <label class="f">כניסה</label><input class="in" id="nEnt" placeholder="למשל: כניסה ב׳ מהחניה">
+ <div class="grid2"><div><label class="f">עם מי מדברים</label><input class="in" id="nContact" placeholder="שם"></div><div><label class="f">טלפון לחזרה</label><input class="in" id="nPhone" type="tel" inputmode="tel" placeholder="05X-XXXXXXX"></div></div>
  <label class="f">מצב המעלית</label><div class="choices" id="nPri"><button class="choice on" data-k="normal" onclick="pick(this)">פועלת</button><button class="choice" data-k="stopped" onclick="pick(this)">עומדת</button></div>
- <label class="f">התקלה</label><input class="in" id="nIssue" placeholder="למשל: דלת לא נסגרת"><label class="f">פירוט</label><textarea class="in" id="nDetail" placeholder="קומה, דלתות פתוחות או סגורות, חשמל, תאורה בלחצנים, יש לכודים?"></textarea>
- <label class="f">כיסוי</label><div class="choices" id="nCover">${Object.entries(COVER).map(([k,l],i)=>`<button class="choice ${i?'':'on'}" data-k="${k}" onclick="pick(this)">${l}</button>`).join('')}</div>
+ <label class="f">תאור תקלה</label><select class="in" id="nIssue">${FAULTS.map(f=>`<option>${f}</option>`).join('')}</select>
+ <label class="f">פירוט</label><textarea class="in" id="nDetail" placeholder="קומה, דלתות פתוחות או סגורות, חשמל, תאורה בלחצנים, מתי זה התחיל?"></textarea>
+ <label class="f">סוג שרות</label><div class="choices" id="nCover">${Object.entries(COVER).map(([k,l],i)=>`<button class="choice ${i?'':'on'}" data-k="${k}" onclick="pick(this)">${l.replace('ביטוח ','')}</button>`).join('')}</div>
  <button class="btn primary block mt" onclick="createCall()">פתיחה ושיבוץ לפי האזור</button>`)}
+function priorCalls(){const a=($('#nAddr')?.value||'').trim();const el=$('#nPrior');if(!el)return;if(a.length<3){el.textContent='';return}const n=calls().filter(c=>c.address.startsWith(a)).length+(accounts().some(x=>x.address.startsWith(a))?0:0);el.textContent=n?`פניות קודמות בכתובת: ${n}`:''}
 function pick(b){[...b.parentNode.children].forEach(x=>x.classList.remove('on'));b.classList.add('on')}
-function createCall(){const addr=$('#nAddr').value.trim(),issue=$('#nIssue').value.trim();if(!addr||!issue){toast('חסרים כתובת ותקלה');return}
+function createCall(){const addr=$('#nAddr').value.trim();const rescue=$('#nKind .on').dataset.k==='rescue';const issue=rescue?'חילוץ: יש לכודים':$('#nIssue').value;if(!addr){toast('חסרה כתובת');return}
  const meta=db.meta.seed;const id=meta.nextId++;put('meta',meta);const city=$('#nCity').value;const t=CITY_TECH[city];
- const c={id,address:addr+', '+city,entrance:$('#nEnt').value||'כניסה ראשית',city,issue,detail:$('#nDetail').value||'',priority:$('#nPri .on').dataset.k,status:'assigned',tech:t,cover:$('#nCover .on').dataset.k,contact:$('#nContact').value||'—',elevator:{type:'חשמלית',mol:'—',contract:'—'},createdAt:Date.now(),history:[],photos:[],report:null,internal:'',
+ const c={id,address:addr+', '+city,entrance:$('#nEnt').value||'כניסה ראשית',city,issue,detail:($('#nDetail').value||'')+($('#nPhone').value?` · טלפון לחזרה: ${$('#nPhone').value}`:''),priority:rescue?'stopped':$('#nPri .on').dataset.k,rescue,status:'assigned',tech:t,cover:$('#nCover .on').dataset.k,contact:$('#nContact').value||'—',elevator:{type:'חשמלית',mol:'—',contract:'—'},createdAt:Date.now(),history:[],photos:[],report:null,internal:'',
   log:[{t:Date.now(),who:PEOPLE[me].name,text:'קריאה נפתחה'},{t:Date.now(),who:'מערכת',text:'שובצה ל'+PEOPLE[t].name+' לפי האזור'}]};
  put('calls',c);closeSheet();toast('הקריאה שובצה ל'+PEOPLE[t].name)}
 
@@ -822,7 +844,7 @@ function ownerView(){if(!tab)tab='over';let inner='';
   <div class="choices seg">${[['day','היום'],['month','החודש'],['year','השנה']].map(([k,l])=>`<button class="choice ${ownPeriod===k?'on':''}" onclick="ownPeriod='${k}';render()">${l}</button>`).join('')}</div>
   <div class="money"><div class="mtile hero2"><span>נכנס לבנק</span><b>${money(M.in)}</b><small>${ch>=0?'▲':'▼'} ${Math.abs(ch)}% לעומת ${M.prevLabel}</small></div><div class="mtile"><span>יצא</span><b>${money(M.out)}</b><small>ספקים והוצאות</small></div><div class="mtile"><span>תזרים נטו</span><b>${money(net)}</b><small>נכנס פחות יצא</small></div><div class="mtile warnt" onclick="goTab('collect')"><span>לגבייה עכשיו</span><b>${money(due)}</b><small>${debtors.length} לקוחות · חוזי שירות בלבד ›</small></div></div>
   <div class="card"><div class="row"><b>שבעת הימים האחרונים</b><span class="small muted"><i class="lg lgi"></i>נכנס <i class="lg lgo"></i>יצא · אלפי ₪</span></div><div class="bars">${WEEK.map(([a,b],i)=>`<div class="bar"><div class="bb"><i class="bi" style="height:${a/maxW*100}%"></i><i class="bo" style="height:${b/maxW*100}%"></i></div><span>${new Date(dayStart(i-6)).toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})}</span></div>`).join('')}</div></div>
-  <div class="card"><div class="row"><b>גיול חובות של חוזי השירות</b><span class="small muted">בלי שיפוצים וחלקים</span></div>${B.map(([l,f])=>{const v=debtors.filter(f).reduce((s,a)=>s+openSum(a),0);return `<div class="agerow"><span>${l}</span><div class="ag"><i style="width:${v/maxB*100}%"></i></div><b>${money(v)}</b></div>`}).join('')}</div>
+  <div class="card"><div class="row"><b>גיול חובות</b><span class="small muted">${money(due+accounts().reduce((s,a)=>s+workSum(a),0))} בגיול</span></div><div class="split"><div><span>חוזי שירות, לגבייה</span><b>${money(due)}</b></div><div><span>עבודות, שיפוצים וחוב קודם</span><b>${money(accounts().reduce((s,a)=>s+workSum(a),0))}</b></div></div><div class="small muted" style="margin-top:8px">חוזי שירות לפי ותק:</div>${B.map(([l,f])=>{const v=debtors.filter(f).reduce((s,a)=>s+openSum(a),0);return `<div class="agerow"><span>${l}</span><div class="ag"><i style="width:${v/maxB*100}%"></i></div><b>${money(v)}</b></div>`}).join('')}</div>
   <div class="card"><div class="row"><b>קריאות שירות</b><span class="small muted">היום</span></div><div class="mini">${Object.entries(S).map(([k,d])=>`<div class="${d.tone}"><b>${d.list.length}</b><span>${d.label}</span></div>`).join('')}</div></div>
   <div class="info">המספרים של הכסף לדוגמה. אחרי החיבור הם יגיעו מחשבון הבנק, והקבלות מפריוריטי.</div>`;
  }else if(tab==='calls'){inner=callsDash()}
@@ -835,11 +857,15 @@ const ASTATUS={todo:['לטיפול','red'],promise:['הבטיח לשלם','blue'
 const REASONS_D=['','ללא מענה','מייל שגוי','חשבוניות לא התקבלו','התחלף ועד הבית','אין כסף בקופה','מחלוקת על חיוב','סכסוך בין הוועד למחזיק','הבטיח לשלם'];
 const BANK='[פרטי החשבון של צמרת להעברה]';
 const accounts=()=>Object.values(db.accounts);
-const openInv=a=>(a.invoices||[]).filter(i=>!i.paid);
+const openInv=a=>(a.invoices||[]).filter(i=>!i.paid&&i.kind!=='work');
+const workInv=a=>(a.invoices||[]).filter(i=>!i.paid&&i.kind==='work');
+const workSum=a=>workInv(a).reduce((s,i)=>s+i.amount,0);
+
 const openSum=a=>openInv(a).reduce((s,i)=>s+i.amount,0);
 const openCount=a=>openInv(a).length;
 const monthName=m=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-m);return d.toLocaleDateString('he-IL',{month:'long'})};
 const accountByAddress=addr=>accounts().find(a=>a.address===addr);
+const debtOf=c=>{const a=accountByAddress(c.address);return a?{months:openCount(a),amount:openSum(a)}:{months:0,amount:0}};
 let collectMode='debts',collectFilter='all';
 function collectView(readOnly){
  const seg=`<div class="choices seg">${[['debts','חובות'],['monthly','תזכורת חודשית']].map(([k,l])=>`<button class="choice ${collectMode===k?'on':''}" onclick="collectMode='${k}';render()">${l}</button>`).join('')}</div>`;
@@ -849,12 +875,13 @@ function collectView(readOnly){
  const list=debtors.filter(F[collectFilter]?.[1]||(()=>true));
  return `${pageHead('גבייה',DATE())}${seg}${kpis([[money(debtors.reduce((s,a)=>s+openSum(a),0)),'פתוח'],[debtors.filter(a=>openCount(a)>=3).length,'3 חודשים ומעלה',1],[debtors.filter(a=>a.status==='promise').length,'הבטיחו לשלם']])}
  <div class="filters">${Object.entries(F).map(([k,[l,f]])=>`<button class="choice ${collectFilter===k?'on':''}" onclick="collectFilter='${k}';render()">${l} · ${debtors.filter(f).length}</button>`).join('')}</div>
- ${list.map(a=>`<div class="card tap ${openCount(a)>=3?'flag':''}" onclick="openDebt('${a.id}')"><div class="row"><div class="addr">${esc(a.address)}</div><b>${money(openSum(a))}</b></div><div class="meta"><span class="pill ${ASTATUS[a.status][1]}">${ASTATUS[a.status][0]}${a.status==='promise'&&a.promise?' · '+dayLabel(a.promise):''}</span><span class="chip">${openCount(a)} חודשים</span><span class="chip">${PAY[a.pay]}</span>${a.reason?`<span class="chip">${esc(a.reason)}</span>`:''}</div></div>`).join('')||'<div class="empty">אין חובות בסינון הזה.</div>'}
+ ${list.map(a=>`<div class="card tap ${openCount(a)>=3?'flag':''}" onclick="openDebt('${a.id}')"><div class="row"><div class="addr">${esc(a.address)}</div><b>${money(openSum(a))}</b></div><div class="meta"><span class="pill ${ASTATUS[a.status][1]}">${ASTATUS[a.status][0]}${a.status==='promise'&&a.promise?' · '+dayLabel(a.promise):''}</span><span class="chip">${openCount(a)} חודשים</span><span class="chip">${PAY[a.pay]}</span>${a.reason?`<span class="chip">${esc(a.reason)}</span>`:''}${workSum(a)?`<span class="chip">בגיול גם ${money(workSum(a))} עבודות</span>`:''}</div></div>`).join('')||'<div class="empty">אין חובות בסינון הזה.</div>'}
  <div class="info">רק חוזי שירות, לפי המק״ט של החשבונית. חובות על שיפוצים וחלקים לא נכנסים לכאן.</div>`}
-function debtMsg(a){const inv=openInv(a);return `שלום ${a.contact}, כאן צמרת מעליות. לפי הרישומים שלנו פתוחות ${inv.length} חשבוניות שירות עבור המעלית בכתובת ${a.address} (${inv.map(i=>monthName(i.m)).join(', ')}), בסך ${money(openSum(a))}. אפשר להסדיר בהעברה בנקאית: ${BANK}. אחרי ההעברה נשמח לאישור בהודעה. תודה!`}
+function debtMsg(a){const inv=openInv(a);return `שלום ${a.contact}, כאן צמרת מעליות. לפי הרישומים שלנו פתוחות ${inv.length} חשבוניות שירות עבור המעלית בכתובת ${a.address} (${inv.map(i=>i.m).join(', ')}), בסך ${money(openSum(a))}. אפשר להסדיר בהעברה בנקאית: ${BANK}. אחרי ההעברה נשמח לאישור בהודעה. תודה!`}
 function openDebt(id){const a=db.accounts[id];const inv=openInv(a);const txt=debtMsg(a);const ro=PEOPLE[me].role==='owner';
- sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${ASTATUS[a.status][1]}">${ASTATUS[a.status][0]}</span><span class="pill">${PAY[a.pay]}</span></div><div class="addr" style="margin-top:6px">${esc(a.address)}</div><div class="sub">${esc(a.contact)} · ${money(a.fee)} לחודש</div></div>`,`
- <div class="box" style="margin-top:0"><h4>חשבוניות שירות פתוחות</h4>${inv.length?`<table class="lines">${inv.map(i=>`<tr><td>שירות ${monthName(i.m)}</td><td>${money(i.amount)}</td></tr>`).join('')}<tr class="tot"><td>סה״כ</td><td>${money(openSum(a))}</td></tr></table>`:'<div class="muted">אין חוב פתוח</div>'}</div>
+ sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${ASTATUS[a.status][1]}">${ASTATUS[a.status][0]}</span><span class="pill">${PAY[a.pay]}</span></div><div class="addr" style="margin-top:6px">${esc(a.address)}</div><div class="sub">מס׳ לקוח ${esc(a.no||'')}${a.name?' · '+esc(a.name):''} · ${esc(a.contact)} · ${money(a.fee)} לחודש</div></div>`,`
+ <div class="box" style="margin-top:0"><h4>חשבוניות שירות פתוחות</h4>${inv.length?`<table class="lines">${inv.map(i=>`<tr><td>שירות ${i.m}</td><td>${money(i.amount)}</td></tr>`).join('')}<tr class="tot"><td>סה״כ לגבייה</td><td>${money(openSum(a))}</td></tr></table>`:'<div class="muted">אין חוב פתוח על חוזה השירות</div>'}</div>
+ ${workSum(a)?`<div class="box"><h4>בגיול, אבל לא בגבייה החודשית</h4><table class="lines">${workInv(a).map(i=>`<tr><td>${esc(i.what||'עבודה')} · ${esc(i.m)}</td><td>${money(i.amount)}</td></tr>`).join('')}</table><div class="small muted mt">עבודות, שיפוצים ומקדמות מטופלים לפי תנאי ההצעה, לא בדרישה חודשית.</div></div>`:''}
  ${!ro&&inv.length?`<div class="btns mt"><a class="btn primary" href="https://wa.me/?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener" onclick="logAcc('${a.id}','נשלחה הודעת וואטסאפ')">וואטסאפ עם פירוט החוב</a><a class="btn ghost" href="mailto:?subject=${encodeURIComponent('צמרת מעליות · חשבוניות שירות פתוחות')}&body=${encodeURIComponent(txt)}" onclick="logAcc('${a.id}','נשלח מייל')">מייל</a></div>
   <div class="small muted mt">ההודעה מוכנה עם הסכום. בוואטסאפ בוחרים את איש הקשר ושולחים.</div>
   <div class="box"><h4>מצב</h4><div class="choices" id="aSt">${Object.entries(ASTATUS).map(([k,[l]])=>`<button class="choice ${a.status===k?'on':''}" data-k="${k}" onclick="pick(this);document.getElementById('aPro').hidden=this.dataset.k!=='promise'">${l}</button>`).join('')}</div>
@@ -883,12 +910,12 @@ function setRem(id,st){const a=db.accounts[id];a.reminder=st;const txt={forms:'�
 /* ========= CUSTOMER FILE ========= */
 function openAccount(id){const a=db.accounts[id];const cs=calls().filter(c=>c.address===a.address);const ms=Object.values(db.memos).filter(m=>m.address===a.address);const qs=Object.values(db.quotes).filter(q=>q.address===a.address);const role=PEOPLE[me].role;
  const callClick=c=>role==='guy'?`openGuyCall(${c.id})`:`openOfficeCall(${c.id})`;
- sheet(`<div><div class="sub">תיק לקוח</div><div class="addr">${esc(a.address)}</div><div class="sub">${esc(a.contact)} · ${PAY[a.pay]} · ${money(a.fee)} לחודש</div></div>`,`
- <div class="grid2" style="margin-top:0"><div class="kv"><span>חוב פתוח</span><b>${openSum(a)?money(openSum(a))+' · '+openCount(a)+' חודשים':'אין'}</b></div><div class="kv"><span>מצב גבייה</span><b>${ASTATUS[a.status][0]}</b></div></div>
+ sheet(`<div><div class="sub">תיק לקוח · מס׳ ${esc(a.no||'')}${a.name?' · '+esc(a.name):''}</div><div class="addr">${esc(a.address)}</div><div class="sub">${esc(a.contact)} · ${PAY[a.pay]} · ${money(a.fee)} לחודש</div></div>`,`
+ <div class="grid2" style="margin-top:0"><div class="kv"><span>חוב על חוזה השירות</span><b>${openSum(a)?money(openSum(a))+' · '+openCount(a)+' חודשים':'אין'}</b></div><div class="kv"><span>מצב גבייה</span><b>${ASTATUS[a.status][0]}</b></div></div>
  ${openSum(a)&&role!=='tech'?`<button class="btn ghost block mt" onclick="openDebt('${a.id}')">פירוט החוב ופנייה ללקוח</button>`:''}
- <div class="box"><h4>קריאות שירות</h4>${cs.length?cs.map(c=>`<div class="def" style="cursor:pointer" onclick="${callClick(c)}"><span style="flex:1"><b>${esc(c.issue)}</b><div class="who2">#${c.id} · ${dayLabel(c.createdAt)} ${hhmm(c.createdAt)}${c.report?' · '+esc(c.report.text):''}</div></span>${statusPill(c)}</div>`).join(''):'<div class="muted small">אין קריאות</div>'}</div>
+ <div class="box"><h4>קריאות שירות</h4>${cs.length?cs.map(c=>`<div class="def" style="cursor:pointer" onclick="${callClick(c)}"><span style="flex:1"><b>${esc(c.issue)}</b><div class="who2">${callNo(c)} · ${dayLabel(c.createdAt)} ${hhmm(c.createdAt)}${c.report?' · '+esc(c.report.text):''}</div></span>${statusPill(c)}</div>`).join(''):'<div class="muted small">אין קריאות</div>'}</div>
  <div class="box"><h4>תזכירי בודק</h4>${ms.length?ms.map(m=>`<div class="def" style="cursor:pointer" onclick="${role==='guy'?`openMemo('${m.id}')`:`openMemoOffice('${m.id}')`}"><span style="flex:1">${m.status==='missing'?'תזכיר לא התקבל':'בדיקה '+new Date(m.last).toLocaleDateString('he-IL')} · ${m.defects.length} ליקויים</span><span class="pill">${m.status==='inbox'?'חדש':m.status==='missing'?'חסר':'נקלט'}</span></div>`).join(''):'<div class="muted small">אין תזכירים</div>'}</div>
- <div class="box"><h4>הצעות מחיר</h4>${qs.length?qs.map(q=>`<div class="def" style="cursor:pointer" onclick="${role==='guy'?`openGuyQuote(${q.id})`:`officeQuoteSheet(${q.id})`}"><span style="flex:1">#${q.id} · ${money(qTotal(q))}</span>${qPill(q)}</div>`).join(''):'<div class="muted small">אין הצעות</div>'}</div>
+ <div class="box"><h4>הצעות מחיר</h4>${qs.length?qs.map(q=>`<div class="def" style="cursor:pointer" onclick="${role==='guy'?`openGuyQuote(${q.id})`:`officeQuoteSheet(${q.id})`}"><span style="flex:1">${quoteNo(q)} · ${money(qTotal(q))}</span>${qPill(q)}</div>`).join(''):'<div class="muted small">אין הצעות</div>'}</div>
  <div class="box"><h4>יומן קשר</h4><div class="log">${(a.log||[]).slice().reverse().map(l=>`<div><b>${dayLabel(l.t)==='היום'?hhmm(l.t):dayLabel(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')||'<div>עוד אין</div>'}</div><div class="small muted mt">אחרי החיבור יופיעו כאן גם המיילים מ-Gmail.</div></div>`)}
 
 /* ========= render ========= */
