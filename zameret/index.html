@@ -318,6 +318,9 @@ a.link{color:var(--blue);text-decoration:none;font-weight:600}
 .lg{display:inline-block;width:9px;height:9px;border-radius:2px;margin:0 6px 0 3px;vertical-align:-1px}
 .agerow{display:grid;grid-template-columns:72px 1fr auto;gap:10px;align-items:center;margin-top:9px;font-size:13px}
 .ag{height:10px;background:var(--line2);border-radius:99px;overflow:hidden}.ag i{display:block;height:100%;background:var(--amber);border-radius:99px}
+.msgrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 0;border-top:1px solid var(--line2)}.msgrow:first-of-type{border-top:0}.msgrow .ml{flex-basis:100%;font-weight:600;font-size:14px}.msgrow .btn{flex:1}
+.msgtxt{white-space:pre-wrap;font-size:13.5px;line-height:1.6;background:var(--bg);border-radius:10px;padding:10px}
+.search{margin-bottom:8px}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.split div{background:var(--bg);border-radius:12px;padding:8px 10px}.split span{display:block;font-size:11.5px;color:var(--muted)}.split b{font-size:17px}
 .mini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px;text-align:center}
 .mini div{background:var(--bg);border-radius:12px;padding:8px 4px}.mini b{display:block;font-size:20px}.mini span{font-size:11px;color:var(--muted);line-height:1.25;display:block}
@@ -437,7 +440,7 @@ function seed(){
  const acc=(no,address,name,contact,city,pay,fee,invoices,status,reason,extra)=>({id:'a'+no,no,address,name,contact,city,pay,fee,invoices,status,reason,log:[],reminder:'none',...(extra||{}),updatedAt:Date.now()});
  [acc('4101','האלון 14, קריית ים','','רונית לוי','קריית ים','cash',2395,[...run(2,[2345,2385,2395]),W('יוני 26',142070,'שיפוץ מעלית'),...run(6,[2395,2395,2415,1225])],'todo','התחלף ועד הבית'),
   acc('4102','האורן 8, נשר','','יוסי גולן','נשר','checks',5575,run(3,[5405,5575,5575,5575,5575,4990,5615]),'dispute','מחלוקת על חיוב'),
-  acc('4103','הצבר 5, ירושלים','','מיכל הדר','ירושלים','transfer',510,[...run(0,[130,505,505,510,510,510,510,510,515]),W('אוק׳ 26',63230,'החלפת לוח פיקוד')],'todo','חשבוניות לא התקבלו'),
+  acc('4103','הצבר 5, טבריה','','מיכל הדר','טבריה','transfer',510,[...run(0,[130,505,505,510,510,510,510,510,515]),W('אוק׳ 26',63230,'החלפת לוח פיקוד')],'todo','חשבוניות לא התקבלו'),
   acc('4104','הגפן 40, חיפה','','ועד הבית','חיפה','cash',400,[W('יוני 25',17745,'חוב קודם'),...run(0,[395,395,395,395,400,400,400,400,400,400])],'todo','ללא מענה'),
   acc('4105','הערבה 16, חיפה','','ועד הבית','חיפה','transfer',745,run(0,[735,735,735,740,745,745,745,745,750,750]),'promise','הבטיח לשלם',{promise:T(9,0,3)}),
   acc('4106','המעיין 7 ב׳, חיפה','','ועד הבית','חיפה','checks',675,[S('ספט׳ 25',670),S('אוק׳ 25',670),S('נוב׳ 25',1335),...run(0,[670,1065,670,670,675,675,675,675,680,680])],'arrangement','הסדר תשלומים בהנהלת החשבונות'),
@@ -455,9 +458,26 @@ function seed(){
   acc('4118','הרימון 19, קריית מוצקין','','ענת קדם','קריית מוצקין','masav',785,[W('יולי 26',75475,'שיפוץ מעלית')],'paid',''),
   acc('4119','הגליל 31, חיפה','','נועם ברק','חיפה','masav',690,[],'paid',''),
   acc('4120','הנרקיס 22, חיפה','','משה אזולאי','חיפה','transfer',670,[],'paid','')
- ].forEach(a=>docs.push({kind:'accounts',id:a.id,data:a}));
+ ].concat(moreAccounts(acc,S,W,M26,T)).forEach(a=>docs.push({kind:'accounts',id:a.id,data:a}));
  return docs;
 }
+
+
+/* made-up customers for the sample: northern towns only, same mix as a real aging report */
+function moreAccounts(acc,S,W,M26,T){let x=7;const rnd=()=>(x=(x*16807)%2147483647)/2147483647;const pick=a=>a[Math.floor(rnd()*a.length)];
+ const towns=[['חיפה',14],['קריית ים',4],['קריית מוצקין',4],['קריית ביאליק',4],['קריית אתא',3],['קריית חיים',3],['נשר',3],['טירת כרמל',2],['עכו',3],['כרמיאל',3],['נהריה',3],['צפת',2],['טבריה',2]];
+ const streets=['הארז','התבור','המגינים','החשמונאים','הנביאים','העליה','הגפן','השקמה','הורדים','הנשיא','ההגנה','הפלמ״ח','בן גוריון','ז׳בוטינסקי','הרב קוק','יפה נוף','מוריה','חורב','הכרמל','דרך הים','שדרות ההסתדרות','הבנים','האשל','השיטה','הדקלים','המלאכה','הנרקיסים','הצבעונים','אחד העם','ביאליק'];
+ const reasons=['ללא מענה','מייל שגוי','חשבוניות לא התקבלו','התחלף ועד הבית','אין כסף בקופה','','','','מחלוקת על חיוב','סכסוך בין הוועד למחזיק'];
+ const works=['שיפוץ מעלית','החלפת לוח פיקוד','החלפת מנוע','החלפת דלתות','מודרניזציה','החלפת כבלים','הצעת מחיר שאושרה','חוב קודם'];
+ const contacts=['ועד הבית','ועד הבית','ועד הבית','חברת ניהול','מזכירות הבניין'];
+ const out=[];const pool=[];towns.forEach(([t,n])=>{for(let i=0;i<n;i++)pool.push(t)});
+ for(let i=0;i<54;i++){const city=pool[i%pool.length];const address=`${pick(streets)} ${2+Math.floor(rnd()*80)}, ${city}`;
+  const r=rnd();const pay=r<.3?'cash':r<.5?'checks':r<.8?'transfer':'masav';const fee=Math.round((320+rnd()*1180)/5)*5;
+  const months=pay==='masav'?0:Math.floor(rnd()*rnd()*11);const inv=[];for(let m=10-months;m<10;m++)inv.push(S(M26[m],fee+Math.round((rnd()-.5)*20)));
+  if(rnd()<.33)inv.unshift(W(M26[Math.floor(rnd()*9)],Math.round((4000+rnd()*rnd()*190000)/5)*5,pick(works)));
+  const st=months?(rnd()<.62?'todo':pick(['promise','arrangement','dispute','todo'])):'paid';
+  out.push(acc(String(4200+i),address,'',pick(contacts),city,pay,fee,inv,st,st==='todo'?pick(reasons):st==='promise'?'הבטיח לשלם':st==='arrangement'?'הסדר תשלומים בהנהלת החשבונות':st==='dispute'?'מחלוקת על חיוב':'',st==='promise'?{promise:T(9,0,2+Math.floor(rnd()*6))}:null))}
+ return out}
 
 /* ========= store + sync ========= */
 const db={calls:{},memos:{},quotes:{},accounts:{},meta:{}};
@@ -854,58 +874,165 @@ function ownerView(){if(!tab)tab='over';let inner='';
 /* ========= ACCOUNTS, COLLECTION, MONTHLY REMINDER ========= */
 const PAY={cash:'מזומן',checks:'צ׳קים',transfer:'העברה בנקאית',masav:'הרשאה לחיוב (מס״ב)'};
 const ASTATUS={todo:['לטיפול','red'],promise:['הבטיח לשלם','blue'],arrangement:['בהסדר','teal'],dispute:['בבירור','amber'],paid:['שולם','green']};
-const REASONS_D=['','ללא מענה','מייל שגוי','חשבוניות לא התקבלו','התחלף ועד הבית','אין כסף בקופה','מחלוקת על חיוב','סכסוך בין הוועד למחזיק','הבטיח לשלם'];
-const BANK='[פרטי החשבון של צמרת להעברה]';
+const REASONS_D=['','ללא מענה','מייל שגוי','חשבוניות לא התקבלו','התחלף ועד הבית','אין כסף בקופה','מחלוקת על חיוב','סכסוך בין הוועד למחזיק','הבטיח לשלם','מעדיף וואטסאפ ולא מייל'];
+// test mode: every message opens to Eyal, not to the customer
+const TEST={phone:'972538276288',phoneLabel:'053-8276288',email:'eyal@meeting-scheduled.com'};
+const BANK='[פרטי חשבון הבנק של צמרת]', INST='[קוד המוסד]', FORM='[קישור לטופס ההרשאה ולדף ההנחיות]';
 const accounts=()=>Object.values(db.accounts);
 const openInv=a=>(a.invoices||[]).filter(i=>!i.paid&&i.kind!=='work');
 const workInv=a=>(a.invoices||[]).filter(i=>!i.paid&&i.kind==='work');
 const workSum=a=>workInv(a).reduce((s,i)=>s+i.amount,0);
-
 const openSum=a=>openInv(a).reduce((s,i)=>s+i.amount,0);
 const openCount=a=>openInv(a).length;
-const monthName=m=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-m);return d.toLocaleDateString('he-IL',{month:'long'})};
 const accountByAddress=addr=>accounts().find(a=>a.address===addr);
 const debtOf=c=>{const a=accountByAddress(c.address);return a?{months:openCount(a),amount:openSum(a)}:{months:0,amount:0}};
-let collectMode='debts',collectFilter='all';
+const CUR_MONTH='נובמבר 2026';
+const hi=a=>a.contact&&!/^(ועד הבית|חברת ניהול|מזכירות הבניין)$/.test(a.contact)?`שלום ${a.contact},`:'שלום רב,';
+/* message templates: the wording follows what Or asked for — a reminder, not an ultimatum; bank transfer first; a standing order offered politely */
+const MSG={
+ reminder:{label:'תזכורת לתשלום החודשי',wa:a=>`${hi(a)}
+כאן צמרת מעליות. רצינו להזכיר שהגיע מועד התשלום החודשי עבור שירות המעלית ב${a.address}: ${money(a.fee)} עבור ${CUR_MONTH}. החשבונית נשלחה אליכם גם במייל.
+
+אפשר להעביר בהעברה בנקאית לחשבון: ${BANK}. אחרי ההעברה נשמח לאישור כאן בהודעה.
+
+אגב, אפשר להסדיר את התשלום באופן שוטף בהוראת קבע או בהרשאה לחיוב חשבון, ואז לא צריך לזכור כל חודש. תרצו שנשלח לכם פרטים?
+
+תודה,
+צמרת מעליות`,
+  subj:a=>`צמרת מעליות · תשלום חודשי עבור המעלית, ${CUR_MONTH}`,
+  mail:a=>`שלום רב,
+
+הגיע מועד התשלום החודשי עבור שירות המעלית בכתובת ${a.address}.
+סכום לתשלום: ${money(a.fee)} (חודש ${CUR_MONTH}). חשבונית העסקה מצורפת למייל.
+
+ניתן לשלם בהעברה בנקאית לחשבון: ${BANK}
+לאחר ההעברה נבקש לשלוח אישור העברה בתשובה למייל זה, ונפיק לכם חשבונית מס קבלה.
+
+כדי לחסוך את התשלום הידני בכל חודש, ניתן להסדיר את התשלום באופן שוטף בהוראת קבע בחשבון הבנק או בהרשאה לחיוב חשבון. אם תרצו, נשלח לכם את הטופס ואת דף ההנחיות.
+
+בברכה,
+צמרת מעליות 1987 בע״מ
+04-8412643`},
+ debt:{label:'חשבוניות פתוחות',wa:a=>`${hi(a)}
+כאן צמרת מעליות. לפי הרישומים שלנו פתוחות ${openCount(a)} חשבוניות שירות עבור המעלית ב${a.address}, בסך ${money(openSum(a))}:
+${openInv(a).map(i=>`• ${i.m}: ${money(i.amount)}`).join('\n')}
+
+נשמח להסדיר את התשלום בהעברה בנקאית לחשבון: ${BANK}, ולקבל אישור העברה כאן בהודעה.
+אם יש שאלה על החיוב, או שצריך לחלק את התשלום, אפשר לענות להודעה הזו ונחזור אליכם.
+
+תודה,
+צמרת מעליות`,
+  subj:a=>`צמרת מעליות · חשבוניות שירות פתוחות, ${a.address}`,
+  mail:a=>`שלום רב,
+
+לפי הרישומים שלנו, עבור שירות המעלית בכתובת ${a.address} פתוחות החשבוניות הבאות:
+${openInv(a).map(i=>`${i.m}: ${money(i.amount)}`).join('\n')}
+סה״כ לתשלום: ${money(openSum(a))}
+
+נבקש להסדיר את התשלום בהעברה בנקאית לחשבון: ${BANK}, ולשלוח אישור העברה בתשובה למייל זה.
+אם התשלום כבר בוצע, או שיש שאלה לגבי החיוב, נשמח שתעדכנו אותנו ונבדוק מיד.
+
+בברכה,
+צמרת מעליות 1987 בע״מ
+04-8412643`},
+ standing:{label:'פרטים להוראת קבע',wa:a=>`${hi(a)}
+כמו שביקשתם, אלה הפרטים להסדרת התשלום החודשי:
+
+1. הרשאה לחיוב חשבון: ממלאים את הטופס, מאשרים אותו בבנק ושולחים לנו את האישור. קוד המוסד: ${INST}.
+2. או הוראת קבע: נותנים לבנק הוראה חודשית לחשבון ${BANK} על סך ${money(a.fee)}.
+
+הטופס ודף ההנחיות: ${FORM}
+אם משהו לא ברור, אפשר לענות כאן ונעזור.
+
+תודה,
+צמרת מעליות`,
+  subj:a=>`צמרת מעליות · טופס הרשאה לחיוב חשבון / הוראת קבע`,
+  mail:a=>`שלום רב,
+
+בהמשך לבקשתכם, מצורפים הטופס ודף ההנחיות להסדרת התשלום החודשי עבור המעלית בכתובת ${a.address}.
+
+הרשאה לחיוב חשבון: יש למלא את הטופס, לאשר אותו בבנק ולשלוח אלינו את האישור. קוד המוסד: ${INST}.
+לחלופין, הוראת קבע: יש להורות לבנק על העברה חודשית לחשבון ${BANK} בסך ${money(a.fee)}.
+
+הטופס ודף ההנחיות: ${FORM}
+
+בברכה,
+צמרת מעליות 1987 בע״מ
+04-8412643`},
+ warning:{label:'מכתב התראה לפני הליכים',mailOnly:true,
+  subj:a=>`הנדון: התראה לפני נקיטת הליכים · ${a.address}`,
+  mail:a=>`לכבוד ועד הבית, ${a.address}
+
+הנדון: חוב בגין שירות ואחזקת מעלית
+
+על אף פניותינו הקודמות, טרם הוסדר החוב בגין שירות המעלית בבניין, בסך ${money(openSum(a))}, עבור ${openCount(a)} חודשים (${openInv(a).map(i=>i.m).join(', ')}).
+
+נבקש להסדיר את התשלום בתוך 14 ימים ממועד מכתב זה, בהעברה בנקאית לחשבון: ${BANK}, או ליצור איתנו קשר לתיאום הסדר תשלומים.
+ככל שהחוב לא יוסדר במועד, נשקול את המשך הטיפול, לרבות נקיטת הליכים לגבייתו.
+
+בברכה,
+צמרת מעליות 1987 בע״מ
+04-8412643`}};
+const waLink=(a,k)=>`https://wa.me/${TEST.phone}?text=${encodeURIComponent(MSG[k].wa(a))}`;
+const mailLink=(a,k)=>`mailto:${TEST.email}?subject=${encodeURIComponent(MSG[k].subj(a))}&body=${encodeURIComponent(MSG[k].mail(a))}`;
+function msgButtons(a,k){const m=MSG[k];return `<div class="msgrow"><span class="ml">${m.label}</span>${m.mailOnly?'':`<a class="btn primary sm" href="${waLink(a,k)}" target="_blank" rel="noopener" onclick="sentMsg('${a.id}','${k}','וואטסאפ')">וואטסאפ</a>`}<a class="btn ghost sm" href="${mailLink(a,k)}" onclick="sentMsg('${a.id}','${k}','מייל')">מייל</a><button class="btn ghost sm" onclick="previewMsg('${a.id}','${k}')">תצוגה</button></div>`}
+const testNote=`<div class="small muted mt">מצב בדיקה: ההודעות נפתחות אל אייל (${TEST.phoneLabel}, ${TEST.email}) ולא אל הלקוח. אחרי החיבור הן ייפתחו ישירות לאיש הקשר מפריוריטי.</div>`;
+function previewMsg(id,k){const a=db.accounts[id];const m=MSG[k];sheet(`<div><div class="sub">${esc(m.label)}</div><div class="addr">${esc(a.address)}</div></div>`,`${m.mailOnly?'':`<div class="box" style="margin-top:0"><h4>וואטסאפ</h4><div class="msgtxt">${esc(m.wa(a))}</div></div>`}<div class="box"><h4>מייל · ${esc(m.subj(a))}</h4><div class="msgtxt">${esc(m.mail(a))}</div></div><button class="btn ghost block mt" onclick="${k==='reminder'||k==='standing'?`openReminder('${id}')`:`openDebt('${id}')`}">חזרה</button>`)}
+function sentMsg(id,k,ch){const a=db.accounts[id];a.log=(a.log||[]).concat({t:Date.now(),who:PEOPLE[me].name,text:`נפתחה הודעת ${ch}: ${MSG[k].label}`});
+ if(k==='reminder'&&a.reminder==='none')a.reminder='sent';if(k==='standing'&&['yes','none','sent'].includes(a.reminder))a.reminder='forms';put('accounts',a)}
+let collectMode='debts',collectFilter='all',remFilter='all',collectQ='';
+const search=`<input class="in search" placeholder="חיפוש כתובת או עיר" value="${''}" oninput="collectQ=this.value;clearTimeout(window._qt);window._qt=setTimeout(()=>{render();const el=document.querySelector('.search');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length)}},250)">`;
+const matchQ=a=>!collectQ||(a.address+' '+a.city).includes(collectQ.trim());
 function collectView(readOnly){
  const seg=`<div class="choices seg">${[['debts','חובות'],['monthly','תזכורת חודשית']].map(([k,l])=>`<button class="choice ${collectMode===k?'on':''}" onclick="collectMode='${k}';render()">${l}</button>`).join('')}</div>`;
- if(collectMode==='monthly')return monthlyView(seg,readOnly);
+ const srch=search.replace('value=""',`value="${esc(collectQ)}"`);
+ if(collectMode==='monthly')return monthlyView(seg,srch,readOnly);
  const debtors=accounts().filter(a=>openSum(a)>0).sort((a,b)=>openSum(b)-openSum(a));
  const F={all:['הכל',()=>true],over3:['3 חודשים ומעלה',a=>openCount(a)>=3],todo:['לטיפול',a=>a.status==='todo'],promise:['הבטיח לשלם',a=>a.status==='promise'],arrangement:['בהסדר',a=>a.status==='arrangement'],dispute:['בבירור',a=>a.status==='dispute']};
- const list=debtors.filter(F[collectFilter]?.[1]||(()=>true));
- return `${pageHead('גבייה',DATE())}${seg}${kpis([[money(debtors.reduce((s,a)=>s+openSum(a),0)),'פתוח'],[debtors.filter(a=>openCount(a)>=3).length,'3 חודשים ומעלה',1],[debtors.filter(a=>a.status==='promise').length,'הבטיחו לשלם']])}
- <div class="filters">${Object.entries(F).map(([k,[l,f]])=>`<button class="choice ${collectFilter===k?'on':''}" onclick="collectFilter='${k}';render()">${l} · ${debtors.filter(f).length}</button>`).join('')}</div>
+ const list=debtors.filter(F[collectFilter]?.[1]||(()=>true)).filter(matchQ);
+ const works=accounts().reduce((s,a)=>s+workSum(a),0);
+ return `${pageHead('גבייה',DATE())}${seg}${kpis([[money(debtors.reduce((s,a)=>s+openSum(a),0)),'חוזי שירות לגבייה'],[debtors.filter(a=>openCount(a)>=3).length,'3 חודשים ומעלה',1],[debtors.filter(a=>a.status==='promise').length,'הבטיחו לשלם']])}
+ <div class="small muted" style="margin:-4px 2px 10px">בגיול יש עוד ${money(works)} על עבודות, שיפוצים וחוב קודם. הם מופיעים בתיק הלקוח, לא בגבייה החודשית.</div>
+ ${srch}<div class="filters">${Object.entries(F).map(([k,[l,f]])=>`<button class="choice ${collectFilter===k?'on':''}" onclick="collectFilter='${k}';render()">${l} · ${debtors.filter(f).length}</button>`).join('')}</div>
  ${list.map(a=>`<div class="card tap ${openCount(a)>=3?'flag':''}" onclick="openDebt('${a.id}')"><div class="row"><div class="addr">${esc(a.address)}</div><b>${money(openSum(a))}</b></div><div class="meta"><span class="pill ${ASTATUS[a.status][1]}">${ASTATUS[a.status][0]}${a.status==='promise'&&a.promise?' · '+dayLabel(a.promise):''}</span><span class="chip">${openCount(a)} חודשים</span><span class="chip">${PAY[a.pay]}</span>${a.reason?`<span class="chip">${esc(a.reason)}</span>`:''}${workSum(a)?`<span class="chip">בגיול גם ${money(workSum(a))} עבודות</span>`:''}</div></div>`).join('')||'<div class="empty">אין חובות בסינון הזה.</div>'}
  <div class="info">רק חוזי שירות, לפי המק״ט של החשבונית. חובות על שיפוצים וחלקים לא נכנסים לכאן.</div>`}
-function debtMsg(a){const inv=openInv(a);return `שלום ${a.contact}, כאן צמרת מעליות. לפי הרישומים שלנו פתוחות ${inv.length} חשבוניות שירות עבור המעלית בכתובת ${a.address} (${inv.map(i=>i.m).join(', ')}), בסך ${money(openSum(a))}. אפשר להסדיר בהעברה בנקאית: ${BANK}. אחרי ההעברה נשמח לאישור בהודעה. תודה!`}
-function openDebt(id){const a=db.accounts[id];const inv=openInv(a);const txt=debtMsg(a);const ro=PEOPLE[me].role==='owner';
- sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${ASTATUS[a.status][1]}">${ASTATUS[a.status][0]}</span><span class="pill">${PAY[a.pay]}</span></div><div class="addr" style="margin-top:6px">${esc(a.address)}</div><div class="sub">מס׳ לקוח ${esc(a.no||'')}${a.name?' · '+esc(a.name):''} · ${esc(a.contact)} · ${money(a.fee)} לחודש</div></div>`,`
- <div class="box" style="margin-top:0"><h4>חשבוניות שירות פתוחות</h4>${inv.length?`<table class="lines">${inv.map(i=>`<tr><td>שירות ${i.m}</td><td>${money(i.amount)}</td></tr>`).join('')}<tr class="tot"><td>סה״כ לגבייה</td><td>${money(openSum(a))}</td></tr></table>`:'<div class="muted">אין חוב פתוח על חוזה השירות</div>'}</div>
+function openDebt(id){const a=db.accounts[id];const inv=openInv(a);const ro=PEOPLE[me].role==='owner';
+ sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${ASTATUS[a.status][1]}">${ASTATUS[a.status][0]}</span><span class="pill">${PAY[a.pay]}</span></div><div class="addr" style="margin-top:6px">${esc(a.address)}</div><div class="sub">מס׳ לקוח ${esc(a.no||'')} · ${esc(a.contact)} · ${money(a.fee)} לחודש</div></div>`,`
+ <div class="box" style="margin-top:0"><h4>חשבוניות שירות פתוחות</h4>${inv.length?`<table class="lines">${inv.map(i=>`<tr><td>שירות ${esc(i.m)}</td><td>${money(i.amount)}</td></tr>`).join('')}<tr class="tot"><td>סה״כ לגבייה</td><td>${money(openSum(a))}</td></tr></table>`:'<div class="muted">אין חוב פתוח על חוזה השירות</div>'}</div>
  ${workSum(a)?`<div class="box"><h4>בגיול, אבל לא בגבייה החודשית</h4><table class="lines">${workInv(a).map(i=>`<tr><td>${esc(i.what||'עבודה')} · ${esc(i.m)}</td><td>${money(i.amount)}</td></tr>`).join('')}</table><div class="small muted mt">עבודות, שיפוצים ומקדמות מטופלים לפי תנאי ההצעה, לא בדרישה חודשית.</div></div>`:''}
- ${!ro&&inv.length?`<div class="btns mt"><a class="btn primary" href="https://wa.me/?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener" onclick="logAcc('${a.id}','נשלחה הודעת וואטסאפ')">וואטסאפ עם פירוט החוב</a><a class="btn ghost" href="mailto:?subject=${encodeURIComponent('צמרת מעליות · חשבוניות שירות פתוחות')}&body=${encodeURIComponent(txt)}" onclick="logAcc('${a.id}','נשלח מייל')">מייל</a></div>
-  <div class="small muted mt">ההודעה מוכנה עם הסכום. בוואטסאפ בוחרים את איש הקשר ושולחים.</div>
+ ${!ro&&inv.length?`<div class="box"><h4>שליחת הודעה מוכנה</h4>${msgButtons(a,'debt')}${a.pay!=='masav'?msgButtons(a,'standing'):''}${openCount(a)>=6?msgButtons(a,'warning'):''}${testNote}</div>
   <div class="box"><h4>מצב</h4><div class="choices" id="aSt">${Object.entries(ASTATUS).map(([k,[l]])=>`<button class="choice ${a.status===k?'on':''}" data-k="${k}" onclick="pick(this);document.getElementById('aPro').hidden=this.dataset.k!=='promise'">${l}</button>`).join('')}</div>
    <div id="aPro" ${a.status==='promise'?'':'hidden'}><label class="f">ישלם עד</label><input class="in" type="date" id="aDate" value="${a.promise?new Date(a.promise).toISOString().slice(0,10):new Date(Date.now()+3*864e5).toISOString().slice(0,10)}"></div>
    <label class="f">סיבה</label><select class="in" id="aWhy">${REASONS_D.map(r=>`<option ${r===a.reason?'selected':''}>${r}</option>`).join('')}</select>
-   <button class="btn dark block mt" onclick="saveDebt('${a.id}')">שמירה</button></div>`:''}
- <div class="info">אחרי החיבור, הסוכן הקולי מתקשר ללקוחות מהרשימה הזו, והסטטוס מתעדכן לבד לפי השיחה ולפי התשלום בפריוריטי.</div>
+   <button class="btn dark block mt" onclick="saveDebt('${a.id}')">שמירה</button><div class="small muted mt">אפשר לשנות את המצב בכל רגע, גם לחזור אחורה.</div></div>`:''}
+ <div class="info">אחרי החיבור, הסוכן הקולי מתקשר ללקוחות מהרשימה הזו, והמצב מתעדכן לבד לפי השיחה ולפי התשלום בפריוריטי.</div>
  <button class="btn ghost block mt" onclick="openAccount('${a.id}')">${ICON.doc} תיק לקוח</button>
  <div class="box"><h4>יומן קשר</h4><div class="log">${(a.log||[]).slice().reverse().map(l=>`<div><b>${dayLabel(l.t)==='היום'?hhmm(l.t):dayLabel(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')||'<div>עוד אין</div>'}</div></div>`)}
 function logAcc(id,text){const a=db.accounts[id];a.log=(a.log||[]).concat({t:Date.now(),who:PEOPLE[me].name,text});put('accounts',a)}
 function saveDebt(id){const a=db.accounts[id];const st=$('#aSt .on').dataset.k;a.reason=$('#aWhy').value;
- if(st==='paid'){a.invoices.forEach(i=>i.paid=true);a.status='paid';a.log.push({t:Date.now(),who:PEOPLE[me].name,text:'סומן ששולם'})}
+ if(st==='paid'){a.invoices.forEach(i=>{if(i.kind!=='work')i.paid=true});a.status='paid';a.log.push({t:Date.now(),who:PEOPLE[me].name,text:'סומן ששולם'})}
  else{a.status=st;if(st==='promise'){a.promise=new Date($('#aDate').value+'T08:00').getTime()}a.log.push({t:Date.now(),who:PEOPLE[me].name,text:ASTATUS[st][0]+(st==='promise'?' עד '+new Date(a.promise).toLocaleDateString('he-IL'):'')+(a.reason?' · '+a.reason:'')})}
  put('accounts',a);closeSheet();toast('נשמר')}
-const RSTAT={none:['טרם נשלחה','',],sent:['התזכורת נשלחה','blue'],forms:['ביקש פרטים · נשלחו טפסים','amber'],joined:['עבר לתשלום קבוע','green'],declined:['לא מעוניין כרגע','']};
-function monthlyView(seg,readOnly){const list=accounts().filter(a=>a.pay!=='masav'||a.reminder==='joined');const notSent=list.filter(a=>a.reminder==='none').length;
- return `${pageHead('גבייה',DATE())}${seg}${kpis([[list.length,'בלי מס״ב'],[list.filter(a=>a.reminder==='sent').length,'קיבלו תזכורת'],[list.filter(a=>a.reminder==='forms').length,'ביקשו פרטים'],[list.filter(a=>a.reminder==='joined').length,'עברו לקבוע']])}
- <div class="card"><b>תזכורת עם הוצאת החשבוניות</b><div class="detail" style="-webkit-line-clamp:unset">ב-16 לחודש, בנוסף למייל, הלקוחות שמשלמים במזומן, בצ׳קים או בהעברות מקבלים שיחה: "הגיע מועד התשלום החודשי עבור המעלית, יש להעביר תשלום באופן מסודר", ושאלה אם לשלוח פרטים לתשלום קבוע.</div>${!readOnly&&notSent?`<button class="btn primary block mt" onclick="sendReminders()">שליחת תזכורת ל-${notSent} לקוחות</button>`:''}</div>
- ${list.map(a=>`<div class="card"><div class="row"><div class="addr">${esc(a.address)}</div><span class="pill ${RSTAT[a.reminder][1]}">${RSTAT[a.reminder][0]}</span></div><div class="meta"><span class="chip">${PAY[a.pay]}</span><span class="chip">${money(a.fee)} לחודש</span>${openCount(a)?`<span class="chip">${openCount(a)} פתוחות</span>`:''}</div>
-  ${!readOnly&&a.reminder==='sent'?`<div class="btns mt"><button class="btn ghost sm" onclick="setRem('${a.id}','forms')">ביקש פרטים</button><button class="btn ghost sm" onclick="setRem('${a.id}','declined')">לא מעוניין</button></div>`:''}
-  ${!readOnly&&a.reminder==='forms'?`<button class="btn ghost sm block mt" onclick="setRem('${a.id}','joined')">ההרשאה נקלטה: עבר לתשלום קבוע</button>`:''}</div>`).join('')}
- <div class="info">אחרי החיבור, השיחות יוצאות לבד מהסוכן הקולי, ומי שעונה "כן" מקבל מיד את טופס ההרשאה, דף ההנחיות וקוד המוסד.</div>`}
-function sendReminders(){const list=accounts().filter(a=>a.pay!=='masav'&&a.reminder==='none');list.forEach(a=>{a.reminder='sent';a.log=(a.log||[]).concat({t:Date.now(),who:PEOPLE[me].name,text:'נשלחה תזכורת חודשית'});put('accounts',a)});toast('נשלחה תזכורת ל-'+list.length+' לקוחות')}
-function setRem(id,st){const a=db.accounts[id];a.reminder=st;const txt={forms:'ביקש פרטים לתשלום קבוע. נשלחו טופס הרשאה, דף הנחיות וקוד מוסד',declined:'לא מעוניין בתשלום קבוע כרגע',joined:'ההרשאה לחיוב נקלטה. עבר לתשלום קבוע'}[st];if(st==='joined')a.pay='masav';a.log=(a.log||[]).concat({t:Date.now(),who:PEOPLE[me].name,text:txt});put('accounts',a);toast(st==='forms'?'נשלחו הטפסים':'עודכן')}
+/* monthly reminder: one ready message per customer, no blind bulk send */
+const RSTAT={none:['טרם נשלחה תזכורת','red'],sent:['נשלחה תזכורת, מחכים לתשובה','blue'],yes:['ביקש פרטים להוראת קבע','amber'],forms:['נשלחו טפסים להוראת קבע','amber'],declined:['ענה שלא כרגע','',],joined:['עבר להוראת קבע או הרשאה','green']};
+const RHELP={none:'עוד לא קיבל את התזכורת החודשית.',sent:'קיבל תזכורת. מחכים שישלם או שיענה אם הוא רוצה הוראת קבע.',yes:'ענה "כן" לשאלה על הוראת קבע. עכשיו שולחים לו את הטופס והפרטים.',forms:'קיבל את הטופס. מחכים שיאשר בבנק וישלח אישור.',declined:'ענה שהוא לא רוצה הוראת קבע כרגע. ממשיך לקבל תזכורת חודשית.',joined:'ההרשאה נקלטה במערכת. מהחודש הבא הוא לא צריך תזכורת.'};
+function monthlyView(seg,srch,readOnly){const all=accounts().filter(a=>a.pay!=='masav'||a.reminder==='joined');
+ const RF={all:['הכל',()=>true],none:['טרם נשלחה',a=>a.reminder==='none'],sent:['מחכים לתשובה',a=>a.reminder==='sent'],yes:['ביקשו פרטים',a=>['yes','forms'].includes(a.reminder)],declined:['לא כרגע',a=>a.reminder==='declined'],joined:['עברו',a=>a.reminder==='joined']};
+ const list=all.filter(RF[remFilter]?.[1]||(()=>true)).filter(matchQ).sort((a,b)=>Object.keys(RSTAT).indexOf(a.reminder)-Object.keys(RSTAT).indexOf(b.reminder));
+ return `${pageHead('גבייה',DATE())}${seg}${kpis([[all.length,'לקוחות בלי מס״ב'],[all.filter(a=>a.reminder==='none').length,'טרם נשלחה',1],[all.filter(a=>['yes','forms'].includes(a.reminder)).length,'ביקשו פרטים'],[all.filter(a=>a.reminder==='joined').length,'עברו לקבוע']])}
+ <div class="card"><b>תזכורת עם הוצאת החשבוניות, ב-16 לחודש</b><div class="detail" style="-webkit-line-clamp:unset;display:block">לקוחות שמשלמים במזומן, בצ׳קים או בהעברות, ואין להם הוראת קבע או הרשאה לחיוב. לכל לקוח יש הודעה מוכנה: לוחצים "וואטסאפ" או "מייל", ההודעה נפתחת מוכנה לשליחה עם הסכום, ומי שעונה "כן" מקבל את הטופס.</div></div>
+ ${srch}<div class="filters">${Object.entries(RF).map(([k,[l,f]])=>`<button class="choice ${remFilter===k?'on':''}" onclick="remFilter='${k}';render()">${l} · ${all.filter(f).length}</button>`).join('')}</div>
+ ${list.map(a=>`<div class="card tap" onclick="openReminder('${a.id}')"><div class="row"><div class="addr">${esc(a.address)}</div><span class="pill ${RSTAT[a.reminder][1]}">${RSTAT[a.reminder][0]}</span></div><div class="meta"><span class="chip">${PAY[a.pay]}</span><span class="chip">${money(a.fee)} לחודש</span>${openCount(a)>1?`<span class="chip">${openCount(a)} חשבוניות פתוחות</span>`:''}</div></div>`).join('')||'<div class="empty">אין לקוחות בסינון הזה.</div>'}
+ <div class="info">אחרי החיבור, הסוכן הקולי מתקשר ב-16 לחודש לכל הרשימה, והמצב מתעדכן לפי התשובה בשיחה.</div>`}
+function openReminder(id){const a=db.accounts[id];const ro=PEOPLE[me].role==='owner';const multi=openCount(a)>1;
+ sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${RSTAT[a.reminder][1]}">${RSTAT[a.reminder][0]}</span><span class="pill">${PAY[a.pay]}</span></div><div class="addr" style="margin-top:6px">${esc(a.address)}</div><div class="sub">מס׳ לקוח ${esc(a.no||'')} · ${esc(a.contact)} · ${money(a.fee)} לחודש</div></div>`,`
+ <div class="info" style="margin-top:0">${RHELP[a.reminder]}</div>
+ ${!ro?`<div class="box"><h4>מה שולחים עכשיו</h4>${['none','sent','declined'].includes(a.reminder)?msgButtons(a,multi?'debt':'reminder'):''}${['yes','forms'].includes(a.reminder)?msgButtons(a,'standing'):''}${a.reminder==='joined'?'<div class="muted small">אין צורך בתזכורת. התשלום יורד בהרשאה.</div>':''}${multi&&a.reminder!=='joined'?`<div class="small muted mt">יש ללקוח ${openCount(a)} חשבוניות פתוחות, ולכן ההודעה כוללת את כל הפירוט ולא רק את החודש הנוכחי.</div>`:''}${testNote}</div>
+ <div class="box"><h4>מה הלקוח ענה?</h4><div class="choices">${[['sent','עוד לא ענה'],['yes','כן, רוצה פרטים להוראת קבע'],['declined','לא כרגע'],['joined','ההרשאה נקלטה'],['none','טרם נשלחה']].map(([k,l])=>`<button class="choice ${a.reminder===k?'on':''}" onclick="setRem('${a.id}','${k}')">${l}</button>`).join('')}</div><div class="small muted mt">אפשר לשנות בכל רגע. כל שינוי נרשם ביומן הקשר.</div></div>`:''}
+ ${openSum(a)?`<button class="btn ghost block mt" onclick="openDebt('${a.id}')">פירוט החוב</button>`:''}
+ <button class="btn ghost block mt" onclick="openAccount('${a.id}')">${ICON.doc} תיק לקוח</button>`)}
+function setRem(id,st){const a=db.accounts[id];if(a.reminder===st)return;const prev=a.reminder;a.reminder=st;if(st==='joined')a.pay='masav';else if(prev==='joined'&&a.pay==='masav')a.pay=a.prevPay||'transfer';if(st==='joined')a.prevPay=a.prevPay||'transfer';
+ a.log=(a.log||[]).concat({t:Date.now(),who:PEOPLE[me].name,text:'תזכורת חודשית: '+RSTAT[st][0]});put('accounts',a);openReminder(id)}
 
 /* ========= CUSTOMER FILE ========= */
 function openAccount(id){const a=db.accounts[id];const cs=calls().filter(c=>c.address===a.address);const ms=Object.values(db.memos).filter(m=>m.address===a.address);const qs=Object.values(db.quotes).filter(q=>q.address===a.address);const role=PEOPLE[me].role;
