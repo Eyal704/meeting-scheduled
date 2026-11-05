@@ -284,6 +284,16 @@ a.link{color:var(--blue);text-decoration:none;font-weight:600}
   .pnote,.landing .foot{color:#8fb4bb}
   .reset-l{color:#d8eef0}
 }
+
+/* technician app on a computer: keep the phone layout, centered */
+@media(min-width:900px){
+  .app.is-tech main{display:block;margin:0 auto;max-width:680px;padding:28px 20px 110px}
+  .app.is-tech main>.card{margin-bottom:12px}
+  .app.is-tech .nav{top:auto;bottom:0;left:0;right:0;width:auto;border-left:0;border-top:1px solid var(--line);display:flex;justify-content:center;padding:6px}
+  .app.is-tech .nav-in{flex-direction:row;max-width:560px}
+  .app.is-tech .nav button{flex:1;flex-direction:column;justify-content:center;gap:2px;font-size:12px;padding:6px 2px}
+  .app.is-tech .badge{position:absolute;top:2px;left:calc(50% - 22px);margin:0}
+}
 @keyframes slideL{from{transform:translateX(-40px);opacity:.4}to{transform:none;opacity:1}}
 </style>
 </head>
@@ -418,7 +428,7 @@ const kpis=items=>`<div class="kpis">${items.map(([n,l,hot])=>`<span class="kpi 
 const pageHead=(title,sub,action='')=>`<div class="head"><div><h1>${title}</h1>${sub?`<div class="sub">${sub}</div>`:''}</div>${action}</div>`;
 function toast(t){const el=document.createElement('div');el.className='toast';el.textContent=t;document.body.appendChild(el);setTimeout(()=>el.remove(),3200)}
 function renderSync(){const el=$('#sync');if(!el)return;const show=remote&&(!online||pending.length);el.hidden=!show;el.textContent=!online?'אין קליטה. הדיווחים יישלחו לבד כשהקליטה תחזור':pending.length?'שולח '+pending.length+' עדכונים…':''}
-function shell(inner,navItems){const p=PEOPLE[me];return `<div class="app"><div class="top"><div class="top-row"><div class="logo">${ICON.logo}<div>צמרת מעליות<small>${p.role==='tech'||p.role==='team'?'אפליקציית שטח':p.role==='guy'?'ניהול השירות':'מוקד השירות'}</small></div></div>
+function shell(inner,navItems){const p=PEOPLE[me];return `<div class="app ${p.role==='tech'||p.role==='team'?'is-tech':''}"><div class="top"><div class="top-row"><div class="logo">${ICON.logo}<div>צמרת מעליות<small>${p.role==='tech'||p.role==='team'?'אפליקציית שטח':p.role==='guy'?'ניהול השירות':'מוקד השירות'}</small></div></div>
  <button class="who" onclick="openMe()">${esc(p.name)}<span class="av">${esc(p.name[0])}</span></button></div></div><div class="offline" id="sync" hidden></div>
  <main>${inner}</main>${navItems?`<nav class="nav"><div class="nav-in">${navItems.map(([id,label,ic,b])=>`<button class="${tab===id?'on':''}" onclick="tab='${id}';render();scrollTo(0,0)">${b?`<span class="badge">${b}</span>`:''}${ICON[ic]}${label}</button>`).join('')}</div></nav>`:''}</div>`}
 function openMe(){const p=PEOPLE[me];sheet(`<div><b style="font-size:17px">${esc(p.name)}</b><div class="sub">${esc(p.title)}${p.area?' · '+esc(p.area):''}</div></div>`,`
