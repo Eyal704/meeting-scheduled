@@ -365,8 +365,6 @@ function techCard(c){const m=memoOf(c);const repeat=(c.history||[]).length>=2;re
  <div class="meta">${c.status!=='assigned'?statusPill(c):''}${repeat?`<span class="pill amber">קריאה ${(c.history.length+1)} החודש</span>`:''}${m&&!m.missing?`<span class="chip">תזכיר: ${m.defects.filter(d=>d.owner==='צמרת'&&!d.done).length} ליקויים פתוחים</span>`:''}</div></div>`}
 let draft=null;
 function openTechCall(id){const c=db.calls[id];openCall=id;const m=memoOf(c);const st=c.status;
- const stepCls=(k)=>{const seq=['enroute','onsite','done'];const cur=st==='assigned'||st==='scheduled'?-1:st==='enroute'?0:st==='onsite'?1:2;const i=seq.indexOf(k);return i<=cur?'done':i===cur+1?'next':''};
- const t=(w)=>{const e=c.log.slice().reverse().find(l=>l.text===w);return e?hhmm(e.t):''};
  const canWork=['assigned','enroute','onsite','scheduled'].includes(st)&&c.tech===me;
  const repeat=(c.history||[]).length>=2;
  sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${c.priority==='stopped'?'red':''}">${c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span>${statusPill(c)}</div><div class="addr" style="margin-top:6px">${esc(c.address)}</div><div class="sub">#${c.id} · ${esc(c.entrance)}</div></div>`,`
@@ -376,20 +374,20 @@ function openTechCall(id){const c=db.calls[id];openCall=id;const m=memoOf(c);con
  </div>
  ${repeat?`<div class="warn"><b>קריאה חוזרת:</b> זו הקריאה ה-${c.history.length+1} בכתובת הזו בחודש האחרון, באותה תקלה.<div class="small mt">${c.history.map(h=>`${dayLabel(h.t)}: ${esc(h.repair)}`).join(' · ')}</div></div>`:''}
  ${m&&m.missing?`<div class="warn">התזכיר העדכני של המעלית הזו לא התקבל במשרד.</div>`:''}
- ${canWork?`<div class="steps"><button class="step ${stepCls('enroute')}" onclick="techStep(${c.id},'enroute')">יצאתי<small>${t('יצא לדרך')||'לחיצה אחת'}</small></button><button class="step ${stepCls('onsite')}" onclick="techStep(${c.id},'onsite')">הגעתי<small>${t('הגיע לאתר')||'לחיצה אחת'}</small></button><button class="step ${stepCls('done')}" onclick="startReport(${c.id})">סיום<small>דיווח</small></button></div>`:''}
+ ${canWork&&st!=='onsite'?`<button class="btn primary block mt" style="min-height:52px;font-size:16px" onclick="techStep(${c.id},'${st==='enroute'?'onsite':'enroute'}')">${st==='enroute'?'הגעתי לאתר':'יצאתי לדרך'}</button>${st!=='enroute'?`<button class="btn block sm mt" style="background:none;color:var(--muted)" onclick="techStep(${c.id},'onsite')">כבר באתר</button>`:''}`:''}
  ${c.report?`<div class="ok"><b>הדיווח שלך (${hhmm(c.report.at)}):</b> ${esc(c.report.text)}</div>`:''}
  <div id="reportArea"></div>
  <div class="box"><h4>מה קרה בקריאה</h4><div class="log">${c.log.slice().reverse().map(l=>`<div><b>${hhmm(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')}</div></div>`);
  if(st==='onsite'&&c.tech===me)startReport(id,true);
 }
-function techStep(id,s){const c=db.calls[id];if(s==='enroute'&&!['assigned','scheduled'].includes(c.status))return;if(s==='onsite'&&c.status==='onsite')return;
- c.status=s;c.log.push({t:Date.now(),who:PEOPLE[me].name,text:s==='enroute'?'יצא לדרך':'הגיע לאתר'});put('calls',c);toast(s==='enroute'?'גיא והמשרד רואים שאתה בדרך':'סומן: באתר');openTechCall(id)}
-function startReport(id,silent){const c=db.calls[id];if(!['onsite','enroute','assigned','scheduled'].includes(c.status))return;
+function techStep(id,s){const c=db.calls[id];if(s==='enroute'&&!['assigned','scheduled'].includes(c.status))return;if(s==='onsite'&&!['assigned','scheduled','enroute'].includes(c.status))return;
+ c.status=s;c.log.push({t:Date.now(),who:PEOPLE[me].name,text:s==='enroute'?'יצא לדרך':'הגיע לאתר'});put('calls',c);toast(s==='enroute'?'גיא והמשרד רואים שאתה בדרך':'סומן שהגעת. אפשר למלא דיווח');openTechCall(id)}
+function startReport(id,silent){const c=db.calls[id];if(c.status!=='onsite')return;
  draft={id,outcome:'',reason:'',when:'',text:'',parts:{},photos:[],damage:false,defects:{}};renderReport();if(!silent)$('#reportArea')?.scrollIntoView({behavior:'smooth',block:'start'})}
 function renderReport(){const c=db.calls[draft.id];const m=memoOf(c);const area=$('#reportArea');if(!area)return;
  const ch=(k,v,l)=>`<button class="choice ${draft[k]===v?'on':''}" onclick="draft.${k}='${v}';renderReport()">${l}</button>`;
  const sr=window.SpeechRecognition||window.webkitSpeechRecognition;
- area.innerHTML=`<div class="box"><h4>סיום טיפול</h4>
+ area.innerHTML=`<div class="box"><h4>דיווח מהאתר</h4>
  <label class="f">מה המצב?</label><div class="choices">${ch('outcome','closed','המעלית תקינה, סוגר')}${ch('outcome','follow','צריך המשך טיפול')}</div>
  ${draft.outcome==='follow'?`<label class="f">מה צריך?</label><div class="choices">${REASONS.map(r=>ch('reason',r,r)).join('')}</div>
  <label class="f">מתי?</label><div class="choices">${WHEN.map(([k,l])=>ch('when',k,l)).join('')}</div>`:''}
@@ -400,7 +398,7 @@ function renderReport(){const c=db.calls[draft.id];const m=memoOf(c);const area=
  <label class="f">תמונות</label><div class="photos">${draft.photos.map((s,i)=>`<img src="${s}" alt="" onclick="draft.photos.splice(${i},1);renderReport()">`).join('')}${draft.photos.length<3?`<label class="addph">${ICON.cam}<input type="file" accept="image/*" capture="environment" hidden onchange="addPhoto(this)"></label>`:''}</div>
  ${m&&!m.missing&&m.defects.some(d=>d.owner==='צמרת'&&!d.done)?`<label class="f">ליקויים מהתזכיר שטופלו בביקור הזה</label><div class="box" style="margin-top:0">${m.defects.map((d,i)=>d.owner==='צמרת'&&!d.done?`<label class="def"><input type="checkbox" ${draft.defects[i]?'checked':''} onchange="draft.defects[${i}]=this.checked"><span>${esc(d.t)}</span></label>`:'').join('')}</div>`:''}
  <label class="def" style="border:0;margin-top:8px"><input type="checkbox" ${draft.damage?'checked':''} onchange="draft.damage=this.checked"><span>נמצאה חבלה או נזק מים</span></label>
- <button class="btn primary block mt" onclick="submitReport()" ${!draft.outcome||(draft.outcome==='follow'&&(!draft.reason||!draft.when))?'disabled':''}>${draft.outcome==='follow'?'שליחה לגיא':'סגירת הקריאה'}</button>
+ <button class="btn primary block mt" onclick="submitReport()" ${!draft.outcome||(draft.outcome==='follow'&&(!draft.reason||!draft.when))?'disabled':''}>${draft.outcome==='follow'?'שליחת הדיווח לגיא':draft.outcome==='closed'?'סגירת הקריאה':'בחרו מה המצב כדי לשלוח'}</button>
  ${draft.outcome==='follow'?'<div class="sub small mt">הדיווח מגיע ישר למסך של גיא, בלי וואטסאפ.</div>':draft.outcome==='closed'?'<div class="sub small mt">הקריאה נסגרת ועוברת לקריסטי. גיא לא צריך לאשר.</div>':''}</div>`;
 }
 function partQty(pid,d){draft.parts[pid]=(draft.parts[pid]||0)+d;if(draft.parts[pid]<=0)delete draft.parts[pid];renderReport()}
