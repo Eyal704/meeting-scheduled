@@ -56,6 +56,8 @@ h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
 .kpi b{font-size:14px;color:var(--ink);font-weight:800}
 .kpi.hot{background:var(--red-t);border-color:transparent;color:var(--red)}.kpi.hot b{color:var(--red)}
 .offline[hidden]{display:none}
+.toast{display:flex;align-items:center;gap:14px}
+.toast-a{color:#7fe0c4;font-weight:700;font-size:14px;padding:2px 4px}
 .head{margin:0 0 10px}h1{font-size:20px}
 /* landing */
 .hero{background:linear-gradient(160deg,#183b4a 0%,#1d4d5c 55%,#1e6b62 100%);color:#fff;padding:calc(18px + env(safe-area-inset-top)) 20px 78px;position:relative;overflow:hidden}
@@ -426,19 +428,22 @@ function notifyChanges(before){if(!me)return;const p=PEOPLE[me];for(const c of O
 const DATE=()=>new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'});
 const kpis=items=>`<div class="kpis">${items.map(([n,l,hot])=>`<span class="kpi ${hot&&n?'hot':''}"><b>${n}</b>${l}</span>`).join('')}</div>`;
 const pageHead=(title,sub,action='')=>`<div class="head"><div><h1>${title}</h1>${sub?`<div class="sub">${sub}</div>`:''}</div>${action}</div>`;
-function toast(t){const el=document.createElement('div');el.className='toast';el.textContent=t;document.body.appendChild(el);setTimeout(()=>el.remove(),3200)}
-function renderSync(){const el=$('#sync');if(!el)return;const show=remote&&(!online||pending.length);el.hidden=!show;el.textContent=!online?'אין קליטה. הדיווחים יישלחו לבד כשהקליטה תחזור':pending.length?'שולח '+pending.length+' עדכונים…':''}
+function toast(t,action,fn){document.querySelectorAll('.toast').forEach(x=>x.remove());const el=document.createElement('div');el.className='toast';el.textContent=t;if(action){const b=document.createElement('button');b.className='toast-a';b.textContent=action;b.onclick=()=>{el.remove();fn()};el.appendChild(b)}document.body.appendChild(el);setTimeout(()=>el.remove(),action?6000:3200)}
+function renderSync(){const el=$('#sync');if(!el)return;const show=remote&&!online;el.hidden=!show;el.textContent=show?'אין קליטה. הדיווחים יישלחו לבד כשהקליטה תחזור':''}
 function shell(inner,navItems){const p=PEOPLE[me];return `<div class="app ${p.role==='tech'||p.role==='team'?'is-tech':''}"><div class="top"><div class="top-row"><div class="logo">${ICON.logo}<div>צמרת מעליות<small>${p.role==='tech'||p.role==='team'?'אפליקציית שטח':p.role==='guy'?'ניהול השירות':'מוקד השירות'}</small></div></div>
  <button class="who" onclick="openMe()">${esc(p.name)}<span class="av">${esc(p.name[0])}</span></button></div></div><div class="offline" id="sync" hidden></div>
- <main>${inner}</main>${navItems?`<nav class="nav"><div class="nav-in">${navItems.map(([id,label,ic,b])=>`<button class="${tab===id?'on':''}" onclick="tab='${id}';render();scrollTo(0,0)">${b?`<span class="badge">${b}</span>`:''}${ICON[ic]}${label}</button>`).join('')}</div></nav>`:''}</div>`}
+ <main>${inner}</main>${navItems?`<nav class="nav"><div class="nav-in">${navItems.map(([id,label,ic,b])=>`<button class="${tab===id?'on':''}" onclick="goTab('${id}')">${b?`<span class="badge">${b}</span>`:''}${ICON[ic]}${label}</button>`).join('')}</div></nav>`:''}</div>`}
 function openMe(){const p=PEOPLE[me];sheet(`<div><b style="font-size:17px">${esc(p.name)}</b><div class="sub">${esc(p.title)}${p.area?' · '+esc(p.area):''}</div></div>`,`
  <button class="btn block dark" onclick="logout()">החלפת משתמש</button>
  <button class="btn block ghost mt" onclick="if(confirm('להחזיר את כל הקריאות למצב ההתחלתי? זה משפיע על כל מי שמחובר.'))resetAll()">איפוס הנתונים למצב ההתחלתי</button>
  <div class="info">הנתונים כאן הם לדוגמה. אחרי החיבור לפריוריטי יופיעו הקריאות, הלקוחות והתזכירים האמיתיים.</div><div class="foot">נבנה עבור צמרת מעליות · MeetingScheduled</div>`)}
 
 /* ========= sheet ========= */
-function sheet(head,body){closeSheet();const bg=document.createElement('div');bg.className='sheet-bg';bg.id='sheet';bg.innerHTML=`<div class="sheet" onclick="event.stopPropagation()"><div class="sheet-head">${head}<button class="x" onclick="closeSheet()" aria-label="סגירה">✕</button></div><div class="sheet-body">${body}</div></div>`;bg.onclick=closeSheet;document.body.appendChild(bg);document.body.style.overflow='hidden'}
-function closeSheet(){$('#sheet')?.remove();document.body.style.overflow='';openCall=null}
+function sheet(head,body){const had=!!$('#sheet');removeSheet();const bg=document.createElement('div');bg.className='sheet-bg';bg.id='sheet';bg.innerHTML=`<div class="sheet" onclick="event.stopPropagation()"><div class="sheet-head">${head}<button class="x" onclick="closeSheet()" aria-label="סגירה">✕</button></div><div class="sheet-body">${body}</div></div>`;bg.onclick=closeSheet;document.body.appendChild(bg);document.body.style.overflow='hidden';if(!had)history.pushState({tab,sheet:1},'')}
+function removeSheet(){$('#sheet')?.remove();document.body.style.overflow='';openCall=null}
+function closeSheet(){const open=!!$('#sheet');removeSheet();if(open&&history.state?.sheet)history.back()}
+function goTab(id){if(tab===id)return;tab=id;history.pushState({tab:id},'');render();scrollTo(0,0)}
+window.addEventListener('popstate',e=>{if($('#sheet')){removeSheet();draft=null;return}tab=e.state?.tab||'';render()});
 let openCall=null;
 
 /* ========= login picker ========= */
@@ -499,7 +504,8 @@ function openTechCall(id){const c=db.calls[id];openCall=id;const m=memoOf(c);con
  if(st==='onsite'&&c.tech===me)startReport(id,true);
 }
 function techStep(id,s){const c=db.calls[id];if(s==='enroute'&&!['assigned','scheduled'].includes(c.status))return;if(s==='onsite'&&!['assigned','scheduled','enroute'].includes(c.status))return;
- c.status=s;c.log.push({t:Date.now(),who:PEOPLE[me].name,text:s==='enroute'?'יצא לדרך':'הגיע לאתר'});put('calls',c);toast(s==='enroute'?'גיא והמשרד רואים שאתה בדרך':'סומן שהגעת. אפשר למלא דיווח');openTechCall(id)}
+ const prev=c.status;c.status=s;c.log.push({t:Date.now(),who:PEOPLE[me].name,text:s==='enroute'?'יצא לדרך':'הגיע לאתר'});put('calls',c);openTechCall(id);
+ toast(s==='enroute'?'סומן שיצאת לדרך':'סומן שהגעת','ביטול',()=>{const x=db.calls[id];x.status=prev;x.log.pop();put('calls',x);draft=null;if($('#sheet'))openTechCall(id)})}
 function startReport(id,silent){const c=db.calls[id];if(c.status!=='onsite')return;
  draft={id,outcome:'',reason:'',when:'',text:'',parts:{},photos:[],damage:false,defects:{}};renderReport();if(!silent)$('#reportArea')?.scrollIntoView({behavior:'smooth',block:'start'})}
 function renderReport(){const c=db.calls[draft.id];const m=memoOf(c);const area=$('#reportArea');if(!area)return;
