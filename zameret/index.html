@@ -234,6 +234,57 @@ table.lines tr.tot td{font-weight:800;border-top:1.5px solid var(--ink)}
 .small{font-size:12.5px}
 .mt{margin-top:10px}
 a.link{color:var(--blue);text-decoration:none;font-weight:600}
+
+/* ===== desktop ===== */
+.feat{display:none}
+@media(min-width:900px){
+  body{font-size:15px}
+  .top{padding:12px 28px}
+  .top-row{max-width:none}
+  .app{padding-bottom:0}
+  .nav{top:62px;bottom:0;right:0;left:auto;width:228px;border-top:0;border-left:1px solid var(--line);display:block;padding:18px 12px;background:#fff}
+  .nav-in{flex-direction:column;max-width:none;gap:4px}
+  .nav button{flex:none;flex-direction:row;justify-content:flex-start;gap:12px;font-size:14.5px;padding:11px 12px;border-radius:11px}
+  .nav button svg{width:20px;height:20px}
+  .nav button.on{background:var(--teal-t);color:var(--teal)}
+  .badge{position:static;margin-inline-start:auto;order:3}
+  main{max-width:none;margin-right:228px;padding:26px 34px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px;align-content:start}
+  main>*:not(.card){grid-column:1/-1}
+  main>.card{margin:0}
+  main>.card:has(.live){grid-column:1/-1;max-width:760px}
+  .office-grid{display:contents}
+  .office-grid>.card{margin:0}
+  .office-grid>.empty{grid-column:1/-1}
+  .section-t{margin:14px 2px 0}
+  .head{margin:0 0 2px}
+  h1{font-size:24px}
+  .kpis{margin:0 0 6px}
+  .sheet-bg{align-items:stretch;justify-content:flex-end}
+  .sheet{max-width:560px;width:560px;height:100vh;max-height:none;border-radius:0;animation:slideL .22s ease-out;box-shadow:0 0 40px rgba(0,0,0,.18)}
+  .sheet-head{padding:18px 22px 14px}
+  .sheet-body{padding:16px 22px 28px}
+  .toast{bottom:28px}
+  /* landing */
+  .landing{display:grid;grid-template-columns:1.05fr 1fr;min-height:100vh;background:linear-gradient(150deg,#183b4a 0%,#1d4d5c 50%,#1e6b62 100%)}
+  .hero{background:none;padding:56px 64px;display:flex;align-items:center}
+  .hero:after{left:auto;right:-160px;bottom:-200px;width:560px;height:560px}
+  .hero-in{max-width:520px;margin:0}
+  .hero-t{font-size:56px;margin-top:56px}
+  .hero-p{font-size:18px;max-width:460px}
+  .feat{display:grid;gap:14px;list-style:none;margin-top:36px}
+  .feat li{display:flex;gap:14px;align-items:flex-start;color:#cfe3e6;font-size:14.5px}
+  .feat li b{display:block;color:#fff;font-size:16px;margin-bottom:1px}
+  .feat li span{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.1);display:grid;place-items:center;flex:none;color:#fff}
+  .feat li span svg{width:19px;height:19px}
+  .pick2{margin:auto;padding:48px 40px;width:100%;max-width:520px;align-self:center}
+  .pcard{padding:24px 20px 10px;border-radius:22px;box-shadow:0 24px 60px rgba(0,0,0,.25)}
+  .tip{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#cfe3e6}
+  .tip b{color:#fff}
+  .tip-i{background:rgba(255,255,255,.12);color:#fff}
+  .pnote,.landing .foot{color:#8fb4bb}
+  .reset-l{color:#d8eef0}
+}
+@keyframes slideL{from{transform:translateX(-40px);opacity:.4}to{transform:none;opacity:1}}
 </style>
 </head>
 <body>
@@ -384,8 +435,9 @@ let openCall=null;
 function picker(){
  const tile=(id,wide)=>{const p=PEOPLE[id];return `<button class="tile ${wide?'wide':''}" onclick="login('${id}')"><span class="tav tav-${p.role}">${p.name[0]}</span><span class="tt"><b>${p.name}</b><span>${p.area||p.title}</span></span>${wide?`<span class="tdesc">${p.role==='guy'?'רואה רק מה שצריך החלטה שלו':''}</span>`:''}<span class="tgo">‹</span></button>`};
  const sec=(t,sub,body)=>`<section class="psec"><div class="psec-h"><b>${t}</b><span>${sub}</span></div>${body}</section>`;
- return `<div class="hero"><div class="hero-in"><div class="logo big">${ICON.logo}<div>צמרת מעליות<small>שירות, אחזקה ושיפוץ מעליות</small></div></div>
-  <h1 class="hero-t">שירות ושטח<br>במקום אחד</h1><p class="hero-p">הטכנאי מדווח מהאתר, גיא מקבל רק את מה שצריך החלטה, והמשרד רואה מה לחייב.</p></div></div>
+ return `<div class="landing"><div class="hero"><div class="hero-in"><div class="logo big">${ICON.logo}<div>צמרת מעליות<small>שירות, אחזקה ושיפוץ מעליות</small></div></div>
+  <h1 class="hero-t">שירות ושטח<br>במקום אחד</h1><p class="hero-p">הטכנאי מדווח מהאתר, גיא מקבל רק את מה שצריך החלטה, והמשרד רואה מה לחייב.</p>
+  <ul class="feat"><li><span>${ICON.check}</span><div><b>דיווח מהאתר בכמה לחיצות</b>יצאתי, הגעתי, דיווח עם הכתבה ותמונות</div></li><li><span>${ICON.bell}</span><div><b>גיא מקבל רק החלטות</b>שיבוץ, צוות מכני או הצעת מחיר בלחיצה</div></li><li><span>${ICON.tag}</span><div><b>חיוב לפי הכיסוי</b>ביטוח רגיל מחויב, מקיף במחיר אפס</div></li></ul></div></div>
  <div class="pick2"><div class="pcard"><div class="pcard-h">מי נכנס?</div>
   ${sec('טכנאים','אפליקציית שטח',`<div class="tiles">${['ofer','kosta','dror','moshe','patrick'].map(id=>tile(id)).join('')}</div>`)}
   ${sec('ניהול השירות','החלטות, שיבוץ ומחירון',`<div class="tiles one">${tile('guy',true)}</div>`)}
@@ -393,7 +445,7 @@ function picker(){
  </div>
  <div class="tip"><span class="tip-i">${ICON.bell}</span><span><b>כדאי לנסות בשני טלפונים.</b> באחד נכנסים כטכנאי ובשני כגיא. דיווח מהשטח מגיע לגיא תוך כמה שניות.</span></div>
  <div class="pnote">נתונים לדוגמה עד לחיבור לפריוריטי · <button class="reset-l" onclick="if(confirm('להחזיר את כל הקריאות למצב ההתחלתי? זה משפיע על כל מי שמחובר.'))resetAll()">איפוס הנתונים</button></div>
- <div class="foot">נבנה עבור צמרת מעליות · MeetingScheduled</div></div>`}
+ <div class="foot">נבנה עבור צמרת מעליות · MeetingScheduled</div></div></div>`}
 
 /* ========= TECHNICIAN ========= */
 function techView(){
