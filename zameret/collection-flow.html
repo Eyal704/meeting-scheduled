@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="he" dir="rtl" data-visualize-standalone>
+<html lang="he" dir="rtl" data-theme="light" data-visualize-standalone>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com https://persistent.oaistatic.com/plugins/visualize/; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com https://persistent.oaistatic.com/plugins/visualize/charts/; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>צמרת מעליות — תהליך הגבייה והמעקב</title>
 <style>:root {
-  color-scheme: light dark;
+  color-scheme: light;
   background-color: var(
     --background,
     var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
@@ -1696,7 +1696,7 @@ html>body{padding:0}</style>
     };
   }
   const syncTheme = () => {
-    const theme = mediaQuery.matches ? "dark" : "light";
+    const theme = "light";
     root.dataset.theme = theme;
     globalThis.openai = {
       ...globalThis.openai,
@@ -1833,7 +1833,7 @@ html>body{padding:0}</style>
 </script>
 <div id="zameret-flow" dir="rtl">
 <style>
-#zameret-flow{color:var(--foreground);display:grid;gap:24px}#zameret-flow .intro{display:grid;gap:8px;padding-inline-end:80px}#zameret-flow .flow{display:grid;gap:0}#zameret-flow .stage{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:center}#zameret-flow .node{display:flex;gap:12px;align-items:center;padding:16px 0}#zameret-flow .node i{color:var(--blue);flex-shrink:0}#zameret-flow .label{display:grid;gap:4px}#zameret-flow .aside{color:var(--muted-foreground)}#zameret-flow .connector{width:100%;height:30px;display:block;color:var(--muted-foreground)}#zameret-flow .branches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}#zameret-flow .branch{display:grid;align-content:start;gap:12px}#zameret-flow .branch h3{border-block-start:4px solid var(--blue);padding-block-start:12px}#zameret-flow .branch.wait h3{border-color:var(--orange)}#zameret-flow .branch.office h3{border-color:var(--purple)}#zameret-flow .route{display:grid;gap:4px;padding-block:6px}#zameret-flow .section{display:grid;gap:16px}#zameret-flow .plate{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:24px;align-items:center}#zameret-flow .annotation{display:grid;gap:8px}#zameret-flow .small-label{color:var(--muted-foreground)}
+#zameret-flow{color:var(--foreground);display:grid;gap:40px}#zameret-flow .intro{display:grid;gap:8px;padding-inline-end:80px}#zameret-flow .flow{display:grid;gap:0}#zameret-flow .stage{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:center}#zameret-flow .node{display:flex;gap:12px;align-items:center;padding:16px 0}#zameret-flow .node i{color:var(--blue);flex-shrink:0}#zameret-flow .label{display:grid;gap:4px}#zameret-flow .aside{color:var(--muted-foreground)}#zameret-flow .connector{width:100%;height:30px;display:block;color:var(--muted-foreground)}#zameret-flow .branches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}#zameret-flow .branch{display:grid;align-content:start;gap:12px}#zameret-flow .branch h3{border-block-start:4px solid var(--blue);padding-block-start:12px}#zameret-flow .branch.wait h3{border-color:var(--orange)}#zameret-flow .branch.office h3{border-color:var(--purple)}#zameret-flow .route{display:grid;gap:4px;padding-block:6px}#zameret-flow .section{display:grid;gap:30px}#zameret-flow .plate{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:24px;align-items:center}#zameret-flow .annotation{display:grid;gap:8px}#zameret-flow .small-label{color:var(--muted-foreground)}
 #zameret-flow .product{--p-bg:light-dark(#fff,#192422);--p-ink:light-dark(#193c35,#e8f3ef);--p-muted:light-dark(#526c64,#b3c9c0);--p-line:light-dark(#dce6e1,#38524a);--p-soft:light-dark(#f1f6f3,#233931);--p-blue:light-dark(#e9f1ff,#243850);--p-orange:light-dark(#fff2d9,#433621);--p-purple:light-dark(#f0eafa,#382c48);background:var(--p-bg);color:var(--p-ink);border:1px solid var(--p-line);border-radius:16px;overflow:hidden;font-family:Arial,sans-serif;font-size:14px;line-height:1.6;box-shadow:0 6px 20px light-dark(#183f3510,#00000020)}#zameret-flow .product .bar{background:var(--p-soft);padding:12px 16px;border-bottom:1px solid var(--p-line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}#zameret-flow .product .inside{padding:18px;display:grid;gap:14px}#zameret-flow .product .p-title{font-size:19px;font-weight:500}#zameret-flow .product .p-sub{color:var(--p-muted);font-size:12px}#zameret-flow .product .pill{display:inline-block;border-radius:20px;padding:3px 10px;background:var(--p-blue);font-size:12px}#zameret-flow .product .next{background:var(--p-blue);padding:14px;border-radius:10px;display:grid;gap:5px}#zameret-flow .product .next strong{font-size:21px;font-weight:500}#zameret-flow .product .p-row{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--p-line);padding-block:10px}#zameret-flow .product .p-actions{display:flex;gap:8px;flex-wrap:wrap}#zameret-flow .product .p-control{border:1px solid var(--p-line);border-radius:8px;padding:7px 12px;background:var(--p-soft)}#zameret-flow .product .chat{padding:12px;background:var(--p-soft);border-radius:12px 2px 12px 12px;max-width:90%}#zameret-flow .product .reply{margin-inline-start:24px;background:var(--p-blue);border-radius:2px 12px 12px 12px}#zameret-flow .product .timeline{border-inline-start:2px solid var(--p-line);padding-inline-start:14px;display:grid;gap:15px}#zameret-flow .product .audio{display:flex;align-items:center;gap:12px;background:var(--p-soft);padding:12px;border-radius:9px}#zameret-flow .product .wave{flex:1;display:flex;align-items:center;gap:3px;height:24px}#zameret-flow .product .wave span{width:4px;background:var(--p-muted);height:50%}#zameret-flow .product .wave span:nth-child(3n){height:95%}#zameret-flow .product .wave span:nth-child(2n){height:30%}#zameret-flow .product .p-note{font-size:12px;color:var(--p-muted)}
 @media(max-width:580px){#zameret-flow .stage,#zameret-flow .plate{grid-template-columns:1fr;gap:8px}#zameret-flow .branches{grid-template-columns:1fr;gap:16px}#zameret-flow .intro{padding-inline-end:45px}#zameret-flow .product .next strong{font-size:18px}}
 </style>
@@ -1852,20 +1852,20 @@ html>body{padding:0}</style>
 </section>
 <div class="text-small small-label">חצים רציפים: תהליך הסוכן והמעקב. חץ מקווקו: המשך ידני אפשרי. תדירות החיוג היא הצעה לדמו; החיוג בפועל כבוי.</div>
 <style>
-#zameret-flow .fig-flow{position:relative;display:grid;gap:52px;padding:16px 8px;background-image:radial-gradient(circle,var(--border) 1px,transparent 1px);background-size:18px 18px;isolation:isolate}
+#zameret-flow .fig-flow{position:relative;display:grid;gap:80px;padding:28px 12px;background-image:radial-gradient(circle,var(--border) 1px,transparent 1px);background-size:18px 18px;isolation:isolate}
 #zameret-flow .fig-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:-1;pointer-events:none}
 #zameret-flow .fig-center{display:flex;justify-content:center}
-#zameret-flow .fig-box{box-sizing:border-box;border:1px solid var(--border);border-radius:10px;padding:16px;display:grid;gap:8px;text-align:center;color:var(--foreground);background:var(--background);width:100%;min-width:0}
+#zameret-flow .fig-box{box-sizing:border-box;border:1px solid var(--border);border-radius:10px;padding:22px;display:grid;gap:12px;text-align:center;color:var(--foreground);background:var(--background);width:100%;min-width:0}
 #zameret-flow .fig-center .fig-box{width:min(100%,350px)}
 #zameret-flow .fig-box.blue{background:color-mix(in srgb,var(--blue) 10%,var(--background));border-block-start:3px solid var(--blue)}
 #zameret-flow .fig-box.amber{background:color-mix(in srgb,var(--orange) 10%,var(--background));border-block-start:3px solid var(--orange)}
 #zameret-flow .fig-box.purple{background:color-mix(in srgb,var(--purple) 10%,var(--background));border-block-start:3px solid var(--purple)}
 #zameret-flow .fig-box.green{background:color-mix(in srgb,var(--green) 10%,var(--background));border-block-start:3px solid var(--green)}
 #zameret-flow .fig-tag{font-weight:500}
-#zameret-flow .fig-lanes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
-#zameret-flow .fig-lane{display:grid;grid-template-rows:1fr 1.6fr;gap:44px}
+#zameret-flow .fig-lanes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;align-items:stretch}
+#zameret-flow .fig-lane{display:grid;grid-template-rows:1fr 1.6fr;gap:68px}
 #zameret-flow .fig-box hr{margin:3px 0}
-@media(max-width:580px){#zameret-flow .fig-flow{padding-inline:24px 4px;gap:36px}#zameret-flow .fig-lanes{grid-template-columns:1fr;gap:36px}#zameret-flow .fig-lane{grid-template-rows:auto auto;gap:30px}#zameret-flow .fig-center .fig-box{width:100%}}
+@media(max-width:580px){#zameret-flow .fig-flow{padding-inline:24px 4px;gap:52px}#zameret-flow .fig-lanes{grid-template-columns:1fr;gap:52px}#zameret-flow .fig-lane{grid-template-rows:auto auto;gap:44px}#zameret-flow .fig-center .fig-box{width:100%}}
 </style>
 <script>
 (function(){const root=document.getElementById('zameret-flow');const flow=root.querySelector('.fig-flow');const layer=root.querySelector('.fig-lines');const svg=root.querySelector('.fig-wires');const edges=[['flow-start','flow-call'],['flow-call','flow-no'],['flow-call','flow-yes'],['flow-call','flow-check'],['flow-no','flow-retry'],['flow-yes','flow-plan'],['flow-check','flow-office'],['flow-retry','flow-record'],['flow-plan','flow-record'],['flow-office','flow-record'],['flow-record','flow-wa']];function draw(){const r=flow.getBoundingClientRect();svg.setAttribute('viewBox','0 0 '+r.width+' '+r.height);layer.replaceChildren();const small=r.width<581;edges.forEach(([a,b])=>{const x=root.querySelector('#'+a).getBoundingClientRect(),y=root.querySelector('#'+b).getBoundingClientRect();let sx=x.left-r.left+x.width/2,sy=x.bottom-r.top+4,tx=y.left-r.left+y.width/2,ty=y.top-r.top-7;let d;const branch=a==='flow-call',merge=b==='flow-record';if(small&&(branch||merge)){const rail=branch?12:3; sx=x.left-r.left-3;sy=x.top-r.top+x.height/2;tx=y.left-r.left-7;ty=y.top-r.top+y.height/2;d=`M${sx} ${sy} H${rail} V${ty} H${tx}`;}else{const mid=branch?sy+21:merge?ty-19:(sy+ty)/2;d=`M${sx} ${sy} V${mid} H${tx} V${ty}`;}const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke','var(--muted-foreground)');p.setAttribute('stroke-width','1.5');p.setAttribute('marker-end','url(#fig-head)');if(b==='flow-wa')p.setAttribute('stroke-dasharray','5 4');layer.appendChild(p);});}new ResizeObserver(draw).observe(flow);draw();})();
