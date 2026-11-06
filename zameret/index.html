@@ -22,6 +22,12 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#183b4a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="צמרת">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -572,7 +578,7 @@ async function resetAll(){const docs=seed();for(const k of ['calls','memos','quo
 
 /* ========= session ========= */
 let me=localStorage.getItem('zme')||'';let tab='';let filter='all';
-function login(id){closeSheet();stopLoc();me=id;localStorage.setItem('zme',id);tab='';PG={};techCat='service';techUrg=null;techTime='all';techQ='';if(locOn())startLoc();render();window.scrollTo(0,0)}
+function login(id){if(PEOPLE[id]?.role==='tech'){pushState='unknown';setTimeout(()=>checkPush().then(()=>{if(me===id&&tab==='set')render()}),0)}closeSheet();stopLoc();me=id;localStorage.setItem('zme',id);tab='';PG={};techCat='service';techUrg=null;techTime='all';techQ='';if(locOn())startLoc();render();window.scrollTo(0,0)}
 function logout(){stopLoc();me='';localStorage.removeItem('zme');closeSheet();render()}
 const calls=()=>Object.values(db.calls).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
 const memoOf=c=>c.memo?db.memos[c.memo]:null;
@@ -599,10 +605,36 @@ function ring(urgent){try{AC=AC||new (window.AudioContext||window.webkitAudioCon
 async function sysNotify(title,body,tag){if(!('Notification' in window)||Notification.permission!=='granted')return;
  try{const reg=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();const o={body,tag,renotify:true,requireInteraction:true,icon:'icon.png',badge:'icon.png',lang:'he',dir:'rtl',vibrate:[300,120,300]};if(reg)await reg.showNotification(title,o);else new Notification(title,o)}catch(e){}}
 function alertCall(c){const u=c.rescue||c.priority==='stopped';if(alertsOn())ring(u);sysNotify(c.rescue?'חילוץ: יש לכודים':u?'מעלית עומדת':'קריאה חדשה',c.address+' · '+c.issue,'call-'+c.id)}
-async function enableAlerts(){localStorage.setItem('zalert-'+me,'1');try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();await AC.resume()}catch(e){}
- try{if('serviceWorker' in navigator)await navigator.serviceWorker.register('sw.js')}catch(e){}
+async function enableAlerts(){localStorage.setItem('zalert-'+me,'1');try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();AC.resume()}catch(e){}
  let perm='denied';try{if('Notification' in window)perm=Notification.permission==='default'?await Notification.requestPermission():Notification.permission}catch(e){}
- ring(false);toast(perm==='granted'?'הצליל וההתראות פועלים. כך תישמע קריאה חדשה':'הצליל פועל. התראות מערכת לא אושרו בדפדפן');render()}
+ try{if('serviceWorker' in navigator)await navigator.serviceWorker.register('sw.js')}catch(e){}
+ ring(false);if(perm==='granted'&&pushPossible())await subscribePush(true);
+ toast(perm==='granted'?(pushState==='on'?'הצליל וההתראות פועלים, גם כשהטלפון נעול':'הצליל וההתראות פועלים. כך תישמע קריאה חדשה'):'הצליל פועל. התראות מערכת לא אושרו בדפדפן');render()}
+/* ========= push: the call reaches the phone even when it is locked ========= */
+const VAPID_PUBLIC='BB7CKaTdnEaGWdxpG8PoXROVnxlpyg65glVuVVhDgWy9DK34D7eIqFPIlxxJ-V6WRYOHPlWPKV7-Nr5rjnItAck';
+const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const pushPossible=()=>'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window&&!(isIOS&&!isStandalone());
+let pushState='unknown';
+const b64uBytes=s=>Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')+'==='.slice((s.length+3)%4)),c=>c.charCodeAt(0));
+async function checkPush(){if(isIOS&&!isStandalone()){pushState='ios';return}if(!pushPossible()){pushState='unsupported';return}
+ try{const reg=await navigator.serviceWorker.getRegistration();const sub=reg&&await reg.pushManager.getSubscription();pushState=sub&&localStorage.getItem('zpush')===me&&Notification.permission==='granted'?'on':'off'}catch(e){pushState='off'}}
+async function subscribePush(quiet){try{const reg=await navigator.serviceWorker.register('sw.js');await navigator.serviceWorker.ready;
+  let sub=await reg.pushManager.getSubscription();if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64uBytes(VAPID_PUBLIC)});
+  await api('/push/subscribe',{method:'POST',body:JSON.stringify({who:me,sub:sub.toJSON()})});localStorage.setItem('zpush',me);pushState='on';return true}
+ catch(e){pushState='off';if(!quiet)toast('ההפעלה לא הצליחה. כדאי לנסות שוב כשיש קליטה');return false}}
+async function enablePush(){if(isIOS&&!isStandalone()){showInstall();return}if(!pushPossible()){toast('הדפדפן הזה לא תומך בהתראות כשהטלפון נעול. כדאי לפתוח ב-Chrome');return}
+ let perm=Notification.permission;try{if(perm==='default')perm=await Notification.requestPermission()}catch(e){}
+ if(perm!=='granted'){toast('לא ניתן אישור להתראות. אפשר לאשר אותן בהגדרות הדפדפן');return}
+ if(!alertsOn())localStorage.setItem('zalert-'+me,'1');
+ if(await subscribePush(false))toast('מעכשיו קריאה חדשה תגיע גם כשהטלפון נעול');render()}
+async function testPush(){try{const r=await api('/push/test',{method:'POST',body:JSON.stringify({who:me})});toast(r.sent?'נשלחה התראת בדיקה. אפשר לנעול את הטלפון, היא תגיע תוך כמה שניות':'הטלפון עוד לא רשום להתראות. לוחצים "הפעלה"')}catch(e){toast('השליחה לא הצליחה. בודקים קליטה ומנסים שוב')}}
+function showInstall(){sheet(`<div><div class="addr">התקנה באייפון</div><div class="sub">פעם אחת, כדי שקריאה תגיע גם כשהטלפון נעול</div></div>`,`
+ <div class="box" style="margin-top:0"><div class="def"><span class="pill blue" style="flex:none">1</span><span>בספארי לוחצים על כפתור השיתוף (ריבוע עם חץ למעלה).</span></div>
+ <div class="def"><span class="pill blue" style="flex:none">2</span><span>בוחרים <b>"הוספה למסך הבית"</b> ולוחצים "הוסף".</span></div>
+ <div class="def"><span class="pill blue" style="flex:none">3</span><span>פותחים את <b>צמרת</b> ממסך הבית, בוחרים את השם שלך ונכנסים ל"הגדרות".</span></div>
+ <div class="def"><span class="pill blue" style="flex:none">4</span><span>לוחצים <b>"הפעלה"</b> ומאשרים התראות.</span></div></div>
+ <div class="info">באייפון, התראות כשהטלפון נעול עובדות רק מהאפליקציה שעל מסך הבית (iOS 16.4 ומעלה). באנדרואיד מספיק Chrome.</div>`)}
 function testAlert(urgent){ring(urgent);sysNotify(urgent?'חילוץ: יש לכודים':'קריאה חדשה','בדיקת התראה','test')}
 setInterval(()=>{if(!me||PEOPLE[me]?.role!=='tech'||!alertsOn())return;const wait=calls().filter(c=>c.tech===me&&needsAck(c));if(!wait.length)return;const urgent=wait.some(c=>c.rescue);if(Date.now()-lastRing>(urgent?3e4:12e4))ring(urgent)},5000);
 function markDelivered(){if(!me||PEOPLE[me]?.role!=='tech')return;for(const c of Object.values(db.calls)){if(c.tech===me&&c.status==='assigned'&&c.assignedAt&&!c.deliveredAt){c.deliveredAt=Date.now();c.log.push({t:Date.now(),who:'מערכת',text:'נמסרה לטלפון של '+PEOPLE[me].name});putQuiet('calls',c)}}}
@@ -713,7 +745,10 @@ function techView(){
   inner=`${pageHead('הגדרות',esc(PEOPLE[me].name)+' · '+esc(PEOPLE[me].area))}
   <div class="card"><div class="row"><div><b>צליל והתראות לקריאה חדשה</b><div class="small muted">צליל מיוחד, רטט והתראה בטלפון. חילוץ נשמע אחרת.</div></div><span class="pill ${alertsOn()?'green':''}">${alertsOn()?'פועל':'כבוי'}</span></div>
    <div class="btns mt">${alertsOn()?`<button class="btn ghost" onclick="testAlert(false)">בדיקה: קריאה רגילה</button><button class="btn ghost" onclick="testAlert(true)">בדיקה: חילוץ</button>`:`<button class="btn primary" onclick="enableAlerts()">הפעלה</button>`}</div>
-   <div class="small muted mt">ההתראה מגיעה כשהאפליקציה פתוחה או ברקע. כשהקריאה לא אושרה, הצליל חוזר כל 2 דקות (חילוץ: כל 30 שניות).</div></div>
+   <div class="small muted mt">כשהאפליקציה פתוחה נשמע הצליל המיוחד. כשהקריאה לא אושרה, הוא חוזר כל 2 דקות (חילוץ: כל 30 שניות).</div></div>
+  <div class="card"><div class="row"><div><b>התראות כשהטלפון נעול</b><div class="small muted">קריאה חדשה מגיעה כהתראה גם כשהאפליקציה סגורה. עד שלוחצים "קיבלתי", היא נשלחת שוב כל 2 דקות (חילוץ: כל דקה).</div></div><span class="pill ${pushState==='on'?'green':''}">${pushState==='on'?'פועל':pushState==='unknown'?'…':'כבוי'}</span></div>
+   ${pushState==='on'?`<button class="btn ghost block mt" onclick="testPush()">שליחת התראת בדיקה לטלפון הזה</button>`:pushState==='ios'?`<button class="btn primary block mt" onclick="showInstall()">איך מתקינים באייפון</button>`:pushState==='unsupported'?`<div class="small muted mt">הדפדפן הזה לא תומך. באנדרואיד פותחים ב-Chrome, באייפון מוסיפים למסך הבית.</div>`:alertsOn()?`<button class="btn primary block mt" onclick="enablePush()">הפעלה</button>`:`<div class="small mt" style="color:var(--teal);font-weight:700">נדלק יחד עם "הפעלה" למעלה.</div>`}
+   <div class="small muted mt">ההתראה עצמה בצליל ההתראות הרגיל של הטלפון. הכותרת אומרת אם זו קריאה רגילה, מעלית עומדת או חילוץ.</div></div>
   <div class="card"><div class="row"><div><b>שיתוף מיקום עם גיא</b><div class="small muted">גיא רואה איפה אתה במפה של השטח. אפשר לכבות בכל רגע.</div></div><span class="pill ${locOn()?'green':''}">${locOn()?'משותף':'כבוי'}</span></div>
    <button class="btn ${locOn()?'ghost':'primary'} block mt" onclick="toggleLoc()">${locOn()?'הפסקת שיתוף המיקום':'הפעלת שיתוף מיקום'}</button>
    ${l&&!l.sample?`<div class="locl mt">מיקום אחרון נשלח ${ago(l.at)} · <a href="${mapsUrl(l)}" target="_blank" rel="noopener">במפה</a></div>`:''}</div>`;
@@ -1303,7 +1338,7 @@ function render(){const keep=openCall;let html;const ae=document.activeElement;c
  $('#app').innerHTML=html;renderSync();if(fid){const el=document.getElementById(fid);if(el){el.focus();try{sel&&el.setSelectionRange(sel[0],sel[1])}catch(e){}}}if(me&&PEOPLE[me]?.role==='tech')setTimeout(markDelivered,0);
  if(keep&&$('#sheet')&&!draft){/* sheet content refresh handled by explicit calls */}
 }
-(async()=>{$('#app').innerHTML='<div class="pick"><div class="sub">טוען…</div></div>';await initStore();if(me&&PEOPLE[me]?.role==='tech'&&locOn())startLoc();if(me&&alertsOn()&&'serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});render();setInterval(poll,2500);document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()})})();
+(async()=>{$('#app').innerHTML='<div class="pick"><div class="sub">טוען…</div></div>';await initStore();if(me&&PEOPLE[me]?.role==='tech'&&locOn())startLoc();if(me&&PEOPLE[me]?.role==='tech')checkPush().then(()=>{if(tab==='set')render()});if(me&&alertsOn()&&'serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});render();setInterval(poll,2500);document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()})})();
 </script>
 </body>
 </html>
