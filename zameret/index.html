@@ -287,6 +287,33 @@ a.link{color:var(--blue);text-decoration:none;font-weight:600}
   .reset-l{color:#d8eef0}
 }
 
+/* technician list: categories, urgency, filters */
+.cat{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#e9f0f1;padding:4px;border-radius:14px;margin:0 0 10px}
+.cat button{border:0;background:none;padding:9px 6px;border-radius:11px;font:inherit;font-weight:700;font-size:14.5px;color:var(--muted);cursor:pointer}
+.cat button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cat button span{font-weight:600;color:var(--faint);margin-inline-start:4px}
+.urg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:10px}
+.ub{border:1px solid var(--line);background:#fff;border-radius:13px;padding:8px 2px 7px;font:inherit;display:flex;flex-direction:column;align-items:center;gap:1px;color:var(--muted);font-size:11.5px;font-weight:600;line-height:1.2;cursor:pointer;min-width:0}
+.ub b{font-size:21px;font-weight:800;color:var(--ink)}
+.ub.rs b,.ub.stp b{color:var(--red)}
+.ub.on{border-color:var(--brand);background:var(--brand);color:#cfe3e6}.ub.on b{color:#fff}
+.ub.rs.on{background:var(--red);border-color:var(--red);color:#fde3e1}
+.tfil{display:flex;gap:6px;overflow-x:auto;margin-bottom:8px;scrollbar-width:none}.tfil::-webkit-scrollbar{display:none}
+.tfil .choice{flex:none;padding:6px 12px;font-size:13px}
+.more{display:block;width:100%;margin:6px 0 2px;border:1px dashed #c4d3d7;background:none;border-radius:12px;padding:11px;font:inherit;font-weight:700;color:var(--brand);cursor:pointer}
+.card.rescue{background:var(--red);border-color:var(--red);color:#fff}.card.rescue .detail,.card.rescue .time,.card.rescue .issue{color:#fde3e1}.card.rescue .pill{background:#fff;color:var(--red)}
+.card.newc{border:2px solid var(--brand)}
+.acc{margin-top:10px;width:100%;min-height:46px;border:0;border-radius:12px;background:var(--brand);color:#fff;font:inherit;font-weight:800;font-size:15.5px;cursor:pointer}
+.card.rescue .acc{background:#fff;color:var(--red)}
+.alertbar{display:flex;gap:10px;align-items:center;background:var(--amber-t);border-radius:14px;padding:10px 12px;margin-bottom:10px;font-size:13.5px;line-height:1.4}
+.alertbar .btn{flex:none}.alertbar>svg{width:22px;height:22px;flex:none;color:#7a5212}
+.trap{background:var(--red-t);border-radius:14px;padding:12px;margin-top:10px;color:#7d1d16;font-size:14.5px}.trap b{font-size:16px}
+.ackl{font-size:12.5px;color:var(--muted);margin-top:8px}
+#fmap{height:320px;border-radius:16px;overflow:hidden;border:1px solid var(--line);margin-bottom:10px;background:#e9eef0}
+.tm{direction:ltr}.tm span{position:absolute;left:0;top:0;direction:rtl;transform:translate(-50%,-135%);background:var(--brand);color:#fff;font:700 12px Heebo,sans-serif;padding:3px 8px;border-radius:9px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.tm span.at{background:var(--teal)}.tm span.go{background:var(--amber)}
+.locl{font-size:12px;color:var(--muted)}.locl a{color:var(--brand);font-weight:700}
+
 /* technician app on a computer: keep the phone layout, centered */
 @media(min-width:900px){
   .app.is-tech main{display:block;margin:0 auto;max-width:680px;padding:28px 20px 110px}
@@ -409,7 +436,7 @@ function seed(){
   {id:181,source:'memo',memo:'m6',address:'האורן 8, נשר',city:'נשר',contact:'יוסי גולן',lines:[{name:'לחצן קומה',qty:3,price:180},{name:'מחוון קומה',qty:1,price:640}],labor:LABOR_VISIT,discountPct:0,owner:['ניקוי חדר המכונות'],status:'draft',createdAt:T(7,41),log:[{t:T(7,41),who:'מערכת',text:'הצעה נבנתה מהתזכיר'}],updatedAt:Date.now()},
   {id:180,source:'call',address:'התאנה 12, קריית ים',city:'קריית ים',contact:'דורון משה',lines:[{name:'מנעול דלת חיצונית',qty:2,price:950},{name:'רצועת דלת',qty:2,price:380}],labor:900,discountPct:0,status:'discount_req',discount:{pct:10,reason:'ועד ותיק, ביקש הנחה כדי לאשר החודש',by:'אור',at:T(9,30)},createdAt:T(8,50,-1),sentAt:T(9,0,-1),log:[{t:T(9,0,-1),who:'גיא',text:'נשלחה ללקוח'},{t:T(9,30),who:'אור',text:'הלקוח ביקש 10% הנחה'}],updatedAt:Date.now()}
  ];
- const base=(o)=>Object.assign({log:[],report:null,internal:'',history:[],photos:[],updatedAt:Date.now()},o);
+ const base=(o)=>Object.assign({log:[],report:null,internal:'',history:[],photos:[],updatedAt:Date.now()},o,o.createdAt?(()=>{const n=Date.now(),cl=(d,cap)=>Math.max(o.createdAt,Math.min(o.createdAt+d,n-cap));return{assignedAt:cl(18e4,9e4),deliveredAt:cl(2e5,8e4),acceptedAt:cl(4e5,6e4)}})():{});
  const calls=[
   base({id:8456,address:'האלון 14, קריית ים',entrance:'כניסה ב׳, ליד החניה',city:'קריית ים',issue:'מעלית עומדת',detail:'המעלית עומדת בקומה הראשונה. הדלת הפנימית פתוחה, החיצונית סגורה. התאורה בלחצנים פועלת. אין לכודים.',priority:'stopped',status:'assigned',tech:'kosta',cover:'regular',contact:'רונית לוי',elevator:{type:'חשמלית',mol:'31-0457',contract:'4101'},createdAt:T(12,34),log:[{t:T(12,34),who:'מוקד',text:'קריאה התקבלה'},{t:T(12,36),who:'קריסטי',text:'שובצה לקוסטה'}]}),
   base({id:8455,address:'הגליל 31, חיפה',entrance:'כניסה ראשית',city:'חיפה',issue:'דלת חיצונית אינה נפתחת',detail:'קומה 3: דלת התא נפתחת, הדלת החיצונית נשארת סגורה. אין לכודים. איש הקשר ממתין בכניסה.',priority:'stopped',status:'assigned',tech:'ofer',cover:'full',contact:'נועם ברק',elevator:{type:'חשמלית',mol:'31-0212',contract:'4119'},memo:'m2',createdAt:T(11,48),log:[{t:T(11,48),who:'מוקד',text:'קריאה התקבלה'},{t:T(11,50),who:'קריסטי',text:'שובצה לעופר'}]}),
@@ -431,8 +458,12 @@ function seed(){
      log:[{t:T(7,30),who:'מוקד',text:'קריאה התקבלה'},{t:T(7,34),who:'קריסטי',text:'שובצה למשה'},{t:T(9,48),who:'משה',text:'הקריאה נסגרה'}]}),
   base({id:8457,address:'הסביון 3, חיפה',entrance:'כניסה מהחניון',city:'חיפה',issue:'רעש מהפיר',detail:'רעש חריג מהפיר בלילה. המעלית פועלת.',priority:'normal',status:'new',tech:null,cover:'full',contact:'מיכל הדר',elevator:{type:'הידראולית',mol:'31-1620',contract:'4103'},createdAt:T(12,58),log:[{t:T(12,58),who:'מוקד',text:'קריאה התקבלה'}]})
  ];
- const docs=[];calls.forEach(c=>docs.push({kind:'calls',id:String(c.id),data:c}));[memoA,memoB,memoC,memoD,memoE,memoF].forEach(m=>docs.push({kind:'memos',id:m.id,data:m}));quotes.forEach(q=>docs.push({kind:'quotes',id:String(q.id),data:q}));
- docs.push({kind:'meta',id:'seed',data:{id:'seed',at:Date.now(),nextId:8458,nextQuote:182,hist:{week:{opened:41,closed:38},month:{opened:173,closed:166}},updatedAt:Date.now()}});
+ calls.find(c=>c.id===8456).acceptedAt=null;calls.find(c=>c.id===8457).assignedAt=null;
+ calls.push(base({id:8459,address:'הגליל 31, חיפה',entrance:'כניסה ראשית',city:'חיפה',issue:'חילוץ: יש לכודים',detail:'שני דיירים לכודים בתא בין קומה 3 ל-4. התאורה בתא דולקת, הם רגועים. הוועד בקשר איתם בטלפון.',priority:'stopped',rescue:true,trapped:{count:2,floor:'בין 3 ל-4'},status:'assigned',tech:'ofer',cover:'full',contact:'נועם ברק',elevator:{type:'חשמלית',mol:'31-0212',contract:'—'},createdAt:Date.now()-2*6e4,log:[{t:Date.now()-2*6e4,who:'מוקד',text:'חילוץ התקבל'},{t:Date.now()-6e4,who:'מערכת',text:'שובץ לעופר, הקרוב באזור'}]}));
+ calls.find(c=>c.id===8459).acceptedAt=null;calls.find(c=>c.id===8459).deliveredAt=null;
+ const docs=[];calls.forEach(c=>docs.push({kind:'calls',id:String(c.id),data:c}));
+ [['ofer',32.794,34.989,4],['kosta',32.842,35.075,9],['dror',32.927,35.083,6],['moshe',32.771,35.041,15],['patrick',32.818,34.999,22]].forEach(([t,lat,lng,m])=>docs.push({kind:'meta',id:'loc-'+t,data:{id:'loc-'+t,tech:t,lat,lng,at:Date.now()-m*6e4,sample:true,updatedAt:Date.now()}}));[memoA,memoB,memoC,memoD,memoE,memoF].forEach(m=>docs.push({kind:'memos',id:m.id,data:m}));quotes.forEach(q=>docs.push({kind:'quotes',id:String(q.id),data:q}));
+ docs.push({kind:'meta',id:'seed',data:{id:'seed',at:Date.now(),nextId:8460,nextQuote:182,hist:{week:{opened:41,closed:38},month:{opened:173,closed:166}},updatedAt:Date.now()}});
  // amounts from the debt-aging report of 2.11.2026; service = חוזה שירות, work = עבודות, שיפוצים וחוב קודם
  const S=(m,amount)=>({m,amount,kind:'service',paid:false}), W=(m,amount,what)=>({m,amount,kind:'work',what,paid:false});
  const M26=['ינו׳ 26','פבר׳ 26','מרץ 26','אפר׳ 26','מאי 26','יוני 26','יולי 26','אוג׳ 26','ספט׳ 26','אוק׳ 26'];
@@ -479,6 +510,29 @@ function moreAccounts(acc,S,W,M26,T){let x=7;const rnd=()=>(x=(x*16807)%21474836
   out.push(acc(String(4200+i),address,'',pick(contacts),city,pay,fee,inv,st,st==='todo'?pick(reasons):st==='promise'?'הבטיח לשלם':st==='arrangement'?'הסדר תשלומים בהנהלת החשבונות':st==='dispute'?'מחלוקת על חיוב':'',st==='promise'?{promise:T(9,0,2+Math.floor(rnd()*6))}:null))}
  return out}
 
+
+/* backlog for the sample: each area has a few hundred calls, like in real life. Generated the same way on every device, saved to the server only when someone changes one. */
+const AREA_CITIES={ofer:['חיפה'],kosta:['קריית ים','קריית מוצקין','קריית ביאליק','קריית אתא','קריית חיים'],dror:['עכו','כרמיאל','נהריה','צפת'],moshe:['נשר','טירת כרמל','טבריה'],patrick:['חיפה','קריית ים','נשר','עכו']};
+const BACKLOG_N={ofer:420,kosta:360,dror:300,moshe:260,patrick:80};
+const isMemoCall=c=>c.kind==='memo'||String(c.issue||'').startsWith('ליקוי מתזכיר');
+function backlogCalls(seedAt){let x=11;const rnd=()=>(x=(x*16807)%2147483647)/2147483647;const pick=a=>a[Math.floor(rnd()*a.length)];
+ const streets=['הארז','התבור','המגינים','הנביאים','העליה','הגפן','השקמה','הורדים','הנשיא','ההגנה','הפלמ״ח','בן גוריון','ז׳בוטינסקי','הרב קוק','יפה נוף','מוריה','חורב','הכרמל','דרך הים','הבנים','האשל','השיטה','הדקלים','הנרקיסים','הצבעונים','אחד העם','ביאליק','הרצל','ויצמן','סוקולוב','קק״ל','התשבי','החשמל','הגליל','ירושלים','הנוטר','המעפילים','השחר'];
+ const faults=[['נורה','תאורה בתא לא דולקת'],['רועשת/חורקת','רעש בזמן נסיעה'],['דלת נתקעת/לא נסגרת/לא נפתחת','הדלת נסגרת ונפתחת שוב'],['הפרשי גובה','המעלית עוצרת גבוה מהרצפה'],['מאוורר','המאוורר בתא לא עובד'],['דלת נטרקת','הדלת נטרקת בכוח'],['פועלת חלקית','לא מגיעה לקומה העליונה'],['דלת רועדת','הדלת רועדת בפתיחה'],['נתקעת לסירוגין','נתקעה פעמיים השבוע']];
+ const defects=['כיוון מנעול דלת חיצונית','השלמת שילוט אזהרה בתא','החלפת סוללת תאורת חירום','ניקוי תחתית הפיר','בדיקת רעידות בנסיעה','תיקון מגע בטיחות','החלפת כבל טלפון חירום','שימון מסילות'];
+ const contacts=['ועד הבית','ועד הבית','חברת ניהול','איש קשר בבניין'];
+ const out=[];let id=9000;
+ for(const [tech,n] of Object.entries(BACKLOG_N)){for(let i=0;i<n;i++){const city=pick(AREA_CITIES[tech]);const address=`${pick(streets)} ${2+Math.floor(rnd()*90)}, ${city}`;
+  const memo=tech!=='patrick'&&rnd()<.22;const [issue,detail]=tech==='patrick'?['טיפול מונע','טיפול מונע תקופתי ושימון']:memo?['ליקוי מתזכיר: '+pick(defects),'מתוך תזכיר הבודק האחרון']:pick(faults);
+  const age=Math.floor(rnd()*rnd()*40)+(rnd()<.15?0:1);const createdAt=seedAt-age*864e5-Math.floor(rnd()*9)*36e5;
+  const r=rnd();const status=r<.38?'closed':r<.5?'scheduled':'assigned';const pr=!memo&&tech!=='patrick'&&age<=1&&status!=='closed'&&rnd()<.3?'stopped':'normal';
+  const c={id:id++,kind:memo?'memo':tech==='patrick'?'preventive':'service',address,entrance:'כניסה ראשית',city,issue,detail:pr==='stopped'?'המעלית עומדת. '+detail:detail,priority:pr,status,tech,cover:pick(['regular','full','full','ext']),contact:pick(contacts),elevator:{type:pick(['חשמלית','חשמלית','הידראולית']),mol:'31-'+(1000+Math.floor(rnd()*8999)),contract:'—'},createdAt,assignedAt:createdAt+6e5,deliveredAt:createdAt+6.2e5,acceptedAt:createdAt+9e5,history:[],photos:[],report:null,internal:'',log:[{t:createdAt,who:'מוקד',text:'קריאה התקבלה'}],updatedAt:0};
+  if(status!=='assigned'&&c.createdAt>seedAt-4*36e5){c.createdAt=seedAt-4*36e5;c.assignedAt=c.createdAt+6e5;c.deliveredAt=c.createdAt+6.2e5;c.acceptedAt=c.createdAt+9e5;c.log[0].t=c.createdAt}
+  if(status==='closed'){c.report={text:'טופל. המעלית נבדקה ועובדת.',outcome:'closed',parts:[],at:Math.min(c.createdAt+(1+rnd()*20)*36e5,seedAt-15*6e4),by:tech};c.billed=true}
+  if(status==='scheduled'){c.report={text:'נדרש המשך טיפול.',outcome:'follow',reason:pick(['הזמנת חלק','מעלית במעקב','צוות מכני']),when:'tomorrow',parts:[],at:Math.min(c.createdAt+3*36e5,seedAt-15*6e4),by:tech};c.due=seedAt+Math.floor(rnd()*6-2)*864e5}
+  out.push(c)}}
+ return out}
+function addBacklog(){const at=db.meta.seed?.at||Date.now();for(const c of backlogCalls(at))if(!db.calls[c.id])db.calls[c.id]=c}
+
 /* ========= store + sync ========= */
 const db={calls:{},memos:{},quotes:{},accounts:{},meta:{}};
 const KEY=new URLSearchParams(location.search).get('k')||localStorage.getItem('zk')||'';
@@ -494,29 +548,72 @@ async function initStore(){
  try{const s=await api('/state');remote=true;
    const seedAt=s.docs.find(d=>d.kind==='meta'&&d.id==='seed')?.data?.at||0;
    if(!s.docs.length||seedAt<dayStart(0)){const docs=seed();await api('/reset',{method:'POST',body:JSON.stringify({docs})});for(const k of ['calls','memos','quotes','accounts','meta'])db[k]={};applyDocs(docs)}else applyDocs(s.docs);
-   lastSync=s.now||Date.now();saveLocal();
- }catch(e){remote=false;keyRefused=String(e.message)==='403';if(!loadLocal()){applyDocs(seed());saveLocal()}}
+   lastSync=s.now||Date.now();addBacklog();saveLocal();
+ }catch(e){remote=false;keyRefused=String(e.message)==='403';if(!loadLocal()){applyDocs(seed())}addBacklog();saveLocal()}
 }
 function put(kind,obj){obj.updatedAt=Date.now();db[kind][String(obj.id)]=obj;saveLocal();bc&&bc.postMessage('sync');
  if(remote){pending.push({kind,id:String(obj.id),data:obj});localStorage.setItem('zq',JSON.stringify(pending));flush()}render()}
 async function flush(){if(!remote||!pending.length)return;try{const batch=pending.slice();await api('/docs',{method:'PUT',body:JSON.stringify({docs:batch})});pending=pending.slice(batch.length);localStorage.setItem('zq',JSON.stringify(pending));online=true}catch(e){online=false}renderSync()}
-async function poll(){if(!remote||document.hidden)return;try{await flush();const s=await api('/state?since='+(lastSync-5000));lastSync=s.now||Date.now();online=true;const before=snapshotFor();if(applyDocs(s.docs)){saveLocal();notifyChanges(before);render()}}catch(e){online=false}renderSync()}
+async function poll(){if(!remote||(document.hidden&&PEOPLE[me]?.role!=='tech'))return;try{await flush();const s=await api('/state?since='+(lastSync-5000));lastSync=s.now||Date.now();online=true;const before=snapshotFor();if(applyDocs(s.docs)){saveLocal();notifyChanges(before);render()}}catch(e){online=false}renderSync()}
 bc&&(bc.onmessage=()=>{const before=snapshotFor();loadLocal();notifyChanges(before);render()});
 window.addEventListener('storage',e=>{if(e.key==='zdb'&&!bc){loadLocal();render()}});
 window.addEventListener('online',()=>{online=true;flush();renderSync()});window.addEventListener('offline',()=>{online=false;renderSync()});
-async function resetAll(){const docs=seed();for(const k of ['calls','memos','quotes','accounts','meta'])db[k]={};applyDocs(docs);saveLocal();bc&&bc.postMessage('sync');if(remote){try{await api('/reset',{method:'POST',body:JSON.stringify({docs})})}catch(e){}}closeSheet();toast('הנתונים חזרו למצב ההתחלתי');render()}
+async function resetAll(){const docs=seed();for(const k of ['calls','memos','quotes','accounts','meta'])db[k]={};applyDocs(docs);addBacklog();saveLocal();bc&&bc.postMessage('sync');if(remote){try{await api('/reset',{method:'POST',body:JSON.stringify({docs})})}catch(e){}}closeSheet();toast('הנתונים חזרו למצב ההתחלתי');render()}
 
 /* ========= session ========= */
 let me=localStorage.getItem('zme')||'';let tab='';let filter='all';
-function login(id){closeSheet();me=id;localStorage.setItem('zme',id);tab='';render();window.scrollTo(0,0)}
-function logout(){me='';localStorage.removeItem('zme');closeSheet();render()}
+function login(id){closeSheet();stopLoc();me=id;localStorage.setItem('zme',id);tab='';PG={};techCat='service';techUrg=null;techTime='all';techQ='';if(locOn())startLoc();render();window.scrollTo(0,0)}
+function logout(){stopLoc();me='';localStorage.removeItem('zme');closeSheet();render()}
 const calls=()=>Object.values(db.calls).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
 const memoOf=c=>c.memo?db.memos[c.memo]:null;
+const whenL=t=>dayLabel(t)==='היום'?hhmm(t):dayLabel(t)+' '+hhmm(t);
+const ago=t=>{const m=Math.max(0,Math.round((Date.now()-t)/6e4));return m<1?'עכשיו':m<60?m+' דק׳':m<1440?Math.floor(m/60)+' שע׳':Math.floor(m/1440)+' ימים'};
+const needsAck=c=>c.status==='assigned'&&c.tech&&c.tech!=='mech'&&!c.acceptedAt;
+const urgOf=c=>c.rescue?'rescue':c.status==='scheduled'?'follow':c.priority==='stopped'?'stopped':'regular';
+function assignTo(c,t){c.tech=t;c.assignedAt=Date.now();c.deliveredAt=null;c.acceptedAt=null}
+function ackLine(c){if(!c.tech||c.tech==='mech'||!c.assignedAt)return'';const a=c.assignedAt;
+ if(c.acceptedAt)return `שובצה ${hhmm(a)} · נמסרה ${c.deliveredAt?hhmm(c.deliveredAt):'—'} · אושרה ${hhmm(c.acceptedAt)} (${Math.max(0,Math.round((c.acceptedAt-a)/6e4))} דק׳)`;
+ return `שובצה ${hhmm(a)} · ${c.deliveredAt?'נמסרה לטלפון '+hhmm(c.deliveredAt):'עוד לא נמסרה לטלפון'} · <b style="color:var(--red)">לא אושרה (${ago(a)})</b>`}
+const ackPill=c=>needsAck(c)?`<span class="pill ${Date.now()-(c.assignedAt||c.createdAt)>6e5?'red':'amber'}">${c.deliveredAt?'לא אושרה':'לא נמסרה'} · ${ago(c.assignedAt||c.createdAt)}</span>`:'';
+let PG={};
+function paged(key,list,fn,step=20){const n=PG[key]||step;const rest=list.length-n;return list.slice(0,n).map(fn).join('')+(rest>0?`<button class="more" onclick="PG['${key}']=${n+step};render()">הצגת עוד ${Math.min(step,rest)} · נשארו ${rest}</button>`:'')}
+function putQuiet(kind,obj){obj.updatedAt=Date.now();db[kind][String(obj.id)]=obj;saveLocal();bc&&bc.postMessage('sync');if(remote){pending.push({kind,id:String(obj.id),data:obj});localStorage.setItem('zq',JSON.stringify(pending));flush()}}
+
+/* ========= alerts: special ring, vibration, system notification ========= */
+let AC=null,lastRing=0;
+const alertsOn=()=>localStorage.getItem('zalert-'+me)==='1';
+function ring(urgent){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();const t0=AC.currentTime+.02;
+  const seq=urgent?[988,1319,988,1319,988,1319,988,1319]:[659,988,1319,0,659,988,1319];
+  seq.forEach((f,i)=>{if(!f)return;const o=AC.createOscillator(),g=AC.createGain();o.type='triangle';o.frequency.value=f;const st=t0+i*(urgent?.17:.16);g.gain.setValueAtTime(0,st);g.gain.linearRampToValueAtTime(.4,st+.02);g.gain.exponentialRampToValueAtTime(.001,st+(urgent?.16:.3));o.connect(g);g.connect(AC.destination);o.start(st);o.stop(st+.35)})}catch(e){}
+ try{navigator.vibrate&&navigator.vibrate(urgent?[500,150,500,150,500,150,900]:[300,120,300,120,300])}catch(e){}lastRing=Date.now()}
+async function sysNotify(title,body,tag){if(!('Notification' in window)||Notification.permission!=='granted')return;
+ try{const reg=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();const o={body,tag,renotify:true,requireInteraction:true,icon:'icon.png',badge:'icon.png',lang:'he',dir:'rtl',vibrate:[300,120,300]};if(reg)await reg.showNotification(title,o);else new Notification(title,o)}catch(e){}}
+function alertCall(c){const u=c.rescue||c.priority==='stopped';if(alertsOn())ring(u);sysNotify(c.rescue?'חילוץ: יש לכודים':u?'מעלית עומדת':'קריאה חדשה',c.address+' · '+c.issue,'call-'+c.id)}
+async function enableAlerts(){localStorage.setItem('zalert-'+me,'1');try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();await AC.resume()}catch(e){}
+ try{if('serviceWorker' in navigator)await navigator.serviceWorker.register('sw.js')}catch(e){}
+ let perm='denied';try{if('Notification' in window)perm=Notification.permission==='default'?await Notification.requestPermission():Notification.permission}catch(e){}
+ ring(false);toast(perm==='granted'?'הצליל וההתראות פועלים. כך תישמע קריאה חדשה':'הצליל פועל. התראות מערכת לא אושרו בדפדפן');render()}
+function testAlert(urgent){ring(urgent);sysNotify(urgent?'חילוץ: יש לכודים':'קריאה חדשה','בדיקת התראה','test')}
+setInterval(()=>{if(!me||PEOPLE[me]?.role!=='tech'||!alertsOn())return;const wait=calls().filter(c=>c.tech===me&&needsAck(c));if(!wait.length)return;const urgent=wait.some(c=>c.rescue);if(Date.now()-lastRing>(urgent?3e4:12e4))ring(urgent)},5000);
+function markDelivered(){if(!me||PEOPLE[me]?.role!=='tech')return;for(const c of Object.values(db.calls)){if(c.tech===me&&c.status==='assigned'&&c.assignedAt&&!c.deliveredAt){c.deliveredAt=Date.now();c.log.push({t:Date.now(),who:'מערכת',text:'נמסרה לטלפון של '+PEOPLE[me].name});putQuiet('calls',c)}}}
+
+/* ========= location sharing (opt-in, per technician) ========= */
+let geoWatch=null,lastLocPut=0,lastPos=null;
+const locOn=()=>localStorage.getItem('zloc-'+me)==='1';
+function sendLoc(p,force){lastPos=p;const now=Date.now();if(!force&&now-lastLocPut<6e4)return;lastLocPut=now;putQuiet('meta',{id:'loc-'+me,tech:me,lat:+p.coords.latitude.toFixed(5),lng:+p.coords.longitude.toFixed(5),acc:Math.round(p.coords.accuracy||0),at:now})}
+function startLoc(){if(!navigator.geolocation||geoWatch!=null)return;geoWatch=navigator.geolocation.watchPosition(p=>sendLoc(p),err=>{if(err.code===1){localStorage.removeItem('zloc-'+me);stopLoc();toast('לא ניתנה הרשאת מיקום. אפשר לאשר אותה בהגדרות הדפדפן');render()}},{enableHighAccuracy:true,maximumAge:30000,timeout:30000})}
+function stopLoc(){if(geoWatch!=null&&navigator.geolocation)navigator.geolocation.clearWatch(geoWatch);geoWatch=null}
+function toggleLoc(){if(!navigator.geolocation){toast('הדפדפן לא תומך בשירותי מיקום');return}
+ if(locOn()){localStorage.removeItem('zloc-'+me);stopLoc();toast('שיתוף המיקום הופסק')}else{localStorage.setItem('zloc-'+me,'1');lastLocPut=0;startLoc();navigator.geolocation.getCurrentPosition(p=>sendLoc(p,true),()=>{},{enableHighAccuracy:true,timeout:20000});toast('המיקום שלך מוצג לגיא בזמן העבודה')}render()}
+function stepLoc(){if(locOn()&&navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>sendLoc(p,true),()=>{},{enableHighAccuracy:true,timeout:15000,maximumAge:20000})}
+const locOf=t=>db.meta['loc-'+t];
+const mapsUrl=l=>`https://www.google.com/maps?q=${l.lat},${l.lng}`;
 
 /* ========= notifications on change ========= */
 function snapshotFor(){return Object.assign(Object.fromEntries(Object.values(db.calls).map(c=>[c.id,c.status+'|'+c.tech])),Object.fromEntries(Object.values(db.quotes).map(q=>['q'+q.id,q.status])))}
 function notifyChanges(before){if(!me)return;const p=PEOPLE[me];for(const c of Object.values(db.calls)){const was=before[c.id];const now=c.status+'|'+c.tech;if(was===now)continue;
- if(p.role==='tech'&&c.tech===me&&['assigned','scheduled'].includes(c.status)&&(!was||!was.endsWith('|'+me)||!was.startsWith(c.status)))toast('קריאה חדשה שובצה אליך: '+c.address);
+ if(p.role==='tech'&&c.tech===me&&['assigned','scheduled'].includes(c.status)&&(!was||!was.endsWith('|'+me)||!was.startsWith(c.status))){toast((c.rescue?'חילוץ שובץ אליך: ':'קריאה חדשה שובצה אליך: ')+c.address);if(c.status==='assigned')alertCall(c)}
+ else if(p.role==='guy'&&c.rescue&&c.status==='assigned'&&!was)toast('חילוץ חדש: '+c.address);
  else if(p.role==='guy'&&c.status==='needs_guy')toast('דיווח חדש מהשטח: '+c.address);
  else if(p.role==='office'&&c.status==='closed')toast('קריאה נסגרה: '+c.address);
  else if(p.role==='office'&&c.status==='new')toast('קריאה חדשה: '+c.address);}
@@ -540,7 +637,7 @@ function openMe(){const p=PEOPLE[me];sheet(`<div><b style="font-size:17px">${esc
 function sheet(head,body){const had=!!$('#sheet');removeSheet();const bg=document.createElement('div');bg.className='sheet-bg';bg.id='sheet';bg.innerHTML=`<div class="sheet" onclick="event.stopPropagation()"><div class="sheet-head">${head}<button class="x" onclick="closeSheet()" aria-label="סגירה">✕</button></div><div class="sheet-body">${body}</div></div>`;bg.onclick=closeSheet;document.body.appendChild(bg);document.body.style.overflow='hidden';if(!had)history.pushState({tab,sheet:1,who:me},'')}
 function removeSheet(){$('#sheet')?.remove();document.body.style.overflow='';openCall=null}
 function closeSheet(){removeSheet();if(history.state?.sheet)history.replaceState({tab,who:me},'')}
-function goTab(id){if(tab===id)return;tab=id;history.pushState({tab:id,who:me},'');render();scrollTo(0,0)}
+function goTab(id){if(tab===id)return;tab=id;PG={};history.pushState({tab:id,who:me},'');render();scrollTo(0,0)}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#sheet'))closeSheet()});
 window.addEventListener('popstate',e=>{if($('#sheet')){removeSheet();draft=null;return}tab=e.state&&e.state.who===me?e.state.tab||'':'';render()});
 let openCall=null;
@@ -551,7 +648,7 @@ function picker(){
  const sec=(t,sub,body)=>`<section class="psec"><div class="psec-h"><b>${t}</b><span>${sub}</span></div>${body}</section>`;
  return `<div class="landing"><div class="hero"><div class="hero-in"><div class="logo big">${ICON.logo}<div>צמרת מעליות<small>שירות, אחזקה ושיפוץ מעליות</small></div></div>
   <h1 class="hero-t">שירות ושטח<br>במקום אחד</h1><p class="hero-p">הטכנאי מדווח מהאתר, גיא מקבל רק את מה שצריך החלטה, והמשרד רואה מה לחייב.</p>
-  <ul class="feat"><li><span>${ICON.check}</span><div><b>דיווח מהאתר בכמה לחיצות</b>יצאתי, הגעתי, דיווח עם הכתבה ותמונות</div></li><li><span>${ICON.bell}</span><div><b>גיא מקבל רק החלטות</b>שיבוץ, צוות מכני או הצעת מחיר בלחיצה</div></li><li><span>${ICON.tag}</span><div><b>חיוב לפי הכיסוי</b>ביטוח רגיל מחויב, מקיף במחיר אפס</div></li></ul></div></div>
+  <ul class="feat"><li><span>${ICON.check}</span><div><b>דיווח מהאתר בכמה לחיצות</b>קיבלתי, יצאתי, הגעתי, דיווח עם הכתבה ותמונות</div></li><li><span>${ICON.bell}</span><div><b>גיא מקבל רק החלטות</b>שיבוץ, צוות מכני או הצעת מחיר בלחיצה</div></li><li><span>${ICON.tag}</span><div><b>חיוב לפי הכיסוי</b>ביטוח רגיל מחויב, מקיף במחיר אפס</div></li></ul></div></div>
  <div class="pick2"><div class="pcard"><div class="pcard-h">מי נכנס?</div>
   ${sec('טכנאים','אפליקציית שטח',`<div class="tiles">${['ofer','kosta','dror','moshe','patrick'].map(id=>tile(id)).join('')}</div>`)}
   ${sec('ניהול השירות','החלטות, שיבוץ ומחירון',`<div class="tiles one">${tile('guy',true)}</div>`)}
@@ -564,49 +661,88 @@ function picker(){
  <div class="foot">נבנה עבור צמרת מעליות · MeetingScheduled</div></div></div>`}
 
 /* ========= TECHNICIAN ========= */
+let techCat='service',techUrg=null,techTime='all',techQ='';
+const URG=[['rescue','חילוץ','rs'],['stopped','עומדות','stp'],['follow','המשך טיפול',''],['regular','רגילות',''],['all','הכל','']];
+const TTIME=[['all','כל הזמנים'],['today','התקבלו היום',0],['3d','3 ימים',2],['week','השבוע',6],['old','לפני יותר משבוע',-1]];
+const techQMatch=c=>{const q=techQ.trim();return !q||(c.address+' '+c.contact+' '+callNo(c)+' '+c.issue).includes(q)};
+const techTimeMatch=c=>{const f=TTIME.find(x=>x[0]===techTime);if(!f||f[0]==='all')return true;if(f[2]===-1)return c.createdAt<dayStart(-6);return c.createdAt>=dayStart(-f[2])};
+const qInput=(id,ph,v,setter)=>`<input class="in search" id="${id}" type="search" placeholder="${ph}" value="${esc(v)}" oninput="${setter}=this.value;PG={};clearTimeout(window._qt);window._qt=setTimeout(render,200)">`;
 function techView(){
  if(!tab)tab='mine';
  const mine=calls().filter(c=>c.tech===me);
- const active=mine.filter(c=>['assigned','enroute','onsite'].includes(c.status)||(c.status==='scheduled'&&c.due<=dayStart(1)));
- const order={onsite:0,enroute:1,assigned:2,scheduled:3};
- active.sort((a,b)=>(order[a.status]-order[b.status])||((a.priority==='stopped'?0:1)-(b.priority==='stopped'?0:1))||(a.createdAt-b.createdAt));
- const later=mine.filter(c=>c.status==='scheduled'&&c.due>dayStart(1));
+ const open=mine.filter(c=>['assigned','enroute','onsite','scheduled'].includes(c.status));
  const doneToday=mine.filter(c=>c.report&&c.report.at>=dayStart(0)&&['closed','needs_guy','scheduled','quote'].includes(c.status)&&c.report.by===me);
  let inner='';
  if(tab==='mine'){
-  inner=`${pageHead('הקריאות שלי',DATE()+' · '+esc(PEOPLE[me].area))}${kpis([[active.filter(c=>c.priority==='stopped').length,'עומדות',1],[active.length,'לטיפול'],[doneToday.length,'דווחו היום']])}
-  ${active.length?active.map(techCard).join(''):`<div class="empty">אין קריאות פתוחות כרגע. קריאה חדשה תופיע כאן מיד כשתשובץ אליך.</div>`}
-  ${later.length?`<div class="section-t">מתוכנן בהמשך <span class="n">${later.length}</span></div>${later.map(techCard).join('')}`:''}`;
+  const now=open.filter(c=>['enroute','onsite'].includes(c.status));
+  const rescues=open.filter(c=>c.rescue&&!now.includes(c)).sort((a,b)=>a.createdAt-b.createdAt);
+  const waiting=open.filter(c=>needsAck(c)&&!c.rescue&&!now.includes(c)).sort((a,b)=>a.createdAt-b.createdAt);
+  const pool=open.filter(c=>!now.includes(c)&&!c.rescue&&!waiting.includes(c));
+  const svcAll=open.filter(c=>!now.includes(c)&&!isMemoCall(c)),svc=pool.filter(c=>!isMemoCall(c)),mem=pool.filter(isMemoCall);
+  const cnt=k=>k==='all'?svcAll.length:svcAll.filter(c=>urgOf(c)===k).length;
+  if(techUrg===null)techUrg=cnt('stopped')?'stopped':'all';
+  const showR=techCat==='service'&&techUrg==='rescue';
+  const base=showR?rescues:(techCat==='memo'?mem:svc).filter(c=>techCat==='memo'||techUrg==='all'||urgOf(c)===techUrg);
+  const list=base.filter(c=>techTimeMatch(c)&&techQMatch(c)).sort((a,b)=>a.createdAt-b.createdAt);
+  const stopped=svc.filter(c=>urgOf(c)==='stopped').length;
+  inner=`${pageHead('הקריאות שלי',DATE()+' · '+esc(PEOPLE[me].area))}
+  ${!alertsOn()?`<div class="alertbar">${ICON.bell}<span style="flex:1"><b>צליל מיוחד לקריאה חדשה.</b> מפעילים פעם אחת בטלפון הזה.</span><button class="btn primary sm" onclick="enableAlerts()">הפעלה</button></div>`:''}
+  ${now.map(techCard).join('')}
+  ${showR?'':rescues.map(techCard).join('')}
+  ${waiting.length?`<div class="section-t">ממתינות לאישור שלך <span class="n">${waiting.length}</span></div>${waiting.map(techCard).join('')}`:''}
+  <div class="cat"><button class="${techCat==='service'?'on':''}" onclick="techCat='service';PG={};render()">קריאות שירות<span>${svcAll.length}</span></button><button class="${techCat==='memo'?'on':''}" onclick="techCat='memo';PG={};render()">תזכירים<span>${open.filter(c=>!now.includes(c)&&isMemoCall(c)).length}</span></button></div>
+  ${techCat==='service'?`<div class="urg">${URG.map(([k,l,cls])=>`<button class="ub ${cls} ${techUrg===k?'on':''}" onclick="techUrg='${k}';PG={};render()"><b>${cnt(k)}</b>${l}</button>`).join('')}</div>`:''}
+  <div class="tfil">${TTIME.map(([k,l])=>`<button class="choice ${techTime===k?'on':''}" onclick="techTime='${k}';PG={};render()">${l}</button>`).join('')}</div>
+  ${qInput('tq','חיפוש לפי כתובת, איש קשר או מספר קריאה',techQ,'techQ')}
+  ${list.length?paged('tech',list,techCard):`<div class="empty">${techQ||techTime!=='all'?'אין קריאות שמתאימות לחיפוש.':techCat==='memo'?'אין ליקויים פתוחים מתזכירים.':'אין כאן קריאות פתוחות.'}</div>`}
+  <div class="small muted" style="margin-top:8px">${open.length} קריאות פתוחות אצלך · ${stopped} מעליות עומדות · מסודר מהוותיקה לחדשה</div>`;
+ }else if(tab==='done'){
+  inner=`${pageHead('דווחו היום',DATE())}${doneToday.length?paged('done',doneToday,c=>`<div class="card tap" onclick="openTechCall(${c.id})"><div class="row"><div class="addr">${esc(c.address)}</div>${statusPill(c)}</div><div class="detail">${esc(c.report.text)}</div><div class="meta"><span class="chip">${hhmm(c.report.at)}</span></div></div>`):`<div class="empty">עוד לא דיווחת היום.</div>`}`;
  }else{
-  inner=`${pageHead('דווחו היום',DATE())}${doneToday.length?doneToday.map(c=>`<div class="card tap" onclick="openTechCall(${c.id})"><div class="row"><div class="addr">${esc(c.address)}</div>${statusPill(c)}</div><div class="detail">${esc(c.report.text)}</div><div class="meta"><span class="chip">${hhmm(c.report.at)}</span></div></div>`).join(''):`<div class="empty">עוד לא דיווחת היום.</div>`}`;
+  const l=locOf(me);
+  inner=`${pageHead('הגדרות',esc(PEOPLE[me].name)+' · '+esc(PEOPLE[me].area))}
+  <div class="card"><div class="row"><div><b>צליל והתראות לקריאה חדשה</b><div class="small muted">צליל מיוחד, רטט והתראה בטלפון. חילוץ נשמע אחרת.</div></div><span class="pill ${alertsOn()?'green':''}">${alertsOn()?'פועל':'כבוי'}</span></div>
+   <div class="btns mt">${alertsOn()?`<button class="btn ghost" onclick="testAlert(false)">בדיקה: קריאה רגילה</button><button class="btn ghost" onclick="testAlert(true)">בדיקה: חילוץ</button>`:`<button class="btn primary" onclick="enableAlerts()">הפעלה</button>`}</div>
+   <div class="small muted mt">ההתראה מגיעה כשהאפליקציה פתוחה או ברקע. כשהקריאה לא אושרה, הצליל חוזר כל 2 דקות (חילוץ: כל 30 שניות).</div></div>
+  <div class="card"><div class="row"><div><b>שיתוף מיקום עם גיא</b><div class="small muted">גיא רואה איפה אתה במפה של השטח. אפשר לכבות בכל רגע.</div></div><span class="pill ${locOn()?'green':''}">${locOn()?'משותף':'כבוי'}</span></div>
+   <button class="btn ${locOn()?'ghost':'primary'} block mt" onclick="toggleLoc()">${locOn()?'הפסקת שיתוף המיקום':'הפעלת שיתוף מיקום'}</button>
+   ${l&&!l.sample?`<div class="locl mt">מיקום אחרון נשלח ${ago(l.at)} · <a href="${mapsUrl(l)}" target="_blank" rel="noopener">במפה</a></div>`:''}</div>`;
  }
- return shell(inner,[['mine','הקריאות שלי','list',active.length||''],['done','דווחו היום','check','']]);
+ return shell(inner,[['mine','הקריאות שלי','list',open.filter(needsAck).length||''],['done','דווחו היום','check',''],['set','הגדרות','bell','']]);
 }
 function statusPill(c){const s=STATUS[c.status]||['',''];let t=s[0];if(c.status==='scheduled'&&c.due)t='המשך טיפול '+dayLabel(c.due);return `<span class="pill ${s[1]}">${t}</span>`}
-function techCard(c){const m=memoOf(c);const repeat=(c.history||[]).length>=2;return `<div class="card tap ${c.priority==='stopped'?'stopped':''}" onclick="openTechCall(${c.id})">
- <div class="row"><span class="pill ${c.priority==='stopped'?'red':''}">${c.rescue?'חילוץ':c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span><span class="time">${callNo(c)} · ${hhmm(c.createdAt)}</span></div>
- <div class="addr mt">${esc(c.address)}</div><div class="issue">${esc(c.issue)}</div><div class="detail">${esc(c.detail)}</div>
- <div class="meta">${c.status!=='assigned'?statusPill(c):''}${repeat?`<span class="pill amber">קריאה ${(c.history.length+1)} החודש</span>`:''}${m&&!m.missing?`<span class="chip">תזכיר: ${m.defects.filter(d=>d.owner==='צמרת'&&!d.done).length} ליקויים פתוחים</span>`:''}</div></div>`}
+const prioPill=c=>`<span class="pill ${c.rescue||c.priority==='stopped'?'red':''}">${c.rescue?'חילוץ':isMemoCall(c)?'תזכיר':c.kind==='preventive'?'טיפול מונע':c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span>`;
+function techCard(c){const m=memoOf(c);const repeat=(c.history||[]).length>=2;const ack=needsAck(c)&&c.tech===me;
+ return `<div class="card tap ${c.rescue?'rescue':c.priority==='stopped'?'stopped':''} ${ack&&!c.rescue?'newc':''}" onclick="openTechCall(${c.id})">
+ <div class="row">${prioPill(c)}<span class="time">${callNo(c)} · ${whenL(c.createdAt)}</span></div>
+ <div class="addr mt">${esc(c.address)}</div><div class="issue">${esc(c.issue)}</div>${c.rescue&&c.trapped?`<div class="detail"><b>${c.trapped.count} לכודים · ${esc(c.trapped.floor)}</b></div>`:''}<div class="detail">${esc(c.detail)}</div>
+ <div class="meta">${c.status!=='assigned'?statusPill(c):''}${repeat?`<span class="pill amber">קריאה ${(c.history.length+1)} החודש</span>`:''}${m&&!m.missing?`<span class="chip">תזכיר: ${m.defects.filter(d=>d.owner==='צמרת'&&!d.done).length} ליקויים פתוחים</span>`:''}</div>
+ ${ack?`<button class="acc" onclick="event.stopPropagation();techStep(${c.id},'accept')">קיבלתי את הקריאה</button>`:''}</div>`}
 let draft=null;
 function openTechCall(id){const c=db.calls[id];openCall=id;const m=memoOf(c);const st=c.status;
  const canWork=['assigned','enroute','onsite','scheduled'].includes(st)&&c.tech===me;
  const repeat=(c.history||[]).length>=2;
- sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${c.priority==='stopped'?'red':''}">${c.rescue?'חילוץ':c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span>${statusPill(c)}</div><div class="addr" style="margin-top:6px">${esc(c.address)}</div><div class="sub">${callNo(c)} · ${esc(c.entrance)}</div></div>`,`
- <div class="box" style="margin-top:0"><div class="issue">${esc(c.issue)}</div><div class="detail" style="color:var(--ink)">${esc(c.detail)}</div>
+ sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px">${prioPill(c)}${needsAck(c)?'<span class="pill amber">ממתינה לאישור שלך</span>':statusPill(c)}</div><div class="addr" style="margin-top:6px">${esc(c.address)}</div><div class="sub">${callNo(c)} · ${esc(c.entrance)} · התקבלה ${whenL(c.createdAt)}</div></div>`,`
+ ${c.rescue?`<div class="trap" style="margin-top:0"><b>חילוץ: ${c.trapped?c.trapped.count+' לכודים · '+esc(c.trapped.floor):'יש לכודים'}</b><div class="mt">${esc(c.detail)}</div><div class="small mt">איש קשר במקום: ${esc(c.contact)}</div></div>`:''}
+ <div class="box" style="${c.rescue?'':'margin-top:0'}">${c.rescue?'':`<div class="issue">${esc(c.issue)}</div><div class="detail" style="color:var(--ink)">${esc(c.detail)}</div>`}
   <div class="grid2 mt"><div class="kv"><span>איש קשר</span><b>${esc(c.contact)}</b></div><div class="kv"><span>סוג מעלית</span><b>${esc(c.elevator.type)}</b></div><div class="kv"><span>מס׳ במשרד העבודה</span><b>${esc(c.elevator.mol)}</b></div><div class="kv"><span>כיסוי</span><b>${COVER[c.cover]}</b></div></div>
   <div class="btns mt"><a class="btn ghost" href="https://waze.com/ul?q=${encodeURIComponent(c.address)}&navigate=yes" target="_blank" rel="noopener">${ICON.map} ניווט ב-Waze</a>${m?`<button class="btn ghost" onclick="openMemo('${m.id}',${c.id})">${ICON.doc} תזכיר אחרון</button>`:''}</div>
  </div>
  ${repeat?`<div class="warn"><b>קריאה חוזרת:</b> זו הקריאה ה-${c.history.length+1} בכתובת הזו בחודש האחרון, באותה תקלה.<div class="small mt">${c.history.map(h=>`${dayLabel(h.t)}: ${esc(h.repair)}`).join(' · ')}</div></div>`:''}
  ${m&&m.missing?`<div class="warn">התזכיר העדכני של המעלית הזו לא התקבל במשרד.</div>`:''}
- ${canWork&&st!=='onsite'?`<button class="btn primary block mt" style="min-height:52px;font-size:16px" onclick="techStep(${c.id},'${st==='enroute'?'onsite':'enroute'}')">${st==='enroute'?'הגעתי לאתר':'יצאתי לדרך'}</button>${st!=='enroute'?`<button class="btn block sm mt" style="background:none;color:var(--muted)" onclick="techStep(${c.id},'onsite')">כבר באתר</button>`:''}`:''}
+ ${canWork&&st!=='onsite'?(()=>{const nx=needsAck(c)?['accept','קיבלתי את הקריאה']:st==='enroute'?['onsite','הגעתי לאתר']:['enroute','יצאתי לדרך'];return `<button class="btn primary block mt" style="min-height:54px;font-size:16.5px${c.rescue?';background:var(--red)':''}" onclick="techStep(${c.id},'${nx[0]}')">${nx[1]}</button>${nx[0]==='accept'?`<div class="small muted mt" style="text-align:center">אחרי האישור: יצאתי לדרך ← הגעתי לאתר</div>`:st!=='enroute'?`<button class="btn block sm mt" style="background:none;color:var(--muted)" onclick="techStep(${c.id},'onsite')">כבר באתר</button>`:''}`})():''}
+ ${ackLine(c)?`<div class="ackl">${ackLine(c)}</div>`:''}
  ${c.report?`<div class="ok"><b>הדיווח שלך (${hhmm(c.report.at)}):</b> ${esc(c.report.text)}</div>`:''}
  <div id="reportArea"></div>
  <div class="box"><h4>מה קרה בקריאה</h4><div class="log">${c.log.slice().reverse().map(l=>`<div><b>${hhmm(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')}</div></div>`);
  if(st==='onsite'&&c.tech===me)startReport(id,true);
 }
-function techStep(id,s){const c=db.calls[id];if(s==='enroute'&&!['assigned','scheduled'].includes(c.status))return;if(s==='onsite'&&!['assigned','scheduled','enroute'].includes(c.status))return;
- const prev=c.status;c.status=s;c.log.push({t:Date.now(),who:PEOPLE[me].name,text:s==='enroute'?'יצא לדרך':'הגיע לאתר'});put('calls',c);openTechCall(id);
- toast(s==='enroute'?'סומן שיצאת לדרך':'סומן שהגעת','ביטול',()=>{const x=db.calls[id];x.status=prev;x.log.pop();put('calls',x);draft=null;if($('#sheet'))openTechCall(id)})}
+function techStep(id,s){const c=db.calls[id];if(s==='accept'&&c.status!=='assigned')return;if(s==='enroute'&&!['assigned','scheduled'].includes(c.status))return;if(s==='onsite'&&!['assigned','scheduled','enroute'].includes(c.status))return;
+ const prev={status:c.status,acceptedAt:c.acceptedAt||null,n:c.log.length};const name=PEOPLE[me].name;
+ if(!c.acceptedAt){c.acceptedAt=Date.now();c.log.push({t:Date.now(),who:name,text:'אישר קבלת הקריאה'})}
+ if(s!=='accept'){c.status=s;c.log.push({t:Date.now(),who:name,text:s==='enroute'?'יצא לדרך':'הגיע לאתר'})}
+ put('calls',c);stepLoc();openTechCall(id);
+ toast(s==='accept'?'אישרת את הקריאה. גיא והמשרד רואים את זה':s==='enroute'?'סומן שיצאת לדרך':'סומן שהגעת','ביטול',()=>{const x=db.calls[id];x.status=prev.status;x.acceptedAt=prev.acceptedAt;x.log=x.log.slice(0,prev.n);put('calls',x);draft=null;if($('#sheet'))openTechCall(id)})}
 function startReport(id,silent){const c=db.calls[id];if(c.status!=='onsite')return;
  draft={id,outcome:'',reason:'',when:'',text:'',parts:{},photos:[],damage:false,defects:{}};renderReport();if(!silent)$('#reportArea')?.scrollIntoView({behavior:'smooth',block:'start'})}
 function renderReport(){const c=db.calls[draft.id];const m=memoOf(c);const area=$('#reportArea');if(!area)return;
@@ -649,6 +785,14 @@ function openMemo(mid,callId){const m=db.memos[mid];sheet(`<div><div class="sub"
  ${callId?`<button class="btn block ghost mt" onclick="${PEOPLE[me].role==='tech'?`openTechCall(${callId})`:`openOfficeCall(${callId})`}">חזרה לקריאה</button>`:''}`)}
 
 /* ========= GUY ========= */
+let fieldTech='all',fieldF='all',LMAP=null;
+function loadLeaflet(){if(window.L)return Promise.resolve();if(window._ll)return window._ll;window._ll=new Promise((ok,no)=>{const l=document.createElement('link');l.rel='stylesheet';l.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';document.head.appendChild(l);const sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';sc.onload=ok;sc.onerror=no;document.head.appendChild(sc)});return window._ll}
+async function drawFieldMap(){const el=$('#fmap');if(!el)return;try{await loadLeaflet()}catch(e){el.innerHTML='<div class="empty">המפה לא נטענה</div>';return}if(!$('#fmap'))return;
+ const pts=TECHS.map(t=>{const l=locOf(t);if(!l)return null;const mine=calls().filter(c=>c.tech===t);const now=mine.find(c=>c.status==='onsite')||mine.find(c=>c.status==='enroute');return{t,l,cls:now?(now.status==='onsite'?'at':'go'):''}}).filter(Boolean);
+ if(LMAP){try{LMAP.remove()}catch(e){}}LMAP=L.map(el,{zoomControl:true,attributionControl:true}).setView([32.83,35.04],11);
+ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(LMAP);
+ pts.forEach(p=>{L.circleMarker([p.l.lat,p.l.lng],{radius:7,color:'#fff',weight:2,fillColor:p.cls==='at'?'#1e8a7a':p.cls==='go'?'#c98a1a':'#183b4a',fillOpacity:1}).addTo(LMAP);L.marker([p.l.lat,p.l.lng],{icon:L.divIcon({className:'tm',html:`<span class="${p.cls}">${PEOPLE[p.t].name} · ${ago(p.l.at)}</span>`,iconSize:[0,0]})}).addTo(LMAP)});
+ if(pts.length>1)LMAP.fitBounds(pts.map(p=>[p.l.lat,p.l.lng]),{padding:[40,40],maxZoom:13})}
 function guyView(){
  if(!tab)tab='dash';
  const all=calls();
@@ -658,7 +802,7 @@ function guyView(){
  const qDraft=Object.values(db.quotes).filter(q=>q.status==='draft').sort((a,b)=>a.createdAt-b.createdAt);
  const qDisc=Object.values(db.quotes).filter(q=>q.status==='discount_req');
  const todo=decide.length+qDraft.length+qDisc.length;
- const field=TECHS.map(id=>{const mine=all.filter(c=>c.tech===id);const now=mine.find(c=>c.status==='onsite')||mine.find(c=>c.status==='enroute');const open=mine.filter(c=>['assigned','enroute','onsite'].includes(c.status)).length;return{id,now,open}});
+ const field=TECHS.map(id=>{const mine=all.filter(c=>c.tech===id);const now=mine.find(c=>c.status==='onsite')||mine.find(c=>c.status==='enroute');const open=mine.filter(c=>['assigned','enroute','onsite','scheduled'].includes(c.status)).length;const wait=mine.filter(needsAck).length;return{id,now,open,wait,loc:locOf(id)}});
  const closedNoGuy=all.filter(c=>c.status==='closed'&&c.report&&c.report.at>=dayStart(0)&&!c.viaGuy).length;
  let inner='';
  if(tab==='dash'){inner=callsDash();}
@@ -671,9 +815,18 @@ function guyView(){
   ${repeats.length?`<div class="section-t">קריאות חוזרות לבדיקה <span class="n">${repeats.length}</span></div>${repeats.map(c=>`<div class="card tap flag" onclick="openGuyCall(${c.id})"><div class="row"><span class="pill amber">קריאה ${c.history.length+1} החודש</span>${statusPill(c)}</div><div class="addr mt">${esc(c.address)}</div><div class="issue">${esc(c.issue)}</div><div class="detail">${c.history.map(h=>`${dayLabel(h.t)}: ${esc(h.repair)}`).join(' · ')}</div></div>`).join('')}`:''}
   ${quotes.length?`<div class="section-t">הצעות מחיר אצל לקוחות <span class="n">${quotes.length}</span></div>${quotes.map(c=>{const q=db.quotes[c.quote];return `<div class="card tap" onclick="openGuyCall(${c.id})"><div class="row"><div class="addr">${esc(c.address)}</div><span class="pill blue">${q?money(qTotal(q)):''}</span></div><div class="detail">נשלחה ${q?hhmm(q.sentAt):''} · ממתינה לאישור בכתב</div></div>`}).join('')}`:''}`;
  }else if(tab==='field'){
+  const F2={all:['הכל',c=>true],rescue:['חילוץ',c=>c.rescue],stopped:['עומדות',c=>c.priority==='stopped'&&!c.rescue],unack:['לא אושרו',needsAck],follow:['המשך טיפול',c=>['needs_guy','scheduled','quote'].includes(c.status)]};
+  const openAll=all.filter(c=>c.status!=='closed'&&(fieldTech==='all'||c.tech===fieldTech));
+  const fl=openAll.filter((F2[fieldF]||F2.all)[1]).sort((a,b)=>(b.rescue?1:0)-(a.rescue?1:0)||(a.createdAt-b.createdAt));
   inner=`${pageHead('השטח עכשיו',DATE())}
-  <div class="card">${field.map(f=>{const p=PEOPLE[f.id];const cls=f.now?(f.now.status==='onsite'?'at':'go'):(f.open?'':'free');return `<div class="live"><span class="dot ${cls}"></span><div style="flex:1"><b>${p.name}</b> <span class="sub">· ${p.area}</span><div class="small muted">${f.now?(f.now.status==='onsite'?'באתר: ':'בדרך ל: ')+esc(f.now.address):f.open?f.open+' קריאות ממתינות':'פנוי'}</div></div><span class="time">${f.open} פתוחות</span></div>`}).join('')}</div>
-  <div class="section-t">כל הקריאות הפתוחות</div>${all.filter(c=>!['closed'].includes(c.status)).map(c=>`<div class="card tap ${c.priority==='stopped'?'stopped':''}" onclick="openGuyCall(${c.id})"><div class="row"><div class="addr">${esc(c.address)}</div>${statusPill(c)}</div><div class="issue">${esc(c.issue)}</div><div class="meta"><span class="chip">${c.tech?esc(PEOPLE[c.tech].name):'לא שובצה'}</span><span class="chip">${hhmm(c.createdAt)}</span></div></div>`).join('')}`;
+  <div id="fmap"></div>
+  <div class="card">${field.map(f=>{const p=PEOPLE[f.id];const cls=f.now?(f.now.status==='onsite'?'at':'go'):'free';return `<div class="live"><span class="dot ${cls}"></span><div style="flex:1;min-width:0"><b>${p.name}</b> <span class="sub">· ${p.area}</span><div class="small muted">${f.now?(f.now.status==='onsite'?'באתר: ':'בדרך ל: ')+esc(f.now.address)+' · מ-'+hhmm((f.now.log.filter(l=>/יצא לדרך|הגיע לאתר/.test(l.text)).pop()||{}).t||f.now.createdAt):'לא בקריאה כרגע'}</div>
+   <div class="locl">${f.loc?`מיקום ${ago(f.loc.at)} · <a href="${mapsUrl(f.loc)}" target="_blank" rel="noopener">במפה</a>`:'לא משתף מיקום'}${f.wait?` · <b style="color:var(--red)">${f.wait} לא אושרו</b>`:''}</div></div><span class="time">${f.open} פתוחות</span></div>`}).join('')}</div>
+  <div class="section-t">קריאות פתוחות <span class="n">${fl.length}</span></div>
+  <div class="tfil"><select class="in" style="width:auto;flex:none;padding:6px 10px;min-height:0" onchange="fieldTech=this.value;PG={};render()"><option value="all">כל הטכנאים</option>${TECHS.map(t=>`<option value="${t}" ${fieldTech===t?'selected':''}>${PEOPLE[t].name}</option>`).join('')}</select>${Object.entries(F2).map(([k,[l,f]])=>`<button class="choice ${fieldF===k?'on':''}" onclick="fieldF='${k}';PG={};render()">${l} · ${openAll.filter(f).length}</button>`).join('')}</div>
+  ${fl.length?paged('field',fl,mgrCard):'<div class="empty">אין קריאות בסינון הזה.</div>'}
+  <div class="info">המיקום מגיע מהטלפון של הטכנאי, רק כשהוא הפעיל שיתוף מיקום. המיקומים שמופיעים עכשיו לדוגמה. אם תרצו, אפשר לבדוק חיבור למערכת האיתור שברכבים במקום הטלפון.</div>`;
+  setTimeout(drawFieldMap,0);
  }else{
   inner=`${pageHead('מחירון','מחיר ללקוח. קריסטי מתמחרת לפיו בלי אישור שלך.')}
   <div class="card">${PARTS.map(p=>`<div class="live"><span style="flex:1">${esc(p.name)}</span><b>${money(p.price)}</b></div>`).join('')}</div>
@@ -686,6 +839,7 @@ function openGuyCall(id){const c=db.calls[id];openCall=id;const q=c.quote?db.quo
  sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${c.priority==='stopped'?'red':''}">${c.rescue?'חילוץ':c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span>${statusPill(c)}</div><div class="addr" style="margin-top:6px">${esc(c.address)}</div><div class="sub">${callNo(c)} · ${esc(c.issue)} · ${COVER[c.cover]}</div></div>`,`
  ${c.report?`<div class="box" style="margin-top:0"><h4>דיווח ${esc(PEOPLE[c.report.by]?.name)} · ${hhmm(c.report.at)}</h4><div>${esc(c.report.text)}</div>${partsHtml?`<div class="small muted mt">חלקים: ${partsHtml}</div>`:''}${c.report.damage?'<div class="pill red mt" style="display:inline-block">חבלה או נזק מים</div>':''}${c.photos?.length?`<div class="photos">${c.photos.map(s=>`<img src="${s}" alt="">`).join('')}</div>`:''}</div>`:`<div class="box" style="margin-top:0"><div class="detail" style="color:var(--ink)">${esc(c.detail)}</div></div>`}
  ${(c.history||[]).length?`<div class="warn"><b>היסטוריה בכתובת:</b> ${c.history.map(h=>`${dayLabel(h.t)}: ${esc(h.repair)}`).join(' · ')}</div>`:''}
+ ${c.rescue?`<div class="trap"><b>חילוץ: ${c.trapped?c.trapped.count+' לכודים · '+esc(c.trapped.floor):'יש לכודים'}</b><div class="small mt">${esc(c.contact)}</div></div>`:''}${ackLine(c)?`<div class="ackl">${ackLine(c)}</div>`:''}
  ${reassignBox(c)}${c.status==='needs_guy'?`<div class="box"><h4>מה עושים?</h4>
   <label class="f">שיבוץ המשך טיפול</label><select class="in" id="gTech">${[...TECHS,'mech'].map(t=>`<option value="${t}" ${t===(c.report.reason==='צוות מכני'?'mech':c.tech)?'selected':''}>${PEOPLE[t].name} · ${PEOPLE[t].area}</option>`).join('')}</select>
   <div class="choices mt" id="gWhen">${WHEN.map(([k,l])=>`<button class="choice ${k===c.report.when?'on':''}" data-k="${k}" onclick="[...this.parentNode.children].forEach(b=>b.classList.remove('on'));this.classList.add('on')">${l}</button>`).join('')}</div>
@@ -695,9 +849,9 @@ function openGuyCall(id){const c=db.calls[id];openCall=id;const q=c.quote?db.quo
  ${q?`<div class="box"><h4>${quoteNo(q)} ${qPill(q)}</h4>${quoteTable(q)}${q.status==='sent'?`<button class="btn primary block mt" onclick="quoteApproved(${c.id})">הלקוח אישר בכתב: פתיחת הזמנת עבודה</button>`:''}</div>`:''}
  <div class="box"><h4>מה קרה בקריאה</h4><div class="log">${c.log.slice().reverse().map(l=>`<div><b>${hhmm(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')}</div></div>`)}
 function reassignBox(c){if(['new','needs_guy','closed'].includes(c.status))return'';return `<div class="box"><h4>העברה לטכנאי אחר</h4><div class="row" style="gap:8px"><select class="in" id="rTech">${[...TECHS,'mech'].map(t=>`<option value="${t}" ${t===c.tech?'selected':''}>${PEOPLE[t].name} · ${PEOPLE[t].area}</option>`).join('')}</select><button class="btn ghost" onclick="reassign(${c.id})">העברה</button></div></div>`}
-function reassign(id){const c=db.calls[id];const t=$('#rTech').value;if(t===c.tech){toast('הקריאה כבר אצל '+PEOPLE[t].name);return}c.tech=t;if(['enroute','onsite'].includes(c.status))c.status='assigned';c.log.push({t:Date.now(),who:PEOPLE[me].name,text:'הועברה ל'+PEOPLE[t].name});put('calls',c);closeSheet();toast(PEOPLE[t].name+' קיבל את הקריאה')}
+function reassign(id){const c=db.calls[id];const t=$('#rTech').value;if(t===c.tech){toast('הקריאה כבר אצל '+PEOPLE[t].name);return}assignTo(c,t);if(['enroute','onsite'].includes(c.status))c.status='assigned';c.log.push({t:Date.now(),who:PEOPLE[me].name,text:'הועברה ל'+PEOPLE[t].name});put('calls',c);closeSheet();toast(PEOPLE[t].name+' קיבל את הקריאה')}
 function guySchedule(id){const c=db.calls[id];const t=$('#gTech').value;const w=$('#gWhen .on')?.dataset.k||'today';const add=WHEN.find(x=>x[0]===w)[2];
- c.tech=t;c.due=todayAt(8,0,add);c.status=add===0?'assigned':'scheduled';c.viaGuy=true;c.log.push({t:Date.now(),who:'גיא',text:`שובצה ל${PEOPLE[t].name} ${WHEN.find(x=>x[0]===w)[1]}`});put('calls',c);closeSheet();toast(`${PEOPLE[t].name} קיבל את הקריאה`)}
+ assignTo(c,t);c.due=todayAt(8,0,add);c.status=add===0?'assigned':'scheduled';c.viaGuy=true;c.log.push({t:Date.now(),who:'גיא',text:`שובצה ל${PEOPLE[t].name} ${WHEN.find(x=>x[0]===w)[1]}`});put('calls',c);closeSheet();toast(`${PEOPLE[t].name} קיבל את הקריאה`)}
 function guyClose(id){const c=db.calls[id];c.status='closed';c.viaGuy=true;c.log.push({t:Date.now(),who:'גיא',text:'הקריאה נסגרה'});put('calls',c);closeSheet();toast('הקריאה נסגרה ועברה למשרד')}
 function guyAck(id){const c=db.calls[id];c.guyAck=true;c.log.push({t:Date.now(),who:'גיא',text:'נבדקה קריאה חוזרת'});put('calls',c);closeSheet()}
 function linesFor(c,parts){const charge=c.cover==='regular'||c.report?.damage;return parts.map(([pid,q])=>{const p=partById(pid);return{name:p.name,qty:q,price:p.price,charge:charge?p.price*q:0}})}
@@ -736,7 +890,7 @@ function discountSheet(id){const q=db.quotes[id];const d=q.discount||{};sheet(`<
 function decideDiscount(id,yes){const q=db.quotes[id];const d=q.discount;if(yes)q.discountPct=d.pct;q.status='sent';q.sentAt=Date.now();q.log.push({t:Date.now(),who:'גיא',text:yes?`אישר ${d.pct}% הנחה. ההצעה המעודכנת נשלחה ללקוח`:'לא אישר הנחה'});q.discount=null;put('quotes',q);closeSheet();toast(yes?'ההנחה אושרה וההצעה המעודכנת נשלחה ללקוח':'ההנחה נדחתה')}
 function quoteApproved(id){const c=db.calls[id];approveQuote(c.quote)}
 function approveQuote(qid){const q=db.quotes[qid];q.status='approved';q.approvedAt=Date.now();q.log.push({t:Date.now(),who:PEOPLE[me].name,text:'הלקוח אישר בכתב. נפתחה הזמנת עבודה'});put('quotes',q);
- if(q.callId){const c=db.calls[q.callId];c.status='scheduled';c.tech=c.tech||'kosta';c.due=todayAt(8,0,2);c.log.push({t:Date.now(),who:PEOPLE[me].name,text:'הלקוח אישר בכתב. נפתחה הזמנת עבודה'});put('calls',c)}
+ if(q.callId){const c=db.calls[q.callId];c.status='scheduled';if(!c.tech)assignTo(c,'kosta');c.due=todayAt(8,0,2);c.log.push({t:Date.now(),who:PEOPLE[me].name,text:'הלקוח אישר בכתב. נפתחה הזמנת עבודה'});put('calls',c)}
  else{const meta=db.meta.seed;const cid=meta.nextId++;put('meta',meta);const t=CITY_TECH[q.city]||'ofer';
   put('calls',{id:cid,address:q.address,entrance:'כניסה ראשית',city:q.city,issue:'ביצוע הצעת מחיר '+quoteNo(q),detail:q.lines.map(l=>l.name+' × '+l.qty).join(', '),priority:'normal',status:'scheduled',due:todayAt(8,0,2),tech:t,cover:'regular',contact:q.contact||'—',elevator:{type:'—',mol:'—',contract:'—'},memo:q.memo||null,createdAt:Date.now(),history:[],photos:[],report:null,internal:'',log:[{t:Date.now(),who:PEOPLE[me].name,text:'הזמנת עבודה מהצעה '+quoteNo(q)+' שאושרה בכתב'},{t:Date.now(),who:'מערכת',text:'שובצה ל'+PEOPLE[t].name+' מחרתיים'}]})}
  closeSheet();toast('נפתחה הזמנת עבודה ושובצה לטכנאי')}
@@ -753,7 +907,7 @@ function requestDiscount(id){const q=db.quotes[id];const pct=+$('#dReq .on').dat
 function processMemo(mid){const m=db.memos[mid];if(m.status!=='inbox')return;const res={subCalls:[],owner:[],quote:null};const lines=[];const t=CITY_TECH[m.city]||'ofer';const meta=db.meta.seed;
  m.defects.forEach(d=>{if(d.owner!=='צמרת'){res.owner.push(d.t);return}
   if(m.cover==='regular'&&d.parts?.length){d.parts.forEach(([pid,qty])=>{const p=partById(pid);lines.push({name:p.name,qty,price:p.price})})}
-  else{const cid=meta.nextId++;res.subCalls.push(cid);put('calls',{id:cid,address:m.address,entrance:'כניסה ראשית',city:m.city,issue:'ליקוי מתזכיר: '+d.t,detail:'מתוך תזכיר הבודק. '+(m.cover==='regular'?'ללא חלקים לחיוב.':'בכיסוי '+COVER[m.cover]+', ללא חיוב.'),priority:'normal',status:'assigned',tech:t,cover:m.cover,contact:m.contact,elevator:{type:'—',mol:'—',contract:'—'},memo:m.id,createdAt:Date.now(),history:[],photos:[],report:null,internal:'',log:[{t:Date.now(),who:'מערכת',text:'נפתחה מתזכיר הבודק'},{t:Date.now(),who:'מערכת',text:'שובצה ל'+PEOPLE[t].name+' לפי האזור'}]})}});
+  else{const cid=meta.nextId++;res.subCalls.push(cid);put('calls',{id:cid,address:m.address,entrance:'כניסה ראשית',city:m.city,issue:'ליקוי מתזכיר: '+d.t,detail:'מתוך תזכיר הבודק. '+(m.cover==='regular'?'ללא חלקים לחיוב.':'בכיסוי '+COVER[m.cover]+', ללא חיוב.'),kind:'memo',priority:'normal',status:'assigned',tech:t,cover:m.cover,contact:m.contact,elevator:{type:'—',mol:'—',contract:'—'},memo:m.id,createdAt:Date.now(),assignedAt:Date.now(),deliveredAt:null,acceptedAt:null,history:[],photos:[],report:null,internal:'',log:[{t:Date.now(),who:'מערכת',text:'נפתחה מתזכיר הבודק'},{t:Date.now(),who:'מערכת',text:'שובצה ל'+PEOPLE[t].name+' לפי האזור'}]})}});
  put('meta',meta);
  if(lines.length){const qid=nextQuoteId();res.quote=qid;put('quotes',{id:qid,source:'memo',memo:m.id,address:m.address,city:m.city,contact:m.contact,lines,labor:LABOR_VISIT,discountPct:0,owner:res.owner,status:'draft',createdAt:Date.now(),log:[{t:Date.now(),who:'מערכת',text:'הצעה נבנתה מהתזכיר ונשלחה לאישור גיא'}]})}
  m.status='processed';m.result=res;m.processedAt=Date.now();put('memos',m);openMemoOffice(mid)}
@@ -769,15 +923,17 @@ function openMemoOffice(mid){const m=db.memos[mid];const r=m.result||{};const q=
  ${r.owner?.length?`<div class="box"><h4>הודעה לוועד</h4><div class="small">שלום ${esc(m.contact||'')}, בבדיקה התקופתית נמצאו ליקויים שבאחריות הבניין: ${r.owner.map(esc).join(', ')}. נשמח לעזור בתיאום.</div></div>`:''}`)}
 
 /* ========= OFFICE (Kristy / Or) ========= */
+let officeQ='';
 function officeView(){
  if(!tab)tab='board';
  const all=calls();let inner='';
  if(tab==='board'){
-  const F={all:['הכל',()=>true],new:['ממתינות לשיבוץ',c=>c.status==='new'],work:['בטיפול',c=>['assigned','enroute','onsite','scheduled'].includes(c.status)],guy:['אצל גיא',c=>['needs_guy','quote'].includes(c.status)],closed:['נסגרו',c=>c.status==='closed'],debt:['לקוח עם חוב',c=>debtOf(c).months>=3]};
-  const list=all.filter(F[filter]?.[1]||(()=>true));
+  const F={all:['הכל',()=>true],new:['ממתינות לשיבוץ',c=>c.status==='new'],unack:['לא אושרו ע״י טכנאי',needsAck],rescue:['חילוץ',c=>c.rescue&&c.status!=='closed'],work:['בטיפול',c=>['assigned','enroute','onsite','scheduled'].includes(c.status)],guy:['אצל גיא',c=>['needs_guy','quote'].includes(c.status)],closed:['נסגרו',c=>c.status==='closed'],debt:['לקוח עם חוב',c=>debtOf(c).months>=3]};
+  const oq=officeQ.trim();const list=all.filter(F[filter]?.[1]||(()=>true)).filter(c=>!oq||(c.address+' '+c.contact+' '+callNo(c)+' '+(c.tech?PEOPLE[c.tech].name:'')).includes(oq));
   inner=`${pageHead('קריאות שירות',DATE(),`<button class=\"btn primary sm\" onclick=\"newCall()\">${ICON.plus} קריאה חדשה</button>`)}
-  <div class="filters">${Object.entries(F).map(([k,[l,f]])=>`<button class="choice ${filter===k?'on':''}" onclick="filter='${k}';render()">${l} · ${all.filter(f).length}</button>`).join('')}</div>
-  <div class="office-grid">${list.map(officeCard).join('')||'<div class="empty">אין קריאות בסינון הזה.</div>'}</div>`;
+  <div class="filters">${Object.entries(F).map(([k,[l,f]])=>`<button class="choice ${filter===k?'on':''}" onclick="filter='${k}';PG={};render()">${l} · ${all.filter(f).length}</button>`).join('')}</div>
+  ${qInput('oq','חיפוש לפי כתובת, איש קשר, טכנאי או מספר קריאה',officeQ,'officeQ')}
+  <div class="office-grid">${list.length?paged('board',list,officeCard,30):'<div class="empty">אין קריאות בסינון הזה.</div>'}</div>`;
  }else if(tab==='collect'){inner=collectView();
  }else if(tab==='memos'){
   const ms=Object.values(db.memos);const order={inbox:0,missing:1,processed:2};ms.sort((a,b)=>(order[a.status]-order[b.status])||((b.receivedAt||0)-(a.receivedAt||0)));
@@ -787,21 +943,25 @@ function officeView(){
   <div class="section-t">הצעות מחיר</div>${qs.map(q=>`<div class="card tap" onclick="officeQuoteSheet(${q.id})"><div class="row"><div class="addr">${esc(q.address)}</div>${qPill(q)}</div><div class="meta"><span class="chip">${quoteNo(q)}</span><span class="chip">${money(qTotal(q))}</span><span class="chip">${q.source==='memo'?'מתזכיר':'מדיווח טכנאי'}</span></div></div>`).join('')||'<div class="empty">אין הצעות.</div>'}
   <div class="info">אחרי החיבור, תזכיר שמגיע למייל נקלט לבד: המערכת קוראת את ה-PDF, מפרקת לליקויים ובונה הצעה לפי המחירון.</div>`;
  }else{
-  const closed=all.filter(c=>c.status==='closed');
-  inner=`${pageHead('לחיוב',DATE())}${closed.map(c=>{const lines=linesFor(c,c.report?.parts||[]);const tot=lines.reduce((a,l)=>a+l.charge,0);return `<div class="card tap" onclick="openOfficeCall(${c.id})"><div class="row"><div class="addr">${esc(c.address)}</div>${c.billed?'<span class="pill green">מוכן להפקה</span>':tot?`<span class="pill blue">${money(tot)}</span>`:'<span class="pill">ללא חיוב</span>'}</div><div class="detail">${COVER[c.cover]} · ${lines.map(l=>esc(l.name)).join(', ')||'ללא חלקים'}</div></div>`}).join('')||'<div class="empty">אין קריאות סגורות.</div>'}
+  const closed=all.filter(c=>c.status==='closed');const toBill=closed.filter(c=>!c.billed),ready=closed.filter(c=>c.billed);
+  const billCard=c=>{const lines=linesFor(c,c.report?.parts||[]);const tot=lines.reduce((a,l)=>a+l.charge,0);return `<div class="card tap" onclick="openOfficeCall(${c.id})"><div class="row"><div class="addr">${esc(c.address)}</div>${c.billed?'<span class="pill green">מוכן להפקה</span>':tot?`<span class="pill blue">${money(tot)}</span>`:'<span class="pill">ללא חיוב</span>'}</div><div class="detail">${COVER[c.cover]} · ${lines.map(l=>esc(l.name)).join(', ')||'ללא חלקים'} · נסגרה ${whenL(c.report?.at||c.createdAt)}</div></div>`};
+  inner=`${pageHead('לחיוב',DATE())}${kpis([[toBill.length,'לאישור חיוב',1],[ready.length,'מוכנות להפקה']])}
+  <div class="section-t">לאישור חיוב <span class="n">${toBill.length}</span></div>${toBill.length?toBill.map(billCard).join(''):'<div class="empty">אין קריאות שמחכות לאישור חיוב.</div>'}
+  <div class="section-t">מוכנות להפקה <span class="n">${ready.length}</span></div>${paged('bill',ready,billCard)}
   <div class="info">בביטוח רגיל כל חלק מחויב לפי המחירון. בביטוח מקיף החלק מופיע במחיר אפס. חבלה ונזק מים מחויבים תמיד.</div>`;
  }
  return shell(inner,[['board','קריאות','list',all.filter(c=>c.status==='new').length||''],['memos','תזכירים','doc',Object.values(db.memos).filter(m=>m.status==='inbox').length||''],['collect','גבייה','wallet',''],['bill','לחיוב','tag','']]);
 }
 function officeCard(c){const repeat=(c.history||[]).length>=2;return `<div class="card tap ${c.priority==='stopped'&&c.status!=='closed'?'stopped':''}" onclick="openOfficeCall(${c.id})">
  <div class="row"><div class="addr">${esc(c.address)}</div>${statusPill(c)}</div><div class="issue">${esc(c.issue)}</div>
- <div class="meta"><span class="chip">${callNo(c)} · ${hhmm(c.createdAt)}</span><span class="chip">${c.tech?esc(PEOPLE[c.tech].name):'לא שובצה'}</span>${debtOf(c).months>=3?`<span class="pill red">חוב ${debtOf(c).months} חודשים</span>`:''}${repeat?'<span class="pill amber">קריאה חוזרת</span>':''}${memoOf(c)?.missing?'<span class="pill amber">תזכיר חסר</span>':''}</div></div>`}
+ <div class="meta">${c.rescue?prioPill(c):''}<span class="chip">${callNo(c)} · ${whenL(c.createdAt)}</span><span class="chip">${c.tech?esc(PEOPLE[c.tech].name):'לא שובצה'}</span>${ackPill(c)}${debtOf(c).months>=3?`<span class="pill red">חוב ${debtOf(c).months} חודשים</span>`:''}${repeat?'<span class="pill amber">קריאה חוזרת</span>':''}${memoOf(c)?.missing?'<span class="pill amber">תזכיר חסר</span>':''}</div></div>`}
 function openOfficeCall(id){const c=db.calls[id];openCall=id;const m=memoOf(c);const lines=linesFor(c,c.report?.parts||[]);const tot=lines.reduce((a,l)=>a+l.charge,0);const sug=CITY_TECH[c.city];
  sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${c.priority==='stopped'?'red':''}">${c.rescue?'חילוץ':c.priority==='stopped'?'מעלית עומדת':'רגילה'}</span>${statusPill(c)}</div><div class="addr" style="margin-top:6px">${esc(c.address)}</div><div class="sub">${callNo(c)} · ${esc(c.contact)} · ${COVER[c.cover]}</div></div>`,`
  ${debtOf(c).months>=3?`<div class="danger" style="margin-top:0"><b>ללקוח חוב פתוח של ${debtOf(c).months} חודשים (${money(debtOf(c).amount)}).</b> הטיפול בקריאה ממשיך כרגיל. כדאי להזכיר ללקוח להסדיר.</div>`:''}
  ${m?.missing?`<div class="warn">התזכיר של המעלית לא התקבל. מועד הבדיקה היה ${new Date(m.next).toLocaleDateString('he-IL')}. כדאי לבקש אותו מהלקוח.</div>`:''}
  <div class="two"><div class="box"><h4>התקלה</h4><div class="issue">${esc(c.issue)}</div><div class="detail">${esc(c.detail)}</div></div><div class="box"><h4>התיקון</h4>${c.report?`<div>${esc(c.report.text)}</div><div class="small muted mt">${esc(PEOPLE[c.report.by]?.name)} · ${hhmm(c.report.at)}</div>`:'<div class="muted">עוד לא דווח</div>'}</div></div>
  ${c.photos?.length?`<div class="photos">${c.photos.map(s=>`<img src="${s}" alt="">`).join('')}</div>`:''}
+ ${ackLine(c)?`<div class="ackl">${ackLine(c)}</div>`:''}
  ${reassignBox(c)}${c.status==='new'?`<div class="box"><h4>שיבוץ</h4><select class="in" id="oTech">${TECHS.map(t=>`<option value="${t}" ${t===sug?'selected':''}>${PEOPLE[t].name} · ${PEOPLE[t].area}${t===sug?' (לפי האזור)':''}</option>`).join('')}</select><button class="btn primary block mt" onclick="officeAssign(${c.id})">שיבוץ ושליחה לטכנאי</button></div>`:''}
  ${c.status==='closed'?`<div class="box"><h4>חיוב לפי ${COVER[c.cover]}</h4>${lines.length?`<table class="lines">${lines.map(l=>`<tr><td>${esc(l.name)} × ${l.qty}${l.charge?'':' <span class="muted small">(${money(l.price*l.qty)} בכיסוי)</span>'}</td><td>${money(l.charge)}</td></tr>`).join('')}<tr class="tot"><td>לחיוב</td><td>${money(tot)}</td></tr></table>`:'<div class="muted">ללא חלקים</div>'}
    ${c.billed?'<div class="ok">מוכן להפקת חשבונית עסקה.</div>':`<button class="btn primary block mt" onclick="markBilled(${c.id})">${tot?'אישור החיוב':'סגירה ללא חיוב'}</button>`}</div>
@@ -810,8 +970,8 @@ function openOfficeCall(id){const c=db.calls[id];openCall=id;const m=memoOf(c);c
  <label class="f">הערה פנימית (לא נשלחת ללקוח)</label><textarea class="in" id="oNote" placeholder="למשל: הוועד התחלף, לדבר עם אבי">${esc(c.internal)}</textarea><button class="btn ghost block mt" onclick="saveNote(${c.id})">שמירת ההערה</button>
  ${m?`<button class="btn ghost block mt" onclick="openMemo('${m.id}',${c.id})">${ICON.doc} תזכיר וליקויים</button>`:''}
  <div class="box"><h4>מה קרה בקריאה</h4><div class="log">${c.log.slice().reverse().map(l=>`<div><b>${hhmm(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')}</div></div>`)}
-function officeAssign(id){const c=db.calls[id];const t=$('#oTech').value;c.tech=t;c.status='assigned';c.log.push({t:Date.now(),who:PEOPLE[me].name,text:'שובצה ל'+PEOPLE[t].name});put('calls',c);closeSheet();toast(PEOPLE[t].name+' קיבל את הקריאה בטלפון')}
-function saveNote(id){const c=db.calls[id];c.internal=$('#oNote').value;put('calls',c);toast('ההערה נשמרה')}
+function officeAssign(id){const c=db.calls[id];const t=$('#oTech').value;assignTo(c,t);c.status='assigned';c.log.push({t:Date.now(),who:PEOPLE[me].name,text:'שובצה ל'+PEOPLE[t].name});put('calls',c);closeSheet();toast(PEOPLE[t].name+' קיבל את הקריאה בטלפון')}
+function saveNote(id){const c=db.calls[id];const el=$('#oNote');if(!el)return;c.internal=el.value;put('calls',c);toast('ההערה נשמרה')}
 function markBilled(id){const c=db.calls[id];c.billed=true;c.log.push({t:Date.now(),who:PEOPLE[me].name,text:'החיוב אושר'});put('calls',c);openOfficeCall(id)}
 function newCall(){sheet(`<div><div class="addr">קריאה חדשה</div><div class="sub">אחרי החיבור, הסוכן הקולי ממלא את זה לבד מהשיחה</div></div>`,`
  <label class="f">סוג הפנייה</label><div class="choices" id="nKind"><button class="choice on" data-k="fault" onclick="pick(this)">תקלה (לא חילוץ)</button><button class="choice" data-k="rescue" onclick="pick(this)">חילוץ: יש לכודים</button></div>
@@ -828,7 +988,7 @@ function priorCalls(){const a=($('#nAddr')?.value||'').trim();const el=$('#nPrio
 function pick(b){[...b.parentNode.children].forEach(x=>x.classList.remove('on'));b.classList.add('on')}
 function createCall(){const addr=$('#nAddr').value.trim();const rescue=$('#nKind .on').dataset.k==='rescue';const issue=rescue?'חילוץ: יש לכודים':$('#nIssue').value;if(!addr){toast('חסרה כתובת');return}
  const meta=db.meta.seed;const id=meta.nextId++;put('meta',meta);const city=$('#nCity').value;const t=CITY_TECH[city];
- const c={id,address:addr+', '+city,entrance:$('#nEnt').value||'כניסה ראשית',city,issue,detail:($('#nDetail').value||'')+($('#nPhone').value?` · טלפון לחזרה: ${$('#nPhone').value}`:''),priority:rescue?'stopped':$('#nPri .on').dataset.k,rescue,status:'assigned',tech:t,cover:$('#nCover .on').dataset.k,contact:$('#nContact').value||'—',elevator:{type:'חשמלית',mol:'—',contract:'—'},createdAt:Date.now(),history:[],photos:[],report:null,internal:'',
+ const c={id,address:addr+', '+city,entrance:$('#nEnt').value||'כניסה ראשית',city,issue,detail:($('#nDetail').value||'')+($('#nPhone').value?` · טלפון לחזרה: ${$('#nPhone').value}`:''),priority:rescue?'stopped':$('#nPri .on').dataset.k,rescue,trapped:rescue?{count:'יש',floor:'פרטים מהמוקד'}:null,status:'assigned',tech:t,cover:$('#nCover .on').dataset.k,contact:$('#nContact').value||'—',elevator:{type:'חשמלית',mol:'—',contract:'—'},createdAt:Date.now(),assignedAt:Date.now(),deliveredAt:null,acceptedAt:null,history:[],photos:[],report:null,internal:'',
   log:[{t:Date.now(),who:PEOPLE[me].name,text:'קריאה נפתחה'},{t:Date.now(),who:'מערכת',text:'שובצה ל'+PEOPLE[t].name+' לפי האזור'}]};
  put('calls',c);closeSheet();toast('הקריאה שובצה ל'+PEOPLE[t].name)}
 
@@ -836,19 +996,22 @@ function createCall(){const addr=$('#nAddr').value.trim();const rescue=$('#nKind
 let dashPeriod='day',drill=null;
 const PERIOD={day:['היום',0],week:['השבוע',6],month:['החודש',29]};
 function inPeriod(t){return t>=dayStart(-PERIOD[dashPeriod][1])}
-function dashSets(){const all=calls();const h=dashPeriod==='day'?{opened:0,closed:0}:(db.meta.seed?.hist?.[dashPeriod]||{opened:0,closed:0});
+function dashSets(){const all=calls();const acc=all.filter(c=>c.acceptedAt&&c.assignedAt&&c.acceptedAt>=dayStart(0));const avg=acc.length?Math.round(acc.reduce((x,c)=>x+(c.acceptedAt-c.assignedAt),0)/acc.length/6e4):0;
  return{
-  open:{label:'קריאות פתוחות',sub:'נפתחו '+PERIOD[dashPeriod][0],list:all.filter(c=>c.status!=='closed'&&inPeriod(c.createdAt)),extra:h.opened-0,tone:''},
-  closed:{label:'קריאות סגורות',sub:'נסגרו '+PERIOD[dashPeriod][0],list:all.filter(c=>c.status==='closed'&&inPeriod(c.report?.at||c.createdAt)),extra:h.closed,tone:'green'},
-  follow:{label:'ממתינות להמשך טיפול',sub:'עכשיו',list:all.filter(c=>['needs_guy','scheduled','quote'].includes(c.status)),extra:0,tone:'amber'},
-  stopped:{label:'מעליות מושבתות',sub:'עכשיו',list:all.filter(c=>c.priority==='stopped'&&c.status!=='closed'),extra:0,tone:'red'}}}
+  open:{label:'קריאות פתוחות',sub:'נפתחו '+PERIOD[dashPeriod][0],list:all.filter(c=>c.status!=='closed'&&inPeriod(c.createdAt)),tone:''},
+  closed:{label:'קריאות סגורות',sub:'נסגרו '+PERIOD[dashPeriod][0],list:all.filter(c=>c.status==='closed'&&inPeriod(c.report?.at||c.createdAt)),tone:'green'},
+  follow:{label:'ממתינות להמשך טיפול',sub:'עכשיו',list:all.filter(c=>['needs_guy','scheduled','quote'].includes(c.status)),tone:'amber'},
+  stopped:{label:'מעליות מושבתות',sub:'עכשיו',list:all.filter(c=>c.priority==='stopped'&&!c.rescue&&c.status!=='closed'),tone:'red'},
+  rescue:{label:'חילוצים פתוחים',sub:'עכשיו',list:all.filter(c=>c.rescue&&c.status!=='closed'),tone:'red'},
+  unack:{label:'לא אושרו ע״י טכנאי',sub:avg?`זמן אישור ממוצע היום: ${avg} דק׳`:'עכשיו',list:all.filter(needsAck).sort((a,b)=>(a.assignedAt||0)-(b.assignedAt||0)),tone:'amber'}}}
 function callsDash(){const S=dashSets();
  if(drill&&S[drill]){const d=S[drill];return `${pageHead(d.label,d.sub,`<button class="btn ghost sm" onclick="drill=null;render()">חזרה לתמונת מצב</button>`)}
-  ${d.list.length?d.list.map(c=>`<div class="card tap ${c.priority==='stopped'&&c.status!=='closed'?'stopped':''}" onclick="${PEOPLE[me].role==='guy'?`openGuyCall(${c.id})`:`openOfficeCall(${c.id})`}"><div class="row"><div class="addr">${esc(c.address)}</div>${statusPill(c)}</div><div class="issue">${esc(c.issue)}</div><div class="meta"><span class="chip">${c.tech?esc(PEOPLE[c.tech].name):'לא שובצה'}</span><span class="chip">${hhmm(c.createdAt)}</span></div></div>`).join(''):'<div class="empty">אין קריאות כאן.</div>'}
-  ${d.extra?`<div class="info">ועוד ${d.extra} קריאות מימים קודמים. אחרי החיבור לפריוריטי הן יופיעו כאן.</div>`:''}`}
+  ${d.list.length?paged('drill-'+drill,d.list,mgrCard):'<div class="empty">אין קריאות כאן.</div>'}`}
  return `${pageHead('תמונת מצב',DATE())}
  <div class="choices seg">${Object.entries(PERIOD).map(([k,[l]])=>`<button class="choice ${dashPeriod===k?'on':''}" onclick="dashPeriod='${k}';render()">${l==='היום'?'יומי':l==='השבוע'?'שבועי':'חודשי'}</button>`).join('')}</div>
- <div class="dash">${Object.entries(S).map(([k,d])=>`<button class="dtile ${d.tone}" onclick="drill='${k}';render();scrollTo(0,0)"><span class="dl">${d.label}</span><b>${d.list.length+d.extra}</b><span class="ds">${d.sub}</span></button>`).join('')}</div>`}
+ <div class="dash">${Object.entries(S).map(([k,d])=>`<button class="dtile ${d.tone}" onclick="drill='${k}';render();scrollTo(0,0)"><span class="dl">${d.label}</span><b>${d.list.length}</b><span class="ds">${d.sub}</span></button>`).join('')}</div>`}
+
+const mgrCard=c=>`<div class="card tap ${c.rescue&&c.status!=='closed'?'stopped':c.priority==='stopped'&&c.status!=='closed'?'stopped':''}" onclick="${PEOPLE[me].role==='guy'?`openGuyCall(${c.id})`:`openOfficeCall(${c.id})`}"><div class="row"><div class="addr">${esc(c.address)}</div>${statusPill(c)}</div><div class="issue">${esc(c.issue)}</div><div class="meta">${c.rescue||c.priority==='stopped'?prioPill(c):''}<span class="chip">${c.tech?esc(PEOPLE[c.tech].name):'לא שובצה'}</span><span class="chip">${callNo(c)} · ${whenL(c.createdAt)}</span>${ackPill(c)}</div></div>`;
 
 /* ========= OWNER (Shmaya) ========= */
 let ownPeriod='day';
@@ -865,7 +1028,7 @@ function ownerView(){if(!tab)tab='over';let inner='';
   <div class="money"><div class="mtile hero2"><span>נכנס לבנק</span><b>${money(M.in)}</b><small>${ch>=0?'▲':'▼'} ${Math.abs(ch)}% לעומת ${M.prevLabel}</small></div><div class="mtile"><span>יצא</span><b>${money(M.out)}</b><small>ספקים והוצאות</small></div><div class="mtile"><span>תזרים נטו</span><b>${money(net)}</b><small>נכנס פחות יצא</small></div><div class="mtile warnt" onclick="goTab('collect')"><span>לגבייה עכשיו</span><b>${money(due)}</b><small>${debtors.length} לקוחות · חוזי שירות בלבד ›</small></div></div>
   <div class="card"><div class="row"><b>שבעת הימים האחרונים</b><span class="small muted"><i class="lg lgi"></i>נכנס <i class="lg lgo"></i>יצא · אלפי ₪</span></div><div class="bars">${WEEK.map(([a,b],i)=>`<div class="bar"><div class="bb"><i class="bi" style="height:${a/maxW*100}%"></i><i class="bo" style="height:${b/maxW*100}%"></i></div><span>${new Date(dayStart(i-6)).toLocaleDateString('he-IL',{day:'numeric',month:'numeric'})}</span></div>`).join('')}</div></div>
   <div class="card"><div class="row"><b>גיול חובות</b><span class="small muted">${money(due+accounts().reduce((s,a)=>s+workSum(a),0))} בגיול</span></div><div class="split"><div><span>חוזי שירות, לגבייה</span><b>${money(due)}</b></div><div><span>עבודות, שיפוצים וחוב קודם</span><b>${money(accounts().reduce((s,a)=>s+workSum(a),0))}</b></div></div><div class="small muted" style="margin-top:8px">חוזי שירות לפי ותק:</div>${B.map(([l,f])=>{const v=debtors.filter(f).reduce((s,a)=>s+openSum(a),0);return `<div class="agerow"><span>${l}</span><div class="ag"><i style="width:${v/maxB*100}%"></i></div><b>${money(v)}</b></div>`}).join('')}</div>
-  <div class="card"><div class="row"><b>קריאות שירות</b><span class="small muted">היום</span></div><div class="mini">${Object.entries(S).map(([k,d])=>`<div class="${d.tone}"><b>${d.list.length}</b><span>${d.label}</span></div>`).join('')}</div></div>
+  <div class="card"><div class="row"><b>קריאות שירות</b><span class="small muted">היום</span></div><div class="mini">${Object.entries(S).filter(([k])=>['open','closed','follow','stopped'].includes(k)).map(([k,d])=>`<div class="${d.tone}"><b>${d.list.length}</b><span>${d.label}</span></div>`).join('')}</div></div>
   <div class="info">המספרים של הכסף לדוגמה. אחרי החיבור הם יגיעו מחשבון הבנק, והקבלות מפריוריטי.</div>`;
  }else if(tab==='calls'){inner=callsDash()}
  else inner=collectView(true);
@@ -1045,12 +1208,12 @@ function openAccount(id){const a=db.accounts[id];const cs=calls().filter(c=>c.ad
  <div class="box"><h4>יומן קשר</h4><div class="log">${(a.log||[]).slice().reverse().map(l=>`<div><b>${dayLabel(l.t)==='היום'?hhmm(l.t):dayLabel(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')||'<div>עוד אין</div>'}</div><div class="small muted mt">אחרי החיבור יופיעו כאן גם המיילים מ-Gmail.</div></div>`)}
 
 /* ========= render ========= */
-function render(){const keep=openCall;let html;
+function render(){const keep=openCall;let html;const ae=document.activeElement;const fid=ae&&ae.id&&ae.closest&&ae.closest('#app')?ae.id:null;const sel=fid&&ae.selectionStart!=null?[ae.selectionStart,ae.selectionEnd]:null;
  if(!me||!PEOPLE[me])html=picker();else{const r=PEOPLE[me].role;html=r==='tech'||r==='team'?techView():r==='guy'?guyView():r==='owner'?ownerView():officeView()}
- $('#app').innerHTML=html;renderSync();
+ $('#app').innerHTML=html;renderSync();if(fid){const el=document.getElementById(fid);if(el){el.focus();try{sel&&el.setSelectionRange(sel[0],sel[1])}catch(e){}}}if(me&&PEOPLE[me]?.role==='tech')setTimeout(markDelivered,0);
  if(keep&&$('#sheet')&&!draft){/* sheet content refresh handled by explicit calls */}
 }
-(async()=>{$('#app').innerHTML='<div class="pick"><div class="sub">טוען…</div></div>';await initStore();render();setInterval(poll,2500);document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()})})();
+(async()=>{$('#app').innerHTML='<div class="pick"><div class="sub">טוען…</div></div>';await initStore();if(me&&PEOPLE[me]?.role==='tech'&&locOn())startLoc();if(me&&alertsOn()&&'serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});render();setInterval(poll,2500);document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()})})();
 </script>
 </body>
 </html>
