@@ -250,10 +250,10 @@ body.allpaused .dot{background:var(--red);animation:none}
 .ov-big span{font-size:34px;font-weight:800;letter-spacing:-.5px}
 .ov-big small{font-size:14px;color:var(--muted)}
 .agebar{display:grid;grid-template-columns:78px 1fr auto;gap:10px;align-items:center;width:100%;border:0;background:none;padding:7px 0;text-align:right;border-radius:8px}
-.agebar:hover .ag i{filter:brightness(.92)}.agebar:hover b{color:var(--rose)}
+.agebar:hover .agtrack i{filter:brightness(.92)}.agebar:hover b{color:var(--rose)}
 .agebar span{font-size:14px}
-.ag{height:12px;background:#efe6e8;border-radius:6px;overflow:hidden}
-.ag i{display:block;height:100%;width:0;border-radius:6px;transition:width 1.2s cubic-bezier(.3,.7,.2,1)}
+.agtrack{height:12px;background:#efe6e8;border-radius:6px;overflow:hidden}
+.agtrack i{display:block;height:100%;width:0;border-radius:6px;transition:width 1.2s cubic-bezier(.3,.7,.2,1)}
 .agebar b{font-size:14px;white-space:nowrap}.agebar small{display:block;font-size:12px;color:var(--muted);font-weight:500}
 .stack{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:10px 0 12px;background:#efe6e8}
 .stack i{display:block;height:100%;width:0;transition:width 1.2s cubic-bezier(.3,.7,.2,1)}
@@ -277,6 +277,7 @@ body.allpaused .titem:not(.pay) b::after{content:" · עצור";color:var(--red)
 .fchips button.on{background:var(--ink);border-color:var(--ink);color:#fff}
 .pane2{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
 .nb.std{background:var(--green-t);color:var(--green)}
+.pane2 .calls{gap:5px}.pane2 .callrow{padding:7px 11px;gap:8px}.pane2 .callrow b{font-size:14px;font-weight:700}.pane2 .callrow .cd{font-size:13px;color:var(--muted)}.pane2 .callrow .cn{font-size:12px;color:var(--faint);margin-inline-start:8px}.pane2 .callrow small{font-size:12.5px}.pane2 .callrow .nb{font-size:11.5px;padding:2px 8px}
 .callrow .lis{font-size:12.5px;font-weight:700;color:var(--rose);white-space:nowrap}
 @media(max-width:900px){.ov-grid{grid-template-columns:1fr}.cons-top .btn{width:100%}}
 
@@ -625,27 +626,27 @@ const NB={agent:['call','שיחה מתוכננת'],promise:['pay','בדיקת ת
 const opener=who=>['ag',`שלום, אני מתקשרת מטעם צמרת מעליות. אפשר לדבר עם ${who}?`];
 const NA=t=>({t,out:'לא ענה',dur:'',sum:'אין מענה',tr:[]});
 const CUSTS=[
- {id:'a',addr:'הערבה 16, חיפה',amt:7425,months:10,age:'m6',st:'promise',label:'הבטיח לשלם · בדיקה ביום חמישי',reason:'אמר שיעביר עד יום חמישי. עד אז הסוכנת לא מתקשרת.',
-  calls:[{t:'אתמול 14:15',out:'שיחה מלאה',dur:'1:49',sum:'הבטיח לשלם עד יום חמישי',tr:[opener('הגזבר'),['cu','כן, מדבר.'],['ag','יש אצלנו עשר חשבוניות שירות פתוחות על המעלית, בסך 7,425 שקלים. יש להסדיר את התשלום. מתי תוכל להעביר?'],['cu','אני מעביר עד יום חמישי.'],['ag','רשמתי, עד יום חמישי. אפשר גם לסדר את זה בהוראת קבע, ואז לא צריך לזכור כל חודש. תרצה פרטים?'],['cu','אחרי שאעביר, נדבר על זה.'],['ag','בסדר גמור. תודה, יום טוב.']]},NA('לפני 3 ימים 15:36')]},
+ {id:'a',addr:'הערבה 16, חיפה',amt:7425,months:10,age:'m6',st:'promise',label:'הבטיח לשלם · בדיקה ביום חמישי 12.11',reason:'אמר שיעביר עד יום חמישי. עד אז הסוכנת לא מתקשרת.',
+  calls:[{t:'5.11 · 14:15',out:'שיחה מלאה',dur:'1:49',sum:'הבטיח לשלם עד יום חמישי',tr:[opener('הגזבר'),['cu','כן, מדבר.'],['ag','יש אצלנו עשר חשבוניות שירות פתוחות על המעלית, בסך 7,425 שקלים. יש להסדיר את התשלום. מתי תוכל להעביר?'],['cu','אני מעביר עד יום חמישי.'],['ag','רשמתי, עד יום חמישי. אפשר גם לסדר את זה בהוראת קבע, ואז לא צריך לזכור כל חודש. תרצה פרטים?'],['cu','אחרי שאעביר, נדבר על זה.'],['ag','בסדר גמור. תודה, יום טוב.']]},NA('2.11 · 15:36')]},
  {id:'b',addr:'הגפן 40, חיפה',amt:3980,months:10,age:'m6',st:'red',label:'לא ענה 6 פעמים · עבר למשרד',reason:'הסוכנת הפסיקה להתקשר. מה עושים: מכתב, שיחה מהמשרד, או משהו אחר.',
-  calls:[...['אתמול','לפני יומיים','לפני 3 ימים','לפני 4 ימים','לפני 5 ימים'].map(d=>NA(d+' 10:00')),{t:'לפני 6 ימים 10:00',out:'ענה וניתק',dur:'0:14',sum:'ענה וניתק לפני שהוסבר החוב',tr:[opener('הגזבר של הבניין'),['cu','מי זה? אני לא יכול עכשיו.'],['ag','זה ייקח דקה, זה בנוגע לחשבוניות השירות של המעלית.'],['sys','השיחה נותקה על ידי הלקוח']]}]},
- {id:'c',addr:'החרוב 21, עכו',amt:5170,months:4,age:'m36',st:'agent',label:'ביקש שנחזור אליו',reason:'ביקש שהסוכנת תתקשר ביום ראשון ב-11:00.',next:'יום ראשון 11:00',
-  calls:[{t:'היום 10:00',out:'שיחה מלאה',dur:'0:41',sum:'בנהיגה, ביקש שיחה חוזרת ביום ראשון ב-11:00',tr:[opener('הגזבר'),['cu','כן, אבל אני בנהיגה עכשיו.'],['ag','בטח. מתי יהיה לך נוח שנחזור אליך?'],['cu','יום ראשון בבוקר, בסביבות אחת עשרה.'],['ag','אז ביום ראשון, 9 בנובמבר, בשעה 11:00. נכון?'],['cu','כן.'],['ag','מעולה, אחזור אליך אז. נסיעה טובה.']]}]},
+  calls:[...['5.11 · 10:02','4.11 · 11:37','3.11 · 09:48','2.11 · 13:15','1.11 · 10:26'].map(NA),{t:'29.10 · 16:04',out:'ענה וניתק',dur:'0:14',sum:'ענה וניתק לפני שהוסבר החוב',tr:[opener('הגזבר של הבניין'),['cu','מי זה? אני לא יכול עכשיו.'],['ag','זה ייקח דקה, זה בנוגע לחשבוניות השירות של המעלית.'],['sys','השיחה נותקה על ידי הלקוח']]}]},
+ {id:'c',addr:'החרוב 21, עכו',amt:5170,months:4,age:'m36',st:'agent',label:'ביקש שנחזור אליו',reason:'ביקש שהסוכנת תתקשר ביום ראשון ב-11:00.',next:'יום ראשון 8.11 · 11:00',
+  calls:[{t:'5.11 · 10:41',out:'שיחה מלאה',dur:'0:41',sum:'בנהיגה, ביקש שיחה חוזרת ביום ראשון ב-11:00',tr:[opener('הגזבר'),['cu','כן, אבל אני בנהיגה עכשיו.'],['ag','בטח. מתי יהיה לך נוח שנחזור אליך?'],['cu','יום ראשון בבוקר, בסביבות אחת עשרה.'],['ag','אז ביום ראשון, 8 בנובמבר, בשעה 11:00. נכון?'],['cu','כן.'],['ag','מעולה, אחזור אליך אז. נסיעה טובה.']]}]},
  {id:'e',addr:'הנרקיס 22, חיפה',amt:2190,months:3,age:'m36',st:'office',label:'מחלוקת על החוב · למשרד',reason:'טוען שהחיוב של ספטמבר לא נכון. אור בודקת וחוזרת אליו.',
-  calls:[{t:'היום 11:20',out:'שיחה מלאה',dur:'1:12',sum:'מחלוקת על החיוב של ספטמבר',tr:[opener('בעל הדירה שמטפל בתשלומים'),['cu','כן, זה אני.'],['ag','יש אצלנו שלוש חשבוניות שירות פתוחות על המעלית, בסך 2,190 שקלים. רציתי לבדוק מה מצב התשלום.'],['cu','את ספטמבר אני לא משלם. לא הייתה אצלנו שום קריאה באותו חודש.'],['ag','אני מבינה. המחלוקת היא על החיוב של צמרת, נכון?'],['cu','כן.'],['ag','בסדר. צריך שהמשרד יבדוק את זה לפני שממשיכים. אור תחזור אליך.']]}]},
+  calls:[{t:'4.11 · 12:20',out:'שיחה מלאה',dur:'1:12',sum:'מחלוקת על החיוב של ספטמבר',tr:[opener('בעל הדירה שמטפל בתשלומים'),['cu','כן, זה אני.'],['ag','יש אצלנו שלוש חשבוניות שירות פתוחות על המעלית, בסך 2,190 שקלים. רציתי לבדוק מה מצב התשלום.'],['cu','את ספטמבר אני לא משלם. לא הייתה אצלנו שום קריאה באותו חודש.'],['ag','אני מבינה. המחלוקת היא על החיוב של צמרת, נכון?'],['cu','כן.'],['ag','בסדר. צריך שהמשרד יבדוק את זה לפני שממשיכים. אור תחזור אליך.']]}]},
  {id:'f',addr:'התבור 9, נשר',amt:1290,months:2,age:'m2',st:'standing',label:'ביקשה הוראת קבע · הפרטים נשלחו',reason:'הטופס וההסבר נשלחו אליה בוואטסאפ. מחכים שההרשאה תיקלט בבנק.',
-  calls:[{t:'אתמול 12:05',out:'שיחה מלאה',dur:'1:31',sum:'ביקשה להעביר להוראת קבע ותעביר היום את שתי החשבוניות',tr:[opener('הגזברית'),['cu','כן, אני הגזברית.'],['ag','יש שתי חשבוניות שירות פתוחות על המעלית, בסך 1,290 שקלים. רציתי לבדוק מה מצב התשלום.'],['cu','אני כל חודש שוכחת, זו כל הבעיה.'],['ag','אפשר לסדר את זה בהוראת קבע, ואז לא צריך לזכור כל חודש. תרצי שנשלח לך את הפרטים?'],['cu','כן, זה יהיה מעולה.'],['ag','הטופס וההסבר נשלחים אלייך עכשיו בוואטסאפ. את שתי החשבוניות אפשר להעביר כבר עכשיו.'],['cu','אעביר היום, תודה.']]}]},
+  calls:[{t:'3.11 · 12:05',out:'שיחה מלאה',dur:'1:31',sum:'ביקשה להעביר להוראת קבע ותעביר היום את שתי החשבוניות',tr:[opener('הגזברית'),['cu','כן, אני הגזברית.'],['ag','יש שתי חשבוניות שירות פתוחות על המעלית, בסך 1,290 שקלים. רציתי לבדוק מה מצב התשלום.'],['cu','אני כל חודש שוכחת, זו כל הבעיה.'],['ag','אפשר לסדר את זה בהוראת קבע, ואז לא צריך לזכור כל חודש. תרצי שנשלח לך את הפרטים?'],['cu','כן, זה יהיה מעולה.'],['ag','הטופס וההסבר נשלחים אלייך עכשיו בוואטסאפ. את שתי החשבוניות אפשר להעביר כבר עכשיו.'],['cu','אעביר היום, תודה.']]}]},
  {id:'d',addr:'האלון 14, קריית ים',amt:15555,months:7,age:'m6',st:'personal',label:'טיפול אישי · שמעיה',reason:'יש ללקוח גם שיפוץ פתוח (₪142,070). כדי לא לפגוע בקשר, הסוכנת לא מתקשרת אליו. שמעיה מטפל אישית.',calls:[]}];
 const WAIT=[['office','מחלוקת או "כבר שילמתי"',9,'#b7791f'],['red','לא ענו 6 פעמים',4,'#c2413b'],['promise','בדיקת תשלום השבוע',7,'#3f5fa8'],['standing','הוראות קבע לוודא בבנק',5,'#2f7d4f']];
-const PLAN={a:[{when:'יום חמישי',what:'בדיקת תשלום',sub:'אם הכסף הגיע, הלקוח יוצא מהגבייה',cls:'pay'},{when:'יום ראשון 10:00',what:'שיחה, רק אם לא שולם',sub:'שיחה 3 מתוך 6'}],
- b:[],c:[{when:'יום ראשון 11:00',what:'שיחה חוזרת, כמו שביקש'},{when:'יום שני 10:00',what:'ניסיון נוסף, רק אם לא יענה',sub:'שיחה 2 מתוך 6',cls:'more'}],
- e:[],f:[{when:'עד סוף השבוע',what:'לוודא שההרשאה נקלטה בבנק',cls:'pay'},{when:'מהחודש הבא',what:'בלי שיחות גבייה, התשלום יורד לבד',cls:'more'}],d:[]};
+const PLAN={a:[{when:'יום חמישי 12.11',what:'בדיקת תשלום',sub:'אם הכסף הגיע, הלקוח יוצא מהגבייה',cls:'pay'},{when:'יום ראשון 15.11 · 10:00',what:'שיחה, רק אם לא שולם',sub:'שיחה 3 מתוך 6'}],
+ b:[],c:[{when:'יום ראשון 8.11 · 11:00',what:'שיחה חוזרת, כמו שביקש'},{when:'יום שני 9.11 · 10:00',what:'ניסיון נוסף, רק אם לא יענה',sub:'שיחה 2 מתוך 6',cls:'more'}],
+ e:[],f:[{when:'עד 12.11',what:'לוודא שההרשאה נקלטה בבנק',cls:'pay'},{when:'מדצמבר',what:'בלי שיחות גבייה, התשלום יורד לבד',cls:'more'}],d:[]};
 let view='over',fil=null,sel='a',openCall=null,log=[];
 const now=()=>new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});
 const filLabel=()=>fil?(AGE.find(x=>x[0]===fil)||ST.find(x=>x[0]===fil))[1]:'כל הלקוחות';
 function drawOver(){const tot=AGE.reduce((s,a)=>s+a[2],0),max=Math.max(...AGE.map(a=>a[2]));
  $('#totalAmt').textContent=nis(tot);
- $('#aging').innerHTML=AGE.map(([k,l,v,n,c])=>`<button class="agebar" data-f="${k}"><span>${l}</span><div class="ag"><i data-w="${Math.round(v/max*100)}" style="background:${c}"></i></div><b>${nis(v)}<small>${n} לקוחות</small></b></button>`).join('');
+ $('#aging').innerHTML=AGE.map(([k,l,v,n,c])=>`<button class="agebar" data-f="${k}"><span>${l}</span><div class="agtrack"><i data-w="${Math.round(v/max*100)}" style="background:${c}"></i></div><b>${nis(v)}<small>${n} לקוחות</small></b></button>`).join('');
  const sum=ST.reduce((s,x)=>s+x[2],0);
  $('#stackBar').innerHTML=ST.map(([k,l,n,c])=>`<i data-w="${(n/sum*100).toFixed(1)}" style="background:${c}" title="${l}"></i>`).join('');
  $('#statusRows').innerHTML=ST.map(([k,l,n,c])=>`<button class="srow" data-f="${k}"><i style="background:${c}"></i><span>${l}</span><b>${n}</b></button>`).join('');
@@ -667,7 +668,7 @@ function drawCust(){const c=CUSTS.find(x=>x.id===sel);if(!c){$('#custPane').inne
  <b>מה מתוכנן ללקוח הזה</b>
  <div class="tline" style="margin:6px 0 14px">${(PLAN[c.id]||[]).length&&!['stop','ok'].includes(c.st)?PLAN[c.id].map(u=>`<div class="titem ${u.cls||''}"><b>${u.when}</b><span>${u.what}</span>${u.sub?`<small>${u.sub}</small>`:''}</div>`).join(''):`<div class="sim" style="margin:4px 0">${c.st==='personal'?'אין שיחות של הסוכנת. שמעיה מטפל אישית.':c.st==='ok'?'אין. הלקוח שילם.':c.st==='stop'?'אין. הסוכנת עצורה ללקוח הזה.':'אין שיחות מתוכננות. מחכה להחלטה של אור.'}</div>`}</div>
  <b>שיחות הסוכנת (${c.calls.length})</b>
- <div class="calls">${c.calls.length?c.calls.map((k,i)=>`<button class="callrow ${openCall===i?'on':''}" data-i="${i}"><span class="ci"><b>שיחה ${c.calls.length-i}</b> · ${k.t}${k.dur?' · '+k.dur:''}<small>${k.sum}</small></span>${k.tr.length?'<span class="lis">האזנה ותמלול</span>':''}<span class="nb ${k.out==='שיחה מלאה'?'ok':k.out==='ענה וניתק'?'off':'stop'}">${k.out}</span></button>`).join(''):'<div class="sim">הסוכנת לא מתקשרת ללקוח הזה.</div>'}</div>
+ <div class="calls">${c.calls.length?c.calls.map((k,i)=>`<button class="callrow ${openCall===i?'on':''}" data-i="${i}"><span class="ci"><b>${k.t}</b>${k.dur?`<span class="cd"> · ${k.dur}</span>`:''}<span class="cn">שיחה ${c.calls.length-i}</span><small>${k.sum}</small></span>${k.tr.length?'<span class="lis">האזנה ותמלול</span>':''}<span class="nb ${k.out==='שיחה מלאה'?'ok':k.out==='ענה וניתק'?'off':'stop'}">${k.out}</span></button>`).join(''):'<div class="sim">הסוכנת לא מתקשרת ללקוח הזה.</div>'}</div>
  <div class="tr" id="trBox"></div>
  <div class="acts">${c.st==='stop'||c.st==='personal'?`<button class="btn sm" data-a="resume">${c.st==='personal'?'להעביר לשיחות הסוכנת':'החזרה לשיחות'}</button>`:c.st==='ok'?'':`<button class="btn sm" data-a="stop">עצירת הסוכנת ללקוח</button>`}${c.st!=='ok'?'<button class="btn sm go" data-a="paid">סימון ששולם</button>':''}</div>
  <div class="log">${log.filter(l=>l.id===c.id).map(l=>`<div><b>${l.t}</b> · ${l.text}</div>`).join('')||'יומן פעולות: עוד אין'}</div>`;
