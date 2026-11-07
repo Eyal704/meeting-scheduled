@@ -229,6 +229,52 @@ body.allpaused .dot{background:var(--red);animation:none}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1f1f22;color:#fff;border-radius:14px;padding:11px 14px;display:flex;gap:14px;align-items:center;font-size:15px;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 .toast button{background:none;border:0;color:#ffb3c3;font-weight:800}
 
+/* Or's view: overview first, then customers, then the call */
+.cons{padding:16px}
+.cons-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cons-top .agent{flex:1;min-width:200px}
+.vt{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px}
+.vt button{border:0;background:none;border-radius:9px;padding:7px 16px;font-weight:700;font-size:14.5px;color:var(--muted)}
+.vt button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.crumbs{font-size:14px;color:var(--muted);margin:12px 0 10px;min-height:20px}
+.crumbs button{border:0;background:none;color:var(--rose);font-weight:700;padding:0}
+.ov-grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
+.ov-card{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:16px}
+.ov-l{font-size:13.5px;font-weight:700;color:var(--muted)}
+.ov-big{display:flex;align-items:baseline;gap:10px;margin-top:4px}
+.ov-big span{font-size:34px;font-weight:800;letter-spacing:-.5px}
+.ov-big small{font-size:14px;color:var(--muted)}
+.agebar{display:grid;grid-template-columns:78px 1fr auto;gap:10px;align-items:center;width:100%;border:0;background:none;padding:7px 0;text-align:right;border-radius:8px}
+.agebar:hover .ag i{filter:brightness(.92)}.agebar:hover b{color:var(--rose)}
+.agebar span{font-size:14px}
+.ag{height:12px;background:#efe6e8;border-radius:6px;overflow:hidden}
+.ag i{display:block;height:100%;width:0;border-radius:6px;transition:width 1.2s cubic-bezier(.3,.7,.2,1)}
+.agebar b{font-size:14px;white-space:nowrap}.agebar small{display:block;font-size:12px;color:var(--muted);font-weight:500}
+.stack{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:10px 0 12px;background:#efe6e8}
+.stack i{display:block;height:100%;width:0;transition:width 1.2s cubic-bezier(.3,.7,.2,1)}
+.srow{display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;padding:6px 0;text-align:right;font-size:14.5px}
+.srow i{width:10px;height:10px;border-radius:3px;flex:none}
+.srow span{flex:1}.srow b{font-size:14.5px}
+.srow:hover span{color:var(--rose)}
+.tline{position:relative;margin-top:10px;padding-inline-start:18px}
+.tline::before{content:"";position:absolute;right:5px;top:6px;bottom:6px;width:2px;background:var(--rose-b)}
+.titem{position:relative;display:block;width:100%;border:0;background:none;text-align:right;padding:7px 0}
+.titem::before{content:"";position:absolute;right:-18px;top:13px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--teal)}
+.titem.pay::before{border-color:var(--blue)}.titem.more::before{border-color:var(--faint)}
+.titem b{display:block;font-size:13.5px;color:var(--muted)}
+.titem span{font-size:14.5px;font-weight:600}
+.titem small{display:block;font-size:12.5px;color:var(--muted)}
+.titem:not(.more):hover span{color:var(--rose)}
+body.allpaused .titem:not(.pay)::before{border-color:var(--red);background:var(--red-t)}
+body.allpaused .titem:not(.pay) b::after{content:" · עצור";color:var(--red);font-weight:700}
+.fchips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.fchips button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font-size:13.5px;font-weight:600;color:var(--muted)}
+.fchips button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.pane2{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+.nb.std{background:var(--green-t);color:var(--green)}
+.callrow .lis{font-size:12.5px;font-weight:700;color:var(--rose);white-space:nowrap}
+@media(max-width:900px){.ov-grid{grid-template-columns:1fr}.cons-top .btn{width:100%}}
+
 /* email alert mock */
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:14.5px;font-weight:600;color:var(--muted)}
@@ -392,20 +438,39 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
 
   <section id="console">
     <div class="sec-h"><span class="sec-n">3</span><h2>מה אור רואה ושולטת</h2></div>
-    <p class="sec-p">הדמיה של מסך הגבייה. אפשר ללחוץ על הכל: לעצור שיחות, לפתוח שיחה, לשמוע, לקרוא תמלול ולבטל פעולה.</p>
-    <div class="console">
-      <div class="card pane reveal">
-        <div class="agent"><span class="dot"></span><div style="flex:1"><b id="agT">הסוכנת פעילה</b><div class="sim" id="agS" style="margin:0">מתקשרת לפי החוקים, בימים א׳–ה׳.</div></div><button class="btn stop sm" id="pauseAll">עצירת כל השיחות</button></div>
-        <div class="wins">
-          <div class="g"><b data-c="7">0</b><span>הבטיחו לשלם</span></div>
-          <div class="t"><b data-c="5">0</b><span>רוצים הוראת קבע</span></div>
-          <div class="a"><b data-c="9">0</b><span>עברו למשרד</span></div>
-          <div class="r"><b data-c="4">0</b><span>לא ענו 6 פעמים</span></div>
-        </div>
-        <div class="custs" id="custs"></div>
-        <div class="sim">נתונים לדוגמה.</div>
+    <p class="sec-p">קודם תמונה כללית: כמה חוב יש, כמה זמן הוא פתוח, ואיפה כל לקוח עומד. לוחצים על כל מספר ויורדים ללקוחות, ומשם לשיחה עצמה.</p>
+    <div class="card cons reveal">
+      <div class="cons-top">
+        <div class="agent"><span class="dot"></span><div><b id="agT">הסוכנת פעילה</b><div class="sim" id="agS" style="margin:0">מתקשרת לפי החוקים, בימים א׳–ה׳.</div></div></div>
+        <div class="vt" id="viewTabs"><button data-v="over" class="on">תמונה כללית</button><button data-v="list">לקוחות</button></div>
+        <button class="btn stop sm" id="pauseAll">עצירת כל השיחות</button>
       </div>
-      <div class="card pane reveal" id="custPane"></div>
+      <div class="crumbs" id="crumbs"></div>
+      <div id="viewOver" class="vw">
+        <div class="ov-grid">
+          <div class="ov-card">
+            <div class="ov-l">לגבייה עכשיו · חוזי שירות</div>
+            <div class="ov-big"><span id="totalAmt">₪0</span><small>44 לקוחות</small></div>
+            <div class="ov-l" style="margin-top:14px">כמה זמן החוב פתוח</div>
+            <div id="aging"></div>
+          </div>
+          <div class="ov-card">
+            <div class="ov-l">איפה הלקוחות עומדים</div>
+            <div class="stack" id="stackBar"></div>
+            <div id="statusRows"></div>
+          </div>
+          <div class="ov-card">
+            <div class="ov-l">השיחות הבאות</div>
+            <div class="tline" id="tline"></div>
+          </div>
+        </div>
+      </div>
+      <div id="viewList" class="vw" hidden>
+        <div class="console">
+          <div><div class="fchips" id="fchips"></div><div class="custs" id="custs"></div><div class="sim">לקוחות לדוגמה.</div></div>
+          <div class="pane2" id="custPane"></div>
+        </div>
+      </div>
     </div>
     <div class="golinks">
       <a data-go="view=collect" target="_blank" rel="noopener"><b>מסך הגבייה</b><span>כל הלקוחות, מה הסוכנת השיגה, ועצירה</span></a>
@@ -535,41 +600,79 @@ $('#restart').onclick=()=>{step=0;render()};
 /* hover or click on a step shows the flow up to that step (steps outside this scenario are ignored) */
 $$('#flowSteps [data-k]').forEach(el=>{const go=()=>{const i=seqOf().indexOf(el.dataset.k);if(i>=0&&i!==step){step=i;render()}};el.addEventListener('mouseenter',go);el.addEventListener('click',go)});
 
-/* console simulation */
+/* Or's view (simulation): overview -> customers -> call */
+const nis=n=>'₪'+n.toLocaleString('en-US');
+const AGE=[['m1','חודש אחד',6200,4,'#e7b7c3'],['m2','חודשיים',12220,5,'#d98a9d'],['m36','3 עד 6 חודשים',96310,21,'#c9536e'],['m6','מעל 6 חודשים',98858,14,'#8c3349']];
+const ST=[['agent','בטיפול הסוכנת',12,'#2f6f63'],['promise','הבטיחו לשלם',7,'#3f5fa8'],['standing','רוצים הוראת קבע',5,'#2f7d4f'],['office','עברו למשרד',9,'#b7791f'],['red','לא ענו 6 פעמים',4,'#c2413b'],['personal','טיפול אישי',7,'#8a8a90']];
+const NB={agent:['call','שיחה מתוכננת'],promise:['pay','בדיקת תשלום'],standing:['std','הוראת קבע'],office:['off','למשרד'],red:['off','לא ענה 6 פעמים'],personal:['stop','טיפול אישי'],stop:['stop','עצור'],ok:['ok','שולם']};
+const opener=who=>['ag',`שלום, אני מתקשרת מטעם צמרת מעליות. אפשר לדבר עם ${who}?`];
+const NA=t=>({t,out:'לא ענה',dur:'',sum:'אין מענה',tr:[]});
 const CUSTS=[
- {id:'a',addr:'הערבה 16, חיפה',debt:'₪7,425 · 10 חודשים',state:'pay',label:'הבטיח לשלם · בדיקה ביום חמישי',reason:'אמר שיעביר עד יום חמישי. לא מתקשרים בינתיים.',calls:[{t:'אתמול 14:15',out:'שיחה מלאה',dur:'1:49',sum:'הבטיח לשלם עד יום חמישי',tr:[['ag','שלום, אני מתקשרת מטעם צמרת מעליות. אפשר לדבר עם הגזבר?'],['cu','כן, מדבר.'],['ag','יש אצלנו עשר חשבוניות שירות פתוחות על המעלית. יש להסדיר את התשלום. מתי תוכל להעביר?'],['cu','אני מעביר עד יום חמישי.'],['ag','רשמתי, עד יום חמישי. אפשר גם לסדר את זה בהוראת קבע, ואז לא צריך לזכור כל חודש. תרצה פרטים?'],['cu','כן, תשלחו.']]},{t:'לפני 3 ימים 15:36',out:'לא ענה',dur:'',sum:'אין מענה',tr:[]}]},
- {id:'b',addr:'הגפן 40, חיפה',debt:'₪3,980 · 10 חודשים',state:'off',label:'לא ענה 6 פעמים · עבר למשרד',reason:'הסוכנת הפסיקה להתקשר. מה עושים: מכתב, שיחה מהמשרד, או משהו אחר.',calls:['אתמול','לפני יומיים','לפני 3 ימים','לפני 4 ימים','לפני 5 ימים','לפני 6 ימים'].map(d=>({t:d+' 10:00',out:'לא ענה',dur:'',sum:'אין מענה',tr:[]}))},
- {id:'c',addr:'החרוב 21, עכו',debt:'₪5,170 · 10 חודשים',state:'call',label:'לא ענה · תנסה שוב',reason:'ניסיון 2 מתוך 6.',next:'מחר 10:00',calls:[{t:'היום 10:00',out:'לא ענה',dur:'',sum:'אין מענה',tr:[]}]},
- {id:'d',addr:'האלון 14, קריית ים',debt:'₪15,555 · 7 חודשים',state:'stop',personal:true,label:'טיפול אישי · שמעיה',reason:'יש ללקוח גם שיפוץ פתוח (₪142,070). הסוכנת לא מתקשרת אליו.',calls:[]}];
-const NB={call:['call','שיחה מתוכננת'],pay:['pay','בדיקת תשלום'],off:['off','למשרד'],stop:['stop','עצור'],ok:['ok','שולם']};
-let sel='a',openCall=null,log=[];
-function now(){return new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'})}
-function drawList(){$('#custs').innerHTML=CUSTS.map(c=>`<button class="cust ${c.id===sel?'on':''}" data-id="${c.id}"><span><b>${c.addr}</b><small>${c.debt}</small></span><span class="nb ${NB[c.state][0]}">${c.personal&&c.state==='stop'?'טיפול אישי':NB[c.state][1]}</span></button>`).join('');$$('.cust').forEach(b=>b.onclick=()=>{sel=b.dataset.id;openCall=null;drawList();drawCust()})}
-function drawCust(){const c=CUSTS.find(x=>x.id===sel);const paused=document.body.classList.contains('allpaused');
- $('#custPane').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px"><b style="font-size:19px">${c.addr}</b><span class="sim" style="margin:0">${c.debt}</span></div>
- <div class="next ${c.state}"><h4>מה הלאה</h4><b>${c.label}</b>${c.next?`<div><b>השיחה הבאה: ${paused&&c.state==='call'?'עצורה':c.next}</b></div>`:''}<div class="sim" style="margin-top:4px">${c.reason}</div></div>
+ {id:'a',addr:'הערבה 16, חיפה',amt:7425,months:10,age:'m6',st:'promise',label:'הבטיח לשלם · בדיקה ביום חמישי',reason:'אמר שיעביר עד יום חמישי. עד אז הסוכנת לא מתקשרת.',
+  calls:[{t:'אתמול 14:15',out:'שיחה מלאה',dur:'1:49',sum:'הבטיח לשלם עד יום חמישי',tr:[opener('הגזבר'),['cu','כן, מדבר.'],['ag','יש אצלנו עשר חשבוניות שירות פתוחות על המעלית, בסך 7,425 שקלים. יש להסדיר את התשלום. מתי תוכל להעביר?'],['cu','אני מעביר עד יום חמישי.'],['ag','רשמתי, עד יום חמישי. אפשר גם לסדר את זה בהוראת קבע, ואז לא צריך לזכור כל חודש. תרצה פרטים?'],['cu','אחרי שאעביר, נדבר על זה.'],['ag','בסדר גמור. תודה, יום טוב.']]},NA('לפני 3 ימים 15:36')]},
+ {id:'b',addr:'הגפן 40, חיפה',amt:3980,months:10,age:'m6',st:'red',label:'לא ענה 6 פעמים · עבר למשרד',reason:'הסוכנת הפסיקה להתקשר. מה עושים: מכתב, שיחה מהמשרד, או משהו אחר.',
+  calls:[...['אתמול','לפני יומיים','לפני 3 ימים','לפני 4 ימים','לפני 5 ימים'].map(d=>NA(d+' 10:00')),{t:'לפני 6 ימים 10:00',out:'ענה וניתק',dur:'0:14',sum:'ענה וניתק לפני שהוסבר החוב',tr:[opener('הגזבר של הבניין'),['cu','מי זה? אני לא יכול עכשיו.'],['ag','זה ייקח דקה, זה בנוגע לחשבוניות השירות של המעלית.'],['sys','השיחה נותקה על ידי הלקוח']]}]},
+ {id:'c',addr:'החרוב 21, עכו',amt:5170,months:4,age:'m36',st:'agent',label:'ביקש שנחזור אליו',reason:'ביקש שהסוכנת תתקשר ביום ראשון ב-11:00.',next:'יום ראשון 11:00',
+  calls:[{t:'היום 10:00',out:'שיחה מלאה',dur:'0:41',sum:'בנהיגה, ביקש שיחה חוזרת ביום ראשון ב-11:00',tr:[opener('הגזבר'),['cu','כן, אבל אני בנהיגה עכשיו.'],['ag','בטח. מתי יהיה לך נוח שנחזור אליך?'],['cu','יום ראשון בבוקר, בסביבות אחת עשרה.'],['ag','אז ביום ראשון, 9 בנובמבר, בשעה 11:00. נכון?'],['cu','כן.'],['ag','מעולה, אחזור אליך אז. נסיעה טובה.']]}]},
+ {id:'e',addr:'הנרקיס 22, חיפה',amt:2190,months:3,age:'m36',st:'office',label:'מחלוקת על החוב · למשרד',reason:'טוען שהחיוב של ספטמבר לא נכון. אור בודקת וחוזרת אליו.',
+  calls:[{t:'היום 11:20',out:'שיחה מלאה',dur:'1:12',sum:'מחלוקת על החיוב של ספטמבר',tr:[opener('בעל הדירה שמטפל בתשלומים'),['cu','כן, זה אני.'],['ag','יש אצלנו שלוש חשבוניות שירות פתוחות על המעלית, בסך 2,190 שקלים. רציתי לבדוק מה מצב התשלום.'],['cu','את ספטמבר אני לא משלם. לא הייתה אצלנו שום קריאה באותו חודש.'],['ag','אני מבינה. המחלוקת היא על החיוב של צמרת, נכון?'],['cu','כן.'],['ag','בסדר. צריך שהמשרד יבדוק את זה לפני שממשיכים. אור תחזור אליך.']]}]},
+ {id:'f',addr:'התבור 9, נשר',amt:1290,months:2,age:'m2',st:'standing',label:'ביקשה הוראת קבע · הפרטים נשלחו',reason:'הטופס וההסבר נשלחו אליה בוואטסאפ. מחכים שההרשאה תיקלט בבנק.',
+  calls:[{t:'אתמול 12:05',out:'שיחה מלאה',dur:'1:31',sum:'ביקשה להעביר להוראת קבע ותעביר היום את שתי החשבוניות',tr:[opener('הגזברית'),['cu','כן, אני הגזברית.'],['ag','יש שתי חשבוניות שירות פתוחות על המעלית, בסך 1,290 שקלים. רציתי לבדוק מה מצב התשלום.'],['cu','אני כל חודש שוכחת, זו כל הבעיה.'],['ag','אפשר לסדר את זה בהוראת קבע, ואז לא צריך לזכור כל חודש. תרצי שנשלח לך את הפרטים?'],['cu','כן, זה יהיה מעולה.'],['ag','הטופס וההסבר נשלחים אלייך עכשיו בוואטסאפ. את שתי החשבוניות אפשר להעביר כבר עכשיו.'],['cu','אעביר היום, תודה.']]}]},
+ {id:'d',addr:'האלון 14, קריית ים',amt:15555,months:7,age:'m6',st:'personal',label:'טיפול אישי · שמעיה',reason:'יש ללקוח גם שיפוץ פתוח (₪142,070). כדי לא לפגוע בקשר, הסוכנת לא מתקשרת אליו. שמעיה מטפל אישית.',calls:[]}];
+const UPCOMING=[
+ {when:'מחר 10:00',what:'שיחה ראשונה ל-3 לקוחות חדשים',cls:'more'},
+ {when:'יום ראשון 10:00',what:'ניסיון חוזר ל-4 לקוחות',sub:'שיחה 2 עד 5 מתוך 6',cls:'more'},
+ {when:'יום ראשון 11:00',what:'החרוב 21, עכו',sub:'שיחה חוזרת, כמו שביקש',id:'c'},
+ {when:'יום חמישי',what:'הערבה 16, חיפה',sub:'בדיקת תשלום, בלי שיחה',id:'a',cls:'pay'},
+ {when:'השבוע',what:'ועוד 11 שיחות מתוכננות',cls:'more'}];
+let view='over',fil=null,sel='a',openCall=null,log=[];
+const now=()=>new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});
+const filLabel=()=>fil?(AGE.find(x=>x[0]===fil)||ST.find(x=>x[0]===fil))[1]:'כל הלקוחות';
+function drawOver(){const tot=AGE.reduce((s,a)=>s+a[2],0),max=Math.max(...AGE.map(a=>a[2]));
+ $('#totalAmt').textContent=nis(tot);
+ $('#aging').innerHTML=AGE.map(([k,l,v,n,c])=>`<button class="agebar" data-f="${k}"><span>${l}</span><div class="ag"><i data-w="${Math.round(v/max*100)}" style="background:${c}"></i></div><b>${nis(v)}<small>${n} לקוחות</small></b></button>`).join('');
+ const sum=ST.reduce((s,x)=>s+x[2],0);
+ $('#stackBar').innerHTML=ST.map(([k,l,n,c])=>`<i data-w="${(n/sum*100).toFixed(1)}" style="background:${c}" title="${l}"></i>`).join('');
+ $('#statusRows').innerHTML=ST.map(([k,l,n,c])=>`<button class="srow" data-f="${k}"><i style="background:${c}"></i><span>${l}</span><b>${n}</b></button>`).join('');
+ $('#tline').innerHTML=UPCOMING.map(u=>`<button class="titem ${u.cls||''}" ${u.id?`data-id="${u.id}"`:''}><b>${u.when}</b><span>${u.what}</span>${u.sub?`<small>${u.sub}</small>`:''}</button>`).join('');
+ setTimeout(()=>$$('#viewOver [data-w]').forEach(i=>i.style.width=i.dataset.w+'%'),60);
+ $$('#viewOver [data-f]').forEach(b=>b.onclick=()=>{fil=b.dataset.f;view='list';const first=CUSTS.find(c=>c.age===fil||c.st===fil);if(first)sel=first.id;openCall=null;drawAll()});
+ $$('#tline [data-id]').forEach(b=>b.onclick=()=>{fil=null;view='list';sel=b.dataset.id;openCall=null;drawAll()})}
+function drawCrumbs(){const c=CUSTS.find(x=>x.id===sel);$('#crumbs').innerHTML=view==='over'?'תמונה כללית של כל החובות':`<button id="cbHome">תמונה כללית</button> › ${filLabel()} › ${c?c.addr:''}`;const h=$('#cbHome');if(h)h.onclick=()=>{view='over';drawAll()}}
+function shown(){return CUSTS.filter(c=>!fil||c.age===fil||c.st===fil)}
+function drawList(){const chips=[[null,'הכל'],...ST.map(s=>[s[0],s[1]]),...AGE.map(a=>[a[0],a[1]])];
+ $('#fchips').innerHTML=chips.filter(([k])=>!k||CUSTS.some(c=>c.age===k||c.st===k)).map(([k,l])=>`<button class="${fil===k?'on':''}" data-k="${k||''}">${l}</button>`).join('');
+ $$('#fchips button').forEach(b=>b.onclick=()=>{fil=b.dataset.k||null;const s=shown();if(!s.some(c=>c.id===sel)&&s[0])sel=s[0].id;openCall=null;drawAll()});
+ $('#custs').innerHTML=shown().map(c=>`<button class="cust ${c.id===sel?'on':''}" data-id="${c.id}"><span><b>${c.addr}</b><small>${nis(c.amt)} · ${c.months} חודשים</small></span><span class="nb ${NB[c.st][0]}">${NB[c.st][1]}</span></button>`).join('')||'<div class="sim">אין לקוחות לדוגמה בסינון הזה.</div>';
+ $$('.cust').forEach(b=>b.onclick=()=>{sel=b.dataset.id;openCall=null;drawAll()})}
+function drawCust(){const c=CUSTS.find(x=>x.id===sel);if(!c){$('#custPane').innerHTML='';return}const paused=document.body.classList.contains('allpaused');
+ const cls={agent:'',promise:'pay',standing:'ok',office:'off',red:'off',personal:'stop',stop:'stop',ok:'ok'}[c.st];
+ $('#custPane').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px"><b style="font-size:19px">${c.addr}</b><span class="sim" style="margin:0">${nis(c.amt)} · ${c.months} חודשים</span></div>
+ <div class="next ${cls}"><h4>מה הלאה</h4><b>${c.label}</b>${c.next?`<div><b>השיחה הבאה: ${paused?'עצורה':c.next}</b></div>`:''}<div class="sim" style="margin-top:4px">${c.reason}</div></div>
  <b>שיחות הסוכנת (${c.calls.length})</b>
- <div class="calls">${c.calls.length?c.calls.map((k,i)=>`<button class="callrow ${openCall===i?'on':''}" data-i="${i}"><span class="ci"><b>שיחה ${c.calls.length-i}</b> · ${k.t}${k.dur?' · '+k.dur:''}<small>${k.sum}</small></span><span class="nb ${k.out==='שיחה מלאה'?'ok':'stop'}">${k.out}</span></button>`).join(''):'<div class="sim">הסוכנת לא מתקשרת ללקוח הזה.</div>'}</div>
+ <div class="calls">${c.calls.length?c.calls.map((k,i)=>`<button class="callrow ${openCall===i?'on':''}" data-i="${i}"><span class="ci"><b>שיחה ${c.calls.length-i}</b> · ${k.t}${k.dur?' · '+k.dur:''}<small>${k.sum}</small></span>${k.tr.length?'<span class="lis">האזנה ותמלול</span>':''}<span class="nb ${k.out==='שיחה מלאה'?'ok':k.out==='ענה וניתק'?'off':'stop'}">${k.out}</span></button>`).join(''):'<div class="sim">הסוכנת לא מתקשרת ללקוח הזה.</div>'}</div>
  <div class="tr" id="trBox"></div>
- <div class="acts">${c.state==='stop'?`<button class="btn sm" data-a="resume">${c.personal?'להעביר לשיחות הסוכנת':'החזרה לשיחות'}</button>`:`<button class="btn sm" data-a="stop">עצירת הסוכנת ללקוח</button>`}${c.state!=='ok'?'<button class="btn sm go" data-a="paid">סימון ששולם</button>':''}</div>
+ <div class="acts">${c.st==='stop'||c.st==='personal'?`<button class="btn sm" data-a="resume">${c.st==='personal'?'להעביר לשיחות הסוכנת':'החזרה לשיחות'}</button>`:c.st==='ok'?'':`<button class="btn sm" data-a="stop">עצירת הסוכנת ללקוח</button>`}${c.st!=='ok'?'<button class="btn sm go" data-a="paid">סימון ששולם</button>':''}</div>
  <div class="log">${log.filter(l=>l.id===c.id).map(l=>`<div><b>${l.t}</b> · ${l.text}</div>`).join('')||'יומן פעולות: עוד אין'}</div>`;
  $$('.callrow').forEach(b=>b.onclick=()=>{openCall=+b.dataset.i;drawCust();showTr(c.calls[openCall])});
- $$('[data-a]').forEach(b=>b.onclick=()=>act(c,b.dataset.a));
- if(openCall!=null)showTr(c.calls[openCall],true)}
-function showTr(k,instant){const box=$('#trBox');box.classList.add('open');
+ $$('#custPane [data-a]').forEach(b=>b.onclick=()=>act(c,b.dataset.a));
+ if(openCall==null){const first=c.calls.findIndex(k=>k.tr.length);if(first>=0){openCall=first;$$('.callrow')[first]?.classList.add('on');showTr(c.calls[first],true)}}else showTr(c.calls[openCall],true)}
+function showTr(k,instant){const box=$('#trBox');if(!box)return;box.classList.add('open');
  if(!k.tr.length){box.innerHTML='<div class="sim">הלקוח לא ענה, ולכן אין הקלטה ואין תמלול. הסוכנת תנסה שוב לפי החוקים.</div>';return}
- box.innerHTML=`<div class="wave" id="wave"><button class="play" id="play">▶</button><div class="bars">${Array.from({length:34},(_,i)=>`<i style="animation-delay:${(i%7)*.09}s"></i>`).join('')}</div><span class="sim" style="margin:0">${k.dur}</span></div>${k.tr.map(([w,t])=>`<div class="msg ${w}"><small>${w==='ag'?'הסוכנת':'הלקוח'}</small>${t}</div>`).join('')}<div class="sim">בשיחה אמיתית יש כאן ההקלטה עצמה. התמלול נכנס לכרטיס דקה אחרי השיחה.</div>`;
- const ms=$$('#trBox .msg');ms.forEach((m,i)=>instant?m.classList.add('show'):setTimeout(()=>m.classList.add('show'),300+i*650));
- $('#play').onclick=()=>{const w=$('#wave');w.classList.toggle('playing');$('#play').textContent=w.classList.contains('playing')?'❚❚':'▶'}}
+ box.innerHTML=`<div class="wave" id="wave"><button class="play" id="play">▶</button><div class="bars">${Array.from({length:34},(_,i)=>`<i style="animation-delay:${(i%7)*.09}s"></i>`).join('')}</div><span class="sim" style="margin:0">${k.dur}</span></div>${k.tr.map(([w,t])=>w==='sys'?`<div class="sim" style="text-align:center;margin:6px 0">${t}</div>`:`<div class="msg ${w}"><small>${w==='ag'?'הסוכנת':'הלקוח'}</small>${t}</div>`).join('')}<div class="sim">בשיחה אמיתית יש כאן ההקלטה עצמה. התמלול נכנס לכרטיס דקה אחרי השיחה.</div>`;
+ const ms=$$('#trBox .msg');ms.forEach((m,i)=>instant?m.classList.add('show'):setTimeout(()=>m.classList.add('show'),250+i*550));
+ $('#play').onclick=()=>{const w=$('#wave');const on=!w.classList.contains('playing');w.classList.toggle('playing',on);$('#play').textContent=on?'❚❚':'▶';if(on){ms.forEach(m=>m.classList.remove('show'));ms.forEach((m,i)=>setTimeout(()=>m.classList.add('show'),250+i*900))}}}
 function act(c,a){const prev=JSON.parse(JSON.stringify(c));const L={stop:'הסוכנת לא תתקשר ללקוח הזה',resume:'הלקוח חזר לשיחות של הסוכנת',paid:'סומן ששולם. הלקוח יצא מהגבייה'};
- if(a==='stop'){c.state='stop';c.label='פניות אוטומטיות נעצרו';c.reason='עצרה: אור. החוב נשאר פתוח.';c.next=null}
- if(a==='resume'){c.state='call';c.personal=false;c.label='תתקשר בשעות החיוג הקרובות';c.reason='חזר לשיחות של הסוכנת.';c.next='מחר 10:00'}
- if(a==='paid'){c.state='ok';c.label='שולם';c.reason='אין יותר פניות.';c.next=null}
- log.unshift({id:c.id,t:now(),text:'אור: '+L[a]});drawList();drawCust();
- toast(L[a],()=>{Object.assign(c,prev);log.shift();drawList();drawCust();toast('הפעולה בוטלה')})}
+ if(a==='stop'){c.st='stop';c.label='פניות אוטומטיות נעצרו';c.reason='עצרה: אור. החוב נשאר פתוח.';c.next=null}
+ if(a==='resume'){c.st='agent';c.label='תתקשר בשעות החיוג הקרובות';c.reason='חזר לשיחות של הסוכנת.';c.next='מחר 10:00'}
+ if(a==='paid'){c.st='ok';c.label='שולם';c.reason='אין יותר פניות.';c.next=null}
+ log.unshift({id:c.id,t:now(),text:'אור: '+L[a]});drawAll();
+ toast(L[a],()=>{Object.assign(c,prev);log.shift();drawAll();toast('הפעולה בוטלה')})}
+function drawAll(){$$('#viewTabs button').forEach(b=>b.classList.toggle('on',b.dataset.v===view));$('#viewOver').hidden=view!=='over';$('#viewList').hidden=view!=='list';drawCrumbs();if(view==='over')drawOver();else{drawList();drawCust()}}
+$$('#viewTabs button').forEach(b=>b.onclick=()=>{view=b.dataset.v;if(view==='list')fil=fil||null;drawAll()});
 $('#pauseAll').onclick=()=>{const p=!document.body.classList.contains('allpaused');setPaused(p);toast(p?'כל שיחות הגבייה נעצרו':'השיחות חזרו לפעול',()=>{setPaused(!p);toast('הפעולה בוטלה')})};
-function setPaused(p){document.body.classList.toggle('allpaused',p);$('#agT').textContent=p?'הסוכנת עצורה':'הסוכנת פעילה';$('#agS').textContent=p?'עצרה: אור, '+now()+'. אף לקוח לא יקבל שיחה.':'מתקשרת לפי החוקים, בימים א׳–ה׳.';const b=$('#pauseAll');b.textContent=p?'החזרת השיחות':'עצירת כל השיחות';b.className='btn sm '+(p?'go':'stop');drawCust()}
-drawList();drawCust();
+function setPaused(p){document.body.classList.toggle('allpaused',p);$('#agT').textContent=p?'הסוכנת עצורה':'הסוכנת פעילה';$('#agS').textContent=p?'עצרה: אור, '+now()+'. אף לקוח לא יקבל שיחה.':'מתקשרת לפי החוקים, בימים א׳–ה׳.';const b=$('#pauseAll');b.textContent=p?'החזרת השיחות':'עצירת כל השיחות';b.className='btn sm '+(p?'go':'stop');if(view==='list')drawCust()}
+drawAll();
 
 /* email alert examples (same wording as the real alerts) */
 const TONE={good:['#2f7d4f','#e8f4ec','הזדמנות'],urgent:['#c2413b','#fbeceb','דחוף'],info:['#3f5fa8','#ebf0fa','לידיעה']};
