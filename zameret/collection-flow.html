@@ -104,7 +104,7 @@ section{padding:40px 0;scroll-margin-top:64px}
 .goal .ic{color:var(--rose);flex:none}
 
 /* flow player */
-.player{padding:20px}
+.player{padding:20px;cursor:pointer;user-select:none}
 .scen{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
 .scen button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:14.5px;font-weight:600;color:var(--muted)}
 .scen button.on{background:var(--ink);border-color:var(--ink);color:#fff}
@@ -164,9 +164,7 @@ body.allpaused .wire.on::after{animation-play-state:paused;opacity:.3}
 .grp .who{color:var(--muted);font-size:14.5px;margin-bottom:12px}
 .grp ul{margin:0;padding-inline-start:18px;font-size:15px;line-height:1.7}
 .grp .tg{margin-top:12px;font-weight:700;font-size:14.5px;border-radius:10px;padding:7px 10px}
-.grp.g1 .tg{background:var(--green-t);color:var(--green)}.grp.g2 .tg{background:var(--amber-t);color:var(--amber)}.grp.g3 .tg{background:var(--blue-t);color:var(--blue)}
-.grp::before{content:"";position:absolute;top:0;right:0;left:0;height:4px}
-.grp.g1::before{background:var(--green)}.grp.g2::before{background:var(--amber)}.grp.g3::before{background:var(--blue)}
+.grp .tg{background:var(--rose-t);color:var(--rose2)}
 
 /* timeline */
 .tl{padding:20px}
@@ -406,7 +404,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
         <div class="v split" data-on="2"></div>
         <div class="split-label">יש שלוש אפשרויות:</div>
         <div class="lanes2">
-          <div class="lane2" data-k="b1" style="--c:var(--amber)"><span class="ltag">לא ענו</span><div class="lc"><h4>מנסה שוב</h4><p>ביום העבודה הבא ב-10:00, עד 6 פעמים. אחר כך הלקוח עובר למשרד.</p></div></div>
+          <div class="lane2" data-k="b1" style="--c:var(--amber)"><span class="ltag">לא ענו</span><div class="lc"><h4>מנסה שוב</h4><p>עד 6 פעמים, בימים ובשעות שונים. את ההמשך אור קובעת: להמשיך לנסות, לעצור, או להעביר לטיפול המשרד.</p></div></div>
           <div class="lane2" data-k="b2" style="--c:var(--green)"><span class="ltag">ענו והתקדמנו</span><div class="lc"><h4>יש צעד הבא</h4><p>הבטחה עם תאריך, בקשה לחזור, או הוראת קבע.</p></div></div>
           <div class="lane2" data-k="b3" style="--c:var(--purple)"><span class="ltag">צריך את המשרד</span><div class="lc"><h4>עובר לאור</h4><p>מחלוקת, "כבר שילמתי", או בקשה שלא יתקשרו.</p></div></div>
         </div>
@@ -416,7 +414,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
         <div class="nd" data-k="office"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><h3 id="lastT">אור רואה ומחליטה</h3><p id="lastS">אפשר לעצור, לשנות מועד, או לבטל פעולה.</p></div>
       </div>
       <div class="cap" id="cap"></div>
-      <div class="hint">לוחצים "השלב הבא", או מעבירים את העכבר על שלב כדי לראות מה קורה בו.</div>
+      <div class="hint">לוחצים בכל מקום בתרשים כדי לעבור לשלב הבא.</div>
       <div class="paused-note">כל השיחות עצורות כרגע (מהמסוף למטה). אף לקוח לא יקבל שיחה.</div>
     </div>
   </section>
@@ -448,7 +446,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
     <p class="sec-p">לא כל חוב זהה. לקוח חשוב באמצע פרויקט לא מקבל שיחה אוטומטית.</p>
     <div class="groups">
       <div class="card grp g1 reveal"><h3>חוב חדש</h3><div class="who">חודש-חודשיים</div><ul><li>הודעה בוואטסאפ כשהחשבונית יוצאת</li><li>שיחות של הסוכנת</li><li>הצעה להוראת קבע בכל שיחה</li></ul><div class="tg">המטרה: הוראת קבע</div></div>
-      <div class="card grp g2 reveal"><h3>חוב ותיק</h3><div class="who">חוזה שירות בלבד, 3 חודשים ומעלה</div><ul><li>הודעה ושיחה ייעודיות</li><li>טון ישיר יותר</li><li>אחרי 6 שיחות בלי מענה: למשרד</li></ul><div class="tg">המטרה: תשלום או הסדר</div></div>
+      <div class="card grp g2 reveal"><h3>חוב ותיק</h3><div class="who">חוזה שירות בלבד, 3 חודשים ומעלה</div><ul><li>הודעה ושיחה ייעודיות</li><li>טון ישיר יותר</li><li>עד 6 ניסיונות בזמנים שונים</li></ul><div class="tg">המטרה: תשלום או הסדר</div></div>
       <div class="card grp g3 reveal"><h3>לקוח עם עבודה או פרויקט</h3><div class="who">יש גם חוב על שיפוץ או עבודה</div><ul><li><b>הסוכנת לא מתקשרת</b></li><li>שמעיה או גיא מטפלים אישית</li><li>בודקים אם משהו פתוח, ומסכמים בכתב</li></ul><div class="tg">המטרה: חוזה שירות מסודר, חוב ישן בהסכמה</div></div>
     </div>
   </section>
@@ -599,7 +597,7 @@ $$('.reveal').forEach(el=>io.observe(el));
 
 /* flow player */
 const SC={
- noans:{branch:'b1',caps:['יש 3 חשבוניות פתוחות, 1,800 ₪','הסוכנת מתקשרת... אין מענה','לא ענו. ניסיון נוסף מחר ב-10:00 (2 מתוך 6)','בכרטיס: "לא ענה · תנסה שוב מחר 10:00"','אחרי 6 פעמים בלי מענה, הלקוח עובר לאור'],last:['אחרי 6 ניסיונות: אור מחליטה','מכתב, שיחה מהמשרד, או משהו אחר.']},
+ noans:{branch:'b1',caps:['יש 3 חשבוניות פתוחות, 1,800 ₪','הסוכנת מתקשרת... אין מענה','לא ענו. ניסיון נוסף מחר, בשעה אחרת (2 מתוך 6)','בכרטיס: "לא ענה · תנסה שוב מחר 10:00"','אחרי 6 ניסיונות, מה שאור קבעה: להמשיך, לעצור או להעביר למשרד'],last:['אחרי 6 ניסיונות: לפי ההגדרה של אור','להמשיך לנסות, לעצור, או טיפול של המשרד.']},
  promise:{branch:'b2',caps:['יש 3 חשבוניות פתוחות, 1,800 ₪','"שלום, אני מתקשרת מטעם צמרת מעליות..."','"אעביר עד יום חמישי." נשמרה הבטחה עם תאריך','בכרטיס: "הבטיח לשלם · בדיקת תשלום ביום חמישי"','ביום חמישי בודקים אם הכסף הגיע. לא מתקשרים בינתיים'],last:['בודקים אם התשלום הגיע','אם לא, הסוכנת תתקשר שוב.']},
  standing:{branch:'b2',caps:['יש 3 חשבוניות פתוחות, 1,800 ₪','הסוכנת מציעה: "אפשר לסדר את זה בהוראת קבע"','"כן, תשלחו לי פרטים." זו התוצאה הכי טובה','הפרטים וההסבר יוצאים ללקוח בוואטסאפ, מיד בסיום השיחה','בכרטיס, בירוק: "ביקש פרטים להוראת קבע". מהחודש הבא אין חוב חודשי'],last:['אור מוודאת שההרשאה נקלטה','לקוח שעבר להוראת קבע יוצא מהגבייה.']},
  dispute:{branch:'b3',caps:['יש 3 חשבוניות פתוחות, 1,800 ₪','"על מה המחלוקת?" הסוכנת מקשיבה ולא מתווכחת','"החיוב של ספטמבר לא נכון." עובר למשרד','בכרטיס: "מחלוקת על החוב · למשרד". הסוכנת לא מתקשרת','אור בודקת את החיוב וחוזרת ללקוח'],last:['אור בודקת את החיוב','הסוכנת לא מתקשרת עד שהמשרד מחליט.']},
@@ -613,10 +611,10 @@ function render(){const s=SC[cur];const seq=['start','call',s.branch,'card','off
  $('#cap').textContent=step>=0?s.caps[step]:'';if(step===4){$('#lastT').textContent=s.last[0];$('#lastS').textContent=s.last[1]}else{$('#lastT').textContent='אור רואה ומחליטה';$('#lastS').textContent='אפשר לעצור, לשנות מועד, או לבטל פעולה.'}}
 render();
 $$('#scen [data-s]').forEach(b=>b.onclick=()=>setScen(b.dataset.s));
-$('#nextStep').onclick=()=>{step=step>=4?0:step+1;render()};
-$('#restart').onclick=()=>{step=0;render()};
+$('#nextStep').onclick=e=>{e.stopPropagation();step=step>=4?0:step+1;render()};
+$('#restart').onclick=e=>{e.stopPropagation();step=0;render()};
 /* hover or click on a step shows the flow up to that step (steps outside this scenario are ignored) */
-$$('#flowSteps [data-k]').forEach(el=>{const go=()=>{const i=seqOf().indexOf(el.dataset.k);if(i>=0&&i!==step){step=i;render()}};el.addEventListener('mouseenter',go);el.addEventListener('click',go)});
+document.querySelector('#flow .player').addEventListener('click',e=>{if(e.target.closest('#scen'))return;step=step>=4?0:step+1;render()});
 
 /* Or's view (simulation): overview -> customers -> call */
 const nis=n=>'₪'+n.toLocaleString('en-US');
