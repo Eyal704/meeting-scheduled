@@ -6,460 +6,605 @@
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="light">
 <meta name="darkreader-lock">
-<title>צמרת מעליות — מעקב גבייה</title>
+<title>צמרת מעליות · מעקב גבייה</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#1c1c1e;--muted:#6c6c72;--faint:#a0a0a8;--line:#ece4e6;--line2:#fdf2f4;
-  --bg:#fdf9fa;--card:#fff;--brand:#c9536e;--brand2:#a84059;
-  --rose:#c9536e;--rose-t:#fdf2f4;--rose-b:#e9cfd6;
-  --teal:#3d6b52;--teal-t:#e8f2ec;--red:#c2413b;--red-t:#fbeceb;
-  --amber:#b7791f;--amber-t:#fbf3e4;--blue:#c9536e;--blue-t:#fdf2f4;
-  --green:#2f7d4f;--green-t:#e8f4ec;--purple:#6b4fa0;--purple-t:#f1edf8;
-  --radius:14px;--shadow:0 1px 2px rgba(22,35,43,.05),0 6px 18px rgba(22,35,43,.06);
-  --wire:#e2b9c3;
+  --ink:#1c1c1e;--muted:#6c6c72;--faint:#a0a0a8;--line:#ece4e6;--soft:#fdf2f4;
+  --bg:#fdf9fa;--card:#fff;--rose:#c9536e;--rose2:#a84059;--rose-t:#fdf2f4;--rose-b:#e9cfd6;
+  --teal:#2f6f63;--teal-t:#e6f2ef;--red:#c2413b;--red-t:#fbeceb;--amber:#b7791f;--amber-t:#fbf3e4;
+  --green:#2f7d4f;--green-t:#e8f4ec;--purple:#6b4fa0;--blue:#3f5fa8;--blue-t:#ebf0fa;
+  --shadow:0 1px 2px rgba(22,35,43,.05),0 8px 24px rgba(22,35,43,.07);
 }
 *{box-sizing:border-box}
 html{background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Heebo',system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{margin:0;line-height:1.3}
-p{margin:0}
-.wrap{max-width:1440px;margin:0 auto;padding:0 32px}
+body{overflow-x:clip;margin:0;background:var(--bg);color:var(--ink);font-family:'Heebo',system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p{margin:0}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+section{padding:40px 0;scroll-margin-top:64px}
+.sec-h{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.sec-n{width:30px;height:30px;border-radius:50%;background:var(--rose);color:#fff;display:grid;place-items:center;font-weight:800;font-size:15px;flex:none}
+.sec-h h2{font-size:26px;font-weight:800}
+.sec-p{color:var(--muted);margin:0 0 20px 0;padding-inline-start:42px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.draft{display:inline-block;font-size:12.5px;font-weight:700;color:var(--amber);background:var(--amber-t);border-radius:999px;padding:2px 10px;margin-inline-start:6px;vertical-align:middle}
 
-/* top bar */
-.topbar{background:var(--card);color:var(--ink);border-bottom:1px solid var(--line)}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px}
-.brand .mark{width:32px;height:32px;border-radius:9px;background:var(--rose-t);color:var(--rose);display:grid;place-items:center}
-.back{color:var(--ink);text-decoration:none;font-size:15px;font-weight:500;padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);white-space:nowrap}
-.back:hover{background:var(--line2)}
+/* top */
+.topbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;min-height:58px;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.mark{width:32px;height:32px;border-radius:9px;background:var(--rose-t);color:var(--rose);display:grid;place-items:center}
+.back{color:var(--ink);text-decoration:none;font-size:15px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;white-space:nowrap}
 
 /* hero */
-.hero{padding:44px 0 32px}
-.eyebrow{font-size:14px;font-weight:600;color:var(--muted)}
-.hero h1{font-size:clamp(30px,4.6vw,46px);font-weight:800;margin:4px 0 8px}
-.hero p{font-size:20px;color:var(--muted);max-width:720px}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-.chip{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;padding:6px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--ink)}
-.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--rose)}
-.chip.on .dot{background:var(--green)}
+.hero{padding:44px 0 24px}
+.hero-g{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+.kicker{display:inline-flex;gap:8px;align-items:center;background:var(--rose-t);color:var(--rose2);font-weight:700;font-size:14px;border-radius:999px;padding:4px 12px}
+.hero h1{font-size:44px;font-weight:800;margin:14px 0 12px;letter-spacing:-.5px}
+.hero h1 span{color:var(--rose)}
+.lead{font-size:19px;color:#3a3a40;max-width:560px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:14.5px;font-weight:500}
+.chip b{color:var(--rose)}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 18px;font-weight:700;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn.pri{background:var(--rose);border-color:var(--rose);color:#fff}
+.btn.stop{background:var(--red);border-color:var(--red);color:#fff}
+.btn.go{background:var(--green);border-color:var(--green);color:#fff}
+.btn.sm{padding:7px 12px;font-size:14px;border-radius:10px}
 
-main{padding-bottom:64px;display:grid;gap:32px}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:44px}
-.panel-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:32px}
-.panel-head h2{font-size:27px;font-weight:800}
-.panel-head p{color:var(--muted);font-size:17px;margin-top:4px}
-.num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--rose-t);color:var(--rose);font-size:17px;font-weight:700;margin-inline-end:8px;vertical-align:2px}
+/* harmony orbit */
+.orbit{position:relative;width:min(380px,90vw);aspect-ratio:1;margin:0 auto}
+.ring{position:absolute;inset:14%;border-radius:50%;border:2px dashed var(--rose-b);animation:spin 40s linear infinite}
+.ring2{position:absolute;inset:14%;border-radius:50%}
+.ring2 i{position:absolute;top:-6px;left:calc(50% - 6px);width:12px;height:12px;border-radius:50%;background:var(--rose);box-shadow:0 0 0 6px rgba(201,83,110,.15)}
+.ring2.a{animation:spin 16s linear infinite}.ring2.b{animation:spin 16s linear infinite;animation-delay:-8s}
+.ring2.b i{background:var(--teal);box-shadow:0 0 0 6px rgba(47,111,99,.15)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.core{position:absolute;inset:36%;border-radius:50%;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);display:grid;place-items:center;text-align:center;font-weight:800;font-size:15px;line-height:1.25;padding:8px}
+.core small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.node{position:absolute;width:118px;transform:translate(-50%,-50%);background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 6px;text-align:center;font-size:13.5px;font-weight:700;box-shadow:var(--shadow);transition:transform .3s,border-color .3s}
+.node small{display:block;font-weight:500;color:var(--muted);font-size:11.5px;line-height:1.3}
+.node .ic{line-height:1;color:var(--rose);display:flex;justify-content:center;margin-bottom:2px}
+.ic svg,.si svg,.ico svg,.lic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.goal .ic svg{width:34px;height:34px}.si{color:var(--rose)}.step.done .si{color:var(--green)}
+.node:hover{border-color:var(--rose);transform:translate(-50%,-50%) scale(1.06)}
+.step{cursor:pointer}
+.hint{font-size:14px;color:var(--muted);text-align:center;margin-top:6px}
+.node.lit{border-color:var(--rose);transform:translate(-50%,-50%) scale(1.06)}
+.n1{top:6%;left:50%}.n2{top:50%;left:94%}.n3{top:94%;left:50%}.n4{top:50%;left:6%}
 
-/* ---------- flow diagram ---------- */
-.flow{--gap:44px;display:grid;justify-items:center}
-.node{position:relative;width:min(100%,560px);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 28px;text-align:center;box-shadow:0 1px 2px rgba(22,35,43,.04)}
-.node .ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin:0 auto 10px;background:var(--rose-t);color:var(--rose)}
-.node h3{font-size:22px;font-weight:800}
-.node p{font-size:17px;color:var(--muted);margin-top:4px}
-.node.start{background:var(--rose-t);border:1px solid var(--rose-b)}
-.node.start .ico{background:#fff;color:var(--rose)}
-.node.agent{border:2px solid var(--rose)}
-.node.record{border:2px solid var(--teal)}
-.node.record .ico{background:var(--teal-t);color:var(--teal)}
-.node.wa{border:1.5px dashed var(--green);background:var(--green-t)}
-.node.wa .ico{background:#fff;color:var(--green)}
-.kicker{display:inline-block;font-size:14px;font-weight:600;padding:3px 12px;border-radius:999px;margin-bottom:8px}
-.note{font-size:15px!important}
-.node.start .kicker{background:#fff;color:var(--rose);border:1px solid var(--rose-b)}
-.node.wa .kicker{background:#fff;color:var(--green)}
-.note{font-size:12.5px;color:var(--faint);margin-top:6px}
-.node.start .note{color:#a9c2c8}
+/* "how it all works together" panel */
+.loop{padding:20px 20px 16px;max-width:430px;width:100%;margin:0 auto}
+.loop-h{font-weight:800;font-size:17px;margin-bottom:12px}
+.lrows{position:relative;display:grid;gap:12px}
+.lrows::before{content:"";position:absolute;right:22px;top:22px;bottom:22px;width:2px;background:var(--rose-b)}
+.pulse{position:absolute;right:18px;top:18px;width:10px;height:10px;border-radius:50%;background:var(--rose);box-shadow:0 0 0 5px rgba(201,83,110,.18);animation:travel 8s ease-in-out infinite;z-index:2}
+@keyframes travel{0%{top:18px}25%{top:calc(25% + 4px)}50%{top:calc(50% + 2px)}75%{top:calc(75% - 2px)}92%,100%{top:calc(100% - 28px)}}
+.lrow{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:10px 12px;position:relative;z-index:1}
+.lic{width:44px;height:44px;border-radius:12px;background:#fff;border:1px solid var(--rose-b);color:var(--rose);display:grid;place-items:center;flex:none;animation:glow 8s ease-in-out infinite}
+.lrow:nth-child(3) .lic{animation-delay:2s}.lrow:nth-child(4) .lic{animation-delay:4s}.lrow:nth-child(5) .lic{animation-delay:6s}
+@keyframes glow{0%,20%,100%{box-shadow:none;border-color:var(--rose-b)}8%{box-shadow:0 0 0 6px rgba(201,83,110,.15);border-color:var(--rose)}}
+.lt{flex:1;min-width:0}.lt b{display:block;font-size:15.5px}.lt small{display:block;color:var(--muted);font-size:13px;line-height:1.35}
+.lst{font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;background:var(--rose-t);color:var(--rose2);white-space:nowrap}
+.lst.g{background:var(--green-t);color:var(--green)}.lst.a{background:var(--amber-t);color:var(--amber)}
+.loop-f{margin-top:12px;font-size:13.5px;color:var(--muted);text-align:center}
 
-.v{width:2px;height:var(--gap);background:var(--wire);position:relative}
-.v::after{content:"";position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top:6px solid var(--rose);border-bottom:0}
-.v.split-gap{height:calc(var(--gap) * .6)}
-.v.split-gap::after{display:none}
-.v.dash{background:repeating-linear-gradient(var(--wire) 0 5px,transparent 5px 9px)}
-.v.dash::after{border-top-color:var(--green)}
+/* goal */
+.goal{display:flex;gap:16px;align-items:center;padding:18px 22px;background:linear-gradient(120deg,#fff,var(--rose-t));border:1px solid var(--rose-b);border-radius:18px}
+.goal .big{font-size:22px;font-weight:800}
+.goal .ic{color:var(--rose);flex:none}
 
-.lanes{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;position:relative;padding-top:var(--gap)}
-.lanes::before{content:"";position:absolute;top:0;right:calc(100%/6);left:calc(100%/6);height:2px;background:var(--wire)}
-.lanes::after{content:"";position:absolute;bottom:0;right:calc(100%/6);left:calc(100%/6);height:2px;background:var(--wire)}
-.lane{position:relative;display:flex;flex-direction:column;align-items:stretch;padding-bottom:var(--gap);--c:var(--green);--t:var(--green-t)}
-.lane::before{content:"";position:absolute;top:calc(var(--gap) * -1);right:50%;width:2px;height:var(--gap);background:var(--wire)}
-.lane::after{content:"";position:absolute;bottom:0;right:50%;width:2px;height:var(--gap);background:var(--wire)}
-.lane.amber{--c:var(--amber);--t:var(--amber-t)}
-.lane.purple{--c:var(--purple);--t:var(--purple-t)}
-.lane-tag{align-self:center;display:inline-flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:var(--ink);background:var(--card);border:1px solid var(--line);padding:5px 16px;border-radius:999px;margin-bottom:16px;position:relative;z-index:1}
-.lane-tag::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c)}
-.lane .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;text-align:start}
-.lane .card h4{font-size:19px;font-weight:800;margin-bottom:4px}
-.lane .card p,.lane .card li{font-size:16.5px;color:var(--muted)}
-.lane .card .sep{height:1px;background:var(--line2);margin:14px 0}
-.lane .card strong{color:var(--ink)}
-.lane .card ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px;text-align:start}
-.lane .card li{display:flex;gap:6px;align-items:baseline}
-.lane .card li b{color:var(--ink);font-weight:600;white-space:nowrap}
-.lane .mini{align-self:center;width:2px;height:26px;background:var(--wire);position:relative;margin:6px 0 14px}
-.lane .mini::after{content:"";position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top:6px solid var(--rose);border-bottom:0}
-.lane .grow{flex:1;display:flex;flex-direction:column}
-.lane .grow .card{flex:1}
-.stop{display:inline-block;margin-top:4px;font-size:17px;font-weight:800;color:var(--ink)}
+/* flow player */
+.player{padding:20px}
+.scen{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.scen button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:14.5px;font-weight:600;color:var(--muted)}
+.scen button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.scen .pp{margin-inline-start:auto}
+.flow{display:grid;grid-template-columns:1fr;gap:0;max-width:760px;margin:0 auto}
+.step{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:#fff;opacity:.45;transition:opacity .35s,border-color .35s,box-shadow .35s,transform .35s}
+.step .si{width:42px;height:42px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:20px;flex:none}
+.step b{display:block;font-size:16.5px}
+.step span{color:var(--muted);font-size:14.5px}
+.step.lit{opacity:1;border-color:var(--rose);box-shadow:0 8px 26px rgba(201,83,110,.16);transform:translateX(-2px)}
+.step.done{opacity:1}
+.step.done .si{background:var(--green-t)}
+.wire{height:34px;width:3px;margin:0 auto;background:var(--line);position:relative;overflow:hidden;border-radius:2px}
+.wire.on::after{content:"";position:absolute;inset:-34px 0 0;background:linear-gradient(transparent,var(--rose),transparent);animation:drip .9s linear infinite}
+@keyframes drip{to{transform:translateY(68px)}}
+.branches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.branches .step{flex-direction:column;gap:8px}
+.cap{margin-top:16px;text-align:center;font-size:16px;font-weight:600;min-height:52px;color:var(--rose2)}
+.paused-note{display:none;margin-top:10px;text-align:center;color:var(--red);font-weight:700}
+body.allpaused .paused-note{display:block}
+body.allpaused .wire.on::after{animation-play-state:paused;opacity:.3}
 
-.legend{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:32px;padding-top:20px;border-top:1px solid var(--line2);font-size:15px;color:var(--muted)}
-.legend span{display:inline-flex;align-items:center;gap:8px}
-.legend i{display:inline-block;width:26px;height:0;border-top:2px solid var(--wire)}
-.legend i.d{border-top:2px dashed var(--green)}
+/* flow diagram (layout of the original page, with the step-by-step player) */
+.flow2{--gap:40px;display:grid;justify-items:center;margin-top:6px}
+.nd{width:min(100%,560px);background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 26px;text-align:center;box-shadow:0 1px 2px rgba(22,35,43,.04);opacity:.5;cursor:pointer;transition:opacity .35s,border-color .35s,box-shadow .35s}
+.nd .ico{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;margin:0 auto 10px;background:var(--rose-t);color:var(--rose)}
+.nd h3{font-size:21px;font-weight:800}
+.nd p{font-size:16.5px;color:var(--muted);margin-top:4px}
+.nd.start{background:var(--rose-t);border-color:var(--rose-b)}.nd.start .ico{background:#fff}
+.kick{display:inline-block;font-size:13.5px;font-weight:600;padding:3px 12px;border-radius:999px;background:#fff;color:var(--rose);border:1px solid var(--rose-b);margin-bottom:8px}
+.nd.rec .ico{background:var(--teal-t);color:var(--teal)}
+.nd.lit{opacity:1;border:2px solid var(--rose);box-shadow:0 10px 30px rgba(201,83,110,.15)}
+.nd.done{opacity:1}
+.v{width:2px;height:var(--gap);background:var(--rose-b);position:relative;transition:background .35s}
+.v::after{content:"";position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top:6px solid var(--rose-b);border-bottom:0;transition:border-color .35s}
+.v.on{background:var(--rose)}.v.on::after{border-top-color:var(--rose)}
+.v.split{height:calc(var(--gap)*.6)}.v.split::after{display:none}
+.lanes2{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;position:relative;padding-top:var(--gap);padding-bottom:var(--gap)}
+.lanes2::before,.lanes2::after{content:"";position:absolute;right:calc(100%/6);left:calc(100%/6);height:2px;background:var(--rose-b)}
+.lanes2::before{top:0}.lanes2::after{bottom:0}
+.lane2{position:relative;display:flex;flex-direction:column;align-items:center;opacity:.5;cursor:pointer;transition:opacity .35s}
+.lane2::before{content:"";position:absolute;top:calc(var(--gap)*-1);right:50%;width:2px;height:var(--gap);background:var(--rose-b)}
+.lane2::after{content:"";position:absolute;bottom:calc(var(--gap)*-1);right:50%;width:2px;height:var(--gap);background:var(--rose-b)}
+.ltag{display:inline-flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;background:#fff;border:1px solid var(--line);padding:5px 15px;border-radius:999px;margin-bottom:14px;position:relative;z-index:1}
+.ltag::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c)}
+.lc{width:100%;flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;text-align:start;transition:border-color .35s,box-shadow .35s}
+.lc h4{font-size:18px;font-weight:800;margin-bottom:4px}.lc p{font-size:15.5px;color:var(--muted)}
+.lane2.lit,.lane2.done{opacity:1}.lane2.lit .lc{border:2px solid var(--c);box-shadow:0 10px 30px rgba(0,0,0,.08)}
+.lane2.lit::before,.lane2.lit::after,.lane2.done::before,.lane2.done::after{background:var(--c)}
+.split-label{display:none;font-size:13.5px;font-weight:600;color:var(--muted);margin:6px 0 2px}
+@media(max-width:900px){.lanes2{grid-template-columns:1fr;gap:14px;padding:8px 0}.lanes2::before,.lanes2::after,.lane2::before,.lane2::after{display:none}.split-label{display:block}.v.split{height:14px}.nd{padding:18px 16px}}
 
-/* ---------- one-customer walkthrough ---------- */
-.seg{display:flex;flex-wrap:wrap;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:5px}
-.seg button{font:inherit;font-size:16px;font-weight:500;border:0;background:transparent;color:var(--muted);padding:9px 16px;border-radius:9px;cursor:pointer}
-.seg button:hover{color:var(--ink)}
-.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(22,35,43,.12)}
-.seg-label{font-size:15px;color:var(--muted);margin-bottom:10px;font-weight:500}
+/* groups */
+.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grp{padding:18px;position:relative;overflow:hidden}
+.grp h3{font-size:18px;margin-bottom:4px}
+.grp .who{color:var(--muted);font-size:14.5px;margin-bottom:12px}
+.grp ul{margin:0;padding-inline-start:18px;font-size:15px;line-height:1.7}
+.grp .tg{margin-top:12px;font-weight:700;font-size:14.5px;border-radius:10px;padding:7px 10px}
+.grp.g1 .tg{background:var(--green-t);color:var(--green)}.grp.g2 .tg{background:var(--amber-t);color:var(--amber)}.grp.g3 .tg{background:var(--blue-t);color:var(--blue)}
+.grp::before{content:"";position:absolute;top:0;right:0;left:0;height:4px}
+.grp.g1::before{background:var(--green)}.grp.g2::before{background:var(--amber)}.grp.g3::before{background:var(--blue)}
 
-.steps{display:grid;gap:0;margin-top:36px}
-.step{display:grid;grid-template-columns:44px minmax(0,1.2fr) minmax(0,1fr);gap:36px;align-items:start;position:relative;padding-bottom:44px}
-.step:last-child{padding-bottom:0}
-.step::before{content:"";position:absolute;top:36px;bottom:0;right:17px;width:2px;background:var(--line)}
-.step:last-child::before{display:none}
-.step .n{width:36px;height:36px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px;position:relative;z-index:1}
-.step .ann{padding-top:4px}
-.step .ann h3{font-size:23px;font-weight:800;margin-bottom:8px}
-.step .ann p{color:var(--muted);font-size:18px}
+/* timeline */
+.tl{padding:20px}
+.tl-row{margin-bottom:22px}
+.tl-row h4{font-size:15.5px;margin-bottom:10px}
+.track{position:relative;display:grid;gap:0;padding-top:6px}
+.bar{position:absolute;top:22px;right:0;height:4px;width:0;background:var(--rose);border-radius:2px;transition:width 2.4s cubic-bezier(.3,.7,.2,1)}
+.bar.base{width:100%;background:var(--line);transition:none}
+.tl.in .bar.fill{width:100%}
+.mk{position:relative;text-align:center;font-size:13px;color:var(--muted);padding:0 2px}
+.mk i{display:block;width:16px;height:16px;border-radius:50%;margin:8px auto 6px;background:#fff;border:3px solid var(--rose);position:relative;z-index:1}
+.mk.office i{border-color:var(--amber)}.mk.end i{border-color:var(--red);background:var(--red)}
+.mk b{display:block;color:var(--ink);font-size:13.5px}
 
-.mock{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);font-size:15.5px}
-.mock .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
-.mock .bar b{color:var(--ink);font-weight:600}
-.mock .bar .tag{font-size:11.5px;padding:2px 9px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
-.mock .in{padding:16px;display:grid;gap:12px}
-.m-title{font-size:20px;font-weight:700}
-.m-sub{font-size:14px;color:var(--muted)}
-.pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:3px 11px;border-radius:999px;background:var(--blue-t);color:var(--blue);transition:background .2s,color .2s}
-.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
-.next{border-radius:12px;padding:14px 16px;background:var(--blue-t);border-inline-start:4px solid var(--blue);display:grid;gap:2px;transition:background .2s,border-color .2s}
-.next small{font-size:12.5px;color:var(--muted);font-weight:500}
-.next strong{font-size:22px;font-weight:800;letter-spacing:-.2px}
-.next span{font-size:13px;color:var(--muted)}
-.row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line2);font-size:13.5px}
-.row b{font-weight:700}
-.fine{font-size:12px;color:var(--faint)}
+/* tone */
+.tone{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:end}
+.tstep{border-radius:14px 14px 6px 6px;padding:12px 10px;color:#fff;font-weight:700;font-size:14.5px;line-height:1.35;display:flex;flex-direction:column;justify-content:flex-end}
+.tstep small{display:block;font-weight:500;font-size:12.5px;opacity:.9}
+.tone .t1{background:#e7a8b6;height:90px}.tone .t2{background:#d97f94;height:120px}.tone .t3{background:#c9536e;height:150px}.tone .t4{background:#a84059;height:180px}.tone .t5{background:#6e2a3b;height:210px}
+.tone-l{display:flex;justify-content:space-between;color:var(--muted);font-size:13.5px;margin-top:8px}
 
-.tl{display:grid;gap:14px;position:relative;padding-inline-start:20px}
-.tl::before{content:"";position:absolute;top:6px;bottom:6px;right:5px;width:2px;background:var(--line)}
-.tl-item{position:relative}
-.tl-item::before{content:"";position:absolute;right:-20px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--card);border:3px solid var(--blue)}
-.tl-item.miss::before{border-color:var(--amber)}
-.tl-item .when{font-size:13px;color:var(--muted)}
-.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-.btn-s{font-size:12.5px;font-weight:500;padding:5px 11px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:inline-flex;align-items:center;gap:6px}
+/* console (simulation) */
+.console{display:grid;grid-template-columns:340px 1fr;gap:14px}
+.pane{padding:16px}
+.agent{display:flex;align-items:flex-start;gap:10px}
+.dot{width:11px;height:11px;border-radius:50%;margin-top:7px;background:var(--green);box-shadow:0 0 0 0 rgba(47,125,79,.4);animation:pulse 1.8s infinite;flex:none}
+body.allpaused .dot{background:var(--red);animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,125,79,.45)}70%{box-shadow:0 0 0 9px rgba(47,125,79,0)}100%{box-shadow:0 0 0 0 rgba(47,125,79,0)}}
+.wins{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px}
+.wins div{background:var(--bg);border-radius:12px;padding:10px;text-align:center}
+.wins b{display:block;font-size:24px;font-weight:800}
+.wins span{font-size:12.5px;color:var(--muted)}
+.wins .g b{color:var(--green)}.wins .t b{color:var(--teal)}.wins .a b{color:var(--amber)}.wins .r b{color:var(--red)}
+.custs{margin-top:14px;display:grid;gap:6px}
+.cust{display:flex;justify-content:space-between;gap:8px;align-items:center;text-align:right;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 11px}
+.cust.on{border-color:var(--rose);background:var(--rose-t)}
+.cust b{font-size:14.5px}.cust small{display:block;color:var(--muted);font-size:12.5px}
+.nb{font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.nb.call{background:var(--teal-t);color:var(--teal)}.nb.pay{background:var(--blue-t);color:var(--blue)}.nb.off{background:var(--amber-t);color:var(--amber)}.nb.stop{background:#eef0f1;color:var(--muted)}.nb.ok{background:var(--green-t);color:var(--green)}
+.next{border:2px solid var(--teal);border-radius:14px;padding:12px 14px;margin-bottom:12px}
+.next.pay{border-color:var(--blue)}.next.off{border-color:var(--amber)}.next.stop{border-color:var(--faint)}.next.ok{border-color:var(--green)}
+.next h4{font-size:13px;color:var(--muted);font-weight:600}
+.next b{font-size:17px}
+.calls{display:grid;gap:6px}
+.callrow{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:9px 11px;background:#fff;text-align:right;width:100%}
+.callrow.on{border-color:var(--rose)}
+.callrow .ci{flex:1}.callrow small{display:block;color:var(--muted);font-size:12.5px}
+.tr{margin-top:12px;border-top:1px solid var(--line);padding-top:12px;display:none}
+.tr.open{display:block}
+.wave{display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:12px;padding:8px 12px;margin-bottom:10px}
+.wave .play{width:32px;height:32px;border-radius:50%;border:0;background:var(--rose);color:#fff;font-size:13px}
+.bars{display:flex;gap:3px;align-items:center;height:26px;flex:1}
+.bars i{flex:1;background:var(--rose-b);border-radius:2px;height:30%}
+.wave.playing .bars i{animation:eq 1s ease-in-out infinite}
+@keyframes eq{0%,100%{height:25%}50%{height:95%}}
+.msg{max-width:88%;padding:8px 12px;border-radius:14px;font-size:14.5px;margin-bottom:7px;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s}
+.msg.show{opacity:1;transform:none}
+.msg small{display:block;font-size:11px;font-weight:700;color:var(--muted)}
+.msg.ag{background:var(--teal-t);margin-inline-end:auto;border-top-right-radius:4px}
+.msg.cu{background:#f0eef0;margin-inline-start:auto;border-top-left-radius:4px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.log{margin-top:12px;font-size:13.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;max-height:120px;overflow:auto}
+.log div b{color:var(--ink);font-weight:600}
+.sim{font-size:13px;color:var(--muted);margin-top:10px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1f1f22;color:#fff;border-radius:14px;padding:11px 14px;display:flex;gap:14px;align-items:center;font-size:15px;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.toast button{background:none;border:0;color:#ffb3c3;font-weight:800}
 
-.audio{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line2);padding:10px 12px;border-radius:12px}
-.play{width:32px;height:32px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;flex-shrink:0}
-.wave{flex:1;display:flex;align-items:center;gap:3px;height:26px}
-.wave span{flex:1;max-width:4px;border-radius:2px;background:#b9c6cb}
-.wave span:nth-child(-n+6){background:var(--brand2)}
-.audio .t{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
-.bub{max-width:88%;padding:9px 13px;border-radius:14px;font-size:14px}
-.bub b{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:1px}
-.bub.agent{background:var(--bg);border-top-right-radius:4px;justify-self:start}
-.bub.cust{background:var(--blue-t);border-top-left-radius:4px;justify-self:end}
+/* email alert mock */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:14.5px;font-weight:600;color:var(--muted)}
+.tabs button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.mailwrap{display:grid;grid-template-columns:1fr 1.15fr;gap:18px;align-items:start}
+.inbox{padding:14px}
+.irow{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:12px;background:var(--rose-t);border:1px solid var(--rose-b)}
+.irow .av{width:34px;height:34px;border-radius:50%;background:var(--rose);color:#fff;display:grid;place-items:center;font-weight:800;flex:none}
+.irow b{display:block;font-size:14.5px}.irow span{font-size:13.5px;color:var(--muted)}
+.why{margin-top:12px;font-size:14.5px;line-height:1.7}.why li{margin-bottom:4px}
+.mail{background:#f6f2f3;border-radius:16px;padding:14px}
+.mail .m{background:#fff;border-radius:14px;overflow:hidden;font-family:Arial,Helvetica,sans-serif}
+.mail .bar{height:6px}
+.mail .in{padding:16px 18px}
+.mail .tag{display:inline-block;font-size:12.5px;font-weight:700;border-radius:999px;padding:3px 11px}
+.mail h3{font-size:21px;margin:10px 0 4px}
+.mail .meta{font-size:14px;color:#3a3a40}
+.mail .todo{border-radius:12px;padding:12px 14px;margin:14px 0}
+.mail .todo small{display:block;font-size:12.5px;font-weight:700;margin-bottom:3px}
+.mail .todo div{font-weight:700;font-size:15.5px;line-height:1.5}
+.mail .lbl{font-size:12.5px;color:#6c6c72;font-weight:700;margin-top:10px}
+.mail p{font-size:15px;line-height:1.55}
+.mail .mbtn{display:inline-block;background:var(--rose);color:#fff;border-radius:10px;padding:10px 18px;font-weight:700;margin-top:14px;font-size:15px}
+.mail .foot{font-size:12px;color:#8a8a90;border-top:1px solid #f0e8ea;padding:10px 18px}
 
-.wa-screen{background:#efe7dd;padding:16px;display:grid;gap:10px}
-.wa-msg{background:#d9fdd3;border-radius:10px;border-top-right-radius:3px;padding:10px 12px;font-size:14px;max-width:92%;box-shadow:0 1px 1px rgba(0,0,0,.08);justify-self:start}
-.wa-msg .ts{display:block;text-align:left;font-size:11px;color:#667781;margin-top:3px}
-.wa-btn{justify-self:center;display:inline-flex;align-items:center;gap:8px;background:#25a35a;color:#fff;font-weight:600;font-size:13.5px;padding:8px 16px;border-radius:999px}
+/* whatsapp proposal */
+.wa{display:grid;grid-template-columns:330px 1fr;gap:18px;align-items:start}
+.phone{background:#1f1f22;border-radius:34px;padding:12px;box-shadow:var(--shadow)}
+.screen{background:#ece5dd;border-radius:24px;min-height:430px;overflow:hidden;display:flex;flex-direction:column}
+.wa-top{background:#075e54;color:#fff;padding:12px 14px;font-weight:700;font-size:15px;display:flex;gap:10px;align-items:center}
+.wa-top i{width:30px;height:30px;border-radius:50%;background:#fff;color:#075e54;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px}
+.wa-top small{display:block;font-weight:400;font-size:12px;opacity:.85}
+.chat{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1}
+.wb{max-width:86%;padding:8px 10px;border-radius:10px;font-size:14px;line-height:1.5;box-shadow:0 1px 1px rgba(0,0,0,.08);opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
+.wb.show{opacity:1;transform:none}
+.wb.biz{background:#fff;align-self:flex-start;border-top-right-radius:2px}
+.wb.cust{background:#dcf8c6;align-self:flex-end;border-top-left-radius:2px}
+.wb.sys{align-self:center;background:#fff8d6;font-size:12.5px;color:#5c5c5c}
+.wb .tk{display:block;text-align:left;font-size:11px;color:#8a8a8a;margin-top:2px}
+.wb .tk.read{color:#34b7f1}
+.wa-ctl{display:flex;gap:8px;margin-top:12px;align-items:center}
+.tpls{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+.tpl{padding:12px 14px}
+.tpl b{display:block;font-size:15px}.tpl span{font-size:13.5px;color:var(--muted)}
+.need{padding:16px 18px;margin-top:12px}
+.need ul{margin:6px 0 0;padding-inline-start:18px;line-height:1.75;font-size:15px}
+.soon{display:inline-block;font-size:12.5px;font-weight:700;color:var(--blue);background:var(--blue-t);border-radius:999px;padding:2px 10px;margin-inline-start:6px;vertical-align:middle}
 
-footer{color:var(--faint);font-size:12.5px;text-align:center;padding:0 20px 32px}
+/* direct links into the system */
+.golinks{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.golinks a{display:block;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);transition:border-color .2s,transform .2s}
+.golinks a:hover{border-color:var(--rose);transform:translateY(-2px)}
+.golinks b{display:block;font-size:15px}.golinks span{font-size:13px;color:var(--muted)}
+.run{counter-reset:r;list-style:none;margin:10px 0 0;padding:0}
+.run li{counter-increment:r;position:relative;padding:8px 40px 8px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.run li::before{content:counter(r);position:absolute;right:0;top:8px;width:26px;height:26px;border-radius:8px;background:var(--rose);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px}
+.run a{display:inline-block;margin:4px 0 0 8px}
 
-/* ---------- mobile ---------- */
-@media (max-width:720px){
-  .wrap{padding:0 16px}
-  .panel{padding:22px 16px;border-radius:16px}
-  .hero{padding:26px 0 20px}
-  .node{padding:20px 18px}
-  .lanes{grid-template-columns:1fr;gap:16px;padding-top:6px}
-  .lanes::before,.lanes::after,.lane::before,.lane::after{display:none}
-  .lanes{gap:22px}
-  .lane{padding-bottom:0}
-  .lane-tag{align-self:flex-start}
-  .split-label{display:block!important;margin-top:4px}
-  .v.split-gap{height:14px}
-  .step{grid-template-columns:36px minmax(0,1fr);gap:14px}
-  .step .mock{grid-column:2}
-  .step .ann{grid-column:2;grid-row:1}
-  .step .n{grid-row:1}
-  .step .ann{padding-top:3px}
+/* decisions + presenter */
+.dec{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.dq{display:flex;gap:10px;align-items:flex-start;padding:14px 16px}
+.dq i{font-style:normal;width:26px;height:26px;border-radius:8px;background:var(--rose-t);color:var(--rose);display:grid;place-items:center;font-weight:800;flex:none}
+.presenter{display:none;padding:16px;border:2px dashed var(--rose-b);background:#fff;border-radius:16px;margin-top:16px}
+.presenter.show{display:block}
+.presenter a{display:inline-block;margin:6px 0 0 8px}
+footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .hero-g,.console,.mailwrap,.wa{grid-template-columns:1fr}
+  .golinks{grid-template-columns:1fr 1fr}.tpls{grid-template-columns:1fr}
+  .phone{max-width:340px;margin:0 auto}
+  .groups,.dec{grid-template-columns:1fr}
+  .hero h1{font-size:34px}
+  .branches{grid-template-columns:1fr}
+  .tone{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+  .tstep{font-size:12.5px;padding:8px 6px}.tstep small{display:none}
+  .sec-p{padding-inline-start:0}
 }
-.split-label{display:none;font-size:13px;font-weight:600;color:var(--muted);text-align:center;margin-top:-4px}
-@media print{.topbar,.seg{display:none}.panel{box-shadow:none}}
+@media(max-width:560px){.orbit{width:calc(100vw - 150px)}.node{width:96px;font-size:12px;padding:6px 4px}.node small{display:none}.core{font-size:12.5px}.core small{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
+<div class="topbar"><div class="wrap">
+  <div class="brand"><span class="mark"><svg width="16" height="16" viewBox="0 0 32 32"><path d="M4 26 16 6l12 20z" fill="currentColor"/></svg></span>צמרת מעליות · גבייה</div>
+  <a class="back" id="backLink" href="./">חזרה למערכת ←</a>
+</div></div>
 
-<header class="topbar">
-  <div class="wrap">
-    <div class="brand">
-      <span class="mark" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="m9 8 3-3 3 3M9 16l3 3 3-3"/></svg></span>
-      צמרת מעליות · מעקב גבייה
-    </div>
-    <a class="back" id="back-to-zameret" href="./">חזרה למערכת ←</a>
-  </div>
-</header>
-
-<section class="hero">
-  <div class="wrap">
-    <div class="eyebrow">צמרת מעליות · גבייה</div>
-    <h1>איך עובד המעקב אחרי חובות</h1>
-    <p>המערכת מתקשרת ללקוח, רושמת מה נאמר וקובעת את הצעד הבא. כל המידע נשמר בכרטיס הלקוח.</p>
+<header class="hero"><div class="wrap hero-g">
+  <div>
+    <span class="kicker">דמו · נתונים לדוגמה</span>
+    <h1>מעקב גבייה <span>אוטומטי</span><br>לצמרת מעליות</h1>
+    <p class="lead">הסוכנת הקולית של צמרת מעליות מתקשרת ללקוחות שיש להם חשבוניות פתוחות, מבינה מה מעכב את התשלום וקובעת את הצעד הבא. כל שיחה, הקלטה ותמלול נשמרים בכרטיס הלקוח, ואור רואה הכל ושולטת בהכל.</p>
     <div class="chips">
-      <span class="chip"><span class="dot"></span>שיחות בימים א׳–ה׳, 09:00–17:00</span>
-      <span class="chip"><span class="dot"></span>הודעות וואטסאפ — המשרד שולח בעצמו</span>
-      <span class="chip on"><span class="dot"></span>הכול נשמר בכרטיס הלקוח</span>
+      <span class="chip">שיחות בימים <b>א׳–ה׳, 09:00–17:00</b></span>
     </div>
+    <div class="cta"><a class="btn pri" href="#flow">איך זה עובד</a><a class="btn" href="#console">מה אור רואה</a></div>
   </div>
-</section>
+  <div class="loop card" aria-hidden="true">
+    <div class="loop-h">כך הכל עובד יחד</div>
+    <div class="lrows"><span class="pulse"></span>
+      <div class="lrow"><span class="lic"><svg viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg></span><div class="lt"><b>פריוריטי</b><small>החשבוניות הפתוחות נכנסות לבד</small></div><span class="lst">מסונכרן</span></div>
+      <div class="lrow"><span class="lic"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><div class="lt"><b>הסוכנת</b><small>מתקשרת, מבררת וקובעת צעד הבא</small></div><span class="lst g">בשיחה</span></div>
+      <div class="lrow"><span class="lic"><svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></svg></span><div class="lt"><b>כרטיס הלקוח</b><small>שיחה, תמלול והצעד הבא</small></div><span class="lst">נשמר</span></div>
+      <div class="lrow"><span class="lic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div class="lt"><b>אור</b><small>מקבלת התראה, מחליטה, עוצרת</small></div><span class="lst a">התראה</span></div>
+    </div>
+    <div class="loop-f">חוזר על עצמו עד שהחוב מוסדר</div>
+  </div>
+</div></header>
 
 <main class="wrap">
+  <div class="goal reveal"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></div><div><div class="big">המטרה: שכל לקוח יעבור להוראת קבע או הרשאה לחיוב.</div><div class="sec-p" style="padding:0;margin:2px 0 0">חוב חודשי הוא תסמין. לקוח בהוראת קבע לא צריך יותר שיחות גבייה.</div></div></div>
 
-  <!-- ===== flow ===== -->
-  <section class="panel" aria-label="תרשים: מהשיחה ועד הצעד הבא">
-    <div class="panel-head">
-      <div>
-        <h2><span class="num">1</span>התהליך במבט אחד</h2>
-        <p>מהחוב הפתוח, דרך השיחה עם הלקוח, ועד הצעד הבא.</p>
+  <section id="flow">
+    <div class="sec-h"><span class="sec-n">1</span><h2>שיחה אחת, מההתחלה עד הצעד הבא</h2></div>
+    <p class="sec-p">בוחרים מה הלקוח ענה, ועוברים שלב אחרי שלב כדי לראות איך המערכת מגיבה.</p>
+    <div class="card player reveal">
+      <div class="scen" id="scen">
+        <button data-s="noans" class="on">לא ענה</button>
+        <button data-s="promise">הבטיח לשלם</button>
+        <button data-s="standing">רוצה הוראת קבע</button>
+        <button data-s="dispute">מחלוקת על החוב</button>
+        <button data-s="stop">ביקש שלא יתקשרו</button>
+        <button class="pp" id="restart">מההתחלה</button>
+        <button class="btn pri sm" id="nextStep">השלב הבא ←</button>
       </div>
-    </div>
-
-    <div class="flow">
-      <div class="node start">
-        <div class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></div>
-        <span class="kicker">נקודת ההתחלה</span>
-        <h3>ללקוח יש חשבוניות שירות שלא שולמו</h3>
-        <p>המערכת בודקת את גובה החוב ואת השיחות הקודמות.</p>
-      </div>
-      <div class="v"></div>
-      <div class="node agent">
-        <div class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></div>
-        <h3>הנציג האוטומטי מתקשר</h3>
-        <p>מוודא שהוא מדבר עם האדם הנכון, ושואל מה מעכב את התשלום.</p>
-      </div>
-      <div class="v split-gap"></div>
-      <div class="split-label">יש שלוש אפשרויות:</div>
-
-      <div class="lanes">
-        <div class="lane amber">
-          <span class="lane-tag">לא ענו</span>
-          <div class="card"><h4>השיחה נרשמת כ״לא ענה״</h4><p>לא הייתה שיחה, ולכן אין הקלטה.</p></div>
-          <div class="mini"></div>
-          <div class="grow"><div class="card">
-            <h4>המערכת מתקשרת שוב</h4><p>ביום העבודה הבא, בשעה 10:00.</p>
-            <div class="sep"></div>
-            <p>אחרי 3 פעמים בלי מענה:</p>
-            <span class="stop">המערכת מפסיקה להתקשר, והמשרד ממשיך את הטיפול.</span>
-          </div></div>
+      <div class="flow2" id="flowSteps">
+        <div class="nd start" data-k="start"><div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg></div><span class="kick">נקודת ההתחלה</span><h3>ללקוח יש חשבוניות שירות שלא שולמו</h3><p>המערכת בודקת את גובה החוב ואת השיחות הקודמות.</p></div>
+        <div class="v" data-on="1"></div>
+        <div class="nd" data-k="call"><div class="ico"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></div><h3>הסוכנת מתקשרת מהקו של המשרד</h3><p>מוודאת שהיא מדברת עם האדם הנכון, ושואלת מה מעכב את התשלום.</p></div>
+        <div class="v split" data-on="2"></div>
+        <div class="split-label">יש שלוש אפשרויות:</div>
+        <div class="lanes2">
+          <div class="lane2" data-k="b1" style="--c:var(--amber)"><span class="ltag">לא ענו</span><div class="lc"><h4>מנסה שוב</h4><p>ביום העבודה הבא ב-10:00, עד 6 פעמים. אחר כך הלקוח עובר למשרד.</p></div></div>
+          <div class="lane2" data-k="b2" style="--c:var(--green)"><span class="ltag">ענו והתקדמנו</span><div class="lc"><h4>יש צעד הבא</h4><p>הבטחה עם תאריך, בקשה לחזור, או הוראת קבע.</p></div></div>
+          <div class="lane2" data-k="b3" style="--c:var(--purple)"><span class="ltag">צריך את המשרד</span><div class="lc"><h4>עובר לאור</h4><p>מחלוקת, "כבר שילמתי", או בקשה שלא יתקשרו.</p></div></div>
         </div>
-
-        <div class="lane">
-          <span class="lane-tag">ענו — ואפשר להתקדם</span>
-          <div class="card"><h4>הנציג מברר מה הצעד הבא</h4><p>למשל: הלקוח הבטיח לשלם, ביקש שיחזרו אליו, או שאין לו כרגע כסף.</p></div>
-          <div class="mini"></div>
-          <div class="grow"><div class="card">
-            <h4>מה קורה אחר כך</h4>
-            <ul>
-              <li><b>הבטיח לשלם:</b><span>במועד שנקבע, המשרד בודק אם התשלום הגיע.</span></li>
-              <li><b>ביקש שיחזרו אליו:</b><span>המערכת מתקשרת שוב בדיוק במועד שסוכם.</span></li>
-              <li><b>אין כרגע כסף:</b><span>המערכת מתקשרת שוב במועד שסוכם, ועוזרת לגבות מהדיירים.</span></li>
-            </ul>
-            <div class="sep"></div>
-            <p>לא נקבע מועד ברור? המשרד מתאם מול הלקוח.</p>
-          </div></div>
-        </div>
-
-        <div class="lane purple">
-          <span class="lane-tag">ענו — וצריך בדיקה של המשרד</span>
-          <div class="card"><h4>יש סיבה לעצור</h4><p>למשל: ״כבר שילמתי״, מחלוקת על החוב, בקשה שלא יתקשרו, איש קשר לא נכון, או פרטים חסרים.</p></div>
-          <div class="mini"></div>
-          <div class="grow"><div class="card">
-            <h4>הטיפול עובר למשרד</h4><p>המערכת לא מתקשרת שוב מעצמה.</p>
-            <div class="sep"></div>
-            <p>גם כשהלקוח ביקש שלא יתקשרו:</p>
-            <span class="stop">החוב נשאר פתוח. הוא לא נמחק.</span>
-          </div></div>
-        </div>
+        <div class="v" data-on="3"></div>
+        <div class="nd rec" data-k="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></svg></div><h3>כרטיס הלקוח מתעדכן לבד</h3><p>סיכום, הקלטה, תמלול, והצעד הבא עם תאריך.</p></div>
+        <div class="v" data-on="4"></div>
+        <div class="nd" data-k="office"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><h3 id="lastT">אור רואה ומחליטה</h3><p id="lastS">אפשר לעצור, לשנות מועד, או לבטל פעולה.</p></div>
       </div>
-
-      <div class="v"></div>
-      <div class="node record">
-        <div class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M15 8h2M15 12h2M7 16h10"/></svg></div>
-        <h3>כרטיס הלקוח מתעדכן מעצמו</h3>
-        <p>מה קרה בשיחה, כמה פעמים התקשרו, ומה הצעד הבא.</p>
-        <p class="note">כשהלקוח ענה: גם הקלטה של השיחה והשיחה בכתב, זמן קצר אחרי הסיום.</p>
-      </div>
-      <div class="v dash"></div>
-      <div class="node wa">
-        <div class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg></div>
-        <span class="kicker">כשצריך · פעולה ידנית</span>
-        <h3>אפשר להמשיך בוואטסאפ</h3>
-        <p>המשרד פותח הודעה מוכנה, קורא אותה ושולח בעצמו.</p>
-        <p class="note">ההודעה לא נשלחת לבד, ותשובות הלקוח בוואטסאפ לא נכנסות לכרטיס.</p>
-      </div>
-    </div>
-
-    <div class="legend">
-      <span><i></i>קו רציף: מה שהמערכת עושה לבד</span>
-      <span><i class="d"></i>קו מקווקו: פעולה ידנית של המשרד</span>
-      <span>את השעות ואת מספר הניסיונות אפשר לשנות.</span>
+      <div class="cap" id="cap"></div>
+      <div class="hint">לוחצים "השלב הבא", או מעבירים את העכבר על שלב כדי לראות מה קורה בו.</div>
+      <div class="paused-note">כל השיחות עצורות כרגע (מהמסוף למטה). אף לקוח לא יקבל שיחה.</div>
     </div>
   </section>
 
-  <!-- ===== one customer ===== -->
-  <section class="panel" id="zameret-flow">
-    <div class="panel-head">
+  <section>
+    <div class="sec-h"><span class="sec-n">2</span><h2>מי מקבל איזה טיפול</h2></div>
+    <p class="sec-p">לא כל חוב זהה. לקוח חשוב באמצע פרויקט לא מקבל שיחה אוטומטית.</p>
+    <div class="groups">
+      <div class="card grp g1 reveal"><h3>חוב חדש</h3><div class="who">חודש-חודשיים</div><ul><li>הודעה בוואטסאפ כשהחשבונית יוצאת</li><li>שיחות של הסוכנת</li><li>הצעה להוראת קבע בכל שיחה</li></ul><div class="tg">המטרה: הוראת קבע</div></div>
+      <div class="card grp g2 reveal"><h3>חוב ותיק</h3><div class="who">חוזה שירות בלבד, 3 חודשים ומעלה</div><ul><li>הודעה ושיחה ייעודיות</li><li>טון ישיר יותר</li><li>אחרי 6 שיחות בלי מענה: למשרד</li></ul><div class="tg">המטרה: תשלום או הסדר</div></div>
+      <div class="card grp g3 reveal"><h3>לקוח עם עבודה או פרויקט</h3><div class="who">יש גם חוב על שיפוץ או עבודה</div><ul><li><b>הסוכנת לא מתקשרת</b></li><li>שמעיה או גיא מטפלים אישית</li><li>בודקים אם משהו פתוח, ומסכמים בכתב</li></ul><div class="tg">המטרה: חוזה שירות מסודר, חוב ישן בהסכמה</div></div>
+    </div>
+  </section>
+
+  <section id="console">
+    <div class="sec-h"><span class="sec-n">3</span><h2>מה אור רואה ושולטת</h2></div>
+    <p class="sec-p">הדמיה של מסך הגבייה. אפשר ללחוץ על הכל: לעצור שיחות, לפתוח שיחה, לשמוע, לקרוא תמלול ולבטל פעולה.</p>
+    <div class="console">
+      <div class="card pane reveal">
+        <div class="agent"><span class="dot"></span><div style="flex:1"><b id="agT">הסוכנת פעילה</b><div class="sim" id="agS" style="margin:0">מתקשרת לפי החוקים, בימים א׳–ה׳.</div></div><button class="btn stop sm" id="pauseAll">עצירת כל השיחות</button></div>
+        <div class="wins">
+          <div class="g"><b data-c="7">0</b><span>הבטיחו לשלם</span></div>
+          <div class="t"><b data-c="5">0</b><span>רוצים הוראת קבע</span></div>
+          <div class="a"><b data-c="9">0</b><span>עברו למשרד</span></div>
+          <div class="r"><b data-c="4">0</b><span>לא ענו 6 פעמים</span></div>
+        </div>
+        <div class="custs" id="custs"></div>
+        <div class="sim">נתונים לדוגמה.</div>
+      </div>
+      <div class="card pane reveal" id="custPane"></div>
+    </div>
+    <div class="golinks">
+      <a data-go="view=collect" target="_blank" rel="noopener"><b>מסך הגבייה</b><span>כל הלקוחות, מה הסוכנת השיגה, ועצירה</span></a>
+      <a data-go="acct=a4105" target="_blank" rel="noopener"><b>לקוח שהבטיח לשלם</b><span>שיחות, תמלול והצעד הבא</span></a>
+      <a data-go="view=collect&amp;filter=red" target="_blank" rel="noopener"><b>הרשימה האדומה</b><span>לא ענו 6 פעמים, עברו למשרד</span></a>
+      <a data-go="acct=a4101" target="_blank" rel="noopener"><b>טיפול אישי</b><span>לקוח עם שיפוץ, בלי שיחות אוטומטיות</span></a>
+    </div>
+  </section>
+
+  <section id="alerts">
+    <div class="sec-h"><span class="sec-n">4</span><h2>התראה במייל לאור</h2></div>
+    <p class="sec-p">כשהסוכנת מסיימת שיחה שצריכה את אור, מגיע אליה מייל בעברית. רואים מיד מה קרה ומה צריך לעשות.</p>
+    <div class="tabs" id="mailTabs">
+      <button data-m="standing" class="on">הזדמנות: הוראת קבע</button>
+      <button data-m="dispute">דחוף: מחלוקת על החוב</button>
+      <button data-m="retry">דחוף: לא ענה 6 פעמים</button>
+      <button data-m="promise">לידיעה: הבטיח לשלם</button>
+    </div>
+    <div class="mailwrap">
+      <div class="card inbox reveal">
+        <div class="irow"><span class="av">צ</span><div><b>מערכת הגבייה · צמרת מעליות</b><span id="mailSubj"></span></div></div>
+        <ul class="why">
+          <li><b>מה צריך לעשות</b> מופיע ראשון, בקופסה צבעונית.</li>
+          <li>ירוק להזדמנות, אדום לדחוף, כתום לטיפול, כחול לידיעה.</li>
+          <li>כפתור אחד שפותח את כרטיס הלקוח במערכת, וקישור להאזנה לשיחה.</li>
+          <li>מייל אחד לכל שיחה. שיחה שלא נענתה לא שולחת מייל, רק כשנגמרים הניסיונות.</li>
+          <li>רק שיחות טלפון אמיתיות שולחות מייל לאור.</li>
+        </ul>
+      </div>
+      <div class="mail reveal"><div class="m" id="mailBody"></div></div>
+    </div>
+  </section>
+
+  <section id="whatsapp">
+    <div class="sec-h"><span class="sec-n">5</span><h2>וואטסאפ שעובד יחד עם הסוכנת</h2></div>
+    <p class="sec-p">הלקוח מבקש בשיחה, והוואטסאפ יוצא לבד, מיד בסיום: פירוט חשבוניות, טופס הוראת קבע או אישור מועד.</p>
+    <div class="wa">
+      <div class="phone reveal"><div class="screen">
+        <div class="wa-top"><i>צ</i><div>צמרת מעליות<small>חשבון עסקי</small></div></div>
+        <div class="chat" id="chat"></div>
+      </div>
+      <div class="wa-ctl"><button class="btn pri sm" id="waNext">הצעד הבא ←</button><button class="btn sm" id="waReset">מההתחלה</button></div></div>
       <div>
-        <h2><span class="num">2</span>דוגמה: לקוח אחד, צעד אחרי צעד</h2>
-        <p>המסכים כאן מציגים נתונים לדוגמה. השעות לפי שעון ישראל.</p>
+        <div class="card need reveal"><b>איך זה עובד</b>
+          <ul><li>בשיחה הלקוח אומר "תשלחו לי את הפירוט", ומיד בסיום יוצא וואטסאפ מצמרת.</li><li>הלקוח עונה בוואטסאפ, למשל אישור העברה, והתשובה נכנסת לכרטיס הלקוח.</li><li>אור מקבלת התראה רק כשצריך אותה.</li><li>נשלח רק לאיש הקשר שאומת בשיחה, ורק על מה שביקש. לא לקבוצת הבניין.</li></ul></div>
+        <div class="tpls">
+          <div class="card tpl reveal"><b>פירוט חשבוניות</b><span>כשהלקוח ביקש פירוט או לא קיבל חשבוניות</span></div>
+          <div class="card tpl reveal"><b>בקשת אישור העברה</b><span>כשהלקוח אמר שכבר שילם</span></div>
+          <div class="card tpl reveal"><b>טופס הוראת קבע</b><span>כשהלקוח ביקש פרטים להוראת קבע</span></div>
+          <div class="card tpl reveal"><b>אישור מועד שיחה חוזרת</b><span>כשנקבע מועד לחזור אליו</span></div>
+        </div>
+        <div class="card need reveal"><b>מה צריך כדי להפעיל</b>
+          <ul><li>מספר וואטסאפ עסקי של צמרת, ובדיקה שהוא פנוי לזה.</li><li>אישור של Meta לעסק ולשם "צמרת מעליות". זה יכול לקחת כמה שבועות.</li><li>אישור ארבע ההודעות האלה. בדרך כלל עד 48 שעות.</li><li>עלות: כ-4 אגורות להודעה, בערך 10 דולר ל-1,000 הודעות.</li><li>פיתוח: יום-יומיים עבודה אחרי האישורים.</li></ul></div>
       </div>
     </div>
+  </section>
 
-    <div class="seg-label" id="seg-label">לחצו על תוצאה, וראו איך הכרטיס משתנה:</div>
-    <div class="seg" role="group" aria-labelledby="seg-label">
-      <button type="button" data-case="callback" aria-pressed="true">ביקש שיחזרו אליו</button>
-      <button type="button" data-case="noanswer" aria-pressed="false">לא ענה</button>
-      <button type="button" data-case="promise" aria-pressed="false">הבטיח לשלם</button>
-      <button type="button" data-case="dispute" aria-pressed="false">מחלוקת על החוב</button>
-      <button type="button" data-case="stop" aria-pressed="false">ביקש שלא יתקשרו</button>
+  <section>
+    <div class="sec-h"><span class="sec-n">6</span><h2>מה צריך להחליט איתכם</h2></div>
+    <p class="sec-p">רק אתם יכולים לענות על אלה. אחרי זה מעדכנים את הסוכנת.</p>
+    <div class="dec">
+      <div class="card dq reveal"><i>1</i><div><b>כמה ניסיונות?</b><br><span class="sim" style="margin:0">הגדרנו 6 שיחות בלי מענה, כמו שדיברנו. אור יכולה לשנות את זה במסך הגבייה.</span></div></div>
+      <div class="card dq reveal"><i>2</i><div><b>כמה ימים בין שיחה לשיחה?</b><br><span class="sim" style="margin:0">כרגע ניסיון חוזר ביום העבודה הבא. אפשר לרווח, למשל כל יומיים.</span></div></div>
+      <div class="card dq reveal"><i>3</i><div><b>מה עושים עם הרשימה האדומה?</b><br><span class="sim" style="margin:0">מכתב התראה, שיחה משמעיה, או עורך דין.</span></div></div>
+      <div class="card dq reveal"><i>4</i><div><b>מי מטפל בלקוחות עם עבודות?</b><br><span class="sim" style="margin:0">שמעיה, גיא, או לפי הלקוח.</span></div></div>
+      <div class="card dq reveal"><i>5</i><div><b>מתי עוצרים תיקון בגלל חוב?</b><br><span class="sim" style="margin:0">החלטה של המשרד, לא של הסוכנת.</span></div></div>
+      <div class="card dq reveal"><i>6</i><div><b>להתחיל עם וואטסאפ אוטומטי?</b><br><span class="sim" style="margin:0">צריך מספר וואטסאפ עסקי של צמרת ואישור של Meta. אפשר להתחיל בתהליך עכשיו.</span></div></div>
     </div>
-
-    <div class="steps">
-      <!-- 1 -->
-      <div class="step">
-        <div class="n">1</div>
-        <div class="mock" role="img" aria-label="דוגמה לכרטיס גבייה עם הצעד הבא">
-          <div class="bar"><b>צמרת מעליות · גבייה</b><span class="tag">דוגמה</span></div>
-          <div class="in">
-            <div>
-              <div class="m-title">רחוב הדוגמה 12, חיפה</div>
-              <div class="m-sub">איש קשר: אור · לקוח מס׳ 4101 · חוב פתוח: 1,800 ₪</div>
-            </div>
-            <div><span class="pill" id="z-status">ביקש שיחזרו אליו</span></div>
-            <div class="next" id="z-next">
-              <small id="z-nextlabel">השיחה הבאה</small>
-              <strong id="z-date">8.11.2026 · 11:00</strong>
-              <span id="z-reason">המועד שהלקוח ביקש בשיחה</span>
-            </div>
-            <div class="row"><span>מספר שיחות עד עכשיו</span><b id="z-tries">2</b></div>
-          </div>
-        </div>
-        <div class="ann">
-          <h3>במבט אחד: מה הלאה?</h3>
-          <p id="z-explain" aria-live="polite">רואים מיד מתי מתקשרים שוב ולמה. לא צריך להקשיב להקלטה כדי לדעת.</p>
-        </div>
-      </div>
-
-      <!-- 2 -->
-      <div class="step">
-        <div class="n">2</div>
-        <div class="mock" role="img" aria-label="דוגמה לרשימת השיחות עם הלקוח">
-          <div class="bar"><b>כל השיחות עם הלקוח</b><span class="tag">דוגמה</span></div>
-          <div class="in">
-            <div class="tl">
-              <div class="tl-item">
-                <span class="pill">שיחה 2 · הלקוח ענה</span>
-                <div class="when">5.11.2026 · 11:00</div>
-                <div class="m-sub">ביקש שיחזרו אליו ב־8.11 בשעה 11:00</div>
-                <div class="btns"><span class="btn-s">▷ האזנה</span><span class="btn-s">השיחה בכתב</span></div>
-              </div>
-              <div class="tl-item miss">
-                <span class="pill" style="background:var(--amber-t);color:var(--amber)">שיחה 1 · לא ענה</span>
-                <div class="when">4.11.2026 · 10:00</div>
-                <div class="m-sub">לא הייתה שיחה, ולכן אין הקלטה</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="ann">
-          <h3>כל שיחה נשמרת</h3>
-          <p>רואים מתי התקשרו, כמה פעמים, ומה קרה בכל פעם. לוחצים על שיחה כדי לראות את הפרטים.</p>
-        </div>
-      </div>
-
-      <!-- 3 -->
-      <div class="step">
-        <div class="n">3</div>
-        <div class="mock" role="img" aria-label="דוגמה לפרטי שיחה עם הקלטה והשיחה בכתב">
-          <div class="bar"><b>פרטי השיחה</b><span class="tag">דוגמה</span></div>
-          <div class="in">
-            <div>
-              <div class="m-title">ביקש שיחזרו אליו</div>
-              <div class="m-sub">5.11.2026 · 11:00</div>
-            </div>
-            <div class="audio">
-              <span class="play" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 12 6 4v16z"/></svg></span>
-              <div class="wave" aria-hidden="true"><span style="height:40%"></span><span style="height:75%"></span><span style="height:55%"></span><span style="height:90%"></span><span style="height:35%"></span><span style="height:65%"></span><span style="height:85%"></span><span style="height:45%"></span><span style="height:70%"></span><span style="height:30%"></span><span style="height:60%"></span><span style="height:95%"></span><span style="height:50%"></span><span style="height:40%"></span><span style="height:75%"></span><span style="height:35%"></span><span style="height:55%"></span><span style="height:80%"></span><span style="height:45%"></span><span style="height:30%"></span><span style="height:60%"></span><span style="height:40%"></span></div>
-              <span class="t">הקלטה</span>
-            </div>
-            <div class="bub agent"><b>הנציג האוטומטי</b>באיזה יום ובאיזו שעה נוח לך שנחזור אליך?</div>
-            <div class="bub cust"><b>הלקוח</b>ביום ראשון, שמונה בנובמבר, באחת־עשרה בבוקר.</div>
-            <div class="row"><span>הצעד הבא</span><b>שיחה חוזרת במועד שסוכם</b></div>
-            <span class="fine">קטע שיחה לדוגמה.</span>
-          </div>
-        </div>
-        <div class="ann">
-          <h3>אפשר גם לבדוק מה נאמר</h3>
-          <p>הסיכום נותן תמונה מהירה. כדי לבדוק, אפשר להאזין להקלטה או לקרוא את השיחה בכתב.</p>
-        </div>
-      </div>
-
-      <!-- 4 -->
-      <div class="step">
-        <div class="n">4</div>
-        <div class="mock" role="img" aria-label="דוגמה להודעת וואטסאפ מוכנה">
-          <div class="bar"><b>WhatsApp · אור</b><span class="tag">הודעה מוכנה</span></div>
-          <div class="wa-screen">
-            <div class="wa-msg">שלום אור, כאן צמרת מעליות. בהמשך לשיחה שלנו: בכרטיס שלך יש שלוש חשבוניות שירות פתוחות, בסך 1,800 ₪. יש להסדיר את התשלום. לכל שאלה אפשר לענות כאן.<span class="ts">טרם נשלחה</span></div>
-            <span class="wa-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>פתיחת ההודעה בוואטסאפ</span>
-          </div>
-          <div class="in" style="padding-top:10px"><span class="fine">פתיחת ההודעה עדיין לא שולחת אותה. המשרד קורא ושולח.</span></div>
-        </div>
-        <div class="ann">
-          <h3>וואטסאפ — בשליטת המשרד</h3>
-          <p>כשצריך, המשרד שולח ללקוח הודעת וואטסאפ מוכנה. ההודעה נשלחת רק אחרי שמישהו במשרד קרא ואישר.</p>
-        </div>
-      </div>
+    <div class="presenter" id="presenter">
+      <b>לאייל: סדר ההדגמה בפגישה</b> <span class="sim">(מוצג רק בקישור המציג)</span>
+      <ol class="run">
+        <li><b>הכותרת והמטרה.</b> המטרה היא הוראת קבע. לגלול לחלק 1 ולעבור על "הבטיח לשלם" ו"רוצה הוראת קבע".</li>
+        <li><b>הסוכנת עצמה ב-Retell.</b> להראות איך היא בנויה, ואז שיחת בדיקה בדפדפן. אור אומרת "שלום" ראשונה.<br>
+          <a class="btn sm" target="_blank" rel="noopener" href="https://dashboard.retellai.com/org_kB1lkYCNjKzSM0K7/agents/agent_a8eac6c401b02b2e1bd2f71fdb">הסוכנת ב-Retell</a>
+          <a class="btn sm pri" target="_blank" rel="noopener" href="https://dashboard.retellai.com/org_kB1lkYCNjKzSM0K7/agents/agent_a8eac6c401b02b2e1bd2f71fdb?test_panel=open&amp;test_mode=audio">שיחת בדיקה בדפדפן</a>
+          <a class="btn sm" target="_blank" rel="noopener" href="https://dashboard.retellai.com/org_kB1lkYCNjKzSM0K7/call-history">היסטוריית השיחות</a></li>
+        <li><b>מה שהשיחה עשתה במערכת.</b> כרטיס הדוגמה של אור: הסיכום, התמלול, ההקלטה והצעד הבא.<br>
+          <a class="btn sm pri" data-go="acct=zameret-demo-or" target="_blank" rel="noopener">כרטיס הדוגמה של אור</a></li>
+        <li><b>התמונה המלאה.</b> מסך הגבייה, מה הסוכנת השיגה, הרשימה האדומה וטיפול אישי. ללחוץ "עצירת כל השיחות" ו"ביטול".<br>
+          <a class="btn sm" data-go="view=collect" target="_blank" rel="noopener">מסך הגבייה</a>
+          <a class="btn sm" data-go="view=collect&amp;filter=red" target="_blank" rel="noopener">הרשימה האדומה</a>
+          <a class="btn sm" data-go="acct=a4101" target="_blank" rel="noopener">טיפול אישי</a></li>
+        <li><b>ההתראה במייל</b> (חלק 4) <b>והוואטסאפ האוטומטי</b> (חלק 5).</li>
+        <li><b>ההחלטות שלה</b> (חלק 6): ניסיונות, ימים, רשימה אדומה, טיפול אישי, וואטסאפ.</li>
+      </ol>
+      <div class="sim">שיחת טלפון אמיתית לאור רק אחרי "go" ל-Codex, לפי רשימת הבדיקה שלו. בשיחת בדיקה בדפדפן נשלחת התראה רק אליך.</div>
     </div>
   </section>
 </main>
-<footer>צמרת מעליות · מערכת שירות וגבייה</footer>
+<footer>צמרת מעליות · מערכת שירות וגבייה · נבנה על ידי MeetingScheduled</footer>
 
 <script>
-(function(){
-  var back=document.getElementById('back-to-zameret');
-  if(back) back.href='./'+location.search;
+const qs=location.search;const params=new URLSearchParams(qs);
+document.getElementById('backLink').href='./'+qs;
+const kParam=params.get('k');
+const sysLink=extra=>'./?'+(kParam?'k='+encodeURIComponent(kParam)+'&':'')+extra;
+document.querySelectorAll('[data-go]').forEach(a=>a.href=sysLink(a.dataset.go));
+if(params.get('p')==='1')document.getElementById('presenter').classList.add('show');
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let toastT;function toast(t,undo){$$('.toast').forEach(x=>x.remove());const el=document.createElement('div');el.className='toast';el.textContent=t;if(undo){const b=document.createElement('button');b.textContent='ביטול';b.onclick=()=>{el.remove();undo()};el.appendChild(b)}document.body.appendChild(el);clearTimeout(toastT);toastT=setTimeout(()=>el.remove(),undo?6000:2600)}
 
-  var C={
-    callback:{status:'ביקש שיחזרו אליו',label:'השיחה הבאה',date:'8.11.2026 · 11:00',reason:'המועד שהלקוח ביקש בשיחה',tries:'2',explain:'רואים מיד מתי מתקשרים שוב ולמה. לא צריך להקשיב להקלטה כדי לדעת.',c:'--blue',t:'--blue-t'},
-    noanswer:{status:'לא ענה — המערכת תתקשר שוב',label:'השיחה הבאה',date:'8.11.2026 · 10:00',reason:'שיחה 2 מתוך 3 · ביום העבודה הבא',tries:'1',explain:'המערכת תתקשר שוב לבד. אם אחרי 3 פעמים אין מענה, היא מפסיקה להתקשר והמשרד ממשיך.',c:'--amber',t:'--amber-t'},
-    promise:{status:'הבטיח לשלם',label:'בדיקה אם התשלום הגיע',date:'8.11.2026',reason:'המשרד בודק בתאריך שהלקוח נתן',tries:'2',explain:'המערכת לא מתקשרת שוב. החוב נסגר רק כשהתשלום באמת מגיע, לא בגלל הבטחה.',c:'--teal',t:'--teal-t'},
-    dispute:{status:'מחלוקת על החוב',label:'השיחה הבאה',date:'אין — לא מתקשרים',reason:'המשרד בודק את החיוב',tries:'2',explain:'התיק עובר לבדיקה של אדם במשרד. המערכת לא מתקשרת שוב.',c:'--purple',t:'--purple-t'},
-    stop:{status:'ביקש שלא יתקשרו',label:'השיחה הבאה',date:'אין — לא מתקשרים',reason:'הבקשה הועברה למשרד',tries:'2',explain:'המערכת מפסיקה להתקשר. החוב נשאר פתוח — הוא לא נמחק.',c:'--red',t:'--red-t'}
-  };
-  var $=function(id){return document.getElementById(id)};
-  var btns=document.querySelectorAll('.seg button');
-  function render(k){
-    var a=C[k]||C.callback;
-    $('z-status').textContent=a.status;
-    $('z-nextlabel').textContent=a.label;
-    $('z-date').textContent=a.date;
-    $('z-reason').textContent=a.reason;
-    $('z-tries').textContent=a.tries;
-    $('z-explain').textContent=a.explain;
-    var c='var('+a.c+')',t='var('+a.t+')';
-    $('z-status').style.background=t;$('z-status').style.color=c;
-    $('z-next').style.background=t;$('z-next').style.borderInlineStartColor=c;
-    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.case===k))});
-  }
-  btns.forEach(function(b){b.addEventListener('click',function(){render(b.dataset.case)})});
-  render('callback');
-})();
+
+/* reveal on scroll + count-up + timeline fill */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');
+  e.target.querySelectorAll?.('[data-c]').forEach(b=>{const n=+b.dataset.c;let i=0;const t=setInterval(()=>{b.textContent=++i;if(i>=n)clearInterval(t)},70)});
+  io.unobserve(e.target)}),{threshold:.2});
+$$('.reveal').forEach(el=>io.observe(el));
+
+/* flow player */
+const SC={
+ noans:{branch:'b1',caps:['יש 3 חשבוניות פתוחות, 1,800 ₪','הסוכנת מתקשרת... אין מענה','לא ענו. ניסיון נוסף מחר ב-10:00 (2 מתוך 6)','בכרטיס: "לא ענה · תנסה שוב מחר 10:00"','אחרי 6 פעמים בלי מענה, הלקוח עובר לאור'],last:['אחרי 6 ניסיונות: אור מחליטה','מכתב, שיחה מהמשרד, או משהו אחר.']},
+ promise:{branch:'b2',caps:['יש 3 חשבוניות פתוחות, 1,800 ₪','"שלום, אני מתקשרת מטעם צמרת מעליות..."','"אעביר עד יום חמישי." נשמרה הבטחה עם תאריך','בכרטיס: "הבטיח לשלם · בדיקת תשלום ביום חמישי"','ביום חמישי בודקים אם הכסף הגיע. לא מתקשרים בינתיים'],last:['בודקים אם התשלום הגיע','אם לא, הסוכנת תתקשר שוב.']},
+ standing:{branch:'b2',caps:['יש 3 חשבוניות פתוחות, 1,800 ₪','הסוכנת מציעה: "אפשר לסדר את זה בהוראת קבע"','"כן, תשלחו לי פרטים." זו התוצאה הכי טובה','הפרטים וההסבר יוצאים ללקוח בוואטסאפ, מיד בסיום השיחה','בכרטיס, בירוק: "ביקש פרטים להוראת קבע". מהחודש הבא אין חוב חודשי'],last:['אור מוודאת שההרשאה נקלטה','לקוח שעבר להוראת קבע יוצא מהגבייה.']},
+ dispute:{branch:'b3',caps:['יש 3 חשבוניות פתוחות, 1,800 ₪','"על מה המחלוקת?" הסוכנת מקשיבה ולא מתווכחת','"החיוב של ספטמבר לא נכון." עובר למשרד','בכרטיס: "מחלוקת על החוב · למשרד". הסוכנת לא מתקשרת','אור בודקת את החיוב וחוזרת ללקוח'],last:['אור בודקת את החיוב','הסוכנת לא מתקשרת עד שהמשרד מחליט.']},
+ stop:{branch:'b3',caps:['יש 3 חשבוניות פתוחות, 1,800 ₪','"אל תתקשרו אליי יותר." "ברור, אני מכבדת את הבקשה."','הבקשה נשמרת. הסוכנת לא תתקשר שוב','בכרטיס: "פניות אוטומטיות נעצרו". החוב נשאר פתוח','אור מחליטה איך ממשיכים, בשיחה אישית או במכתב'],last:['אור מחליטה איך ממשיכים','החוב לא נמחק.']}};
+let cur='noans',step=0;
+const seqOf=()=>['start','call',SC[cur].branch,'card','office'];
+function setScen(k){cur=k;step=0;$$('#scen [data-s]').forEach(b=>b.classList.toggle('on',b.dataset.s===k));render()}
+function render(){const s=SC[cur];const seq=['start','call',s.branch,'card','office'];
+ $$('#flowSteps [data-k]').forEach(el=>{const k=el.dataset.k;const i=seq.indexOf(k);el.classList.toggle('lit',i===step);el.classList.toggle('done',i>=0&&i<step)});
+ $$('#flowSteps .v').forEach(w=>w.classList.toggle('on',step>=+w.dataset.on));
+ $('#cap').textContent=step>=0?s.caps[step]:'';if(step===4){$('#lastT').textContent=s.last[0];$('#lastS').textContent=s.last[1]}else{$('#lastT').textContent='אור רואה ומחליטה';$('#lastS').textContent='אפשר לעצור, לשנות מועד, או לבטל פעולה.'}}
+render();
+$$('#scen [data-s]').forEach(b=>b.onclick=()=>setScen(b.dataset.s));
+$('#nextStep').onclick=()=>{step=step>=4?0:step+1;render()};
+$('#restart').onclick=()=>{step=0;render()};
+/* hover or click on a step shows the flow up to that step (steps outside this scenario are ignored) */
+$$('#flowSteps [data-k]').forEach(el=>{const go=()=>{const i=seqOf().indexOf(el.dataset.k);if(i>=0&&i!==step){step=i;render()}};el.addEventListener('mouseenter',go);el.addEventListener('click',go)});
+
+/* console simulation */
+const CUSTS=[
+ {id:'a',addr:'הערבה 16, חיפה',debt:'₪7,425 · 10 חודשים',state:'pay',label:'הבטיח לשלם · בדיקה ביום חמישי',reason:'אמר שיעביר עד יום חמישי. לא מתקשרים בינתיים.',calls:[{t:'אתמול 14:15',out:'שיחה מלאה',dur:'1:49',sum:'הבטיח לשלם עד יום חמישי',tr:[['ag','שלום, אני מתקשרת מטעם צמרת מעליות. אפשר לדבר עם הגזבר?'],['cu','כן, מדבר.'],['ag','יש אצלנו עשר חשבוניות שירות פתוחות על המעלית. יש להסדיר את התשלום. מתי תוכל להעביר?'],['cu','אני מעביר עד יום חמישי.'],['ag','רשמתי, עד יום חמישי. אפשר גם לסדר את זה בהוראת קבע, ואז לא צריך לזכור כל חודש. תרצה פרטים?'],['cu','כן, תשלחו.']]},{t:'לפני 3 ימים 15:36',out:'לא ענה',dur:'',sum:'אין מענה',tr:[]}]},
+ {id:'b',addr:'הגפן 40, חיפה',debt:'₪3,980 · 10 חודשים',state:'off',label:'לא ענה 6 פעמים · עבר למשרד',reason:'הסוכנת הפסיקה להתקשר. מה עושים: מכתב, שיחה מהמשרד, או משהו אחר.',calls:['אתמול','לפני יומיים','לפני 3 ימים','לפני 4 ימים','לפני 5 ימים','לפני 6 ימים'].map(d=>({t:d+' 10:00',out:'לא ענה',dur:'',sum:'אין מענה',tr:[]}))},
+ {id:'c',addr:'החרוב 21, עכו',debt:'₪5,170 · 10 חודשים',state:'call',label:'לא ענה · תנסה שוב',reason:'ניסיון 2 מתוך 6.',next:'מחר 10:00',calls:[{t:'היום 10:00',out:'לא ענה',dur:'',sum:'אין מענה',tr:[]}]},
+ {id:'d',addr:'האלון 14, קריית ים',debt:'₪15,555 · 7 חודשים',state:'stop',personal:true,label:'טיפול אישי · שמעיה',reason:'יש ללקוח גם שיפוץ פתוח (₪142,070). הסוכנת לא מתקשרת אליו.',calls:[]}];
+const NB={call:['call','שיחה מתוכננת'],pay:['pay','בדיקת תשלום'],off:['off','למשרד'],stop:['stop','עצור'],ok:['ok','שולם']};
+let sel='a',openCall=null,log=[];
+function now(){return new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'})}
+function drawList(){$('#custs').innerHTML=CUSTS.map(c=>`<button class="cust ${c.id===sel?'on':''}" data-id="${c.id}"><span><b>${c.addr}</b><small>${c.debt}</small></span><span class="nb ${NB[c.state][0]}">${c.personal&&c.state==='stop'?'טיפול אישי':NB[c.state][1]}</span></button>`).join('');$$('.cust').forEach(b=>b.onclick=()=>{sel=b.dataset.id;openCall=null;drawList();drawCust()})}
+function drawCust(){const c=CUSTS.find(x=>x.id===sel);const paused=document.body.classList.contains('allpaused');
+ $('#custPane').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px"><b style="font-size:19px">${c.addr}</b><span class="sim" style="margin:0">${c.debt}</span></div>
+ <div class="next ${c.state}"><h4>מה הלאה</h4><b>${c.label}</b>${c.next?`<div><b>השיחה הבאה: ${paused&&c.state==='call'?'עצורה':c.next}</b></div>`:''}<div class="sim" style="margin-top:4px">${c.reason}</div></div>
+ <b>שיחות הסוכנת (${c.calls.length})</b>
+ <div class="calls">${c.calls.length?c.calls.map((k,i)=>`<button class="callrow ${openCall===i?'on':''}" data-i="${i}"><span class="ci"><b>שיחה ${c.calls.length-i}</b> · ${k.t}${k.dur?' · '+k.dur:''}<small>${k.sum}</small></span><span class="nb ${k.out==='שיחה מלאה'?'ok':'stop'}">${k.out}</span></button>`).join(''):'<div class="sim">הסוכנת לא מתקשרת ללקוח הזה.</div>'}</div>
+ <div class="tr" id="trBox"></div>
+ <div class="acts">${c.state==='stop'?`<button class="btn sm" data-a="resume">${c.personal?'להעביר לשיחות הסוכנת':'החזרה לשיחות'}</button>`:`<button class="btn sm" data-a="stop">עצירת הסוכנת ללקוח</button>`}${c.state!=='ok'?'<button class="btn sm go" data-a="paid">סימון ששולם</button>':''}</div>
+ <div class="log">${log.filter(l=>l.id===c.id).map(l=>`<div><b>${l.t}</b> · ${l.text}</div>`).join('')||'יומן פעולות: עוד אין'}</div>`;
+ $$('.callrow').forEach(b=>b.onclick=()=>{openCall=+b.dataset.i;drawCust();showTr(c.calls[openCall])});
+ $$('[data-a]').forEach(b=>b.onclick=()=>act(c,b.dataset.a));
+ if(openCall!=null)showTr(c.calls[openCall],true)}
+function showTr(k,instant){const box=$('#trBox');box.classList.add('open');
+ if(!k.tr.length){box.innerHTML='<div class="sim">הלקוח לא ענה, ולכן אין הקלטה ואין תמלול. הסוכנת תנסה שוב לפי החוקים.</div>';return}
+ box.innerHTML=`<div class="wave" id="wave"><button class="play" id="play">▶</button><div class="bars">${Array.from({length:34},(_,i)=>`<i style="animation-delay:${(i%7)*.09}s"></i>`).join('')}</div><span class="sim" style="margin:0">${k.dur}</span></div>${k.tr.map(([w,t])=>`<div class="msg ${w}"><small>${w==='ag'?'הסוכנת':'הלקוח'}</small>${t}</div>`).join('')}<div class="sim">בשיחה אמיתית יש כאן ההקלטה עצמה. התמלול נכנס לכרטיס דקה אחרי השיחה.</div>`;
+ const ms=$$('#trBox .msg');ms.forEach((m,i)=>instant?m.classList.add('show'):setTimeout(()=>m.classList.add('show'),300+i*650));
+ $('#play').onclick=()=>{const w=$('#wave');w.classList.toggle('playing');$('#play').textContent=w.classList.contains('playing')?'❚❚':'▶'}}
+function act(c,a){const prev=JSON.parse(JSON.stringify(c));const L={stop:'הסוכנת לא תתקשר ללקוח הזה',resume:'הלקוח חזר לשיחות של הסוכנת',paid:'סומן ששולם. הלקוח יצא מהגבייה'};
+ if(a==='stop'){c.state='stop';c.label='פניות אוטומטיות נעצרו';c.reason='עצרה: אור. החוב נשאר פתוח.';c.next=null}
+ if(a==='resume'){c.state='call';c.personal=false;c.label='תתקשר בשעות החיוג הקרובות';c.reason='חזר לשיחות של הסוכנת.';c.next='מחר 10:00'}
+ if(a==='paid'){c.state='ok';c.label='שולם';c.reason='אין יותר פניות.';c.next=null}
+ log.unshift({id:c.id,t:now(),text:'אור: '+L[a]});drawList();drawCust();
+ toast(L[a],()=>{Object.assign(c,prev);log.shift();drawList();drawCust();toast('הפעולה בוטלה')})}
+$('#pauseAll').onclick=()=>{const p=!document.body.classList.contains('allpaused');setPaused(p);toast(p?'כל שיחות הגבייה נעצרו':'השיחות חזרו לפעול',()=>{setPaused(!p);toast('הפעולה בוטלה')})};
+function setPaused(p){document.body.classList.toggle('allpaused',p);$('#agT').textContent=p?'הסוכנת עצורה':'הסוכנת פעילה';$('#agS').textContent=p?'עצרה: אור, '+now()+'. אף לקוח לא יקבל שיחה.':'מתקשרת לפי החוקים, בימים א׳–ה׳.';const b=$('#pauseAll');b.textContent=p?'החזרת השיחות':'עצירת כל השיחות';b.className='btn sm '+(p?'go':'stop');drawCust()}
+drawList();drawCust();
+
+/* email alert examples (same wording as the real alerts) */
+const TONE={good:['#2f7d4f','#e8f4ec','הזדמנות'],urgent:['#c2413b','#fbeceb','דחוף'],info:['#3f5fa8','#ebf0fa','לידיעה']};
+const MAILS={
+ standing:{tone:'good',title:'ביקש פרטים להוראת קבע',todo:'לוודא שההרשאה נקלטה בבנק. אחרי זה אין יותר חוב חודשי ללקוח הזה.',sum:'הלקוח אמר שהוא מעדיף לסדר את התשלום בהוראת קבע או בהרשאה לחיוב חשבון. הסוכנת הסבירה איך זה עובד, והפרטים והטופס נשלחו אליו בוואטסאפ.',next:'הסוכנת לא מתקשרת. מחכים שההרשאה תיקלט.'},
+ dispute:{tone:'urgent',title:'מחלוקת על החוב',todo:'לבדוק את החיוב שהלקוח מערער עליו, ולחזור אליו עם תשובה.',sum:'הלקוח טוען שהחיוב של ספטמבר לא נכון, כי באותו חודש לא הייתה קריאת שירות.',next:'הסוכנת לא תתקשר עד שתחליטי.'},
+ retry:{tone:'urgent',title:'לא ענה 6 פעמים · עבר אלייך',todo:'להחליט מה הלאה: מכתב התראה, שיחה מהמשרד, או משהו אחר.',sum:'הלקוח לא ענה לשיחה.',next:'הסוכנת לא תתקשר עד שתחליטי.'},
+ promise:{tone:'info',title:'הבטיח לשלם',todo:'לבדוק במועד שנאמר אם התשלום הגיע. הסוכנת לא תתקשר עד אז.',sum:'הלקוח אישר שקיבל את החשבוניות ואמר שיעביר את התשלום עד יום חמישי.',facts:['מועד תשלום שנאמר: יום חמישי','סכום שנאמר: ₪1,800'],next:'בדיקת תשלום ביום חמישי. עד אז הסוכנת לא מתקשרת.'}};
+function drawMail(k){const m=MAILS[k],[c,bg,lab]=TONE[m.tone];const subj=(m.tone==='urgent'?'דחוף: ':'')+m.title+' · רחוב הדוגמה 12, חיפה';
+ document.getElementById('mailSubj').textContent=subj;
+ document.getElementById('mailBody').innerHTML=`<div class="bar" style="background:${c}"></div><div class="in"><span class="tag" style="background:${bg};color:${c}">${lab}</span> <span style="font-size:12.5px;color:#6c6c72">צמרת מעליות · גבייה</span>
+ <h3>${m.title}</h3><div class="meta">רחוב הדוגמה 12, חיפה · איש קשר: אור · חוב פתוח ₪1,800</div>
+ <div class="todo" style="background:${bg}"><small style="color:${c}">מה צריך לעשות</small><div>${m.todo}</div></div>
+ <div class="lbl">מה קרה בשיחה</div><p>${m.sum}</p>${m.facts?`<ul style="margin:6px 0 0;padding-inline-start:18px;font-size:14.5px">${m.facts.map(f=>`<li>${f}</li>`).join('')}</ul>`:''}
+ <div class="lbl">מה הסוכנת עושה עכשיו</div><p>${m.next}</p><span class="mbtn">לפתוח את כרטיס הלקוח</span></div>
+ <div class="foot">הודעה אוטומטית ממערכת הגבייה של צמרת מעליות. אפשר לעצור את כל השיחות במסך הגבייה.</div>`;
+ document.querySelectorAll('#mailTabs button').forEach(b=>b.classList.toggle('on',b.dataset.m===k))}
+document.querySelectorAll('#mailTabs button').forEach(b=>b.onclick=()=>drawMail(b.dataset.m));drawMail('standing');
+
+/* whatsapp proposal: one step per click */
+const WA=[
+ ['sys','השיחה עם הסוכנת הסתיימה · הלקוח ביקש פירוט חשבוניות'],
+ ['biz','שלום אור, בהמשך לשיחתנו, זהו פירוט החשבוניות הפתוחות עבור שירות המעלית בבניין רחוב הדוגמה 12: אוגוסט, ספטמבר ואוקטובר 2026. הסכום הכולל הוא 1,800 ₪. יש להסדיר את התשלום. לצפייה בחשבוניות: [קישור]. צמרת מעליות.','נמסרה'],
+ ['biz-read'],
+ ['cust','העברתי עכשיו, מצרפת את האישור','אישור_העברה.pdf'],
+ ['sys','בכרטיס הלקוח: התקבל אישור העברה · אור קיבלה התראה לבדוק את התשלום']];
+let waStep=0;
+function drawWA(){const chat=document.getElementById('chat');chat.innerHTML='';
+ for(let i=0;i<waStep;i++){const [w,t,x]=WA[i];if(w==='biz-read'){const tk=chat.querySelector('.tk');if(tk){tk.textContent='✓✓ נקראה';tk.classList.add('read')}continue}
+  const el=document.createElement('div');el.className='wb '+w;el.innerHTML=w==='biz'?`${t}<span class="tk">✓✓ ${x}</span>`:w==='cust'?`${t}<div style="margin-top:6px;background:#fff;border-radius:8px;padding:6px 8px;font-size:12.5px">${x}</div>`:t;chat.appendChild(el);
+  if(i<waStep-1)el.classList.add('show');else setTimeout(()=>el.classList.add('show'),30)}
+ document.getElementById('waNext').textContent=waStep>=WA.length?'סיום':'הצעד הבא ←';document.getElementById('waNext').disabled=waStep>=WA.length}
+document.getElementById('waNext').onclick=()=>{if(waStep<WA.length){waStep++;drawWA()}};
+document.getElementById('waReset').onclick=()=>{waStep=0;drawWA()};
+waStep=1;drawWA();
 </script>
 </body>
 </html>

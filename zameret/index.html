@@ -293,6 +293,25 @@ a.link{color:var(--blue);text-decoration:none;font-weight:600}
   .reset-l{color:#d8eef0}
 }
 
+/* collection agent: control, wins, next step */
+.ctrl{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
+.ctrl.off{background:#fff6f4;border-color:#f3c9c2}
+.ctl-t{font-weight:800;font-size:16px;display:flex;align-items:center;gap:8px}
+.ldot{width:10px;height:10px;border-radius:50%;background:var(--faint);flex:none}.ldot.on{background:var(--green);box-shadow:0 0 0 0 rgba(31,138,90,.5);animation:pulse 1.8s infinite}.ldot.wait{background:var(--amber)}.ldot.off{background:var(--red)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,138,90,.45)}70%{box-shadow:0 0 0 9px rgba(31,138,90,0)}100%{box-shadow:0 0 0 0 rgba(31,138,90,0)}}
+.btn.stop{background:var(--red);color:#fff;border-color:var(--red)}
+.rules{margin-top:10px;font-size:13.5px}.rules summary{cursor:pointer;font-weight:700;color:var(--brand)}.rules ul{margin:8px 0 6px;padding-inline-start:18px;line-height:1.7}
+.wins{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:8px}
+.wins button{border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:9px 2px;font:inherit;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;min-width:0}
+.wins b{font-size:20px;font-weight:800}.wins span{font-size:11px;color:var(--muted);line-height:1.2;text-align:center}
+.wins .g b{color:var(--green)}.wins .t b{color:var(--teal)}.wins .a b{color:var(--amber)}.wins .r b{color:var(--red)}
+@media(max-width:400px){.wins{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.win{background:#e9f6ef;border:1px solid #c7e7d4;border-radius:14px;padding:12px;margin:10px 0;font-size:14px;line-height:1.5}.win b{color:var(--green)}
+.box.next{border:2px solid var(--teal)}.box.next.human{border-color:var(--amber)}.box.next.payment_check{border-color:#6c8fd6}
+.pers{border:2px solid #6c8fd6}
+.nchip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--teal-t);color:var(--teal)}
+.nchip.human{background:var(--amber-t);color:#7a5212}.nchip.personal,.nchip.payment_check{background:#e8eefb;color:#2f4f9a}.nchip.stop{background:#eef1f2;color:var(--muted)}.nchip.red{background:var(--red-t);color:var(--red)}
+
 /* collection agent */
 .seq{display:flex;gap:4px;margin-top:10px}.seq i{flex:1;height:6px;border-radius:3px;background:#e3e9eb}.seq i.d{background:var(--teal)}.seq i.h{background:var(--amber)}.seq i.r{background:var(--red)}
 .tr{display:flex;flex-direction:column;gap:7px}.tr div{padding:8px 12px;border-radius:14px;max-width:86%;font-size:14px;line-height:1.55}
@@ -1231,7 +1250,44 @@ function agentTranscript(a,c){if(c.provider==='retell')return c.transcript||[];c
  return T[c.kind]||[]}
 const planFor=a=>db.followUps?.[a.id];
 const planTime=t=>new Intl.DateTimeFormat('he-IL',{timeZone:'Asia/Jerusalem',dateStyle:'short',timeStyle:'short'}).format(new Date(t));
-function agentState(a){const p=planFor(a);return{k:p?.status==='retry_limit'?'red':'demo',label:p?.label||'טרם בוצעה שיחת סוכן',pill:'<span class="pill">'+(p?.mode==='active'?'אוטומציה פעילה':'חיוג כבוי')+'</span>',sub:p?.reason||'ממתין לשיחה ראשונה'};}
+const POL_DEF={maxAttempts:6,retryHour:10,startHour:9,endHour:17,days:[0,1,2,3,4]};
+const polC=()=>Object.assign({},POL_DEF,db.meta.collection?.policy||{});
+Object.defineProperty(window,'MAX_TRIES',{get:()=>polC().maxAttempts,configurable:true});
+const DAYN=['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'];
+const polDays=p=>{const d=p.days.slice().sort();return d.length&&d.every((x,i)=>i===0||x===d[i-1]+1)?DAYN[d[0]]+'–'+DAYN[d[d.length-1]]:d.map(x=>DAYN[x]).join(', ')};
+const hh=h=>String(h).padStart(2,'0')+':00';
+function setPolicy(k,v){const prev=Object.assign({id:'collection',paused:false},db.meta.collection||{});const pol=Object.assign(polC(),{[k]:+v});
+ put('meta',Object.assign({},prev,{policy:pol,policyBy:PEOPLE[me].name,policyAt:Date.now()}));
+ toast(k==='maxAttempts'?`מעכשיו עד ${v} ניסיונות בלי מענה`:`ניסיון חוזר בשעה ${hh(v)}`,'ביטול',()=>{put('meta',Object.assign({},prev));toast('הפעולה בוטלה')})}
+const collectionPaused=()=>!!db.meta.collection?.paused;
+const isPersonal=a=>workSum(a)>0&&openSum(a)>0&&!a.personal?.released;
+const hasRealCalls=a=>agentCallsFor(a).some(c=>c.provider==='retell');
+const sampleStanding=a=>{const cs=a.agentCalls||[];const k=cs[cs.length-1]?.kind;return !a.is_synthetic&&['promise','arrangement','resend'].includes(k)&&Number(String(a.no||'').slice(-1))%2===1};
+const wantsStanding=a=>['yes','forms'].includes(a.reminder)||planFor(a)?.status==='recurring_payment_interest'||agentCallsFor(a).some(c=>c.business_outcome==='recurring_payment_interest')||sampleStanding(a);
+function nextWork10(t){const p=polC();const d=new Date(t);do{d.setDate(d.getDate()+1)}while(!p.days.includes(d.getDay()));d.setHours(p.retryHour,0,0,0);return d.getTime()}
+function agentView(a){
+ if(!openSum(a))return{status:'paid',label:'אין חוב פתוח',nextAction:'none'};
+ if(isPersonal(a))return{status:'personal',label:'טיפול אישי · '+(PEOPLE[a.personal?.owner||'shmaya']?.name||'שמעיה'),reason:`יש ללקוח גם חוב על עבודות (${money(workSum(a))}), ולכן הסוכנת לא מתקשרת אליו.`,nextAction:'human'};
+ if(a.is_synthetic||hasRealCalls(a)){const p=planFor(a);if(p)return p}
+ if(a.noCall)return{status:'stop_contact',label:'פניות אוטומטיות נעצרו',reason:`${a.noCall.why} · ${a.noCall.by} ${whenL(a.noCall.at)}. החוב נשאר פתוח.`,nextAction:'human'};
+ if(['dispute','arrangement'].includes(a.status))return{status:'human_review',label:a.status==='dispute'?'בבירור במשרד':'בהסדר · המשרד מטפל',reason:'הסוכנת לא מתקשרת עד שהמשרד משנה את המצב.',nextAction:'human'};
+ const cs=a.agentCalls||[];const c=cs[cs.length-1];
+ if(!c)return{status:'not_started',label:'עוד לא התקשרו',reason:'הסוכנת תתקשר בשעות החיוג הקרובות.',nextAction:'call',nextAt:null};
+ if(['none','hangup'].includes(c.kind)){let n=0;for(let i=cs.length-1;i>=0&&['none','hangup'].includes(cs[i].kind);i--)n++;
+  if(n>=MAX_TRIES)return{status:'retry_limit',label:`לא ענה ${n} פעמים · עבר למשרד`,reason:'הסוכנת הפסיקה להתקשר. הצעד הבא בהחלטה שלכם: מכתב, שיחה מהמשרד או משהו אחר.',nextAction:'human',unansweredAttempts:n};
+  return{status:'no_answer',label:c.kind==='hangup'?'ענה וניתק · תנסה שוב':'לא ענה · תנסה שוב',reason:`ניסיון ${n+1} מתוך ${MAX_TRIES}, ביום העבודה הבא ב-${hh(polC().retryHour)}.`,nextAction:'call',nextAt:nextWork10(c.t),unansweredAttempts:n}}
+ if(c.kind==='promise'){if(a.promise&&a.promise<Date.now())return{status:'promise_due',label:'עבר מועד ההבטחה · לבדוק תשלום',reason:'אם התשלום לא הגיע, הסוכנת תתקשר שוב.',nextAction:'payment_check',nextAt:a.promise};
+  return{status:'promise_to_pay',label:'הבטיח לשלם · בודקים תשלום',reason:agentSummary(a,c),nextAction:'payment_check',nextAt:a.promise||null}}
+ const M={dispute:['debt_dispute','מחלוקת על החוב · למשרד'],arrangement:['needs_help','ביקש הסדר תשלומים · למשרד'],resend:['missing_invoice','צריך לשלוח חשבוניות'],newboard:['new_contact','צריך לעדכן איש קשר']}[c.kind]||['human_review','עבר למשרד'];
+ return{status:M[0],label:M[1],reason:agentSummary(a,c),nextAction:'human'}}
+function agentState(a){const v=agentView(a);return{k:v.status==='retry_limit'?'red':v.status,label:v.label,pill:'',sub:v.reason||''}}
+function nextChip(v){if(!v||v.nextAction==='none')return'';
+ if(v.status==='retry_limit')return `<span class="nchip red">${esc(v.label)}</span>`;
+ if(v.status==='personal')return `<span class="nchip personal">${esc(v.label)}</span>`;
+ if(v.status==='stop_contact')return `<span class="nchip stop">${esc(v.label)}</span>`;
+ if(v.nextAction==='call')return collectionPaused()?'<span class="nchip stop">השיחות עצורות</span>':`<span class="nchip">${v.nextAt?'שיחה הבאה: '+whenL(v.nextAt):esc(v.label)}</span>`;
+ if(v.nextAction==='payment_check')return `<span class="nchip payment_check">${v.nextAt?'בדיקת תשלום: '+dayLabel(v.nextAt):esc(v.label)}</span>`;
+ return `<span class="nchip human">${esc(v.label)}</span>`}
 function followUpHtml(p,sim=false){if(!p)return'';const isCall=p.nextAction==='call';return `<div class="box" style="border:2px solid var(--teal,#278779)"><h4>${sim?'הדמיית תוצאה בלבד':'סטטוס הסוכן והמשך טיפול'}</h4><b>${esc(p.label)}</b><div class="mt">${p.nextAt?`<b>${isCall?'השיחה הבאה':p.nextAction==='payment_check'?'בדיקת תשלום':'מועד המעקב'}: ${planTime(p.nextAt)}</b><div class="small muted">שעון ישראל</div>`:'<b>אין שיחה נוספת מתוכננת</b>'}</div><p>${esc(p.reason)}</p><div class="small muted">${p.attempts} ניסיונות מתועדים${p.unansweredAttempts?' · '+p.unansweredAttempts+' ללא מענה ברצף':''}</div>${p.mode!=='active'?'<div class="info">חיוג אוטומטי כבוי. המועד מוצג לצורך תכנון הדמו בלבד.</div>':''}${p.nextAction==='payment_check'?'<div class="info">לא מחייגים לפני שהמשרד בודק אם התקבל תשלום. החיבור לפריוריטי טרם פעיל.</div>':''}</div>`;}
 async function previewFollowUp(){const scenario=$('#followScenario').value,wall_time=$('#followPreviewTime').value;try{const r=await api('/follow-up/preview',{method:'POST',body:JSON.stringify({scenario,wall_time})});$('#followPreviewResult').innerHTML=followUpHtml(r.plan,true)}catch{toast('לא ניתן להציג את התרחיש כרגע')}}
 async function scheduleFollowUp(id){const p=planFor(db.accounts[id]);try{const r=await api('/follow-up/schedule',{method:'POST',body:JSON.stringify({account_id:id,source_call_id:p?.sourceCallId,wall_time:$('#followTime').value})});applyDocs(r.docs);await poll();openDebt(id);toast('מועד המעקב נשמר')}catch{toast('יש לבחור מועד עתידי בראשון–חמישי, 09:00–17:00, לשיחה האחרונה')}}
@@ -1245,12 +1301,40 @@ function proposedAgentState(a){const cs=agentCallsFor(a);const n=cs.length;const
  if(n>=SEQ.length&&!done)return{k:'red',label:'רשימה אדומה',pill:'<span class="pill red">סיים את הרצף</span>',sub:`${n} שיחות, 2 הודעות וואטסאפ ומייל, בלי מענה. השלב הבא בהחלטה שלכם: מכתב התראה, שיחה מהמשרד או העברה לטיפול משפטי.`};
  const gap=n===0?0:n<SEQ.length?SEQ[n]-SEQ[n-1]:4;const b=new Date(n?cs[n-1].t:now);b.setHours(10,0,0,0);const t=b.getTime()+gap*864e5;
  return{k:'active',label:`פעיל · שיחה ${n+1}${n<SEQ.length?' מתוך '+SEQ.length:''}`,pill:'<span class="pill teal">ברצף</span>',sub:`הפנייה הבאה: ${t<now?'בשעות הקרובות':whenL(t)} · ${SEQ_CH[Math.min(n,SEQ.length-1)]}`}}
-function seqBar(a){const cs=agentCallsFor(a);const red=agentState(a).k==='red';return `<div class="seq">${SEQ.map((_,i)=>{const c=cs[i];return `<i class="${c?(red?'r':c.outcome==='completed'?'d':c.outcome==='hung_up'?'h':'d'):''}" title="${SEQ_CH[i]}"></i>`}).join('')}</div>`}
+function seqBar(a){const v=agentView(a);const n=v.unansweredAttempts||0;if(!n)return'';return `<div class="seq">${Array.from({length:MAX_TRIES},(_,i)=>`<i class="${i<n?(n>=MAX_TRIES?'r':'h'):''}"></i>`).join('')}</div><div class="small muted" style="margin-top:4px">${n} מתוך ${MAX_TRIES} ניסיונות בלי מענה</div>`}
 function agentBanner(a){const l=recentAgent(a);if(!l||!openSum(a))return'';return `<div class="agentb"><b>${l.provider==='retell'?'הסוכן התקשר':'נתון הדגמה: שיחה'} ${whenL(l.t)} · ${OUTL[l.outcome][0]}.</b> בנושא חוב של ${money(openSum(a))} על חוזה השירות. אם הלקוח חוזר אליכם, זו כנראה הסיבה.</div>`}
-function agentBox(a,ro){const st=agentState(a);const cs=agentCallsFor(a);
- return `${followUpPanel(a,ro)}<div class="box"><h4>הסוכן הקולי · היסטוריית שיחות</h4><div class="info">רשומות ללא מזהה Retell הן נתוני הדגמה. פתיחת וואטסאפ אינה אישור שליחה.</div><div class="row"><b>${st.label}</b>${st.pill}</div>${st.sub?`<div class="small muted mt">${st.sub}</div>`:''}${cs.length||st.k==='active'?seqBar(a):''}
- ${cs.length?cs.map((c,i)=>({c,i})).reverse().map(({c,i})=>`<div class="def" style="cursor:pointer" onclick="openAgentCall('${a.id}',${i})"><span style="flex:1"><b>שיחה ${i+1}</b> · ${whenL(c.t)}${c.dur?' · '+fmtDur(c.dur):''}<div class="who2">${esc(agentSummary(a,c))}</div></span>${outPill(c)}</div>`).join(''):'<div class="muted small mt">הסוכן עוד לא התקשר ללקוח הזה.</div>'}
- ${!ro&&openSum(a)?(a.noCall?`<button class="btn ghost block mt" onclick="setNoCall('${a.id}',false)">החזרה לרצף השיחות</button>`:`<label class="f">עצירת פניות אוטומטיות</label><div class="row" style="gap:8px"><select class="in" id="ncWhy">${NC_REASONS.map(r=>`<option>${r}</option>`).join('')}</select><button class="btn dark" style="flex:none" onclick="setNoCall('${a.id}',true)">עצירה</button></div><div class="small muted mt">עוצר פניות אוטומטיות ומעביר לטיפול המשרד. החוב אינו נמחק.</div>`):''}</div>`}
+function agentBox(a,ro){const cs=agentCallsFor(a);
+ return `<div class="box"><h4>שיחות הסוכנת <span class="muted small">· ${cs.length}</span></h4>
+ ${cs.length?cs.map((c,i)=>({c,i})).reverse().map(({c,i})=>`<div class="def" style="cursor:pointer" onclick="openAgentCall('${a.id}',${i})"><span style="flex:1"><b>שיחה ${i+1}</b> · ${whenL(c.t)}${c.dur?' · '+fmtDur(c.dur):''}${c.provider==='retell'?' · <b style="color:var(--teal)">שיחה אמיתית</b>':''}<div class="who2">${esc(agentSummary(a,c))}</div></span>${outPill(c)}</div>`).join(''):'<div class="muted small mt">הסוכנת עוד לא התקשרה ללקוח הזה.</div>'}
+ <div class="small muted mt">לוחצים על שיחה כדי לראות את הסיכום${cs.some(c=>c.provider==='retell')?', לשמוע את ההקלטה':''} ולקרוא את התמלול.${cs.some(c=>c.provider!=='retell')?' שיחות בלי הסימון "שיחה אמיתית" הן דוגמה.':''}</div>
+ ${!ro&&openSum(a)&&!isPersonal(a)?(a.noCall?`<button class="btn ghost block mt" onclick="setNoCall('${a.id}',false)">החזרה לשיחות של הסוכנת</button>`:`<label class="f">לעצור את הסוכנת ללקוח הזה</label><div class="row" style="gap:8px"><select class="in" id="ncWhy">${NC_REASONS.map(r=>`<option>${r}</option>`).join('')}</select><button class="btn dark" style="flex:none" onclick="setNoCall('${a.id}',true)">עצירה</button></div><div class="small muted mt">הסוכנת לא מתקשרת ללקוח הזה. החוב נשאר פתוח. אפשר להחזיר בכל רגע.</div>`):''}</div>`}
+function nextStepBox(a,ro){const v=agentView(a);if(v.status==='personal')return personalBox(a,ro);
+ if(a.is_synthetic||hasRealCalls(a))return followUpPanel(a,ro);
+ const paused=collectionPaused()&&v.nextAction==='call';
+ return `<div class="box next ${v.nextAction}" style="margin-top:0"><h4>מה הלאה</h4><b style="font-size:16px">${esc(v.label)}</b>${v.nextAt?`<div class="mt"><b>${v.nextAction==='call'?'השיחה הבאה':'בדיקת תשלום'}: ${v.nextAction==='call'?whenL(v.nextAt):new Date(v.nextAt).toLocaleDateString('he-IL')}</b></div>`:''}${v.reason?`<div class="small mt">${esc(v.reason)}</div>`:''}${paused?'<div class="warn">כל השיחות עצורות כרגע, אז השיחה הזו לא תתבצע.</div>':''}${seqBar(a)}</div>`}
+function standingBox(a,ro){if(!wantsStanding(a)||a.pay==='masav')return'';return `<div class="win"><b>ביקש פרטים להוראת קבע.</b> זו התוצאה הכי טובה: אחרי שההרשאה נקלטת, אין יותר חוב חודשי.${ro?'':msgButtons(a,'standing')}</div>`}
+function personalBox(a,ro){const p=a.personal||{};const st=p.steps||{};const open=calls().filter(c=>c.address===a.address&&c.status!=='closed').length;
+ const step=(k,l)=>`<label class="def"><input type="checkbox" ${st[k]?'checked':''} ${ro?'disabled':''} onchange="personalStep('${a.id}','${k}',this.checked)"><span>${l}${st[k]?`<div class="who2">${esc(st[k].by)} · ${whenL(st[k].at)}</div>`:''}</span></label>`;
+ return `<div class="box pers" style="margin-top:0"><h4>טיפול אישי · הסוכנת לא מתקשרת</h4><div class="small">ללקוח יש גם חוב על עבודות (${money(workSum(a))}). כדי לא לפגוע בקשר, הוא מטופל אישית ולא בשיחות אוטומטיות.</div>
+ <label class="f">מי מטפל</label><div class="choices">${['shmaya','guy','or'].map(k=>`<button class="choice ${(p.owner||'shmaya')===k?'on':''}" ${ro?'disabled':''} onclick="personalOwner('${a.id}','${k}')">${PEOPLE[k].name}</button>`).join('')}</div>
+ <label class="f">הצעדים</label>${step('check','לבדוק אם יש משהו פתוח בעבודה או קריאה חוזרת'+(open?` (${open} קריאות פתוחות בכתובת)`:''))}${step('talk','שיחה עם הלקוח: חוזה השירות מסודר מעכשיו, החוב הישן לפי הסכמה')}${step('deal','הסדר בכתב עם תאריכים')}
+ ${ro?'':`<button class="btn ghost block mt" onclick="personalRelease('${a.id}')">להעביר לשיחות של הסוכנת</button>`}</div>`}
+function withUndo(id,label,mut,reopen){const a=db.accounts[id];const prev=JSON.parse(JSON.stringify(a));mut(a);put('accounts',a);reopen&&reopen();
+ toast(label,'ביטול',()=>{put('accounts',prev);reopen&&reopen();toast('הפעולה בוטלה')})}
+const reDebt=id=>()=>{if($('#sheet'))openDebt(id)};
+function personalStep(id,k,on){withUndo(id,on?'הצעד סומן':'הסימון הוסר',a=>{a.personal=a.personal||{};a.personal.steps=a.personal.steps||{};if(on)a.personal.steps[k]={by:PEOPLE[me].name,at:Date.now()};else delete a.personal.steps[k]},reDebt(id))}
+function personalOwner(id,k){withUndo(id,'מטפל: '+PEOPLE[k].name,a=>{a.personal=Object.assign(a.personal||{},{owner:k});a.log.push({t:Date.now(),who:PEOPLE[me].name,text:'טיפול אישי: '+PEOPLE[k].name})},reDebt(id))}
+function personalRelease(id){withUndo(id,'הלקוח עבר לשיחות של הסוכנת',a=>{a.personal=Object.assign(a.personal||{},{released:true});a.log.push({t:Date.now(),who:PEOPLE[me].name,text:'הועבר מטיפול אישי לשיחות הסוכנת'})},reDebt(id))}
+let agentSrv=null,agentSrvLoading=false;
+async function loadAgentSrv(){if(agentSrvLoading||agentSrv)return;agentSrvLoading=true;try{agentSrv=await api('/retell/status')}catch(e){agentSrv={connected:false}}agentSrvLoading=false;render()}
+function togglePause(){const prev=Object.assign({id:'collection',paused:false},db.meta.collection||{});const on=!collectionPaused();
+ put('meta',{id:'collection',paused:on,by:PEOPLE[me].name,at:Date.now()});
+ toast(on?'כל שיחות הגבייה נעצרו':'השיחות חזרו לפעול','ביטול',()=>{put('meta',Object.assign({},prev));toast('הפעולה בוטלה')})}
+function agentControl(ro){if(!agentSrv)setTimeout(loadAgentSrv,0);const paused=collectionPaused();const m=db.meta.collection||{};const live=agentSrv?.automation_enabled;
+ const [dot,title,sub]=paused?['off','הסוכנת עצורה',`נעצרה על ידי ${esc(m.by||'')} ${m.at?whenL(m.at):''}. אף לקוח לא יקבל שיחה עד שמחזירים.`]:live?['on','הסוכנת פעילה',`מתקשרת לבד לפי החוקים, בימים ${polDays(polC())}, ${hh(polC().startHour)}–${hh(polC().endHour)}.`]:['wait','הסוכנת מוכנה','החיוג האוטומטי עוד לא הופעל. בשלב הזה היא מתקשרת רק כשמפעילים שיחה יזומה. אחרי האישור שלכם היא תתקשר לבד לפי החוקים.'];
+ return `<div class="ctrl ${paused?'off':''}"><div class="row" style="align-items:flex-start;gap:10px"><div style="flex:1"><div class="ctl-t"><span class="ldot ${dot}"></span>${title}</div><div class="small muted" style="margin-top:3px">${sub}</div></div>${ro?'':`<button class="btn ${paused?'primary':'stop'} sm" style="flex:none" onclick="togglePause()">${paused?'החזרת השיחות':'עצירת כל השיחות'}</button>`}</div>
+ <details class="rules"><summary>חוקי הסוכנת</summary><ul><li>מתקשרת בימים ${polDays(polC())}, ${hh(polC().startHour)}–${hh(polC().endHour)} בלבד</li><li>לא ענה: מנסה שוב ביום העבודה הבא ב-${hh(polC().retryHour)}, עד ${MAX_TRIES} פעמים. אחר כך הלקוח עובר למשרד</li><li>הבטיח לשלם: לא מתקשרת שוב. בודקים אם התשלום הגיע</li><li>מחלוקת, טוען ששילם, איש קשר חדש או חשבוניות חסרות: עובר למשרד</li><li>ביקש שלא יתקשרו: נעצר מיד. החוב נשאר פתוח</li><li>לקוח עם חוב על עבודות: טיפול אישי, בלי שיחות אוטומטיות</li><li>אומרת "יש להסדיר את התשלום", בלי איומים</li></ul>${ro?'':`<div class="row" style="gap:8px;margin-top:8px;flex-wrap:wrap"><label class="small" style="display:flex;align-items:center;gap:6px">ניסיונות בלי מענה<select class="in" style="width:auto;min-height:0;padding:4px 8px" onchange="setPolicy('maxAttempts',this.value)">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<option ${n===MAX_TRIES?'selected':''}>${n}</option>`).join('')}</select></label><label class="small" style="display:flex;align-items:center;gap:6px">שעת ניסיון חוזר<select class="in" style="width:auto;min-height:0;padding:4px 8px" onchange="setPolicy('retryHour',this.value)">${[9,10,11,12,13,14,15,16].filter(h=>h>=polC().startHour&&h<polC().endHour).map(h=>`<option value="${h}" ${h===polC().retryHour?'selected':''}>${hh(h)}</option>`).join('')}</select></label></div>`}<div class="small muted" style="margin-top:6px">${db.meta.collection?.policyBy?`עודכן על ידי ${esc(db.meta.collection.policyBy)} ${whenL(db.meta.collection.policyAt)}. `:''}את הימים והשעות קובעים אתם. השינוי חל על השיחות הבאות.</div></details>
+ <div class="btns mt"><button class="btn ghost sm" onclick="openDebt('zameret-demo-or')">כרטיס הדוגמה של אור</button><a class="btn ghost sm" href="collection-flow.html${esc(location.search)}" target="_blank" rel="noopener">איך התהליך עובד</a></div></div>`}
 function safeRecording(url){try{return new URL(url).protocol==='https:'}catch{return false}}
 function openAgentCall(aid,i){const a=db.accounts[aid];const c=agentCallsFor(a)[i];const tr=agentTranscript(a,c);
  sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px">${outPill(c)}<span class="pill">שיחה ${i+1}</span></div><div class="addr" style="margin-top:6px">${esc(a.address)}</div><div class="sub">${whenL(c.t)}${c.dur?' · '+fmtDur(c.dur):''} · ${c.provider==='retell'?'שיחת Retell מתועדת':'תסריט לדוגמה · לא בוצעה שיחה'}</div></div>`,`
@@ -1258,47 +1342,51 @@ function openAgentCall(aid,i){const a=db.accounts[aid];const c=agentCallsFor(a)[
  ${tr.length?`<div class="box"><h4>${c.provider==='retell'?'תמלול השיחה':'תמלול לדוגמה'}</h4><div class="tr">${tr.map(([w,t])=>`<div class="${w}">${w==='sys'?'':`<small>${w==='ag'?'הסוכן':'הלקוח'}</small>`}${esc(t)}</div>`).join('')}</div></div>`:'<div class="info">אין תמלול זמין לשיחה זו.</div>'}
  ${c.provider==='retell'&&safeRecording(c.recording_url)?`<div class="box"><h4>הקלטת השיחה</h4><audio controls preload="none" style="width:100%" src="${esc(c.recording_url)}"></audio></div>`:'<div class="info">אין הקלטה זמינה לשיחה זו.</div>'}
  <button class="btn ghost block mt" onclick="openDebt('${aid}')">חזרה לחוב</button>`)}
-function setNoCall(id,on){const a=db.accounts[id];const name=PEOPLE[me].name;if(on){const why=$('#ncWhy')?.value||'אחר';a.noCall={why,by:name,at:Date.now()};a.log.push({t:Date.now(),who:name,text:'לא להתקשר כרגע: '+why})}else{a.noCall=null;a.log.push({t:Date.now(),who:name,text:'הוחזר לרצף השיחות'})}
- put('accounts',a);openDebt(id);toast(on?'הסוכן לא יתקשר וההודעות נעצרו':'הלקוח חזר לרצף')}
+function setNoCall(id,on){const why=$('#ncWhy')?.value||'אחר';const name=PEOPLE[me].name;
+ withUndo(id,on?'הסוכנת לא תתקשר ללקוח הזה':'הלקוח חזר לשיחות של הסוכנת',a=>{if(on){a.noCall={why,by:name,at:Date.now()};a.log.push({t:Date.now(),who:name,text:'עצירת הסוכנת: '+why})}else{a.noCall=null;a.log.push({t:Date.now(),who:name,text:'הוחזר לשיחות הסוכנת'})}},reDebt(id))}
 let collectMode='debts',collectFilter='all',remFilter='all',collectQ='';
 const search=`<input class="in search" placeholder="חיפוש כתובת, עיר, איש קשר או מס׳ לקוח" value="${''}" oninput="collectQ=this.value;clearTimeout(window._qt);window._qt=setTimeout(()=>{render();const el=document.querySelector('.search');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length)}},250)">`;
 const matchQ=a=>!collectQ||(a.address+' '+a.city+' '+(a.no||'')+' '+(a.contact||'')).includes(collectQ.trim());
-function agentStats(){const cs=accounts().flatMap(a=>agentCallsFor(a)).filter(c=>c.t>=dayStart(-6));if(!cs.length)return'';const ans=cs.filter(c=>c.outcome!=='no_answer').length,full=cs.filter(c=>c.outcome==='completed').length;const pc=v=>Math.round(v/cs.length*100)+'%';
- return `<div class="card"><div class="row"><b>שיחות הסוכן, 7 ימים אחרונים</b><span class="small muted">${cs.length} שיחות</span></div><div class="astat"><div><b>${pc(cs.length-ans)}</b><span>לא ענו</span></div><div><b>${pc(ans-full)}</b><span>ענו וניתקו</span></div><div><b>${pc(full)}</b><span>שיחה מלאה</span></div></div></div>`}
+function agentWins(debtors){const V=debtors.map(a=>[a,agentView(a)]);const n=f=>V.filter(([a,v])=>f(a,v)).length;
+ const cs=debtors.flatMap(a=>agentCallsFor(a)).filter(c=>c.t>=dayStart(-6));const ans=cs.filter(c=>!['no_answer'].includes(c.outcome)).length;
+ const t=(k,cls,num,l)=>`<button class="${cls}" onclick="collectFilter='${k}';render()"><b>${num}</b><span>${l}</span></button>`;
+ return `<div class="card"><div class="row"><b>מה הסוכנת השיגה</b><span class="small muted">${cs.length} שיחות ב-7 ימים · ${cs.length?Math.round(ans/cs.length*100):0}% ענו</span></div>
+ <div class="wins">${t('promise','g',n((a,v)=>['promise_to_pay','promise_due'].includes(v.status)),'הבטיחו לשלם')}${t('standing','t',n(a=>wantsStanding(a)),'רוצים הוראת קבע')}${t('office','a',n((a,v)=>v.nextAction==='human'&&!['personal','retry_limit','stop_contact'].includes(v.status)),'עברו למשרד')}${t('red','r',n((a,v)=>v.status==='retry_limit'),`לא ענו ${MAX_TRIES} פעמים`)}${t('personal','',n((a,v)=>v.status==='personal'),'טיפול אישי')}</div>
+ <div class="small muted" style="margin-top:6px">לוחצים על מספר כדי לראות את הלקוחות. נתוני דוגמה עד החיבור לפריוריטי.</div></div>`}
 function orDemoAccount(){return{id:'zameret-demo-or',no:'DEMO-OR',address:'רחוב הדוגמה 12, חיפה',city:'חיפה',contact:'אור',name:'דמו בלבד',is_synthetic:true,pay:'transfer',fee:600,invoices:['אוגוסט 2026','ספטמבר 2026','אוקטובר 2026'].map(m=>({m,amount:600,kind:'service',paid:false})),status:'todo',reason:'נתוני הדגמה בלבד',log:[],reminder:'none',agentCalls:[],updatedAt:Date.now()}}
 function collectView(readOnly){
  const seg=`<div class="choices seg">${[['debts','חובות'],['monthly','תזכורת חודשית']].map(([k,l])=>`<button class="choice ${collectMode===k?'on':''}" onclick="collectMode='${k}';render()">${l}</button>`).join('')}</div>`;
  const srch=search.replace('value=""',`value="${esc(collectQ)}"`);
- if(collectMode==='monthly')return monthlyView(seg,srch,readOnly);
+ if(collectMode==='monthly')return `${agentControl(readOnly)}`+monthlyView(seg,srch,readOnly);
  const debtors=accounts().filter(a=>!a.is_synthetic&&openSum(a)>0).sort((a,b)=>openSum(b)-openSum(a));
- const F={all:['הכל',()=>true],over3:['3 חודשים ומעלה',a=>openCount(a)>=3],todo:['לטיפול',a=>a.status==='todo'],promise:['הבטיח לשלם',a=>a.status==='promise'],arrangement:['בהסדר',a=>a.status==='arrangement'],dispute:['בבירור',a=>a.status==='dispute'],red:['רשימה אדומה',a=>agentState(a).k==='red'],nocall:['פניות אוטומטיות נעצרו',a=>!!a.noCall||planFor(a)?.status==='stop_contact'],scheduled:['שיחה מתוכננת',a=>planFor(a)?.nextAction==='call'],human:['המשך טיפול במשרד',a=>planFor(a)?.nextAction==='human']};
- const list=debtors.filter(F[collectFilter]?.[1]||(()=>true)).filter(matchQ);
+ const V=a=>agentView(a);
+ const F={all:['הכל',()=>true],office:['לטיפול המשרד',a=>V(a).nextAction==='human'&&V(a).status!=='personal'],call:['שיחה מתוכננת',a=>V(a).nextAction==='call'],promise:['הבטיחו לשלם',a=>['promise_to_pay','promise_due'].includes(V(a).status)],standing:['רוצים הוראת קבע',a=>wantsStanding(a)],red:[`רשימה אדומה · לא ענו ${MAX_TRIES} פעמים`,a=>V(a).status==='retry_limit'],personal:['טיפול אישי',a=>V(a).status==='personal'],stopped:['הסוכנת נעצרה',a=>V(a).status==='stop_contact'],over3:['3 חודשים ומעלה',a=>openCount(a)>=3]};
+ if(!F[collectFilter])collectFilter='all';
+ const list=debtors.filter(F[collectFilter][1]).filter(matchQ);
  const works=accounts().reduce((s,a)=>s+workSum(a),0);
- return `${pageHead('גבייה',DATE())}<button class="btn primary block" onclick="openDebt('zameret-demo-or')">פתיחת כרטיס הדמו של אור</button><a class="btn ghost block mt" href="collection-flow.html${esc(location.search)}" target="_blank" rel="noopener">איך עובד תהליך הגבייה? תרשים והסבר</a>${seg}${kpis([[money(debtors.reduce((s,a)=>s+openSum(a),0)),'חוזי שירות לגבייה'],[debtors.filter(a=>openCount(a)>=3).length,'3 חודשים ומעלה',1],[debtors.filter(a=>a.status==='promise').length,'הבטיחו לשלם'],[debtors.filter(a=>agentState(a).k==='red').length,'ברשימה האדומה',1]])}
- ${agentStats()}
- <div class="small muted" style="margin:-4px 2px 10px">בגיול יש עוד ${money(works)} על עבודות, שיפוצים וחוב קודם. הם מופיעים בתיק הלקוח, לא בגבייה החודשית.</div>
+ return `${pageHead('גבייה',DATE())}${agentControl(readOnly)}${seg}${kpis([[money(debtors.reduce((s,a)=>s+openSum(a),0)),'חוזי שירות לגבייה'],[debtors.filter(a=>openCount(a)>=3).length,'3 חודשים ומעלה',1],[debtors.filter(a=>V(a).status==='retry_limit').length,'ברשימה האדומה',1]])}
+ ${agentWins(debtors)}
  ${srch}<div class="filters">${Object.entries(F).map(([k,[l,f]])=>`<button class="choice ${collectFilter===k?'on':''}" onclick="collectFilter='${k}';render()">${l} · ${debtors.filter(f).length}</button>`).join('')}</div>
- ${list.map(a=>`<div class="card tap ${openCount(a)>=3?'flag':''}" onclick="openDebt('${a.id}')"><div class="row"><div class="addr">${esc(a.address)}</div><b>${money(openSum(a))}</b></div><div class="meta"><span class="pill ${ASTATUS[a.status][1]}">${ASTATUS[a.status][0]}${a.status==='promise'&&a.promise?' · '+dayLabel(a.promise):''}</span><span class="chip">${openCount(a)} חודשים</span><span class="chip">${PAY[a.pay]}</span>${a.reason?`<span class="chip">${esc(a.reason)}</span>`:''}${planFor(a)?.sourceCallId?`<span class="chip">${esc(planFor(a).label)}</span>${planFor(a).nextAt?`<span class="chip">${planFor(a).nextAction==='call'?'שיחה הבאה':'מעקב'}: ${planTime(planFor(a).nextAt)}</span>`:''}`:''}${agentState(a).k==='red'?'<span class="pill red">רשימה אדומה</span>':a.noCall?'<span class="pill">לא להתקשר</span>':lastAgent(a)?`<span class="chip">הסוכן ${whenL(lastAgent(a).t)} · ${OUTL[lastAgent(a).outcome][0]}</span>`:''}${workSum(a)?`<span class="chip">בגיול גם ${money(workSum(a))} עבודות</span>`:''}</div></div>`).join('')||'<div class="empty">אין חובות בסינון הזה.</div>'}
- <div class="info">רק חוזי שירות, לפי המק״ט של החשבונית. חובות על שיפוצים וחלקים לא נכנסים לכאן.</div>`}
-function openDebt(id){const a=db.accounts[id];const inv=openInv(a);const ro=PEOPLE[me].role==='owner';
- sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px"><span class="pill ${ASTATUS[a.status][1]}">${ASTATUS[a.status][0]}</span><span class="pill">${PAY[a.pay]}</span>${agentState(a).k==='red'?'<span class="pill red">רשימה אדומה</span>':''}</div><div class="addr" style="margin-top:6px">${esc(a.address)}</div><div class="sub">מס׳ לקוח ${esc(a.no||'')} · ${esc(a.contact)} · ${money(a.fee)} לחודש</div></div>`,`
- ${a.is_synthetic?'<div class="info">דמו בלבד · 3 חשבוניות של 600 ₪, ללא חוב אמיתי. החיוג כבוי.</div>':''}${agentBanner(a)}<div class="box" style="margin-top:0"><h4>חשבוניות שירות פתוחות</h4>${inv.length?`<table class="lines">${inv.map(i=>`<tr><td>שירות ${esc(i.m)}</td><td>${money(i.amount)}</td></tr>`).join('')}<tr class="tot"><td>סה״כ לגבייה</td><td>${money(openSum(a))}</td></tr></table>`:'<div class="muted">אין חוב פתוח על חוזה השירות</div>'}</div>
- ${workSum(a)?`<div class="box"><h4>בגיול, אבל לא בגבייה החודשית</h4><table class="lines">${workInv(a).map(i=>`<tr><td>${esc(i.what||'עבודה')} · ${esc(i.m)}</td><td>${money(i.amount)}</td></tr>`).join('')}</table><div class="small muted mt">עבודות, שיפוצים ומקדמות מטופלים לפי תנאי ההצעה, לא בדרישה חודשית.</div></div>`:''}
- ${inv.length?agentBox(a,ro):''}
- ${!ro&&inv.length?`<div class="box"><h4>שליחת הודעה מוכנה</h4>${msgButtons(a,'debt')}${a.pay!=='masav'?msgButtons(a,'standing'):''}${openCount(a)>=6||agentState(a).k==='red'?msgButtons(a,'warning'):''}${a.is_synthetic?'<div class="small muted">פתיחה בלבד בוואטסאפ של אור; השליחה ידנית.</div>':testNote}</div>
-  <div class="box"><h4>מצב</h4><div class="choices" id="aSt">${Object.entries(ASTATUS).map(([k,[l]])=>`<button class="choice ${a.status===k?'on':''}" data-k="${k}" onclick="pick(this);document.getElementById('aPro').hidden=this.dataset.k!=='promise'">${l}</button>`).join('')}</div>
+ ${list.map(a=>{const v=V(a);return `<div class="card tap ${v.status==='retry_limit'?'flag':''}" onclick="openDebt('${a.id}')"><div class="row"><div class="addr">${esc(a.address)}</div><b>${money(openSum(a))}</b></div><div class="meta">${nextChip(v)}<span class="chip">${openCount(a)} חודשים</span><span class="chip">${PAY[a.pay]}</span>${wantsStanding(a)&&a.pay!=='masav'?'<span class="pill green">רוצה הוראת קבע</span>':''}${lastAgent(a)?`<span class="chip">שיחה אחרונה: ${whenL(lastAgent(a).t)}</span>`:''}</div></div>`}).join('')||'<div class="empty">אין לקוחות בסינון הזה.</div>'}
+ <div class="info">רק חוזי שירות, לפי המק״ט של החשבונית. חובות על עבודות ושיפוצים (${money(works)}) מופיעים בתיק הלקוח, ולקוחות שיש להם כאלה מטופלים אישית.</div>`}
+function openDebt(id){const a=db.accounts[id];const inv=openInv(a);const ro=PEOPLE[me].role==='owner';const v=agentView(a);
+ sheet(`<div><div class="row" style="justify-content:flex-start;gap:6px">${nextChip(v)}<span class="pill">${PAY[a.pay]}</span></div><div class="addr" style="margin-top:6px">${esc(a.address)}</div><div class="sub">מס׳ לקוח ${esc(a.no||'')} · ${esc(a.contact)} · ${money(a.fee)} לחודש · חוב ${money(openSum(a))}</div></div>`,`
+ ${a.is_synthetic?'<div class="info" style="margin-top:0">כרטיס דוגמה: 3 חשבוניות של 600 ₪, בלי חוב אמיתי.</div>':''}${agentBanner(a)}
+ ${inv.length?nextStepBox(a,ro)+standingBox(a,ro)+agentBox(a,ro):''}
+ <div class="box"><h4>חשבוניות שירות פתוחות</h4>${inv.length?`<table class="lines">${inv.map(i=>`<tr><td>שירות ${esc(i.m)}</td><td>${money(i.amount)}</td></tr>`).join('')}<tr class="tot"><td>סה״כ לגבייה</td><td>${money(openSum(a))}</td></tr></table>`:'<div class="muted">אין חוב פתוח על חוזה השירות</div>'}</div>
+ ${workSum(a)?`<div class="box"><h4>חוב על עבודות · לא בגבייה החודשית</h4><table class="lines">${workInv(a).map(i=>`<tr><td>${esc(i.what||'עבודה')} · ${esc(i.m)}</td><td>${money(i.amount)}</td></tr>`).join('')}</table><div class="small muted mt">עבודות, שיפוצים ומקדמות מטופלים לפי תנאי ההצעה, לא בדרישה חודשית.</div></div>`:''}
+ ${!ro&&inv.length?`<div class="box"><h4>שליחת הודעה מוכנה</h4>${msgButtons(a,'debt')}${a.pay!=='masav'&&!wantsStanding(a)?msgButtons(a,'standing'):''}${openCount(a)>=6||v.status==='retry_limit'?msgButtons(a,'warning'):''}${a.is_synthetic?'<div class="small muted">ההודעה נפתחת בוואטסאפ ונשלחת ידנית.</div>':testNote}</div>
+  <div class="box"><h4>מצב בגבייה</h4><div class="choices" id="aSt">${Object.entries(ASTATUS).map(([k,[l]])=>`<button class="choice ${a.status===k?'on':''}" data-k="${k}" onclick="pick(this);document.getElementById('aPro').hidden=this.dataset.k!=='promise'">${l}</button>`).join('')}</div>
    <div id="aPro" ${a.status==='promise'?'':'hidden'}><label class="f">ישלם עד</label><input class="in" type="date" id="aDate" value="${a.promise?new Date(a.promise).toISOString().slice(0,10):new Date(Date.now()+3*864e5).toISOString().slice(0,10)}"></div>
    <label class="f">סיבה</label><select class="in" id="aWhy">${REASONS_D.map(r=>`<option ${r===a.reason?'selected':''}>${r}</option>`).join('')}</select>
-   <button class="btn dark block mt" onclick="saveDebt('${a.id}')">שמירה</button><div class="small muted mt">אפשר לשנות את המצב בכל רגע, גם לחזור אחורה.</div></div>`:''}
-
- <div class="info">הקלטות ותמלולים מ־Retell מסומנים כרשומות שיחה. יתר הרשומות הן דוגמאות. אימות תשלום בפריוריטי עדיין אינו מחובר.</div>
+   <button class="btn dark block mt" onclick="saveDebt('${a.id}')">שמירה</button><div class="small muted mt">"בבירור" ו"בהסדר" עוצרים את הסוכנת. אחרי כל שמירה אפשר ללחוץ "ביטול".</div></div>`:''}
  <button class="btn ghost block mt" onclick="openAccount('${a.id}')">${ICON.doc} תיק לקוח</button>
  <div class="box"><h4>יומן קשר</h4><div class="log">${(a.log||[]).slice().reverse().map(l=>`<div><b>${dayLabel(l.t)==='היום'?hhmm(l.t):dayLabel(l.t)}</b><span>${esc(l.who)}: ${esc(l.text)}</span></div>`).join('')||'<div>עוד אין</div>'}</div></div>`)}
 function logAcc(id,text){const a=db.accounts[id];a.log=(a.log||[]).concat({t:Date.now(),who:PEOPLE[me].name,text});put('accounts',a)}
-function saveDebt(id){const a=db.accounts[id];const st=$('#aSt .on').dataset.k;a.reason=$('#aWhy').value;
- if(st==='paid'){a.invoices.forEach(i=>{if(i.kind!=='work')i.paid=true});a.status='paid';a.log.push({t:Date.now(),who:PEOPLE[me].name,text:'סומן ששולם'})}
- else{a.status=st;if(st==='promise'){a.promise=new Date($('#aDate').value+'T08:00').getTime()}a.log.push({t:Date.now(),who:PEOPLE[me].name,text:ASTATUS[st][0]+(st==='promise'?' עד '+new Date(a.promise).toLocaleDateString('he-IL'):'')+(a.reason?' · '+a.reason:'')})}
- put('accounts',a);closeSheet();toast('נשמר')}
+function saveDebt(id){const st=$('#aSt .on').dataset.k;const why=$('#aWhy').value;const pr=st==='promise'?new Date($('#aDate').value+'T08:00').getTime():null;const name=PEOPLE[me].name;
+ closeSheet();withUndo(id,st==='paid'?'סומן ששולם':'נשמר: '+ASTATUS[st][0],a=>{a.reason=why;
+  if(st==='paid'){a.invoices.forEach(i=>{if(i.kind!=='work')i.paid=true});a.status='paid';a.log.push({t:Date.now(),who:name,text:'סומן ששולם'})}
+  else{a.status=st;if(pr)a.promise=pr;a.log.push({t:Date.now(),who:name,text:ASTATUS[st][0]+(pr?' עד '+new Date(pr).toLocaleDateString('he-IL'):'')+(why?' · '+why:'')})}})}
 /* monthly reminder: one ready message per customer, no blind bulk send */
 const RSTAT={none:['טרם נשלחה תזכורת','red'],sent:['נשלחה תזכורת, מחכים לתשובה','blue'],yes:['ביקש פרטים להוראת קבע','amber'],forms:['נשלחו טפסים להוראת קבע','amber'],declined:['ענה שלא כרגע','',],joined:['עבר להוראת קבע או הרשאה','green']};
 const RHELP={none:'עוד לא קיבל את התזכורת החודשית.',sent:'קיבל תזכורת. מחכים שישלם או שיענה אם הוא רוצה הוראת קבע.',yes:'ענה "כן" לשאלה על הוראת קבע. עכשיו שולחים לו את הטופס והפרטים.',forms:'קיבל את הטופס. מחכים שיאשר בבנק וישלח אישור.',declined:'ענה שהוא לא רוצה הוראת קבע כרגע. ממשיך לקבל תזכורת חודשית.',joined:'ההרשאה נקלטה במערכת. מהחודש הבא הוא לא צריך תזכורת.'};
@@ -1317,8 +1405,16 @@ function openReminder(id){const a=db.accounts[id];const ro=PEOPLE[me].role==='ow
  <div class="box"><h4>מה הלקוח ענה?</h4><div class="choices">${[['sent','עוד לא ענה'],['yes','כן, רוצה פרטים להוראת קבע'],['declined','לא כרגע'],['joined','ההרשאה נקלטה'],['none','טרם נשלחה']].map(([k,l])=>`<button class="choice ${a.reminder===k?'on':''}" onclick="setRem('${a.id}','${k}')">${l}</button>`).join('')}</div><div class="small muted mt">אפשר לשנות בכל רגע. כל שינוי נרשם ביומן הקשר.</div></div>`:''}
  ${openSum(a)?`<button class="btn ghost block mt" onclick="openDebt('${a.id}')">פירוט החוב</button>`:''}
  <button class="btn ghost block mt" onclick="openAccount('${a.id}')">${ICON.doc} תיק לקוח</button>`)}
-function setRem(id,st){const a=db.accounts[id];if(a.reminder===st)return;const prev=a.reminder;a.reminder=st;if(st==='joined')a.pay='masav';else if(prev==='joined'&&a.pay==='masav')a.pay=a.prevPay||'transfer';if(st==='joined')a.prevPay=a.prevPay||'transfer';
- a.log=(a.log||[]).concat({t:Date.now(),who:PEOPLE[me].name,text:'תזכורת חודשית: '+RSTAT[st][0]});put('accounts',a);openReminder(id)}
+function setRem(id,st){const a0=db.accounts[id];if(a0.reminder===st)return;const name=PEOPLE[me].name;
+ withUndo(id,'עודכן: '+RSTAT[st][0],a=>{const prev=a.reminder;a.reminder=st;if(st==='joined'){a.prevPay=a.prevPay||(a.pay==='masav'?'transfer':a.pay);a.pay='masav'}else if(prev==='joined'&&a.pay==='masav')a.pay=a.prevPay||'transfer';
+  a.log=(a.log||[]).concat({t:Date.now(),who:name,text:'תזכורת חודשית: '+RSTAT[st][0]})},()=>{if($('#sheet'))openReminder(id)})}
+
+/* link from an alert email: ?acct=<id> opens that customer's collection card (as Or when nobody is logged in on this device) */
+function openFromLink(){const q=new URLSearchParams(location.search);const id=q.get('acct'),view=q.get('view'),f=q.get('filter');
+ if(!(id&&db.accounts[id])&&view!=='collect')return;
+ if(!me||!['office','owner'].includes(PEOPLE[me]?.role)){me='or';localStorage.setItem('zme','or')}
+ tab='collect';collectMode='debts';if(f)collectFilter=f;render();if(id&&db.accounts[id])openDebt(id);
+ try{const u=new URL(location.href);['acct','view','filter'].forEach(k=>u.searchParams.delete(k));history.replaceState(history.state,'',u)}catch(e){}}
 
 /* ========= CUSTOMER FILE ========= */
 function openAccount(id){const a=db.accounts[id];const cs=calls().filter(c=>c.address===a.address);const ms=Object.values(db.memos).filter(m=>m.address===a.address);const qs=Object.values(db.quotes).filter(q=>q.address===a.address);const role=PEOPLE[me].role;
@@ -1338,7 +1434,7 @@ function render(){const keep=openCall;let html;const ae=document.activeElement;c
  $('#app').innerHTML=html;renderSync();if(fid){const el=document.getElementById(fid);if(el){el.focus();try{sel&&el.setSelectionRange(sel[0],sel[1])}catch(e){}}}if(me&&PEOPLE[me]?.role==='tech')setTimeout(markDelivered,0);
  if(keep&&$('#sheet')&&!draft){/* sheet content refresh handled by explicit calls */}
 }
-(async()=>{$('#app').innerHTML='<div class="pick"><div class="sub">טוען…</div></div>';await initStore();if(me&&PEOPLE[me]?.role==='tech'&&locOn())startLoc();if(me&&PEOPLE[me]?.role==='tech')checkPush().then(()=>{if(tab==='set')render()});if(me&&alertsOn()&&'serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});render();setInterval(poll,2500);document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()})})();
+(async()=>{$('#app').innerHTML='<div class="pick"><div class="sub">טוען…</div></div>';await initStore();if(me&&PEOPLE[me]?.role==='tech'&&locOn())startLoc();if(me&&PEOPLE[me]?.role==='tech')checkPush().then(()=>{if(tab==='set')render()});if(me&&alertsOn()&&'serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});render();openFromLink();setInterval(poll,2500);document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()})})();
 </script>
 </body>
 </html>
