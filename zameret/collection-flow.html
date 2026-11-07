@@ -42,6 +42,10 @@ section{padding:40px 0;scroll-margin-top:64px}
 /* hero */
 .hero{padding:44px 0 24px}
 .hero-g{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+.hero-one{max-width:820px}
+.harmony{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;padding:24px}
+.harmony ul{margin:0;padding-inline-start:18px;line-height:1.85;font-size:16px}
+@media(max-width:900px){.harmony{grid-template-columns:1fr}}
 .kicker{display:inline-flex;gap:8px;align-items:center;background:var(--rose-t);color:var(--rose2);font-weight:700;font-size:14px;border-radius:999px;padding:4px 12px}
 .hero h1{font-size:44px;font-weight:800;margin:14px 0 12px;letter-spacing:-.5px}
 .hero h1 span{color:var(--rose)}
@@ -366,7 +370,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
   <a class="back" id="backLink" href="./">חזרה למערכת ←</a>
 </div></div>
 
-<header class="hero"><div class="wrap hero-g">
+<header class="hero"><div class="wrap hero-one">
   <div>
     <span class="kicker">דמו · נתונים לדוגמה</span>
     <h1>מעקב גבייה <span>אוטומטי</span><br>לצמרת מעליות</h1>
@@ -375,16 +379,6 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
       <span class="chip">שיחות בימים <b>א׳–ה׳, 09:00–17:00</b></span>
     </div>
     <div class="cta"><a class="btn pri" href="#flow">איך זה עובד</a><a class="btn" href="#console">מה אור רואה</a></div>
-  </div>
-  <div class="loop card" aria-hidden="true">
-    <div class="loop-h">כך הכל עובד יחד</div>
-    <div class="lrows"><span class="pulse"></span>
-      <div class="lrow"><span class="lic"><svg viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg></span><div class="lt"><b>פריוריטי</b><small>החשבוניות הפתוחות נכנסות לבד</small></div><span class="lst">מסונכרן</span></div>
-      <div class="lrow"><span class="lic"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><div class="lt"><b>הסוכנת</b><small>מתקשרת, מבררת וקובעת צעד הבא</small></div><span class="lst g">בשיחה</span></div>
-      <div class="lrow"><span class="lic"><svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></svg></span><div class="lt"><b>כרטיס הלקוח</b><small>שיחה, תמלול והצעד הבא</small></div><span class="lst">נשמר</span></div>
-      <div class="lrow"><span class="lic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div class="lt"><b>אור</b><small>מקבלת התראה, מחליטה, עוצרת</small></div><span class="lst a">התראה</span></div>
-    </div>
-    <div class="loop-f">חוזר על עצמו עד שהחוב מוסדר</div>
   </div>
 </div></header>
 
@@ -426,8 +420,30 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
     </div>
   </section>
 
+  <section id="harmony">
+    <div class="sec-h"><span class="sec-n">2</span><h2>כך הכל מתחבר</h2></div>
+    <p class="sec-p">ארבעה חלקים שעובדים יחד, בלי להעתיק נתונים בין מערכות.</p>
+    <div class="card harmony reveal">
+      <div class="orbit" aria-hidden="true">
+        <div class="ring"></div><div class="ring2 a"><i></i></div><div class="ring2 b"><i></i></div>
+        <div class="core">הכל מחובר<small>בלי להעתיק נתונים בין מערכות</small></div>
+        <div class="node n1"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg></div>פריוריטי<small>חשבוניות פתוחות</small></div>
+        <div class="node n2"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></div>הסוכנת<small>מתקשרת ומבררת</small></div>
+        <div class="node n3"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></svg></div>כרטיס הלקוח<small>שיחה, תמלול, צעד הבא</small></div>
+        <div class="node n4"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>אור<small>רואה, מחליטה, עוצרת</small></div>
+      </div>
+      <ul>
+        <li><b>פריוריטי:</b> החשבוניות הפתוחות נכנסות לבד, בלי הקלדה.</li>
+        <li><b>הסוכנת:</b> מתקשרת מהקו של המשרד, מבררת וקובעת צעד הבא.</li>
+        <li><b>כרטיס הלקוח:</b> כל שיחה נשמרת, עם הקלטה, תמלול ומה הלאה.</li>
+        <li><b>אור:</b> מקבלת התראה כשצריך אותה, מחליטה, ויכולה לעצור הכל.</li>
+        <li>וחוזר חלילה, עד שהחוב מוסדר.</li>
+      </ul>
+    </div>
+  </section>
+
   <section>
-    <div class="sec-h"><span class="sec-n">2</span><h2>מי מקבל איזה טיפול</h2></div>
+    <div class="sec-h"><span class="sec-n">3</span><h2>מי מקבל איזה טיפול</h2></div>
     <p class="sec-p">לא כל חוב זהה. לקוח חשוב באמצע פרויקט לא מקבל שיחה אוטומטית.</p>
     <div class="groups">
       <div class="card grp g1 reveal"><h3>חוב חדש</h3><div class="who">חודש-חודשיים</div><ul><li>הודעה בוואטסאפ כשהחשבונית יוצאת</li><li>שיחות של הסוכנת</li><li>הצעה להוראת קבע בכל שיחה</li></ul><div class="tg">המטרה: הוראת קבע</div></div>
@@ -437,7 +453,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
   </section>
 
   <section id="console">
-    <div class="sec-h"><span class="sec-n">3</span><h2>מה אור רואה ושולטת</h2></div>
+    <div class="sec-h"><span class="sec-n">4</span><h2>מה אור רואה ושולטת</h2></div>
     <p class="sec-p">קודם תמונה כללית: כמה חוב יש, כמה זמן הוא פתוח, ואיפה כל לקוח עומד. לוחצים על כל מספר ויורדים ללקוחות, ומשם לשיחה עצמה.</p>
     <div class="card cons reveal">
       <div class="cons-top">
@@ -481,7 +497,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
   </section>
 
   <section id="alerts">
-    <div class="sec-h"><span class="sec-n">4</span><h2>התראה במייל לאור</h2></div>
+    <div class="sec-h"><span class="sec-n">5</span><h2>התראה במייל לאור</h2></div>
     <p class="sec-p">כשהסוכנת מסיימת שיחה שצריכה את אור, מגיע אליה מייל בעברית. רואים מיד מה קרה ומה צריך לעשות.</p>
     <div class="tabs" id="mailTabs">
       <button data-m="standing" class="on">הזדמנות: הוראת קבע</button>
@@ -505,7 +521,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
   </section>
 
   <section id="whatsapp">
-    <div class="sec-h"><span class="sec-n">5</span><h2>וואטסאפ שעובד יחד עם הסוכנת</h2></div>
+    <div class="sec-h"><span class="sec-n">6</span><h2>וואטסאפ שעובד יחד עם הסוכנת</h2></div>
     <p class="sec-p">הלקוח מבקש בשיחה, והוואטסאפ יוצא לבד, מיד בסיום: פירוט חשבוניות, טופס הוראת קבע או אישור מועד.</p>
     <div class="wa">
       <div class="phone reveal"><div class="screen">
@@ -529,7 +545,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
   </section>
 
   <section>
-    <div class="sec-h"><span class="sec-n">6</span><h2>מה צריך להחליט איתכם</h2></div>
+    <div class="sec-h"><span class="sec-n">7</span><h2>מה צריך להחליט איתכם</h2></div>
     <p class="sec-p">רק אתם יכולים לענות על אלה. אחרי זה מעדכנים את הסוכנת.</p>
     <div class="dec">
       <div class="card dq reveal"><i>1</i><div><b>כמה ניסיונות?</b><br><span class="sim" style="margin:0">הגדרנו 6 שיחות בלי מענה, כמו שדיברנו. אור יכולה לשנות את זה במסך הגבייה.</span></div></div>
@@ -553,8 +569,8 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
           <a class="btn sm" data-go="view=collect" target="_blank" rel="noopener">מסך הגבייה</a>
           <a class="btn sm" data-go="view=collect&amp;filter=red" target="_blank" rel="noopener">הרשימה האדומה</a>
           <a class="btn sm" data-go="acct=a4101" target="_blank" rel="noopener">טיפול אישי</a></li>
-        <li><b>ההתראה במייל</b> (חלק 4) <b>והוואטסאפ האוטומטי</b> (חלק 5).</li>
-        <li><b>ההחלטות שלה</b> (חלק 6): ניסיונות, ימים, רשימה אדומה, טיפול אישי, וואטסאפ.</li>
+        <li><b>ההתראה במייל</b> (חלק 5) <b>והוואטסאפ האוטומטי</b> (חלק 6).</li>
+        <li><b>ההחלטות שלה</b> (חלק 7): ניסיונות, ימים, רשימה אדומה, טיפול אישי, וואטסאפ.</li>
       </ol>
       <div class="sim">שיחת טלפון אמיתית לאור רק אחרי "go" ל-Codex, לפי רשימת הבדיקה שלו. בשיחת בדיקה בדפדפן נשלחת התראה רק אליך.</div>
     </div>
