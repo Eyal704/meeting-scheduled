@@ -124,9 +124,6 @@ section{padding:40px 0;scroll-margin-top:64px}
 .branches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .branches .step{flex-direction:column;gap:8px}
 .cap{margin-top:16px;text-align:center;font-size:16px;font-weight:600;min-height:52px;color:var(--rose2)}
-.paused-note{display:none;margin-top:10px;text-align:center;color:var(--red);font-weight:700}
-body.allpaused .paused-note{display:block}
-body.allpaused .wire.on::after{animation-play-state:paused;opacity:.3}
 
 /* flow diagram (layout of the original page, with the step-by-step player) */
 .flow2{--gap:40px;display:grid;justify-items:center;margin-top:6px}
@@ -192,7 +189,6 @@ body.allpaused .wire.on::after{animation-play-state:paused;opacity:.3}
 .pane{padding:16px}
 .agent{display:flex;align-items:flex-start;gap:10px}
 .dot{width:11px;height:11px;border-radius:50%;margin-top:7px;background:var(--green);box-shadow:0 0 0 0 rgba(47,125,79,.4);animation:pulse 1.8s infinite;flex:none}
-body.allpaused .dot{background:var(--red);animation:none}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,125,79,.45)}70%{box-shadow:0 0 0 9px rgba(47,125,79,0)}100%{box-shadow:0 0 0 0 rgba(47,125,79,0)}}
 .wins{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px}
 .wins div{background:var(--bg);border-radius:12px;padding:10px;text-align:center}
@@ -269,8 +265,6 @@ body.allpaused .dot{background:var(--red);animation:none}
 .titem span{font-size:14.5px;font-weight:600}
 .titem small{display:block;font-size:12.5px;color:var(--muted)}
 .titem:not(.more):hover span{color:var(--rose)}
-body.allpaused .titem:not(.pay)::before{border-color:var(--red);background:var(--red-t)}
-body.allpaused .titem:not(.pay) b::after{content:" · עצור";color:var(--red);font-weight:700}
 .fchips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .fchips button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font-size:13.5px;font-weight:600;color:var(--muted)}
 .fchips button.on{background:var(--ink);border-color:var(--ink);color:#fff}
@@ -326,8 +320,8 @@ body.allpaused .titem:not(.pay) b::after{content:" · עצור";color:var(--red)
 .tpls{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
 .tpl{padding:12px 14px}
 .tpl b{display:block;font-size:15px}.tpl span{font-size:13.5px;color:var(--muted)}
-.price-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:14px;align-items:start}.pcard{padding:20px 22px}.pcard.main{border-color:var(--rose-b)}.pl{font-size:14px;font-weight:700;color:var(--muted)}.pbig{color:var(--ink);font-size:40px;font-weight:800;line-height:1.15;margin:4px 0 14px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.pbig small{font-size:14px;font-weight:600;color:var(--muted)}.pinc{list-style:none;margin:0 0 12px;padding:0;font-size:15px;line-height:1.6}.pinc li{position:relative;padding-inline-start:24px;margin-bottom:9px}.pinc li::before{content:"✓";position:absolute;inset-inline-start:0;top:0;color:#008f87;font-weight:800}
-@media(max-width:900px){.price-grid{grid-template-columns:1fr}}
+.price-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:14px;align-items:start}.pcard{padding:20px 22px}.pcard.main{border-color:var(--rose-b)}.pl{font-size:14px;font-weight:700;color:var(--muted)}.pbig{color:var(--green);font-size:40px;font-weight:800;line-height:1.15;margin:4px 0 14px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.pcard:not(.main) .pbig{color:var(--ink)}.pcard.extra{margin-top:14px}.pinc.two{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;margin-bottom:0}.pbig small{font-size:14px;font-weight:600;color:var(--muted)}.pinc{list-style:none;margin:0 0 12px;padding:0;font-size:15px;line-height:1.6}.pinc li{position:relative;padding-inline-start:24px;margin-bottom:9px}.pinc li::before{content:"✓";position:absolute;inset-inline-start:0;top:0;color:#b8860b;font-weight:800}
+@media(max-width:900px){.price-grid,.pinc.two{grid-template-columns:1fr}}
 .need{padding:16px 18px;margin-top:12px}
 .need ul{margin:6px 0 0;padding-inline-start:18px;line-height:1.75;font-size:15px}
 .soon{display:inline-block;font-size:12.5px;font-weight:700;color:var(--blue);background:var(--blue-t);border-radius:999px;padding:2px 10px;margin-inline-start:6px;vertical-align:middle}
@@ -422,7 +416,6 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
       </div>
       <div class="cap" id="cap"></div>
       <div class="hint">לוחצים בכל מקום באזור הזה, או על החצים במקלדת, כדי לעבור שלב.</div>
-      <div class="paused-note">כל השיחות עצורות כרגע (מהמסוף למטה). אף לקוח לא יקבל שיחה.</div>
     </div>
   </section>
 
@@ -465,7 +458,6 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
       <div class="cons-top">
         <div class="agent"><span class="dot"></span><div><b id="agT">הסוכנת פעילה</b><div class="sim" id="agS" style="margin:0">מתקשרת לפי החוקים, בימים א׳–ה׳.</div></div></div>
         <div class="vt" id="viewTabs"><button data-v="over" class="on">תמונה כללית</button><button data-v="list">לקוחות</button></div>
-        <button class="btn stop sm" id="pauseAll">עצירת כל השיחות</button>
       </div>
       <div class="allrow">
         <div class="allrow-h"><b>כל השיחות לדוגמה ברצף</b><span class="sim" style="margin:0">7 שיחות · 3:44 · לוחצים על שם כדי לקפוץ לשיחה</span></div>
@@ -570,7 +562,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
     <p class="sec-p">תשלום אחד על בניית המערכת. אחרי זה משלמים רק על דקות שיחה בפועל.</p>
     <div class="price-grid">
       <div class="card pcard main reveal">
-        <div class="pl">בניית מערכת הגבייה</div>
+        <div class="pl">שלב ראשון · בניית מערכת הגבייה</div>
         <div class="pbig">₪25,000<small>תשלום חד-פעמי</small></div>
         <ul class="pinc">
           <li><b>חיבור לפריוריטי, לקריאה בלבד.</b> רשימת החייבים בחוזי שירות, בלי שיפוצים וחלקים, מתעדכנת כל יום.</li>
@@ -595,6 +587,23 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
         </ul>
       </div>
     </div>
+    <div class="card pcard main extra reveal">
+      <div class="pl">שלב שני · מערכת שירות ושטח</div>
+      <div class="pbig">₪35,000<small>תשלום חד-פעמי, בנוסף למערכת הגבייה</small></div>
+      <div class="sim" style="margin:0 0 12px">אפליקציה אחת לכל הצוות, מהקריאה הראשונה ועד החיוב.</div>
+      <ul class="pinc two">
+          <li><b>אפליקציה לטכנאים בטלפון.</b> הקריאות לפי דחיפות, אישור קבלה, יצאתי לדרך, הגעתי, ודיווח מהשטח.</li>
+          <li><b>חילוצים והתראות.</b> קריאה חדשה מצלצלת בטלפון של הטכנאי, ומזכירה שוב עד שהוא מאשר.</li>
+          <li><b>המסך של גיא.</b> תמונת מצב של הקריאות, מה מחכה להחלטה שלו, ומי עוד לא אישר קריאה.</li>
+          <li><b>השטח עכשיו.</b> מי בדרך ומי באתר, ומפה של הטכנאים שמשתפים מיקום.</li>
+          <li><b>לוח קריאות למשרד.</b> שיבוץ לפי עיר, הערות פנימיות, וסימון מה עובר לחיוב.</li>
+          <li><b>תזכירי בודק.</b> מהתזכיר יוצאים הליקויים, ומהם קריאות המשך או הצעת מחיר.</li>
+          <li><b>הצעות מחיר ומחירון.</b> ההצעה נבנית מהתזכיר, וגיא מאשר אותה ואת ההנחות בלחיצה.</li>
+          <li><b>תיק לקוח אחד.</b> קריאות, תזכירים, הצעות מחיר וחובות במקום אחד.</li>
+          <li><b>מבט על לשמעיה.</b> קריאות פתוחות וסגורות ביום, בחודש ובשנה, ולצידן הכסף.</li>
+          <li><b>מסך לכל תפקיד.</b> טכנאים, צוות מכני, גיא, משרד, הנהלת חשבונות ובעלים, מכל טלפון או מחשב עם אינטרנט.</li>
+      </ul>
+    </div>
     <div class="presenter" id="presenter">
       <b>לאייל: סדר ההדגמה בפגישה</b> <span class="sim">(מוצג רק בקישור המציג)</span>
       <ol class="run">
@@ -605,13 +614,13 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
           <a class="btn sm" target="_blank" rel="noopener" href="https://dashboard.retellai.com/org_kB1lkYCNjKzSM0K7/call-history">היסטוריית השיחות</a></li>
         <li><b>מה שהשיחה עשתה במערכת.</b> כרטיס הדוגמה של אור: הסיכום, התמלול, ההקלטה והצעד הבא.<br>
           <a class="btn sm pri" data-go="acct=zameret-demo-or" target="_blank" rel="noopener">כרטיס הדוגמה של אור</a></li>
-        <li><b>התמונה המלאה.</b> מסך הגבייה, מה הסוכנת השיגה, הרשימה האדומה וטיפול אישי. ללחוץ "עצירת כל השיחות" ו"ביטול".<br>
+        <li><b>התמונה המלאה.</b> מסך הגבייה, מה הסוכנת השיגה, הרשימה האדומה וטיפול אישי.<br>
           <a class="btn sm" data-go="view=collect" target="_blank" rel="noopener">מסך הגבייה</a>
           <a class="btn sm" data-go="view=collect&amp;filter=red" target="_blank" rel="noopener">הרשימה האדומה</a>
           <a class="btn sm" data-go="acct=a4101" target="_blank" rel="noopener">טיפול אישי</a></li>
         <li><b>ההתראה במייל</b> (חלק 5) <b>והוואטסאפ האוטומטי</b> (חלק 6).</li>
         <li><b>שיחות אמיתיות לדוגמה:</b> בכל לקוח בחלק 4 יש הקלטה אמיתית מ-Retell עם תמלול. מתחת ללקוחות יש עוד שני מקרים: "כבר שילמנו" ו"אני כבר לא בוועד". אפשר גם לנגן את כל השבע ברצף.<br><a class="btn sm" href="demos/all-seven.mp3?v=3" target="_blank" rel="noopener">כל שבע השיחות ברצף (3:44)</a></li>
-        <li><b>הצעת המחיר</b> (חלק 7): ₪25,000 לבנייה, ₪1 לדקת שיחה מהמספר של צמרת.</li>
+        <li><b>הצעת המחיר</b> (חלק 7): ₪25,000 לבנייה, ₪1 לדקת שיחה מהמספר של צמרת. אחר כך שלב שני: מערכת שירות ושטח, ₪35,000.</li>
       </ol>
       <div class="sim">שיחת טלפון אמיתית לאור רק אחרי "go" ל-Codex, לפי רשימת הבדיקה שלו. בשיחת בדיקה בדפדפן נשלחת התראה רק אליך.</div>
     </div>
@@ -703,10 +712,10 @@ function drawList(){const chips=[[null,'הכל'],...ST.map(s=>[s[0],s[1]]),...AG
  $$('#fchips button').forEach(b=>b.onclick=()=>{fil=b.dataset.k||null;const s=shown();if(!s.some(c=>c.id===sel)&&s[0])sel=s[0].id;openCall=null;drawAll()});
  $('#custs').innerHTML=shown().map(c=>`<button class="cust ${c.id===sel?'on':''}" data-id="${c.id}"><span><b>${c.addr}</b><small>${nis(c.amt)} · ${c.months} חודשים</small></span><span class="nb ${NB[c.st][0]}">${NB[c.st][1]}</span></button>`).join('')||'<div class="sim">אין לקוחות לדוגמה בסינון הזה.</div>';
  $$('.cust').forEach(b=>b.onclick=()=>{sel=b.dataset.id;openCall=null;drawAll()})}
-function drawCust(){const c=CUSTS.find(x=>x.id===sel);if(!c){$('#custPane').innerHTML='';return}const paused=document.body.classList.contains('allpaused');
+function drawCust(){const c=CUSTS.find(x=>x.id===sel);if(!c){$('#custPane').innerHTML='';return}
  const cls={agent:'',promise:'pay',standing:'ok',office:'off',red:'off',personal:'stop',stop:'stop',ok:'ok'}[c.st];
  $('#custPane').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px"><b style="font-size:19px">${c.addr}</b><span class="sim" style="margin:0">${nis(c.amt)} · ${c.months} חודשים</span></div>
- <div class="next ${cls}"><h4>מה הלאה</h4><b>${c.label}</b>${c.next?`<div><b>השיחה הבאה: ${paused?'עצורה':c.next}</b></div>`:''}<div class="sim" style="margin-top:4px">${c.reason}</div></div>
+ <div class="next ${cls}"><h4>מה הלאה</h4><b>${c.label}</b>${c.next?`<div><b>השיחה הבאה: ${c.next}</b></div>`:''}<div class="sim" style="margin-top:4px">${c.reason}</div></div>
  <b>מה מתוכנן ללקוח הזה</b>
  <div class="tline" style="margin:6px 0 14px">${(PLAN[c.id]||[]).length&&!['stop','ok'].includes(c.st)?PLAN[c.id].map(u=>`<div class="titem ${u.cls||''}"><b>${u.when}</b><span>${u.what}</span>${u.sub?`<small>${u.sub}</small>`:''}</div>`).join(''):`<div class="sim" style="margin:4px 0">${c.st==='personal'?'אין שיחות של הסוכנת. שמעיה מטפל אישית.':c.st==='ok'?'אין. הלקוח שילם.':c.st==='stop'?'אין. הסוכנת עצורה ללקוח הזה.':'אין שיחות מתוכננות. מחכה להחלטה של אור.'}</div>`}</div>
  <b>שיחות הסוכנת (${c.calls.length})</b>
@@ -732,8 +741,6 @@ function act(c,a){const prev=JSON.parse(JSON.stringify(c));const L={stop:'הסו
  toast(L[a],()=>{Object.assign(c,prev);log.shift();drawAll();toast('הפעולה בוטלה')})}
 function drawAll(){$$('#viewTabs button').forEach(b=>b.classList.toggle('on',b.dataset.v===view));$('#viewOver').hidden=view!=='over';$('#viewList').hidden=view!=='list';drawCrumbs();if(view==='over')drawOver();else{drawList();drawCust()}}
 $$('#viewTabs button').forEach(b=>b.onclick=()=>{view=b.dataset.v;if(view==='list')fil=fil||null;drawAll()});
-$('#pauseAll').onclick=()=>{const p=!document.body.classList.contains('allpaused');setPaused(p);toast(p?'כל שיחות הגבייה נעצרו':'השיחות חזרו לפעול',()=>{setPaused(!p);toast('הפעולה בוטלה')})};
-function setPaused(p){document.body.classList.toggle('allpaused',p);$('#agT').textContent=p?'הסוכנת עצורה':'הסוכנת פעילה';$('#agS').textContent=p?'עצרה: אור, '+now()+'. אף לקוח לא יקבל שיחה.':'מתקשרת לפי החוקים, בימים א׳–ה׳.';const b=$('#pauseAll');b.textContent=p?'החזרת השיחות':'עצירת כל השיחות';b.className='btn sm '+(p?'go':'stop');if(view==='list')drawCust()}
 const CHAPS=[['רונית · הבטיחה לשלם',0],['מיכל · הוראת קבע',43],['דנה · מחלוקת',81.1],['שירה · בנהיגה',123.4],['יעל · ניתקה',145.3],['רונית · כבר שילמנו',160.5],['מיכל · לא בוועד',197.3]];
 (()=>{const au=document.getElementById('allAu'),box=document.getElementById('chaps');if(!au||!box)return;
  box.innerHTML=CHAPS.map(([n],i)=>`<button data-ch="${i}">${n}</button>`).join('');
