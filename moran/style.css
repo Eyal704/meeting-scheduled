@@ -342,8 +342,66 @@ button.tour-target:disabled{opacity:1}
  .shell{padding:0;max-width:none}
  .report-shell{max-width:none;margin:0}
  .report-fit{zoom:1!important;width:auto;margin:0!important}
- .report-page{width:210mm;min-height:0;height:296.5mm;padding:7mm;box-shadow:none;page-break-after:always;break-after:page;overflow:hidden;font-size:15px}
+ .report-page{width:210mm;min-height:296.5mm;height:auto;padding:7mm;box-shadow:none;page-break-after:always;break-after:page;overflow:visible;font-size:15px}
  .report-fit:last-child .report-page{page-break-after:auto;break-after:auto}
- .form-frame{min-height:0;height:100%}
+ .form-frame{min-height:282.5mm;height:auto;overflow:visible}
  .rv,.form-contacts,.form-statement,.permit-stop,.af-status{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+.sample-link{display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-size:14px;text-underline-offset:4px;min-height:44px}
+@media print{.annex-finding,.inspector,.permit{break-inside:avoid}.sample-link{display:none!important}}
+html{min-height:100%}body{min-height:100vh}
+
+/* Field actions stay within reach on a phone or tablet. */
+.instrument-details{border:1px solid var(--line);border-radius:10px;background:#f8faff;padding:12px 14px}
+.instrument-details summary{cursor:pointer;min-height:44px;font-size:13px}
+.instrument-details summary span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.instrument-details[open] .grid2{margin-top:15px}
+@media screen and (max-width:1179px){
+ .field-bar .fb-next{flex:1;max-width:260px;min-height:46px}
+ .field-bar .fb-preview{min-height:46px}
+ .fb-progress{display:flex;flex-direction:column;align-items:center;line-height:1.3}
+ .fb-progress strong{margin:0}
+ body[data-role="field"] #toast{bottom:85px}
+}
+@media screen and (max-width:800px){
+ body[data-role="field"] .topbar{padding:7px 12px;gap:6px;min-height:0}
+ body[data-role="field"] .brand img{width:40px;height:32px}
+ body[data-role="field"] .brand strong{font-size:15px}
+ body[data-role="field"] .brand small{display:none}
+ body[data-role="field"] .nav{padding:3px;gap:3px}
+ body[data-role="field"] .nav button{min-height:44px;padding:8px}
+ body[data-role="field"] .demo-strip{padding:4px 12px;font-size:10px;line-height:1.4}
+ body[data-role="field"] .shell{padding:10px 12px 30px}
+ body[data-role="field"] .case-bar{padding:8px 11px;margin-bottom:8px;gap:8px;align-items:flex-start}
+ body[data-role="field"] .case-main{gap:2px 8px}
+ body[data-role="field"] .case-main strong{font-size:12px;line-height:1.4;flex-basis:100%}
+ body[data-role="field"] .case-meta,body[data-role="field"] .case-id{font-size:10px}
+ body[data-role="field"] .case-bar>.badge{font-size:10px;padding:4px 6px}
+ body[data-role="field"] .side{margin-bottom:8px;gap:3px}
+ body[data-role="field"] .side .step{min-height:58px;padding:5px 2px;gap:3px}
+ body[data-role="field"] .step-num{width:22px;height:22px;border-radius:6px}
+ body[data-role="field"] .step strong{font-size:10px}
+ body[data-role="field"] .work-form .card-head{padding:12px 14px;gap:8px}
+ body[data-role="field"] .work-form h2{font-size:20px}
+ body[data-role="field"] .card-head p{font-size:12px}
+ body[data-role="field"] .card-head .badge{font-size:11px}
+ body[data-role="field"] .progress-track{margin:9px 0}
+ body[data-role="field"] .filterbar{flex-wrap:nowrap;overflow-x:auto;padding:8px 14px;gap:6px;overscroll-behavior-inline:contain;scrollbar-width:thin}
+ body[data-role="field"] .filterbar .chip{flex-shrink:0;white-space:nowrap;padding:6px 10px}
+ body[data-role="field"] .check-group{padding:7px 14px}
+ body[data-role="field"] .check-row{padding:14px}
+ body[data-role="field"] .status-options{gap:6px}
+ body[data-role="field"] .field-bar{padding-inline:12px;gap:8px}
+ body[data-role="field"] .field-bar .btn{padding:8px 12px;font-size:13px}
+ body[data-role="field"] .work-form .card-footer{display:none}
+ body[data-role="field"] .work-form{padding-bottom:10px}
+}
+
+@media screen and (max-width:800px){
+ body[data-role="field"] .work-form .grid3:has(>.stat){grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ body[data-role="field"] .work-form .grid3>.stat{padding:12px 9px}
+ body[data-role="field"] .work-form .grid3>.stat>svg{display:none}
+ body[data-role="field"] .work-form .grid3>.stat strong{font-size:23px}
+ body[data-role="field"] .work-form .grid3>.stat small{font-size:10px}
 }
