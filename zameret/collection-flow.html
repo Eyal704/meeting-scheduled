@@ -221,7 +221,7 @@ body.allpaused .dot{background:var(--red);animation:none}
 .bars i{flex:1;background:var(--rose-b);border-radius:2px;height:30%}
 .wave.playing .bars i{animation:eq 1s ease-in-out infinite}
 @keyframes eq{0%,100%{height:25%}50%{height:95%}}
-.msg{max-width:88%;padding:8px 12px;border-radius:14px;font-size:14.5px;margin-bottom:7px;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s}
+.msg{width:fit-content;max-width:88%;padding:8px 12px;border-radius:14px;font-size:14.5px;margin-bottom:7px;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s}
 .msg.show{opacity:1;transform:none}
 .msg small{display:block;font-size:11px;font-weight:700;color:var(--muted)}
 .msg.ag{background:var(--teal-t);margin-inline-end:auto;border-top-right-radius:4px}
@@ -254,10 +254,10 @@ body.allpaused .dot{background:var(--red);animation:none}
 .agtrack{height:12px;background:#efe6e8;border-radius:6px;overflow:hidden}
 .agtrack i{display:block;height:100%;width:0;border-radius:6px;transition:width 1.2s cubic-bezier(.3,.7,.2,1)}
 .agebar b{font-size:14px;white-space:nowrap}.agebar small{display:block;font-size:12px;color:var(--muted);font-weight:500}
-.stack{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:10px 0 12px;background:#efe6e8}
+.stack{display:flex;gap:2px;height:14px;border-radius:7px;overflow:hidden;margin:10px 0 12px;background:#efe6e8}
 .stack i{display:block;height:100%;width:0;transition:width 1.2s cubic-bezier(.3,.7,.2,1)}
 .srow{display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;padding:6px 0;text-align:right;font-size:14.5px}
-.srow i{width:10px;height:10px;border-radius:3px;flex:none}
+.srow i{width:10px;height:10px;border-radius:50%;flex:none}
 .srow span{flex:1}.srow b{font-size:14.5px}
 .srow:hover span{color:var(--rose)}
 .tline{position:relative;margin-top:10px;padding-inline-start:18px}
@@ -277,6 +277,7 @@ body.allpaused .titem:not(.pay) b::after{content:" · עצור";color:var(--red)
 .pane2{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
 .nb.std{background:var(--green-t);color:var(--green)}
 .pane2 .calls{gap:5px}.pane2 .callrow{padding:7px 11px;gap:8px}.pane2 .callrow b{font-size:14px;font-weight:700}.pane2 .callrow .cd{font-size:13px;color:var(--muted)}.pane2 .callrow .cn{font-size:12px;color:var(--faint);margin-inline-start:8px}.pane2 .callrow small{font-size:12.5px}.pane2 .callrow .nb{font-size:11.5px;padding:2px 8px}
+.allrow{margin-top:12px;background:var(--bg);border-radius:12px;padding:10px 12px}.allrow-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}.allrow-h b{font-size:14.5px}.allrow audio{width:100%;height:36px}.chaps{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chaps button{font:inherit;font-size:12.5px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 10px;cursor:pointer;color:var(--ink,#222)}.chaps button.on{background:var(--teal-t);border-color:var(--teal);color:var(--teal);font-weight:700}
 .realrec{background:var(--bg);border-radius:12px;padding:10px 12px;margin-bottom:10px}.realrec audio{width:100%;height:36px}
 .callrow .lis{font-size:12.5px;font-weight:700;color:var(--rose);white-space:nowrap}
 @media(max-width:900px){.ov-grid{grid-template-columns:1fr}.cons-top .btn{width:100%}}
@@ -464,6 +465,11 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
         <div class="vt" id="viewTabs"><button data-v="over" class="on">תמונה כללית</button><button data-v="list">לקוחות</button></div>
         <button class="btn stop sm" id="pauseAll">עצירת כל השיחות</button>
       </div>
+      <div class="allrow">
+        <div class="allrow-h"><b>כל השיחות לדוגמה ברצף</b><span class="sim" style="margin:0">7 שיחות · 3:44 · לוחצים על שם כדי לקפוץ לשיחה</span></div>
+        <audio id="allAu" controls preload="none" src="demos/all-seven.mp3?v=3"></audio>
+        <div class="chaps" id="chaps"></div>
+      </div>
       <div class="crumbs" id="crumbs"></div>
       <div id="viewOver" class="vw">
         <div class="ov-grid">
@@ -496,8 +502,8 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
       <b>עוד שני מקרים שקורים הרבה</b>
       <div class="sim" style="margin:2px 0 10px">אותן לקוחות, תשובה אחרת. גם אלה הקלטות אמיתיות מ-Retell.</div>
       <div class="more-row">
-        <button class="callrow" data-x="0"><span class="ci"><b>"כבר שילמנו"</b><span class="cd"> · 0:32</span><small>הערבה 16 · הסוכנת לא מתווכחת, מעבירה למשרד לבדיקה ומבקשת אישור העברה</small></span><span class="lis">האזנה ותמלול</span></button>
-        <button class="callrow" data-x="1"><span class="ci"><b>"אני כבר לא בוועד"</b><span class="cd"> · 0:23</span><small>התבור 9 · הסוכנת מבקשת את הטלפון של הגזבר החדש</small></span><span class="lis">האזנה ותמלול</span></button>
+        <button class="callrow" data-x="0"><span class="ci"><b>"כבר שילמנו"</b><span class="cd"> · 0:36</span><small>הערבה 16 · הסוכנת לא מתווכחת, מעבירה למשרד לבדיקה ומבקשת אישור העברה</small></span><span class="lis">האזנה ותמלול</span></button>
+        <button class="callrow" data-x="1"><span class="ci"><b>"אני כבר לא בוועד"</b><span class="cd"> · 0:27</span><small>התבור 9 · הסוכנת מבקשת את הטלפון של הגזבר החדש</small></span><span class="lis">האזנה ותמלול</span></button>
       </div>
       <div class="tr" id="trBox2"></div>
     </div>
@@ -583,7 +589,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
           <a class="btn sm" data-go="view=collect&amp;filter=red" target="_blank" rel="noopener">הרשימה האדומה</a>
           <a class="btn sm" data-go="acct=a4101" target="_blank" rel="noopener">טיפול אישי</a></li>
         <li><b>ההתראה במייל</b> (חלק 5) <b>והוואטסאפ האוטומטי</b> (חלק 6).</li>
-        <li><b>שיחות אמיתיות לדוגמה:</b> בכל לקוח בחלק 4 יש הקלטה אמיתית מ-Retell עם תמלול. מתחת ללקוחות יש עוד שני מקרים: "כבר שילמנו" ו"אני כבר לא בוועד". אפשר גם לנגן את כל השבע ברצף.<br><a class="btn sm" href="demos/all-seven.mp3" target="_blank" rel="noopener">כל שבע השיחות ברצף (3:24)</a></li>
+        <li><b>שיחות אמיתיות לדוגמה:</b> בכל לקוח בחלק 4 יש הקלטה אמיתית מ-Retell עם תמלול. מתחת ללקוחות יש עוד שני מקרים: "כבר שילמנו" ו"אני כבר לא בוועד". אפשר גם לנגן את כל השבע ברצף.<br><a class="btn sm" href="demos/all-seven.mp3?v=3" target="_blank" rel="noopener">כל שבע השיחות ברצף (3:44)</a></li>
         <li><b>ההחלטות שלה</b> (חלק 7): ניסיונות, ימים, רשימה אדומה, טיפול אישי, וואטסאפ.</li>
       </ol>
       <div class="sim">שיחת טלפון אמיתית לאור רק אחרי "go" ל-Codex, לפי רשימת הבדיקה שלו. בשיחת בדיקה בדפדפן נשלחת התראה רק אליך.</div>
@@ -636,23 +642,23 @@ document.addEventListener('keydown',e=>{const r=document.querySelector('#flow').
 /* Or's view (simulation): overview -> customers -> call */
 const nis=n=>'₪'+n.toLocaleString('en-US');
 const AGE=[['m1','חודש אחד',6200,4,'#e7b7c3'],['m2','חודשיים',12220,5,'#d98a9d'],['m36','3 עד 6 חודשים',96310,21,'#c9536e'],['m6','מעל 6 חודשים',98858,14,'#8c3349']];
-const ST=[['agent','בטיפול הסוכנת',12,'#2f6f63'],['promise','הבטיחו לשלם',7,'#3f5fa8'],['standing','רוצים הוראת קבע',5,'#2f7d4f'],['office','עברו למשרד',9,'#b7791f'],['red','לא ענו 6 פעמים',4,'#c2413b'],['personal','טיפול אישי',7,'#8a8a90']];
+const ST=[['agent','בטיפול הסוכנת',12,'#008f87'],['promise','הבטיחו לשלם',7,'#5872d6'],['standing','רוצים הוראת קבע',5,'#4f9d69'],['office','עברו למשרד',9,'#d9982a'],['red','לא ענו 6 פעמים',4,'#c9536e'],['personal','טיפול אישי',7,'#bdb7c0']];
 const NB={agent:['call','שיחה מתוכננת'],promise:['pay','בדיקת תשלום'],standing:['std','הוראת קבע'],office:['off','למשרד'],red:['off','לא ענה 6 פעמים'],personal:['stop','טיפול אישי'],stop:['stop','עצור'],ok:['ok','שולם']};
 const opener=who=>['ag',`שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם ${who}?`];
 const NA=t=>({t,out:'לא ענה',dur:'',sum:'אין מענה',tr:[]});
 const CUSTS=[
- {id:'a',addr:'הערבה 16, חיפה',amt:7425,months:10,age:'m6',st:'promise',label:'הבטיחה לשלם · בדיקה ביום חמישי 12.11',reason:'רונית אמרה שתעביר עד יום חמישי. עד אז הסוכנת לא מתקשרת.',
-  calls:[{t:'5.11 · 14:15',out:'שיחה מלאה',dur:'0:40',audio:'demos/01-ronit.mp3?v=2',sum:'הבטיחה להעביר עד יום חמישי 12.11. לא צריכה הוראת קבע',tr:[['cu', 'שלום'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם רונית?'], ['cu', 'כן, מדברת'], ['ag', 'אוקיי, את מטפלת בתשלומים של הבניין בהערבה שש עשרה?'], ['cu', 'כן, אני הגזברית'], ['ag', 'אני מתקשרת בקשר לתשלום על המעלית. יש אצלנו עשר חשבוניות פתוחות. בסך הכול שבעת אלפים ארבע מאות עשרים וחמישה שקל. הן הגיעו אליך?'], ['cu', 'קיבלתי'], ['ag', 'מתי בערך תוכלי להסדיר את זה?'], ['cu', 'אני מעבירה עד יום חמישי'], ['ag', 'מעולה, אז עד יום חמישי. רשמתי. אגב, אם נוח לך, אפשר לעשות הוראת קבע. ואז זה יורד לבד כל חודש. לבקש מהמשרד שישלחו לך פרטים?'], ['cu', 'לא, תודה, זה בסדר.'], ['ag', 'אין בעיה. תודה רונית, יום טוב.']]},NA('2.11 · 15:36')]},
+ {id:'a',addr:'הערבה 16, חיפה',amt:7425,months:10,age:'m6',st:'promise',label:'הבטיחה לשלם · בדיקה ביום חמישי 12.11',reason:'רונית חיכתה שעוד כמה דיירים ישלמו, ואמרה שתעביר עד יום חמישי. עד אז הסוכנת לא מתקשרת.',
+  calls:[{t:'5.11 · 14:15',out:'שיחה מלאה',dur:'0:42',audio:'demos/01-ronit.mp3?v=3',sum:'הבטיחה להעביר עד יום חמישי 12.11. לא צריכה הוראת קבע',tr:[['cu', 'הלו'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם רונית?'], ['cu', 'כן'], ['ag', 'את מטפלת בתשלומים של הבניין בהערבה שש עשרה?'], ['cu', 'כן, נכון'], ['ag', 'אני מתקשרת בקשר לתשלום על המעלית. יש אצלנו עשר חשבוניות פתוחות. בסך הכול שבעת אלפים ארבע מאות עשרים וחמישה שקל. הן הגיעו אליך?'], ['cu', 'כן, קיבלתי את זה, אבל חיכיתי שעוד כמה דיירים ישלמו.'], ['ag', 'הבנתי. ומתי בערך תוכלי להעביר את התשלום?'], ['cu', 'אני אעביר את זה עד יום חמישי.'], ['ag', 'מעולה, אז עד יום חמישי. רשמתי. אגב, אנחנו ממליצים לעשות הוראת קבע. אפשר לשלוח לך פרטים?'], ['cu', 'לא, תודה, זה בסדר.'], ['ag', 'סבבה, יום טוב.']]},NA('2.11 · 15:36')]},
  {id:'b',addr:'הגפן 40, חיפה',amt:3980,months:10,age:'m6',st:'red',label:'לא ענתה 6 פעמים · עבר למשרד',reason:'הסוכנת הפסיקה להתקשר. ההמשך לפי ההגדרה של אור: להמשיך, לעצור או להעביר למשרד.',
-  calls:[...['5.11 · 10:02','4.11 · 13:37','3.11 · 16:08','2.11 · 10:15','1.11 · 13:26'].map(NA),{t:'29.10 · 16:04',out:'ענה וניתק',dur:'0:12',audio:'demos/05-yael.mp3?v=2',sum:'שאלה מי מדברת, אמרה שלא יכולה עכשיו, וניתקה',tr:[['cu', 'שלום'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם יעל?'], ['cu', 'מי זה? אני לא יכולה עכשיו'], ['ag', 'ירדן מצמרת מעליות, בקשר למעלית בבניין. מתי נוח שנחזור אליך?'], ['sys', 'השיחה נותקה על ידי הלקוחה']]}]},
+  calls:[...['5.11 · 10:02','4.11 · 13:37','3.11 · 16:08','2.11 · 10:15','1.11 · 13:26'].map(NA),{t:'29.10 · 16:04',out:'ענה וניתק',dur:'0:14',audio:'demos/05-yael.mp3?v=3',sum:'שאלה מי מדברת, אמרה שלא יכולה עכשיו, וניתקה',tr:[['cu', 'הלו'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם יעל?'], ['cu', 'מי זה? אני לא יכולה עכשיו'], ['ag', 'ירדן מצמרת מעליות, בקשר למעלית בבניין. מתי נוח שנחזור אליך?'], ['sys', 'השיחה נותקה על ידי הלקוחה']]}]},
  {id:'c',addr:'החרוב 21, עכו',amt:5170,months:4,age:'m36',st:'agent',label:'ביקשה שנחזור אליה',reason:'שירה ביקשה שהסוכנת תתקשר ביום ראשון ב-11:00.',next:'יום ראשון 8.11 · 11:00',
-  calls:[{t:'5.11 · 10:41',out:'שיחה מלאה',dur:'0:18',audio:'demos/04-shira.mp3?v=2',sum:'בנהיגה, ביקשה שיחה חוזרת ביום ראשון ב-11:00',tr:[['cu', 'שלום'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם שירה?'], ['cu', 'כן, אבל אני בנהיגה'], ['ag', 'אין בעיה, נדבר אחר כך. מתי נוח לך?'], ['cu', 'ביום ראשון, בסביבות אחת עשרה'], ['ag', 'אז ביום ראשון באחת עשרה, בסדר?'], ['cu', 'כן'], ['ag', 'סגור, נדבר ביום ראשון. נסיעה טובה.']]}]},
+  calls:[{t:'5.11 · 10:41',out:'שיחה מלאה',dur:'0:21',audio:'demos/04-shira.mp3?v=3',sum:'בנהיגה, ביקשה שיחה חוזרת ביום ראשון ב-11:00',tr:[['cu', 'הלו'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם שירה?'], ['cu', 'כן, אבל אני בנהיגה'], ['ag', 'אין בעיה, נדבר אחר כך. מתי נוח לך?'], ['cu', 'ביום ראשון, בסביבות אחת עשרה'], ['ag', 'אז ביום ראשון באחת עשרה, בסדר?'], ['cu', 'כן'], ['ag', 'סגור, נדבר ביום ראשון. נסיעה טובה.']]}]},
  {id:'e',addr:'הנרקיס 22, חיפה',amt:2190,months:3,age:'m36',st:'office',label:'מחלוקת על ספטמבר · למשרד',reason:'דנה טוענת שעל ספטמבר לא מגיע תשלום. אור בודקת וחוזרת אליה. את שתי החשבוניות האחרות היא אמרה שתעביר עד סוף השבוע.',
-  calls:[{t:'4.11 · 12:20',out:'שיחה מלאה',dur:'0:38',audio:'demos/03-dana.mp3?v=2',sum:'ספטמבר במחלוקת, עבר למשרד. את השאר תעביר עד סוף השבוע',tr:[['cu', 'שלום'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם דנה?'], ['cu', 'כן, זאת אני'], ['ag', 'אוקיי. את מטפלת בתשלומים של הבניין בהנרקיס עשרים ושתיים?'], ['cu', 'כן'], ['ag', 'אני מתקשרת בקשר לתשלום על המעלית. יש אצלנו שלוש חשבוניות פתוחות. בסך הכול אלפיים מאה ותשעים שקל. הן הגיעו אליך?'], ['cu', 'את ספטמבר אני לא משלמת, לא הייתה אצלנו קריאה באותו חודש'], ['ag', 'הבנתי. את ספטמבר אני מעבירה לבדיקה במשרד, ויחזרו אליך. ואת שתי החשבוניות האחרות אפשר להסדיר בינתיים?'], ['cu', 'את השאר אני אעביר עד סוף השבוע.'], ['ag', 'מעולה. אז ספטמבר בבדיקה. ואת השאר את מעבירה עד סוף השבוע. תודה דנה, יום טוב.']]}]},
+  calls:[{t:'4.11 · 12:20',out:'שיחה מלאה',dur:'0:41',audio:'demos/03-dana.mp3?v=3',sum:'ספטמבר במחלוקת, עבר למשרד. את השאר תעביר עד סוף השבוע',tr:[['cu', 'הלו'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם דנה?'], ['cu', 'כן, זאת אני'], ['ag', 'את מטפלת בתשלומים של הבניין בהנרקיס עשרים ושתיים?'], ['cu', 'כן'], ['ag', 'אני מתקשרת בקשר לתשלום על המעלית. יש אצלנו שלוש חשבוניות פתוחות. בסך הכול אלפיים מאה ותשעים שקל. הן הגיעו אליך?'], ['cu', 'את ספטמבר אני לא משלמת, לא הייתה אצלנו קריאה באותו חודש'], ['ag', 'הבנתי. את ספטמבר אני מעבירה לבדיקה במשרד, ויחזרו אליך. ואת שתי החשבוניות האחרות אפשר להסדיר בינתיים?'], ['cu', 'את השאר אני אעביר עד סוף השבוע.'], ['ag', 'מעולה. אז ספטמבר בבדיקה. ואת השאר את מעבירה עד סוף השבוע. תודה דנה, יום טוב.']]}]},
  {id:'f',addr:'התבור 9, נשר',amt:1290,months:2,age:'m2',st:'standing',label:'ביקשה פרטים להוראת קבע',reason:'הפרטים וההסבר נשלחים אליה בוואטסאפ. מחכים שההרשאה תיקלט בבנק.',
-  calls:[{t:'3.11 · 12:05',out:'שיחה מלאה',dur:'0:38',audio:'demos/02-michal.mp3?v=2',sum:'ביקשה פרטים להוראת קבע, ותעביר את התשלום היום',tr:[['cu', 'שלום'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם מיכל?'], ['cu', 'כן'], ['ag', 'את מטפלת בתשלומים של הבניין בתבור תשע?'], ['cu', 'כן, אני הגזברית'], ['ag', 'מעולה. אני מתקשרת בקשר לתשלום על המעלית. יש אצלנו שתי חשבוניות פתוחות. בסך הכול אלף מאתיים ותשעים שקל. הן הגיעו אליך?'], ['cu', 'אני כל חודש שוכחת, זו הבעיה'], ['ag', 'קורה. בשביל זה יש הוראת קבע. ואז זה יורד לבד כל חודש. לבקש מהמשרד שישלחו לך פרטים?'], ['cu', 'כן, תשלחו לי פרטים. ואת השתיים אני מעבירה היום.'], ['ag', 'מצוין. אז את התשלום את מעבירה היום. והמשרד ישלח לך פרטים להוראת קבע בוואטסאפ. תודה מיכל, יום טוב.']]}]},
+  calls:[{t:'3.11 · 12:05',out:'שיחה מלאה',dur:'0:37',audio:'demos/02-michal.mp3?v=3',sum:'ביקשה פרטים להוראת קבע, ותעביר את התשלום היום',tr:[['cu', 'הלו'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם מיכל?'], ['cu', 'כן'], ['ag', 'את מטפלת בתשלומים של הבניין בהתבור תשע?'], ['cu', 'כן, נכון'], ['ag', 'אני מתקשרת בקשר לתשלום על המעלית. יש אצלנו שתי חשבוניות פתוחות. בסך הכול אלף מאתיים ותשעים שקל. הן הגיעו אליך?'], ['cu', 'אני כל חודש שוכחת, זו הבעיה'], ['ag', 'קורה. אנחנו ממליצים לעשות הוראת קבע. אפשר לשלוח לך פרטים?'], ['cu', 'כן, תשלחו לי פרטים. ואת התשלום אני אעביר היום.'], ['ag', 'מעולה. אז את התשלום את מעבירה היום. ונשלח לך פרטים להוראת קבע בוואטסאפ. יום טוב.']]}]},
  {id:'d',addr:'האלון 14, קריית ים',amt:15555,months:7,age:'m6',st:'personal',label:'טיפול אישי · שמעיה',reason:'יש ללקוח גם שיפוץ פתוח (₪142,070). כדי לא לפגוע בקשר, הסוכנת לא מתקשרת אליו. שמעיה מטפל אישית.',calls:[]}];
-const WAIT=[['office','מחלוקת או "כבר שילמתי"',9,'#b7791f'],['red','לא ענו 6 פעמים',4,'#c2413b'],['promise','בדיקת תשלום השבוע',7,'#3f5fa8'],['standing','הוראות קבע לוודא בבנק',5,'#2f7d4f']];
+const WAIT=[['office','מחלוקת או "כבר שילמתי"',9,'#d9982a'],['red','לא ענו 6 פעמים',4,'#c9536e'],['promise','בדיקת תשלום השבוע',7,'#5872d6'],['standing','הוראות קבע לוודא בבנק',5,'#4f9d69']];
 const PLAN={a:[{when:'יום חמישי 12.11',what:'בדיקת תשלום',sub:'אם הכסף הגיע, הלקוח יוצא מהגבייה',cls:'pay'},{when:'יום ראשון 15.11 · 10:00',what:'שיחה, רק אם לא שולם',sub:'שיחה 3 מתוך 6'}],
  b:[],c:[{when:'יום ראשון 8.11 · 11:00',what:'שיחה חוזרת, כמו שביקש'},{when:'יום שני 9.11 · 10:00',what:'ניסיון נוסף, רק אם לא יענה',sub:'שיחה 2 מתוך 6',cls:'more'}],
  e:[],f:[{when:'עד 12.11',what:'לוודא שההרשאה נקלטה בבנק',cls:'pay'},{when:'מדצמבר',what:'בלי שיחות גבייה, התשלום יורד לבד',cls:'more'}],d:[]};
@@ -707,7 +713,14 @@ function drawAll(){$$('#viewTabs button').forEach(b=>b.classList.toggle('on',b.d
 $$('#viewTabs button').forEach(b=>b.onclick=()=>{view=b.dataset.v;if(view==='list')fil=fil||null;drawAll()});
 $('#pauseAll').onclick=()=>{const p=!document.body.classList.contains('allpaused');setPaused(p);toast(p?'כל שיחות הגבייה נעצרו':'השיחות חזרו לפעול',()=>{setPaused(!p);toast('הפעולה בוטלה')})};
 function setPaused(p){document.body.classList.toggle('allpaused',p);$('#agT').textContent=p?'הסוכנת עצורה':'הסוכנת פעילה';$('#agS').textContent=p?'עצרה: אור, '+now()+'. אף לקוח לא יקבל שיחה.':'מתקשרת לפי החוקים, בימים א׳–ה׳.';const b=$('#pauseAll');b.textContent=p?'החזרת השיחות':'עצירת כל השיחות';b.className='btn sm '+(p?'go':'stop');if(view==='list')drawCust()}
-const EXTRA=[{audio:'demos/06-ronit-paid.mp3',tr:[['cu', 'שלום'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם רונית?'], ['cu', 'כן, מדברת'], ['ag', 'את מטפלת בתשלומים של הבניין בהערבה שש עשרה?'], ['cu', 'כן, אני הגזברית'], ['ag', 'אני מתקשרת בקשר לתשלום על המעלית. יש אצלנו עשר חשבוניות פתוחות. בסך הכול שבעת אלפים ארבע מאות עשרים וחמישה שקל. הן הגיעו אליך?'], ['cu', 'אבל כבר שילמנו, העברתי לפני שבועיים'], ['ag', 'אוקיי, תודה שאמרת. אני מעבירה למשרד שיבדקו. אם יש לך אישור העברה, אפשר לשלוח אותו למשרד בוואטסאפ.'], ['cu', 'בסדר'], ['ag', 'תודה רונית, יום טוב.']]},{audio:'demos/07-michal-new-contact.mp3',tr:[['cu', 'שלום'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם מיכל?'], ['cu', 'כן'], ['ag', 'את מטפלת בתשלומים של הבניין בתבור תשע?'], ['cu', 'לא, אני כבר לא בוועד. עכשיו זה משה מקומה שלוש.'], ['ag', 'אה, תודה. יש לך במקרה את הטלפון של משה?'], ['cu', 'כן, 052-000-0000'], ['ag', 'תודה רבה, עזרת מאוד. יום טוב.']]}];
+const CHAPS=[['רונית · הבטיחה לשלם',0],['מיכל · הוראת קבע',43],['דנה · מחלוקת',81.1],['שירה · בנהיגה',123.4],['יעל · ניתקה',145.3],['רונית · כבר שילמנו',160.5],['מיכל · לא בוועד',197.3]];
+(()=>{const au=document.getElementById('allAu'),box=document.getElementById('chaps');if(!au||!box)return;
+ box.innerHTML=CHAPS.map(([n],i)=>`<button data-ch="${i}">${n}</button>`).join('');
+ const go=t=>{const s=()=>{au.currentTime=t;au.play()};if(au.readyState>=1)s();else{au.preload='metadata';au.addEventListener('loadedmetadata',s,{once:true});au.load()}};
+ box.querySelectorAll('button').forEach(b=>b.onclick=e=>{e.stopPropagation();go(CHAPS[+b.dataset.ch][1])});
+ au.addEventListener('timeupdate',()=>{let k=0;CHAPS.forEach(([,t],i)=>{if(au.currentTime>=t-.2)k=i});box.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===k&&au.currentTime>0))});
+ au.addEventListener('play',()=>document.querySelectorAll('audio').forEach(x=>{if(x!==au)x.pause()}))})();
+const EXTRA=[{audio:'demos/06-ronit-paid.mp3?v=3',tr:[['cu', 'הלו'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם רונית?'], ['cu', 'כן, מדברת'], ['ag', 'את מטפלת בתשלומים של הבניין בהערבה שש עשרה?'], ['cu', 'כן, אני הגזברית'], ['ag', 'אני מתקשרת בקשר לתשלום על המעלית. יש אצלנו עשר חשבוניות פתוחות. בסך הכול שבעת אלפים ארבע מאות עשרים וחמישה שקל. הן הגיעו אליך?'], ['cu', 'אבל כבר שילמנו, העברתי לפני שבועיים'], ['ag', 'אוקיי, תודה שאמרת. אני מעבירה למשרד שיבדקו. אם יש לך אישור העברה, אפשר לשלוח אותו למשרד בוואטסאפ.'], ['cu', 'בסדר'], ['ag', 'תודה רונית, יום טוב.']]},{audio:'demos/07-michal-new-contact.mp3?v=3',tr:[['cu', 'הלו'], ['ag', 'שלום, מדברת ירדן מצמרת מעליות. אני מדברת עם מיכל?'], ['cu', 'כן'], ['ag', 'את מטפלת בתשלומים של הבניין בתבור תשע?'], ['cu', 'לא, אני כבר לא בוועד. עכשיו זה משה מקומה שלוש.'], ['ag', 'אה, תודה. יש לך במקרה את הטלפון של משה?'], ['cu', 'כן, 052-000-0000'], ['ag', 'תודה רבה, עזרת מאוד. יום טוב.']]}];
 document.querySelectorAll('.more .callrow').forEach(b=>b.onclick=()=>{document.querySelectorAll('.more .callrow').forEach(x=>x.classList.toggle('on',x===b));showTr(EXTRA[+b.dataset.x],false,'trBox2')});
 drawAll();
 
