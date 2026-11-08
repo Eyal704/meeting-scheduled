@@ -326,6 +326,8 @@ body.allpaused .titem:not(.pay) b::after{content:" · עצור";color:var(--red)
 .tpls{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
 .tpl{padding:12px 14px}
 .tpl b{display:block;font-size:15px}.tpl span{font-size:13.5px;color:var(--muted)}
+.price-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:14px;align-items:start}.pcard{padding:20px 22px}.pcard.main{border-color:var(--rose-b)}.pl{font-size:14px;font-weight:700;color:var(--muted)}.pbig{color:var(--ink);font-size:40px;font-weight:800;line-height:1.15;margin:4px 0 14px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.pbig small{font-size:14px;font-weight:600;color:var(--muted)}.pinc{list-style:none;margin:0 0 12px;padding:0;font-size:15px;line-height:1.6}.pinc li{position:relative;padding-inline-start:24px;margin-bottom:9px}.pinc li::before{content:"✓";position:absolute;inset-inline-start:0;top:0;color:#008f87;font-weight:800}
+@media(max-width:900px){.price-grid{grid-template-columns:1fr}}
 .need{padding:16px 18px;margin-top:12px}
 .need ul{margin:6px 0 0;padding-inline-start:18px;line-height:1.75;font-size:15px}
 .soon{display:inline-block;font-size:12.5px;font-weight:700;color:var(--blue);background:var(--blue-t);border-radius:999px;padding:2px 10px;margin-inline-start:6px;vertical-align:middle}
@@ -563,16 +565,35 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
     </div>
   </section>
 
-  <section>
-    <div class="sec-h"><span class="sec-n">7</span><h2>מה צריך להחליט איתכם</h2></div>
-    <p class="sec-p">רק אתם יכולים לענות על אלה. אחרי זה מעדכנים את הסוכנת.</p>
-    <div class="dec">
-      <div class="card dq reveal"><i>1</i><div><b>כמה ניסיונות?</b><br><span class="sim" style="margin:0">הגדרנו 6 שיחות בלי מענה, כמו שדיברנו. אור יכולה לשנות את זה במסך הגבייה.</span></div></div>
-      <div class="card dq reveal"><i>2</i><div><b>כמה ימים בין שיחה לשיחה?</b><br><span class="sim" style="margin:0">כרגע ניסיון חוזר ביום העבודה הבא. אפשר לרווח, למשל כל יומיים.</span></div></div>
-      <div class="card dq reveal"><i>3</i><div><b>מה עושים עם הרשימה האדומה?</b><br><span class="sim" style="margin:0">מכתב התראה, שיחה משמעיה, או עורך דין.</span></div></div>
-      <div class="card dq reveal"><i>4</i><div><b>מי מטפל בלקוחות עם עבודות?</b><br><span class="sim" style="margin:0">שמעיה, גיא, או לפי הלקוח.</span></div></div>
-      <div class="card dq reveal"><i>5</i><div><b>מתי עוצרים תיקון בגלל חוב?</b><br><span class="sim" style="margin:0">החלטה של המשרד, לא של הסוכנת.</span></div></div>
-      <div class="card dq reveal"><i>6</i><div><b>להתחיל עם וואטסאפ אוטומטי?</b><br><span class="sim" style="margin:0">צריך מספר וואטסאפ עסקי של צמרת ואישור של Meta. אפשר להתחיל בתהליך עכשיו.</span></div></div>
+  <section id="price">
+    <div class="sec-h"><span class="sec-n">7</span><h2>הצעת מחיר</h2></div>
+    <p class="sec-p">תשלום אחד על בניית המערכת. אחרי זה משלמים רק על דקות שיחה בפועל.</p>
+    <div class="price-grid">
+      <div class="card pcard main reveal">
+        <div class="pl">בניית מערכת הגבייה</div>
+        <div class="pbig">₪25,000<small>תשלום חד-פעמי</small></div>
+        <ul class="pinc">
+          <li><b>חיבור לפריוריטי, לקריאה בלבד.</b> רשימת החייבים בחוזי שירות, בלי שיפוצים וחלקים, מתעדכנת כל יום.</li>
+          <li><b>סוכנת קולית בעברית</b> שמתקשרת לפי החוקים של אור: כמה ניסיונות, באילו ימים ושעות, ומי לא מקבל שיחה.</li>
+          <li><b>אחרי כל שיחה:</b> סיכום, הקלטה ותמלול בכרטיס הלקוח, והצעד הבא נקבע לבד: בדיקת תשלום, שיחה חוזרת או העברה למשרד.</li>
+          <li><b>מסך הגבייה של אור:</b> תמונה כללית, הרשימה האדומה, טיפול אישי, ועצירת כל השיחות בלחיצה.</li>
+          <li><b>התראה במייל לאור</b> על כל מה שצריך יד של אדם: מחלוקת, "כבר שילמנו", בקשה לחלוקה.</li>
+          <li><b>מעבר להוראת קבע:</b> הלקוח מקבל את הפרטים בוואטסאפ או במייל, והמעקב נמשך עד שההרשאה נקלטת.</li>
+          <li><b>מסך מבט על לשמעיה:</b> כמה כסף נכנס לבנק, גיל החובות, וכמה לקוחות עברו להוראת קבע.</li>
+          <li><b>כוונון התסריט יחד עם אור</b> בחודש הראשון, והסכם סודיות. המידע נשאר שלכם.</li>
+        </ul>
+        <div class="sim">תוך כחודש המערכת עובדת, ומתחילים מהלקוחות עם החובות הגדולים והוותיקים.</div>
+      </div>
+      <div class="card pcard reveal">
+        <div class="pl">שיחות · עלות שוטפת</div>
+        <div class="pbig">₪1<small>לדקת שיחה</small></div>
+        <ul class="pinc">
+          <li><b>השיחות יוצאות מהמספר הישיר של צמרת מעליות.</b> הלקוח רואה מספר שהוא מכיר, ויכול לחזור אליו.</li>
+          <li><b>משלמים רק על זמן שיחה בפועל.</b> שיחה שלא נענתה לא עולה כלום.</li>
+          <li><b>לדוגמה:</b> 50 לקוחות בחודש, כשלוש שיחות של כדקה לכל אחד, הם כ-150 דקות. כלומר כ-₪150 בחודש.</li>
+          <li><b>וואטסאפ אוטומטי</b>, אם תבחרו בו: לפי המחיר של Meta, כ-4 אגורות להודעה.</li>
+        </ul>
+      </div>
     </div>
     <div class="presenter" id="presenter">
       <b>לאייל: סדר ההדגמה בפגישה</b> <span class="sim">(מוצג רק בקישור המציג)</span>
@@ -590,7 +611,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
           <a class="btn sm" data-go="acct=a4101" target="_blank" rel="noopener">טיפול אישי</a></li>
         <li><b>ההתראה במייל</b> (חלק 5) <b>והוואטסאפ האוטומטי</b> (חלק 6).</li>
         <li><b>שיחות אמיתיות לדוגמה:</b> בכל לקוח בחלק 4 יש הקלטה אמיתית מ-Retell עם תמלול. מתחת ללקוחות יש עוד שני מקרים: "כבר שילמנו" ו"אני כבר לא בוועד". אפשר גם לנגן את כל השבע ברצף.<br><a class="btn sm" href="demos/all-seven.mp3?v=3" target="_blank" rel="noopener">כל שבע השיחות ברצף (3:44)</a></li>
-        <li><b>ההחלטות שלה</b> (חלק 7): ניסיונות, ימים, רשימה אדומה, טיפול אישי, וואטסאפ.</li>
+        <li><b>הצעת המחיר</b> (חלק 7): ₪25,000 לבנייה, ₪1 לדקת שיחה מהמספר של צמרת.</li>
       </ol>
       <div class="sim">שיחת טלפון אמיתית לאור רק אחרי "go" ל-Codex, לפי רשימת הבדיקה שלו. בשיחת בדיקה בדפדפן נשלחת התראה רק אליך.</div>
     </div>
