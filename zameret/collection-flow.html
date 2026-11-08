@@ -122,7 +122,20 @@ section{padding:40px 0;scroll-margin-top:64px}
 #flow{cursor:pointer;user-select:none}
 .scen{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
 .scen button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:14.5px;font-weight:600;color:var(--muted)}
-.scen button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.scen button[data-s]{color:var(--rose2);border-color:var(--rose-b);background:var(--rose-t);transition:background .2s,border-color .2s,box-shadow .2s,transform .2s}
+.scen button[data-s].on{background:var(--rose2);border-color:var(--rose2);color:#fff;box-shadow:0 3px 10px rgba(168,64,89,.2)}
+.scen button[data-s]:not(.on){animation:scenInvite 3.2s ease-in-out infinite}
+.scen button[data-s]:nth-child(2){animation-delay:.18s}
+.scen button[data-s]:nth-child(3){animation-delay:.36s}
+.scen button[data-s]:nth-child(4){animation-delay:.54s}
+.scen button[data-s]:nth-child(5){animation-delay:.72s}
+@keyframes scenInvite{
+  0%,100%{border-color:var(--rose-b);box-shadow:0 0 0 0 rgba(201,83,110,0)}
+  50%{border-color:var(--rose);box-shadow:0 0 0 4px rgba(201,83,110,.12),0 3px 12px rgba(201,83,110,.12)}
+}
+@media(hover:hover){.scen button[data-s]:not(.on):hover{animation:none;background:#f9e4e9;border-color:var(--rose);box-shadow:0 4px 12px rgba(201,83,110,.18);transform:translateY(-2px)}}
+.scen button[data-s]:focus-visible{animation:none;outline:3px solid var(--rose);outline-offset:3px}
+.scen button[data-s]:active{transform:translateY(0)}
 .scen .pp{margin-inline-start:auto}
 .flow{display:grid;grid-template-columns:1fr;gap:0;max-width:760px;margin:0 auto}
 .step{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:#fff;opacity:.45;transition:opacity .35s,border-color .35s,box-shadow .35s,transform .35s}
@@ -825,3 +838,4 @@ waStep=1;drawWA();
 </script>
 </body>
 </html>
+
