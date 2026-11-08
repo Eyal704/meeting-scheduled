@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light">
+<meta name="darkreader-lock">
+<title>עמית דור · מעקב שירות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="reference.css?v=2">
+<style>
+.brand img{height:36px;width:auto;display:block;border-radius:6px}
+.agebar{grid-template-columns:150px 1fr auto}
+.grp .soon{margin-inline-start:0}
+@media(max-width:560px){.agebar{grid-template-columns:118px 1fr auto}.agebar span{font-size:13px}.brand span{display:none}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap">
+  <div class="brand"><img src="logo.png" alt="עמית דור הנדסת מיזוג אוויר"><span>מעקב שירות</span></div>
+  <a class="back" href="#console">מה אתי רואה ←</a>
+</div></div>
+
+<header class="hero"><div class="wrap hero-one">
+  <div>
+    <h1>מעקב שירות <span>אוטומטי</span><br>לעמית דור</h1>
+    <p class="lead">הסוכנת הקולית של עמית דור מתקשרת ללקוחות שמגיע להם טיפול, שהאחריות שלהם מסתיימת או שהביטוח שלהם לקראת חידוש, ומבינה מה הצעד הבא. כל שיחה, הקלטה ותמלול נשמרים בכרטיס הלקוח, ואתי רואה הכל ושולטת בהכל.</p>
+    <div class="chips">
+      <span class="chip">שיחות רק <b>בימים ובשעות שאתי קובעת</b></span>
+    </div>
+    <div class="cta"><a class="btn pri" href="#flow">איך זה עובד</a><a class="btn" href="#console">מה אתי רואה</a></div>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <div class="goal"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></div><div><div class="big">המטרה: שכל מי שקנה מזגן יישאר לקוח שירות של עמית דור.</div><div class="sec-p" style="padding:0;margin:2px 0 0">300–400 לקוחות חדשים בשנה. במקום לעבור על אקסל כל חודש, כל לקוח מקבל את הפנייה שלו בזמן.</div></div></div>
+
+  <section id="flow">
+    <div class="sec-h"><span class="sec-n">1</span><h2>שיחה אחת, מההתחלה עד הצעד הבא</h2></div>
+    <p class="sec-p">בוחרים למה פונים ללקוח ומה הוא ענה, ועוברים שלב אחרי שלב כדי לראות איך המערכת מגיבה.</p>
+    <div class="card player">
+      <div class="scen" id="scen">
+        <button data-s="season" class="on">טיפול חורף</button>
+        <button data-s="warranty">סיום אחריות</button>
+        <button data-s="network">רשת וסניפים</button>
+        <button data-s="callback">לא יכולה עכשיו</button>
+        <button data-s="noans">לא ענה</button>
+        <button data-s="stop">ביקשה שלא יתקשרו</button>
+        <button class="pp" id="restart">מההתחלה</button>
+        <button class="btn pri sm" id="nextStep">השלב הבא ←</button>
+      </div>
+      <div class="flow2" id="flowSteps">
+        <div class="nd start" data-k="start"><div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg></div><span class="kick">נקודת ההתחלה</span><h3>הגיע המועד של לקוח</h3><p>המערכת רואה בבינה את ההתקנה, האחריות, הביטוח והטיפולים, ובודקת מה הלקוח צריך עכשיו.</p></div>
+        <div class="v" data-on="1"></div>
+        <div class="nd" data-k="call"><div class="ico"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></div><h3>הסוכנת מתקשרת ללקוח</h3><p>לאיש הקשר שסגר איתכם, וברשתות למנהל התחזוקה. אומרת שהיא עוזרת וירטואלית, ומדברת לפי הפרטים שלו בבינה.</p></div>
+        <div class="v split" data-on="2"></div>
+        <div class="split-label">יש שלוש אפשרויות:</div>
+        <div class="lanes2">
+          <div class="lane2" data-k="b1" style="--c:var(--amber)"><span class="ltag">לא ענו</span><div class="lc"><h4>מנסה שוב</h4><p>בימים ובשעות שונים, כמה פעמים שאתי קובעת. את ההמשך אתי מחליטה: להמשיך לנסות, לעצור, או לטפל בעצמה.</p></div></div>
+          <div class="lane2" data-k="b2" style="--c:var(--green)"><span class="ltag">ענו והתקדמנו</span><div class="lc"><h4>יש צעד הבא</h4><p>בקשה לתאם טיפול, פרטים על ביטוח שירות, או מועד שנוח לחזור בו.</p></div></div>
+          <div class="lane2" data-k="b3" style="--c:var(--purple)"><span class="ltag">צריך את אתי</span><div class="lc"><h4>עובר לאתי</h4><p>מזגן שכבר טופל, שאלה על מחיר או כיסוי, או בקשה שלא יתקשרו.</p></div></div>
+        </div>
+        <div class="v" data-on="3"></div>
+        <div class="nd rec" data-k="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></svg></div><h3>כרטיס הלקוח מתעדכן לבד</h3><p>סיכום, הקלטה, תמלול, והצעד הבא עם תאריך.</p></div>
+        <div class="v" data-on="4"></div>
+        <div class="nd" data-k="office"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><h3 id="lastT">אתי רואה ומחליטה</h3><p id="lastS">מאשרת מועד, משנה, עוצרת או מבטלת פעולה.</p></div>
+      </div>
+      <div class="cap" id="cap"></div>
+      <div class="hint">לוחצים בכל מקום באזור הזה, או על החצים במקלדת, כדי לעבור שלב.</div>
+      <div class="paused-note">כל השיחות עצורות כרגע (מהמסך של אתי למטה). אף לקוח לא יקבל שיחה.</div>
+    </div>
+  </section>
+
+  <section id="harmony">
+    <div class="sec-h"><span class="sec-n">2</span><h2>כך הכל מתחבר</h2></div>
+    <p class="sec-p">ארבעה חלקים שעובדים יחד. בינה נשארת המקום שבו עובדים.</p>
+    <div class="card harmony reveal">
+      <div class="orbit" aria-hidden="true">
+        <div class="ring"></div><div class="ring2 a"><i></i></div><div class="ring2 b"><i></i></div>
+        <div class="core">הכל מחובר<small>בלי לעבור על אקסל</small></div>
+        <div class="node n1"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg></div>בינה<small>לקוחות, התקנות, טיפולים</small></div>
+        <div class="node n2"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></div>הסוכנת<small>מתקשרת ומבררת</small></div>
+        <div class="node n3"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></svg></div>כרטיס הלקוח<small>שיחה, תמלול, צעד הבא</small></div>
+        <div class="node n4"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>אתי<small>רואה, מחליטה, עוצרת</small></div>
+      </div>
+      <ul>
+        <li><b>בינה:</b> כל התקנה נרשמת פעם אחת, כמו לקוח שירות חדש, כולל תקופת האחריות. בשבוע הראשון בודקים אם מתחברים ישירות או בייצוא קבצים.</li>
+        <li><b>הסוכנת:</b> מתקשרת בזמן הנכון, מבררת ורושמת מה הלקוח ביקש.</li>
+        <li><b>כרטיס הלקוח:</b> כל שיחה נשמרת, עם הקלטה, תמלול ומה הלאה.</li>
+        <li><b>אתי:</b> מקבלת התראה כשצריך אותה, מחליטה, ויכולה לעצור הכל.</li>
+        <li>ובמועד הבא של הלקוח, זה מתחיל מחדש.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><span class="sec-n">3</span><h2>מי מקבל איזו פנייה</h2></div>
+    <p class="sec-p">לא כל לקוח זהה. לקוח עם ביטוח, לקוח שרק קנה מזגן ורשת עם סניפים מקבלים פנייה אחרת.</p>
+    <div class="groups">
+      <div class="card grp g1 reveal"><h3>לקוח עם ביטוח שירות</h3><div class="who">שני טיפולים בשנה לפי ההסכם</div><ul><li>תזכורת לטיפול קיץ וטיפול חורף</li><li>שיחה של הסוכנת לתיאום</li><li>תזכורת לפני שהביטוח השנתי מסתיים</li></ul><div class="tg">המטרה: טיפול בזמן וחידוש הביטוח</div></div>
+      <div class="card grp g2 reveal"><h3>לקוח שקנה מזגן, בלי ביטוח</h3><div class="who">לרוב לקוח פרטי</div><ul><li>פעם בשנה, הצעה לטיפול ללא תשלום</li><li>חודשיים-שלושה לפני סוף אחריות היצרן: פנייה עם ההצעות שלכם</li><li>מזכירים לו שאפשר לפנות אליכם, ולא ליצרן</li></ul><div class="tg">המטרה: שיישאר איתכם</div></div>
+      <div class="card grp g3 reveal"><h3>רשת או חברה עם סניפים</h3><div class="who">מנהל התחזוקה הוא איש הקשר</div><ul><li>חברה אחת משלמת, טיפול בכל סניף</li><li>תדירות מיוחדת, כמו חנויות בגדים: 3–4 פעמים בשנה</li><li>מזגן שטופל בקריאת שירות עובר לבדיקה של אתי, ולא יורד מהרשימה לבד <span class="soon">הרעיון של דודו · להמשך</span></li></ul><div class="tg">המטרה: אף סניף לא נשכח</div></div>
+    </div>
+  </section>
+
+  <section id="console">
+    <div class="sec-h"><span class="sec-n">4</span><h2>מה אתי רואה ושולטת</h2></div>
+    <p class="sec-p">קודם תמונה כללית: למי פונים החודש, למה, ומה מחכה לאתי. לוחצים על כל מספר ויורדים ללקוחות, ובכרטיס של כל לקוח רואים את השיחות שלו ומה מתוכנן לו.</p>
+    <div class="card cons reveal">
+      <div class="cons-top">
+        <div class="agent"><span class="dot"></span><div><b id="agT">הסוכנת פעילה</b><div class="sim" id="agS" style="margin:0">מתקשרת לפי הכללים שאתי קבעה.</div></div></div>
+        <div class="vt" id="viewTabs"><button data-v="over" class="on">תמונה כללית</button><button data-v="list">לקוחות</button></div>
+        <button class="btn stop sm" id="pauseAll">עצירת כל השיחות</button>
+      </div>
+      <div class="allrow">
+        <div class="allrow-h"><b>כל השיחות לדוגמה ברצף</b><span class="sim" style="margin:0">5 שיחות · 2:34 · לוחצים על שם כדי לקפוץ לשיחה</span></div>
+        <audio id="allAu" controls preload="none" src="audio/all-five.mp3?v=2"></audio>
+        <div class="chaps" id="chaps"></div>
+      </div>
+      <div class="crumbs" id="crumbs"></div>
+      <div id="viewOver" class="vw">
+        <div class="ov-grid">
+          <div class="ov-card">
+            <div class="ov-l">פניות החודש · מספרים לדוגמה</div>
+            <div class="ov-big"><span id="totalN">0</span><small>לקוחות</small></div>
+            <div class="ov-l" style="margin-top:14px">למה פונים</div>
+            <div id="reasons"></div>
+          </div>
+          <div class="ov-card">
+            <div class="ov-l">איפה הלקוחות עומדים</div>
+            <div class="stack" id="stackBar"></div>
+            <div id="statusRows"></div>
+          </div>
+          <div class="ov-card">
+            <div class="ov-l">מחכה לך</div>
+            <div id="waitRows"></div>
+            <div class="sim" style="margin-top:8px">כל השאר הסוכנת ממשיכה לבד. מועד, מחיר וכיסוי נשארים אצל אתי.</div>
+          </div>
+        </div>
+      </div>
+      <div id="viewList" class="vw" hidden>
+        <div class="console">
+          <div><div class="fchips" id="fchips"></div><div class="custs" id="custs"></div><div class="sim">לקוחות לדוגמה.</div></div>
+          <div class="pane2" id="custPane"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="alerts">
+    <div class="sec-h"><span class="sec-n">5</span><h2>התראה במייל לאתי</h2></div>
+    <p class="sec-p">כשהסוכנת מסיימת שיחה שצריכה את אתי, מגיע אליה מייל בעברית. רואים מיד מה קרה ומה צריך לעשות.</p>
+    <div class="tabs" id="mailTabs">
+      <button data-m="warranty" class="on">הזדמנות: ביטוח שירות</button>
+      <button data-m="booking">הזדמנות: לתאם טיפול</button>
+      <button data-m="network">לטיפול: מזגן שכבר טופל</button>
+      <button data-m="stop">לידיעה: לא לפנות</button>
+    </div>
+    <div class="mailwrap">
+      <div class="card inbox reveal">
+        <div class="irow"><span class="av">ע</span><div><b>מעקב שירות · עמית דור</b><span id="mailSubj"></span></div></div>
+        <ul class="why">
+          <li><b>מה צריך לעשות</b> מופיע ראשון, בקופסה צבעונית.</li>
+          <li>ירוק להזדמנות, כתום לטיפול, כחול לידיעה.</li>
+          <li>כפתור אחד שפותח את כרטיס הלקוח, עם ההקלטה והתמלול.</li>
+          <li>מייל אחד לכל שיחה שצריכה את אתי. שיחה שלא נענתה לא שולחת מייל.</li>
+        </ul>
+      </div>
+      <div class="mail reveal"><div class="m" id="mailBody"></div></div>
+    </div>
+  </section>
+
+  <section id="whatsapp">
+    <div class="sec-h"><span class="sec-n">6</span><h2>וואטסאפ שעובד יחד עם הסוכנת</h2></div>
+    <p class="sec-p">הודעה אישית עם שם הלקוח, ההתקנה וסוג הטיפול. לא SMS של מבצעים.</p>
+    <div class="wa">
+      <div class="phone reveal"><div class="screen">
+        <div class="wa-top"><i>ע</i><div>עמית דור<small>חשבון עסקי</small></div></div>
+        <div class="chat" id="chat"></div>
+      </div>
+      <div class="wa-ctl"><button class="btn pri sm" id="waNext">הצעד הבא ←</button><button class="btn sm" id="waReset">מההתחלה</button></div></div>
+      <div>
+        <div class="card need reveal"><b>איך זה עובד</b>
+          <ul><li>בשיחה הלקוחה אומרת "תשלחו לי פרטים", ומיד בסיום יוצאת הודעה מעמית דור.</li><li>הלקוחה עונה בוואטסאפ, והתשובה נכנסת לכרטיס שלה.</li><li>אתי מקבלת התראה רק כשצריך אותה.</li><li>ההודעות יוצאות מנוסח שאישרתם מראש. מחיר וכיסוי נשלחים רק אחרי שאתי בדקה.</li></ul></div>
+        <div class="tpls">
+          <div class="card tpl reveal"><b>טיפול קיץ או חורף</b><span>כשמגיע ללקוח טיפול, לפי ההסכם או כהצעה</span></div>
+          <div class="card tpl reveal"><b>סיום אחריות היצרן</b><span>חודשיים-שלושה לפני שהאחריות נגמרת</span></div>
+          <div class="card tpl reveal"><b>חידוש ביטוח שנתי</b><span>לפני שהביטוח מסתיים</span></div>
+          <div class="card tpl reveal"><b>אישור מועד</b><span>אחרי שאתי קבעה עם הלקוח שעה</span></div>
+        </div>
+        <div class="card need reveal"><b>מה צריך כדי להפעיל</b>
+          <ul><li>מספר וואטסאפ עסקי של עמית דור. בודקים יחד אם קיים או חדש.</li><li>אישור של Meta לעסק ולנוסחים. זה יכול לקחת כמה שבועות.</li><li>בדיקה יחד של כללי הפנייה: למי מותר לפנות, בעיקר בהצעות, ואיך מסירים מי שלא רוצה.</li><li>עלות: לפי השימוש בפועל, בלי תוספת.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="daily">
+    <div class="sec-h"><span class="sec-n">7</span><h2>איך עובדים עם זה ביום-יום</h2></div>
+    <p class="sec-p">מה הסוכנת עושה לבד, מה נשאר אצל אתי, ומה לא משתנה.</p>
+    <div class="groups">
+      <div class="card grp reveal"><h3>הסוכנת עושה לבד</h3><div class="who">בלי שאתי תזכור</div><ul><li>יודעת למי מגיע מה ומתי</li><li>מתקשרת ומנסה שוב כשלא ענו</li><li>רושמת מה הלקוח ביקש, עם הקלטה ותמלול</li></ul></div>
+      <div class="card grp reveal"><h3>נשאר אצל אתי</h3><div class="who">רק מה שצריך אותה</div><ul><li>פותחת את המסך ורואה מה מחכה לה</li><li>מאשרת מועד, מחיר וכיסוי</li><li>עוצרת לקוח אחד, או את כל השיחות, בלחיצה</li></ul></div>
+      <div class="card grp reveal"><h3>לא משתנה</h3><div class="who">מה שכבר עובד</div><ul><li>קריאות שירות נפתחות בבינה כמו היום</li><li>הטכנאים מקבלים אותן בטלפון כמו היום</li><li>מה שמשתנה: כל התקנה חדשה נרשמת גם בבינה</li></ul></div>
+    </div>
+  </section>
+</main>
+<footer>עמית דור · מעקב שירות ושימור לקוחות · נבנה על ידי MeetingScheduled</footer>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let toastT;function toast(t,undo){$$('.toast').forEach(x=>x.remove());const el=document.createElement('div');el.className='toast';el.textContent=t;if(undo){const b=document.createElement('button');b.textContent='ביטול';b.onclick=()=>{el.remove();undo()};el.appendChild(b)}document.body.appendChild(el);clearTimeout(toastT);toastT=setTimeout(()=>el.remove(),undo?6000:2600)}
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');io.unobserve(e.target)}),{threshold:.05});
+$$('.reveal').forEach(el=>io.observe(el));
+
+/* flow player */
+const SC={
+ season:{branch:'b2',caps:['לרונית מגיע טיפול חורף, לפי ביטוח השירות שלה','"שלום רונית, אני נועה, העוזרת הווירטואלית של עמית דור..."','"בשלישי בבוקר אני בבית." נרשמה בקשה לתיאום','בכרטיס: "ביקשה טיפול · שלישי בבוקר · עדיין לא מאושר"','אתי מאשרת שעה וחוזרת אליה. הסוכנת לא קובעת טכנאי לבד'],last:['אתי מאשרת מועד','רק אחרי שאתי מאשרת, זה נכנס לסידור העבודה.']},
+ warranty:{branch:'b2',caps:['למיכל נגמרת אחריות היצרן בעוד חודשיים','"האחריות של היצרן על המזגן שלך מסתיימת בעוד חודשיים..."','"מה זה כולל, וכמה זה עולה?" ביקשה פרטים בוואטסאפ','בכרטיס: "רוצה פרטים על ביטוח שירות · בלי התחייבות"','אתי בודקת איזה מסלול מתאים ושולחת הצעה מסודרת'],last:['אתי שולחת הצעה','מחיר וכיסוי נקבעים אצל אתי, לא בשיחה.']},
+ network:{branch:'b3',caps:['לרשת מגיעים טיפולי חורף בשלושה סניפים','"אני מתקשרת לגבי טיפולי החורף בשלושת הסניפים שלכם..."','"בחולון כבר הייתם לפני שבועיים." עובר לבדיקה של אתי','בכרטיס: "חולון, קומת הכניסה · לבדוק מה בוצע"','אתי בודקת מה בוצע. המזגן נשאר ברשימה עד שהיא מחליטה'],last:['אתי בודקת מה בוצע','אחר כך מתאמת עם דנה את שני הסניפים האחרים.']},
+ callback:{branch:'b2',caps:['לשירה מגיעה תזכורת לחידוש ביטוח שנתי','"אני בנהיגה, אני לא יכולה עכשיו." הסוכנת לא מתעכבת','"מחר, בסביבות אחת עשרה." נרשם מועד לחזור','בכרטיס: "לחזור מחר ב-11:00"','אתי רואה את הבקשה, וחוזרים אליה במועד שביקשה'],last:['חוזרים במועד שביקשה','אתי רואה את הבקשה ויכולה לשנות.']},
+ noans:{branch:'b1',caps:['לאבי מגיעה הצעה לטיפול ללא תשלום, פעם בשנה','הסוכנת מתקשרת... אין מענה','לא ענה. ניסיון נוסף מחר, בשעה אחרת','בכרטיס: "לא ענה · ניסיון נוסף מחר 16:00"','אחרי כל הניסיונות, מה שאתי קבעה: להמשיך, לעצור או לטפל בעצמה'],last:['אחרי כל הניסיונות: לפי ההגדרה של אתי','להמשיך לנסות, לעצור, או לטפל בעצמה.']},
+ stop:{branch:'b3',caps:['ליעל יוצאת הצעת שירות, כלקוחה קיימת','"בבקשה אל תתקשרו אליי עם הצעות." "הבנתי."','הבקשה נשמרת. הסוכנת לא תתקשר שוב עם הצעות','בכרטיס: "לא לפנות · בלי הודעת המשך"','אם יעל תפנה לבד, אתי מטפלת בה כרגיל'],last:['יעל יוצאת מהפניות היזומות','היא נשארת לקוחה. אתי רואה שהבקשה נרשמה.']}};
+let cur='season',step=0;
+function setScen(k){cur=k;step=0;$$('#scen [data-s]').forEach(b=>b.classList.toggle('on',b.dataset.s===k));render()}
+function render(){const s=SC[cur];const seq=['start','call',s.branch,'card','office'];
+ $$('#flowSteps [data-k]').forEach(el=>{const i=seq.indexOf(el.dataset.k);el.classList.toggle('lit',i===step);el.classList.toggle('done',i>=0&&i<step)});
+ $$('#flowSteps .v').forEach(w=>w.classList.toggle('on',step>=+w.dataset.on));
+ $('#cap').textContent=s.caps[step];
+ if(step===4){$('#lastT').textContent=s.last[0];$('#lastS').textContent=s.last[1]}else{$('#lastT').textContent='אתי רואה ומחליטה';$('#lastS').textContent='מאשרת מועד, משנה, עוצרת או מבטלת פעולה.'}}
+render();
+$$('#scen [data-s]').forEach(b=>b.onclick=()=>setScen(b.dataset.s));
+$('#nextStep').onclick=e=>{e.stopPropagation();step=step>=4?0:step+1;render()};
+$('#restart').onclick=e=>{e.stopPropagation();step=0;render()};
+document.querySelector('#flow').addEventListener('click',e=>{if(e.target.closest('#scen'))return;step=step>=4?0:step+1;render()});
+document.addEventListener('keydown',e=>{const r=document.querySelector('#flow').getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;
+ if(e.key==='ArrowLeft'){step=step>=4?0:step+1;render()}else if(e.key==='ArrowRight'){step=step<=0?0:step-1;render()}}); /* RTL: left = next */
+
+/* Eti's view (sample data): overview -> customers -> call */
+const TR={"1":[["cu","הלו?"],["ag","שלום רונית, אני נועה, העוזרת הווירטואלית של עמית דור. זה זמן נוח לרגע?"],["cu","כן."],["ag","אני מתקשרת לגבי טיפול החורף במזגן, במסגרת ביטוח השירות שלך. תרצי שנתאם ביקור?"],["cu","כן, בדיוק רציתי להתקשר. בשלישי בבוקר אני בבית."],["ag","סבבה. אעביר לאתי בקשה ליום שלישי בבוקר. היא תחזור אלייך עם שעה. זה עדיין לא מועד מאושר."],["cu","טוב, רק שלא יגיעו בלי לדבר איתי קודם."],["ag","ברור. קודם מתאמים אִתָּךְ, ורק אז מגיעים."],["cu","מעולה, תודה."],["ag","בשמחה, יום טוב."]],"2":[["cu","הלו?"],["ag","שלום מיכל, אני נועה, העוזרת הווירטואלית של עמית דור. אפשר רגע?"],["cu","כן, מה העניין?"],["ag","האחריות של היצרן על המזגן שלך מסתיימת בעוד חודשיים. תרצי לקבל פרטים על ביטוח שירות להמשך?"],["cu","יכול להיות. מה זה כולל, וכמה זה עולה?"],["ag","זה תלוי במזגן ובמסלול שמתאים לך. אתי תבדוק ותשלח לך הצעה מסודרת. נוח לך בוואטסאפ?"],["cu","כן, תשלחו לי. אני אסתכל על זה בערב."],["ag","סבבה, אעביר לאתי שתשלח לך את הפרטים. זו רק בקשה להצעה, בלי התחייבות."],["cu","בסדר, תודה."],["ag","יום טוב."]],"3":[["cu","הלו?"],["ag","שלום דנה, אני נועה, העוזרת הווירטואלית של עמית דור. אני מתקשרת לגבי טיפולי החורף בשלושת הסניפים שלכם. אפשר רגע?"],["cu","כן. אבל בחולון כבר הייתם לפני שבועיים, במזגן ליד הקופה."],["ag","הבנתי. באיזה סניף בחולון מדובר?"],["cu","בסניף המרכזי, בקומת הכניסה."],["ag","אעביר לאתי לבדוק מה בוצע במזגן הזה. לא נוריד אותו מרשימת הטיפולים לפני שהיא תבדוק."],["cu","מצוין. ואת שני הסניפים האחרים צריך לתאם איתי."],["ag","בסדר. אתי תבדוק את הטיפול בחולון, ותחזור אלייך לתיאום שני הסניפים האחרים."],["cu","מעולה, תודה."],["ag","בשמחה, יום טוב."]],"4":[["cu","הלו?"],["ag","שלום שירה, אני נועה, העוזרת הווירטואלית של עמית דור."],["cu","כן, אבל אני בנהיגה, אני לא יכולה עכשיו."],["ag","ברור. מתי יהיה לך נוח שנחזור?"],["cu","מחר, בסביבות אחת עשרה."],["ag","מחר בסביבות אחת עשרה, נכון?"],["cu","כן."],["ag","סבבה, אעביר את הבקשה לאתי. נסיעה טובה."],["cu","תודה, ביי."]],"5":[["cu","הלו?"],["ag","שלום יעל, אני נועה, העוזרת הווירטואלית של עמית דור. מתקשרת לגבי שירות למזגן."],["cu","אני לא מעוניינת. בבקשה אל תתקשרו אליי עם הצעות."],["ag","הבנתי. אסמן שלא לפנות אלייך עם הצעות נוספות."],["cu","תודה."],["ag","יום טוב."]]};
+const REASONS=[['season','טיפול קיץ/חורף בביטוח',31,'#c9536e'],['free','הצעת טיפול ללא תשלום',14,'#d98a9d'],['warranty','סיום אחריות יצרן',9,'#8c3349'],['renew','חידוש ביטוח שנתי',5,'#e7b7c3'],['network','רשתות וסניפים',3,'#a84059']];
+const ST=[['agent','בטיפול הסוכנת',24,'#008f87'],['booking','ביקשו לתאם טיפול',14,'#4f9d69'],['ins','רוצים פרטים על ביטוח',6,'#5872d6'],['eti','עברו לאתי',8,'#d9982a'],['noans','לא ענו אחרי כל הניסיונות',4,'#c9536e'],['stop','ביקשו שלא לפנות',6,'#bdb7c0']];
+const WAIT=[['booking','לתאם טיפול עם הלקוח',14,'#4f9d69'],['ins','לשלוח פרטים על ביטוח',6,'#5872d6'],['eti','לבדוק מה קרה ולחזור',8,'#d9982a'],['noans','לא ענו אחרי כל הניסיונות',4,'#c9536e']];
+const NB={agent:['call','שיחה מתוכננת'],booking:['std','לתאם טיפול'],ins:['pay','פרטי ביטוח'],eti:['off','לאתי'],noans:['off','לא ענה'],stop:['stop','לא לפנות'],ok:['ok','טופל']};
+const NA=t=>({t,out:'לא ענה',dur:'',sum:'אין מענה',tr:[]});
+const rec=(id,t,dur,sum)=>({t,out:'שיחה מלאה',dur,sum,audio:`audio/0${id}.mp3?v=2`,tr:TR[id]});
+const CUSTS=[
+ {id:'a',name:'רונית לוי',site:'דירה, חולון',unit:'מזגן מפוצל',rs:'season',rsL:'טיפול חורף בביטוח',st:'booking',label:'ביקשה טיפול · שלישי 10.11 בבוקר',reason:'רונית ביקשה שיתאמו איתה קודם, ורק אז יגיעו. המועד עדיין לא מאושר. אתי חוזרת אליה עם שעה.',doneL:'תיאמתי ביקור',calls:[rec(1,'5.11 · 14:15','0:35','ביקשה טיפול חורף ביום שלישי בבוקר')]},
+ {id:'b',name:'מיכל כהן',site:'בית פרטי, ראשון לציון',unit:'מיני מרכזי',rs:'warranty',rsL:'אחריות יצרן מסתיימת בעוד חודשיים',st:'ins',label:'ביקשה פרטים על ביטוח שירות',reason:'מיכל שאלה מה זה כולל וכמה זה עולה. אתי בודקת איזה מסלול מתאים ושולחת הצעה בוואטסאפ. זו רק בקשה להצעה, בלי התחייבות.',doneL:'שלחתי פרטים',calls:[rec(2,'4.11 · 12:20','0:36','רוצה לקבל פרטים בוואטסאפ. לא אישרה רכישה')]},
+ {id:'c',name:'רשת לדוגמה',site:'3 סניפים · דנה, מנהלת תחזוקה',unit:'מערכות VRF',rs:'network',rsL:'טיפולי חורף בשלושה סניפים',st:'eti',label:'לבדוק מזגן שכבר טופל בחולון',reason:'דנה אמרה שבסניף המרכזי בחולון, בקומת הכניסה, כבר טיפלו במזגן לפני שבועיים. הוא נשאר ברשימה עד שאתי בודקת מה בוצע. את שני הסניפים האחרים מתאמים איתה.',doneL:'בדקתי ועדכנתי',calls:[rec(3,'3.11 · 11:05','0:38','טיפול בחולון לבדיקה. שני סניפים לתאם עם דנה')]},
+ {id:'d',name:'שירה ישראלי',site:'דירה, בת ים',unit:'מזגן מפוצל',rs:'renew',rsL:'חידוש ביטוח שנתי',st:'agent',label:'ביקשה שיחזרו אליה',reason:'שירה הייתה בנהיגה וביקשה שיחזרו אליה מחר בסביבות 11:00. אתי יכולה לשנות או לחזור בעצמה.',next:'מחר · 11:00',doneL:'חזרתי ללקוחה',calls:[rec(4,'היום · 10:20','0:23','בנהיגה, ביקשה לחזור מחר ב-11:00')]},
+ {id:'f',name:'אבי מזרחי',site:'משרד, פתח תקווה',unit:'מזגן מפוצל',rs:'free',rsL:'הצעת טיפול ללא תשלום',st:'noans',label:'לא ענה · ניסיון נוסף מחר',reason:'אבי קנה מזגן בלי ביטוח, ומגיעה לו הצעה לטיפול פעם בשנה. הסוכנת מנסה בשעות שונות, כמה פעמים שאתי קבעה.',next:'מחר · 16:00',doneL:'דיברתי איתו',calls:[NA('5.11 · 16:02'),NA('3.11 · 10:15')]},
+ {id:'e',name:'יעל הדר',site:'דירה, תל אביב',unit:'מזגן מפוצל',rs:'free',rsL:'הצעת שירות ללקוחה קיימת',st:'stop',label:'ביקשה שלא לפנות עם הצעות',reason:'הסוכנת סימנה ולא שלחה הודעת המשך. יעל נשארת לקוחה, ואם תפנה לבד אתי מטפלת בה כרגיל.',doneL:'',calls:[rec(5,'2.11 · 13:37','0:17','לא מעוניינת. ביקשה שלא יתקשרו עם הצעות')]}];
+const PLAN={a:[{when:'שלישי 10.11 · בבוקר',what:'ביקור טיפול חורף, אחרי שאתי מאשרת',cls:'pay'},{when:'יוני',what:'תזכורת לטיפול קיץ',cls:'more'}],
+ b:[{when:'השבוע',what:'אתי שולחת הצעה בוואטסאפ',cls:'pay'},{when:'בעוד שבועיים',what:'שיחה קצרה, רק אם לא ענתה להצעה',cls:'more'}],
+ c:[{when:'השבוע',what:'אתי בודקת את דוח השירות של המזגן בחולון',cls:'pay'},{when:'אחרי הבדיקה',what:'תיאום שני הסניפים האחרים עם דנה',cls:'more'}],
+ d:[{when:'מחר · 11:00',what:'שיחה חוזרת, כמו שביקשה'}],
+ f:[{when:'מחר · 16:00',what:'ניסיון נוסף, בשעה אחרת'},{when:'יום חמישי · 10:30',what:'ניסיון נוסף, רק אם לא יענה',cls:'more'}],e:[]};
+let view='over',fil=null,sel='a',openCall=null,log=[];
+const now=()=>new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});
+const filLabel=()=>fil?(REASONS.find(x=>x[0]===fil)||ST.find(x=>x[0]===fil))[1]:'כל הלקוחות';
+function drawOver(){const tot=REASONS.reduce((s,a)=>s+a[2],0),max=Math.max(...REASONS.map(a=>a[2]));
+ $('#totalN').textContent=tot;
+ $('#reasons').innerHTML=REASONS.map(([k,l,n,c])=>`<button class="agebar" data-f="${k}"><span>${l}</span><div class="agtrack"><i data-w="${Math.round(n/max*100)}" style="background:${c}"></i></div><b>${n}</b></button>`).join('');
+ const sum=ST.reduce((s,x)=>s+x[2],0);
+ $('#stackBar').innerHTML=ST.map(([k,l,n,c])=>`<i data-w="${(n/sum*100).toFixed(1)}" style="background:${c}" title="${l}"></i>`).join('');
+ $('#statusRows').innerHTML=ST.map(([k,l,n,c])=>`<button class="srow" data-f="${k}"><i style="background:${c}"></i><span>${l}</span><b>${n}</b></button>`).join('');
+ $('#waitRows').innerHTML=WAIT.map(([k,l,n,c])=>`<button class="srow" data-f="${k}"><i style="background:${c}"></i><span>${l}</span><b>${n}</b></button>`).join('');
+ setTimeout(()=>$$('#viewOver [data-w]').forEach(i=>i.style.width=i.dataset.w+'%'),60);
+ $$('#viewOver [data-f]').forEach(b=>b.onclick=()=>{fil=b.dataset.f;view='list';const first=CUSTS.find(c=>c.rs===fil||c.st===fil);if(first)sel=first.id;openCall=null;drawAll()});
+}
+function drawCrumbs(){const c=CUSTS.find(x=>x.id===sel);$('#crumbs').innerHTML=view==='over'?'תמונה כללית של כל הפניות':`<button id="cbHome">תמונה כללית</button> › ${filLabel()} › ${c?c.name:''}`;const h=$('#cbHome');if(h)h.onclick=()=>{view='over';drawAll()}}
+function shown(){return CUSTS.filter(c=>!fil||c.rs===fil||c.st===fil)}
+function drawList(){const chips=[[null,'הכל'],...ST.map(s=>[s[0],s[1]]),...REASONS.map(a=>[a[0],a[1]])];
+ $('#fchips').innerHTML=chips.filter(([k])=>!k||CUSTS.some(c=>c.rs===k||c.st===k)).map(([k,l])=>`<button class="${fil===k?'on':''}" data-k="${k||''}">${l}</button>`).join('');
+ $$('#fchips button').forEach(b=>b.onclick=()=>{fil=b.dataset.k||null;const s=shown();if(!s.some(c=>c.id===sel)&&s[0])sel=s[0].id;openCall=null;drawAll()});
+ $('#custs').innerHTML=shown().map(c=>`<button class="cust ${c.id===sel?'on':''}" data-id="${c.id}"><span><b>${c.name}</b><small>${c.site} · ${c.rsL}</small></span><span class="nb ${NB[c.st][0]}">${NB[c.st][1]}</span></button>`).join('')||'<div class="sim">אין לקוחות לדוגמה בסינון הזה.</div>';
+ $$('.cust').forEach(b=>b.onclick=()=>{sel=b.dataset.id;openCall=null;drawAll()})}
+function drawCust(){const c=CUSTS.find(x=>x.id===sel);if(!c){$('#custPane').innerHTML='';return}const paused=document.body.classList.contains('allpaused');
+ const cls={agent:'',booking:'ok',ins:'pay',eti:'off',noans:'off',stop:'stop',ok:'ok'}[c.st];
+ const plan=(PLAN[c.id]||[]);
+ $('#custPane').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap"><b style="font-size:19px">${c.name}</b><span class="sim" style="margin:0">${c.site} · ${c.unit}</span></div>
+ <div class="next ${cls}"><h4>מה הלאה</h4><b>${c.label}</b>${c.next?`<div><b>השיחה הבאה: ${paused?'עצורה':c.next}</b></div>`:''}<div class="sim" style="margin-top:4px">${c.reason}</div></div>
+ <b>מה מתוכנן ללקוח הזה</b>
+ <div class="tline" style="margin:6px 0 14px">${plan.length&&!['stop','ok'].includes(c.st)?plan.map(u=>`<div class="titem ${u.cls||''}"><b>${u.when}</b><span>${u.what}</span>${u.sub?`<small>${u.sub}</small>`:''}</div>`).join(''):`<div class="sim" style="margin:4px 0">${c.st==='ok'?'אין. אתי סיימה לטפל.':'אין פניות יזומות ללקוח הזה.'}</div>`}</div>
+ <b>שיחות הסוכנת (${c.calls.length})</b>
+ <div class="calls">${c.calls.map((k,i)=>`<button class="callrow ${openCall===i?'on':''}" data-i="${i}"><span class="ci"><b>${k.t}</b>${k.dur?`<span class="cd"> · ${k.dur}</span>`:''}<span class="cn">שיחה ${c.calls.length-i}</span><small>${k.sum}</small></span>${k.tr.length?'<span class="lis">האזנה ותמלול</span>':''}<span class="nb ${k.out==='שיחה מלאה'?'ok':'stop'}">${k.out}</span></button>`).join('')}</div>
+ <div class="tr" id="trBox"></div>
+ <div class="acts">${c.st==='stop'?'<button class="btn sm" data-a="resume">החזרה לפניות</button>':c.st==='ok'?'':'<button class="btn sm" data-a="stop">עצירת הסוכנת ללקוח</button>'}${c.st!=='ok'&&c.doneL?`<button class="btn sm go" data-a="done">${c.doneL}</button>`:''}</div>
+ <div class="log">${log.filter(l=>l.id===c.id).map(l=>`<div><b>${l.t}</b> · ${l.text}</div>`).join('')||'יומן פעולות: עוד אין'}</div>`;
+ $$('#custPane .callrow').forEach(b=>b.onclick=()=>{openCall=+b.dataset.i;drawCust()});
+ $$('#custPane [data-a]').forEach(b=>b.onclick=()=>act(c,b.dataset.a));
+ if(openCall==null){const first=c.calls.findIndex(k=>k.tr.length);openCall=first>=0?first:0;$$('#custPane .callrow')[openCall]?.classList.add('on')}
+ showTr(c.calls[openCall])}
+function showTr(k){const box=$('#trBox');if(!box||!k)return;box.classList.add('open');
+ if(!k.tr.length){box.innerHTML='<div class="sim">הלקוח לא ענה, ולכן אין הקלטה ואין תמלול. הסוכנת תנסה שוב לפי הכללים.</div>';return}
+ box.innerHTML=`<div class="realrec"><audio controls preload="none" src="${k.audio}"></audio><div class="sim" style="margin:4px 0 0">הקלטה לדוגמה בשני קולות סינתטיים. הלקוחה ושיחתה מומצאות.</div></div>`+k.tr.map(([w,t])=>`<div class="msg ${w} show"><small>${w==='ag'?'הסוכנת':'הלקוחה'}</small>${t}</div>`).join('');
+ const au=box.querySelector('audio');au.addEventListener('play',()=>$$('audio').forEach(x=>{if(x!==au)x.pause()}))}
+function act(c,a){const prev=JSON.parse(JSON.stringify({st:c.st,label:c.label,reason:c.reason,next:c.next||null}));const L={stop:'הסוכנת לא תתקשר ללקוח הזה',resume:'הלקוח חזר לפניות של הסוכנת',done:'סומן: '+c.doneL};
+ if(a==='stop'){c.st='stop';c.label='פניות אוטומטיות נעצרו';c.reason='עצרה: אתי. הלקוח נשאר בבינה כרגיל.';c.next=null}
+ if(a==='resume'){c.st='agent';c.label='הסוכנת תתקשר בשעות הקרובות';c.reason='חזר לפניות של הסוכנת.';c.next='מחר · 10:00'}
+ if(a==='done'){c.st='ok';c.label=c.doneL;c.reason='אתי סיימה לטפל. במועד הבא של הלקוח המעקב ממשיך.';c.next=null}
+ log.unshift({id:c.id,t:now(),text:'אתי: '+L[a]});drawAll();
+ toast(L[a],()=>{Object.assign(c,prev);log.shift();drawAll();toast('הפעולה בוטלה')})}
+function drawAll(){$$('#viewTabs button').forEach(b=>b.classList.toggle('on',b.dataset.v===view));$('#viewOver').hidden=view!=='over';$('#viewList').hidden=view!=='list';drawCrumbs();if(view==='over')drawOver();else{drawList();drawCust()}}
+$$('#viewTabs button').forEach(b=>b.onclick=()=>{view=b.dataset.v;drawAll()});
+$('#pauseAll').onclick=()=>{const p=!document.body.classList.contains('allpaused');setPaused(p);toast(p?'כל השיחות נעצרו':'השיחות חזרו לפעול',()=>{setPaused(!p);toast('הפעולה בוטלה')})};
+function setPaused(p){document.body.classList.toggle('allpaused',p);$('#agT').textContent=p?'הסוכנת עצורה':'הסוכנת פעילה';$('#agS').textContent=p?'עצרה: אתי, '+now()+'. אף לקוח לא יקבל שיחה.':'מתקשרת לפי הכללים שאתי קבעה.';const b=$('#pauseAll');b.textContent=p?'החזרת השיחות':'עצירת כל השיחות';b.className='btn sm '+(p?'go':'stop');if(view==='list')drawCust()}
+const CHAPS=[['רונית · טיפול חורף',0],['מיכל · סיום אחריות',36],['דנה · רשת וסניפים',73.2],['שירה · בנהיגה',112.6],['יעל · לא מעוניינת',137]];
+(()=>{const au=$('#allAu'),box=$('#chaps');
+ box.innerHTML=CHAPS.map(([n],i)=>`<button data-ch="${i}">${n}</button>`).join('');
+ const go=t=>{const s=()=>{au.currentTime=t;au.play()};if(au.readyState>=1)s();else{au.preload='metadata';au.addEventListener('loadedmetadata',s,{once:true});au.load()}};
+ box.querySelectorAll('button').forEach(b=>b.onclick=e=>{e.stopPropagation();go(CHAPS[+b.dataset.ch][1])});
+ au.addEventListener('timeupdate',()=>{let k=0;CHAPS.forEach(([,t],i)=>{if(au.currentTime>=t-.2)k=i});box.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===k&&au.currentTime>0))});
+ au.addEventListener('play',()=>$$('audio').forEach(x=>{if(x!==au)x.pause()}))})();
+drawAll();
+
+/* email alert examples */
+const TONE={good:['#2f7d4f','#e8f4ec','הזדמנות'],act:['#b7791f','#fbf3e4','לטיפול'],info:['#3f5fa8','#ebf0fa','לידיעה']};
+const MAILS={
+ warranty:{tone:'good',title:'ביקשה פרטים על ביטוח שירות',who:'מיכל כהן · בית פרטי, ראשון לציון · אחריות היצרן מסתיימת בעוד חודשיים',todo:'לבדוק איזה מסלול מתאים, ולשלוח למיכל הצעה בוואטסאפ.',sum:'מיכל שאלה מה הביטוח כולל וכמה הוא עולה. הסוכנת אמרה שאתי תבדוק ותשלח הצעה. לא אושרה רכישה.',next:'הסוכנת לא מתקשרת. מחכה לך.'},
+ booking:{tone:'good',title:'ביקשה לתאם טיפול חורף',who:'רונית לוי · דירה, חולון · טיפול חורף בביטוח',todo:'לחזור לרונית עם שעה ליום שלישי בבוקר, ואז להכניס לסידור העבודה.',sum:'רונית אמרה שהיא בבית בשלישי בבוקר, וביקשה שלא יגיעו בלי לדבר איתה קודם. המועד עדיין לא מאושר.',next:'הסוכנת לא מתקשרת. מחכה לך.'},
+ network:{tone:'act',title:'מזגן שכבר טופל · לבדיקה',who:'רשת לדוגמה · דנה, מנהלת תחזוקה · 3 סניפים',todo:'לבדוק מה בוצע במזגן בחולון, ולחזור לדנה לתיאום שני הסניפים האחרים.',sum:'דנה אמרה שבסניף המרכזי בחולון, בקומת הכניסה, כבר טיפלו במזגן לפני שבועיים.',next:'המזגן נשאר ברשימת הטיפולים עד שתחליטי.'},
+ stop:{tone:'info',title:'ביקשה שלא לפנות עם הצעות',who:'יעל הדר · דירה, תל אביב',todo:'אין צורך לעשות כלום. זה לידיעתך.',sum:'יעל אמרה שהיא לא מעוניינת, וביקשה שלא יתקשרו אליה עם הצעות. הסוכנת סימנה ולא שלחה הודעת המשך.',next:'הסוכנת לא תפנה אליה יותר עם הצעות.'}};
+function drawMail(k){const m=MAILS[k],[c,bg,lab]=TONE[m.tone];
+ $('#mailSubj').textContent=m.title+' · '+m.who.split(' · ')[0];
+ $('#mailBody').innerHTML=`<div class="bar" style="background:${c}"></div><div class="in"><span class="tag" style="background:${bg};color:${c}">${lab}</span> <span style="font-size:12.5px;color:#6c6c72">עמית דור · מעקב שירות</span>
+ <h3>${m.title}</h3><div class="meta">${m.who}</div>
+ <div class="todo" style="background:${bg}"><small style="color:${c}">מה צריך לעשות</small><div>${m.todo}</div></div>
+ <div class="lbl">מה קרה בשיחה</div><p>${m.sum}</p>
+ <div class="lbl">מה הסוכנת עושה עכשיו</div><p>${m.next}</p><span class="mbtn">לפתוח את כרטיס הלקוח</span></div>
+ <div class="foot">הודעה אוטומטית ממערכת מעקב השירות של עמית דור. אפשר לעצור את כל השיחות במסך הניהול.</div>`;
+ $$('#mailTabs button').forEach(b=>b.classList.toggle('on',b.dataset.m===k))}
+$$('#mailTabs button').forEach(b=>b.onclick=()=>drawMail(b.dataset.m));drawMail('warranty');
+
+/* whatsapp: one step per click */
+const WA=[
+ ['sys','השיחה עם הסוכנת הסתיימה · מיכל ביקשה פרטים על ביטוח שירות'],
+ ['biz','שלום מיכל, כאן עמית דור. בהמשך לשיחה, אחריות היצרן על המזגן שלך מסתיימת בעוד חודשיים. אתי תבדוק איזה מסלול מתאים לך ותשלח הצעה מסודרת. זה בלי התחייבות.','נמסרה'],
+ ['biz-read'],
+ ['cust','תודה. זה כולל גם חלקים?'],
+ ['sys','בכרטיס הלקוח: מיכל שאלה על חלקים · אתי קיבלה התראה']];
+let waStep=0;
+function drawWA(){const chat=$('#chat');chat.innerHTML='';
+ for(let i=0;i<waStep;i++){const [w,t,x]=WA[i];if(w==='biz-read'){const tk=chat.querySelector('.tk');if(tk){tk.textContent='✓✓ נקראה';tk.classList.add('read')}continue}
+  const el=document.createElement('div');el.className='wb '+w;el.innerHTML=w==='biz'?`${t}<span class="tk">✓✓ ${x}</span>`:t;chat.appendChild(el);
+  if(i<waStep-1)el.classList.add('show');else setTimeout(()=>el.classList.add('show'),30)}
+ $('#waNext').textContent=waStep>=WA.length?'סיום':'הצעד הבא ←';$('#waNext').disabled=waStep>=WA.length}
+$('#waNext').onclick=()=>{if(waStep<WA.length){waStep++;drawWA()}};
+$('#waReset').onclick=()=>{waStep=1;drawWA()};
+waStep=1;drawWA();
+</script>
+</body>
+</html>
