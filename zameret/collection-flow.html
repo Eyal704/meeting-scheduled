@@ -320,7 +320,7 @@ section{padding:40px 0;scroll-margin-top:64px}
 .tpls{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
 .tpl{padding:12px 14px}
 .tpl b{display:block;font-size:15px}.tpl span{font-size:13.5px;color:var(--muted)}
-.price-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:14px;align-items:start}.pcard{padding:20px 22px}.pcard.main{border-color:var(--rose-b)}.pl{font-size:14px;font-weight:700;color:var(--muted)}.pbig{color:var(--green);font-size:40px;font-weight:800;line-height:1.15;margin:4px 0 14px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.pcard:not(.main) .pbig{color:var(--ink)}.pcard.extra{margin-top:14px}.pinc.two{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;margin-bottom:0}.pbig small{font-size:14px;font-weight:600;color:var(--muted)}.pinc{list-style:none;margin:0 0 12px;padding:0;font-size:15px;line-height:1.6}.pinc li{position:relative;padding-inline-start:24px;margin-bottom:9px}.pinc li::before{content:"✓";position:absolute;inset-inline-start:0;top:0;color:#b8860b;font-weight:800}
+.price-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:14px;align-items:start}.pcard{padding:20px 22px}.pcard.main{border-color:var(--rose-b)}.pl{font-size:14px;font-weight:700;color:var(--muted)}.pbig{color:var(--green);font-size:40px;font-weight:800;line-height:1.15;margin:4px 0 14px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.pcard:not(.main) .pbig{color:var(--ink)}.pside{display:grid;gap:14px}.pcard.extra{margin-top:14px}.pinc.two{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;margin-bottom:0}.pbig small{font-size:14px;font-weight:600;color:var(--muted)}.pinc{list-style:none;margin:0 0 12px;padding:0;font-size:15px;line-height:1.6}.pinc li{position:relative;padding-inline-start:24px;margin-bottom:9px}.pinc li::before{content:"✓";position:absolute;inset-inline-start:0;top:0;color:#b8860b;font-weight:800}
 @media(max-width:900px){.price-grid,.pinc.two{grid-template-columns:1fr}}
 .need{padding:16px 18px;margin-top:12px}
 .need ul{margin:6px 0 0;padding-inline-start:18px;line-height:1.75;font-size:15px}
@@ -559,7 +559,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
 
   <section id="price">
     <div class="sec-h"><span class="sec-n">7</span><h2>הצעת מחיר</h2></div>
-    <p class="sec-p">תשלום אחד על בניית המערכת. אחרי זה משלמים רק על דקות שיחה בפועל.</p>
+    <p class="sec-p">תשלום אחד על בניית המערכת. אחרי זה: דקות שיחה בפועל וליווי חודשי.</p>
     <div class="price-grid">
       <div class="card pcard main reveal">
         <div class="pl">שלב ראשון · בניית מערכת הגבייה</div>
@@ -576,6 +576,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
         </ul>
         <div class="sim">תוך כחודש המערכת עובדת, ומתחילים מהלקוחות עם החובות הגדולים והוותיקים.</div>
       </div>
+      <div class="pside">
       <div class="card pcard reveal">
         <div class="pl">שיחות · עלות שוטפת</div>
         <div class="pbig">₪1<small>לדקת שיחה</small></div>
@@ -585,6 +586,19 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
           <li><b>לדוגמה:</b> 50 לקוחות בחודש, כשלוש שיחות של כדקה לכל אחד, הם כ-150 דקות. כלומר כ-₪150 בחודש.</li>
           <li><b>וואטסאפ אוטומטי</b>, אם תבחרו בו: לפי המחיר של Meta, כ-4 אגורות להודעה.</li>
         </ul>
+      </div>
+      <div class="card pcard reveal">
+        <div class="pl">ליווי שוטף · מהחודש השני</div>
+        <div class="pbig">₪1,500<small>לחודש</small></div>
+        <ul class="pinc">
+          <li><b>המערכת רצה ומאוחסנת,</b> ויש מי שאחראי עליה.</li>
+          <li><b>תיקון תקלות,</b> ומענה בוואטסאפ באותו יום עבודה.</li>
+          <li><b>האזנה למדגם שיחות כל חודש,</b> ושיפור התסריט של הסוכנת.</li>
+          <li><b>עד 4 שעות שינויים בחודש,</b> וסיכום חודשי קצר.</li>
+          <li><b>בלי התחייבות.</b> התשלום החודשי בהוראת קבע.</li>
+        </ul>
+        <div class="sim">עם שלב שני: ₪2,500 לחודש, עד 8 שעות שינויים.</div>
+      </div>
       </div>
     </div>
     <div class="card pcard main extra reveal">
@@ -620,7 +634,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
           <a class="btn sm" data-go="acct=a4101" target="_blank" rel="noopener">טיפול אישי</a></li>
         <li><b>ההתראה במייל</b> (חלק 5) <b>והוואטסאפ האוטומטי</b> (חלק 6).</li>
         <li><b>שיחות אמיתיות לדוגמה:</b> בכל לקוח בחלק 4 יש הקלטה אמיתית מ-Retell עם תמלול. מתחת ללקוחות יש עוד שני מקרים: "כבר שילמנו" ו"אני כבר לא בוועד". אפשר גם לנגן את כל השבע ברצף.<br><a class="btn sm" href="demos/all-seven.mp3?v=3" target="_blank" rel="noopener">כל שבע השיחות ברצף (3:44)</a></li>
-        <li><b>הצעת המחיר</b> (חלק 7): ₪25,000 לבנייה, ₪1 לדקת שיחה מהמספר של צמרת. אחר כך שלב שני: מערכת שירות ושטח, ₪35,000.</li>
+        <li><b>הצעת המחיר</b> (חלק 7): ₪25,000 לבנייה, ₪1 לדקת שיחה מהמספר של צמרת, וליווי שוטף ב-₪1,500 לחודש. אחר כך שלב שני: מערכת שירות ושטח, ₪35,000.</li>
       </ol>
       <div class="sim">שיחת טלפון אמיתית לאור רק אחרי "go" ל-Codex, לפי רשימת הבדיקה שלו. בשיחת בדיקה בדפדפן נשלחת התראה רק אליך.</div>
     </div>
