@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Midwest Biomedical · Field Report Demo</title>
+<style>
+  :root {
+    --bg: #f4f6f8;
+    --card: #ffffff;
+    --ink: #17202a;
+    --muted: #5d6b78;
+    --line: #dfe4e9;
+    --accent: #0f6e8c;
+    --accent-soft: #e6f2f6;
+    --ok: #1d7a46;
+    --ok-soft: #e7f5ec;
+    --bad: #b42318;
+    --bad-soft: #fdecea;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.45;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+  header.top { background: var(--card); border-bottom: 1px solid var(--line); }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; padding-bottom: 14px; }
+  .brand { font-weight: 700; font-size: 16px; }
+  .brand span { color: var(--muted); font-weight: 500; }
+  .tag { font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 20px 0 10px; }
+  .step {
+    appearance: none; border: 1px solid var(--line); background: var(--card); border-radius: 10px;
+    padding: 10px 12px; text-align: left; cursor: pointer; font: inherit; color: var(--muted);
+  }
+  .step b { display: block; font-size: 12px; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; }
+  .step span { display: block; font-size: 14px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+  .step.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  .step.done b::after { content: " ✓"; color: var(--ok); }
+
+  .caption { font-size: 17px; margin: 14px 0 14px; }
+  .caption small { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .pad { padding: 18px; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* step 1: tablet */
+  .tablet { border: 10px solid #1f2a33; border-radius: 22px; background: var(--card); overflow: hidden; }
+  .visitbar { background: var(--accent); color: #fff; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 4px 16px; justify-content: space-between; font-size: 14px; }
+  .visitbar strong { font-size: 15px; }
+  .t-body { display: grid; grid-template-columns: 210px 1fr; min-height: 420px; }
+  .devlist { border-right: 1px solid var(--line); padding: 12px; background: #fafbfc; }
+  .devlist h4 { margin: 4px 4px 10px; font-size: 12px; text-transform: uppercase; color: var(--muted); letter-spacing: .03em; }
+  .dev { padding: 9px 10px; border-radius: 8px; font-size: 14px; margin-bottom: 4px; display: flex; justify-content: space-between; gap: 6px; }
+  .dev.cur { background: var(--accent-soft); font-weight: 600; }
+  .dev em { font-style: normal; font-size: 12px; color: var(--ok); }
+  .dev.todo em { color: var(--muted); }
+  .form { padding: 16px 18px; }
+  .devhead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; margin-bottom: 12px; }
+  .devhead h3 { margin: 0; font-size: 18px; }
+  .devhead div { color: var(--muted); font-size: 13px; }
+  .sec { font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); margin: 14px 0 6px; font-weight: 600; }
+  .checks { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chk { border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; font-size: 13px; background: var(--ok-soft); color: var(--ok); border-color: #bfe3cc; }
+  .rows { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .row { display: grid; grid-template-columns: 1fr 120px 130px 74px; align-items: center; gap: 10px; padding: 9px 12px; border-top: 1px solid var(--line); font-size: 14px; }
+  .row:first-child { border-top: 0; }
+  .row.head { background: #fafbfc; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+  .row .lim { color: var(--muted); font-size: 13px; }
+  .row input { width: 100%; font: inherit; padding: 6px 8px; border: 1px solid #c9d1d9; border-radius: 7px; text-align: right; }
+  .row input:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: var(--accent); }
+  .row.fail { background: var(--bad-soft); }
+  .pill { font-size: 12px; font-weight: 700; border-radius: 999px; padding: 3px 9px; text-align: center; }
+  .pill.ok { background: var(--ok-soft); color: var(--ok); }
+  .pill.bad { background: var(--bad); color: #fff; }
+  textarea { width: 100%; font: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid #c9d1d9; border-radius: 8px; resize: vertical; min-height: 54px; }
+  .hint { margin-top: 12px; font-size: 13px; background: #fff8e6; border: 1px solid #f3dfa6; border-radius: 8px; padding: 8px 10px; }
+  .submitbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .status { font-weight: 600; font-size: 14px; }
+  .status.ok { color: var(--ok); }
+  .status.bad { color: var(--bad); }
+
+  .btn { appearance: none; border: 0; background: var(--accent); color: #fff; font: inherit; font-weight: 600; padding: 10px 16px; border-radius: 9px; cursor: pointer; }
+  .btn:hover { filter: brightness(1.08); }
+  .btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .btn.green { background: var(--ok); }
+  .btn[disabled] { opacity: .45; cursor: default; filter: none; }
+
+  /* step 2: review */
+  .review { display: grid; grid-template-columns: 330px 1fr; gap: 14px; }
+  .queue .item { padding: 12px 14px; border-top: 1px solid var(--line); cursor: pointer; }
+  .queue .item:first-of-type { border-top: 0; }
+  .queue .item.sel { background: var(--accent-soft); }
+  .queue .item .l1 { display: flex; justify-content: space-between; gap: 8px; font-weight: 600; font-size: 14px; }
+  .queue .item .l2 { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  .queue h4, .detail h4 { margin: 0; padding: 12px 14px; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); border-bottom: 1px solid var(--line); }
+  .new { font-size: 11px; background: var(--accent); color: #fff; border-radius: 4px; padding: 1px 6px; margin-left: 6px; vertical-align: 1px; }
+  .appr { font-size: 12px; color: var(--ok); font-weight: 700; }
+  .detail .pad h3 { margin: 0 0 2px; font-size: 18px; }
+  .detail .meta { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+  .note { font-size: 14px; background: #fafbfc; border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; margin-top: 12px; }
+  .flagnote { font-size: 14px; background: var(--bad-soft); border: 1px solid #f4c7c3; color: var(--bad); border-radius: 8px; padding: 9px 11px; margin-top: 12px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .done-msg { margin-top: 12px; color: var(--ok); font-weight: 600; font-size: 14px; }
+
+  /* step 3: report */
+  .reportwrap { display: grid; grid-template-columns: 1fr 280px; gap: 14px; align-items: start; }
+  .doc { padding: 28px 30px; }
+  .doc .dh { display: flex; justify-content: space-between; gap: 10px; border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
+  .doc .dh .co { font-weight: 800; font-size: 17px; }
+  .doc .dh .co small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+  .doc .dh .rid { text-align: right; font-size: 12px; color: var(--muted); }
+  .doc h2 { font-size: 17px; margin: 16px 0 10px; }
+  .kv { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 20px; font-size: 13px; margin-bottom: 14px; }
+  .kv div span { color: var(--muted); }
+  table.res { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.res th, table.res td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); }
+  table.res th { font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: .03em; }
+  table.res td.r { font-weight: 700; }
+  table.res tr.f td { background: var(--bad-soft); }
+  .overall { margin: 14px 0; padding: 10px 12px; border-radius: 8px; font-weight: 700; }
+  .overall.ok { background: var(--ok-soft); color: var(--ok); }
+  .overall.bad { background: var(--bad-soft); color: var(--bad); }
+  .sigs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 18px; font-size: 13px; }
+  .sig { border-top: 1px solid var(--ink); padding-top: 6px; }
+  .sig .s { font-family: "Snell Roundhand", "Segoe Script", cursive; font-size: 22px; line-height: 1; margin-bottom: 6px; color: #23395d; }
+  .sig span { color: var(--muted); }
+  .side .pad h4 { margin: 0 0 8px; font-size: 14px; }
+  .tick { display: flex; gap: 8px; font-size: 14px; margin: 8px 0; }
+  .tick i { font-style: normal; color: var(--ok); font-weight: 800; }
+
+  /* step 4: tracking */
+  .track table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .track th, .track td { text-align: left; padding: 10px 12px; border-top: 1px solid var(--line); }
+  .track th { font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); background: #fafbfc; border-top: 0; }
+  .track td.num { font-variant-numeric: tabular-nums; }
+  .od { color: var(--bad); font-weight: 700; }
+  .due { color: #9a6700; font-weight: 600; }
+  .trackhead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px; border-bottom: 1px solid var(--line); }
+  .trackhead strong { font-size: 15px; }
+  .tablescroll { overflow-x: auto; }
+  .closing { margin-top: 14px; }
+  .closing p { margin: 0 0 6px; }
+
+  .nav { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 18px 0 8px; }
+  footer { color: var(--muted); font-size: 13px; text-align: center; padding: 18px 0 30px; }
+  footer a { color: var(--muted); }
+
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); background: #17202a; color: #fff; padding: 10px 16px; border-radius: 10px; font-size: 14px; opacity: 0; transition: .25s; pointer-events: none; max-width: calc(100% - 32px); }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 820px) {
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .t-body { grid-template-columns: 1fr; }
+    .devlist { border-right: 0; border-bottom: 1px solid var(--line); display: flex; gap: 6px; overflow-x: auto; }
+    .devlist h4 { display: none; }
+    .dev { white-space: nowrap; margin: 0; }
+    .review, .reportwrap { grid-template-columns: 1fr; }
+    .tablet { border-width: 6px; border-radius: 16px; }
+    .doc { padding: 18px; }
+  }
+  @media (max-width: 560px) {
+    .row { grid-template-columns: 1fr 86px 64px; }
+    .row .lim { display: none; }
+    .kv { grid-template-columns: 1fr; }
+    .sigs { grid-template-columns: 1fr; }
+    header.top .tag { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">Midwest Biomedical <span>· Field report demo</span></div>
+    <div class="tag">Illinois · sample data, names made up</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <nav class="steps" id="steps">
+    <button class="step active" data-go="0"><b>Step 1</b><span>Technician on site</span></button>
+    <button class="step" data-go="1"><b>Step 2</b><span>Engineer review</span></button>
+    <button class="step" data-go="2"><b>Step 3</b><span>Report to facility</span></button>
+    <button class="step" data-go="3"><b>Step 4</b><span>Everything tracked</span></button>
+  </nav>
+
+  <!-- STEP 1 -->
+  <section class="panel active" data-panel="0">
+    <p class="caption">The technician fills in the test on a tablet, at the device. The system checks each reading against the limit as it's typed.
+      <small>No handwritten sheet and nobody types it up later. Try changing a reading below.</small></p>
+
+    <div class="tablet">
+      <div class="visitbar">
+        <div><strong>Oak Hollow Care Center</strong> · Naperville, IL · Skilled nursing</div>
+        <div>PM visit · Nov 9, 2026 · Tech: J. Rivera</div>
+      </div>
+      <div class="t-body">
+        <aside class="devlist">
+          <h4>Today · 12 devices</h4>
+          <div class="dev"><span>Patient monitor</span><em>Done</em></div>
+          <div class="dev"><span>Infusion pump ×3</span><em>Done</em></div>
+          <div class="dev cur"><span>Defibrillator</span><em style="color:var(--accent)">Now</em></div>
+          <div class="dev todo"><span>Suction unit ×2</span><em>Next</em></div>
+          <div class="dev todo"><span>Patient lift ×2</span><em>—</em></div>
+          <div class="dev todo"><span>Scales ×3</span><em>—</em></div>
+        </aside>
+        <div class="form">
+          <div class="devhead">
+            <h3>Defibrillator / monitor</h3>
+            <div>Asset OH-0142 · 2nd floor nurse station · Last PM Nov 2025</div>
+          </div>
+
+          <div class="sec">Visual inspection</div>
+          <div class="checks">
+            <span class="chk">✓ Housing &amp; controls</span>
+            <span class="chk">✓ Cords &amp; cables</span>
+            <span class="chk">✓ Pads in date</span>
+            <span class="chk">✓ Battery</span>
+            <span class="chk">✓ Self-test</span>
+          </div>
+
+          <div class="sec">Electrical safety &amp; performance</div>
+          <div class="rows" id="rows">
+            <div class="row head"><div>Test</div><div>Reading</div><div class="lim">Limit</div><div>Result</div></div>
+          </div>
+
+          <div class="sec">Notes</div>
+          <textarea id="notes">Pads expire 03/2027. Battery at 92%. No issues found.</textarea>
+
+          <div class="hint">Try it: change <b>Chassis leakage</b> to 140. The check flags it right away, and the report goes to the engineer marked.</div>
+
+          <div class="submitbar">
+            <div class="status ok" id="s1status">All checks passed</div>
+            <button class="btn" id="submit1">Submit for review →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="panel" data-panel="1">
+    <p class="caption">Your engineer sees every report from the field in one list. Clean ones are approved in one click. Flagged readings are marked in red so nothing gets missed.
+      <small>The engineer still reviews every report. The difference is they're not reading handwriting or retyping anything.</small></p>
+
+    <div class="review">
+      <div class="card queue" id="queue"><h4>Waiting for review · today</h4></div>
+      <div class="card detail"><h4>Report</h4><div class="pad" id="detail"></div></div>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="panel" data-panel="2">
+    <p class="caption">Once approved, the finished report goes to the facility and into that device's history.
+      <small>Same layout every time, signed by the technician and the reviewing engineer.</small></p>
+
+    <div class="reportwrap">
+      <div class="card doc" id="doc"></div>
+      <div class="card side"><div class="pad">
+        <h4>What happened when the engineer approved</h4>
+        <div class="tick"><i>✓</i><span>PDF emailed to the facility's contact</span></div>
+        <div class="tick"><i>✓</i><span>Saved to asset OH-0142's service history</span></div>
+        <div class="tick"><i>✓</i><span>Next PM date set, reminder scheduled</span></div>
+        <div class="tick" id="tagout" style="display:none"><i style="color:var(--bad)">!</i><span>Device marked out of service until repair</span></div>
+        <div class="tick"><i>✓</i><span>Added to the facility's survey records</span></div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="panel" data-panel="3">
+    <p class="caption">Every facility, every device, every due date in one place, so you can see what's coming up and what's overdue.
+      <small>When a surveyor (Joint Commission, CMS, state) asks for records, the facility's binder is one click away.</small></p>
+
+    <div class="card track">
+      <div class="trackhead">
+        <strong>Illinois facilities · November 2026</strong>
+        <button class="btn ghost" id="binder">Survey binder: Oak Hollow</button>
+      </div>
+      <div class="tablescroll">
+        <table>
+          <thead><tr><th>Facility</th><th>City</th><th>Devices</th><th>Due this month</th><th>Overdue</th><th>Last visit</th></tr></thead>
+          <tbody>
+            <tr><td>Oak Hollow Care Center</td><td>Naperville</td><td class="num">48</td><td class="num">0</td><td class="num" id="ohOverdue">0</td><td>Today</td></tr>
+            <tr><td>Elm Street Family Medicine</td><td>Elmhurst</td><td class="num">22</td><td class="num due">6</td><td class="num">0</td><td>Oct 14</td></tr>
+            <tr><td>Westfield Dialysis Clinic</td><td>Wheaton</td><td class="num">31</td><td class="num due">9</td><td class="num">0</td><td>Oct 2</td></tr>
+            <tr><td>Northwest Imaging Partners</td><td>Schaumburg</td><td class="num">14</td><td class="num due">2</td><td class="num od">1</td><td>Sep 21</td></tr>
+            <tr><td>Fox Valley Rehab</td><td>Aurora</td><td class="num">27</td><td class="num">0</td><td class="num">0</td><td>Nov 3</td></tr>
+            <tr><td>Grove Point Surgery Center</td><td>Downers Grove</td><td class="num">39</td><td class="num due">12</td><td class="num od">3</td><td>Aug 30</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card pad closing">
+      <p><b>This is a sample.</b> The real one is built around your own forms, test procedures and limits, and works on any tablet or phone.</p>
+      <p style="color:var(--muted);margin:0">Eyal Taieb · MeetingScheduled · +1 (202) 952-4617</p>
+    </div>
+  </section>
+
+  <div class="nav">
+    <button class="btn ghost" id="prev">← Back</button>
+    <button class="btn" id="next">Next →</button>
+  </div>
+</main>
+
+<footer>Created by <a href="https://meeting-scheduled.com" target="_blank" rel="noopener">MeetingScheduled</a> for Midwest Biomedical Technologies</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  var tests = [
+    { id: 'gr',  name: 'Ground resistance',       unit: 'Ω',  val: 0.12, lim: '≤ 0.50 Ω (NFPA 99)', ok: function (v) { return v <= 0.5; } },
+    { id: 'lk',  name: 'Chassis leakage',         unit: 'µA', val: 38,   lim: '≤ 100 µA (NFPA 99)', ok: function (v) { return v <= 100; } },
+    { id: 'en',  name: 'Energy delivered @ 200 J', unit: 'J', val: 194,  lim: '170 – 230 J',        ok: function (v) { return v >= 170 && v <= 230; } },
+    { id: 'ct',  name: 'Charge time to 200 J',    unit: 's',  val: 6.2,  lim: '≤ 10 s',             ok: function (v) { return v <= 10; } }
+  ];
+
+  var state = { step: 0, submitted: false, approved: {}, sel: 'oh' };
+  var rowsEl = document.getElementById('rows');
+
+  tests.forEach(function (t) {
+    var r = document.createElement('div');
+    r.className = 'row'; r.id = 'row-' + t.id;
+    r.innerHTML = '<div>' + t.name + '</div>' +
+      '<div><input inputmode="decimal" value="' + t.val + '" data-t="' + t.id + '" aria-label="' + t.name + ' (' + t.unit + ')"></div>' +
+      '<div class="lim">' + t.lim + '</div>' +
+      '<div><span class="pill ok">PASS</span></div>';
+    rowsEl.appendChild(r);
+  });
+
+  function readings() {
+    return tests.map(function (t) {
+      var raw = document.querySelector('input[data-t="' + t.id + '"]').value.replace(',', '.');
+      var v = parseFloat(raw);
+      var pass = !isNaN(v) && t.ok(v);
+      return { t: t, v: isNaN(v) ? raw : v, pass: pass };
+    });
+  }
+  function fails() { return readings().filter(function (r) { return !r.pass; }); }
+
+  function refresh1() {
+    readings().forEach(function (r) {
+      var row = document.getElementById('row-' + r.t.id);
+      row.classList.toggle('fail', !r.pass);
+      row.querySelector('.pill').className = 'pill ' + (r.pass ? 'ok' : 'bad');
+      row.querySelector('.pill').textContent = r.pass ? 'PASS' : 'FAIL';
+    });
+    var f = fails().length;
+    var s = document.getElementById('s1status');
+    s.className = 'status ' + (f ? 'bad' : 'ok');
+    s.textContent = f ? f + ' reading out of limit. The engineer will see it flagged.' : 'All checks passed';
+  }
+  rowsEl.addEventListener('input', function () { refresh1(); state.approved.oh = false; });
+
+  // ---------- step 2 ----------
+  var others = [
+    { id: 'el', fac: 'Elm Street Family Medicine', city: 'Elmhurst', dev: 'Infusion pump ×4', tech: 'M. Chen', flag: 0,
+      rows: [['Occlusion alarm', 'Alarmed at 14 psi', '≤ 15 psi', 1], ['Flow accuracy', '−2.1 %', '± 5 %', 1], ['Chassis leakage', '22 µA', '≤ 100 µA', 1]],
+      note: 'All 4 pumps passed. Unit #3 door latch tightened.' },
+    { id: 'nw', fac: 'Northwest Imaging Partners', city: 'Schaumburg', dev: 'C-arm', tech: 'D. Okafor', flag: 1,
+      rows: [['Visual inspection', 'Foot switch cable worn', 'No damage', 0], ['Ground resistance', '0.21 Ω', '≤ 0.50 Ω', 1], ['Collimator / light field', 'Aligned', 'Within spec', 1]],
+      note: 'Foot switch cable jacket cracked near the connector. Replacement part quoted.' },
+    { id: 'fv', fac: 'Fox Valley Rehab', city: 'Aurora', dev: 'Patient lift ×3', tech: 'J. Rivera', flag: 0,
+      rows: [['Load test', '450 lb held', 'Rated load', 1], ['Emergency lowering', 'Works', 'Works', 1], ['Battery', 'Charged, holds', 'OK', 1]],
+      note: 'Sling on lift #2 near end of life, recommend replacement at next visit.' }
+  ];
+
+  function ohItem() {
+    var r = readings(), f = fails().length;
+    return { id: 'oh', fac: 'Oak Hollow Care Center', city: 'Naperville', dev: 'Defibrillator · OH-0142', tech: 'J. Rivera', flag: f, isNew: true,
+      rows: r.map(function (x) { return [x.t.name, x.v + ' ' + x.t.unit, x.t.lim.replace(' (NFPA 99)', ''), x.pass ? 1 : 0]; }),
+      note: document.getElementById('notes').value };
+  }
+  function allItems() { return state.submitted ? [ohItem()].concat(others) : others.slice(); }
+
+  function renderQueue() {
+    var q = document.getElementById('queue');
+    q.innerHTML = '<h4>Waiting for review · today</h4>';
+    allItems().forEach(function (it) {
+      var d = document.createElement('div');
+      d.className = 'item' + (state.sel === it.id ? ' sel' : '');
+      var badge = state.approved[it.id] ? '<span class="appr">Approved</span>'
+        : (it.flag ? '<span class="pill bad">' + it.flag + ' flag</span>' : '<span class="pill ok">Passed</span>');
+      d.innerHTML = '<div class="l1"><span>' + it.fac + (it.isNew ? '<span class="new">NEW</span>' : '') + '</span>' + badge + '</div>' +
+        '<div class="l2">' + it.city + ' · ' + it.dev + ' · ' + it.tech + '</div>';
+      d.onclick = function () { state.sel = it.id; renderQueue(); renderDetail(); };
+      q.appendChild(d);
+    });
+  }
+
+  function renderDetail() {
+    var it = allItems().filter(function (x) { return x.id === state.sel; })[0] || allItems()[0];
+    state.sel = it.id;
+    var el = document.getElementById('detail');
+    var html = '<h3>' + it.dev + '</h3><div class="meta">' + it.fac + ' · ' + it.city + ', IL · Tech: ' + it.tech + '</div>' +
+      '<div class="rows"><div class="row head"><div>Test</div><div>Reading</div><div class="lim">Limit</div><div>Result</div></div>';
+    it.rows.forEach(function (r) {
+      html += '<div class="row' + (r[3] ? '' : ' fail') + '"><div>' + r[0] + '</div><div>' + r[1] + '</div><div class="lim">' + r[2] + '</div>' +
+        '<div><span class="pill ' + (r[3] ? 'ok' : 'bad') + '">' + (r[3] ? 'PASS' : 'FAIL') + '</span></div></div>';
+    });
+    html += '</div>';
+    if (it.flag) html += '<div class="flagnote"><b>Flagged:</b> ' + it.flag + ' item out of limit. Approving records it as a deficiency and marks the device out of service until repaired.</div>';
+    html += '<div class="note"><b>Technician note:</b> ' + escapeHtml(it.note) + '</div>';
+    if (state.approved[it.id]) {
+      html += '<div class="done-msg">✓ Approved and sent to the facility.</div>';
+    } else {
+      html += '<div class="actions"><button class="btn green" id="approve">' + (it.flag ? 'Approve with deficiency & send' : 'Approve & send to facility') + '</button>' +
+        '<button class="btn ghost" id="back">Send back to technician</button></div>';
+    }
+    el.innerHTML = html;
+    var a = document.getElementById('approve');
+    if (a) a.onclick = function () {
+      state.approved[it.id] = true; renderQueue(); renderDetail();
+      toast(it.id === 'oh' ? 'Approved. Report sent to Oak Hollow. Next: see the report →' : 'Approved and sent to ' + it.fac);
+    };
+    var b = document.getElementById('back');
+    if (b) b.onclick = function () { toast('Sent back to ' + it.tech + ' with a comment. It returns here once fixed.'); };
+  }
+
+  // ---------- step 3 ----------
+  function renderDoc() {
+    var it = ohItem(), bad = it.flag > 0;
+    var rows = it.rows.map(function (r) {
+      return '<tr class="' + (r[3] ? '' : 'f') + '"><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td><td class="r" style="color:' + (r[3] ? 'var(--ok)' : 'var(--bad)') + '">' + (r[3] ? 'Pass' : 'Fail') + '</td></tr>';
+    }).join('');
+    var approved = state.approved.oh;
+    document.getElementById('doc').innerHTML =
+      '<div class="dh"><div class="co">Midwest Biomedical Technologies<small>Oak Brook, Illinois · (708) 406-9887</small></div>' +
+      '<div class="rid">Report MBT-IL-26-1109-0142<br>Nov 9, 2026</div></div>' +
+      '<h2>Preventive Maintenance &amp; Electrical Safety Report</h2>' +
+      '<div class="kv"><div><span>Facility:</span> Oak Hollow Care Center, Naperville IL</div><div><span>Device:</span> Defibrillator / monitor</div>' +
+      '<div><span>Asset ID:</span> OH-0142</div><div><span>Location:</span> 2nd floor nurse station</div>' +
+      '<div><span>Visual inspection:</span> Pass (5 of 5)</div><div><span>Next PM due:</span> ' + (bad ? 'After repair' : 'Nov 2027') + '</div></div>' +
+      '<table class="res"><thead><tr><th>Test</th><th>Reading</th><th>Limit</th><th>Result</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+      '<div class="overall ' + (bad ? 'bad' : 'ok') + '">' + (bad ? 'Result: FAIL · device removed from service, repair recommended' : 'Result: PASS · device approved for clinical use') + '</div>' +
+      '<div style="font-size:13px"><b>Notes:</b> ' + escapeHtml(it.note) + '</div>' +
+      '<div class="sigs"><div class="sig"><div class="s">J. Rivera</div>Technician<br><span>Nov 9, 2026 · 2:41 PM</span></div>' +
+      '<div class="sig"><div class="s">' + (approved ? 'R. Novak' : '&nbsp;') + '</div>Reviewing engineer<br><span>' + (approved ? 'Approved Nov 9, 2026 · 4:12 PM' : 'Waiting for approval (step 2)') + '</span></div></div>';
+    document.getElementById('tagout').style.display = bad ? 'flex' : 'none';
+    document.getElementById('ohOverdue').textContent = '0';
+  }
+
+  // ---------- navigation ----------
+  var panels = document.querySelectorAll('.panel');
+  var stepBtns = document.querySelectorAll('.step');
+  function go(n) {
+    state.step = Math.max(0, Math.min(3, n));
+    if (state.step >= 1 && !state.submitted) state.submitted = true;
+    panels.forEach(function (p, i) { p.classList.toggle('active', i === state.step); });
+    stepBtns.forEach(function (b, i) { b.classList.toggle('active', i === state.step); b.classList.toggle('done', i < state.step); });
+    if (state.step === 1) { state.sel = 'oh'; renderQueue(); renderDetail(); }
+    if (state.step === 2) {
+      if (!state.approved.oh) { state.approved.oh = true; }
+      renderDoc();
+    }
+    document.getElementById('prev').disabled = state.step === 0;
+    var nx = document.getElementById('next');
+    nx.style.visibility = state.step === 3 ? 'hidden' : 'visible';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  stepBtns.forEach(function (b) { b.onclick = function () { go(+b.dataset.go); }; });
+  document.getElementById('next').onclick = function () { go(state.step + 1); };
+  document.getElementById('prev').onclick = function () { go(state.step - 1); };
+  document.getElementById('submit1').onclick = function () { state.submitted = true; toast('Submitted. It’s now in the engineer’s review list.'); go(1); };
+  document.getElementById('binder').onclick = function () { toast('Binder PDF: all 48 devices, last test, result and next due date.'); };
+
+  var tt;
+  function toast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(tt); tt = setTimeout(function () { t.classList.remove('show'); }, 2800);
+  }
+  function escapeHtml(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  refresh1(); go(0);
+  var dl = document.querySelector('.devlist'), cur = document.querySelector('.dev.cur');
+  if (dl && cur && dl.scrollWidth > dl.clientWidth) dl.scrollLeft = cur.offsetLeft - 12;
+})();
+</script>
+</body>
+</html>
