@@ -347,7 +347,7 @@ section{padding:40px 0;scroll-margin-top:64px}
 .tpls{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
 .tpl{padding:12px 14px}
 .tpl b{display:block;font-size:15px}.tpl span{font-size:13.5px;color:var(--muted)}
-.price-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:14px;align-items:start}.pcard{padding:20px 22px}.pcard.main{border-color:var(--rose-b)}.pl{font-size:14px;font-weight:700;color:var(--muted)}.pbig{color:var(--green);font-size:40px;font-weight:800;line-height:1.15;margin:4px 0 14px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.pcard:not(.main) .pbig{color:var(--ink)}.psup{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:15px;line-height:1.6}.psup span{color:var(--green)}.pu{white-space:nowrap;text-decoration-thickness:1.5px;text-underline-offset:3px}.vw:not([hidden]){animation:vwfade .3s ease}.vw.clip{overflow:hidden;-webkit-mask-image:linear-gradient(#000 88%,transparent);mask-image:linear-gradient(#000 88%,transparent)}@keyframes vwfade{from{opacity:0}to{opacity:1}}.pside{display:grid;gap:14px}.pside .pbig{font-size:28px;margin-bottom:12px}.pcard.ret .pbig{color:var(--green)}.pcard.extra{margin-top:14px}.pinc.two{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;margin-bottom:0}.pbig small{font-size:14px;font-weight:600;color:var(--muted)}.pinc{list-style:none;margin:0 0 12px;padding:0;font-size:15px;line-height:1.6}.pinc li{position:relative;padding-inline-start:24px;margin-bottom:9px}.pinc li::before{content:"✓";position:absolute;inset-inline-start:0;top:0;color:#b8860b;font-weight:800}
+.price-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:14px;align-items:start}.pcard{padding:20px 22px}.pcard.main{border-color:var(--rose-b)}.pl{font-size:14px;font-weight:700;color:var(--muted)}.pbig{color:var(--green);font-size:40px;font-weight:800;line-height:1.15;margin:4px 0 14px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.pcard:not(.main) .pbig{color:var(--ink)}.psup{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:15px;line-height:1.6}.psup span{color:var(--green)}.pu{white-space:nowrap;text-decoration-thickness:1.5px;text-underline-offset:3px}.vw:not([hidden]){animation:vwfade .3s ease}.vw.clip{overflow:hidden;-webkit-mask-image:linear-gradient(#000 88%,transparent);mask-image:linear-gradient(#000 88%,transparent)}@keyframes vwfade{from{opacity:0}to{opacity:1}}.paybox{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}.pay-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 14px}.pay-row div{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px}.pay-row b{display:block;font-size:21px;font-weight:800;color:var(--green)}.pay-row span{font-size:13px;color:var(--muted)}.pside{display:grid;gap:14px}.pside .pbig{font-size:28px;margin-bottom:12px}.pcard.ret .pbig{color:var(--green)}.pcard.extra{margin-top:14px}.pinc.two{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;margin-bottom:0}.pbig small{font-size:14px;font-weight:600;color:var(--muted)}.pinc{list-style:none;margin:0 0 12px;padding:0;font-size:15px;line-height:1.6}.pinc li{position:relative;padding-inline-start:24px;margin-bottom:9px}.pinc li::before{content:"✓";position:absolute;inset-inline-start:0;top:0;color:#b8860b;font-weight:800}
 @media(max-width:900px){.price-grid,.pinc.two{grid-template-columns:1fr}}
 .need{padding:16px 18px;margin-top:12px}
 .need ul{margin:6px 0 0;padding-inline-start:18px;line-height:1.75;font-size:15px}
@@ -586,11 +586,11 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
 
   <section id="price">
     <div class="sec-h"><span class="sec-n">7</span><h2>הצעת מחיר</h2></div>
-    <p class="sec-p">תשלום אחד על בניית המערכת. אחרי זה: דקות שיחה בפועל וליווי חודשי.<br><strong>כל המחירים סופיים, ללא תוספת מע״מ.</strong></p>
+    <p class="sec-p">המחיר לבניית המערכת, לוח התשלומים ועלות דקת שיחה.<br><strong>כל המחירים סופיים, ללא תוספת מע״מ.</strong></p>
     <div class="price-grid">
       <div class="card pcard main reveal">
         <div class="pl">שלב ראשון · בניית מערכת הגבייה</div>
-        <div class="pbig">₪25,000<small>תשלום חד-פעמי</small></div>
+        <div class="pbig">₪25,000<small>בשלושה תשלומים</small></div>
         <ul class="pinc">
           <li><b>חיבור לפריוריטי, לקריאה בלבד.</b> רשימת החייבים בחוזי שירות, בלי שיפוצים וחלקים, מתעדכנת כל יום.</li>
           <li><b>סוכנת קולית בעברית</b> שמתקשרת לפי החוקים של אור: כמה ניסיונות, באילו ימים ושעות, ומי לא מקבל שיחה.</li>
@@ -601,7 +601,14 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
           <li><b>מסך מבט על לשמעיה:</b> כמה כסף נכנס לבנק, גיל החובות, וכמה לקוחות עברו להוראת קבע.</li>
           <li><b>כוונון התסריט יחד עם אור</b> בחודש הראשון, והסכם סודיות. המידע נשאר שלכם.</li>
         </ul>
-        <div class="sim">תוך כחודש המערכת עובדת, ומתחילים מהלקוחות עם החובות הגדולים והוותיקים.</div>
+        <div class="paybox">
+          <div class="pl">תשלומים</div>
+          <div class="pay-row"><div><b>₪8,000</b><span>10.11 · תשלום ראשון</span></div><div><b>₪8,000</b><span>20.11 · תשלום שני</span></div><div><b>₪9,000</b><span>30.11 · תשלום שלישי</span></div></div>
+          <ul class="pinc">
+            <li><b>תוך כשבוע המערכת באוויר.</b> אחר כך מתחילים בניתוח השיחות, שיפורים ואוטומציות נוספות.</li>
+            <li><b>בחודש השני:</b> תמיכה, שיפורים ודיוקים בלי עלות נוספת.</li>
+          </ul>
+        </div>
       </div>
       <div class="pside">
       <div class="card pcard reveal">
@@ -613,19 +620,6 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
           <li><b>לדוגמה:</b> 50 לקוחות בחודש, כשלוש שיחות של כדקה לכל אחד, הם כ-150 דקות. כלומר כ-₪150 בחודש.</li>
           <li><b>וואטסאפ אוטומטי</b>, אם תבחרו בו: לפי המחיר של Meta, כ-4 אגורות להודעה.</li>
         </ul>
-      </div>
-      <div class="card pcard ret reveal">
-        <div class="pl">ליווי שוטף · מהחודש השני</div>
-        <div class="pbig">₪1,500<small>לחודש</small></div>
-        <ul class="pinc">
-          <li><b>המערכת רצה ומאוחסנת,</b> ויש מי שאחראי עליה.</li>
-          <li><b>תיקון תקלות במערכת,</b> ומענה בוואטסאפ באותו יום עבודה.</li>
-          <li><b>עד 4 שעות עבודה בחודש:</b> האזנה למדגם שיחות, שיפור התסריט של הסוכנת ושינויים במערכת.</li>
-          <li><b>עבודה מעבר לזה</b> בתיאום מראש ובתשלום נפרד.</li>
-          <li><b>סיכום חודשי קצר.</b></li>
-          <li><b>בלי התחייבות.</b> התשלום החודשי בהוראת קבע.</li>
-        </ul>
-        <div class="sim">עם שלב שני: <u class="pu">₪3,350 לחודש</u>, עד 8 שעות עבודה.</div>
       </div>
       </div>
     </div>
@@ -645,7 +639,6 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
           <li><b>מבט על לשמעיה.</b> קריאות פתוחות וסגורות ביום, בחודש ובשנה, ולצידן הכסף.</li>
           <li><b>מסך לכל תפקיד.</b> טכנאים, צוות מכני, גיא, משרד, הנהלת חשבונות ובעלים, מכל טלפון או מחשב עם אינטרנט.</li>
       </ul>
-      <div class="psup"><b>ליווי שוטף למערכת: <span>עוד ₪1,850 לחודש</span>, מהחודש השני.</b> אחסון, תיקון תקלות, מענה בוואטסאפ, ועד 4 שעות עבודה נוספות בחודש על שינויים במערכת. יחד עם הגבייה <u class="pu">₪3,350 לחודש</u>, בלי התחייבות ובהוראת קבע.</div>
     </div>
     <div class="presenter" id="presenter">
       <b>לאייל: סדר ההדגמה בפגישה</b> <span class="sim">(מוצג רק בקישור המציג)</span>
@@ -663,7 +656,7 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
           <a class="btn sm" data-go="acct=a4101" target="_blank" rel="noopener">טיפול אישי</a></li>
         <li><b>ההתראה במייל</b> (חלק 5) <b>והוואטסאפ האוטומטי</b> (חלק 6).</li>
         <li><b>שיחות אמיתיות לדוגמה:</b> בכל לקוח בחלק 4 יש הקלטה אמיתית מ-Retell עם תמלול. מתחת ללקוחות יש עוד שני מקרים: "כבר שילמנו" ו"אני כבר לא בוועד". אפשר גם לנגן את כל השבע ברצף.<br><a class="btn sm" href="demos/all-seven.mp3?v=3" target="_blank" rel="noopener">כל שבע השיחות ברצף (3:44)</a></li>
-        <li><b>הצעת המחיר</b> (חלק 7): ₪25,000 לבנייה, ₪1 לדקת שיחה מהמספר של צמרת, וליווי שוטף ב-₪1,500 לחודש. אחר כך שלב שני: מערכת שירות ושטח, ₪35,000, ועוד ₪1,850 לחודש לליווי.</li>
+        <li><b>הצעת המחיר</b> (חלק 7): ₪25,000 לבנייה בשלושה תשלומים (10.11, 20.11, 30.11), ₪1 לדקת שיחה מהמספר של צמרת, והחודש השני בלי עלות נוספת. אחר כך שלב שני: מערכת שירות ושטח, ₪35,000.</li>
       </ol>
       <div class="sim">שיחת טלפון אמיתית לאור רק אחרי "go" ל-Codex, לפי רשימת הבדיקה שלו. בשיחת בדיקה בדפדפן נשלחת התראה רק אליך.</div>
     </div>
