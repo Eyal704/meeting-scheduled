@@ -11,15 +11,87 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=David+Libre:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=soft-blue-8" />
+  <style>
+    #demo-gate{min-height:100dvh;display:grid;place-items:center;padding:24px;background:#f3f6fa}
+    #demo-gate[hidden]{display:none}
+    #demo-gate form{width:100%;max-width:380px;padding:32px;background:white;border:1px solid #dce3ec;border-radius:18px;box-shadow:0 16px 48px #24364b0d}
+    #demo-gate img{display:block;width:160px;height:auto;margin:0 auto 24px}
+    #demo-gate h1{font-size:26px;margin:0 0 10px}
+    #demo-gate p{color:#596b80;margin:0 0 24px}
+    #demo-gate label{display:block;margin-bottom:8px}
+    #demo-password{box-sizing:border-box;width:100%;min-height:48px;padding:10px 12px;border:1px solid #aab8ca;border-radius:8px;font:inherit;font-size:16px}
+    #demo-password:focus-visible,#demo-enter:focus-visible{outline:3px solid #7496bc;outline-offset:3px}
+    #demo-enter{width:100%;min-height:48px;margin-top:16px;border:0;border-radius:8px;background:#435f7b;color:white;font:inherit;cursor:pointer}
+    #demo-enter:disabled{opacity:.65;cursor:wait}
+    #demo-gate #demo-error{min-height:24px;margin:12px 0 0;color:#a82d36;font-size:14px}
+  </style>
 </head>
 <body>
+  <main id="demo-gate">
+    <form id="demo-login">
+      <img src="assets/moran-logo.png" alt="מורן מהנדסים" />
+      <h1>כניסה לדמו</h1>
+      <p>הזינו את הסיסמה שקיבלתם כדי להמשיך.</p>
+      <label for="demo-password">סיסמה</label>
+      <input id="demo-password" name="password" type="password" autocomplete="current-password" required autofocus aria-describedby="demo-error" />
+      <button id="demo-enter" type="submit">כניסה</button>
+      <p id="demo-error" role="alert" aria-live="polite"></p>
+      <noscript>יש להפעיל JavaScript בדפדפן כדי להיכנס לדמו.</noscript>
+    </form>
+  </main>
   <div id="app"></div>
   <div id="coach" role="dialog" aria-live="polite"></div>
   <div id="toast" role="status" aria-live="polite"></div>
   <dialog id="modal"></dialog>
-  <script src="checklist.js?v=mobile-6"></script>
-  <script src="report-form.js?v=mobile-6"></script>
-  <script src="experience.js?v=labels-9"></script>
-  <script src="app.js?v=labels-7"></script>
+  <script>
+    // Basic client-side demo gate; static files remain publicly accessible.
+    (() => {
+      const form = document.getElementById('demo-login');
+      const password = document.getElementById('demo-password');
+      const button = document.getElementById('demo-enter');
+      const error = document.getElementById('demo-error');
+      let loading = false;
+      password.addEventListener('input', () => {
+        password.removeAttribute('aria-invalid');
+        error.textContent = '';
+      });
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (loading) return;
+        if (password.value !== 'א') {
+          error.textContent = 'הסיסמה שגויה. נסו שוב.';
+          password.setAttribute('aria-invalid', 'true');
+          password.focus();
+          password.select();
+          return;
+        }
+        loading = true;
+        button.disabled = true;
+        button.textContent = 'טוען…';
+        error.textContent = '';
+        password.value = '';
+        try {
+          for (const src of ['checklist.js?v=mobile-6', 'report-form.js?v=mobile-6', 'experience.js?v=labels-9', 'app.js?v=labels-7']) {
+            await new Promise((resolve, reject) => {
+              const script = document.createElement('script');
+              script.src = src;
+              script.onload = resolve;
+              script.onerror = reject;
+              document.body.appendChild(script);
+            });
+          }
+          document.getElementById('demo-gate').hidden = true;
+          const heading = document.querySelector('#app h1');
+          if (heading) {
+            heading.setAttribute('tabindex', '-1');
+            heading.focus({ preventScroll: true });
+          }
+        } catch {
+          error.textContent = 'הדמו לא נטען. רעננו את העמוד ונסו שוב.';
+          button.textContent = 'יש לרענן את העמוד';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
