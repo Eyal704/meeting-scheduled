@@ -343,11 +343,11 @@ footer small{display:block;font-size:12.5px;color:var(--faint);margin-top:4px}
 
   <section id="console">
     <div class="sec-h"><span class="sec-n">4</span><h2 data-de="Was Aharon sieht und steuert">מה אהרון רואה ושולט</h2></div>
-    <p class="sec-p" data-de="Zuerst der Überblick: wie viele frühere Aufträge es gibt und was auf Aharon wartet. Ein Klick auf eine Zahl führt zu den Kunden, und im Profil jedes Kunden stehen das Gespräch und was als Nächstes geplant ist.">קודם תמונה כללית: כמה הזמנות קודמות יש, ומה מחכה לאהרון. לוחצים על מספר ויורדים ללקוחות, ובכרטיס של כל לקוח רואים את השיחה ומה מתוכנן לו.</p>
+    <p class="sec-p" data-de="Wählen Sie einen Kunden, hören Sie das Gespräch an und sehen Sie, was als Nächstes geplant ist. Unter Überblick finden Sie die Gesamtzahlen und die Aufgaben für Aharon.">בוחרים לקוח, מאזינים לשיחה ורואים מה מתוכנן לו. בלשונית ״תמונה כללית״ אפשר לראות את הנתונים הכוללים ומה מחכה לאהרון.</p>
     <div class="card cons reveal">
       <div class="voice-controls"><div><b data-de="Stimme für die Aufnahmen wählen">בחירת קול להקלטות</b><div class="sim" data-de="Sechs Aufnahmen je Stimme. Bei Lena antworten die Kunden mit Karls Stimme. Der Telefon-Livetest nutzt weiterhin Karl.">שש הקלטות לכל קול. בגרסת Lena הלקוחות עונים בקול של Karl. הדגמת הטלפון החיה נשארת עם Karl.</div></div><div class="vt" id="voiceTabs" role="group" aria-label="Voice"><button data-voice="lena">Lena</button><button data-voice="karl">Karl</button></div><button class="btn sm pri" id="listenExamples" data-de="Gespräche anhören">להאזנה לשיחות</button></div><div class="cons-top">
         <div class="agent"><span class="dot"></span><div><b data-de="Karl ist aktiv">Karl פעיל</b><div class="sim" style="margin:0" data-de="Ruft nach Aharons Regeln an, Mo–Fr, 9:00–18:00.">מתקשר לפי החוקים של אהרון, בימים ב׳–ו׳, 09:00–18:00.</div></div></div>
-        <div class="vt" id="viewTabs"><button data-v="over" class="on" data-de="Überblick">תמונה כללית</button><button data-v="list" data-de="Kunden">לקוחות</button></div>
+        <div class="vt" id="viewTabs"><button data-v="list" class="on" data-de="Kunden">לקוחות</button><button data-v="over" data-de="Überblick">תמונה כללית</button></div>
       </div>
       <div class="crumbs" id="crumbs"></div>
       <div id="viewOver">
@@ -578,7 +578,7 @@ const CUSTS=[
   plan:[],
   call:{t:'16.11 · 12:20',dur:'0:14',out:'stop',sum:['ביקש שלא יתקשרו, Karl התנצל וסיים','Keine Anrufe mehr, Karl entschuldigt sich'],
   tr:[['cu','Ja?','כן?'],['ag',OPEN('Herrn Leitner'),OPEN_HE('מר לייטנר')],['cu','Ja. Aber bitte rufen Sie mich nicht mehr an.','כן. אבל בבקשה אל תתקשרו אליי יותר.'],['ag','Verstanden. Ich trage das sofort ein, Sie bekommen von uns keine Anrufe mehr. Entschuldigen Sie die Störung, auf Wiederhören.','הבנתי. אני רושם את זה מיד, לא תקבל מאיתנו יותר שיחות. סליחה על ההפרעה, להתראות.']]}}];
-let view='over',fil=null,sel='berger',log=[],trTimers=[];
+let view='list',fil=null,sel='berger',log=[],trTimers=[];
 const now=()=>new Date().toLocaleTimeString(L==='he'?'he-IL':'de-AT',{hour:'2-digit',minute:'2-digit'});
 const stLabel=k=>{const x=ST.find(s=>s[0]===k)||WAIT.find(s=>s[0]===k);return x?P(x[1]):''};
 function drawOver(){const max=Math.max(...AGE.map(a=>a[1]));
