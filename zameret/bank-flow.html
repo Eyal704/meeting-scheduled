@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light">
+<meta name="darkreader-lock">
+<title>צמרת מעליות · התאמות בנק</title>
+<meta name="description" content="מהעברה בבנק לקבלה ללקוח: התאמה לחשבונית, אישור בלחיצה, והסוכנת מפסיקה לפנות.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:site_name" content="MeetingScheduled">
+<meta property="og:url" content="https://www.meeting-scheduled.com/zameret/bank-flow.html">
+<meta property="og:title" content="התאמות בנק · צמרת מעליות">
+<meta property="og:description" content="מהעברה בבנק לקבלה ללקוח: התאמה לחשבונית, אישור בלחיצה, והסוכנת מפסיקה לפנות.">
+<meta property="og:image" content="https://www.meeting-scheduled.com/zameret/og-bank.jpg">
+<meta property="og:image:secure_url" content="https://www.meeting-scheduled.com/zameret/og-bank.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="התנועות מהבנק של היום, מותאמות לחשבוניות של צמרת מעליות">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1c1c1e;--muted:#6c6c72;--faint:#a0a0a8;--line:#ece4e6;--bg:#fdf9fa;--card:#fff;--rose:#c9536e;--rose2:#a84059;--rose-t:#fdf2f4;--rose-b:#e9cfd6;--teal:#2f6f63;--teal-t:#e6f2ef;--amber:#b7791f;--amber-t:#fbf3e4;--green:#2f7d4f;--green-t:#e8f4ec;--blue:#3f5fa8;--blue-t:#ebf0fa;--shadow:0 1px 2px rgba(22,35,43,.05),0 8px 24px rgba(22,35,43,.07)}
+*{box-sizing:border-box}html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Heebo',system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip}
+h1,h2,h3,p{margin:0}button{font:inherit;cursor:pointer}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.topbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;min-height:58px;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.mark{width:32px;height:32px;border-radius:9px;background:var(--rose-t);color:var(--rose);display:grid;place-items:center}
+.back{color:var(--ink);text-decoration:none;font-size:15px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;white-space:nowrap}
+.hero{padding:56px 0 24px;text-align:center}
+.hero h1{font-size:52px;font-weight:800;line-height:1.15;letter-spacing:-.6px}
+.hero h1 span{color:var(--rose)}
+.lead{max-width:720px;margin:18px auto 0;color:var(--muted);font-size:18px}
+section{padding:34px 0}
+.sec-h{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.sec-n{width:30px;height:30px;border-radius:50%;background:var(--rose);color:#fff;display:grid;place-items:center;font-weight:800;font-size:15px;flex:none}
+.sec-h h2{font-size:24px;font-weight:800}
+.sec-p{color:var(--muted);margin:0 0 18px;padding-inline-start:42px;font-size:15.5px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.step{padding:18px;position:relative}
+.step .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--rose-t);color:var(--rose);margin-bottom:10px}
+.step .ic svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8}
+.step b{display:block;font-size:16px;margin-bottom:4px}.step p{font-size:14px;color:var(--muted)}
+.step small{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--rose2);background:var(--rose-t);border-radius:999px;padding:2px 10px}
+.inbox{padding:6px 0}
+.inbox-h{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 20px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.inbox-h b{font-size:16px;flex:1}.inbox-h .btn{padding:6px 12px;font-size:13px}.tag.none{background:var(--amber-t);color:var(--amber)}.ltr{direction:ltr;unicode-bidi:isolate;white-space:nowrap;display:inline-block}.inbox-h .sum{font-size:14px;color:var(--muted)}.inbox-h .sum b{color:var(--green);font-size:14px}
+.tx{display:grid;grid-template-columns:150px 1fr auto;gap:16px;align-items:center;padding:14px 20px;border-bottom:1px solid #f4eef0;transition:background .3s}
+.tx:last-child{border-bottom:0}
+.tx .amt{font-size:20px;font-weight:800}.tx .amt small{display:block;font-size:12px;font-weight:500;color:var(--muted)}
+.tx .who{font-size:14.5px}.tx .who b{font-size:15px}.tx .who .arrow{color:var(--faint);margin:0 6px}
+.tx .why{font-size:12.5px;color:var(--muted);margin-top:3px}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 9px;margin-inline-start:6px;vertical-align:1px}
+.tag.full{background:var(--green-t);color:var(--green)}.tag.part{background:var(--blue-t);color:var(--blue)}.tag.none{background:var(--amber-t);color:var(--amber)}
+.act{display:flex;gap:8px;align-items:center}
+.btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 14px;font-weight:700;font-size:14px;color:var(--ink);white-space:nowrap}
+.btn.pri{background:var(--rose);border-color:var(--rose);color:#fff}
+.btn:disabled{opacity:.5;cursor:default}
+select.pick{font:inherit;font-size:13.5px;border:1px solid var(--line);border-radius:10px;padding:7px 10px;background:#fff;max-width:190px}
+.tx.done{background:#f6fbf8}
+.tx.done .act{display:none}
+.okline{display:none;font-size:13px;font-weight:600;color:var(--green);margin-top:5px}
+.tx.done .okline{display:block}
+.note{font-size:13px;color:var(--muted);margin-top:10px;padding-inline-start:4px}
+.rep{display:grid;grid-template-columns:1fr 1.2fr;gap:14px}
+.rep .card{padding:20px}
+.big{font-size:34px;font-weight:800;line-height:1.1}.big small{font-size:14px;font-weight:500;color:var(--muted);margin-inline-start:6px}
+.stack{display:flex;gap:2px;height:14px;border-radius:7px;overflow:hidden;margin:14px 0 12px;background:#f1eaed}.stack i{display:block;height:100%}
+.srow{display:flex;align-items:center;gap:9px;font-size:14px;padding:4px 0}.srow i{width:10px;height:10px;border-radius:50%;flex:none}.srow span{flex:1}
+.list-h{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:8px}
+.lrow{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #f4eef0;font-size:14px}.lrow:last-child{border-bottom:0}
+.lrow small{display:block;color:var(--muted);font-size:12px}
+.need{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.need .card{padding:18px}.need b{display:block;margin-bottom:4px;font-size:15.5px}.need p{font-size:14px;color:var(--muted)}
+.links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+.links a{color:var(--ink);text-decoration:none;font-weight:700;font-size:14.5px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px}
+footer{padding:28px 0 48px;color:var(--muted);font-size:14px;text-align:center}
+@media(max-width:900px){.steps{grid-template-columns:1fr 1fr}.rep{grid-template-columns:1fr}.need{grid-template-columns:1fr}.hero h1{font-size:38px}}
+@media(max-width:640px){.steps{grid-template-columns:1fr}.tx{grid-template-columns:1fr;gap:8px}.sec-p{padding-inline-start:0}.hero{padding-top:36px}.hero h1{font-size:32px}.lead{font-size:16px}}
+.only{max-width:980px;padding-top:40px;padding-bottom:10px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap only">
+  <div class="card inbox">
+    <div class="inbox-h"><b>התנועות מהבנק · היום</b><span class="sum" id="sum"></span><button class="btn" id="bulk">אישור כל ההתאמות המלאות</button></div>
+    <div class="tx" data-amt="742.5" data-full="1">
+      <div class="amt">₪742.50<small>העברה · 08:12</small></div>
+      <div><div class="who"><b>ועד בית הערבה 16</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1002</span><span class="tag full">התאמה מלאה</span></div><div class="why">הסכום ושם המשלם זהים לחשבונית הפתוחה.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
+    </div>
+    <div class="tx" data-amt="1290">
+      <div class="amt">₪1,290<small>העברה · 08:40</small></div>
+      <div><div class="who"><b>מיכל לוי</b><span class="arrow">←</span>ועד בית התבור 9 · 2 חשבוניות<span class="tag part">התאמה לפי הגזברית</span></div><div class="why">מיכל רשומה בתיק כגזברית הבניין. הסכום מכסה שתי חשבוניות, של 890 ושל 400 ש״ח.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
+    </div>
+    <div class="tx" data-amt="398" data-full="1">
+      <div class="amt">₪398<small>העברה · 09:05</small></div>
+      <div><div class="who"><b>נציגות החרוב 21</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1016</span><span class="tag full">התאמה מלאה</span></div><div class="why">הסכום ושם המשלם זהים לחשבונית הפתוחה.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
+    </div>
+    <div class="tx" data-amt="1000">
+      <div class="amt">₪1,000<small>העברה · 09:31</small></div>
+      <div><div class="who"><b>י. כהן</b><span class="tag none">לא נמצא לקוח מתאים</span></div><div class="why">אין חשבונית פתוחה בסכום הזה, ואין משלם בשם הזה בתיקים. בוחרים לקוח, והמערכת תזכור את המשלם בפעם הבאה.</div><div class="okline">שויך ונשמר · הקבלה נשלחה במייל · בפעם הבאה ההתאמה תהיה אוטומטית</div></div>
+      <div class="act"><select class="pick" aria-label="שיוך ללקוח"><option value="">שיוך ללקוח…</option><option>ועד בית הגפן 40</option><option>ועד בית הנרקיס 22</option><option>בית האלון 14</option><option>ועד בית השקמה 8</option><option>נציגות הארז 11</option><option>ועד בית הרימון 5</option><option>ועד בית הדולב 19</option><option>ועד בית הכרמל 30</option><option>נציגות הזית 3</option><option>ועד בית האורן 5</option><option>ועד בית הברוש 2</option><option>ועד בית החצב 17</option><option>ועד בית הצאלון 6</option><option>ועד בית הלוטם 9</option><option>חברת ניהול אופק</option></select><button class="btn" data-ok disabled>שיוך ואישור</button></div>
+    </div>
+    <div class="tx" data-amt="890" data-full="1">
+      <div class="amt">₪890<small>העברה · 09:44</small></div>
+      <div><div class="who"><b>נציגות הזית 3</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1031</span><span class="tag full">התאמה מלאה</span></div><div class="why">הסכום ושם המשלם זהים לחשבונית הפתוחה.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
+    </div>
+    <div class="tx" data-amt="445">
+      <div class="amt">₪445<small>העברה · 09:58</small></div>
+      <div><div class="who"><b>ועד בית הנרקיס 22</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1021</span><span class="tag part">תשלום חלקי</span></div><div class="why">החשבונית על 890 ש״ח. הקבלה תהיה על 445, ונשארת יתרה של 445 ש״ח במעקב.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
+    </div>
+    <div class="tx" data-amt="1555" data-full="1">
+      <div class="amt">₪1,555<small>צ׳ק · 10:10</small></div>
+      <div><div class="who"><b>בית האלון 14</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-0987</span><span class="tag full">התאמה מלאה</span></div><div class="why">הפקדת צ׳ק. מספר הצ׳ק והסכום תואמים לחשבונית.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
+    </div>
+    <div class="tx" data-amt="2380">
+      <div class="amt">₪2,380<small>העברה · 10:22</small></div>
+      <div><div class="who"><b>חברת ניהול אופק</b><span class="arrow">←</span>3 בניינים · 3 חשבוניות<span class="tag part">לפי פירוט ההעברה</span></div><div class="why">בפירוט ההעברה מופיעים הדולב 19, האורן 5 והברוש 2. הסכום מתחלק בין שלוש החשבוניות.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
+    </div>
+    <div class="tx" data-amt="612">
+      <div class="amt">₪612<small>העברה · 10:37</small></div>
+      <div><div class="who"><b>ר. אברהם</b><span class="tag none">לא נמצא לקוח מתאים</span></div><div class="why">אין חשבונית פתוחה בסכום הזה, ואין משלם בשם הזה בתיקים. בוחרים לקוח, והמערכת תזכור את המשלם בפעם הבאה.</div><div class="okline">שויך ונשמר · הקבלה נשלחה במייל · בפעם הבאה ההתאמה תהיה אוטומטית</div></div>
+      <div class="act"><select class="pick" aria-label="שיוך ללקוח"><option value="">שיוך ללקוח…</option><option>ועד בית הגפן 40</option><option>ועד בית הנרקיס 22</option><option>בית האלון 14</option><option>ועד בית השקמה 8</option><option>נציגות הארז 11</option><option>ועד בית הרימון 5</option><option>ועד בית הדולב 19</option><option>ועד בית הכרמל 30</option><option>נציגות הזית 3</option><option>ועד בית האורן 5</option><option>ועד בית הברוש 2</option><option>ועד בית החצב 17</option><option>ועד בית הצאלון 6</option><option>ועד בית הלוטם 9</option><option>חברת ניהול אופק</option></select><button class="btn" data-ok disabled>שיוך ואישור</button></div>
+    </div>
+    <div class="tx" data-amt="3980" data-full="1">
+      <div class="amt">₪3,980<small>העברה · 10:51</small></div>
+      <div><div class="who"><b>ועד בית הגפן 40</b><span class="arrow">←</span>5 חשבוניות · ספטמבר עד ינואר<span class="tag full">סוגר את כל החוב</span></div><div class="why">הסכום תואם בדיוק לכל החשבוניות הפתוחות של הבניין.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
+    </div>
+    <div class="tx" data-amt="800">
+      <div class="amt">₪800<small>העברה · 11:06</small></div>
+      <div><div class="who"><b>ועד בית השקמה 8</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1044</span><span class="tag none">סכום שונה</span></div><div class="why">החשבונית על 742.50 ש״ח, וההעברה גבוהה ב-57.50. כדאי לבדוק לפני אישור.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
+    </div>
+    <div class="tx" data-amt="5740" data-full="1">
+      <div class="amt">₪5,740<small>מס״ב · 11:15</small></div>
+      <div><div class="who"><b>גביית הוראות קבע</b><span class="arrow">←</span>8 לקוחות<span class="tag full">לפי קובץ החיוב</span></div><div class="why">כל שורה בקובץ החיוב מותאמת ללקוח ולחשבונית שלו.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
+    </div>
+    <div class="tx" data-amt="350">
+      <div class="amt">₪350<small>הפקדת מזומן · 11:28</small></div>
+      <div><div class="who"><b>ללא שם</b><span class="tag none">לא נמצא לקוח מתאים</span></div><div class="why">הפקדת מזומן בלי פרטי משלם. בוחרים לקוח, או משאירים לבדיקה.</div><div class="okline">שויך ונשמר · הקבלה נשלחה במייל · בפעם הבאה ההתאמה תהיה אוטומטית</div></div>
+      <div class="act"><select class="pick" aria-label="שיוך ללקוח"><option value="">שיוך ללקוח…</option><option>ועד בית הגפן 40</option><option>ועד בית הנרקיס 22</option><option>בית האלון 14</option><option>ועד בית השקמה 8</option><option>נציגות הארז 11</option><option>ועד בית הרימון 5</option><option>ועד בית הדולב 19</option><option>ועד בית הכרמל 30</option><option>נציגות הזית 3</option><option>ועד בית האורן 5</option><option>ועד בית הברוש 2</option><option>ועד בית החצב 17</option><option>ועד בית הצאלון 6</option><option>ועד בית הלוטם 9</option><option>חברת ניהול אופק</option></select><button class="btn" data-ok disabled>שיוך ואישור</button></div>
+    </div>
+    <div class="tx" data-amt="1180" data-full="1">
+      <div class="amt">₪1,180<small>העברה · 11:42</small></div>
+      <div><div class="who"><b>ועד בית הכרמל 30</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1050</span><span class="tag full">התאמה מלאה</span></div><div class="why">הסכום ושם המשלם זהים לחשבונית הפתוחה.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
+    </div>
+  </div>
+  <p class="note">חלק מהשלב השני, ונבנה במקביל למערכת הגבייה. התנועות והסכומים לדוגמה. הקבלה עצמה מופקת בפריוריטי, עם המספור שלכם, ונשלחת ללקוח רק אחרי אישור.</p>
+</main>
+
+<footer>צמרת מעליות · מערכת שירות וגבייה · נבנה על ידי MeetingScheduled</footer>
+<script>
+(()=>{const rows=[...document.querySelectorAll('.tx')],sum=document.getElementById('sum'),bulk=document.getElementById('bulk');
+const ils=n=>'₪'+n.toLocaleString('he-IL',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
+function upd(){const done=rows.filter(r=>r.classList.contains('done'));const amt=done.reduce((n,r)=>n+Number(r.dataset.amt),0);sum.innerHTML=done.length?`${done.length} מתוך ${rows.length} טופלו · <b>${ils(amt)} נקלטו</b>`:`${rows.length} תנועות · ${rows.filter(r=>r.querySelector('.tag.none')).length} לבדיקה`;
+ const left=rows.filter(r=>r.dataset.full&&!r.classList.contains('done')).length;bulk.textContent=left?`אישור כל ההתאמות המלאות (${left})`:'כל ההתאמות המלאות אושרו';bulk.disabled=!left}
+function approve(r){const s=r.querySelector('select');if(s&&s.value){r.querySelector('.who b').textContent=s.value+' · משלם: '+r.querySelector('.who b').textContent;const t=r.querySelector('.tag');t.className='tag part';t.textContent='שויך ידנית'}r.classList.add('done')}
+rows.forEach(r=>{const b=r.querySelector('[data-ok]'),s=r.querySelector('select');if(s)s.onchange=()=>{b.disabled=!s.value};b.onclick=()=>{approve(r);upd()}});
+bulk.onclick=()=>{rows.filter(r=>r.dataset.full&&!r.classList.contains('done')).forEach(approve);upd()};upd()})();
+</script>
+</body>
+</html>
