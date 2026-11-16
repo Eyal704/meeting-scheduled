@@ -87,6 +87,15 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:14px;text-align:center}
 @media(max-width:900px){.steps{grid-template-columns:1fr 1fr}.rep{grid-template-columns:1fr}.need{grid-template-columns:1fr}.hero h1{font-size:38px}}
 @media(max-width:640px){.steps{grid-template-columns:1fr}.tx{grid-template-columns:1fr;gap:8px}.sec-p{padding-inline-start:0}.hero{padding-top:36px}.hero h1{font-size:32px}.lead{font-size:16px}}
 .only{max-width:980px;padding-top:40px;padding-bottom:10px}
+.lnk{display:flex;gap:14px;margin-top:6px}.lnk{flex-wrap:wrap}.lnk button{white-space:nowrap;border:0;background:none;padding:0;color:var(--rose2);font-weight:600;font-size:13px;text-decoration:underline;text-underline-offset:3px}
+dialog{border:0;border-radius:20px;width:min(560px,94vw);padding:24px 26px;box-shadow:0 24px 80px rgba(30,20,25,.25);font-size:15px}dialog::backdrop{background:rgba(40,25,32,.45)}
+dialog .x{position:absolute;top:14px;left:14px;border:1px solid var(--line);background:#fff;border-radius:50%;width:32px;height:32px;font-size:13px}
+dialog h3{font-size:19px;margin:0 0 2px;padding-inline-end:44px}.dim{color:var(--muted);font-size:13px;margin-top:10px}
+.rc-h{padding-inline-end:44px;display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:12px}.rc-h b{font-size:18px}.rc-h small{display:block;color:var(--muted);font-size:13px}
+.st{font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;background:var(--amber-t);color:var(--amber)}.st.ok{background:var(--green-t);color:var(--green)}
+.rc-g,.cg{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-bottom:14px}.rc-g small,.cg small,.tl small{display:block;color:var(--muted);font-size:12px}.cg{grid-template-columns:repeat(3,1fr);margin-top:14px}.cg b{font-size:15px}
+dialog table{width:100%;border-collapse:collapse;font-size:14px}dialog th,dialog td{text-align:right;padding:8px 6px;border-bottom:1px solid #f3edef}dialog th{color:var(--muted);font-size:12px}dialog td:last-child,dialog th:last-child{text-align:left}dialog tfoot td{font-weight:800;border-bottom:0}
+.tl{border-inline-start:2px solid var(--rose-b);padding-inline-start:14px;display:grid;gap:10px;font-size:14px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -94,89 +103,107 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:14px;text-align:center}
 <main class="wrap only">
   <div class="card inbox">
     <div class="inbox-h"><b>התנועות מהבנק · היום</b><span class="sum" id="sum"></span><button class="btn" id="bulk">אישור כל ההתאמות המלאות</button></div>
-    <div class="tx" data-amt="742.5" data-full="1">
+    <div class="tx" data-i="0" data-amt="742.5" data-full="1">
       <div class="amt">₪742.50<small>העברה · 08:12</small></div>
-      <div><div class="who"><b>ועד בית הערבה 16</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1002</span><span class="tag full">התאמה מלאה</span></div><div class="why">הסכום ושם המשלם זהים לחשבונית הפתוחה.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div><div class="who"><b>ועד בית הערבה 16</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1002</span><span class="tag full">התאמה מלאה</span></div><div class="why">הסכום ושם המשלם זהים לחשבונית הפתוחה.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
       <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
     </div>
-    <div class="tx" data-amt="1290">
+    <div class="tx" data-i="1" data-amt="1290">
       <div class="amt">₪1,290<small>העברה · 08:40</small></div>
-      <div><div class="who"><b>מיכל לוי</b><span class="arrow">←</span>ועד בית התבור 9 · 2 חשבוניות<span class="tag part">התאמה לפי הגזברית</span></div><div class="why">מיכל רשומה בתיק כגזברית הבניין. הסכום מכסה שתי חשבוניות, של 890 ושל 400 ש״ח.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div><div class="who"><b>מיכל לוי</b><span class="arrow">←</span>ועד בית התבור 9 · 2 חשבוניות<span class="tag part">התאמה לפי הגזברית</span></div><div class="why">מיכל רשומה בתיק כגזברית הבניין. הסכום מכסה שתי חשבוניות, של 890 ושל 400 ש״ח.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
       <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
     </div>
-    <div class="tx" data-amt="398" data-full="1">
+    <div class="tx" data-i="2" data-amt="398" data-full="1">
       <div class="amt">₪398<small>העברה · 09:05</small></div>
-      <div><div class="who"><b>נציגות החרוב 21</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1016</span><span class="tag full">התאמה מלאה</span></div><div class="why">הסכום ושם המשלם זהים לחשבונית הפתוחה.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div><div class="who"><b>נציגות החרוב 21</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1016</span><span class="tag full">התאמה מלאה</span></div><div class="why">הסכום ושם המשלם זהים לחשבונית הפתוחה.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
       <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
     </div>
-    <div class="tx" data-amt="1000">
+    <div class="tx" data-i="3" data-amt="1000">
       <div class="amt">₪1,000<small>העברה · 09:31</small></div>
-      <div><div class="who"><b>י. כהן</b><span class="tag none">לא נמצא לקוח מתאים</span></div><div class="why">אין חשבונית פתוחה בסכום הזה, ואין משלם בשם הזה בתיקים. בוחרים לקוח, והמערכת תזכור את המשלם בפעם הבאה.</div><div class="okline">שויך ונשמר · הקבלה נשלחה במייל · בפעם הבאה ההתאמה תהיה אוטומטית</div></div>
+      <div><div class="who"><b>י. כהן</b><span class="tag none">לא נמצא לקוח מתאים</span></div><div class="why">אין חשבונית פתוחה בסכום הזה, ואין משלם בשם הזה בתיקים. בוחרים לקוח, והמערכת תזכור את המשלם בפעם הבאה.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">שויך ונשמר · הקבלה נשלחה במייל · בפעם הבאה ההתאמה תהיה אוטומטית</div></div>
       <div class="act"><select class="pick" aria-label="שיוך ללקוח"><option value="">שיוך ללקוח…</option><option>ועד בית הגפן 40</option><option>ועד בית הנרקיס 22</option><option>בית האלון 14</option><option>ועד בית השקמה 8</option><option>נציגות הארז 11</option><option>ועד בית הרימון 5</option><option>ועד בית הדולב 19</option><option>ועד בית הכרמל 30</option><option>נציגות הזית 3</option><option>ועד בית האורן 5</option><option>ועד בית הברוש 2</option><option>ועד בית החצב 17</option><option>ועד בית הצאלון 6</option><option>ועד בית הלוטם 9</option><option>חברת ניהול אופק</option></select><button class="btn" data-ok disabled>שיוך ואישור</button></div>
     </div>
-    <div class="tx" data-amt="890" data-full="1">
+    <div class="tx" data-i="4" data-amt="890" data-full="1">
       <div class="amt">₪890<small>העברה · 09:44</small></div>
-      <div><div class="who"><b>נציגות הזית 3</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1031</span><span class="tag full">התאמה מלאה</span></div><div class="why">הסכום ושם המשלם זהים לחשבונית הפתוחה.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div><div class="who"><b>נציגות הזית 3</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1031</span><span class="tag full">התאמה מלאה</span></div><div class="why">הסכום ושם המשלם זהים לחשבונית הפתוחה.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
       <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
     </div>
-    <div class="tx" data-amt="445">
+    <div class="tx" data-i="5" data-amt="445">
       <div class="amt">₪445<small>העברה · 09:58</small></div>
-      <div><div class="who"><b>ועד בית הנרקיס 22</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1021</span><span class="tag part">תשלום חלקי</span></div><div class="why">החשבונית על 890 ש״ח. הקבלה תהיה על 445, ונשארת יתרה של 445 ש״ח במעקב.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div><div class="who"><b>ועד בית הנרקיס 22</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1021</span><span class="tag part">תשלום חלקי</span></div><div class="why">החשבונית על 890 ש״ח. הקבלה תהיה על 445, ונשארת יתרה של 445 ש״ח במעקב.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
       <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
     </div>
-    <div class="tx" data-amt="1555" data-full="1">
+    <div class="tx" data-i="6" data-amt="1555" data-full="1">
       <div class="amt">₪1,555<small>צ׳ק · 10:10</small></div>
-      <div><div class="who"><b>בית האלון 14</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-0987</span><span class="tag full">התאמה מלאה</span></div><div class="why">הפקדת צ׳ק. מספר הצ׳ק והסכום תואמים לחשבונית.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div><div class="who"><b>בית האלון 14</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-0987</span><span class="tag full">התאמה מלאה</span></div><div class="why">הפקדת צ׳ק. מספר הצ׳ק והסכום תואמים לחשבונית.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
       <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
     </div>
-    <div class="tx" data-amt="2380">
+    <div class="tx" data-i="7" data-amt="2380">
       <div class="amt">₪2,380<small>העברה · 10:22</small></div>
-      <div><div class="who"><b>חברת ניהול אופק</b><span class="arrow">←</span>3 בניינים · 3 חשבוניות<span class="tag part">לפי פירוט ההעברה</span></div><div class="why">בפירוט ההעברה מופיעים הדולב 19, האורן 5 והברוש 2. הסכום מתחלק בין שלוש החשבוניות.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div><div class="who"><b>חברת ניהול אופק</b><span class="arrow">←</span>3 בניינים · 3 חשבוניות<span class="tag part">לפי פירוט ההעברה</span></div><div class="why">בפירוט ההעברה מופיעים הדולב 19, האורן 5 והברוש 2. הסכום מתחלק בין שלוש החשבוניות.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
       <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
     </div>
-    <div class="tx" data-amt="612">
+    <div class="tx" data-i="8" data-amt="612">
       <div class="amt">₪612<small>העברה · 10:37</small></div>
-      <div><div class="who"><b>ר. אברהם</b><span class="tag none">לא נמצא לקוח מתאים</span></div><div class="why">אין חשבונית פתוחה בסכום הזה, ואין משלם בשם הזה בתיקים. בוחרים לקוח, והמערכת תזכור את המשלם בפעם הבאה.</div><div class="okline">שויך ונשמר · הקבלה נשלחה במייל · בפעם הבאה ההתאמה תהיה אוטומטית</div></div>
+      <div><div class="who"><b>ר. אברהם</b><span class="tag none">לא נמצא לקוח מתאים</span></div><div class="why">אין חשבונית פתוחה בסכום הזה, ואין משלם בשם הזה בתיקים. בוחרים לקוח, והמערכת תזכור את המשלם בפעם הבאה.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">שויך ונשמר · הקבלה נשלחה במייל · בפעם הבאה ההתאמה תהיה אוטומטית</div></div>
       <div class="act"><select class="pick" aria-label="שיוך ללקוח"><option value="">שיוך ללקוח…</option><option>ועד בית הגפן 40</option><option>ועד בית הנרקיס 22</option><option>בית האלון 14</option><option>ועד בית השקמה 8</option><option>נציגות הארז 11</option><option>ועד בית הרימון 5</option><option>ועד בית הדולב 19</option><option>ועד בית הכרמל 30</option><option>נציגות הזית 3</option><option>ועד בית האורן 5</option><option>ועד בית הברוש 2</option><option>ועד בית החצב 17</option><option>ועד בית הצאלון 6</option><option>ועד בית הלוטם 9</option><option>חברת ניהול אופק</option></select><button class="btn" data-ok disabled>שיוך ואישור</button></div>
     </div>
-    <div class="tx" data-amt="3980" data-full="1">
+    <div class="tx" data-i="9" data-amt="3980" data-full="1">
       <div class="amt">₪3,980<small>העברה · 10:51</small></div>
-      <div><div class="who"><b>ועד בית הגפן 40</b><span class="arrow">←</span>5 חשבוניות · ספטמבר עד ינואר<span class="tag full">סוגר את כל החוב</span></div><div class="why">הסכום תואם בדיוק לכל החשבוניות הפתוחות של הבניין.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div><div class="who"><b>ועד בית הגפן 40</b><span class="arrow">←</span>5 חשבוניות · ספטמבר עד ינואר<span class="tag full">סוגר את כל החוב</span></div><div class="why">הסכום תואם בדיוק לכל החשבוניות הפתוחות של הבניין.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
       <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
     </div>
-    <div class="tx" data-amt="800">
+    <div class="tx" data-i="10" data-amt="800">
       <div class="amt">₪800<small>העברה · 11:06</small></div>
-      <div><div class="who"><b>ועד בית השקמה 8</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1044</span><span class="tag none">סכום שונה</span></div><div class="why">החשבונית על 742.50 ש״ח, וההעברה גבוהה ב-57.50. כדאי לבדוק לפני אישור.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div><div class="who"><b>ועד בית השקמה 8</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1044</span><span class="tag none">סכום שונה</span></div><div class="why">החשבונית על 742.50 ש״ח, וההעברה גבוהה ב-57.50. כדאי לבדוק לפני אישור.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
       <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
     </div>
-    <div class="tx" data-amt="5740" data-full="1">
+    <div class="tx" data-i="11" data-amt="5740" data-full="1">
       <div class="amt">₪5,740<small>מס״ב · 11:15</small></div>
-      <div><div class="who"><b>גביית הוראות קבע</b><span class="arrow">←</span>8 לקוחות<span class="tag full">לפי קובץ החיוב</span></div><div class="why">כל שורה בקובץ החיוב מותאמת ללקוח ולחשבונית שלו.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div><div class="who"><b>גביית הוראות קבע</b><span class="arrow">←</span>8 לקוחות<span class="tag full">לפי קובץ החיוב</span></div><div class="why">כל שורה בקובץ החיוב מותאמת ללקוח ולחשבונית שלו.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
       <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
     </div>
-    <div class="tx" data-amt="350">
+    <div class="tx" data-i="12" data-amt="350">
       <div class="amt">₪350<small>הפקדת מזומן · 11:28</small></div>
-      <div><div class="who"><b>ללא שם</b><span class="tag none">לא נמצא לקוח מתאים</span></div><div class="why">הפקדת מזומן בלי פרטי משלם. בוחרים לקוח, או משאירים לבדיקה.</div><div class="okline">שויך ונשמר · הקבלה נשלחה במייל · בפעם הבאה ההתאמה תהיה אוטומטית</div></div>
+      <div><div class="who"><b>ללא שם</b><span class="tag none">לא נמצא לקוח מתאים</span></div><div class="why">הפקדת מזומן בלי פרטי משלם. בוחרים לקוח, או משאירים לבדיקה.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">שויך ונשמר · הקבלה נשלחה במייל · בפעם הבאה ההתאמה תהיה אוטומטית</div></div>
       <div class="act"><select class="pick" aria-label="שיוך ללקוח"><option value="">שיוך ללקוח…</option><option>ועד בית הגפן 40</option><option>ועד בית הנרקיס 22</option><option>בית האלון 14</option><option>ועד בית השקמה 8</option><option>נציגות הארז 11</option><option>ועד בית הרימון 5</option><option>ועד בית הדולב 19</option><option>ועד בית הכרמל 30</option><option>נציגות הזית 3</option><option>ועד בית האורן 5</option><option>ועד בית הברוש 2</option><option>ועד בית החצב 17</option><option>ועד בית הצאלון 6</option><option>ועד בית הלוטם 9</option><option>חברת ניהול אופק</option></select><button class="btn" data-ok disabled>שיוך ואישור</button></div>
     </div>
-    <div class="tx" data-amt="1180" data-full="1">
+    <div class="tx" data-i="13" data-amt="1180" data-full="1">
       <div class="amt">₪1,180<small>העברה · 11:42</small></div>
-      <div><div class="who"><b>ועד בית הכרמל 30</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1050</span><span class="tag full">התאמה מלאה</span></div><div class="why">הסכום ושם המשלם זהים לחשבונית הפתוחה.</div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
+      <div><div class="who"><b>ועד בית הכרמל 30</b><span class="arrow">←</span>חשבונית <span class="ltr">IN26-1050</span><span class="tag full">התאמה מלאה</span></div><div class="why">הסכום ושם המשלם זהים לחשבונית הפתוחה.</div><div class="lnk"><button data-rcpt>צפייה בקבלה</button><button data-cust>לכרטיס הלקוח</button></div><div class="okline">טיוטה אושרה · הקבלה נשלחה במייל · הסוכנת לא תתקשר</div></div>
       <div class="act"><button class="btn pri" data-ok>אישור ושליחת קבלה</button></div>
     </div>
   </div>
   <p class="note">חלק מהשלב השני, ונבנה במקביל למערכת הגבייה. התנועות והסכומים לדוגמה. הקבלה עצמה מופקת בפריוריטי, עם המספור שלכם, ונשלחת ללקוח רק אחרי אישור.</p>
 </main>
 
+<dialog id="dlg"><button class="x" id="dlgX" aria-label="סגירה">✕</button><div id="dlgBody"></div></dialog>
 <footer>צמרת מעליות · מערכת שירות וגבייה · נבנה על ידי MeetingScheduled</footer>
 <script>
-(()=>{const rows=[...document.querySelectorAll('.tx')],sum=document.getElementById('sum'),bulk=document.getElementById('bulk');
+const DATA=[{"amt": 742.5, "kind": "העברה", "time": "08:12", "payer": "ועד בית הערבה 16", "cust": "ועד בית הערבה 16", "inv": [["IN26-1002", 742.5]], "method": "העברה בנקאית", "email": "rachel.vaad@example.com", "pick": false}, {"amt": 1290, "kind": "העברה", "time": "08:40", "payer": "מיכל לוי", "cust": "ועד בית התבור 9", "inv": [["IN26-0975", 890], ["IN26-1012", 400]], "method": "העברה בנקאית", "email": "michal.l@example.com", "pick": false}, {"amt": 398, "kind": "העברה", "time": "09:05", "payer": "נציגות החרוב 21", "cust": "נציגות החרוב 21", "inv": [["IN26-1016", 398]], "method": "העברה בנקאית", "email": "harov21@example.com", "pick": false}, {"amt": 1000, "kind": "העברה", "time": "09:31", "payer": "י. כהן", "cust": "", "inv": [], "method": "העברה בנקאית", "email": "", "pick": true}, {"amt": 890, "kind": "העברה", "time": "09:44", "payer": "נציגות הזית 3", "cust": "נציגות הזית 3", "inv": [["IN26-1031", 890]], "method": "העברה בנקאית", "email": "zait3@example.com", "pick": false}, {"amt": 445, "kind": "העברה", "time": "09:58", "payer": "ועד בית הנרקיס 22", "cust": "ועד בית הנרקיס 22", "inv": [["IN26-1021", 445]], "method": "העברה בנקאית", "email": "dana.narkis@example.com", "pick": false}, {"amt": 1555, "kind": "צ׳ק", "time": "10:10", "payer": "בית האלון 14", "cust": "בית האלון 14", "inv": [["IN26-0987", 1555]], "method": "צ׳ק 004512", "email": "alon14@example.com", "pick": false}, {"amt": 2380, "kind": "העברה", "time": "10:22", "payer": "חברת ניהול אופק", "cust": "חברת ניהול אופק", "inv": [["IN26-1038", 890], ["IN26-1039", 742.5], ["IN26-1040", 747.5]], "method": "העברה בנקאית", "email": "office@ofek-example.co.il", "pick": false}, {"amt": 612, "kind": "העברה", "time": "10:37", "payer": "ר. אברהם", "cust": "", "inv": [], "method": "העברה בנקאית", "email": "", "pick": true}, {"amt": 3980, "kind": "העברה", "time": "10:51", "payer": "ועד בית הגפן 40", "cust": "ועד בית הגפן 40", "inv": [["IN26-0901", 796], ["IN26-0933", 796], ["IN26-0961", 796], ["IN26-0994", 796], ["IN26-1027", 796]], "method": "העברה בנקאית", "email": "gefen40@example.com", "pick": false}, {"amt": 800, "kind": "העברה", "time": "11:06", "payer": "ועד בית השקמה 8", "cust": "ועד בית השקמה 8", "inv": [["IN26-1044", 742.5]], "method": "העברה בנקאית", "email": "shikma8@example.com", "pick": false}, {"amt": 5740, "kind": "מס״ב", "time": "11:15", "payer": "גביית הוראות קבע", "cust": "8 לקוחות בהוראת קבע", "inv": [["8 חשבוניות", 5740]], "method": "הוראת קבע (מס״ב)", "email": "לכל לקוח לכתובת שבתיק", "pick": false}, {"amt": 350, "kind": "הפקדת מזומן", "time": "11:28", "payer": "ללא שם", "cust": "", "inv": [], "method": "מזומן", "email": "", "pick": true}, {"amt": 1180, "kind": "העברה", "time": "11:42", "payer": "ועד בית הכרמל 30", "cust": "ועד בית הכרמל 30", "inv": [["IN26-1050", 1180]], "method": "העברה בנקאית", "email": "carmel30@example.com", "pick": false}];
+(()=>{const rows=[...document.querySelectorAll('.tx')],sum=document.getElementById('sum'),bulk=document.getElementById('bulk'),dlg=document.getElementById('dlg'),body=document.getElementById('dlgBody');
 const ils=n=>'₪'+n.toLocaleString('he-IL',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const custOf=r=>{const d=DATA[r.dataset.i];const s=r.querySelector('select');return d.cust||(s&&s.value)||''};
 function upd(){const done=rows.filter(r=>r.classList.contains('done'));const amt=done.reduce((n,r)=>n+Number(r.dataset.amt),0);sum.innerHTML=done.length?`${done.length} מתוך ${rows.length} טופלו · <b>${ils(amt)} נקלטו</b>`:`${rows.length} תנועות · ${rows.filter(r=>r.querySelector('.tag.none')).length} לבדיקה`;
  const left=rows.filter(r=>r.dataset.full&&!r.classList.contains('done')).length;bulk.textContent=left?`אישור כל ההתאמות המלאות (${left})`:'כל ההתאמות המלאות אושרו';bulk.disabled=!left}
-function approve(r){const s=r.querySelector('select');if(s&&s.value){r.querySelector('.who b').textContent=s.value+' · משלם: '+r.querySelector('.who b').textContent;const t=r.querySelector('.tag');t.className='tag part';t.textContent='שויך ידנית'}r.classList.add('done')}
-rows.forEach(r=>{const b=r.querySelector('[data-ok]'),s=r.querySelector('select');if(s)s.onchange=()=>{b.disabled=!s.value};b.onclick=()=>{approve(r);upd()}});
-bulk.onclick=()=>{rows.filter(r=>r.dataset.full&&!r.classList.contains('done')).forEach(approve);upd()};upd()})();
+function approve(r){const s=r.querySelector('select');if(s&&s.value){r.querySelector('.who b').textContent=s.value+' · משלם: '+DATA[r.dataset.i].payer;const t=r.querySelector('.tag');t.className='tag part';t.textContent='שויך ידנית'}r.classList.add('done')}
+function receipt(r){const d=DATA[r.dataset.i],c=custOf(r),done=r.classList.contains('done');
+ if(!c){body.innerHTML='<h3>טיוטת קבלה</h3><p class="dim">קודם בוחרים לקוח, ואז הטיוטה מוכנה לצפייה.</p>';dlg.showModal();return}
+ const inv=d.inv.length?d.inv:[['לפי שיוך',d.amt]];
+ body.innerHTML=`<div class="rc"><div class="rc-h"><div><b>צמרת מעליות בע״מ</b><small>קבלה ${done?'· נשלחה':'· טיוטה לאישור'}</small></div><span class="st ${done?'ok':''}">${done?'נשלחה במייל':'טיוטה'}</span></div>
+ <div class="rc-g"><div><small>לכבוד</small>${esc(c)}</div><div><small>תאריך</small>16.11.2026</div><div><small>אמצעי תשלום</small>${esc(d.method)}</div><div><small>נשלחת אל</small><span class="ltr">${esc(d.email||'כתובת המייל שבתיק')}</span></div></div>
+ <table><thead><tr><th>עבור</th><th>סכום</th></tr></thead><tbody>${inv.map(([n,a])=>`<tr><td>${/^IN/.test(n)?'חשבונית <span class="ltr">'+n+'</span>':esc(n)}</td><td>${ils(a)}</td></tr>`).join('')}</tbody><tfoot><tr><td>סה״כ שולם</td><td>${ils(d.amt)}</td></tr></tfoot></table>
+ <p class="dim">הקבלה תופק בפריוריטי, עם מספר הקבלה הרשמי שלכם, ותישלח רק אחרי אישור.</p></div>`;dlg.showModal()}
+function customer(r){const d=DATA[r.dataset.i],c=custOf(r);if(!c){body.innerHTML='<h3>כרטיס הלקוח</h3><p class="dim">קודם בוחרים לקוח.</p>';dlg.showModal();return}
+ const done=r.classList.contains('done');const open=d.inv.length?d.inv.reduce((n,x)=>n+x[1],0):d.amt;
+ body.innerHTML=`<h3>${esc(c)}</h3><p class="dim">כרטיס הלקוח במערכת הגבייה</p>
+ <div class="cg"><div><small>יתרה פתוחה</small><b>${done?ils(0):ils(open)}</b></div><div><small>מצב בגבייה</small><b>${done?'שולם · יצא ממעקב':'במעקב'}</b></div><div><small>הסוכנת</small><b>${done?'לא תתקשר':'לפי התוכנית'}</b></div></div>
+ <div class="tl"><div><small>היום · ${esc(d.time)}</small>${esc(d.method)} של ${ils(d.amt)} · משלם: ${esc(d.payer)}${done?' · קבלה נשלחה':' · ממתין לאישור'}</div><div><small>לפני 5 ימים</small>שיחה של הסוכנת · הבטיחו להעביר השבוע</div><div><small>לפני 3 שבועות</small>תזכורת בוואטסאפ על החשבונית הפתוחה</div></div>
+ <p class="dim">פרטי הכרטיס לדוגמה. במערכת עצמה זה הכרטיס המלא, עם החשבוניות, התשלומים וכל השיחות.</p>`;dlg.showModal()}
+rows.forEach(r=>{const b=r.querySelector('[data-ok]'),s=r.querySelector('select');if(s)s.onchange=()=>{b.disabled=!s.value};b.onclick=()=>{approve(r);upd()};r.querySelector('[data-rcpt]').onclick=()=>receipt(r);r.querySelector('[data-cust]').onclick=()=>customer(r)});
+bulk.onclick=()=>{rows.filter(r=>r.dataset.full&&!r.classList.contains('done')).forEach(approve);upd()};
+document.getElementById('dlgX').onclick=()=>dlg.close();dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});upd()})();
 </script>
 </body>
 </html>
