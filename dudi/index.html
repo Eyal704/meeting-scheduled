@@ -334,6 +334,7 @@ let VIEW={tab:'board',date:TODAY(),filter:'open',q:''};
 const isOffice=()=>!/^#(tech|cust|fb|report)\//.test(location.hash);
 function route(){
   document.getElementById('ov')?.remove();
+  if(!unlocked()&&!window._unlocked)return renderGate();
   const h=location.hash.slice(1);const[p,id]=h.split('/');
   if(p==='tech'&&id)return renderTech(id);
   if(p==='cust'&&id)return renderCust(id);
@@ -702,6 +703,20 @@ function renderReport(id){
       <p class="small muted" style="margin-top:22px;text-align:center">${esc(S.settings.company)} · שירות חירום 24/7</p>
     </div></div>`;
 }
+/* ============ entry lock (browser only) ============ */
+const LOCK='dudi-field-unlocked';
+function unlocked(){try{return localStorage.getItem(LOCK)==='1'}catch(e){return false}}
+function renderGate(){
+  $('#app').innerHTML=`<div class="phone" style="padding-top:12vh"><div class="card sec" style="text-align:center;padding:26px">
+    <div class="mark" style="margin:0 auto 10px;width:46px;height:46px;font-size:20px">ד</div>
+    <h4 style="font-size:19px">${esc(S.settings.company)}</h4><p class="muted small" style="margin:4px 0 16px">מערכת שירות · כניסה</p>
+    <form onsubmit="return tryUnlock(event)"><input type="password" id="gate-pw" placeholder="סיסמה" autocomplete="current-password" style="text-align:center">
+    <button class="btn pri" style="width:100%;justify-content:center;margin-top:10px;padding:11px">כניסה</button>
+    <p id="gate-err" class="small" style="color:var(--red);min-height:20px;margin-top:6px"></p></form></div></div>`;
+  setTimeout(()=>$('#gate-pw')?.focus(),50);
+}
+function tryUnlock(e){e.preventDefault();if($('#gate-pw').value.trim()==='1'){try{localStorage.setItem(LOCK,'1')}catch(_){window._unlocked=true}route()}else{$('#gate-err').textContent='סיסמה שגויה';$('#gate-pw').select()}return false}
+
 function notFound(){$('#app').innerHTML='<div class="phone"><div class="card sec">הקריאה לא נמצאה. <a href="#board">חזרה</a></div></div>'}
 
 route();
