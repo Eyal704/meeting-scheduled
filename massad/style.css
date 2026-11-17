@@ -8,3 +8,5 @@
 .paper-top .pill{align-self:flex-start}
 
 .saved-row .open-report{min-width:0;overflow-wrap:anywhere}
+
+.photo-heading{margin:0 0 12px}.hazard-extra summary{min-height:44px;cursor:pointer;padding:10px 0;font-size:14px;color:var(--muted)}.email-panel{margin-top:22px}.email-actions{display:flex;gap:12px;flex-wrap:wrap}.email-attachment{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}.email-panel input[type=email]{text-align:left}.email-panel #email-status:empty{display:none}.email-panel #email-status:not(:empty){background:var(--soft);padding:12px;border-radius:8px}.email-panel .note{margin:12px 0}@media(max-width:600px){.email-actions>*{width:100%}.email-attachment>button{width:100%}}
