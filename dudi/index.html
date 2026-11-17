@@ -170,6 +170,33 @@ textarea{min-height:70px;resize:vertical}
 @media(max-width:860px){.tv-grid{grid-template-columns:1fr}.tv-phone{order:-1;max-width:400px;width:100%;margin:0 auto}}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;z-index:80;font-weight:600;box-shadow:var(--shadow)}
 .note{background:var(--amber-t);color:#7a5413;border-radius:12px;padding:10px 12px;font-size:14px}
+
+/* Responsive service workspace */
+:root{--rose:#ae3e59;--rose2:#91334b;--muted:#606069;--faint:#73737c}
+.wrap{max-width:1520px;padding-inline:24px}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.btn,.tab,.seg button,.x{min-height:44px}.x{min-width:44px}
+input:not([type=checkbox]):not([type=file]),select,textarea{min-height:46px;font-size:16px}
+input[type=password]{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px}
+.top .wrap{padding-block:12px}.tabs{gap:2px}.tab{padding-inline:10px}
+.board{grid-template-columns:repeat(5,minmax(0,1fr));align-items:start}
+.col{padding:14px}.col-h{min-height:34px}.tech-h{flex-wrap:wrap;gap:8px}
+.job{padding:14px 12px}.job .t{font-size:16px}.job .c{font-size:16px;margin-top:5px}.job .d{font-size:14px;margin-top:4px}.job .row{margin-top:10px}.chip{font-size:13px;padding:3px 9px}
+.summary{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.metric{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:6px 11px;text-align:start;border-radius:9px;box-shadow:none}.metric strong{font-size:18px;line-height:1.2}.metric span{font-size:13px;color:var(--muted)}
+.filters{display:flex;gap:8px;overflow:auto;padding:4px 2px 12px;margin-bottom:4px}.filters .on{background:var(--ink);color:white}
+.phone{max-width:520px;padding:16px 16px 32px}.phone .sec{padding:18px}.phone .sec h4{font-size:17px}.phone .small,.phone label{font-size:14px}.phone .ph-h .sm{font-size:14px;opacity:.9}
+.phone .qty button{width:48px;height:48px}.phone .qty{gap:12px}.phone .part{padding-block:12px}.phone .choice{min-height:58px;text-align:start}.phone .acts .btn{flex:1;justify-content:center}
+.submit-bar{position:sticky;bottom:0;background:var(--bg);padding:12px 0 max(12px,env(safe-area-inset-bottom));z-index:5;border-top:1px solid var(--line);margin-top:16px}
+.photo-label{position:absolute;bottom:0;inset-inline:0;padding:5px;background:rgba(255,255,255,.94);z-index:1}
+.ph-slot:focus-within{outline:3px solid var(--blue)}.ph-slot input{display:block;position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}.ph-slot{margin:0}
+body:has(.ov){overflow:hidden}.drawer>.bar{position:sticky;top:-18px;background:var(--bg);z-index:2;padding-block:10px}.kv{grid-template-columns:90px minmax(0,1fr)}.kv div{overflow-wrap:anywhere}
+@media(max-width:1199px){.board{grid-template-columns:repeat(3,minmax(0,1fr))}.tabs{width:100%;margin:0;flex-wrap:nowrap;overflow:auto}.tab{white-space:nowrap;flex-shrink:0}}
+@media(max-width:760px){.wrap{padding-inline:14px}.board{grid-template-columns:repeat(2,minmax(0,1fr))}.bar h1{width:100%;font-size:23px}.summary{gap:6px}.metric{padding:6px 9px}.top .wrap{gap:8px}.brand{font-size:15px}.top{position:relative}.bar>.btn{flex:1;justify-content:center}.grid3>[style*="span 2"]{grid-column:auto!important}.report{padding:16px}.rep-h{flex-wrap:wrap}.rep-tbl td:first-child{width:100px}.tv-screen{max-height:none;min-height:0}.tv-phone{border-width:5px}.call-table table,.call-table tbody,.call-table tr,.call-table td{display:block}.call-table thead{display:none}.call-table tr{padding:14px;border-bottom:1px solid var(--line)}.call-table td{border:0;padding:3px 0}.call-table td::before{content:attr(data-label);display:inline-block;min-width:64px;color:var(--muted);font-size:13px}.call-table td:nth-child(3){font-weight:700}.call-table td .small{display:inline;margin-inline-start:8px}}
+@media(max-width:480px){.board{grid-template-columns:1fr}.col{padding:16px}.tech-h{flex-wrap:nowrap}.phone{padding-inline:12px}.drawer{padding:14px}.modal-c{padding:16px}.toast{width:calc(100% - 28px);text-align:center}.seg{max-width:100%}.seg button{padding-inline:10px}.rep-ph{gap:8px}}
+@media print{.report{padding:0}.rep-ph figure{break-inside:avoid}}
+
 </style>
 </head>
 <body>
@@ -357,7 +384,7 @@ function fbMsg(j){
 }
 
 /* ============ router ============ */
-let VIEW={tab:'board',date:TODAY(),filter:'open',q:'',techId:'sami',tdate:TODAY(),from:'board'};
+let VIEW={tab:'board',date:TODAY(),filter:'open',q:'',techId:'sami',tdate:TODAY(),from:'board',cat:'all'};
 const isOffice=()=>!/^#(tech|cust|fb|report)\//.test(location.hash);
 function route(){
   document.getElementById('ov')?.remove();
@@ -370,11 +397,18 @@ function route(){
   if(['board','calls','techview','team','log','settings'].includes(p))VIEW.tab=p;
   renderOffice();
 }
+const enhanceUI=()=>{
+  document.querySelectorAll('.call-table tbody tr').forEach(row=>Array.from(row.cells).forEach((cell,i)=>cell.dataset.label=['קריאה','מועד','לקוח','עבודה','טכנאי','מקור','סטטוס'][i]));
+  document.querySelectorAll('label').forEach((label,i)=>{const input=label.parentElement.querySelector('input,select,textarea');if(input&&!label.htmlFor&&!label.contains(input)){if(!input.id)input.id='field-'+i;label.htmlFor=input.id}});
+  document.querySelectorAll('.x').forEach(b=>b.setAttribute('aria-label','סגירה'));
+};
+new MutationObserver(enhanceUI).observe(document.getElementById('app'),{childList:true,subtree:true});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('ov')?.remove()});
 window.addEventListener('hashchange',route);
 window.addEventListener('storage',e=>{if(e.key===KEY){S=load()||S;route()}});
 
 /* ============ office ============ */
-function toggleTab(k){location.hash=(VIEW.tab===k&&k!=='board')?'board':k}
+function toggleTab(k){if(k==='calls')VIEW.callsDate=null;location.hash=(VIEW.tab===k&&k!=='board')?'board':k}
 function renderOffice(){
   const tabs=[['board','לוח עבודה'],['calls','קריאות'],['techview','תצוגת טכנאי'],['team','דירוג טכנאים'],['log','יומן שינויים'],['settings','הגדרות']];
   $('#app').innerHTML=`
@@ -407,8 +441,10 @@ function viewBoard(){
     <button class="btn wa" onclick="openDaySend('${d}')">שליחת הסידור לטכנאים</button>
     <button class="btn pri" onclick="openNew()">+ קריאה חדשה</button>
   </div>
+  <div class="summary">${[['סה״כ קריאות',open.length,'all'],['טרם נשלחו',open.filter(j=>j.status==='scheduled').length,'scheduled'],['ממתינות לאישור לקוח',open.filter(j=>j.status==='done_tech').length,'done_tech'],['ממתינות לסגירת המשרד',open.filter(j=>j.status==='approved').length,'approved']].map(([label,n,f])=>`<button class="card metric" onclick="VIEW.filter='${f}';VIEW.q='';VIEW.callsDate=VIEW.date;location.hash='calls'"><strong>${n}</strong><span>${label}</span></button>`).join('')}</div>
+  <div class="filters" aria-label="סינון לפי תחום">${[{id:'all',name:'כל התחומים'},...CATS].map(c=>`<button class="btn ${VIEW.cat===c.id?'on':''}" aria-pressed="${VIEW.cat===c.id}" onclick="VIEW.cat='${c.id}';viewBoard()">${c.name}</button>`).join('')}</div>
   <div class="bar small">${counts.map(([s,n])=>`<span class="chip st-${s}">${STATUS[s]} · ${n}</span>`).join('')}</div>
-  <div class="board">${CATS.map(c=>{
+  <div class="board" ${VIEW.cat!=='all'?'style="grid-template-columns:1fr"':''}>${CATS.filter(c=>VIEW.cat==='all'||c.id===VIEW.cat).map(c=>{
     const ts_=ACT().filter(x=>x.cat===c.id);
     return `<div class="card col"><div class="col-h"><span class="dot" style="background:${c.color}"></span><h3>${c.name}</h3></div>
     ${ts_.map(tc=>{
@@ -425,17 +461,18 @@ function viewBoard(){
 function viewCalls(){
   const q=VIEW.q.trim();
   let js=S.jobs.slice().sort((a,b)=>(b.date+b.start).localeCompare(a.date+a.start));
+  if(VIEW.callsDate)js=js.filter(j=>j.date===VIEW.callsDate);
   if(VIEW.filter==='open')js=js.filter(j=>j.status!=='closed');
   else if(VIEW.filter!=='all')js=js.filter(j=>j.status===VIEW.filter);
   if(q)js=js.filter(j=>(j.customer+j.address+j.no+tech(j.techId).name+type(j.type).name).includes(q));
   const f=[['open','פתוחות'],...ORDER.map(s=>[s,STATUS[s]]),['all','הכל']];
   $('#view').innerHTML=`
-  <div class="bar"><h1>קריאות</h1>
+  <div class="bar"><h1>קריאות</h1>${VIEW.callsDate?`<button class="btn" onclick="VIEW.callsDate=null;viewCalls()">${dayName(VIEW.callsDate)} · הצגת כל התאריכים</button>`:''}
     <input type="text" placeholder="חיפוש לקוח, כתובת, טכנאי..." value="${esc(VIEW.q)}" oninput="VIEW.q=this.value;clearTimeout(window._q);window._q=setTimeout(()=>{viewCalls();const i=document.querySelector('#view input');i.focus();i.setSelectionRange(i.value.length,i.value.length)},250)" style="max-width:280px">
     <button class="btn pri" onclick="openNew()">+ קריאה חדשה</button></div>
   <div class="bar"><div class="seg" style="flex-wrap:wrap">${f.map(([k,v])=>`<button class="${VIEW.filter===k?'on':''}" onclick="VIEW.filter='${k}';viewCalls()">${v}</button>`).join('')}</div></div>
-  <div class="card tbl"><table><thead><tr><th>#</th><th>מועד</th><th>לקוח</th><th>עבודה</th><th>טכנאי</th><th>מקור</th><th>סטטוס</th></tr></thead><tbody>
-  ${js.slice(0,120).map(j=>`<tr class="click" onclick="openJob('${j.id}')"><td>${j.no}</td><td>${dayName(j.date)} ${j.start}</td><td>${esc(j.customer)}<div class="small muted">${esc(j.city)}</div></td>
+  <div class="card tbl call-table"><table><thead><tr><th>#</th><th>מועד</th><th>לקוח</th><th>עבודה</th><th>טכנאי</th><th>מקור</th><th>סטטוס</th></tr></thead><tbody>
+  ${js.slice(0,120).map(j=>`<tr class="click" tabindex="0" role="button" aria-label="פתיחת קריאה ${j.no}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openJob('${j.id}')}" onclick="openJob('${j.id}')"><td>${j.no}</td><td>${dayName(j.date)} ${j.start}</td><td>${esc(j.customer)}<div class="small muted">${esc(j.city)}</div></td>
    <td>${esc(type(j.type).name)}</td><td>${esc(tech(j.techId).name)}</td><td>${j.source}</td><td><span class="chip st-${j.status}">${STATUS[j.status]}</span>${j.urgent?' <span class="chip urg">דחוף</span>':''}</td></tr>`).join('')||'<tr><td colspan="7" class="muted">אין קריאות</td></tr>'}
   </tbody></table></div>${js.length>120?`<p class="small muted" style="margin-top:8px">מוצגות 120 מתוך ${js.length}</p>`:''}`;
 }
@@ -493,7 +530,7 @@ function viewTeam(){
 function viewLog(){
   const l=S.log.slice().reverse();
   $('#view').innerHTML=`<div class="bar"><h1>יומן שינויים</h1></div>
-  <div class="note" style="margin-bottom:14px">כל פעולה נרשמת כאן עם שעה ומי ביצע אותה. אי אפשר לערוך או למחוק רשומות, גם לא מהמשרד.</div>
+  <div class="note" style="margin-bottom:14px">כל פעולה נרשמת כאן עם שעה ומי ביצע אותה. במערכת המלאה היומן נשמר בשרת ואי אפשר לערוך או למחוק בו רשומות.</div>
   <div class="card tbl"><table><thead><tr><th>מתי</th><th>מי</th><th>מה</th></tr></thead><tbody>
   ${l.slice(0,300).map(e=>`<tr><td style="white-space:nowrap">${ts(e.at)}</td><td>${esc(e.who)}</td><td>${esc(e.text)}</td></tr>`).join('')}</tbody></table></div>`;
 }
@@ -552,6 +589,14 @@ function removeTech(id){
 function setType(id,v){const t=S.types.find(x=>x.id===id);log(`משך התחלתי ל"${t.name}" שונה מ-${t.base} ל-${v} דק׳`);t.base=Math.max(15,+v||60);save();viewSettings();}
 function setSet(k,v){S.settings[k]=v;log(`הגדרה עודכנה: ${k}`);save();}
 
+function validSlot(tid,date,start,dur,catId,exceptId){
+  if(!ACT().some(t=>t.id===tid&&t.cat===catId)){toast('בחרו טכנאי מהתחום המתאים');return false}
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||!/^\d{2}:\d{2}$/.test(start)){toast('יש לבחור תאריך ושעה תקינים');return false}
+  const n=toMin(start),gap=Number(S.settings.gap)||0;
+  if(n<DAY_START||n+dur>DAY_END){toast('השיבוץ חייב להיות בשעות העבודה 07:30–18:00');return false}
+  if(busy(tid,date,exceptId).some(([a,b])=>n<b+gap&&n+dur+gap>a)){toast('השעה חופפת לקריאה אחרת או למרווח הנסיעה. בחרו שעה פנויה.');return false}
+  return true;
+}
 /* ---- new call ---- */
 function openNew(){
   const ov=document.createElement('div');ov.className='ov';ov.id='ov';
@@ -567,7 +612,7 @@ function openNew(){
       <div><label>סוג עבודה</label><select id="n-type"></select></div>
     </div>
     <div style="margin-top:12px"><label>מה דווח</label><textarea id="n-desc" placeholder="מה הלקוח סיפר"></textarea></div>
-    <label style="display:flex;gap:8px;align-items:center;margin-top:8px;color:var(--ink)"><input type="checkbox" id="n-urg"> דחוף (לשבץ כבר היום)</label>
+    <label style="display:flex;gap:8px;align-items:center;margin-top:8px;color:var(--ink)"><input type="checkbox" id="n-urg"> דחוף (עדיפות לשיבוץ היום)</label>
     <div class="suggest" id="n-sug" style="margin-top:12px"></div>
     <div class="grid3" style="margin-top:12px">
       <div><label>טכנאי</label><select id="n-tech"></select></div>
@@ -594,6 +639,7 @@ function saveNew(){
   const j={id:'j'+no,no,createdAt:new Date().toISOString(),source:$('#n-src').value,customer:cust,city:addr.split(',').pop().trim(),contact:$('#n-contact').value.trim()||'—',phone:$('#n-phone').value.trim(),
     address:addr,cat:$('#n-cat').value,type:ty,desc:$('#n-desc').value.trim(),urgent:$('#n-urg').checked,techId:$('#n-tech').value,date:$('#n-date').value,start:$('#n-time').value||'08:00',
     dur:estDur(ty).min,status:'scheduled',result:null,parts:[],notes:'',photos:{},final:null};
+  if(!validSlot(j.techId,j.date,j.start,j.dur,j.cat))return;
   S.jobs.push(j);log(`קריאה #${no} נפתחה (${j.source}): ${type(ty).name}, ${cust}. שובצה ל${tech(j.techId).name}, ${dayName(j.date)} ${j.start}`);save();
   $('#ov').remove();VIEW.date=j.date;if(VIEW.tab!=='board')location.hash='board';else viewBoard();openJob(j.id);toast('הקריאה נשמרה ושובצה');
 }
@@ -603,7 +649,7 @@ function openJob(id){
   const j=job(id);if(!j)return;$('#ov')?.remove();
   const ov=document.createElement('div');ov.className='ov';ov.id='ov';ov.onclick=e=>{if(e.target===ov)ov.remove()};
   const idx=ORDER.indexOf(j.status);
-  const fbAt=j.approvedAt?new Date(new Date(j.approvedAt).getTime()+S.settings.fbDelay*60000):null;
+  const fbAt=j.techEnd?new Date(new Date(j.techEnd).getTime()+S.settings.fbDelay*60000):null;
   ov.innerHTML=`<div class="drawer">
     <div class="bar"><h1 style="font-size:19px">קריאה #${j.no}</h1><span class="chip st-${j.status}">${STATUS[j.status]}</span><button class="x" onclick="$('#ov').remove()">×</button></div>
     <div class="card sec"><div class="kv">
@@ -653,7 +699,7 @@ function actionBlock(j,fbAt){
     <div class="acts"><a class="btn pri" href="#tech/${j.id}" onclick="VIEW.from='board'">פתיחת הטופס של הטכנאי</a><a class="btn" href="${waLink(techMsg(j))}" target="_blank" rel="noopener">שליחה שוב</a></div></div>`;
   if(j.status==='done_tech')return waBlock('אישור הלקוח',custMsg(j),'שליחה ללקוח בוואטסאפ',null,j.contact+' · '+j.customer)+
     `<div class="acts" style="margin-top:8px"><a class="btn sm" href="#cust/${j.id}">מה הלקוח רואה</a></div>`;
-  if(j.status==='approved')return `${waBlock(`משוב · יישלח ${fbAt?'ב-'+fbAt.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}):''} (${S.settings.fbDelay} דק׳ אחרי האישור)`,fbMsg(j),'שליחה עכשיו',null,j.contact+' · '+j.customer)}
+  if(j.status==='approved')return `${waBlock(`משוב · מועד מוצע ${fbAt?'ב-'+fbAt.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}):''} (${S.settings.fbDelay} דק׳ אחרי סיום הביקור)`,fbMsg(j),'שליחה עכשיו',null,j.contact+' · '+j.customer)}
     <div class="acts" style="margin-top:8px"><a class="btn sm" href="#fb/${j.id}">מה הלקוח רואה</a></div>
     <div class="card sec"><h4>סגירה ודוח סופי</h4><div class="acts">
       <button class="btn go" onclick="closeJob('${j.id}','done')">הטיפול הסתיים</button>
@@ -663,10 +709,11 @@ function actionBlock(j,fbAt){
 }
 function markSent(id){const j=job(id);if(j.status==='scheduled'){j.status='sent';log(`קריאה #${j.no} נשלחה לטכנאי ${tech(j.techId).name}`);save();setTimeout(()=>{if(isOffice()){refresh();openJob(id)}},60)}}
 function reschedule(id){const j=job(id);const t=$('#d-tech').value,d=$('#d-date').value,h=$('#d-time').value;
+  if(!validSlot(t,d,h,j.dur,j.cat,id))return;
   log(`קריאה #${j.no} הועברה: ${tech(j.techId).name} ${dayName(j.date)} ${j.start} → ${tech(t).name} ${dayName(d)} ${h}`);
   Object.assign(j,{techId:t,date:d,start:h});if(j.status==='sent')j.status='scheduled';save();refresh();openJob(id);toast('השיבוץ עודכן. צריך לשלוח לטכנאי שוב.')}
 function closeJob(id,final){
-  const j=job(id);j.final=final;j.status='closed';log(`קריאה #${j.no} נסגרה: ${final==='done'?'הטיפול הסתיים':'המשך טיפול'}`);
+  const j=job(id);if(j.status!=='approved')return;j.final=final;j.status='closed';log(`קריאה #${j.no} נסגרה: ${final==='done'?'הטיפול הסתיים':'המשך טיפול'}`);
   if(final==='follow'){const s=suggest(j.cat,j.type,false);const no=nextNo();
     S.jobs.push({...j,id:'j'+no,no,createdAt:new Date().toISOString(),source:'המשך טיפול',desc:'המשך טיפול לקריאה #'+j.no+(j.notes?': '+j.notes:''),urgent:false,
       techId:s.techId,date:s.date,start:s.start,dur:s.dur,status:'scheduled',result:null,parts:[],notes:'',photos:{},techStart:null,techEnd:null,approvedAt:null,feedback:null,final:null,followOf:j.id});
@@ -686,9 +733,11 @@ function sendDay(tid,date){S.jobs.filter(j=>j.techId===tid&&j.date===date&&j.sta
 
 /* ============ technician (phone, no login) ============ */
 let TD=null;
+function persistDraft(){if(TD){job(TD.id).draft={...TD,photos:{...TD.photos},parts:{...TD.parts}};save()}}
+
 function renderTech(id){
   const j=job(id);if(!j)return notFound();
-  if(!TD||TD.id!==id)TD={id,result:j.result,parts:Object.fromEntries((j.parts||[]).map(p=>[p.n,p.q])),notes:j.notes||'',photos:{...j.photos}};
+  if(!TD||TD.id!==id)TD=j.draft||{id,result:j.result,parts:Object.fromEntries((j.parts||[]).map(p=>[p.n,p.q])),notes:j.notes||'',photos:{...j.photos}};
   const done=['done_tech','approved','closed'].includes(j.status);
   const started=!!j.techStart;
   $('#app').innerHTML=`<div class="phone">
@@ -697,29 +746,30 @@ function renderTech(id){
       <div style="margin-top:4px">${esc(j.customer)}</div><div class="sm">${esc(j.address)} · ${dayName(j.date)} ${j.start}</div></div>
     <div class="acts" style="margin:10px 0"><a class="btn" href="https://waze.com/ul?q=${encodeURIComponent(j.address)}" target="_blank" rel="noopener">ניווט</a>${j.phone?`<a class="btn" href="tel:${esc(j.phone)}">התקשרות ל${esc(j.contact)}</a>`:`<span class="btn" style="opacity:.6">איש קשר: ${esc(j.contact)}</span>`}</div>
     ${j.desc?`<div class="card sec"><h4>מה דווח</h4>${esc(j.desc)}</div>`:''}
-    <div class="card sec"><h4>ביקורים קודמים אצל הלקוח</h4>${custHistory(j).replace(/onclick="openJob\('[^']+'\)"/g,'')}</div>
-    ${done?`<div class="card sec" style="text-align:center"><div style="font-size:34px">✓</div><h4>הטופס נשלח למשרד</h4><p class="muted small">הלקוח מקבל הודעה בוואטסאפ לאישור הביקור.</p></div>`:
+    <details class="card sec"><summary class="b">ביקורים קודמים אצל הלקוח</summary>${custHistory(j).replace(/onclick="openJob\('[^']+'\)"/g,'')}</details>
+    ${done?`<div class="card sec" style="text-align:center"><div style="font-size:34px">✓</div><h4>הטופס נשלח למשרד</h4><p class="muted small">הדיווח עבר למשרד, ומשם נשלח ללקוח לאישור.</p></div>`:
     !started?`<button class="btn pri" style="width:100%;justify-content:center;padding:14px;font-size:17px;margin-top:12px" onclick="techStart('${id}')">התחלתי עבודה</button>`:`
-    <div class="card sec"><h4>1. תוצאה</h4><div class="big-btns">${Object.entries(RESULTS).map(([k,v])=>`<button class="choice ${TD.result===k?'on':''}" onclick="TD.result='${k}';renderTech('${id}')">${v}</button>`).join('')}</div></div>
-    <div class="card sec"><h4>2. חלקים שהוחלפו</h4>${PARTS[j.cat].map(p=>`<div class="part"><span>${p}</span><span class="qty"><button onclick="tq('${id}','${p}',-1)">−</button><b>${TD.parts[p]||0}</b><button onclick="tq('${id}','${p}',1)">+</button></span></div>`).join('')}
+    <div class="card sec"><h4>1. תוצאה</h4><div class="big-btns">${Object.entries(RESULTS).map(([k,v])=>`<button class="choice ${TD.result===k?'on':''}" aria-pressed="${TD.result===k}" onclick="TD.result='${k}';persistDraft();renderTech('${id}')">${v}</button>`).join('')}</div></div>
+    <div class="card sec"><h4>2. חלקים שהוחלפו</h4>${PARTS[j.cat].map(p=>`<div class="part"><span>${p}</span><span class="qty"><button aria-label="הפחתת ${p}" onclick="tq('${id}','${p}',-1)">−</button><b>${TD.parts[p]||0}</b><button aria-label="הוספת ${p}" onclick="tq('${id}','${p}',1)">+</button></span></div>`).join('')}
       <p class="small muted" style="margin-top:6px">לא הוחלף כלום? משאירים ריק.</p></div>
-    <div class="card sec"><h4>3. תמונות</h4><div class="photos">${['before','after'].map(k=>`<label class="ph-slot">${TD.photos[k]?`<img src="${TD.photos[k]}">`:`<span>📷<br>${k==='before'?'לפני':'אחרי'}</span>`}<input type="file" accept="image/*" capture="environment" onchange="tPhoto('${id}','${k}',this)"></label>`).join('')}</div></div>
-    <div class="card sec"><h4>4. הערה (לא חובה)</h4><textarea oninput="TD.notes=this.value" placeholder="מה נעשה, מה כדאי לבדוק בפעם הבאה">${esc(TD.notes)}</textarea></div>
-    <button class="btn go" style="width:100%;justify-content:center;padding:14px;font-size:17px;margin-top:12px" ${TD.result?'':'disabled'} onclick="techSubmit('${id}')">סיום ושליחה למשרד</button>
-    ${TD.result?'':'<p class="small muted" style="text-align:center;margin-top:6px">בוחרים תוצאה כדי לשלוח</p>'}`}
+    <div class="card sec"><h4>3. תמונות</h4><div class="photos">${['before','after'].map(k=>`<label class="ph-slot">${TD.photos[k]?`<img alt="תמונת ${k==='before'?'לפני':'אחרי'}" src="${TD.photos[k]}">`:`<span>📷</span>`}<span class="photo-label">${k==='before'?'לפני העבודה':'אחרי העבודה'}${TD.photos[k]?' · החלפה':''}</span><input aria-label="צילום ${k==='before'?'לפני':'אחרי'}" type="file" accept="image/*" capture="environment" onchange="tPhoto('${id}','${k}',this)"></label>`).join('')}</div></div>
+    <div class="card sec"><h4>4. הערה (לא חובה)</h4><p class="small muted">הטיוטה נשמרת במכשיר הזה עד השליחה.</p><textarea oninput="TD.notes=this.value;persistDraft()" placeholder="מה נעשה, מה כדאי לבדוק בפעם הבאה">${esc(TD.notes)}</textarea></div>
+    <div class="submit-bar"><button class="btn go" style="width:100%;justify-content:center;padding:14px;font-size:17px" ${TD.result?'':'disabled'} onclick="techSubmit('${id}')">סיום ושליחה למשרד</button>
+    ${TD.result?'':'<p class="small muted" style="text-align:center;margin-top:6px">בוחרים תוצאה כדי לשלוח</p>'}</div>`}
     <p class="noprint" style="text-align:center;margin-top:20px"><a class="small" href="#${VIEW.from==='techview'?'techview':'board'}" onclick="TD=null">${VIEW.from==='techview'?'חזרה לרשימת הקריאות':'חזרה למסך המשרד'}</a></p>
   </div>`;
 }
-function techStart(id){const j=job(id);j.techStart=new Date().toISOString();if(j.status==='scheduled')j.status='sent';log(`${tech(j.techId).name} התחיל עבודה בקריאה #${j.no}`,tech(j.techId).name);save();renderTech(id)}
-function tq(id,p,d){TD.parts[p]=Math.max(0,(TD.parts[p]||0)+d);renderTech(id)}
+function techStart(id){const j=job(id);if(j.techStart||!['scheduled','sent'].includes(j.status))return;j.techStart=new Date().toISOString();if(j.status==='scheduled')j.status='sent';log(`${tech(j.techId).name} התחיל עבודה בקריאה #${j.no}`,tech(j.techId).name);save();renderTech(id)}
+function tq(id,p,d){TD.parts[p]=Math.max(0,(TD.parts[p]||0)+d);persistDraft();renderTech(id)}
 function tPhoto(id,k,input){
   const f=input.files[0];if(!f)return;const img=new Image();const url=URL.createObjectURL(f);
   img.onload=()=>{const m=900;const sc=Math.min(1,m/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);
-    c.getContext('2d').drawImage(img,0,0,c.width,c.height);TD.photos[k]=c.toDataURL('image/jpeg',.72);URL.revokeObjectURL(url);renderTech(id)};
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);TD.photos[k]=c.toDataURL('image/jpeg',.72);URL.revokeObjectURL(url);persistDraft();renderTech(id)};
+  img.onerror=()=>{URL.revokeObjectURL(url);toast('לא ניתן לפתוח את התמונה. נסו צילום אחר או קובץ JPG.');};
   img.src=url;
 }
 function techSubmit(id){
-  const j=job(id);j.result=TD.result;j.parts=Object.entries(TD.parts).filter(([,q])=>q>0).map(([n,q])=>({n,q}));j.notes=TD.notes.trim();j.photos=TD.photos;
+  const j=job(id);if(!TD?.result||['done_tech','approved','closed'].includes(j.status))return;delete j.draft;j.result=TD.result;j.parts=Object.entries(TD.parts).filter(([,q])=>q>0).map(([n,q])=>({n,q}));j.notes=TD.notes.trim();j.photos=TD.photos;
   j.techEnd=new Date().toISOString();j.status='done_tech';
   const mins=Math.round((new Date(j.techEnd)-new Date(j.techStart))/60000);
   if(mins>=5&&mins<=600)type(j.type).samples.push(mins);
@@ -741,7 +791,7 @@ function renderCust(id){
       <button class="btn" style="justify-content:center;padding:12px" onclick="custNote('${id}')">יש לי הערה</button></div>`}
     <p style="text-align:center;margin-top:20px"><a class="small" href="#board">חזרה למסך המשרד</a></p></div>`;
 }
-function custOk(id){const j=job(id);j.approvedAt=new Date().toISOString();j.status='approved';log(`הלקוח ${j.customer} אישר את קריאה #${j.no}`,'לקוח');save();renderCust(id)}
+function custOk(id){const j=job(id);if(j.status!=='done_tech')return;j.approvedAt=new Date().toISOString();j.status='approved';log(`הלקוח ${j.customer} אישר את קריאה #${j.no}`,'לקוח');save();renderCust(id)}
 function custNote(id){const t=prompt('מה ההערה?');if(!t)return;const j=job(id);j.notes=(j.notes?j.notes+'\n':'')+'הערת לקוח: '+t;log(`הערת לקוח בקריאה #${j.no}: ${t}`,'לקוח');save();toast('ההערה נשלחה למשרד');renderCust(id)}
 
 /* ============ feedback ============ */
