@@ -227,6 +227,7 @@ const dayName=s=>{const d=new Date(s+'T12:00');const t=TODAY();if(s===t)return'�
 const fullDate=s=>new Date(s+'T12:00').toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'numeric',year:'numeric'});
 const ts=iso=>new Date(iso).toLocaleString('he-IL',{day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit'});
 const tech=id=>S.techs.find(t=>t.id===id)||{name:'—'};
+const ACT=()=>S.techs.filter(t=>!t.removed);
 const cat=id=>CATS.find(c=>c.id===id)||{name:'—',color:'#999'};
 const type=id=>S.types.find(t=>t.id===id)||{name:'—',base:60};
 const job=id=>S.jobs.find(j=>j.id===id);
@@ -314,9 +315,9 @@ function freeSlot(techId,date,dur){
   }
   return null;
 }
-function suggest(catId,typeId,urgent,date){
-  const dur=estDur(typeId).min;const techs=S.techs.filter(t=>t.cat===catId);
-  let d=date||(urgent?TODAY():addDays(TODAY(),1));
+function suggest(catId,typeId,urgent,date,from){
+  const dur=estDur(typeId).min;const techs=ACT().filter(t=>t.cat===catId);
+  let d=date||from||(urgent?TODAY():addDays(TODAY(),1));
   for(let k=0;k<10;k++,d=addDays(d,1)){
     if(new Date(d+'T12:00').getDay()===6)continue;
     let best=null;
@@ -362,12 +363,13 @@ window.addEventListener('hashchange',route);
 window.addEventListener('storage',e=>{if(e.key===KEY){S=load()||S;route()}});
 
 /* ============ office ============ */
+function toggleTab(k){location.hash=(VIEW.tab===k&&k!=='board')?'board':k}
 function renderOffice(){
   const tabs=[['board','לוח עבודה'],['calls','קריאות'],['techview','תצוגת טכנאי'],['team','דירוג טכנאים'],['log','יומן שינויים'],['settings','הגדרות']];
   $('#app').innerHTML=`
   <div class="top"><div class="wrap">
     <div class="brand"><div class="mark">ד</div><div>${esc(S.settings.company)}<div class="small muted" style="font-weight:500">מערכת שירות · משרד</div></div></div>
-    <nav class="tabs">${tabs.map(([k,v])=>`<button class="tab ${VIEW.tab===k?'on':''}" onclick="location.hash='${k}'">${v}</button>`).join('')}</nav>
+    <nav class="tabs">${tabs.map(([k,v])=>`<button class="tab ${VIEW.tab===k?'on':''}" onclick="toggleTab('${k}')">${v}</button>`).join('')}</nav>
   </div></div>
   <main><div class="wrap" id="view"></div></main>
   <div class="foot">נבנה על ידי MeetingScheduled · נתוני דוגמה בלבד</div>`;
@@ -396,11 +398,11 @@ function viewBoard(){
   </div>
   <div class="bar small">${counts.map(([s,n])=>`<span class="chip st-${s}">${STATUS[s]} · ${n}</span>`).join('')}</div>
   <div class="board">${CATS.map(c=>{
-    const ts_=S.techs.filter(x=>x.cat===c.id);
+    const ts_=ACT().filter(x=>x.cat===c.id);
     return `<div class="card col"><div class="col-h"><span class="dot" style="background:${c.color}"></span><h3>${c.name}</h3></div>
     ${ts_.map(tc=>{
       const js=S.jobs.filter(j=>j.techId===tc.id&&j.date===d).sort((a,b)=>a.start.localeCompare(b.start));
-      let html=`<div class="tech-h"><span>${esc(tc.name)}</span><span>${js.length} קריאות</span></div>`;
+      let html=`<div class="tech-h"><span>${esc(tc.name)} · ${js.length} קריאות</span><button class="btn sm" onclick="VIEW.techId='${tc.id}';VIEW.tdate='${d}';location.hash='techview'">📱 תצוגת טכנאי</button></div>`;
       if(!js.length)html+='<div class="empty">אין קריאות</div>';
       js.forEach((j,i)=>{
         if(i){const prevEnd=toMin(js[i-1].start)+js[i-1].dur;const g=toMin(j.start)-prevEnd;html+=`<div class="gap">${g>=0?'מרווח '+g+' דק׳':'⚠ חפיפה'}</div>`}
@@ -435,7 +437,7 @@ function viewTechView(){
   const label=j=>j.techStart&&j.status==='sent'?['בטיפול','st-done_tech']:TSTATE[j.status];
   $('#view').innerHTML=`
   <div class="bar"><h1>תצוגת טכנאי</h1>
-    <select onchange="VIEW.techId=this.value;viewTechView()" style="width:auto">${S.techs.map(x=>`<option value="${x.id}" ${x.id===VIEW.techId?'selected':''}>${esc(x.name)} · ${cat(x.cat).name}</option>`).join('')}</select>
+    <select onchange="VIEW.techId=this.value;viewTechView()" style="width:auto">${ACT().map(x=>`<option value="${x.id}" ${x.id===VIEW.techId?'selected':''}>${esc(x.name)} · ${cat(x.cat).name}</option>`).join('')}</select>
     <div class="seg">${[t,addDays(t,1)].map(x=>`<button class="${x===d?'on':''}" onclick="VIEW.tdate='${x}';viewTechView()">${dayName(x)}</button>`).join('')}</div></div>
   <p class="muted" style="margin:-6px 0 16px">כך ${esc(tc.name)} רואה את היום שלו: ההודעה שקיבל מהמשרד, והקריאות בטלפון. לחיצה על קריאה פותחת את הטופס שהוא ממלא בשטח.</p>
   <div class="tv-grid">
@@ -451,7 +453,7 @@ function viewTechView(){
 }
 function monthStats(){
   const m=TODAY().slice(0,7);const tgt=+S.settings.bonusTarget||1;
-  return S.techs.map(t=>{
+  return ACT().map(t=>{
     const js=S.jobs.filter(j=>j.techId===t.id&&j.date.slice(0,7)===m&&j.status==='closed');
     const fb=js.filter(j=>j.feedback);const good=fb.filter(j=>j.feedback.stars>=4).length;
     const avg=fb.length?fb.reduce((a,j)=>a+j.feedback.stars,0)/fb.length:0;
@@ -487,10 +489,16 @@ function viewLog(){
 function viewSettings(){
   $('#view').innerHTML=`<div class="bar"><h1>הגדרות</h1></div>
   <div class="card sec"><h4>טכנאים ותחומים</h4><p class="small muted" style="margin-bottom:8px">כל קריאה בתחום משובצת לטכנאי של התחום. בתחום עם שני טכנאים, המערכת בוחרת את מי שפנוי מוקדם יותר.</p>
-    <div class="tbl"><table><thead><tr><th>טכנאי</th><th>תחום</th></tr></thead><tbody>
-    ${S.techs.map(t=>`<tr><td><input type="text" value="${esc(t.name)}" onchange="setTech('${t.id}','name',this.value)"></td>
-      <td><select onchange="setTech('${t.id}','cat',this.value)">${CATS.map(c=>`<option value="${c.id}" ${c.id===t.cat?'selected':''}>${c.name}</option>`).join('')}</select></td></tr>`).join('')}
-    </tbody></table></div></div>
+    <div class="tbl"><table><thead><tr><th>טכנאי</th><th>תחום</th><th>קריאות פתוחות</th><th></th></tr></thead><tbody>
+    ${ACT().map(t=>`<tr><td><input type="text" value="${esc(t.name)}" onchange="setTech('${t.id}','name',this.value)"></td>
+      <td><select onchange="setTech('${t.id}','cat',this.value)">${CATS.map(c=>`<option value="${c.id}" ${c.id===t.cat?'selected':''}>${c.name}</option>`).join('')}</select></td>
+      <td>${openJobs(t.id).length}</td>
+      <td><button class="btn sm" style="color:var(--red)" onclick="removeTech('${t.id}')">הסרה</button></td></tr>`).join('')}
+    <tr><td><input type="text" id="new-tech-name" placeholder="שם טכנאי חדש"></td>
+      <td><select id="new-tech-cat">${CATS.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}</select></td><td></td>
+      <td><button class="btn sm pri" onclick="addTech()">+ הוספה</button></td></tr>
+    </tbody></table></div>
+    <p class="small muted" style="margin-top:8px">טכנאי שמוסר נשאר בהיסטוריה ובדוחות הישנים, אבל לא מקבל קריאות חדשות.</p></div>
   <div class="card sec"><h4>סוגי עבודה ומשך</h4><p class="small muted" style="margin-bottom:8px">המשך מתעדכן לבד: אחרי 3 ביקורים, המערכת לוקחת את הממוצע של 10 הביקורים האחרונים (משעת ההתחלה עד הסיום בטופס של הטכנאי).</p>
     <div class="tbl"><table><thead><tr><th>עבודה</th><th>תחום</th><th>משך התחלתי</th><th>משך בפועל</th></tr></thead><tbody>
     ${S.types.map(t=>{const e=estDur(t.id);return`<tr><td>${esc(t.name)}</td><td>${cat(t.cat).name}</td>
@@ -511,6 +519,25 @@ function viewSettings(){
   <div style="margin-top:14px"><button class="btn" onclick="if(confirm('לטעון מחדש את נתוני הדוגמה? כל מה שהוזן יימחק.')){localStorage.removeItem('${KEY}');S=seed();save();route();toast('נטענו נתוני דוגמה')}">איפוס נתוני דוגמה</button></div>`;
 }
 function setTech(id,k,v){const t=S.techs.find(x=>x.id===id);const old=t[k];t[k]=v;log(`טכנאי ${t.name}: ${k==='cat'?'תחום שונה מ'+cat(old).name+' ל'+cat(v).name:'שם שונה מ'+old}`);save();}
+const openJobs=id=>S.jobs.filter(j=>j.techId===id&&(j.status==='scheduled'||j.status==='sent'));
+function addTech(){
+  const name=$('#new-tech-name').value.trim(),c=$('#new-tech-cat').value;
+  if(!name){toast('צריך שם לטכנאי');$('#new-tech-name').focus();return}
+  if(ACT().some(t=>t.name===name)){toast('כבר יש טכנאי בשם הזה');return}
+  const id='t'+Date.now().toString(36);S.techs.push({id,name,cat:c});
+  log(`נוסף טכנאי: ${name} (${cat(c).name})`);save();viewSettings();toast(name+' נוסף. קריאות חדשות ב'+cat(c).name+' יכולות להשתבץ אליו.');
+}
+function removeTech(id){
+  const t=tech(id);const open=openJobs(id);const others=ACT().filter(x=>x.cat===t.cat&&x.id!==id);
+  if(open.length&&!others.length){alert(`ל${t.name} יש ${open.length} קריאות פתוחות, ואין טכנאי אחר ב${cat(t.cat).name}. קודם מוסיפים טכנאי לתחום או מעבירים את הקריאות.`);return}
+  const msg=open.length?`להסיר את ${t.name}? ${open.length} הקריאות הפתוחות שלו יעברו ל${others.map(o=>o.name).join(' / ')}, לשעה הפנויה הבאה.`:`להסיר את ${t.name}?`;
+  if(!confirm(msg))return;
+  t.removed=true;
+  open.forEach(j=>{const s=suggest(j.cat,j.type,false,undefined,j.date<TODAY()?TODAY():j.date);const old=`${dayName(j.date)} ${j.start}`;Object.assign(j,{techId:s.techId,date:s.date,start:s.start,status:'scheduled'});
+    log(`קריאה #${j.no} הועברה מ${t.name} (${old}) ל${tech(s.techId).name}, ${dayName(s.date)} ${s.start}`)});
+  log(`הוסר טכנאי: ${t.name}`);if(VIEW.techId===id)VIEW.techId=ACT()[0]?.id;save();viewSettings();
+  toast(open.length?`${t.name} הוסר, ${open.length} קריאות הועברו. צריך לשלוח להן את הסידור שוב.`:`${t.name} הוסר`);
+}
 function setType(id,v){const t=S.types.find(x=>x.id===id);log(`משך התחלתי ל"${t.name}" שונה מ-${t.base} ל-${v} דק׳`);t.base=Math.max(15,+v||60);save();viewSettings();}
 function setSet(k,v){S.settings[k]=v;log(`הגדרה עודכנה: ${k}`);save();}
 
@@ -540,7 +567,7 @@ function openNew(){
   </div>`;
   document.body.appendChild(ov);
   const fillTypes=()=>{const c=$('#n-cat').value;$('#n-type').innerHTML=S.types.filter(t=>t.cat===c).map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
-    $('#n-tech').innerHTML=S.techs.map(t=>`<option value="${t.id}">${t.name} · ${cat(t.cat).name}</option>`).join('');};
+    $('#n-tech').innerHTML=ACT().map(t=>`<option value="${t.id}">${t.name} · ${cat(t.cat).name}</option>`).join('');};
   const sug=(dateFixed)=>{const s=suggest($('#n-cat').value,$('#n-type').value,$('#n-urg').checked,dateFixed);const e=estDur($('#n-type').value);
     $('#n-tech').value=s.techId;$('#n-date').value=s.date;$('#n-time').value=s.start;
     $('#n-sug').innerHTML=`ישובץ ל<b>${esc(tech(s.techId).name)}</b>, ${dayName(s.date)} <b>${s.start}–${fromMin(toMin(s.start)+s.dur)}</b>.<br><span class="small">משך משוער ${s.dur} דק׳ ${e.learned?`(ממוצע של ${e.n} ביקורים קודמים)`:'(משך התחלתי)'}, עם ${S.settings.gap} דק׳ מרווח לנסיעה. אפשר לשנות למטה.</span>`;};
@@ -577,7 +604,7 @@ function openJob(id){
       ${j.desc?`<div>מה דווח</div><div>${esc(j.desc)}</div>`:''}${j.followOf?`<div>המשך של</div><div><a href="#" onclick="openJob('${j.followOf}');return false">קריאה קודמת</a></div>`:''}
     </div>
     ${j.status==='scheduled'||j.status==='sent'?`<details style="margin-top:10px"><summary class="small b" style="cursor:pointer">שינוי שיבוץ</summary>
-      <div class="grid3" style="margin-top:8px"><div><select id="d-tech">${S.techs.map(t=>`<option value="${t.id}" ${t.id===j.techId?'selected':''}>${t.name}</option>`).join('')}</select></div>
+      <div class="grid3" style="margin-top:8px"><div><select id="d-tech">${ACT().map(t=>`<option value="${t.id}" ${t.id===j.techId?'selected':''}>${t.name}</option>`).join('')}</select></div>
       <div><input type="date" id="d-date" value="${j.date}"></div><div><input type="time" id="d-time" value="${j.start}" step="900"></div></div>
       <button class="btn sm" style="margin-top:8px" onclick="reschedule('${j.id}')">שמירת שינוי</button></details>`:''}
     </div>
@@ -632,7 +659,7 @@ function closeJob(id,final){
 function refresh(){if(!$('#view'))return;if(VIEW.tab==='board')viewBoard();else if(VIEW.tab==='calls')viewCalls();}
 function openDaySend(date){
   const ov=document.createElement('div');ov.className='ov';ov.id='ov';ov.onclick=e=>{if(e.target===ov)ov.remove()};
-  const techs=S.techs.filter(t=>S.jobs.some(j=>j.techId===t.id&&j.date===date));
+  const techs=ACT().filter(t=>S.jobs.some(j=>j.techId===t.id&&j.date===date));
   ov.innerHTML=`<div class="drawer"><div class="bar"><h1 style="font-size:19px">הסידור ל${dayName(date)}</h1><button class="x" onclick="$('#ov').remove()">×</button></div>
   <p class="small muted">כל טכנאי מקבל הודעה אחת עם כל הקריאות שלו, כדי שבבוקר לא יחכה לאף אחד. כל שורה כוללת קישור לטופס הסיום.</p>
   ${techs.map(t=>waBlock(t.name+' · '+cat(t.cat).name,dayMsg(t.id,date),'שליחה ל'+esc(t.name),`sendDay('${t.id}','${date}')`)).join('')||'<p class="muted" style="margin-top:12px">אין קריאות ביום הזה</p>'}</div>`;
