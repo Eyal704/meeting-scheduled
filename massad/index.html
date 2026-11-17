@@ -21,16 +21,9 @@
   <meta name="twitter:title" content="מסד | מערכת דוחות בטיחות">
   <meta name="twitter:description" content="סקר מפגעים, בקרת בטיחות, תחקיר אירוע ותיעוד הדרכות.">
   <meta name="twitter:image" content="https://www.meeting-scheduled.com/massad/massad-reports-preview.png">
-  <link rel="icon" href="./logo.png"><link rel="stylesheet" href="./style.css?v=6">
-  <script defer src="./vendor/jspdf.umd.min.js"></script><script defer src="./vendor/html-to-image.js"></script><script defer src="./pdf.js"></script>
-  <script defer src="./checklist.js"></script><script defer src="./email.js?v=6"></script><script defer src="./app.js?v=6"></script>
+  <link rel="icon" href="./logo.png"><link rel="stylesheet" href="./style.css?v=8">
+  <script defer src="./vendor/jspdf.umd.min.js"></script><script defer src="./vendor/html-to-image.js"></script>
+
+<script defer src="./gate.js?v=8"></script>
 </head>
-<body>
-  <header class="topbar"><div class="top-inner"><button class="brand" data-action="home" aria-label="מסד — מסך הבית"><img src="./logo.png" alt="מסד בטיחות"><span><strong>מסד</strong><small>דוחות מהשטח</small></span></button><div class="top-status"><span class="demo">גרסת הדגמה</span><span id="connection"></span></div></div></header>
-  <main id="app"><p class="loading">טוען את הדוחות שלך…</p></main>
-  <div id="toast" role="status" aria-live="polite"></div>
-  <div id="save-error" role="alert" hidden></div>
-  <footer class="footer">מבוסס על הטפסים של מסד · הדוחות נשמרים בדפדפן במכשיר הזה בלבד.<br>לשמירת עותק מחוץ למכשיר, הורידו PDF או גיבוי של כל הדוחות. אין שליחה אוטומטית למשרד.</footer>
-  <noscript>יש להפעיל JavaScript כדי למלא ולשמור דוחות.</noscript>
-</body>
-</html>
+<body><main class="auth-wrap"><section class="auth-card"><div class="auth-brand"><img src="./logo.png" alt="מסד בטיחות"><div><strong>מסד בטיחות</strong><small>מערכת דוחות בטיחות</small></div></div><h1>כניסה למערכת</h1><form id="access-form"><label class="field" for="access-password"><span class="field-label">סיסמה</span><input id="access-password" type="password" autocomplete="current-password" required></label><p id="access-error" class="auth-error" role="alert"></p><button id="access-submit" class="primary" type="submit">כניסה</button></form><p class="note">הדוחות נשמרים בדפדפן במכשיר זה.</p></section></main><noscript>יש להפעיל JavaScript כדי להיכנס למערכת.</noscript></body></html>
