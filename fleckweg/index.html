@@ -502,8 +502,7 @@ footer small{display:block;font-size:12.5px;color:var(--faint);margin-top:4px}
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const params=new URLSearchParams(location.search);
 if(params.get('p')==='1')$('#presenter').classList.add('show');
-let L='he';
-try{const s=localStorage.getItem('fw-lang');if(s==='de'||s==='he')L=s}catch(e){}
+let L='de';
 if(params.get('lang')==='de')L='de';if(params.get('lang')==='he')L='he';
 let voice='lena';
 const agentName=()=>voice==='lena'?'Lena':'Karl';
@@ -687,7 +686,7 @@ function applyLang(){stopRecording();document.documentElement.lang=L==='he'?'he'
  $('#langT').textContent=L==='he'?'Deutsch (Österreich)':'עברית';
  document.title=L==='he'?'fleckweg · מכירה חוזרת':'fleckweg · Wiederbuchung';
  renderFlow();drawAll();drawMail();drawWA();$$('#voiceTabs button').forEach(b=>{b.classList.toggle('on',b.dataset.voice===voice);b.setAttribute('aria-pressed',String(b.dataset.voice===voice))})}
-$('#lang').onclick=()=>{L=L==='he'?'de':'he';try{localStorage.setItem('fw-lang',L)}catch(e){}applyLang()};
+$('#lang').onclick=()=>{L=L==='he'?'de':'he';applyLang()};
 const genderPairs=[['ביקשה','ביקש'],['הסכימה','הסכים'],['הלקוחה','הלקוח'],['קיבלה','קיבל'],['וענתה','וענה'],['סיפרה','סיפר'],['אליה','אליו'],['להתקשר אליה','להתקשר אליו'],['לא הייתה מרוצה','לא היה מרוצה'],['לאשר לה','לאשר לו'],['היא ביקשה','הוא ביקש'],['מתאים לה','מתאים לו'],['שנחזור אליה','שנחזור אליו'],['Kundin','Kunde'],['Sie möchte','Er möchte'],['Sie sagt','Er sagt'],['ruft sie persönlich','ruft ihn persönlich'],['bei ihr','bei ihm']];
 const genderText=(text,toMale)=>[...genderPairs].sort((a,b)=>b[0].length-a[0].length).reduce((value,[f,m])=>value.replaceAll(toMale?f:m,toMale?m:f),text);
 function mapStrings(value,fn){if(typeof value==='string')return fn(value);if(Array.isArray(value))return value.map(v=>mapStrings(v,fn));if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).map(([k,v])=>[k,mapStrings(v,fn)]));return value;}
