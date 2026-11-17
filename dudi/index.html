@@ -109,6 +109,17 @@ textarea{min-height:70px;resize:vertical}
 .acts{display:flex;gap:8px;flex-wrap:wrap}
 /* whatsapp bubble */
 .wa-box{background:#e9e2d8;border-radius:14px;padding:12px}
+.wa-chat{border-radius:14px;overflow:hidden;border:1px solid #d1d7db;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.wa-top{background:#008069;color:#fff;display:flex;align-items:center;gap:10px;padding:9px 12px}
+.wa-av{width:38px;height:38px;border-radius:50%;background:#e9edef;color:#008069;display:grid;place-items:center;font-weight:800;flex:none}
+.wa-top b{font-size:15.5px;display:block;line-height:1.25}.wa-top small{font-size:12px;opacity:.85}
+.wa-body{background-color:#efeae2;background-image:radial-gradient(rgba(84,101,111,.07) 1.2px,transparent 1.2px);background-size:16px 16px;padding:14px 12px 16px}
+.wa-day{display:table;margin:0 auto 10px;background:#fff;color:#54656f;font-size:12px;border-radius:7px;padding:3px 10px;box-shadow:0 1px .5px rgba(11,20,26,.13)}
+.wa-bub{background:#d9fdd3;border-radius:0 8px 8px 8px;padding:7px 9px 5px;font-size:14.2px;line-height:1.5;color:#111b21;white-space:pre-wrap;word-break:break-word;max-width:94%;margin-inline-start:auto;position:relative;box-shadow:0 1px .5px rgba(11,20,26,.13)}
+.wa-bub::after{content:"";position:absolute;top:0;left:-8px;border-width:0 8px 9px 0;border-style:solid;border-color:transparent #d9fdd3 transparent transparent}
+.wa-bub a{color:#027eb5;text-decoration:none;word-break:break-all}
+.wa-meta{display:block;text-align:left;font-size:11px;color:#667781;margin-top:2px;direction:ltr}
+.wa-meta i{font-style:normal;color:#53bdeb;letter-spacing:-3px;margin-left:3px}
 .bub{background:#dcf8c6;border-radius:10px 10px 2px 10px;padding:9px 11px;font-size:14px;white-space:pre-wrap;line-height:1.5;max-width:100%;box-shadow:0 1px 1px rgba(0,0,0,.08);word-break:break-word}
 .bub.in{background:#fff;border-radius:10px 10px 10px 2px}
 .bub-meta{font-size:11px;color:#6b7c6b;text-align:left;margin-top:3px}
@@ -442,7 +453,7 @@ function viewTechView(){
   <p class="muted" style="margin:-6px 0 16px">כך ${esc(tc.name)} רואה את היום שלו: ההודעה שקיבל מהמשרד, והקריאות בטלפון. לחיצה על קריאה פותחת את הטופס שהוא ממלא בשטח.</p>
   <div class="tv-grid">
     <div class="card sec" style="margin-top:0"><h4>ההודעה שקיבל בוואטסאפ</h4>
-      ${msg?`<div class="wa-box"><div class="bub in">${esc(msg)}</div><div class="bub-meta">מהמשרד · ${d===t?'אתמול בערב':'היום'}</div></div>`:'<p class="muted">אין קריאות ביום הזה</p>'}</div>
+      ${msg?waChat(S.settings.company+' · משרד',msg,{sub:'עסק',day:d===t?'אתמול':'היום',time:d===t?'19:30':new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'})}):'<p class="muted">אין קריאות ביום הזה</p>'}</div>
     <div class="tv-phone"><div class="tv-screen">
       <div class="ph-h"><div class="sm">${esc(S.settings.company)}</div><div style="font-size:18px;font-weight:800">שלום ${esc(tc.name)}</div><div class="sm">${fullDate(d)} · ${js.length} קריאות</div></div>
       ${js.map(j=>{const[l,c]=label(j);return `<button class="job" style="margin-top:8px" onclick="VIEW.from='techview';location.hash='tech/${j.id}'">
@@ -625,18 +636,24 @@ function custHistory(j){
   const h=S.jobs.filter(x=>x.customer===j.customer&&x.id!==j.id&&x.result).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6);
   return h.length?h.map(x=>`<div class="small" style="padding:5px 0;border-bottom:1px solid var(--line);cursor:pointer" onclick="openJob('${x.id}')"><b>${new Date(x.date+'T12:00').toLocaleDateString('he-IL')}</b> · ${esc(type(x.type).name)} · ${esc(tech(x.techId).name)}${x.result?' · '+RESULTS[x.result]:''}</div>`).join(''):'<p class="small muted">ביקור ראשון אצל הלקוח</p>';
 }
-function waBlock(title,msg,btn,onSend){
-  return `<div class="card sec"><h4>${title}</h4><div class="wa-box"><div class="bub">${esc(msg)}</div><div class="bub-meta">וואטסאפ</div></div>
+function waLinkify(msg){return esc(msg).replace(/https?:\/\/[^\s<]+/g,u=>`<a href="${u}">${u.length>48?u.slice(0,45)+'…':u}</a>`)}
+function waChat(name,msg,{sub='WhatsApp',day='היום',time}={}){
+  const tm=time||new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});
+  return `<div class="wa-chat"><div class="wa-top"><div class="wa-av">${esc((name||'?').trim()[0])}</div><div><b>${esc(name)}</b><small>${esc(sub)}</small></div></div>
+    <div class="wa-body"><span class="wa-day">${esc(day)}</span><div class="wa-bub">${waLinkify(msg)}<span class="wa-meta">${tm}<i>✓✓</i></span></div></div></div>`;
+}
+function waBlock(title,msg,btn,onSend,to){
+  return `<div class="card sec"><h4>${title}</h4>${waChat(to||title,msg)}
     <div class="acts" style="margin-top:10px"><a class="btn wa" href="${waLink(msg)}" target="_blank" rel="noopener" ${onSend?`onclick="${onSend}"`:''}>${btn}</a></div></div>`;
 }
 function actionBlock(j,fbAt){
-  if(j.status==='scheduled')return waBlock('הודעה לטכנאי',techMsg(j),'שליחה בוואטסאפ',`markSent('${j.id}')`)+
+  if(j.status==='scheduled')return waBlock('הודעה לטכנאי',techMsg(j),'שליחה בוואטסאפ',`markSent('${j.id}')`,tech(j.techId).name)+
     `<div class="acts" style="margin-top:8px"><button class="btn sm" onclick="markSent('${j.id}')">סימון כנשלח בלי לפתוח וואטסאפ</button></div>`;
   if(j.status==='sent')return `<div class="card sec"><h4>אצל הטכנאי</h4><p class="small muted" style="margin-bottom:8px">הטכנאי קיבל קישור לטופס. כך הוא נראה אצלו בטלפון:</p>
     <div class="acts"><a class="btn pri" href="#tech/${j.id}" onclick="VIEW.from='board'">פתיחת הטופס של הטכנאי</a><a class="btn" href="${waLink(techMsg(j))}" target="_blank" rel="noopener">שליחה שוב</a></div></div>`;
-  if(j.status==='done_tech')return waBlock('אישור הלקוח',custMsg(j),'שליחה ללקוח בוואטסאפ')+
+  if(j.status==='done_tech')return waBlock('אישור הלקוח',custMsg(j),'שליחה ללקוח בוואטסאפ',null,j.contact+' · '+j.customer)+
     `<div class="acts" style="margin-top:8px"><a class="btn sm" href="#cust/${j.id}">מה הלקוח רואה</a></div>`;
-  if(j.status==='approved')return `${waBlock(`משוב · יישלח ${fbAt?'ב-'+fbAt.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}):''} (${S.settings.fbDelay} דק׳ אחרי האישור)`,fbMsg(j),'שליחה עכשיו')}
+  if(j.status==='approved')return `${waBlock(`משוב · יישלח ${fbAt?'ב-'+fbAt.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}):''} (${S.settings.fbDelay} דק׳ אחרי האישור)`,fbMsg(j),'שליחה עכשיו',null,j.contact+' · '+j.customer)}
     <div class="acts" style="margin-top:8px"><a class="btn sm" href="#fb/${j.id}">מה הלקוח רואה</a></div>
     <div class="card sec"><h4>סגירה ודוח סופי</h4><div class="acts">
       <button class="btn go" onclick="closeJob('${j.id}','done')">הטיפול הסתיים</button>
@@ -662,7 +679,7 @@ function openDaySend(date){
   const techs=ACT().filter(t=>S.jobs.some(j=>j.techId===t.id&&j.date===date));
   ov.innerHTML=`<div class="drawer"><div class="bar"><h1 style="font-size:19px">הסידור ל${dayName(date)}</h1><button class="x" onclick="$('#ov').remove()">×</button></div>
   <p class="small muted">כל טכנאי מקבל הודעה אחת עם כל הקריאות שלו, כדי שבבוקר לא יחכה לאף אחד. כל שורה כוללת קישור לטופס הסיום.</p>
-  ${techs.map(t=>waBlock(t.name+' · '+cat(t.cat).name,dayMsg(t.id,date),'שליחה ל'+esc(t.name),`sendDay('${t.id}','${date}')`)).join('')||'<p class="muted" style="margin-top:12px">אין קריאות ביום הזה</p>'}</div>`;
+  ${techs.map(t=>waBlock(t.name+' · '+cat(t.cat).name,dayMsg(t.id,date),'שליחה ל'+esc(t.name),`sendDay('${t.id}','${date}')`,t.name)).join('')||'<p class="muted" style="margin-top:12px">אין קריאות ביום הזה</p>'}</div>`;
   document.body.appendChild(ov);
 }
 function sendDay(tid,date){S.jobs.filter(j=>j.techId===tid&&j.date===date&&j.status==='scheduled').forEach(j=>j.status='sent');log(`הסידור ל${dayName(date)} נשלח ל${tech(tid).name}`);save();setTimeout(()=>{if(isOffice())refresh()},60)}
