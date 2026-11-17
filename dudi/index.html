@@ -142,6 +142,10 @@ textarea{min-height:70px;resize:vertical}
 .noimg{aspect-ratio:4/3;display:grid;place-items:center;color:var(--faint);font-size:13px}
 @media print{.noprint{display:none!important}body{background:#fff}.report{border:0;padding:0}}
 .foot{color:var(--faint);font-size:12.5px;text-align:center;padding:24px 0}
+.tv-grid{display:grid;grid-template-columns:1fr 390px;gap:20px;align-items:start}
+.tv-phone{border:10px solid #1c1c1e;border-radius:38px;background:#1c1c1e;box-shadow:var(--shadow)}
+.tv-screen{background:var(--bg);border-radius:28px;padding:14px 12px 22px;min-height:560px;max-height:720px;overflow:auto}
+@media(max-width:860px){.tv-grid{grid-template-columns:1fr}.tv-phone{order:-1;max-width:400px;width:100%;margin:0 auto}}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;z-index:80;font-weight:600;box-shadow:var(--shadow)}
 .note{background:var(--amber-t);color:#7a5413;border-radius:12px;padding:10px 12px;font-size:14px}
 </style>
@@ -319,7 +323,7 @@ function techMsg(j){
 function dayMsg(techId,date){
   const js=S.jobs.filter(j=>j.techId===techId&&j.date===date).sort((a,b)=>a.start.localeCompare(b.start));
   if(!js.length)return'';
-  return `בוקר טוב ${tech(techId).name}, הסידור שלך ל${dayName(date)==='מחר'?'מחר':dayName(date)} (${fullDate(date)}):\n\n`+js.map((j,i)=>
+  return `שלום ${tech(techId).name}, הסידור שלך ל${dayName(date)==='מחר'?'מחר':dayName(date)} (${fullDate(date)}):\n\n`+js.map((j,i)=>
     `${i+1}. ${j.start}–${fromMin(toMin(j.start)+j.dur)} · ${type(j.type).name}\n   ${j.customer}, ${j.address}\n   ${j.contact}${j.desc?' · '+j.desc:''}${j.urgent?' · דחוף':''}\n   טופס: ${link('tech/'+j.id)}`).join('\n\n');
 }
 function custMsg(j){
@@ -330,7 +334,7 @@ function fbMsg(j){
 }
 
 /* ============ router ============ */
-let VIEW={tab:'board',date:TODAY(),filter:'open',q:''};
+let VIEW={tab:'board',date:TODAY(),filter:'open',q:'',techId:'sami',tdate:TODAY(),from:'board'};
 const isOffice=()=>!/^#(tech|cust|fb|report)\//.test(location.hash);
 function route(){
   document.getElementById('ov')?.remove();
@@ -340,7 +344,7 @@ function route(){
   if(p==='cust'&&id)return renderCust(id);
   if(p==='fb'&&id)return renderFb(id);
   if(p==='report'&&id)return renderReport(id);
-  if(['board','calls','team','log','settings'].includes(p))VIEW.tab=p;
+  if(['board','calls','techview','team','log','settings'].includes(p))VIEW.tab=p;
   renderOffice();
 }
 window.addEventListener('hashchange',route);
@@ -348,7 +352,7 @@ window.addEventListener('storage',e=>{if(e.key===KEY){S=load()||S;route()}});
 
 /* ============ office ============ */
 function renderOffice(){
-  const tabs=[['board','לוח עבודה'],['calls','קריאות'],['team','דירוג טכנאים'],['log','יומן שינויים'],['settings','הגדרות']];
+  const tabs=[['board','לוח עבודה'],['calls','קריאות'],['techview','תצוגת טכנאי'],['team','דירוג טכנאים'],['log','יומן שינויים'],['settings','הגדרות']];
   $('#app').innerHTML=`
   <div class="top"><div class="wrap">
     <div class="brand"><div class="mark">ד</div><div>${esc(S.settings.company)}<div class="small muted" style="font-weight:500">מערכת שירות · משרד</div></div></div>
@@ -356,7 +360,7 @@ function renderOffice(){
   </div></div>
   <main><div class="wrap" id="view"></div></main>
   <div class="foot">נבנה על ידי MeetingScheduled · נתוני דוגמה בלבד</div>`;
-  ({board:viewBoard,calls:viewCalls,team:viewTeam,log:viewLog,settings:viewSettings})[VIEW.tab]();
+  ({board:viewBoard,calls:viewCalls,techview:viewTechView,team:viewTeam,log:viewLog,settings:viewSettings})[VIEW.tab]();
 }
 function jobCard(j){
   const end=fromMin(toMin(j.start)+j.dur);
@@ -410,6 +414,29 @@ function viewCalls(){
   ${js.slice(0,120).map(j=>`<tr class="click" onclick="openJob('${j.id}')"><td>${j.no}</td><td>${dayName(j.date)} ${j.start}</td><td>${esc(j.customer)}<div class="small muted">${esc(j.city)}</div></td>
    <td>${esc(type(j.type).name)}</td><td>${esc(tech(j.techId).name)}</td><td>${j.source}</td><td><span class="chip st-${j.status}">${STATUS[j.status]}</span>${j.urgent?' <span class="chip urg">דחוף</span>':''}</td></tr>`).join('')||'<tr><td colspan="7" class="muted">אין קריאות</td></tr>'}
   </tbody></table></div>${js.length>120?`<p class="small muted" style="margin-top:8px">מוצגות 120 מתוך ${js.length}</p>`:''}`;
+}
+/* ---- technician view: what one technician received and sees on the phone ---- */
+const TSTATE={scheduled:['חדשה','st-scheduled'],sent:['חדשה','st-sent'],done_tech:['הסתיים','st-closed'],approved:['הסתיים','st-closed'],closed:['הסתיים','st-closed']};
+function viewTechView(){
+  const t=TODAY();const d=VIEW.tdate;const tc=tech(VIEW.techId);
+  const js=S.jobs.filter(j=>j.techId===VIEW.techId&&j.date===d).sort((a,b)=>a.start.localeCompare(b.start));
+  const msg=dayMsg(VIEW.techId,d);
+  const label=j=>j.techStart&&j.status==='sent'?['בטיפול','st-done_tech']:TSTATE[j.status];
+  $('#view').innerHTML=`
+  <div class="bar"><h1>תצוגת טכנאי</h1>
+    <select onchange="VIEW.techId=this.value;viewTechView()" style="width:auto">${S.techs.map(x=>`<option value="${x.id}" ${x.id===VIEW.techId?'selected':''}>${esc(x.name)} · ${cat(x.cat).name}</option>`).join('')}</select>
+    <div class="seg">${[t,addDays(t,1)].map(x=>`<button class="${x===d?'on':''}" onclick="VIEW.tdate='${x}';viewTechView()">${dayName(x)}</button>`).join('')}</div></div>
+  <p class="muted" style="margin:-6px 0 16px">כך ${esc(tc.name)} רואה את היום שלו: ההודעה שקיבל מהמשרד, והקריאות בטלפון. לחיצה על קריאה פותחת את הטופס שהוא ממלא בשטח.</p>
+  <div class="tv-grid">
+    <div class="card sec" style="margin-top:0"><h4>ההודעה שקיבל בוואטסאפ</h4>
+      ${msg?`<div class="wa-box"><div class="bub in">${esc(msg)}</div><div class="bub-meta">מהמשרד · ${d===t?'אתמול בערב':'היום'}</div></div>`:'<p class="muted">אין קריאות ביום הזה</p>'}</div>
+    <div class="tv-phone"><div class="tv-screen">
+      <div class="ph-h"><div class="sm">${esc(S.settings.company)}</div><div style="font-size:18px;font-weight:800">שלום ${esc(tc.name)}</div><div class="sm">${fullDate(d)} · ${js.length} קריאות</div></div>
+      ${js.map(j=>{const[l,c]=label(j);return `<button class="job" style="margin-top:8px" onclick="VIEW.from='techview';location.hash='tech/${j.id}'">
+        <div class="row" style="margin:0;justify-content:space-between"><span class="t">${j.start}–${fromMin(toMin(j.start)+j.dur)}</span><span class="chip ${c}">${l}</span></div>
+        <div class="c">${esc(type(j.type).name)}</div><div class="d">${esc(j.customer)} · ${esc(j.address)}</div>${j.urgent?'<div class="row"><span class="chip urg">דחוף</span></div>':''}</button>`}).join('')||'<div class="empty" style="padding:30px 0">אין קריאות ביום הזה</div>'}
+    </div></div>
+  </div>`;
 }
 function monthStats(){
   const m=TODAY().slice(0,7);const tgt=+S.settings.bonusTarget||1;
@@ -557,7 +584,7 @@ function openJob(id){
   document.body.appendChild(ov);
 }
 function custHistory(j){
-  const h=S.jobs.filter(x=>x.customer===j.customer&&x.id!==j.id).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6);
+  const h=S.jobs.filter(x=>x.customer===j.customer&&x.id!==j.id&&x.result).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6);
   return h.length?h.map(x=>`<div class="small" style="padding:5px 0;border-bottom:1px solid var(--line);cursor:pointer" onclick="openJob('${x.id}')"><b>${new Date(x.date+'T12:00').toLocaleDateString('he-IL')}</b> · ${esc(type(x.type).name)} · ${esc(tech(x.techId).name)}${x.result?' · '+RESULTS[x.result]:''}</div>`).join(''):'<p class="small muted">ביקור ראשון אצל הלקוח</p>';
 }
 function waBlock(title,msg,btn,onSend){
@@ -568,7 +595,7 @@ function actionBlock(j,fbAt){
   if(j.status==='scheduled')return waBlock('הודעה לטכנאי',techMsg(j),'שליחה בוואטסאפ',`markSent('${j.id}')`)+
     `<div class="acts" style="margin-top:8px"><button class="btn sm" onclick="markSent('${j.id}')">סימון כנשלח בלי לפתוח וואטסאפ</button></div>`;
   if(j.status==='sent')return `<div class="card sec"><h4>אצל הטכנאי</h4><p class="small muted" style="margin-bottom:8px">הטכנאי קיבל קישור לטופס. כך הוא נראה אצלו בטלפון:</p>
-    <div class="acts"><a class="btn pri" href="#tech/${j.id}">פתיחת הטופס של הטכנאי</a><a class="btn" href="${waLink(techMsg(j))}" target="_blank" rel="noopener">שליחה שוב</a></div></div>`;
+    <div class="acts"><a class="btn pri" href="#tech/${j.id}" onclick="VIEW.from='board'">פתיחת הטופס של הטכנאי</a><a class="btn" href="${waLink(techMsg(j))}" target="_blank" rel="noopener">שליחה שוב</a></div></div>`;
   if(j.status==='done_tech')return waBlock('אישור הלקוח',custMsg(j),'שליחה ללקוח בוואטסאפ')+
     `<div class="acts" style="margin-top:8px"><a class="btn sm" href="#cust/${j.id}">מה הלקוח רואה</a></div>`;
   if(j.status==='approved')return `${waBlock(`משוב · יישלח ${fbAt?'ב-'+fbAt.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}):''} (${S.settings.fbDelay} דק׳ אחרי האישור)`,fbMsg(j),'שליחה עכשיו')}
@@ -625,7 +652,7 @@ function renderTech(id){
     <div class="card sec"><h4>4. הערה (לא חובה)</h4><textarea oninput="TD.notes=this.value" placeholder="מה נעשה, מה כדאי לבדוק בפעם הבאה">${esc(TD.notes)}</textarea></div>
     <button class="btn go" style="width:100%;justify-content:center;padding:14px;font-size:17px;margin-top:12px" ${TD.result?'':'disabled'} onclick="techSubmit('${id}')">סיום ושליחה למשרד</button>
     ${TD.result?'':'<p class="small muted" style="text-align:center;margin-top:6px">בוחרים תוצאה כדי לשלוח</p>'}`}
-    <p class="noprint" style="text-align:center;margin-top:20px"><a class="small" href="#board" onclick="TD=null">חזרה למסך המשרד</a></p>
+    <p class="noprint" style="text-align:center;margin-top:20px"><a class="small" href="#${VIEW.from==='techview'?'techview':'board'}" onclick="TD=null">${VIEW.from==='techview'?'חזרה לרשימת הקריאות':'חזרה למסך המשרד'}</a></p>
   </div>`;
 }
 function techStart(id){const j=job(id);j.techStart=new Date().toISOString();if(j.status==='scheduled')j.status='sent';log(`${tech(j.techId).name} התחיל עבודה בקריאה #${j.no}`,tech(j.techId).name);save();renderTech(id)}
