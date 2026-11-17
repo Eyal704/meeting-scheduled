@@ -239,7 +239,8 @@ section{padding:40px 0;scroll-margin-top:64px}
 .wb.mailmsg{max-width:100%;box-shadow:none;border:1px solid var(--line);align-self:stretch}
 .wb .tk{display:block;text-align:right;font-size:11px;color:#8a8a8a;margin-top:2px}
 .wb .tk.read{color:#34b7f1}.wb .lnk{color:#1f6fd1;text-decoration:underline}
-.wa-ctl{display:flex;gap:8px;margin-top:12px;align-items:center}
+.wa-ctl{display:flex;gap:8px;margin-bottom:12px;align-items:center}
+#chat{cursor:pointer}
 .tpls{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
 .tpl{padding:12px 14px}.tpl b{display:block;font-size:15px}.tpl span{font-size:13.5px;color:var(--muted)}
 .need{padding:16px 18px;margin-top:12px}.need ul{margin:6px 0 0;padding-inline-start:18px;line-height:1.75;font-size:15px}
@@ -424,8 +425,8 @@ footer small{display:block;font-size:12.5px;color:var(--faint);margin-top:4px}
     <div class="wa">
       <div>
         <div class="tabs" id="chanTabs" style="margin-bottom:10px"><button data-c="wa" class="on" data-de="WhatsApp · Frau Berger">וואטסאפ · Maria Berger</button><button data-c="em" data-de="E-Mail · Herr Huber">מייל · Thomas Huber</button></div>
-        <div class="phone reveal"><div class="screen" id="screen"><div id="scrTop"></div><div class="chat" id="chat"></div></div></div>
         <div class="wa-ctl"><button class="btn pri sm" id="waNext"></button><button class="btn sm" id="waReset" data-de="Von vorne">מההתחלה</button></div>
+        <div class="phone reveal"><div class="screen" id="screen"><div id="scrTop"></div><div class="chat" id="chat"></div></div></div>
       </div>
       <div>
         <div class="card need reveal"><b data-de="So funktioniert’s">איך זה עובד</b>
@@ -661,7 +662,9 @@ function drawWA(){const C=CH[ch];$('#screen').classList.toggle('em',ch==='em');$
   chat.appendChild(el);if(i<waStep-1)el.classList.add('show');else setTimeout(()=>el.classList.add('show'),30)}
  const done=waStep>=C.steps.length;$('#waNext').textContent=done?T('סיום','Fertig'):T('הצעד הבא ←','Nächster Schritt →');$('#waNext').disabled=done;
  $$('#chanTabs button').forEach(b=>b.classList.toggle('on',b.dataset.c===ch))}
-$('#waNext').onclick=()=>{if(waStep<CH[ch].steps.length){waStep++;drawWA()}};
+function advanceWA(){if(waStep<CH[ch].steps.length){waStep++;drawWA()}}
+$('#waNext').onclick=advanceWA;
+$('#chat').onclick=e=>{if(e.target.closest('a,button,input'))return;advanceWA()};
 $('#waReset').onclick=()=>{waStep=1;drawWA()};
 $$('#chanTabs button').forEach(b=>b.onclick=()=>{ch=b.dataset.c;waStep=1;drawWA()});
 
