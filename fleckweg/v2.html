@@ -504,7 +504,7 @@ const params=new URLSearchParams(location.search);
 if(params.get('p')==='1')$('#presenter').classList.add('show');
 let L='de';
 if(params.get('lang')==='de')L='de';if(params.get('lang')==='he')L='he';
-let voice='lena';
+let voice='karl';
 const agentName=()=>voice==='lena'?'Lena':'Karl';
 const voiceText=text=>voice==='karl'?text:String(text).replaceAll('Karl','Lena').replaceAll('Maria Berger','Martin Berger').replaceAll('Nina Wagner','Niklas Wagner').replaceAll('Eva Gruber','Emil Gruber').replaceAll('Frau Berger','Herr Berger').replaceAll('Frau Wagner','Herr Wagner').replaceAll('Frau Gruber','Herr Gruber').replaceAll('Lena מתקשר','Lena מתקשרת').replaceAll('Lena לא מתקשר','Lena לא מתקשרת').replaceAll('Lena שואל','Lena שואלת').replaceAll('Lena פעיל','Lena פעילה').replaceAll('Lena, הסוכן הקולי','Lena, הסוכנת הקולית').replaceAll('Lena, סוכן קולי','Lena, סוכנת קולית').replaceAll('Lena מזכיר','Lena מזכירה').replaceAll('Lena ממשיך','Lena ממשיכה').replaceAll('Lena מסיים','Lena מסיימת').replaceAll('Lena מדבר','Lena מדברת').replaceAll('Lena קודם שואל','Lena קודם שואלת').replaceAll('Lena שואלת, לא מניח','Lena שואלת, לא מניחה').replaceAll('מתקשר לפי החוקים','מתקשרת לפי החוקים').replaceAll('אומר שהוא עוזר דיגיטלי, מוודא שהוא מדבר','אומרת שהיא עוזרת דיגיטלית, מוודאת שהיא מדברת').replaceAll('הוא מזכיר מה נוקה ומתי, ומציע','היא מזכירה מה נוקה ומתי, ומציעה').replaceAll('KI-Assistent auf','KI-Assistentin auf').replaceAll('digitale Assistent von','digitale Assistentin von').replaceAll('fleckweg, מתקשר','fleckweg, מתקשרת').replaceAll('Lena:</b> מתקשר','Lena:</b> מתקשרת').replaceAll('Lena, ein KI-Assistentin','Lena, eine KI-Assistentin').replaceAll('Lena, ein KI-Assistent','Lena, eine KI-Assistentin');
 const T=(he,de)=>voiceText(L==='he'?he:de);
@@ -698,7 +698,7 @@ function chooseVoice(next){stopRecording();voiceCustomers[previousVoice]=structu
 $$('#voiceTabs button').forEach(b=>b.onclick=()=>chooseVoice(b.dataset.voice));
 $('#listenExamples').onclick=()=>{view='list';fil=null;drawAll();$('#custPane').scrollIntoView({behavior:'smooth',block:'center'});};
 window.addEventListener('pagehide',stopRecording);
-chooseVoice('lena');
+chooseVoice('karl');
 </script>
 </body>
 </html>
