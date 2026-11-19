@@ -51,8 +51,10 @@
     {
       id: 'tp1', name: 'צ׳ילר · טיפול חצי שנתי', equip: 'צ׳ילר', freq: 6,
       checklist: [
-        { id: 'a1', text: 'בדיקת לחצי עבודה (יניקה ודחיסה)', type: 'num', unit: 'bar' },
-        { id: 'a2', text: 'טמפרטורת מים נכנסים / יוצאים', type: 'num', unit: '°C' },
+        { id: 'a1', text: 'לחץ יניקה', type: 'num', unit: 'bar' },
+        { id: 'a1b', text: 'לחץ דחיסה', type: 'num', unit: 'bar' },
+        { id: 'a2', text: 'טמפרטורת מים נכנסים', type: 'num', unit: '°C' },
+        { id: 'a2b', text: 'טמפרטורת מים יוצאים', type: 'num', unit: '°C' },
         { id: 'a3', text: 'ניקוי סוללות עיבוי', type: 'check' },
         { id: 'a4', text: 'בדיקת זרמי מדחסים', type: 'num', unit: 'A' },
         { id: 'a5', text: 'בדיקת דליפות גז בגלאי', type: 'check' },
@@ -145,8 +147,8 @@
         { id: 'q7', name: 'צ׳ילר מעבדה', type: 'צ׳ילר', model: '60 טון', serial: 'CH-40917', place: 'חצר אחורית' }
       ],
       plans: [
-        { id: 'pl6', equipId: 'q6', templateId: 'tp5', last: dateOnly(-170), next: dateOnly(10), reminder: 'sent' },
-        { id: 'pl7', equipId: 'q7', templateId: 'tp1', last: dateOnly(-160), next: dateOnly(21), reminder: 'none' }
+        { id: 'pl6', equipId: 'q6', templateId: 'tp5', last: dateOnly(-170), next: dateOnly(1), reminder: 'confirmed' },
+        { id: 'pl7', equipId: 'q7', templateId: 'tp1', last: dateOnly(-180), next: dateOnly(0), reminder: 'confirmed' }
       ],
       contract: { start: dateOnly(-345), end: dateOnly(20), visits: 4, value: 31000, status: 'נשלחה הצעה' }
     },
@@ -158,8 +160,8 @@
         { id: 'q9', name: 'חדר קירור 2', type: 'חדר קירור', model: '120 מ״ר', serial: 'CR-2211', place: 'מתחם A' }
       ],
       plans: [
-        { id: 'pl8', equipId: 'q8', templateId: 'tp4', last: dateOnly(-80), next: dateOnly(11), reminder: 'none' },
-        { id: 'pl9', equipId: 'q9', templateId: 'tp4', last: dateOnly(-80), next: dateOnly(11), reminder: 'none' }
+        { id: 'pl8', equipId: 'q8', templateId: 'tp4', last: dateOnly(-89), next: dateOnly(1), reminder: 'confirmed' },
+        { id: 'pl9', equipId: 'q9', templateId: 'tp4', last: dateOnly(-89), next: dateOnly(1), reminder: 'confirmed' }
       ],
       contract: { start: dateOnly(-120), end: dateOnly(245), visits: 4, value: 18000, status: 'פעיל' }
     },
@@ -181,7 +183,7 @@
         { id: 'q11', name: 'VRF אגף חדרים', type: 'מערכת VRF', model: '36 יחידות פנים', serial: 'VRF-9902', place: 'גג אגף מזרחי' }
       ],
       plans: [
-        { id: 'pl11', equipId: 'q11', templateId: 'tp3', last: dateOnly(-100), next: dateOnly(80), reminder: 'none' }
+        { id: 'pl11', equipId: 'q11', templateId: 'tp3', last: dateOnly(-178), next: dateOnly(2), reminder: 'confirmed' }
       ],
       contract: null
     }
@@ -250,13 +252,34 @@
       title: 'צ׳ילר 01 · טיפול חצי שנתי', priority: 'low', status: 'closed',
       techId: 't1', partnerId: 'p1', due: at(-176, 9, 0),
       desc: 'טיפול חצי שנתי לפי החוזה.',
-      checklist: checklistFrom('tp1', true).map(c => ({ ...c, value: c.type === 'num' ? (c.unit === 'bar' ? '4.2 / 17.5' : c.unit === 'A' ? '86' : '12 / 7') : c.type === 'text' ? 'היחידה במצב טוב. מומלץ להחליף מגען 2 בטיפול הבא.' : '' })),
+      checklist: checklistFrom('tp1', true).map(c => ({ ...c, value: c.type === 'num' ? ({ a1: '4.2', a1b: '17.5', a2: '12', a2b: '7', a4: '86' })[c.id] || '' : c.type === 'text' ? 'היחידה במצב טוב. מומלץ להחליף מגען 2 בטיפול הבא.' : '' })),
       items: [item('c1', 2, 2), item('g1', 3, 2), item('f3', 1, 0)],
       events: [ev('accepted', 176 * 1440 + 60, WORKSHOP), ev('enroute', 176 * 1440 + 40, WORKSHOP), ev('arrived', 176 * 1440 + 20, custLoc('c1')), ev('working', 176 * 1440 + 15, custLoc('c1')), ev('done', 176 * 1440 - 150, custLoc('c1')), ev('returning', 176 * 1440 - 155, custLoc('c1')), ev('returned', 176 * 1440 - 175, WORKSHOP), ev('review', 176 * 1440 - 180, WORKSHOP), ev('closed', 176 * 1440 - 240, WORKSHOP)],
       diagnosis: 'ללא תקלות. לחצים תקינים.', work: 'בוצע טיפול חצי שנתי מלא לפי הצ׳קליסט. נוספו 2 ק״ג גז.',
       photos: [], signature: null, signer: 'משה אחראי אחזקה', createdAt: ago(177 * 1440)
     }
   ];
+
+  function inH(h) { const t = new Date(Date.now() + h * HOUR); t.setMinutes(Math.round(t.getMinutes() / 15) * 15, 0, 0); return t.toISOString(); }
+  function base(o) { return Object.assign({ checklist: [], items: [], events: [], diagnosis: '', work: '', photos: [], signature: null, signer: '', partnerId: '', createdAt: ago(240) }, o); }
+  jobs.push(
+    /* דניאל לוי */
+    base({ id: 4107, customerId: 'c3', equipId: 'q7', kind: 'טיפול תקופתי', templateId: 'tp1', planId: 'pl7', title: 'צ׳ילר מעבדה · טיפול חצי שנתי', priority: 'low', status: 'accepted', techId: 't1', due: inH(3), desc: 'טיפול חצי שנתי לפי החוזה. כניסה דרך השער האחורי, לתאם עם ד״ר נועה.', checklist: checklistFrom('tp1'), items: [item('c1', 2), item('g1', 3), item('f3', 1)], events: [ev('accepted', 90, WORKSHOP)] }),
+    base({ id: 4108, customerId: 'c1', equipId: 'q1', kind: 'תקלה', title: 'התראת לחץ גבוה בצ׳ילר 01', priority: 'normal', status: 'assigned', techId: 't1', partnerId: 'p1', due: at(1, 8, 0), desc: 'הצ׳ילר נכבה פעמיים אתמול בהתראת לחץ גבוה. לבדוק מאווררי עיבוי וניקיון סוללות.', items: [item('c1', 2), item('e1', 1)], createdAt: ago(35) }),
+    base({ id: 4117, customerId: 'c1', equipId: 'q1', kind: 'תקלה', title: 'רעש במשאבת המים של צ׳ילר 01', priority: 'normal', status: 'closed', techId: 't1', partnerId: 'p1', due: inH(-6), desc: 'רעש חריג במשאבת המים הראשית.', items: [item('p2', 1, 1)], events: [ev('accepted', 420, WORKSHOP), ev('enroute', 400, WORKSHOP), ev('arrived', 375, custLoc('c1')), ev('working', 370, custLoc('c1')), ev('done', 300, custLoc('c1')), ev('returning', 295, custLoc('c1')), ev('returned', 270, WORKSHOP), ev('review', 265, WORKSHOP), ev('closed', 200, WORKSHOP)], diagnosis: 'מיסב שחוק במנוע המשאבה.', work: 'הוחלף מיסב, נבדק זרם המנוע. המשאבה שקטה.', signer: 'משה אחראי אחזקה', createdAt: ago(480) }),
+    /* איתי כהן */
+    base({ id: 4109, customerId: 'c2', equipId: 'q5', kind: 'תקלה', title: 'יט״א לובי לא מתניעה', priority: 'urgent', status: 'assigned', techId: 't2', due: inH(1), desc: 'היחידה לא עולה מהבוקר, הלובי חם. כנראה מגען או פיקוד. רינה מחכה בלובי.', items: [item('e2', 1), item('e1', 1)], createdAt: ago(20) }),
+    base({ id: 4110, customerId: 'c6', equipId: 'q11', kind: 'התקנה', title: 'חיבור בקר מרכזי למערכת VRF', priority: 'low', status: 'accepted', techId: 't2', due: at(1, 10, 0), desc: 'חיבור הבקר המרכזי החדש בקבלה ובדיקת תקשורת לכל 36 היחידות.', items: [item('e3', 2)], events: [ev('accepted', 180, WORKSHOP)] }),
+    /* רועי ביטון */
+    base({ id: 4111, customerId: 'c2', equipId: 'q4', kind: 'תקלה', title: 'יחידת פנים בקומה 3 מטפטפת', priority: 'normal', status: 'assigned', techId: 't3', due: inH(2), desc: 'טפטוף מהתקרה במשרד 304. לבדוק ניקוז ומשאבת עיבוי. אפשר לטפל באותו ביקור של הטיפול.', items: [item('c2', 2)], createdAt: ago(45) }),
+    base({ id: 4112, customerId: 'c6', equipId: 'q11', kind: 'טיפול תקופתי', templateId: 'tp3', planId: 'pl11', title: 'VRF אגף חדרים · טיפול חצי שנתי', priority: 'low', status: 'accepted', techId: 't3', partnerId: 'p2', due: at(2, 9, 0), desc: 'טיפול חצי שנתי. לתאם עם גיל, רק בחדרים פנויים.', checklist: checklistFrom('tp3'), items: [item('c2', 12), item('c1', 1)], events: [ev('accepted', 300, WORKSHOP)] }),
+    /* יוסי אדרי */
+    base({ id: 4113, customerId: 'c3', equipId: 'q6', kind: 'טיפול תקופתי', templateId: 'tp5', planId: 'pl6', title: 'יט״א חדר נקי · טיפול חצי שנתי', priority: 'low', status: 'accepted', techId: 't4', due: at(1, 8, 30), desc: 'החלפת מסננים בחדר הנקי. חובה חלוק וכיסוי נעליים, הציוד ממתין בכניסה.', checklist: checklistFrom('tp5'), items: [item('f1', 6), item('f2', 6), item('p1', 2)], events: [ev('accepted', 240, WORKSHOP)] }),
+    base({ id: 4114, customerId: 'c1', equipId: 'q3', kind: 'תקלה', title: 'רעש חריג במדחס חדר הקירור', priority: 'normal', status: 'assigned', techId: 't4', due: inH(4), desc: 'רעש נקישות מהמדחס בלילה. לבדוק תושבות ולחצים.', items: [item('g2', 2)], createdAt: ago(60) }),
+    /* אמיר פרץ */
+    base({ id: 4115, customerId: 'c4', equipId: 'q8', kind: 'טיפול תקופתי', templateId: 'tp4', planId: 'pl8', title: 'חדר קירור 1 · טיפול רבעוני', priority: 'low', status: 'accepted', techId: 't5', due: at(1, 7, 30), desc: 'טיפול רבעוני. אבי פותח את המתחם ב-7:00.', checklist: checklistFrom('tp4'), items: [item('c1', 1), item('g2', 2)], events: [ev('accepted', 200, WORKSHOP)] }),
+    base({ id: 4116, customerId: 'c4', equipId: 'q9', kind: 'טיפול תקופתי', templateId: 'tp4', planId: 'pl9', title: 'חדר קירור 2 · טיפול רבעוני', priority: 'low', status: 'assigned', techId: 't5', due: at(1, 9, 30), desc: 'באותו ביקור של חדר קירור 1.', checklist: checklistFrom('tp4'), items: [item('c1', 1), item('g2', 2)], createdAt: ago(50) })
+  );
 
   const automations = [
     { id: 'au1', on: true, title: 'תזכורת ללקוח לפני טיפול תקופתי', desc: 'וואטסאפ 14 יום לפני המועד, עם שם הציוד וסוג הטיפול. הלקוח מאשר בתשובה.' },
@@ -269,9 +292,9 @@
 
   window.SHAHAR_SEED = function () {
     return JSON.parse(JSON.stringify({
-      version: 3, me: 'פולינה', workshop: WORKSHOP,
+      version: 5, me: 'פולינה', workshop: WORKSHOP,
       techs, catalog, templates, customers, jobs, automations,
-      settings: { closeMode: 'review' }, nextJobId: 4107, notices: []
+      settings: { closeMode: 'review' }, nextJobId: 4118, notices: []
     }));
   };
 })();

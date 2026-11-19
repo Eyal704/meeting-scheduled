@@ -8,7 +8,7 @@
   function store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage blocked */ } }
   function read(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
   let S = read(KEY);
-  if (!S || S.version !== 3) S = window.SHAHAR_SEED();
+  if (!S || S.version !== 5) S = window.SHAHAR_SEED();
   const params = new URLSearchParams(location.search);
   let ui = Object.assign({ mode: 'office', view: 'today', jobId: null, custId: null, tplId: 'tp1', filter: 'open', q: '', techId: 't1', tjob: null, ttab: 'details', lang: 'he', report: null, modal: null, cat: 'הכל', planTab: 'soon' }, read(UIKEY) || {});
   if (params.get('view') === 'tech') ui.mode = 'tech';
@@ -28,7 +28,12 @@
     const p = String(h || '').replace(/^#\/?/, '').split('/');
     ui.report = null;
     if (p[0] === 'report' && p[1]) { ui.report = +p[1]; return; }
-    if (p[0] === 'tech') { ui.mode = 'tech'; ui.tjob = p[1] ? +p[1] : null; if (!p[1]) ui.ttab = 'details'; return; }
+    if (p[0] === 'tech') {
+      ui.mode = 'tech'; ui.tjob = p[1] ? +p[1] : null; if (!p[1]) ui.ttab = 'details';
+      const jj = ui.tjob && S.jobs.find(x => x.id === ui.tjob), tt = jj && S.techs.find(x => x.id === jj.techId);
+      if (tt && !tt.helper) ui.techId = tt.id;
+      return;
+    }
     ui.mode = 'office';
     if (p[0] === 'job' && p[1]) { ui.view = 'job'; ui.jobId = +p[1]; return; }
     if (p[0] === 'customer' && p[1]) { ui.view = 'customer'; ui.custId = p[1]; return; }
@@ -41,7 +46,14 @@
   /* ---------------- helpers ---------------- */
   const RU = window.SHAHAR_RU || {}, RUD = window.SHAHAR_RU_DATES, RUV = window.SHAHAR_RU_VOICE;
   let PH = false; // true while building the technician phone
-  function tx(s, force) { return (PH || force) && ui.mode === 'tech' && ui.lang === 'ru' && s != null && RU[s] !== undefined ? RU[s] : s; }
+  function tx(s, force) {
+    if (!((PH || force) && ui.mode === 'tech' && ui.lang === 'ru') || s == null) return s;
+    if (RU[s] !== undefined) return RU[s];
+    const m = /^(.+) לפי (חוזה האחזקה|התוכנית)\. לתאם עם (.+)\.$/.exec(s);
+    if (m) return tx(m[1], force) + ' по ' + RU[m[2]] + '. Согласовать: ' + tx(m[3], force) + '.';
+    if (s.includes(' · ')) return s.split(' · ').map(p => RU[p] !== undefined ? RU[p] : p).join(' · ');
+    return s;
+  }
   const $ = (s, r) => (r || document).querySelector(s);
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
   const WD = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
@@ -53,7 +65,7 @@
   function sod(x) { const t = d(x); t.setHours(0, 0, 0, 0); return t.getTime(); }
   function dayDiff(x) { return Math.round((sod(x) - sod(Date.now())) / DAY); }
   function rel(x) { const n = dayDiff(x); if (n === 0) return 'היום'; if (n === 1) return 'מחר'; if (n === -1) return 'אתמול'; if (n > 1) return 'בעוד ' + n + ' ימים'; return 'באיחור של ' + (-n) + ' ימים'; }
-  function money(n) { return '₪' + Math.round(n).toLocaleString('he-IL'); }
+  function money(n) { return Math.round(n).toLocaleString('he-IL') + ' ₪'; }
   function mins(a, b) { return a && b ? Math.max(0, Math.round((d(b) - d(a)) / 60000)) : 0; }
   function dur(n) { if (!n) return '—'; const h = Math.floor(n / 60), m = n % 60; return h ? h + ' ש׳' + (m ? ' ' + m + ' דק׳' : '') : m + ' דק׳'; }
   function initials(n) { return String(n || '').split(' ').slice(0, 2).map(w => w[0]).join(''); }
@@ -147,7 +159,7 @@
     const out = [];
     S.jobs.filter(j => j.status === 'review').forEach(j => out.push({ hot: true, icon: 'file', title: 'דוח מחכה לאישור שלך · #' + j.id, sub: cust(j.customerId).name + ' · ' + tech(j.techId).name, act: 'open-job', arg: j.id }));
     S.jobs.filter(j => j.status === 'assigned' && j.priority === 'urgent').forEach(j => out.push({ hot: true, icon: 'alert', title: 'קריאה דחופה עוד לא אושרה · #' + j.id, sub: j.title + ' · ' + tech(j.techId).name, act: 'open-job', arg: j.id }));
-    allPlans().filter(x => dayDiff(x.p.next) <= 7 && !openJobForPlan(x.p.id) && x.p.reminder !== 'confirmed').forEach(x => out.push({ hot: dayDiff(x.p.next) < 0, icon: 'repeat', cls: dayDiff(x.p.next) < 0 ? '' : 'blue', title: x.t.name + ' · ' + x.c.name, sub: rel(x.p.next) + ' · ' + ({ none: 'עוד לא נשלחה תזכורת', sent: 'נשלחה תזכורת, הלקוח לא ענה', asked_later: 'הלקוח ביקש לדחות' })[x.p.reminder], act: 'go', arg: 'periodic' }));
+    allPlans().filter(x => dayDiff(x.p.next) <= 7 && !openJobForPlan(x.p.id) && x.p.reminder !== 'confirmed').forEach(x => out.push({ hot: dayDiff(x.p.next) < 0, icon: 'repeat', cls: dayDiff(x.p.next) < 0 ? '' : 'blue', title: x.t.name + ' · ' + x.c.name, sub: rel(x.p.next) + ' · ' + ({ none: 'עוד לא נשלחה תזכורת', sent: 'נשלחה תזכורת, הלקוח לא ענה', asked_later: 'הלקוח ביקש לדחות' })[x.p.reminder], act: 'go-plans', arg: dayDiff(x.p.next) < 0 ? 'late' : 'soon' }));
     S.customers.filter(c => c.contract && c.contract.status !== 'חודש' && dayDiff(c.contract.end) <= 45).forEach(c => out.push({ hot: dayDiff(c.contract.end) <= 21, icon: 'sign', cls: dayDiff(c.contract.end) <= 21 ? '' : 'blue', title: 'חוזה אחזקה מסתיים ' + rel(c.contract.end), sub: c.name + ' · ' + c.contract.status, act: 'go', arg: 'contracts' }));
     return out;
   }
@@ -191,14 +203,14 @@
     const open = S.jobs.filter(j => j.status !== 'closed');
     const field = S.jobs.filter(j => ACTIVE.includes(j.status));
     const review = S.jobs.filter(j => j.status === 'review');
-    const plans30 = allPlans().filter(x => dayDiff(x.p.next) <= 30);
+    const plans30 = allPlans().filter(x => dayDiff(x.p.next) <= 7);
     const renew = S.customers.filter(c => c.contract && c.contract.status !== 'חודש' && dayDiff(c.contract.end) <= 60);
     const att = attention();
     const kpis = [
       ['jobs', 'קריאות פתוחות', open.length, open.filter(j => j.priority === 'urgent').length + ' דחופות'],
       ['jobs', 'בשטח עכשיו', field.length, 'טכנאים בדרך או באתר'],
       ['jobs', 'דוחות לבדיקה', review.length, 'מחכים לאישור שלך', review.length > 0],
-      ['periodic', 'טיפולים ב-30 יום', plans30.length, plans30.filter(x => dayDiff(x.p.next) < 0).length + ' באיחור', plans30.some(x => dayDiff(x.p.next) < 0)],
+      ['periodic', 'טיפולים השבוע', plans30.length, plans30.filter(x => dayDiff(x.p.next) < 0).length + ' באיחור', plans30.some(x => dayDiff(x.p.next) < 0)],
       ['contracts', 'חוזים לחידוש', renew.length, 'ב-60 הימים הקרובים', renew.some(c => dayDiff(c.contract.end) <= 21)]
     ];
     const todays = S.jobs.filter(j => j.status !== 'closed' && dayDiff(j.due) <= 0).sort((a, b) => d(a.due) - d(b.due));
@@ -210,7 +222,11 @@
         (act ? '<small>' + ic('pin', 13) + (ll ? esc(ll.loc.addr) + ' · ' + fT(ll.at) : 'עוד לא יצא') + '</small>' : '<small>' + esc(t.spec) + '</small>') + '</div>' +
         '<div class="st">' + (act ? '<button class="link" data-a="open-job" data-arg="' + act.id + '">' + chip(act.status) + '</button>' : '<span class="chip c-ok">פנוי</span>') + '</div></div>';
     }).join('');
-    return '<div class="ph"><div><div class="eyebrow">' + todayLabel() + '</div><h1>' + greeting() + ', ' + esc(S.me) + '</h1></div><div class="actions"><button class="btn pri" data-a="new-job">' + ic('plus') + 'קריאת שירות חדשה</button></div></div>' +
+    const intro = S.introHidden ? '' : '<section class="card intro"><div class="intro-h"><b>שלושה דברים לנסות קודם</b><button class="x" data-a="intro-hide" aria-label="סגירה">' + ic('x') + '</button></div><div class="intro-steps">' +
+      '<button data-a="open-job" data-arg="4104"><span class="n">1</span><span><b>לאשר דוח שהגיע מהשטח</b><small>צ׳קליסט, פריטים, זמנים ומיקומים</small></span></button>' +
+      '<button data-a="mode" data-arg="tech"><span class="n">2</span><span><b>לראות מה הטכנאי רואה בטלפון</b><small>כולל הקלטה ומעבר לרוסית</small></span></button>' +
+      '<button data-a="go" data-arg="templates"><span class="n">3</span><span><b>לבנות תבנית טיפול לצ׳ילר</b><small>ולשייך אותה לציוד של לקוח</small></span></button></div></section>';
+    return '<div class="ph"><div><div class="eyebrow">' + todayLabel() + '</div><h1>' + greeting() + ', ' + esc(S.me) + '</h1></div><div class="actions"><button class="btn pri" data-a="new-job">' + ic('plus') + 'קריאת שירות חדשה</button></div></div>' + intro +
       '<div class="kpis">' + kpis.map(k => '<button class="kpi' + (k[4] ? ' hot' : '') + '" data-a="go" data-arg="' + k[0] + '"><span>' + k[1] + '</span><strong>' + k[2] + '</strong><small>' + k[3] + '</small></button>').join('') + '</div>' +
       '<div class="grid g-main"><div class="grid" style="align-content:start">' +
       '<section class="card"><div class="card-h"><div><h2>' + ic('bell') + 'מחכה לך</h2><div class="sub">רק מה שצריך החלטה שלך. כל השאר רץ לבד.</div></div></div><div class="att">' +
@@ -264,7 +280,7 @@
       (j.status === 'review' ? '<div class="banner orange"><span class="bi">' + ic('file', 24) + '</span><div><b>' + esc(t.name) + ' שלח את הדוח ' + rel(evAt(j, 'review')).replace('היום', 'היום ב-' + fT(evAt(j, 'review'))) + '</b><span class="small muted">בודקים צ׳קליסט, פריטים וחתימה, ומאשרים.</span></div><div class="actions"><button class="btn ok" data-a="approve" data-arg="' + j.id + '">' + ic('check') + 'אישור וסגירה</button><button class="btn" data-a="reopen" data-arg="' + j.id + '">החזרה לטכנאי</button></div></div>' : '') +
       (j.status === 'closed' ? '<div class="banner green"><span class="bi">' + ic('check', 24) + '</span><div><b>הקריאה נסגרה ' + fDY(evAt(j, 'closed')) + '</b><span class="small muted">' + (j.planId ? 'מועד הטיפול הבא עודכן אוטומטית אצל הלקוח.' : 'הדוח שמור בהיסטוריה של הלקוח.') + '</span></div></div>' : '') +
       '<section class="card"><div class="jd-head"><div><div class="row wrap" style="gap:6px"><span class="muted small">#' + j.id + ' · ' + esc(j.kind) + '</span>' + chip(j.status) + pri(j.priority) + '</div><h1>' + esc(j.title) + '</h1><div class="row wrap muted small" style="gap:14px"><span class="row" style="gap:5px">' + ic('building', 15) + '<a href="#" data-a="open-cust" data-arg="' + c.id + '">' + esc(c.name) + '</a></span><span class="row" style="gap:5px">' + ic('pin', 15) + esc(c.address) + '</span><span class="row" style="gap:5px">' + ic('phone', 15) + esc(c.contact) + '</span></div></div>' +
-      '<div class="row wrap"><button class="btn" data-a="report" data-arg="' + j.id + '">' + ic('file') + 'דוח ללקוח</button>' + (j.status !== 'closed' ? '<button class="btn" data-a="transfer" data-arg="' + j.id + '">' + ic('swap') + 'העברה לטכנאי</button>' : '') + (j.status === 'closed' ? '<button class="btn" data-a="reopen" data-arg="' + j.id + '">' + ic('refresh') + 'פתיחה מחדש</button>' : '') + '</div></div>' +
+      '<div class="row wrap"><button class="btn" data-a="as-tech" data-arg="' + j.id + '">' + ic('phoneDev') + 'מסך הטכנאי</button><button class="btn" data-a="report" data-arg="' + j.id + '">' + ic('file') + 'דוח ללקוח</button>' + (j.status !== 'closed' ? '<button class="btn" data-a="transfer" data-arg="' + j.id + '">' + ic('swap') + 'העברה לטכנאי</button>' : '') + (j.status === 'closed' ? '<button class="btn" data-a="reopen" data-arg="' + j.id + '">' + ic('refresh') + 'פתיחה מחדש</button>' : '') + '</div></div>' +
       '<div class="jd-meta"><div><span>טכנאי</span><b><span class="avatar sm">' + initials(t.name) + '</span>' + esc(t.name) + (partner ? '<span class="muted small" style="font-weight:600"> + ' + esc(partner.name) + '</span>' : '') + '</b></div><div><span>מועד</span><b>' + (dayDiff(j.due) === 0 ? 'היום' : fD(j.due)) + ' · ' + fT(j.due) + '</b></div><div><span>זמן עבודה באתר</span><b>' + dur(tt.work) + '</b></div><div><span>זמן נסיעה הלוך וחזור</span><b>' + dur(tt.travel) + '</b></div></div></section>' +
       '<div class="grid g-main mt"><div class="grid" style="align-content:start">' +
       '<section class="card pad"><h2>' + ic('wrench') + 'מה צריך לבצע</h2><p class="pre mt-s">' + esc(j.desc) + '</p>' + (e ? '<div class="kv mt"><span>ציוד</span><b>' + esc(e.name) + ' · ' + esc(e.model) + '</b><span>מספר סידורי</span><b class="num">' + esc(e.serial) + '</b><span>מיקום באתר</span><b>' + esc(e.place) + '</b></div>' : '') + '</section>' +
@@ -322,7 +338,7 @@
       '<section class="card"><div class="jd-head"><div><span class="chip ' + (c.kind === 'חוזה אחזקה' ? 'c-info' : '') + '">' + esc(c.kind) + '</span><h1>' + esc(c.name) + '</h1><div class="row wrap muted small" style="gap:14px"><span class="row" style="gap:5px">' + ic('pin', 15) + esc(c.address) + '</span><span class="row" style="gap:5px">' + ic('phone', 15) + esc(c.contact) + ' · ' + esc(c.phone) + '</span></div></div>' +
       '<div class="row wrap"><a class="btn" href="' + wazeUrl(c) + '" target="_blank" rel="noopener">' + ic('nav') + 'ניווט</a><button class="btn pri" data-a="new-job" data-arg="' + c.id + '">' + ic('plus') + 'קריאה חדשה</button></div></div></section>' +
       '<div class="grid g-main mt"><div class="grid" style="align-content:start">' +
-      '<section class="card"><div class="card-h"><div><h2>' + ic('box') + 'ציוד ותוכנית טיפולים</h2><div class="sub">לכל יחידה תבנית משלה. הטכנאי מקבל את הצ׳קליסט שלה בשטח.</div></div></div><div class="tbl-wrap"><table class="tbl cards"><thead><tr><th>ציוד</th><th>תבנית טיפול</th><th>טיפול אחרון</th><th>טיפול הבא</th></tr></thead><tbody>' +
+      '<section class="card"><div class="card-h"><div><h2>' + ic('box') + 'ציוד ותוכנית טיפולים</h2><div class="sub">לכל יחידה תבנית משלה. הטכנאי מקבל את הצ׳קליסט שלה בשטח.</div></div><button class="btn sm" data-a="new-equip">' + ic('plus', 15) + 'הוספת ציוד</button></div>' + (c.equipment.length ? '' : '<div class="empty">' + ic('box') + '<div>עוד אין ציוד ללקוח הזה. מוסיפים ציוד ומשייכים לו תבנית טיפול.</div></div>') + '<div class="tbl-wrap"><table class="tbl cards"><thead><tr><th>ציוד</th><th>תבנית טיפול</th><th>טיפול אחרון</th><th>טיפול הבא</th></tr></thead><tbody>' +
       c.equipment.map(e => {
         const pl = c.plans.filter(p => p.equipId === e.id);
         return '<tr><td class="t-main"><b>' + esc(e.name) + '</b><small>' + esc(e.model) + ' · ' + esc(e.serial) + ' · ' + esc(e.place) + '</small></td>' +
@@ -384,7 +400,7 @@
       '<section class="card pad"><h2>' + ic('check') + 'כשהטכנאי שולח דוח</h2><div class="grid mt" style="gap:8px">' +
       [['review', 'בדיקה ואישור במשרד', 'הקריאה מחכה לאישור שלך לפני שהיא נסגרת. מומלץ בהתחלה.'], ['close', 'סגירה מיידית', 'הקריאה נסגרת ברגע שהטכנאי שולח.']].map(o => '<button class="card pad" style="text-align:right;box-shadow:none;' + (S.settings.closeMode === o[0] ? 'border-color:var(--blue);background:var(--blue-soft)' : '') + '" data-a="closemode" data-arg="' + o[0] + '"><b>' + o[1] + '</b><div class="small muted">' + o[2] + '</div></button>').join('') + '</div></section>' +
       '</div><div class="grid" style="align-content:start">' +
-      '<section class="card"><div class="card-h"><h2>' + ic('users') + 'הצוות</h2></div>' + S.techs.map(t => '<div class="field-row"><span class="avatar">' + initials(t.name) + '</span><div class="who"><b>' + esc(t.name) + '</b><small>' + esc(t.spec) + '</small></div><span class="st small muted">' + S.jobs.filter(j => j.techId === t.id && j.status !== 'closed').length + ' פתוחות</span></div>').join('') + '</section>' +
+      '<section class="card"><div class="card-h"><h2>' + ic('users') + 'הצוות</h2><button class="btn sm" data-a="new-tech">' + ic('plus', 15) + 'הוספת טכנאי</button></div>' + S.techs.map(t => '<div class="field-row"><span class="avatar">' + initials(t.name) + '</span><div class="who"><b>' + esc(t.name) + '</b><small>' + esc(t.spec) + '</small></div><span class="st small muted">' + S.jobs.filter(j => j.techId === t.id && j.status !== 'closed').length + ' פתוחות</span></div>').join('') + '</section>' +
       '<section class="card pad"><h2>' + ic('pin') + 'מיקום</h2><p class="small mt-s">המיקום נרשם רק כשהטכנאי לוחץ על שלב: קיבלתי, יצאתי, הגעתי, סיימתי, חזרתי. אין מעקב רציף ברקע. מזה מחושבים זמן נסיעה וזמן עבודה בנפרד.</p></section>' +
       '<section class="card pad"><h2>' + ic('mic') + 'הקלטה ותמלול</h2><p class="small mt-s">הטכנאי לוחץ על המיקרופון ומדבר, כמו הודעה קולית בוואטסאפ. המערכת כותבת את הטקסט בדוח. עובד בעברית וברוסית.</p></section>' +
       '</div></div>';
@@ -505,6 +521,8 @@
     if (m.type === 'transfer') { const j = job(m.jobId); return '<div class="overlay" data-a="close-bg"><div class="modal narrow"><div class="modal-h"><div><h2>העברה לטכנאי אחר</h2><p>הדיווחים והזמנים עד עכשיו נשמרים בקריאה</p></div><button class="x" data-a="close">' + ic('x') + '</button></div><div class="modal-b grid" style="gap:12px"><label class="f"><span>הטכנאי הבא</span><select id="tr-to">' + S.techs.filter(t => !t.helper && t.id !== j.techId).map(t => '<option value="' + t.id + '">' + esc(t.name) + ' · ' + esc(t.spec) + '</option>').join('') + '</select></label><label class="f"><span>מה נשאר לעשות?</span><textarea id="tr-why" rows="3" placeholder="למשל: נשאר לחבר בקרה ולבדוק חיישנים"></textarea></label></div><div class="modal-f"><button class="btn pri" data-a="do-transfer" data-arg="' + j.id + '">' + ic('swap') + 'העברה ושליחת התראה</button><button class="btn" data-a="close">ביטול</button></div></div></div>'; }
     if (m.type === 'newcust') return '<div class="overlay" data-a="close-bg"><div class="modal narrow"><div class="modal-h"><div><h2>לקוח חדש</h2></div><button class="x" data-a="close">' + ic('x') + '</button></div><div class="modal-b form-grid"><label class="f span"><span>שם הלקוח</span><input id="nc-name"></label><label class="f"><span>עיר</span><input id="nc-city" value="באר שבע"></label><label class="f"><span>סוג</span><select id="nc-kind"><option>חדש</option><option>לקוח קבוע</option><option>חוזה אחזקה</option></select></label><label class="f span"><span>כתובת</span><input id="nc-addr"></label><label class="f"><span>איש קשר</span><input id="nc-contact"></label><label class="f"><span>טלפון</span><input id="nc-phone" inputmode="tel"></label></div><div class="modal-f"><button class="btn pri" data-a="do-newcust">שמירה</button><button class="btn" data-a="close">ביטול</button></div></div></div>';
     if (m.type === 'newjob') return newJobModal(m);
+    if (m.type === 'newequip') { const types = [...new Set(S.templates.map(t => t.equip))]; return '<div class="overlay" data-a="close-bg"><div class="modal narrow"><div class="modal-h"><div><h2>הוספת ציוד</h2><p>' + esc(cust(ui.custId).name) + '</p></div><button class="x" data-a="close">' + ic('x') + '</button></div><div class="modal-b form-grid"><label class="f span"><span>שם הציוד</span><input id="ne-name" placeholder="למשל: צ׳ילר 03"></label><label class="f"><span>סוג</span><select id="ne-type">' + types.map(t => '<option>' + esc(t) + '</option>').join('') + '<option>אחר</option></select></label><label class="f"><span>דגם</span><input id="ne-model"></label><label class="f"><span>מספר סידורי</span><input id="ne-serial"></label><label class="f"><span>מיקום באתר</span><input id="ne-place" placeholder="למשל: גג"></label><label class="f span"><span>תבנית טיפול</span><select id="ne-tpl"><option value="">בלי, אשייך אחר כך</option>' + S.templates.map(t => '<option value="' + t.id + '">' + esc(t.name) + '</option>').join('') + '</select><small>הטיפול הראשון ייקבע לעוד 30 יום</small></label></div><div class="modal-f"><button class="btn pri" data-a="do-newequip">שמירה</button><button class="btn" data-a="close">ביטול</button></div></div></div>'; }
+    if (m.type === 'newtech') return '<div class="overlay" data-a="close-bg"><div class="modal narrow"><div class="modal-h"><div><h2>הוספת טכנאי</h2></div><button class="x" data-a="close">' + ic('x') + '</button></div><div class="modal-b form-grid"><label class="f span"><span>שם מלא</span><input id="nt-name"></label><label class="f"><span>התמחות</span><input id="nt-spec" placeholder="למשל: צ׳ילרים"></label><label class="f"><span>טלפון</span><input id="nt-phone" inputmode="tel"></label></div><div class="modal-f"><button class="btn pri" data-a="do-newtech">שמירה</button><button class="btn" data-a="close">ביטול</button></div></div></div>';
     return '';
   }
 
@@ -605,8 +623,9 @@
       recog = new SR(); recog.lang = ui.lang === 'ru' ? 'ru-RU' : 'he-IL'; recog.interimResults = true; recog.continuous = true;
       let finalText = '', gotAny = false;
       recog.onresult = ev => { gotAny = true; let interim = ''; for (let k = ev.resultIndex; k < ev.results.length; k++) { const r = ev.results[k]; if (r.isFinal) finalText += r[0].transcript + ' '; else interim += r[0].transcript; } j[field] = base + finalText + interim; const ta = $(field === 'diagnosis' ? '#tr-diag' : '#tr-work'); if (ta) ta.value = j[field]; };
-      recog.onerror = () => { recog = null; if (!gotAny) simulate(); };
-      recog.onend = () => { if (gotAny) { recog = null; ui.rec = null; save(); render(); toast(tx('ההקלטה תומללה ונוספה לדוח', true)); } };
+      let failed = false;
+      recog.onerror = ev => { failed = true; recog = null; if (gotAny) return; if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed' || ev.error === 'audio-capture') { toast(tx('אין גישה למיקרופון, הוכנס טקסט לדוגמה', true)); simulate(); } else { ui.rec = null; render(); toast(tx('לא נקלט דיבור. נסו שוב', true)); } };
+      recog.onend = () => { recog = null; if (failed) return; ui.rec = null; save(); render(); toast(tx(gotAny ? 'ההקלטה תומללה ונוספה לדוח' : 'לא נקלט דיבור. נסו שוב', true)); };
       recog.start();
     } catch (e) { recog = null; simulate(); }
   }
@@ -698,7 +717,14 @@
     renew: a => { const c = cust(a); const k = c.contract; k.start = k.end; const e = d(k.end); e.setFullYear(e.getFullYear() + 1); k.end = e.toISOString(); k.status = 'חודש'; render(); toast('החוזה של ' + c.name + ' חודש עד ' + fDY(k.end)); },
     'new-cust': () => { ui.modal = { type: 'newcust' }; render(); setTimeout(() => { const el = $('#nc-name'); if (el) el.focus(); }, 0); },
     'do-newcust': () => { const name = $('#nc-name').value.trim(); if (!name) { toast('חסר שם לקוח'); return; } const c = { id: uid('c'), name, city: $('#nc-city').value.trim() || 'באר שבע', address: $('#nc-addr').value.trim() || $('#nc-city').value.trim(), contact: $('#nc-contact').value.trim() || 'איש קשר', phone: $('#nc-phone').value.trim(), kind: $('#nc-kind').value, lat: 31.25, lng: 34.79, equipment: [], plans: [], contract: null }; S.customers.push(c); ui.modal = null; ui.view = 'customer'; ui.custId = c.id; render(); toast('הלקוח נוסף'); },
-    tpl: a => { ui.tplId = a; render(); },
+    tpl: a => { ui.tplId = a; render(); if (window.innerWidth < 980) { const el = $('.tpl-layout > .grid'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } },
+    'as-tech': a => { const j = job(+a); ui.mode = 'tech'; ui.techId = j.techId; ui.tjob = j.id; ui.ttab = 'details'; window.scrollTo(0, 0); render(); },
+    'go-plans': a => { ui.planTab = a; go('periodic'); },
+    'intro-hide': () => { S.introHidden = true; render(); },
+    'new-equip': () => { ui.modal = { type: 'newequip' }; render(); setTimeout(() => { const el = $('#ne-name'); if (el) el.focus(); }, 0); },
+    'do-newequip': () => { const name = $('#ne-name').value.trim(); if (!name) { toast('חסר שם לציוד'); return; } const c = cust(ui.custId); const e = { id: uid('q'), name, type: $('#ne-type').value, model: $('#ne-model').value.trim() || '—', serial: $('#ne-serial').value.trim() || '—', place: $('#ne-place').value.trim() || '—' }; c.equipment.push(e); const tp = $('#ne-tpl').value; if (tp) { const nx = new Date(); nx.setDate(nx.getDate() + 30); c.plans.push({ id: uid('pl'), equipId: e.id, templateId: tp, last: null, next: nx.toISOString(), reminder: 'none' }); } ui.modal = null; render(); toast(name + ' נוסף ללקוח'); },
+    'new-tech': () => { ui.modal = { type: 'newtech' }; render(); setTimeout(() => { const el = $('#nt-name'); if (el) el.focus(); }, 0); },
+    'do-newtech': () => { const name = $('#nt-name').value.trim(); if (!name) { toast('חסר שם'); return; } S.techs.push({ id: uid('t'), name, spec: $('#nt-spec').value.trim() || 'טכנאי', phone: $('#nt-phone').value.trim() }); ui.modal = null; render(); toast(name + ' נוסף לצוות. אפשר לשייך לו קריאות'); },
     'tpl-new': () => { const t = { id: uid('tp'), name: 'תבנית חדשה', equip: 'צ׳ילר', freq: 6, checklist: [{ id: uid('r'), text: '', type: 'check' }], items: [] }; S.templates.push(t); ui.tplId = t.id; render(); const el = $('#tpl-name'); if (el) { el.focus(); el.select(); } },
     'tpl-dup': () => { const s = tpl(ui.tplId); const t = JSON.parse(JSON.stringify(s)); t.id = uid('tp'); t.name = s.name + ' (עותק)'; t.checklist.forEach(r => r.id = uid('r')); S.templates.push(t); ui.tplId = t.id; render(); toast('התבנית שוכפלה'); },
     'cl-add': () => { const r = { id: uid('r'), text: '', type: 'check' }; tpl(ui.tplId).checklist.push(r); render(); const el = $('#cl-' + r.id); if (el) el.focus(); },
