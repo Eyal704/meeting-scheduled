@@ -8,7 +8,7 @@
   function store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage blocked */ } }
   function read(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
   let S = read(KEY);
-  if (!S || S.version !== 5) S = window.SHAHAR_SEED();
+  if (!S || S.version !== 6) S = window.SHAHAR_SEED();
   const params = new URLSearchParams(location.search);
   let ui = Object.assign({ mode: 'office', view: 'today', jobId: null, custId: null, tplId: 'tp1', filter: 'open', q: '', techId: 't1', tjob: null, ttab: 'details', lang: 'he', report: null, modal: null, cat: 'הכל', planTab: 'soon' }, read(UIKEY) || {});
   if (params.get('view') === 'tech') ui.mode = 'tech';
@@ -78,6 +78,8 @@
   function equipOf(j) { const c = cust(j.customerId); return c && c.equipment.find(e => e.id === j.equipId); }
   function allPlans() { const out = []; S.customers.forEach(c => c.plans.forEach(p => out.push({ p, c, e: c.equipment.find(e => e.id === p.equipId), t: tpl(p.templateId) }))); return out; }
   function openJobForPlan(pid) { return S.jobs.find(j => j.planId === pid && j.status !== 'closed'); }
+  function freqTitle(t) { return ({ 1: 'טיפול חודשי', 3: 'טיפול רבעוני', 6: 'טיפול חצי שנתי', 12: 'טיפול שנתי' })[t.freq] || 'טיפול'; }
+  function freqPhrase(t) { return ({ 1: 'הטיפול החודשי', 3: 'הטיפול הרבעוני', 6: 'הטיפול החצי שנתי', 12: 'הטיפול השנתי' })[t.freq] || 'הטיפול'; }
   function freqLabel(n) { return ({ 0: 'חד פעמי', 1: 'חודשי', 3: 'רבעוני', 6: 'חצי שנתי', 12: 'שנתי' })[n] || ('כל ' + n + ' חודשים'); }
 
   /* ---------------- icons ---------------- */
@@ -122,15 +124,17 @@
     copy: '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
     image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/>',
     shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
-    info: '<circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/>'
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/>',
+    mail: '<rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6.5 9 6 9-6"/>',
+    clip: '<path d="m21.4 11.1-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/>'
   };
   function ic(n, s) { return '<svg class="i" viewBox="0 0 24 24"' + (s ? ' style="width:' + s + 'px;height:' + s + 'px"' : '') + '>' + (P[n] || '') + '</svg>'; }
 
   /* ---------------- job flow ---------------- */
   const FLOW = ['assigned', 'accepted', 'enroute', 'arrived', 'working', 'done', 'returning', 'returned', 'review', 'closed'];
-  const ST = { assigned: 'ממתינה לאישור', accepted: 'התקבלה', enroute: 'בדרך ללקוח', arrived: 'הגיע לאתר', working: 'בטיפול', done: 'העבודה הסתיימה', returning: 'בדרך חזרה', returned: 'חזר לבית המלאכה', review: 'ממתינה לבדיקה', closed: 'נסגרה' };
+  const ST = { assigned: 'ממתינה לאישור', accepted: 'התקבלה', enroute: 'בדרך ללקוח', arrived: 'באתר', working: 'בטיפול', done: 'העבודה הסתיימה', returning: 'בדרך חזרה', returned: 'בבית המלאכה', review: 'ממתינה לבדיקה', closed: 'נסגרה' };
   const STEP = { accepted: 'קיבלתי את הקריאה', enroute: 'יצאתי לדרך', arrived: 'הגעתי ללקוח', working: 'התחלתי לעבוד', done: 'סיימתי את העבודה', returning: 'יצאתי חזרה', returned: 'הגעתי לבית המלאכה', review: 'שליחת הדוח למשרד' };
-  const EVT = { accepted: 'אישר קבלה', enroute: 'יצא לדרך', arrived: 'הגיע ללקוח', working: 'התחיל לעבוד', done: 'סיים את העבודה', returning: 'יצא חזרה', returned: 'הגיע לבית המלאכה', review: 'שלח דוח למשרד', closed: 'הקריאה נסגרה', transfer: 'הקריאה הועברה', reopen: 'נפתחה להמשך טיפול', created: 'הקריאה נפתחה' };
+  const EVT = { accepted: 'אישר קבלה', enroute: 'יצא לדרך', arrived: 'הגיע ללקוח', working: 'התחיל לעבוד', done: 'סיים את העבודה', returning: 'יצא חזרה', returned: 'הגיע לבית המלאכה', review: 'שלח דוח למשרד', closed: 'הקריאה נסגרה', transfer: 'הקריאה הועברה', mailed: 'הדוח נשלח ללקוח במייל', reopen: 'נפתחה להמשך טיפול', created: 'הקריאה נפתחה' };
   const PRI = { urgent: 'דחופה', normal: 'רגילה', low: 'מתוכננת' };
   const ACTIVE = ['enroute', 'arrived', 'working', 'done', 'returning'];
   function nextStatus(j) { const i = FLOW.indexOf(j.status); return i >= 0 && i < FLOW.indexOf('review') ? FLOW[i + 1] : null; }
@@ -159,7 +163,7 @@
     const out = [];
     S.jobs.filter(j => j.status === 'review').forEach(j => out.push({ hot: true, icon: 'file', title: 'דוח מחכה לאישור שלך · #' + j.id, sub: cust(j.customerId).name + ' · ' + tech(j.techId).name, act: 'open-job', arg: j.id }));
     S.jobs.filter(j => j.status === 'assigned' && j.priority === 'urgent').forEach(j => out.push({ hot: true, icon: 'alert', title: 'קריאה דחופה עוד לא אושרה · #' + j.id, sub: j.title + ' · ' + tech(j.techId).name, act: 'open-job', arg: j.id }));
-    allPlans().filter(x => dayDiff(x.p.next) <= 7 && !openJobForPlan(x.p.id) && x.p.reminder !== 'confirmed').forEach(x => out.push({ hot: dayDiff(x.p.next) < 0, icon: 'repeat', cls: dayDiff(x.p.next) < 0 ? '' : 'blue', title: x.t.name + ' · ' + x.c.name, sub: rel(x.p.next) + ' · ' + ({ none: 'עוד לא נשלחה תזכורת', sent: 'נשלחה תזכורת, הלקוח לא ענה', asked_later: 'הלקוח ביקש לדחות' })[x.p.reminder], act: 'go-plans', arg: dayDiff(x.p.next) < 0 ? 'late' : 'soon' }));
+    allPlans().filter(x => dayDiff(x.p.next) <= 7 && !openJobForPlan(x.p.id) && x.p.reminder !== 'confirmed').forEach(x => out.push({ hot: dayDiff(x.p.next) < 0, icon: 'repeat', cls: dayDiff(x.p.next) < 0 ? '' : 'blue', title: x.t.name + ' · ' + x.c.name, sub: rel(x.p.next) + ' · ' + ({ none: 'עוד לא נשלחה תזכורת', sent: 'נשלח מייל, הלקוח לא ענה', opened: 'המייל נפתח, עוד אין תשובה', asked_later: 'הלקוח ביקש מועד אחר' })[x.p.reminder], act: 'go-plans', arg: dayDiff(x.p.next) < 0 ? 'late' : 'soon' }));
     S.customers.filter(c => c.contract && c.contract.status !== 'חודש' && dayDiff(c.contract.end) <= 45).forEach(c => out.push({ hot: dayDiff(c.contract.end) <= 21, icon: 'sign', cls: dayDiff(c.contract.end) <= 21 ? '' : 'blue', title: 'חוזה אחזקה מסתיים ' + rel(c.contract.end), sub: c.name + ' · ' + c.contract.status, act: 'go', arg: 'contracts' }));
     return out;
   }
@@ -280,14 +284,14 @@
       (j.status === 'review' ? '<div class="banner orange"><span class="bi">' + ic('file', 24) + '</span><div><b>' + esc(t.name) + ' שלח את הדוח ' + rel(evAt(j, 'review')).replace('היום', 'היום ב-' + fT(evAt(j, 'review'))) + '</b><span class="small muted">בודקים צ׳קליסט, פריטים וחתימה, ומאשרים.</span></div><div class="actions"><button class="btn ok" data-a="approve" data-arg="' + j.id + '">' + ic('check') + 'אישור וסגירה</button><button class="btn" data-a="reopen" data-arg="' + j.id + '">החזרה לטכנאי</button></div></div>' : '') +
       (j.status === 'closed' ? '<div class="banner green"><span class="bi">' + ic('check', 24) + '</span><div><b>הקריאה נסגרה ' + fDY(evAt(j, 'closed')) + '</b><span class="small muted">' + (j.planId ? 'מועד הטיפול הבא עודכן אוטומטית אצל הלקוח.' : 'הדוח שמור בהיסטוריה של הלקוח.') + '</span></div></div>' : '') +
       '<section class="card"><div class="jd-head"><div><div class="row wrap" style="gap:6px"><span class="muted small">#' + j.id + ' · ' + esc(j.kind) + '</span>' + chip(j.status) + pri(j.priority) + '</div><h1>' + esc(j.title) + '</h1><div class="row wrap muted small" style="gap:14px"><span class="row" style="gap:5px">' + ic('building', 15) + '<a href="#" data-a="open-cust" data-arg="' + c.id + '">' + esc(c.name) + '</a></span><span class="row" style="gap:5px">' + ic('pin', 15) + esc(c.address) + '</span><span class="row" style="gap:5px">' + ic('phone', 15) + esc(c.contact) + '</span></div></div>' +
-      '<div class="row wrap"><button class="btn" data-a="as-tech" data-arg="' + j.id + '">' + ic('phoneDev') + 'מסך הטכנאי</button><button class="btn" data-a="report" data-arg="' + j.id + '">' + ic('file') + 'דוח ללקוח</button>' + (j.status !== 'closed' ? '<button class="btn" data-a="transfer" data-arg="' + j.id + '">' + ic('swap') + 'העברה לטכנאי</button>' : '') + (j.status === 'closed' ? '<button class="btn" data-a="reopen" data-arg="' + j.id + '">' + ic('refresh') + 'פתיחה מחדש</button>' : '') + '</div></div>' +
+      '<div class="row wrap"><button class="btn" data-a="as-tech" data-arg="' + j.id + '">' + ic('phoneDev') + 'מסך הטכנאי</button><button class="btn" data-a="report" data-arg="' + j.id + '">' + ic('file') + 'דוח ללקוח</button>' + (['review', 'closed'].includes(j.status) ? '<button class="btn" data-a="mail-report" data-arg="' + j.id + '">' + ic('mail') + 'שליחת הדוח במייל</button>' : '') + (j.status !== 'closed' ? '<button class="btn" data-a="transfer" data-arg="' + j.id + '">' + ic('swap') + 'העברה לטכנאי</button>' : '') + (j.status === 'closed' ? '<button class="btn" data-a="reopen" data-arg="' + j.id + '">' + ic('refresh') + 'פתיחה מחדש</button>' : '') + '</div></div>' +
       '<div class="jd-meta"><div><span>טכנאי</span><b><span class="avatar sm">' + initials(t.name) + '</span>' + esc(t.name) + (partner ? '<span class="muted small" style="font-weight:600"> + ' + esc(partner.name) + '</span>' : '') + '</b></div><div><span>מועד</span><b>' + (dayDiff(j.due) === 0 ? 'היום' : fD(j.due)) + ' · ' + fT(j.due) + '</b></div><div><span>זמן עבודה באתר</span><b>' + dur(tt.work) + '</b></div><div><span>זמן נסיעה הלוך וחזור</span><b>' + dur(tt.travel) + '</b></div></div></section>' +
       '<div class="grid g-main mt"><div class="grid" style="align-content:start">' +
       '<section class="card pad"><h2>' + ic('wrench') + 'מה צריך לבצע</h2><p class="pre mt-s">' + esc(j.desc) + '</p>' + (e ? '<div class="kv mt"><span>ציוד</span><b>' + esc(e.name) + ' · ' + esc(e.model) + '</b><span>מספר סידורי</span><b class="num">' + esc(e.serial) + '</b><span>מיקום באתר</span><b>' + esc(e.place) + '</b></div>' : '') + '</section>' +
       (tp ? '<section class="card pad"><div class="row"><h2>' + ic('checklist') + 'צ׳קליסט · ' + esc(tp.name) + '</h2><span class="spacer"></span><span class="chip ' + (clDone === j.checklist.length ? 'c-ok' : 'c-info') + '">' + clDone + ' / ' + j.checklist.length + '</span></div><div class="progress"><i style="width:' + Math.round(clDone / Math.max(1, j.checklist.length) * 100) + '%"></i></div><div class="cl mt-s">' +
         j.checklist.map(r => { const ok = r.type === 'check' ? r.done : String(r.value || '').trim(); return '<div class="cl-row"><span class="tick' + (ok ? ' on' : '') + '">' + (ok ? ic('check', 14) : '') + '</span><span class="t">' + esc(r.text) + (r.type === 'text' && r.value ? '<small>' + esc(r.value) + '</small>' : '') + '</span>' + (r.type === 'num' ? '<span class="v">' + (r.value ? esc(r.value) + ' ' + esc(r.unit) : '<span class="muted small">—</span>') + '</span>' : '') + '</div>'; }).join('') + '</div></section>' : '') +
-      '<section class="card pad"><div class="row"><h2>' + ic('box') + 'פריטים לקריאה</h2><span class="spacer"></span><span class="muted small">מה לקחת · מה הטכנאי סימן שהשתמש</span></div><div class="items mt-s">' +
-      (j.items.length ? j.items.map(i => '<div class="it"><div class="nm"><b>' + esc(i.name) + '</b><small>' + (i.added ? 'נוסף בשטח' : 'לקחת: ' + i.planned + ' ' + esc(i.unit)) + '</small></div><span>' + (i.used == null ? '<span class="chip">טרם סומן</span>' : i.used > 0 ? '<span class="chip c-ok">השתמש</span>' : '<span class="chip">לא נדרש</span>') + '</span><span class="q">' + (i.used > 0 ? i.used + ' ' + esc(i.unit) : '') + '</span></div>').join('') : '<p class="muted">לא הוגדרו פריטים.</p>') + '</div></section>' +
+      '<section class="card pad"><div class="row"><h2>' + ic('box') + 'פריטים לקריאה</h2><span class="spacer"></span><span class="muted small">מה לקחת, ובמה הטכנאי השתמש בפועל</span></div><div class="items mt-s">' +
+      (j.items.length ? j.items.map(i => '<div class="it"><div class="nm"><b>' + esc(i.name) + '</b><small>' + (i.added ? 'נוסף בשטח' : 'לקחת: ' + i.planned + ' ' + esc(i.unit)) + '</small></div><span>' + (i.used == null ? '<span class="chip">טרם סומן</span>' : i.used > 0 ? '<span class="chip c-ok">בשימוש</span>' : '<span class="chip">לא נדרש</span>') + '</span><span class="q">' + (i.used > 0 ? i.used + ' ' + esc(i.unit) : '') + '</span></div>').join('') : '<p class="muted">לא הוגדרו פריטים.</p>') + '</div></section>' +
       '<section class="card pad"><h2>' + ic('pen') + 'דיווח הטכנאי</h2>' + (j.diagnosis || j.work ? '<div class="kv mt-s" style="grid-template-columns:90px 1fr"><span>אבחון</span><p class="pre">' + esc(j.diagnosis || '—') + '</p><span>מה בוצע</span><p class="pre">' + esc(j.work || '—') + '</p></div>' : '<p class="muted mt-s">הדיווח יופיע כאן ברגע שהטכנאי יכתוב או יקליט.</p>') +
       (j.photos.length ? '<div class="photos mt">' + j.photos.map(p => '<img src="' + p + '" alt="תמונה מהשטח">').join('') + '</div>' : '') +
       '<div class="grid g2 mt"><div><div class="small muted" style="margin-bottom:4px">חתימת הלקוח' + (j.signer ? ' · ' + esc(j.signer) : '') + '</div><div class="sig">' + (j.signature ? '<img src="' + j.signature + '" alt="חתימה">' : '<span class="muted small">' + (j.signer && j.status === 'closed' || j.status === 'review' ? 'נחתם על המסך' : 'טרם נחתם') + '</span>') + '</div></div></div></section>' +
@@ -299,13 +303,13 @@
       '</div></div>';
   }
 
-  function remChip(r) { return ({ none: '<span class="chip">לא נשלחה</span>', sent: '<span class="chip c-info">נשלחה · ממתין</span>', confirmed: '<span class="chip c-ok">אישר מועד</span>', asked_later: '<span class="chip c-warn">ביקש לדחות</span>' })[r]; }
+  function remChip(r) { return ({ none: '<span class="chip">לא נשלח</span>', sent: '<span class="chip c-info">נשלח מייל · ממתין</span>', opened: '<span class="chip c-info">המייל נפתח</span>', confirmed: '<span class="chip c-ok">אישר מועד</span>', asked_later: '<span class="chip c-warn">ביקש מועד אחר</span>' })[r]; }
   function vPeriodic() {
     const tabs = [['late', 'באיחור', x => dayDiff(x.p.next) < 0], ['soon', '30 הימים הקרובים', x => dayDiff(x.p.next) <= 30], ['all', 'הכל', () => true]];
     const tab = tabs.find(t => t[0] === ui.planTab) || tabs[1];
     const list = allPlans().filter(tab[2]).sort((a, b) => d(a.p.next) - d(b.p.next));
     return '<div class="ph"><div><div class="eyebrow">לכל לקוח ולכל ציוד, תבנית משלו</div><h1>טיפולים תקופתיים</h1></div><div class="actions"><button class="btn" data-a="go" data-arg="templates">' + ic('checklist') + 'תבניות טיפול</button></div></div>' +
-      '<div class="hint" style="margin-bottom:14px">' + ic('info') + '<span>14 יום לפני כל טיפול יוצאת ללקוח תזכורת בוואטסאפ. כשהוא מאשר, נפתחת קריאה עם הצ׳קליסט והפריטים של התבנית. אפשר גם לפתוח קריאה ידנית בלחיצה.</span></div>' +
+      '<div class="hint" style="margin-bottom:14px">' + ic('info') + '<span>14 יום לפני כל טיפול יוצא ללקוח מייל עם המועד המוצע ושני כפתורים: ״מתאים״ או ״צריך מועד אחר״. רואים מי פתח את המייל, והתשובה נרשמת כאן. כשהלקוח מאשר, נפתחת קריאה עם הצ׳קליסט והפריטים של התבנית.</span></div>' +
       '<div class="toolbar"><div class="tabs">' + tabs.map(t => '<button class="' + (t === tab ? 'on' : '') + '" data-a="plantab" data-arg="' + t[0] + '">' + t[1] + '<small>' + allPlans().filter(t[2]).length + '</small></button>').join('') + '</div></div>' +
       '<section class="card"><div class="tbl-wrap"><table class="tbl cards"><thead><tr><th>מועד</th><th>לקוח · ציוד</th><th>תבנית</th><th>תזכורת ללקוח</th><th></th></tr></thead><tbody>' +
       list.map(x => {
@@ -314,7 +318,7 @@
           '<td class="t-main"><b><a href="#" data-a="open-cust" data-arg="' + x.c.id + '">' + esc(x.c.name) + '</a></b><small>' + esc(x.e.name) + ' · ' + esc(x.e.model) + '</small></td>' +
           '<td><b style="font-weight:600">' + esc(x.t.name) + '</b><div class="small muted">' + x.t.checklist.length + ' סעיפים · ' + freqLabel(x.t.freq) + '</div></td>' +
           '<td>' + remChip(x.p.reminder) + '</td>' +
-          '<td class="nowrap" style="text-align:left">' + (oj ? '<button class="btn sm" data-a="open-job" data-arg="' + oj.id + '">קריאה #' + oj.id + ' · ' + ST[oj.status] + '</button>' : '<span class="row" style="gap:6px;justify-content:flex-end"><button class="btn sm" data-a="wa-plan" data-arg="' + x.p.id + '">' + ic('wa', 15) + 'תזכורת</button><button class="btn sm pri" data-a="plan-job" data-arg="' + x.p.id + '">' + ic('plus', 15) + 'פתיחת קריאה</button></span>') + '</td></tr>';
+          '<td class="nowrap" style="text-align:left">' + (oj ? '<button class="btn sm" data-a="open-job" data-arg="' + oj.id + '">קריאה #' + oj.id + ' · ' + ST[oj.status] + '</button>' : '<span class="row" style="gap:6px;justify-content:flex-end"><button class="btn sm" data-a="wa-plan" data-arg="' + x.p.id + '">' + ic('mail', 15) + 'תזכורת במייל</button><button class="btn sm pri" data-a="plan-job" data-arg="' + x.p.id + '">' + ic('plus', 15) + 'פתיחת קריאה</button></span>') + '</td></tr>';
       }).join('') + '</tbody></table></div></section>';
   }
 
@@ -347,11 +351,11 @@
       }).join('') + '</tbody></table></div></section>' +
       '<section class="card"><div class="card-h"><h2>' + ic('list') + 'היסטוריית קריאות</h2></div>' + jobsTable(hist) + '</section>' +
       '</div><div class="grid" style="align-content:start">' +
-      '<section class="card pad"><h2>' + ic('sign') + 'חוזה אחזקה</h2>' + (c.contract ? '<div class="kv mt" style="grid-template-columns:110px 1fr"><span>תקופה</span><b class="num">' + fDY(c.contract.start) + ' – ' + fDY(c.contract.end) + '</b><span>ביקורים בשנה</span><b>' + c.contract.visits + '</b><span>שווי שנתי</span><b>' + money(c.contract.value) + '</b><span>סטטוס</span><span>' + contractChip(c.contract) + '</span></div>' : '<p class="muted mt-s">אין חוזה אחזקה ללקוח הזה.</p><button class="btn sm mt-s" data-a="wa-contract" data-arg="' + c.id + '">' + ic('wa', 15) + 'הצעת חוזה בוואטסאפ</button>') + '</section>' +
+      '<section class="card pad"><h2>' + ic('sign') + 'חוזה אחזקה</h2>' + (c.contract ? '<div class="kv mt" style="grid-template-columns:110px 1fr"><span>תקופה</span><b class="num">' + fDY(c.contract.start) + ' – ' + fDY(c.contract.end) + '</b><span>ביקורים בשנה</span><b>' + c.contract.visits + '</b><span>שווי שנתי</span><b>' + money(c.contract.value) + '</b><span>סטטוס</span><span>' + contractChip(c.contract) + '</span></div>' : '<p class="muted mt-s">אין חוזה אחזקה ללקוח הזה.</p><button class="btn sm mt-s" data-a="wa-contract" data-arg="' + c.id + '">' + ic('mail', 15) + 'הצעת חוזה במייל</button>') + '</section>' +
       '</div></div>';
   }
 
-  function contractChip(k) { const n = dayDiff(k.end); if (k.status === 'חודש') return '<span class="chip c-ok">חודש</span>'; if (k.status === 'נשלחה הצעה') return '<span class="chip c-info">נשלחה הצעה</span>'; if (n <= 45) return '<span class="chip c-warn">לחידוש · ' + rel(k.end) + '</span>'; return '<span class="chip c-ok">פעיל</span>'; }
+  function contractChip(k) { const n = dayDiff(k.end); if (k.status === 'חודש') return '<span class="chip c-ok">חודש לשנה נוספת</span>'; if (k.status === 'נשלחה הצעה') return '<span class="chip c-info">נשלחה הצעה</span>'; if (n <= 45) return '<span class="chip c-warn">לחידוש · ' + rel(k.end) + '</span>'; return '<span class="chip c-ok">פעיל</span>'; }
   function vContracts() {
     const withK = S.customers.filter(c => c.contract).sort((a, b) => d(a.contract.end) - d(b.contract.end));
     const without = S.customers.filter(c => !c.contract);
@@ -361,8 +365,8 @@
       '<div class="kpis" style="grid-template-columns:repeat(3,1fr)"><div class="kpi"><span>חוזים פעילים</span><strong>' + withK.length + '</strong><small>' + without.length + ' לקוחות בלי חוזה</small></div><div class="kpi' + (renew.length ? ' hot' : '') + '"><span>לחידוש ב-60 יום</span><strong>' + renew.length + '</strong><small>' + money(renew.reduce((s, c) => s + c.contract.value, 0)) + ' בשנה</small></div><div class="kpi"><span>שווי שנתי כולל</span><strong>' + money(totalV) + '</strong><small>לפני מע״מ</small></div></div>' +
       '<section class="card"><div class="tbl-wrap"><table class="tbl cards"><thead><tr><th>לקוח</th><th>תקופה</th><th>ביקורים</th><th>שווי שנתי</th><th>סטטוס</th><th></th></tr></thead><tbody>' +
       withK.map(c => '<tr class="' + (c.contract.status !== 'חודש' && dayDiff(c.contract.end) <= 21 ? 'hot' : '') + '"><td class="t-main"><b><a href="#" data-a="open-cust" data-arg="' + c.id + '">' + esc(c.name) + '</a></b><small>' + esc(c.contact) + '</small></td><td class="num nowrap">' + fDY(c.contract.start) + ' – ' + fDY(c.contract.end) + '</td><td class="num">' + c.contract.visits + ' בשנה</td><td class="num">' + money(c.contract.value) + '</td><td>' + contractChip(c.contract) + '</td>' +
-        '<td class="nowrap" style="text-align:left">' + (c.contract.status === 'חודש' || (c.contract.status !== 'נשלחה הצעה' && dayDiff(c.contract.end) > 60) ? '' : '<span class="row" style="gap:6px;justify-content:flex-end"><button class="btn sm" data-a="wa-contract" data-arg="' + c.id + '">' + ic('wa', 15) + 'תזכורת חידוש</button><button class="btn sm ok" data-a="renew" data-arg="' + c.id + '">' + ic('check', 15) + 'חודש</button></span>') + '</td></tr>').join('') +
-      without.map(c => '<tr><td class="t-main"><b><a href="#" data-a="open-cust" data-arg="' + c.id + '">' + esc(c.name) + '</a></b><small>' + esc(c.contact) + '</small></td><td colspan="3" class="muted">אין חוזה · לקוח ' + esc(c.kind) + '</td><td><span class="chip">אין חוזה</span></td><td style="text-align:left"><button class="btn sm" data-a="wa-contract" data-arg="' + c.id + '">' + ic('wa', 15) + 'הצעת חוזה</button></td></tr>').join('') +
+        '<td class="nowrap" style="text-align:left">' + (c.contract.status === 'חודש' || (c.contract.status !== 'נשלחה הצעה' && dayDiff(c.contract.end) > 60) ? '' : '<span class="row" style="gap:6px;justify-content:flex-end"><button class="btn sm" data-a="wa-contract" data-arg="' + c.id + '">' + ic('mail', 15) + 'תזכורת חידוש</button><button class="btn sm ok" data-a="renew" data-arg="' + c.id + '">' + ic('check', 15) + 'חידוש בוצע</button></span>') + '</td></tr>').join('') +
+      without.map(c => '<tr><td class="t-main"><b><a href="#" data-a="open-cust" data-arg="' + c.id + '">' + esc(c.name) + '</a></b><small>' + esc(c.contact) + '</small></td><td colspan="3" class="muted">אין חוזה · לקוח ' + esc(c.kind) + '</td><td><span class="chip">אין חוזה</span></td><td style="text-align:left"><button class="btn sm" data-a="wa-contract" data-arg="' + c.id + '">' + ic('mail', 15) + 'הצעת חוזה</button></td></tr>').join('') +
       '</tbody></table></div></section>';
   }
 
@@ -390,7 +394,7 @@
       '<div class="toolbar"><label class="search">' + ic('search') + '<input id="q" data-in="q" value="' + esc(ui.q) + '" placeholder="חיפוש לפי שם או מק״ט"></label><div class="tabs">' + cats.map(c => '<button class="' + (ui.cat === c ? 'on' : '') + '" data-a="cat" data-arg="' + esc(c) + '">' + esc(c) + '</button>').join('') + '</div></div>' +
       '<section class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>מק״ט</th><th>פריט</th><th>קטגוריה</th><th>יחידה</th><th>מחיר</th><th>בתבניות</th></tr></thead><tbody>' +
       list.map(c => '<tr><td class="num muted small nowrap">' + esc(c.sku) + '</td><td><input id="cn-' + c.id + '" data-in="cat-name" data-arg="' + c.id + '" value="' + esc(c.name) + '" style="min-width:200px"></td><td><select data-in="cat-cat" data-arg="' + c.id + '">' + cats.slice(1).map(x => '<option' + (x === c.cat ? ' selected' : '') + '>' + esc(x) + '</option>').join('') + '</select></td><td><select data-in="cat-unit" data-arg="' + c.id + '" style="width:90px">' + ['יח׳', 'ק״ג', 'ליטר', 'מטר', 'שעה'].map(u => '<option' + (u === c.unit ? ' selected' : '') + '>' + u + '</option>').join('') + '</select></td><td><div class="row" style="gap:4px"><span class="muted">₪</span><input id="cp-' + c.id + '" type="number" min="0" data-in="cat-price" data-arg="' + c.id + '" value="' + c.price + '" style="width:90px" class="num"></div></td><td class="muted small">' + (usage(c.id) ? usage(c.id) + ' תבניות' : '—') + '</td></tr>').join('') +
-      '</tbody></table></div></section><p class="muted small mt">' + S.catalog.length + ' פריטים. אפשר לייבא את המחירון הקיים מאקסל או מפריוריטי בהטמעה.</p>';
+      '</tbody></table></div></section><p class="muted small mt">' + S.catalog.length + ' פריטים. בהטמעה מייבאים את המחירון הקיים מקובץ אקסל.</p>';
   }
 
   function vSettings() {
@@ -402,7 +406,7 @@
       '</div><div class="grid" style="align-content:start">' +
       '<section class="card"><div class="card-h"><h2>' + ic('users') + 'הצוות</h2><button class="btn sm" data-a="new-tech">' + ic('plus', 15) + 'הוספת טכנאי</button></div>' + S.techs.map(t => '<div class="field-row"><span class="avatar">' + initials(t.name) + '</span><div class="who"><b>' + esc(t.name) + '</b><small>' + esc(t.spec) + '</small></div><span class="st small muted">' + S.jobs.filter(j => j.techId === t.id && j.status !== 'closed').length + ' פתוחות</span></div>').join('') + '</section>' +
       '<section class="card pad"><h2>' + ic('pin') + 'מיקום</h2><p class="small mt-s">המיקום נרשם רק כשהטכנאי לוחץ על שלב: קיבלתי, יצאתי, הגעתי, סיימתי, חזרתי. אין מעקב רציף ברקע. מזה מחושבים זמן נסיעה וזמן עבודה בנפרד.</p></section>' +
-      '<section class="card pad"><h2>' + ic('mic') + 'הקלטה ותמלול</h2><p class="small mt-s">הטכנאי לוחץ על המיקרופון ומדבר, כמו הודעה קולית בוואטסאפ. המערכת כותבת את הטקסט בדוח. עובד בעברית וברוסית.</p></section>' +
+      '<section class="card pad"><h2>' + ic('mic') + 'הקלטה ותמלול</h2><p class="small mt-s">הטכנאי לוחץ על המיקרופון ומדבר, כמו בהודעה קולית. המערכת כותבת את הטקסט בדוח. עובד בעברית וברוסית.</p></section>' +
       '</div></div>';
   }
 
@@ -443,7 +447,7 @@
     const tabs = [['details', tx('פרטים')], ['check', tx('צ׳קליסט') + (j.checklist.length ? ' ' + checklistDone(j) + '/' + j.checklist.length : '')], ['items', tx('פריטים')], ['report', tx('דיווח')], ['sign', tx('חתימה')]];
     let html = '<div class="row wrap" style="gap:6px;margin-bottom:6px">' + chip(j.status) + (j.priority === 'urgent' ? pri('urgent') : '') + '</div><h2 style="font-size:19px;font-weight:800;color:var(--navy);line-height:1.3;margin-bottom:10px">' + esc(tx(j.title)) + '</h2>' +
       (!mine ? '<div class="hint" style="margin-bottom:10px">' + ic('info') + '<span>' + tx('הקריאה באחריות') + ' ' + esc(tx(tech(j.techId).name)) + '. ' + tx('לצפייה בלבד.') + '</span></div>' : '') +
-      (j.status === 'assigned' && mine ? '<div class="hint" style="margin-bottom:10px">' + ic('bell') + '<span>' + tx('קריאה חדשה שויכה אליך. אשר קבלה כדי להתחיל.') + '</span></div>' : '') +
+      (j.status === 'assigned' && mine ? '<div class="hint" style="margin-bottom:10px">' + ic('bell') + '<span>' + tx('קריאה חדשה שויכה אליך. אשרו קבלה כדי להתחיל.') + '</span></div>' : '') +
       '<div class="ttabs">' + tabs.map(t => '<button class="' + (ui.ttab === t[0] ? 'on' : '') + '" data-a="ttab" data-arg="' + t[0] + '">' + t[1] + '</button>').join('') + '</div>';
     const ll = lastLoc(j);
     if (ui.ttab === 'details') {
@@ -509,15 +513,21 @@
       (j.checklist.length ? '<h2>' + esc(tpl(j.templateId).name) + '</h2><table><tr><th>סעיף</th><th style="width:150px">תוצאה</th></tr>' + j.checklist.map(r => '<tr><td>' + esc(r.text) + '</td><td>' + (r.type === 'check' ? (r.done ? '✓ בוצע' : '—') : esc(r.value || '—') + (r.type === 'num' && r.value ? ' ' + esc(r.unit) : '')) + '</td></tr>').join('') + '</table>' : '') +
       '<h2>חומרים וחלקים</h2>' + (used.length ? '<table><tr><th>פריט</th><th style="width:150px">כמות</th></tr>' + used.map(i => '<tr><td>' + esc(i.name) + '</td><td>' + i.used + ' ' + esc(i.unit) + '</td></tr>').join('') + '</table>' : '<p class="muted">לא נעשה שימוש בחומרים.</p>') +
       (j.photos.length ? '<h2>תמונות</h2><div class="photos">' + j.photos.map(p => '<img src="' + p + '" alt="">').join('') + '</div>' : '') +
-      '<h2>אישור הלקוח</h2><div class="two"><div><div class="muted small">שם</div><b>' + esc(j.signer || '—') + '</b></div><div class="sig" style="min-height:70px">' + (j.signature ? '<img src="' + j.signature + '" alt="חתימה">' : '<span class="muted small">טרם נחתם</span>') + '</div></div>' +
-      '<footer>שחר הנדסת מיזוג אוויר בע״מ · באר שבע · דוח שירות ללא מחירים</footer></article></div>';
+      '<h2>אישור הלקוח</h2><div class="two"><div><div class="muted small">שם</div><b>' + esc(j.signer || '—') + '</b></div><div class="sig" style="min-height:70px">' + (j.signature ? '<img src="' + j.signature + '" alt="חתימה">' : '<span class="muted small">' + (j.signer && ['review', 'closed'].includes(j.status) ? 'נחתם על המסך' : 'טרם נחתם') + '</span>') + '</div></div>' +
+      '<footer>שחר הנדסת מיזוג אוויר בע״מ · באר שבע</footer></article></div>';
   }
 
   /* ---------------- modals ---------------- */
   function modalHtml() {
     const m = ui.modal; if (!m) return '';
     if (m.type === 'pick') return m.target === 'tjob' ? '' : pickSheet(false);
-    if (m.type === 'wa') return '<div class="overlay" data-a="close-bg"><div class="modal narrow"><div class="modal-h"><div><h2>' + esc(m.title) + '</h2><p>' + esc(m.sub) + '</p></div><button class="x" data-a="close">' + ic('x') + '</button></div><div class="modal-b"><div class="wa-phone"><div class="wa-top"><img src="icon.jpg" alt=""><div><b>' + esc(m.to) + '</b><small>מ: שחר הנדסת מיזוג אוויר · חשבון עסקי</small></div></div><div class="wa-body"><div class="wa-msg out">' + esc(m.text) + '<div class="wa-btns">' + (m.btns || []).map(b => '<span>' + esc(b) + '</span>').join('') + '</div><time>' + fT(Date.now()) + '</time></div>' + (m.reply ? '<div class="wa-msg in">' + esc(m.reply) + '<time>' + fT(Date.now() + 60000) + '</time></div>' : '') + '</div></div><p class="small muted mt">' + esc(m.note || 'נוסח קבוע שאישרתם מראש. אפשר לערוך בהגדרות.') + '</p></div><div class="modal-f">' + (m.sendAct ? '<button class="btn pri" data-a="' + m.sendAct + '" data-arg="' + m.arg + '">' + ic('wa') + 'שליחה</button>' : '') + '<button class="btn" data-a="close">סגירה</button></div></div></div>';
+    if (m.type === 'mail') return '<div class="overlay" data-a="close-bg"><div class="modal"><div class="modal-h"><div><h2>' + esc(m.title) + '</h2><p>' + esc(m.sub) + '</p></div><button class="x" data-a="close">' + ic('x') + '</button></div><div class="modal-b">' +
+      '<div class="mail"><div class="mail-meta"><div><span>מאת</span><b>שחר הנדסת מיזוג אוויר</b> <small>מכתובת המייל של המשרד</small></div><div><span>אל</span><b>' + esc(m.to) + '</b> <small>' + esc(m.toEmail || '') + '</small></div><div><span>נושא</span><b>' + esc(m.subject) + '</b></div></div>' +
+      '<div class="mail-body"><img src="logo.png" alt="שחר הנדסת מיזוג אוויר" class="mail-logo">' + m.paras.map(p => '<p>' + esc(p) + '</p>').join('') +
+      (m.btns && m.btns.length ? '<div class="mail-btns">' + m.btns.map((b, i) => '<span class="' + (i === 0 ? 'pri' : '') + '">' + esc(b) + '</span>').join('') + '</div>' : '') +
+      (m.attach ? '<div class="mail-attach">' + ic('clip', 15) + esc(m.attach) + '</div>' : '') +
+      '<p class="mail-sign">בברכה,<br>פולינה · שחר הנדסת מיזוג אוויר</p></div></div>' +
+      '<div class="hint mt">' + ic('info') + '<span>' + esc(m.note) + '</span></div></div><div class="modal-f">' + (m.sendAct ? '<button class="btn pri" data-a="' + m.sendAct + '" data-arg="' + m.arg + '">' + ic('mail') + 'שליחה</button>' : '') + '<button class="btn" data-a="close">סגירה</button></div></div></div>';
     if (m.type === 'transfer') { const j = job(m.jobId); return '<div class="overlay" data-a="close-bg"><div class="modal narrow"><div class="modal-h"><div><h2>העברה לטכנאי אחר</h2><p>הדיווחים והזמנים עד עכשיו נשמרים בקריאה</p></div><button class="x" data-a="close">' + ic('x') + '</button></div><div class="modal-b grid" style="gap:12px"><label class="f"><span>הטכנאי הבא</span><select id="tr-to">' + S.techs.filter(t => !t.helper && t.id !== j.techId).map(t => '<option value="' + t.id + '">' + esc(t.name) + ' · ' + esc(t.spec) + '</option>').join('') + '</select></label><label class="f"><span>מה נשאר לעשות?</span><textarea id="tr-why" rows="3" placeholder="למשל: נשאר לחבר בקרה ולבדוק חיישנים"></textarea></label></div><div class="modal-f"><button class="btn pri" data-a="do-transfer" data-arg="' + j.id + '">' + ic('swap') + 'העברה ושליחת התראה</button><button class="btn" data-a="close">ביטול</button></div></div></div>'; }
     if (m.type === 'newcust') return '<div class="overlay" data-a="close-bg"><div class="modal narrow"><div class="modal-h"><div><h2>לקוח חדש</h2></div><button class="x" data-a="close">' + ic('x') + '</button></div><div class="modal-b form-grid"><label class="f span"><span>שם הלקוח</span><input id="nc-name"></label><label class="f"><span>עיר</span><input id="nc-city" value="באר שבע"></label><label class="f"><span>סוג</span><select id="nc-kind"><option>חדש</option><option>לקוח קבוע</option><option>חוזה אחזקה</option></select></label><label class="f span"><span>כתובת</span><input id="nc-addr"></label><label class="f"><span>איש קשר</span><input id="nc-contact"></label><label class="f"><span>טלפון</span><input id="nc-phone" inputmode="tel"></label></div><div class="modal-f"><button class="btn pri" data-a="do-newcust">שמירה</button><button class="btn" data-a="close">ביטול</button></div></div></div>';
     if (m.type === 'newjob') return newJobModal(m);
@@ -531,7 +541,7 @@
     const t = tpl(dr.templateId); if (!t) return;
     dr.items = t.items.map(x => { const c = catItem(x.catId); return { catId: c.id, name: c.name, unit: c.unit, price: c.price, qty: x.qty }; });
     const c = cust(dr.customerId), e = c.equipment.find(q => q.id === dr.equipId);
-    dr.title = t.name.replace(/^[^·]+·\s*/, (e ? e.name : t.equip) + ' · ');
+    dr.title = (e ? e.name : t.equip) + ' · ' + freqTitle(t);
   }
   function newJobModal(m) {
     const dr = m.draft, c = cust(dr.customerId), e = c.equipment.find(q => q.id === dr.equipId);
@@ -665,20 +675,34 @@
   }
   function planToJob(pid) {
     const x = allPlans().find(y => y.p.id === pid);
-    const due = new Date(Math.max(sod(x.p.next), sod(Date.now()) + DAY)); due.setHours(8, 30, 0, 0);
-    const j = createJob({ customerId: x.c.id, equipId: x.e.id, kind: 'טיפול תקופתי', templateId: x.t.id, planId: pid, title: x.e.name + ' · ' + x.t.name.split('·').slice(1).join('·').trim(), priority: 'low', techId: suggestTech(x.e.type), due: due.toISOString(), desc: x.t.name + ' לפי ' + (x.c.contract ? 'חוזה האחזקה' : 'התוכנית') + '. לתאם עם ' + x.c.contact + '.', checklist: x.t.checklist.map(c => Object.assign({}, c, { done: false, value: '' })), items: x.t.items.map(i => { const c = catItem(i.catId); return { id: uid('i'), catId: c.id, name: c.name, unit: c.unit, price: c.price, planned: i.qty, used: null, added: false }; }) });
+    const due = workday(x.p.next);
+    const j = createJob({ customerId: x.c.id, equipId: x.e.id, kind: 'טיפול תקופתי', templateId: x.t.id, planId: pid, title: x.e.name + ' · ' + freqTitle(x.t), priority: 'low', techId: suggestTech(x.e.type), due: due.toISOString(), desc: freqTitle(x.t) + ' לפי ' + (x.c.contract ? 'חוזה האחזקה' : 'התוכנית') + '. לתאם עם ' + x.c.contact + '.', checklist: x.t.checklist.map(c => Object.assign({}, c, { done: false, value: '' })), items: x.t.items.map(i => { const c = catItem(i.catId); return { id: uid('i'), catId: c.id, name: c.name, unit: c.unit, price: c.price, planned: i.qty, used: null, added: false }; }) });
     j.events.push({ status: 'created', at: new Date().toISOString() });
     x.p.reminder = x.p.reminder === 'none' ? 'confirmed' : x.p.reminder;
     return j;
   }
+  function workday(x) { const t = new Date(Math.max(sod(x), sod(Date.now()) + DAY)); t.setHours(8, 30, 0, 0); while (t.getDay() === 5 || t.getDay() === 6) t.setDate(t.getDate() + 1); return t; }
+  function first(n) { return String(n || '').split(' ')[0]; }
   function waForPlan(pid) {
-    const x = allPlans().find(y => y.p.id === pid);
-    return { type: 'wa', title: 'תזכורת טיפול ללקוח', sub: x.c.name + ' · ' + x.e.name, to: x.c.contact, text: 'שלום ' + x.c.contact.split(' ')[0] + ', כאן שחר הנדסת מיזוג אוויר.\nמתקרב מועד ה' + x.t.name.split('·').slice(1).join('·').trim() + ' ב' + x.e.name + ' (' + x.e.place + ').\nהצענו את ' + WD[d(x.p.next).getDay()] + ' ' + fD(x.p.next) + ' בבוקר. מתאים?', btns: ['מתאים', 'צריך מועד אחר', 'לדבר עם המשרד'], reply: 'מתאים, תודה. שיתקשר כשהוא יוצא.', note: 'כשהלקוח עונה ״מתאים״, נפתחת קריאה עם הצ׳קליסט והפריטים, ונשאר רק לשבץ טכנאי.', sendAct: 'wa-send-plan', arg: pid };
+    const x = allPlans().find(y => y.p.id === pid), nd = workday(x.p.next);
+    return { type: 'mail', title: 'תזכורת טיפול ללקוח', sub: x.c.name + ' · ' + x.e.name, to: x.c.contact, toEmail: x.c.email, subject: 'מועד ' + freqPhrase(x.t) + ' · ' + x.e.name,
+      paras: ['שלום ' + first(x.c.contact) + ',', 'מתקרב מועד ' + freqPhrase(x.t) + ' ב' + x.e.name + ' (' + x.e.place + ').', 'אנחנו מציעים את יום ' + WD[nd.getDay()] + ', ' + fD(nd) + ', בבוקר. מתאים לכם?'],
+      btns: ['מתאים', 'צריך מועד אחר'], note: 'הלקוח לוחץ על אחד הכפתורים, והתשובה נרשמת בכרטיס שלו. ״מתאים״ פותח קריאה עם הצ׳קליסט והפריטים של התבנית. רואים גם אם המייל נפתח.', sendAct: 'wa-send-plan', arg: pid };
   }
   function waForContract(cid) {
     const c = cust(cid), k = c.contract;
-    if (!k) return { type: 'wa', title: 'הצעת חוזה אחזקה', sub: c.name, to: c.contact, text: 'שלום ' + c.contact.split(' ')[0] + ', כאן שחר הנדסת מיזוג אוויר.\nבעקבות הטיפול האחרון, נשמח להציע לכם חוזה אחזקה שנתי ל' + c.equipment.map(e => e.name).join(', ') + ': טיפולים קבועים לפי לוח זמנים, עדיפות בקריאות ותזכורת לפני כל טיפול.\nלשלוח הצעה מסודרת?', btns: ['כן, תשלחו', 'לא כרגע'], sendAct: 'wa-send-contract', arg: cid };
-    return { type: 'wa', title: 'תזכורת לחידוש חוזה', sub: c.name + ' · מסתיים ' + fDY(k.end), to: c.contact, text: 'שלום ' + c.contact.split(' ')[0] + ', כאן שחר הנדסת מיזוג אוויר.\nחוזה האחזקה שלכם מסתיים ב-' + fDY(k.end) + '. השנה ביצענו ' + k.visits + ' טיפולים לפי החוזה.\nנשמח לקבוע שיחה קצרה לחידוש לשנה הבאה. מתי נוח?', btns: ['השבוע', 'שבוע הבא', 'תתקשרו אליי'], sendAct: 'wa-send-contract', arg: cid };
+    if (!k) return { type: 'mail', title: 'הצעת חוזה אחזקה', sub: c.name, to: c.contact, toEmail: c.email, subject: 'הצעה לחוזה אחזקה שנתי',
+      paras: ['שלום ' + first(c.contact) + ',', 'נשמח להציע לכם חוזה אחזקה שנתי' + (c.equipment.length ? ' עבור ' + c.equipment.map(e => e.name).join(', ') : '') + '.', 'החוזה כולל טיפולים קבועים לפי לוח זמנים, עדיפות בקריאות שירות ותזכורת לפני כל טיפול.', 'לשלוח לכם הצעה מסודרת?'],
+      btns: ['כן, תשלחו הצעה', 'לא כרגע'], note: 'התשובה של הלקוח נרשמת בכרטיס שלו, ומגיעה אלייך התראה.', sendAct: 'wa-send-contract', arg: cid };
+    return { type: 'mail', title: 'תזכורת לחידוש חוזה', sub: c.name + ' · מסתיים ' + fDY(k.end), to: c.contact, toEmail: c.email, subject: 'חידוש חוזה האחזקה לשנה הבאה',
+      paras: ['שלום ' + first(c.contact) + ',', 'חוזה האחזקה שלכם מסתיים ב-' + fDY(k.end) + '. החוזה כולל ' + k.visits + ' טיפולים בשנה.', 'נשמח לקבוע שיחה קצרה לחידוש לשנה הבאה. מתי נוח לכם?'],
+      btns: ['השבוע', 'בשבוע הבא', 'תתקשרו אליי'], note: 'התשובה של הלקוח נרשמת בכרטיס שלו, ומגיעה אלייך התראה.', sendAct: 'wa-send-contract', arg: cid };
+  }
+  function mailReport(jid) {
+    const j = job(jid), c = cust(j.customerId);
+    return { type: 'mail', title: 'שליחת הדוח ללקוח', sub: c.name + ' · קריאה #' + j.id, to: c.contact, toEmail: c.email, subject: 'דוח שירות · קריאה #' + j.id + ' · ' + j.title,
+      paras: ['שלום ' + first(c.contact) + ',', 'מצורף דוח השירות מהביקור ב-' + fD(evAt(j, 'arrived') || j.due) + ': העבודה שבוצעה, החומרים והחתימה.', 'לכל שאלה אנחנו כאן.'],
+      attach: 'דוח-שירות-' + j.id + '.pdf', note: 'הדוח נשלח בלי מחירים. השליחה נרשמת בציר הזמן של הקריאה.', sendAct: 'send-report', arg: j.id };
   }
 
   const A = {
@@ -693,7 +717,7 @@
     approve: a => { const j = job(+a); j.status = 'closed'; pushEvent(j, 'closed'); afterClose(j); render(); toast('הדוח אושר והקריאה נסגרה'); },
     reopen: a => { const j = job(+a); j.status = 'accepted'; j.events.push({ status: 'reopen', at: new Date().toISOString() }); render(); toast('הקריאה חזרה לטכנאי להמשך טיפול'); },
     transfer: a => { ui.modal = { type: 'transfer', jobId: +a }; render(); },
-    'do-transfer': a => { const j = job(+a), to = $('#tr-to').value, why = $('#tr-why').value.trim(); const from = tech(j.techId).name; j.techId = to; if (!['assigned', 'closed'].includes(j.status)) j.status = 'assigned'; j.events.push({ status: 'transfer', at: new Date().toISOString(), note: from + ' ← ' + tech(to).name + (why ? ': ' + why : '') }); ui.modal = null; render(); toast('הקריאה הועברה ל' + tech(to).name + ' והוא קיבל התראה'); },
+    'do-transfer': a => { const j = job(+a), to = $('#tr-to').value, why = $('#tr-why').value.trim(); const from = tech(j.techId).name; j.techId = to; if (!['assigned', 'closed'].includes(j.status)) j.status = 'assigned'; j.events.push({ status: 'transfer', at: new Date().toISOString(), note: from + ' ← ' + tech(to).name + (why ? ': ' + why : '') }); ui.modal = null; render(); toast('הקריאה הועברה ל' + tech(to).name + ' ונשלחה התראה'); },
     close: () => { ui.modal = null; render(); }, 'close-bg': (a, ev) => { if (ev.target.classList.contains('overlay')) { ui.modal = null; render(); } },
     'new-job': a => { const c = cust(a) || S.customers[0]; const due = new Date(Date.now() + 3 * 3600000); due.setMinutes(0); ui.modal = { type: 'newjob', draft: { customerId: c.id, equipId: c.equipment[0] ? c.equipment[0].id : '', kind: 'תקלה', templateId: '', priority: 'normal', title: '', desc: '', techId: suggestTech(c.equipment[0] && c.equipment[0].type), due: localInput(due), items: [] } }; render(); },
     'dr-qty': (a, ev, el) => { const it = ui.modal.draft.items[+a]; it.qty = Math.max(0, +(it.qty + (+el.dataset.d) * (it.unit === 'ק״ג' || it.unit === 'ליטר' ? .5 : 1)).toFixed(1)); render(); },
@@ -707,14 +731,16 @@
       const c = cust(dr.customerId), plan = t && c.plans.find(p => p.equipId === dr.equipId && p.templateId === t.id);
       const j = createJob({ customerId: dr.customerId, equipId: dr.equipId, kind: dr.kind, templateId: t ? t.id : null, planId: plan ? plan.id : undefined, title: dr.title.trim(), desc: dr.desc.trim() || 'אין פרטים נוספים.', priority: dr.kind === 'טיפול תקופתי' ? 'low' : dr.priority, techId: dr.techId, due: new Date(dr.due).toISOString(), checklist: t ? t.checklist.map(x => Object.assign({}, x, { done: false, value: '' })) : [], items: dr.items.map(i => ({ id: uid('i'), catId: i.catId, name: i.name, unit: i.unit, price: i.price, planned: i.qty, used: null, added: false })) });
       j.events.push({ status: 'created', at: new Date().toISOString() });
-      ui.modal = null; ui.view = 'job'; ui.jobId = j.id; render(); toast('קריאה #' + j.id + ' נפתחה. ' + tech(j.techId).name + ' קיבל התראה');
+      ui.modal = null; ui.view = 'job'; ui.jobId = j.id; render(); toast('קריאה #' + j.id + ' נפתחה ונשלחה התראה ל' + tech(j.techId).name);
     },
     'plan-job': a => { const j = planToJob(a); ui.view = 'job'; ui.jobId = j.id; window.scrollTo(0, 0); render(); toast('קריאה #' + j.id + ' נפתחה עם הצ׳קליסט והפריטים מהתבנית'); },
     'wa-plan': a => { ui.modal = waForPlan(a); render(); },
-    'wa-send-plan': a => { const x = allPlans().find(y => y.p.id === a); x.p.reminder = 'sent'; ui.modal = null; render(); toast('התזכורת נשלחה ל' + x.c.contact); },
+    'wa-send-plan': a => { const x = allPlans().find(y => y.p.id === a); x.p.reminder = 'sent'; ui.modal = null; render(); toast('המייל נשלח ל' + x.c.contact); },
     'wa-contract': a => { ui.modal = waForContract(a); render(); },
-    'wa-send-contract': a => { const c = cust(a); if (c.contract) c.contract.status = 'נשלחה הצעה'; ui.modal = null; render(); toast('ההודעה נשלחה ל' + c.contact); },
-    renew: a => { const c = cust(a); const k = c.contract; k.start = k.end; const e = d(k.end); e.setFullYear(e.getFullYear() + 1); k.end = e.toISOString(); k.status = 'חודש'; render(); toast('החוזה של ' + c.name + ' חודש עד ' + fDY(k.end)); },
+    'wa-send-contract': a => { const c = cust(a); if (c.contract) c.contract.status = 'נשלחה הצעה'; ui.modal = null; render(); toast('המייל נשלח ל' + c.contact); },
+    'mail-report': a => { ui.modal = mailReport(+a); render(); },
+    'send-report': a => { const j = job(+a); j.events.push({ status: 'mailed', at: new Date().toISOString() }); ui.modal = null; render(); toast('הדוח נשלח ל' + cust(j.customerId).contact); },
+    renew: a => { const c = cust(a); const k = c.contract; k.start = k.end; const e = d(k.end); e.setFullYear(e.getFullYear() + 1); k.end = e.toISOString(); k.status = 'חודש'; render(); toast('החוזה עם ' + c.name + ' הוארך עד ' + fDY(k.end)); },
     'new-cust': () => { ui.modal = { type: 'newcust' }; render(); setTimeout(() => { const el = $('#nc-name'); if (el) el.focus(); }, 0); },
     'do-newcust': () => { const name = $('#nc-name').value.trim(); if (!name) { toast('חסר שם לקוח'); return; } const c = { id: uid('c'), name, city: $('#nc-city').value.trim() || 'באר שבע', address: $('#nc-addr').value.trim() || $('#nc-city').value.trim(), contact: $('#nc-contact').value.trim() || 'איש קשר', phone: $('#nc-phone').value.trim(), kind: $('#nc-kind').value, lat: 31.25, lng: 34.79, equipment: [], plans: [], contract: null }; S.customers.push(c); ui.modal = null; ui.view = 'customer'; ui.custId = c.id; render(); toast('הלקוח נוסף'); },
     tpl: a => { ui.tplId = a; render(); if (window.innerWidth < 980) { const el = $('.tpl-layout > .grid'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } },
@@ -724,7 +750,7 @@
     'new-equip': () => { ui.modal = { type: 'newequip' }; render(); setTimeout(() => { const el = $('#ne-name'); if (el) el.focus(); }, 0); },
     'do-newequip': () => { const name = $('#ne-name').value.trim(); if (!name) { toast('חסר שם לציוד'); return; } const c = cust(ui.custId); const e = { id: uid('q'), name, type: $('#ne-type').value, model: $('#ne-model').value.trim() || '—', serial: $('#ne-serial').value.trim() || '—', place: $('#ne-place').value.trim() || '—' }; c.equipment.push(e); const tp = $('#ne-tpl').value; if (tp) { const nx = new Date(); nx.setDate(nx.getDate() + 30); c.plans.push({ id: uid('pl'), equipId: e.id, templateId: tp, last: null, next: nx.toISOString(), reminder: 'none' }); } ui.modal = null; render(); toast(name + ' נוסף ללקוח'); },
     'new-tech': () => { ui.modal = { type: 'newtech' }; render(); setTimeout(() => { const el = $('#nt-name'); if (el) el.focus(); }, 0); },
-    'do-newtech': () => { const name = $('#nt-name').value.trim(); if (!name) { toast('חסר שם'); return; } S.techs.push({ id: uid('t'), name, spec: $('#nt-spec').value.trim() || 'טכנאי', phone: $('#nt-phone').value.trim() }); ui.modal = null; render(); toast(name + ' נוסף לצוות. אפשר לשייך לו קריאות'); },
+    'do-newtech': () => { const name = $('#nt-name').value.trim(); if (!name) { toast('חסר שם'); return; } S.techs.push({ id: uid('t'), name, spec: $('#nt-spec').value.trim() || 'טכנאי', phone: $('#nt-phone').value.trim() }); ui.modal = null; render(); toast(name + ' נוסף לצוות. אפשר לשייך קריאות'); },
     'tpl-new': () => { const t = { id: uid('tp'), name: 'תבנית חדשה', equip: 'צ׳ילר', freq: 6, checklist: [{ id: uid('r'), text: '', type: 'check' }], items: [] }; S.templates.push(t); ui.tplId = t.id; render(); const el = $('#tpl-name'); if (el) { el.focus(); el.select(); } },
     'tpl-dup': () => { const s = tpl(ui.tplId); const t = JSON.parse(JSON.stringify(s)); t.id = uid('tp'); t.name = s.name + ' (עותק)'; t.checklist.forEach(r => r.id = uid('r')); S.templates.push(t); ui.tplId = t.id; render(); toast('התבנית שוכפלה'); },
     'cl-add': () => { const r = { id: uid('r'), text: '', type: 'check' }; tpl(ui.tplId).checklist.push(r); render(); const el = $('#cl-' + r.id); if (el) el.focus(); },

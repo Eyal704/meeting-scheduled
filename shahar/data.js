@@ -113,7 +113,7 @@
   const customers = [
     {
       id: 'c1', name: 'מפעל נגב מזון', city: 'באר שבע', address: 'אזור התעשייה עמק שרה, באר שבע',
-      contact: 'משה אחראי אחזקה', phone: '050-1111111', kind: 'חוזה אחזקה', lat: 31.2285, lng: 34.8205,
+      contact: 'משה אחראי אחזקה', phone: '050-1111111', email: 'moshe@example.co.il', kind: 'חוזה אחזקה', lat: 31.2285, lng: 34.8205,
       equipment: [
         { id: 'q1', name: 'צ׳ילר 01', type: 'צ׳ילר', model: 'קריר 120 טון', serial: 'CH-22841', place: 'גג אולם ייצור' },
         { id: 'q2', name: 'צ׳ילר 02', type: 'צ׳ילר', model: 'קריר 120 טון', serial: 'CH-22842', place: 'גג אולם ייצור' },
@@ -121,14 +121,14 @@
       ],
       plans: [
         { id: 'pl1', equipId: 'q1', templateId: 'tp1', last: dateOnly(-176), next: dateOnly(4), reminder: 'confirmed' },
-        { id: 'pl2', equipId: 'q2', templateId: 'tp2', last: dateOnly(-350), next: dateOnly(15), reminder: 'sent' },
+        { id: 'pl2', equipId: 'q2', templateId: 'tp2', last: dateOnly(-350), next: dateOnly(15), reminder: 'opened' },
         { id: 'pl3', equipId: 'q3', templateId: 'tp4', last: dateOnly(-95), next: dateOnly(-5), reminder: 'none' }
       ],
       contract: { start: dateOnly(-330), end: dateOnly(35), visits: 6, value: 38000, status: 'לחידוש' }
     },
     {
       id: 'c2', name: 'מרכז העסקים דרום', city: 'באר שבע', address: 'שדרות רגר, באר שבע',
-      contact: 'רינה מנהלת הבניין', phone: '050-2222222', kind: 'חוזה אחזקה', lat: 31.2518, lng: 34.7913,
+      contact: 'רינה מנהלת הבניין', phone: '050-2222222', email: 'rina@example.co.il', kind: 'חוזה אחזקה', lat: 31.2518, lng: 34.7913,
       equipment: [
         { id: 'q4', name: 'VRF קומות 1–4', type: 'מערכת VRF', model: '48 יחידות פנים', serial: 'VRF-7781', place: 'גג' },
         { id: 'q5', name: 'יט״א לובי', type: 'יט״א', model: '12,000 CFM', serial: 'AHU-301', place: 'חדר מכונות' }
@@ -141,7 +141,7 @@
     },
     {
       id: 'c3', name: 'מעבדות אופק', city: 'עומר', address: 'פארק ההייטק, עומר',
-      contact: 'ד״ר נועה מנהלת מעבדה', phone: '050-3333333', kind: 'חוזה אחזקה', lat: 31.2683, lng: 34.8487,
+      contact: 'ד״ר נועה מנהלת מעבדה', phone: '050-3333333', email: 'noa@example.co.il', kind: 'חוזה אחזקה', lat: 31.2683, lng: 34.8487,
       equipment: [
         { id: 'q6', name: 'יט״א חדר נקי', type: 'יט״א', model: 'HEPA · 8,000 CFM', serial: 'AHU-552', place: 'קומה 2' },
         { id: 'q7', name: 'צ׳ילר מעבדה', type: 'צ׳ילר', model: '60 טון', serial: 'CH-40917', place: 'חצר אחורית' }
@@ -154,7 +154,7 @@
     },
     {
       id: 'c4', name: 'מרכז לוגיסטי ערבה', city: 'דימונה', address: 'אזור התעשייה, דימונה',
-      contact: 'אבי מנהל התפעול', phone: '050-4444444', kind: 'לקוח קבוע', lat: 31.0700, lng: 35.0330,
+      contact: 'אבי מנהל התפעול', phone: '050-4444444', email: 'avi@example.co.il', kind: 'לקוח קבוע', lat: 31.0700, lng: 35.0330,
       equipment: [
         { id: 'q8', name: 'חדר קירור 1', type: 'חדר קירור', model: '120 מ״ר', serial: 'CR-2210', place: 'מתחם A' },
         { id: 'q9', name: 'חדר קירור 2', type: 'חדר קירור', model: '120 מ״ר', serial: 'CR-2211', place: 'מתחם A' }
@@ -167,7 +167,7 @@
     },
     {
       id: 'c5', name: 'בית אבות נווה מדבר', city: 'באר שבע', address: 'שכונה ה׳, באר שבע',
-      contact: 'שושי אחראית משק', phone: '050-5555555', kind: 'חוזה אחזקה', lat: 31.2602, lng: 34.8058,
+      contact: 'שושי אחראית משק', phone: '050-5555555', email: 'shoshi@example.co.il', kind: 'חוזה אחזקה', lat: 31.2602, lng: 34.8058,
       equipment: [
         { id: 'q10', name: 'צ׳ילר מרכזי', type: 'צ׳ילר', model: '80 טון', serial: 'CH-31105', place: 'גג' }
       ],
@@ -178,7 +178,7 @@
     },
     {
       id: 'c6', name: 'מלון חולות', city: 'ירוחם', address: 'דרך המדבר, ירוחם',
-      contact: 'גיל מנהל תחזוקה', phone: '050-6666666', kind: 'חדש', lat: 30.9877, lng: 34.9306,
+      contact: 'גיל מנהל תחזוקה', phone: '050-6666666', email: 'gil@example.co.il', kind: 'חדש', lat: 30.9877, lng: 34.9306,
       equipment: [
         { id: 'q11', name: 'VRF אגף חדרים', type: 'מערכת VRF', model: '36 יחידות פנים', serial: 'VRF-9902', place: 'גג אגף מזרחי' }
       ],
@@ -242,7 +242,7 @@
       id: 4105, customerId: 'c5', equipId: 'q10', kind: 'טיפול תקופתי', templateId: 'tp2',
       title: 'צ׳ילר מרכזי · טיפול שנתי', priority: 'low', status: 'accepted',
       techId: 't2', partnerId: '', due: at(0, 15, 30),
-      desc: 'טיפול שנתי. הלקוחה ביקשה אחרי 15:00 בגלל ארוחת צהריים בבית.',
+      desc: 'טיפול שנתי. ביקשו להגיע אחרי 15:00, אחרי ארוחת הצהריים של הדיירים.',
       checklist: checklistFrom('tp2'), items: [item('p3', 4), item('f3', 1), item('c1', 3), item('e3', 1)],
       events: [ev('accepted', 25, WORKSHOP)],
       diagnosis: '', work: '', photos: [], signature: null, signer: '', planId: 'pl10', createdAt: ago(300)
@@ -282,17 +282,18 @@
   );
 
   const automations = [
-    { id: 'au1', on: true, title: 'תזכורת ללקוח לפני טיפול תקופתי', desc: 'וואטסאפ 14 יום לפני המועד, עם שם הציוד וסוג הטיפול. הלקוח מאשר בתשובה.' },
-    { id: 'au2', on: true, title: 'תזכורת שנייה למי שלא ענה', desc: '5 ימים אחרי הראשונה. מי שלא ענה גם אז מופיע אצלך ברשימה ״מחכה לך״.' },
-    { id: 'au3', on: true, title: 'פתיחת קריאה אוטומטית', desc: 'כשהלקוח מאשר מועד, נפתחת קריאה עם הצ׳קליסט ורשימת הפריטים של התבנית. נשאר רק לשבץ טכנאי.' },
-    { id: 'au4', on: true, title: 'חידוש חוזה אחזקה', desc: '60 יום לפני סוף החוזה מופיעה התראה במשרד, עם מספר הביקורים שבוצעו השנה.' },
-    { id: 'au5', on: true, title: 'דוח הגיע מהשטח', desc: 'כשטכנאי שולח דוח, את מקבלת התראה. הקריאה ממתינה לבדיקה שלך לפני סגירה.' },
-    { id: 'au6', on: false, title: 'שליחת דוח ללקוח במייל', desc: 'אחרי שאישרת את הדוח, נשלח ללקוח PDF בלי מחירים. כבוי עד שתחליטי.' }
+    { id: 'au1', on: true, title: 'תזכורת ללקוח לפני טיפול תקופתי', desc: 'מייל 14 יום לפני המועד, עם שם הציוד, סוג הטיפול והמועד המוצע. הלקוח עונה בלחיצה: ״מתאים״ או ״צריך מועד אחר״.' },
+    { id: 'au2', on: true, title: 'רואים מי פתח את המייל', desc: 'ליד כל תזכורת מופיע אם המייל נשלח, נפתח או נענה, כדי לדעת למי כדאי להתקשר.' },
+    { id: 'au3', on: true, title: 'תזכורת שנייה למי שלא ענה', desc: '5 ימים אחרי הראשונה. מי שלא ענה גם אז מופיע אצלך ברשימה ״מחכה לך״.' },
+    { id: 'au4', on: true, title: 'פתיחת קריאה אוטומטית', desc: 'כשהלקוח מאשר מועד, נפתחת קריאה עם הצ׳קליסט ורשימת הפריטים של התבנית. נשאר רק לשבץ טכנאי.' },
+    { id: 'au5', on: true, title: 'חידוש חוזה אחזקה', desc: '60 יום לפני סוף החוזה מופיעה התראה במשרד, ואפשר לשלוח ללקוח מייל חידוש בלחיצה.' },
+    { id: 'au6', on: true, title: 'התראה במייל כשדוח מגיע מהשטח', desc: 'כשטכנאי שולח דוח, מגיע אלייך מייל עם קישור לקריאה. הקריאה ממתינה לבדיקה שלך לפני סגירה.' },
+    { id: 'au7', on: false, title: 'שליחת הדוח ללקוח אוטומטית', desc: 'אחרי שאישרת דוח, הוא נשלח ללקוח במייל כ-PDF בלי מחירים. כבוי עד שתחליטי. בינתיים אפשר לשלוח בלחיצה מתוך הקריאה.' }
   ];
 
   window.SHAHAR_SEED = function () {
     return JSON.parse(JSON.stringify({
-      version: 5, me: 'פולינה', workshop: WORKSHOP,
+      version: 6, me: 'פולינה', workshop: WORKSHOP,
       techs, catalog, templates, customers, jobs, automations,
       settings: { closeMode: 'review' }, nextJobId: 4118, notices: []
     }));
