@@ -135,7 +135,8 @@
   .pad-wrap.signed-ok { border-style: solid; border-color: var(--line); background: #fff; }
   .pad-wrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; border-radius: 12px; }
   .pad-wrap .ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #aaa69e; pointer-events: none; font-size: 14px; }
-  .pad-tools { display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-top: 6px; flex-wrap: wrap; }
+  .pad-tools { display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+  .pad-tools .btn.ghost { min-height: 38px; padding: 6px 14px; font-size: 14px; }
   .stamp-img { max-height: 90px; max-width: 160px; display: block; margin-top: 6px; }
 
   .btn { font: inherit; font-weight: 600; border-radius: 10px; padding: 10px 18px; cursor: pointer; border: 1px solid transparent; min-height: 44px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
@@ -343,7 +344,7 @@
     <table>
       <thead><tr><th>אפשרות</th><th>מה כולל</th><th>עלות</th></tr></thead>
       <tbody>
-        <tr><td class="k">א. אחסון אצל אייל</td><td>שרתים ומסד נתונים, גיבוי יומי, אבטחה ותעודת SSL, עדכוני אבטחה, ניטור זמינות, ותמלול ההקלטות (עברית ורוסית) עד 600 דקות בחודש. מעבר לכך, התמלול לפי עלות בפועל, בהודעה מראש. אפשר לבטל בהודעה של 30 יום, ואז אייל מעביר לשחר את המערכת ואת כל הנתונים.</td><td class="price">98 ₪ לחודש</td></tr>
+        <tr><td class="k">א. אחסון אצל אייל</td><td>שרתים ומסד נתונים, גיבוי יומי, אבטחה ותעודת SSL, עדכוני אבטחה, ניטור זמינות, ותמלול ההקלטות (עברית ורוסית) עד 600 דקות בחודש.</td><td class="price">98 ₪ לחודש</td></tr>
         <tr><td class="k">ב. התקנה בשרתי שחר</td><td>אייל מתקין את המערכת ואת הקוד בשרתים של שחר. עלות השרת עצמו משולמת על ידי שחר ישירות לספק.</td><td>לפי סעיף 4, עם הערכת זמן מראש</td></tr>
       </tbody>
     </table>
@@ -413,7 +414,7 @@
         </div>
         <img class="stamp-img" id="stampImg" alt="חותמת" hidden>
         <div class="pad-tools">
-          <button type="button" class="btn link" id="clearPad">ניקוי החתימה</button>
+          <button type="button" class="btn ghost" id="clearPad">איפוס החתימה</button>
           <label class="btn link" for="stampFile">הוספת חותמת מתמונה (לא חובה)</label>
           <input type="file" id="stampFile" accept="image/*" hidden>
         </div>
@@ -438,7 +439,7 @@
       <p id="doneText"></p>
       <div class="sign-actions">
         <button type="button" class="btn primary" id="printBtn">שמירה כ-PDF</button>
-        <button type="button" class="btn ghost" id="unsignBtn">ביטול ועריכה</button>
+        <button type="button" class="btn ghost" id="unsignBtn">איפוס החתימה</button>
       </div>
     </div>
   </section>
@@ -537,11 +538,13 @@
   canvas.addEventListener('pointerup', end);
   canvas.addEventListener('pointercancel', end);
 
-  $('#clearPad').addEventListener('click', () => {
-    if (locked()) return;
+  // Clears the drawn signature and the stamp image.
+  function clearSignature() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    hasInk = false; delete state.sig; save(); $('#padPh').hidden = false; check();
-  });
+    hasInk = false; delete state.sig; delete state.stamp; save();
+    $('#padPh').hidden = false; $('#stampImg').hidden = true; $('#stampFile').value = '';
+  }
+  $('#clearPad').addEventListener('click', () => { if (locked()) return; clearSignature(); check(); });
 
   let resizeT;
   window.addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(sizeCanvas, 120); });
@@ -600,7 +603,9 @@
     $('#sign').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
   $('#unsignBtn').addEventListener('click', () => {
-    delete state.signedAt; save(); applySigned(); check();
+    delete state.signedAt; delete state.signer;
+    applySigned(); clearSignature(); consent.checked = false; check();
+    wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
   $('#printBtn').addEventListener('click', () => window.print());
 
