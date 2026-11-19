@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="darkreader-lock">
+<meta name="color-scheme" content="light">
+<title>הסכם פיתוח · שחר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --page: #f4f2ee;
+    --paper: #ffffff;
+    --ink: #1d1d1f;
+    --ink-2: #3c3d42;
+    --muted: #74767c;
+    --line: #e4e2dd;
+    --soft: #f8f7f4;
+    --brand: #c9536e;
+    --brand-deep: #8f2f47;
+    --brand-soft: #fcf0f3;
+    --brand-line: #f0cdd6;
+    --ok: #1f7a4d;
+    --ok-soft: #eaf6ef;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body.signed .pad-tools { display: none; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--page); color: var(--ink);
+    font-family: "Heebo", system-ui, sans-serif; font-size: 15px; line-height: 1.65;
+  }
+  .paper {
+    max-width: 860px; margin: 28px auto; background: var(--paper);
+    padding: 44px 56px 36px; box-shadow: 0 10px 40px rgba(40, 30, 20, .08);
+  }
+
+  /* Header */
+  .top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+  .for small { display: block; color: var(--muted); font-size: 13px; }
+  .for strong { font-size: 15px; }
+  .brand { display: flex; align-items: center; gap: 10px; direction: ltr; text-decoration: none; color: var(--ink); }
+  .brand img { width: 34px; height: 34px; }
+  .brand span { font-family: "Fraunces", Georgia, serif; font-size: 21px; letter-spacing: -.01em; }
+  .brand em { font-style: normal; color: var(--brand); }
+
+  .eyebrow { color: var(--brand); font-weight: 700; font-size: 13px; margin: 26px 0 4px; }
+  h1 { font-size: 32px; line-height: 1.25; margin: 0 0 6px; font-weight: 800; letter-spacing: -.01em; }
+  h1 .accent { color: var(--brand); }
+  .byline { color: var(--muted); margin: 0 0 18px; }
+
+  .meta { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; align-items: center; margin-bottom: 22px; }
+  .meta dt { color: var(--muted); }
+  .meta dd { margin: 0; font-weight: 500; }
+  .date-pick { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .date-pick input[type=date] {
+    font: inherit; font-weight: 600; color: var(--ink); border: 1px solid var(--brand-line); background: var(--brand-soft);
+    border-radius: 8px; padding: 4px 10px; min-height: 36px;
+  }
+  .hint { color: var(--muted); font-size: 13px; }
+
+  .goal { background: var(--brand-soft); border: 1px solid var(--brand-line); border-radius: 14px; padding: 16px 20px; margin: 4px 0 26px; }
+  .goal b { display: block; color: var(--brand-deep); font-size: 13px; margin-bottom: 2px; }
+  .goal p { margin: 0; font-size: 16px; }
+
+  h2 { font-size: 20px; margin: 30px 0 10px; font-weight: 800; display: flex; align-items: baseline; gap: 10px; }
+  h2 .n { color: var(--brand); font-size: 14px; font-weight: 700; min-width: 18px; }
+  h3 { font-size: 15px; margin: 16px 0 4px; font-weight: 700; }
+
+  ul { margin: 4px 0 8px; padding: 0 20px 0 0; }
+  li { margin: 3px 0; }
+  li::marker { color: var(--brand); }
+
+  .note { background: var(--soft); border: 1px solid var(--line); border-radius: 12px; padding: 11px 16px; margin: 12px 0; }
+  .note b { color: var(--brand-deep); }
+
+  /* Parties */
+  .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 6px; }
+  .party { border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; }
+  .party .role { color: var(--brand); font-weight: 700; font-size: 13px; }
+  .party .name { font-weight: 700; font-size: 16px; margin: 2px 0 6px; }
+  .party .row { display: flex; gap: 6px; align-items: baseline; flex-wrap: wrap; color: var(--ink-2); }
+  .party .row span:first-child { color: var(--muted); }
+  .party .alias { color: var(--muted); font-size: 13px; margin-top: 6px; }
+
+  .fill {
+    font: inherit; color: var(--ink); border: 0; border-bottom: 1.5px dashed #c9c6bf; background: transparent;
+    padding: 1px 2px; min-width: 0; flex: 1 1 140px; border-radius: 0;
+  }
+  .fill:focus { outline: none; border-bottom-color: var(--brand); background: var(--brand-soft); }
+  .fill:disabled { border-bottom-color: transparent; color: var(--ink); -webkit-text-fill-color: var(--ink); opacity: 1; }
+
+  /* Tables */
+  .table { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin: 10px 0; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: var(--soft); color: var(--muted); font-weight: 600; font-size: 13px; text-align: right; padding: 9px 14px; border-bottom: 1px solid var(--line); }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  td.k { font-weight: 700; white-space: nowrap; }
+  td.k small { display: block; font-weight: 500; color: var(--brand-deep); font-size: 12.5px; }
+  td.price { font-weight: 700; white-space: nowrap; }
+  tr.total td { background: var(--brand-soft); font-weight: 700; color: var(--brand-deep); }
+  .auto { background: var(--brand-soft); color: var(--brand-deep); border-radius: 6px; padding: 1px 7px; font-weight: 700; white-space: nowrap; }
+
+  .price-hero { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin: 4px 0 6px; }
+  .price-hero strong { font-size: 30px; color: var(--brand); font-weight: 800; }
+  .price-hero span { color: var(--ink-2); }
+
+  /* Signatures */
+  .sign { margin-top: 34px; border-top: 1px solid var(--line); padding-top: 6px; }
+  .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 10px; }
+  .sig h4 { margin: 0; font-size: 16px; }
+  .sig .sub { color: var(--muted); margin-bottom: 12px; }
+  .sig label.lbl { display: block; color: var(--muted); font-size: 13px; margin: 10px 0 4px; }
+  .sig .line-val { border-bottom: 1px solid #bdbab3; min-height: 34px; padding: 4px 2px; display: flex; align-items: flex-end; }
+  .sig .typed { font-family: "Fraunces", Georgia, serif; font-size: 24px; color: #233a6b; direction: ltr; }
+  .sig input.fill { flex: 1; font-weight: 500; }
+  .pad-wrap { position: relative; border: 1.5px dashed #c9c6bf; border-radius: 12px; background: #fdfcfa; height: 150px; touch-action: none; }
+  .pad-wrap.signed-ok { border-style: solid; border-color: var(--line); background: #fff; }
+  .pad-wrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; border-radius: 12px; }
+  .pad-wrap .ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #aaa69e; pointer-events: none; font-size: 14px; }
+  .pad-tools { display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-top: 6px; flex-wrap: wrap; }
+  .stamp-img { max-height: 90px; max-width: 160px; display: block; margin-top: 6px; }
+
+  .btn { font: inherit; font-weight: 600; border-radius: 10px; padding: 10px 18px; cursor: pointer; border: 1px solid transparent; min-height: 44px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+  .btn.primary { background: var(--brand); color: #fff; }
+  .btn.primary:hover { background: #b84661; }
+  .btn.primary:disabled { background: #e3b7c2; cursor: not-allowed; }
+  .btn.ghost { background: #fff; color: var(--ink); border-color: var(--line); }
+  .btn.ghost:hover { border-color: #c9c6bf; }
+  .btn.link { background: none; border: 0; color: var(--brand-deep); padding: 4px 2px; min-height: 0; font-size: 13px; }
+  .btn.wa { background: #1f9d55; color: #fff; }
+
+  .consent { display: flex; gap: 10px; align-items: flex-start; margin: 22px 0 12px; cursor: pointer; }
+  .consent input { width: 20px; height: 20px; accent-color: var(--brand); margin-top: 3px; flex: none; }
+  .sign-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .missing { color: var(--muted); font-size: 13px; }
+
+  .done { display: none; background: var(--ok-soft); border: 1px solid #bfe3cf; border-radius: 14px; padding: 16px 20px; margin-top: 20px; }
+  .done b { color: var(--ok); font-size: 16px; display: block; }
+  .done p { margin: 4px 0 12px; color: var(--ink-2); }
+  body.signed .done { display: block; }
+  body.signed .pre-sign { display: none; }
+
+  .foot { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; color: var(--muted); font-size: 12px; }
+  .foot .mono { font-family: "JetBrains Mono", ui-monospace, monospace; direction: ltr; }
+
+  @media (max-width: 720px) {
+    .paper { margin: 0; padding: 22px 16px 28px; box-shadow: none; }
+    h1 { font-size: 25px; }
+    .parties, .sig-grid { grid-template-columns: 1fr; }
+    .brand span { font-size: 18px; }
+    .brand img { width: 28px; height: 28px; }
+    td, th { padding: 9px 10px; }
+    td.k { white-space: normal; }
+    .table { overflow-x: auto; }
+  }
+
+  @media print {
+    @page { size: A4; margin: 14mm 14mm 16mm; }
+    body { background: #fff; font-size: 12.5px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .paper { box-shadow: none; margin: 0; padding: 0; max-width: none; }
+    .no-print, .pad-tools, .consent, .sign-actions, .done .btn, .hint { display: none !important; }
+    .date-pick input[type=date] { border: 0; background: none; padding: 0; }
+    .fill { border-bottom-color: transparent; }
+    .pad-wrap { border: 0; border-bottom: 1px solid #bdbab3; border-radius: 0; height: 120px; }
+    .pad-wrap .ph { display: none; }
+    .done { display: none !important; }
+    h2, h3 { break-after: avoid; }
+    .table, .party, .note, .goal, .sig, tr { break-inside: avoid; }
+    .sign { break-before: auto; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<main class="paper">
+
+  <header class="top">
+    <div class="for"><small>הסכם עבור</small><strong>שחר הנדסת מיזוג אוויר בע״מ</strong></div>
+    <a class="brand" href="https://www.meeting-scheduled.com" aria-label="MeetingScheduled">
+      <img src="data:image/svg+xml;utf8,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='64' y='144' width='384' height='304' rx='52' fill='%23D95F76'/%3E%3Crect x='64' y='144' width='384' height='128' rx='52' fill='%23C04D63'/%3E%3Crect x='64' y='224' width='384' height='48' fill='%23C04D63'/%3E%3Crect x='176' y='80' width='56' height='112' rx='28' fill='%23D95F76'/%3E%3Crect x='280' y='80' width='56' height='112' rx='28' fill='%23D95F76'/%3E%3Cpath d='M176 312L232 376L336 248' stroke='white' stroke-width='40' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" alt="">
+      <span>Meeting<em>Scheduled</em></span>
+    </a>
+  </header>
+
+  <p class="eyebrow">הסכם פיתוח והטמעה</p>
+  <h1>מערכת ניהול שירות ושטח <span class="accent">לשחר</span></h1>
+  <p class="byline">גרסה 3 · אייל טייב, MeetingScheduled</p>
+
+  <dl class="meta">
+    <dt>תאריך ההסכם:</dt>
+    <dd>
+      <span class="date-pick">
+        <input type="date" id="agreeDate" aria-label="תאריך ההסכם">
+        <span class="hint no-print">כל התאריכים בהסכם מתעדכנים לפי התאריך הזה</span>
+      </span>
+    </dd>
+    <dt>תשלום שני:</dt>
+    <dd><span class="auto" data-d="pay2"></span> <span class="hint">(14 ימים לאחר החתימה)</span></dd>
+  </dl>
+
+  <div class="goal">
+    <b>מטרת ההסכם</b>
+    <p>לבנות לשחר מערכת שחוסכת זמן למשרד ולטכנאים, במחיר קבוע וברור מראש, בלי הפתעות. כל מה שכלול, כל מה שעולה כסף ומתי, כתוב כאן.</p>
+  </div>
+
+  <h2>הצדדים</h2>
+  <div class="parties">
+    <div class="party">
+      <div class="role">המפתח</div>
+      <div class="name">אייל טייב · MeetingScheduled</div>
+      <div class="row"><span>עוסק פטור מס׳</span><input class="fill" data-f="osek" inputmode="numeric" aria-label="מספר עוסק פטור"></div>
+      <div class="row"><span>טלפון:</span><span dir="ltr">053-8276288</span></div>
+      <div class="row"><span dir="ltr">eyal@meeting-scheduled.com</span></div>
+      <div class="alias">להלן: ״אייל״</div>
+    </div>
+    <div class="party">
+      <div class="role">הלקוח</div>
+      <div class="name">שחר הנדסת מיזוג אוויר בע״מ</div>
+      <div class="row"><span>ח.פ.</span><input class="fill" data-f="hp" inputmode="numeric" aria-label="ח.פ."></div>
+      <div class="row"><span>כתובת:</span><input class="fill" data-f="address" aria-label="כתובת"></div>
+      <div class="row"><span>מיוצגת על ידי:</span><span>פולינה אליאסף</span></div>
+      <div class="alias">להלן: ״שחר״</div>
+    </div>
+  </div>
+
+  <h2><span class="n">1</span>מה נבנה</h2>
+  <p>מערכת אינטרנט בעברית לניהול קריאות שירות, טיפולים תקופתיים וטכנאים בשטח, מותאמת לדרך העבודה של שחר. הטכנאים משתמשים בה מהטלפון (מותקנת על מסך הבית, בלי חנות אפליקציות), והמשרד מהמחשב.</p>
+
+  <h3>במשרד</h3>
+  <ul>
+    <li>פתיחת קריאת שירות: לקוח, ציוד, תיאור, עדיפות, טכנאי ומועד, עם התראה לטכנאי.</li>
+    <li>מסך ״היום״: קריאות פתוחות, מי בשטח ואיפה, דוחות שמחכים לאישור ומה דורש החלטה.</li>
+    <li>בדיקה ואישור של כל דוח לפני סגירה, העברת קריאה בין טכנאים ופתיחה מחדש.</li>
+    <li>סיכום חיוב פנימי לכל קריאה לפי המחירון: פריטים, שעות עבודה ונסיעה בנפרד. לא מופיע ללקוח.</li>
+  </ul>
+
+  <h3>לטכנאי בטלפון</h3>
+  <ul>
+    <li>רשימת הקריאות שלו, ניווט וחיוג ללקוח בלחיצה.</li>
+    <li>שלבים בלחיצה: קיבלתי, יצאתי לדרך, הגעתי, התחלתי, סיימתי, יצאתי חזרה, חזרתי. כל לחיצה רושמת שעה ומיקום. כך נמדדים זמן נסיעה וזמן עבודה בנפרד.</li>
+    <li>צ׳קליסט הטיפול של אותו ציוד, עם שדות למדידות (לחצים, טמפרטורות, זרמים).</li>
+    <li>רשימת ״מה לקחת״ לכל קריאה. בשטח הטכנאי מסמן במה השתמש וכמה, ומוסיף פריטים מהמחירון.</li>
+    <li>הקלטה במקום הקלדה: הטכנאי מדבר, המערכת כותבת. בעברית וברוסית.</li>
+    <li>מסך הטכנאי גם ברוסית, בלחיצה.</li>
+    <li>צילום תמונות וחתימת לקוח על המסך.</li>
+  </ul>
+
+  <h3>לקוחות וטיפולים תקופתיים</h3>
+  <ul>
+    <li>כרטיס לקוח עם הציוד שלו (דגם, מספר סידורי, מיקום באתר) והיסטוריית הקריאות.</li>
+    <li>תבניות טיפול שבונים פעם אחת ומשייכים לכל ציוד, למשל צ׳ילר חצי שנתי ושנתי. כולל התדירות, הצ׳קליסט ורשימת הפריטים.</li>
+    <li>רשימת טיפולים קרובים ובאיחור, ופתיחת קריאה מהתבנית בלחיצה.</li>
+    <li>מחירון ופריטים שאפשר לערוך: גזים, מסננים, חשמל, חלקי חילוף ושעות עבודה.</li>
+    <li>מעקב חוזי אחזקה ותזכורת לפני מועד החידוש.</li>
+    <li>תזכורת ללקוח בוואטסאפ לפני טיפול תקופתי ולפני חידוש חוזה (בכפוף לאישור Meta, ראו סעיף 6).</li>
+  </ul>
+
+  <h3>דוחות</h3>
+  <ul>
+    <li>דוח שירות ללקוח עם זמנים, צ׳קליסט, חומרים, תמונות וחתימה, בלי מחירים. הדפסה או שמירה כ-PDF.</li>
+  </ul>
+
+  <h3>הטמעה</h3>
+  <ul>
+    <li>ייבוא ראשוני של לקוחות, ציוד ומחירון מקובצי אקסל של שחר; התקנה על הטלפונים; הדרכה מרחוק למשרד ולטכנאים.</li>
+  </ul>
+
+  <div class="note"><b>לא כלול כרגע</b> (אפשר להוסיף בהמשך לפי סעיף 4): חיבור לפריוריטי או להנהלת חשבונות, הפקת חשבוניות, פורטל ללקוחות של שחר.</div>
+  <p>אין הגבלה על מספר הטכנאים או המשתמשים, והוספת משתמשים לא משנה את המחיר.</p>
+
+  <h2><span class="n">2</span>לוח זמנים</h2>
+  <div class="table">
+    <table>
+      <thead><tr><th>מתי</th><th>מה קורה</th><th>עלות</th></tr></thead>
+      <tbody>
+        <tr><td class="k">לפני החתימה</td><td>שיחות אפיון, דמו ראשוני ודמו מעודכן לפי השיחות עם פולינה.</td><td class="price">על חשבון אייל</td></tr>
+        <tr><td class="k">שבועות 1–2<small data-d="w1"></small></td><td>פיתוח, דיוק ותכנות המערכת המלאה עבור שחר. כל משוב ייושם, וכל בקשה של פולינה תיכנס למערכת, עד שהיא שלמה ומתאימה בדיוק לדרך העבודה של שחר. משוב אפשר לשלוח מתי שנוח: הודעה קולית בוואטסאפ, שיחה בנסיעה או הערות כתובות.</td><td class="price">כלול ב-7,500 ₪</td></tr>
+        <tr><td class="k">שבועות 3–4<small data-d="w3"></small></td><td>תקופת ליווי והטמעה: תיקונים קטנים ודיוקים חשובים שעולים מהשימוש בפועל. ניתנת ללא תוספת תשלום, כמחווה של רצון טוב ובסיס לקשר ארוך עם שחר.</td><td class="price">ללא תוספת תשלום</td></tr>
+        <tr><td class="k">מהחודש השני<small data-d="m2"></small></td><td>שחר בוחרת אם ומתי לעבוד עם אייל על שינויים, שדרוגים או פרויקטים נוספים, לפי סעיף 4. אין התחייבות חודשית.</td><td class="price">לפי בחירת שחר</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2><span class="n">3</span>מחיר ותשלום</h2>
+  <div class="price-hero"><strong>7,500 ₪</strong><span>מחיר סופי וקבוע. אייל עוסק פטור, ולכן לא מתווסף מע״מ.</span></div>
+  <p>המחיר כולל את כל מה שמפורט בסעיפים 1 ו-2. לא יתווספו תשלומים על הפיתוח, על המשוב או על התיקונים בחודש הראשון.</p>
+  <div class="table">
+    <table>
+      <thead><tr><th>מתי</th><th>תאריך</th><th>סכום</th></tr></thead>
+      <tbody>
+        <tr><td class="k">ביום החתימה</td><td><span class="auto" data-d="pay1"></span></td><td class="price">3,750 ₪ (50%)</td></tr>
+        <tr><td class="k">14 ימים לאחר החתימה</td><td><span class="auto" data-d="pay2"></span></td><td class="price">3,750 ₪ (50%)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>העברה בנקאית, קבלה על כל תשלום.</p>
+
+  <h2><span class="n">4</span>עבודה נוספת, אחרי החודש הראשון</h2>
+  <ul>
+    <li>רק לפי בחירת שחר, לכל שינוי, שדרוג או פרויקט נוסף.</li>
+    <li><b>500 ₪ לשעת עבודה</b>, מחושב לפי דקות עבודה נטו. תיקון קטן לא מחויב בשעה שלמה. למשל, תיקון של 12 דקות עולה 100 ₪.</li>
+    <li>התעריף נעול ל-12 חודשים מיום החתימה (עד <span data-d="lock"></span>).</li>
+    <li>לפני כל עבודה בתשלום, אייל שולח הערכת זמן ועלות בכתב (וואטסאפ מספיק), ומתחילים רק אחרי אישור של פולינה. אם מתברר שהעבודה תיקח יותר מההערכה, עוצרים ושואלים לפני שממשיכים.</li>
+    <li>בסוף כל עבודה נשלח פירוט של הדקות.</li>
+  </ul>
+
+  <h2><span class="n">5</span>אחסון המערכת</h2>
+  <p>בסיום הבנייה שחר בוחרת אחת משתי האפשרויות:</p>
+  <div class="table">
+    <table>
+      <thead><tr><th>אפשרות</th><th>מה כולל</th><th>עלות</th></tr></thead>
+      <tbody>
+        <tr><td class="k">א. אחסון אצל אייל</td><td>שרתים ומסד נתונים, גיבוי יומי, אבטחה ותעודת SSL, עדכוני אבטחה, ניטור זמינות, ותמלול ההקלטות (עברית ורוסית) עד 600 דקות בחודש. מעבר לכך, התמלול לפי עלות בפועל, בהודעה מראש. אפשר לבטל בהודעה של 30 יום, ואז אייל מעביר לשחר את המערכת ואת כל הנתונים.</td><td class="price">98 ₪ לחודש</td></tr>
+        <tr><td class="k">ב. התקנה בשרתי שחר</td><td>אייל מתקין את המערכת ואת הקוד בשרתים של שחר. עלות השרת עצמו משולמת על ידי שחר ישירות לספק.</td><td>לפי סעיף 4, עם הערכת זמן מראש</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><b>כתובת המערכת:</b> תת-דומיין של אתר שחר, למשל <span dir="ltr">service.shaharcold.co.il</span>, ללא עלות (נדרשת גישה להגדרות הדומיין). אפשר גם כתובת זמנית של אייל עד שזה מסודר.</p>
+
+  <h2><span class="n">6</span>עלויות נוספות אפשריות</h2>
+  <ul>
+    <li><b>תזכורות בוואטסאפ ללקוחות (אופציונלי):</b> נדרש מספר וואטסאפ עסקי של שחר ואישור של Meta לעסק ולנוסחי ההודעות (יכול לקחת כמה שבועות). Meta גובה לפי הודעה, ישירות מאמצעי התשלום של שחר, בלי תוספת של אייל. ההקמה כלולה במחיר.</li>
+    <li><b>טלפונים לטכנאים:</b> טלפון חכם (אנדרואיד או אייפון) עם אינטרנט. אפשר להשתמש במכשירים הקיימים או במכשירים ייעודיים, לפי החלטת שחר.</li>
+    <li>אין עלויות נוספות מעבר לאלה. אין רישיון לפי משתמש ואין דמי מנוי מלבד האחסון.</li>
+  </ul>
+  <h3>סיכום העלויות לשנה הראשונה</h3>
+  <div class="table">
+    <table>
+      <thead><tr><th>רכיב</th><th>עלות</th></tr></thead>
+      <tbody>
+        <tr><td>פיתוח והטמעה (חד פעמי, כולל חודש ליווי)</td><td class="price">7,500 ₪</td></tr>
+        <tr><td>אחסון אצל אייל (אם נבחר)</td><td>98 ₪ לחודש, 1,176 ₪ לשנה</td></tr>
+        <tr><td>הודעות וואטסאפ (אם נבחר)</td><td>לפי שימוש, משולם ישירות ל-Meta</td></tr>
+        <tr><td>שינויים ופרויקטים נוספים</td><td>רק לפי בקשה ואישור מראש, 500 ₪ לשעה לפי דקות</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2><span class="n">7</span>מה נדרש משחר</h2>
+  <ul>
+    <li>קבצי אקסל של לקוחות, ציוד ומחירון (במה שקיים, גם חלקי).</li>
+    <li>רשימת הטיפולים התקופתיים והצ׳קליסטים לכל סוג ציוד. אפשר גם בהודעות קוליות, ואייל יבנה מהן את התבניות.</li>
+    <li>רשימת הטכנאים והטלפונים שלהם.</li>
+    <li>זמינות של פולינה למשוב במהלך השבועיים, בזמן שנוח לה.</li>
+    <li>אם נבחרו תזכורות בוואטסאפ: מספר עסקי ואישור Meta.</li>
+  </ul>
+
+  <h2><span class="n">8</span>בעלות, נתונים ופרטיות</h2>
+  <ul>
+    <li>הנתונים של שחר (לקוחות, קריאות, דוחות, מחירים ועובדים) שייכים לשחר, תמיד. אפשר לייצא אותם לאקסל בכל רגע.</li>
+    <li>עם השלמת התשלום, שחר מקבלת זכות שימוש מלאה במערכת שנבנתה עבורה, ללא הגבלת זמן, ועותק של הקוד לפי בקשה. אייל רשאי להמשיך להשתמש בידע ובכלים הכלליים שלו בפרויקטים אחרים, בלי הנתונים ובלי ההתאמות הייחודיות לשחר.</li>
+    <li>אייל שומר בסודיות את כל המידע של שחר, ולא מעביר אותו לאף גורם.</li>
+    <li>המיקום נרשם רק כשהטכנאי לוחץ על שלב, ואין מעקב רציף ברקע. שחר תיידע את העובדים מראש על רישום המיקום.</li>
+  </ul>
+
+  <h2><span class="n">9</span>אחריות לתקלות</h2>
+  <p>תקלה היא משהו שנבנה במסגרת ההסכם ולא עובד כפי שסוכם. במשך 3 חודשים מסיום הבנייה, אייל מתקן תקלות כאלה ללא עלות. תקלה שמשביתה את העבודה מטופלת באותו יום עסקים. שינוי או תוספת אינם תקלה, והם לפי סעיף 4.</p>
+
+  <h2><span class="n">10</span>קשר</h2>
+  <p>וואטסאפ או טלפון: <span dir="ltr">053-8276288</span>. מענה בדרך כלל באותו יום עסקים.</p>
+
+  <section class="sign" id="sign">
+    <h2>חתימות</h2>
+    <div class="sig-grid">
+      <div class="sig">
+        <h4>אייל טייב</h4>
+        <div class="sub">MeetingScheduled</div>
+        <label class="lbl">חתימה</label>
+        <div class="line-val"><span class="typed">Eyal Taieb</span></div>
+        <label class="lbl">תאריך</label>
+        <div class="line-val"><span data-d="pay1"></span></div>
+      </div>
+
+      <div class="sig">
+        <h4>שחר הנדסת מיזוג אוויר בע״מ</h4>
+        <div class="sub">מיוצגת על ידי פולינה אליאסף</div>
+        <label class="lbl" for="signer">שם החותם</label>
+        <div class="line-val"><input class="fill" id="signer" data-f="signer" autocomplete="name"></div>
+        <label class="lbl">חתימה וחותמת</label>
+        <div class="pad-wrap" id="padWrap">
+          <canvas id="pad" aria-label="אזור חתימה"></canvas>
+          <div class="ph" id="padPh">חתמו כאן באצבע או בעכבר</div>
+        </div>
+        <img class="stamp-img" id="stampImg" alt="חותמת" hidden>
+        <div class="pad-tools">
+          <button type="button" class="btn link" id="clearPad">ניקוי החתימה</button>
+          <label class="btn link" for="stampFile">הוספת חותמת מתמונה (לא חובה)</label>
+          <input type="file" id="stampFile" accept="image/*" hidden>
+        </div>
+        <label class="lbl">תאריך</label>
+        <div class="line-val"><span data-d="pay1"></span></div>
+      </div>
+    </div>
+
+    <div class="pre-sign">
+      <label class="consent">
+        <input type="checkbox" id="consent">
+        <span>קראתי את ההסכם, אני מוסמכת לחתום בשם שחר הנדסת מיזוג אוויר בע״מ, ואני מסכימה לתנאים שבו.</span>
+      </label>
+      <div class="sign-actions">
+        <button type="button" class="btn primary" id="signBtn" disabled>חתימה על ההסכם</button>
+        <span class="missing" id="missing"></span>
+      </div>
+    </div>
+
+    <div class="done" role="status">
+      <b>ההסכם נחתם ✓</b>
+      <p id="doneText"></p>
+      <div class="sign-actions">
+        <button type="button" class="btn primary" id="printBtn">שמירה כ-PDF</button>
+        <a class="btn wa" id="waBtn" target="_blank" rel="noopener">שליחה לאייל בוואטסאפ</a>
+        <button type="button" class="btn ghost" id="unsignBtn">ביטול ועריכה</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>הסכם · שחר הנדסת מיזוג אוויר · גרסה 3</span>
+    <span class="mono">meeting-scheduled.com · eyal@meeting-scheduled.com · 053-827-6288</span>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const KEY = 'shahar-agreement-v3';
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => Array.from(document.querySelectorAll(s));
+
+  // ---------- state (per-device convenience only) ----------
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { state = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+
+  // ---------- dates ----------
+  const pad2 = (n) => String(n).padStart(2, '0');
+  const todayIso = () => { const d = new Date(); return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`; };
+  const parse = (iso) => { const [y, m, d] = iso.split('-').map(Number); return new Date(y, m - 1, d); };
+  const add = (date, days) => new Date(date.getFullYear(), date.getMonth(), date.getDate() + days);
+  const fmt = (d) => `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+  const short = (d) => `${d.getDate()}.${d.getMonth() + 1}`;
+
+  const dateInput = $('#agreeDate');
+  dateInput.value = state.date || todayIso();
+
+  function renderDates() {
+    if (!dateInput.value) dateInput.value = todayIso();
+    const d0 = parse(dateInput.value);
+    const lock = new Date(d0.getFullYear() + 1, d0.getMonth(), d0.getDate());
+    const map = {
+      pay1: fmt(d0),
+      pay2: fmt(add(d0, 14)),
+      w1: `${short(d0)}–${fmt(add(d0, 13))}`,
+      w3: `${short(add(d0, 14))}–${fmt(add(d0, 27))}`,
+      m2: `מ-${fmt(add(d0, 28))}`,
+      lock: fmt(lock),
+    };
+    $$('[data-d]').forEach((el) => { el.textContent = map[el.dataset.d] || ''; });
+  }
+  dateInput.addEventListener('change', () => { state.date = dateInput.value; save(); renderDates(); });
+  renderDates();
+
+  // ---------- fill-in fields ----------
+  $$('[data-f]').forEach((el) => {
+    if (state[el.dataset.f]) el.value = state[el.dataset.f];
+    el.addEventListener('input', () => { state[el.dataset.f] = el.value; save(); check(); });
+  });
+
+  // ---------- signature pad ----------
+  const canvas = $('#pad');
+  const wrap = $('#padWrap');
+  const ctx = canvas.getContext('2d');
+  let drawing = false, last = null, hasInk = Boolean(state.sig);
+
+  function sizeCanvas() {
+    const r = wrap.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(r.width * dpr);
+    canvas.height = Math.round(r.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.lineWidth = 2.4; ctx.strokeStyle = '#1b2c55';
+    if (state.sig) {
+      const img = new Image();
+      img.onload = () => ctx.drawImage(img, 0, 0, r.width, r.height);
+      img.src = state.sig;
+    }
+    $('#padPh').hidden = hasInk;
+  }
+  const point = (e) => { const r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  const locked = () => document.body.classList.contains('signed');
+
+  canvas.addEventListener('pointerdown', (e) => {
+    if (locked()) return;
+    drawing = true; last = point(e); canvas.setPointerCapture(e.pointerId);
+    ctx.beginPath(); ctx.arc(last.x, last.y, 1.1, 0, Math.PI * 2); ctx.fillStyle = '#1b2c55'; ctx.fill();
+    hasInk = true; $('#padPh').hidden = true;
+  });
+  canvas.addEventListener('pointermove', (e) => {
+    if (!drawing) return;
+    const p = point(e);
+    ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+    last = p;
+  });
+  const end = () => {
+    if (!drawing) return;
+    drawing = false;
+    state.sig = canvas.toDataURL('image/png'); save(); check();
+  };
+  canvas.addEventListener('pointerup', end);
+  canvas.addEventListener('pointercancel', end);
+
+  $('#clearPad').addEventListener('click', () => {
+    if (locked()) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hasInk = false; delete state.sig; save(); $('#padPh').hidden = false; check();
+  });
+
+  let resizeT;
+  window.addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(sizeCanvas, 120); });
+  sizeCanvas();
+
+  // ---------- optional stamp image ----------
+  const stampImg = $('#stampImg');
+  const showStamp = () => { if (state.stamp) { stampImg.src = state.stamp; stampImg.hidden = false; } else { stampImg.hidden = true; } };
+  showStamp();
+  $('#stampFile').addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, 320 / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      state.stamp = c.toDataURL('image/png'); save(); showStamp();
+      URL.revokeObjectURL(img.src);
+    };
+    img.src = URL.createObjectURL(file);
+  });
+
+  // ---------- signing ----------
+  const consent = $('#consent');
+  function check() {
+    const need = [];
+    if (!($('#signer').value || '').trim()) need.push('שם החותם');
+    if (!hasInk) need.push('חתימה');
+    if (!consent.checked) need.push('אישור התנאים');
+    $('#signBtn').disabled = need.length > 0;
+    $('#missing').textContent = need.length ? `חסר: ${need.join(', ')}` : '';
+  }
+  consent.addEventListener('change', check);
+
+  function applySigned() {
+    const on = Boolean(state.signedAt);
+    document.body.classList.toggle('signed', on);
+    $$('.fill').forEach((el) => { el.disabled = on; });
+    dateInput.disabled = on;
+    wrap.classList.toggle('signed-ok', on);
+    if (on) {
+      const at = new Date(state.signedAt);
+      $('#doneText').textContent = `נחתם על ידי ${state.signer} בשם שחר הנדסת מיזוג אוויר בע״מ, ב-${fmt(at)} בשעה ${pad2(at.getHours())}:${pad2(at.getMinutes())}. נא לשמור עותק כ-PDF ולשלוח לאייל.`;
+      const msg = `שלום אייל, חתמתי על הסכם הפיתוח של שחר (תאריך ההסכם ${fmt(parse(dateInput.value))}). מצרפת את ההסכם החתום כ-PDF.`;
+      $('#waBtn').href = `https://wa.me/972538276288?text=${encodeURIComponent(msg)}`;
+    }
+  }
+
+  $('#signBtn').addEventListener('click', () => {
+    check();
+    if ($('#signBtn').disabled) return;
+    state.signedAt = new Date().toISOString();
+    state.signer = $('#signer').value.trim();
+    state.date = dateInput.value;
+    save(); applySigned();
+    $('#sign').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  $('#unsignBtn').addEventListener('click', () => {
+    delete state.signedAt; save(); applySigned(); check();
+  });
+  $('#printBtn').addEventListener('click', () => window.print());
+
+  applySigned();
+  check();
+})();
+</script>
+</body>
+</html>
