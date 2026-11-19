@@ -14,6 +14,28 @@
   if (params.get('view') === 'tech') ui.mode = 'tech';
   if (params.get('view') === 'office') ui.mode = 'office';
   ui.modal = null; ui.report = null;
+
+  /* ---------------- routing: each screen has its own address, so browser Back works ---------------- */
+  const OFFICE_VIEWS = ['today', 'jobs', 'periodic', 'customers', 'contracts', 'templates', 'catalog', 'settings'];
+  function route() {
+    if (ui.report) return '#/report/' + ui.report;
+    if (ui.mode === 'tech') return ui.tjob ? '#/tech/' + ui.tjob : '#/tech';
+    if (ui.view === 'job' && ui.jobId) return '#/job/' + ui.jobId;
+    if (ui.view === 'customer' && ui.custId) return '#/customer/' + ui.custId;
+    return '#/' + (OFFICE_VIEWS.includes(ui.view) ? ui.view : 'today');
+  }
+  function applyRoute(h) {
+    const p = String(h || '').replace(/^#\/?/, '').split('/');
+    ui.report = null;
+    if (p[0] === 'report' && p[1]) { ui.report = +p[1]; return; }
+    if (p[0] === 'tech') { ui.mode = 'tech'; ui.tjob = p[1] ? +p[1] : null; if (!p[1]) ui.ttab = 'details'; return; }
+    ui.mode = 'office';
+    if (p[0] === 'job' && p[1]) { ui.view = 'job'; ui.jobId = +p[1]; return; }
+    if (p[0] === 'customer' && p[1]) { ui.view = 'customer'; ui.custId = p[1]; return; }
+    ui.view = OFFICE_VIEWS.includes(p[0]) ? p[0] : 'today';
+  }
+  let histIdx = 0, restoring = true;
+  if (/^#\//.test(location.hash)) applyRoute(location.hash);
   function save() { store(KEY, S); store(UIKEY, { mode: ui.mode, view: ui.view, techId: ui.techId, tplId: ui.tplId, jobId: ui.jobId, custId: ui.custId, tjob: ui.tjob, ttab: ui.ttab, lang: ui.lang }); }
 
   /* ---------------- helpers ---------------- */
@@ -238,7 +260,7 @@
     const total = billRows.reduce((s, r) => s + r[3], 0);
     const evRows = j.events.slice().reverse().map(ev => '<div class="tl-row done"><span class="tl-dot"></span><div><b>' + (EVT[ev.status] || ev.status) + (ev.note ? ' · ' + esc(ev.note) : '') + '</b><span class="when">' + fT(ev.at) + '</span>' + (dayDiff(ev.at) !== 0 ? ' <span class="muted small">' + fD(ev.at) + '</span>' : '') +
       (ev.loc ? '<small>' + ic('pin', 13) + esc(ev.loc.addr) + (ev.loc.acc ? ' · דיוק ' + ev.loc.acc + ' מ׳' : '') + ' · <a href="' + mapUrl(ev.loc) + '" target="_blank" rel="noopener">במפה</a></small>' : '') + '</div></div>').join('');
-    return '<button class="back" data-a="go" data-arg="jobs">' + ic('right', 16) + 'חזרה לקריאות</button>' +
+    return '<button class="back" data-a="back" data-arg="jobs">' + ic('right', 16) + 'חזרה</button>' +
       (j.status === 'review' ? '<div class="banner orange"><span class="bi">' + ic('file', 24) + '</span><div><b>' + esc(t.name) + ' שלח את הדוח ' + rel(evAt(j, 'review')).replace('היום', 'היום ב-' + fT(evAt(j, 'review'))) + '</b><span class="small muted">בודקים צ׳קליסט, פריטים וחתימה, ומאשרים.</span></div><div class="actions"><button class="btn ok" data-a="approve" data-arg="' + j.id + '">' + ic('check') + 'אישור וסגירה</button><button class="btn" data-a="reopen" data-arg="' + j.id + '">החזרה לטכנאי</button></div></div>' : '') +
       (j.status === 'closed' ? '<div class="banner green"><span class="bi">' + ic('check', 24) + '</span><div><b>הקריאה נסגרה ' + fDY(evAt(j, 'closed')) + '</b><span class="small muted">' + (j.planId ? 'מועד הטיפול הבא עודכן אוטומטית אצל הלקוח.' : 'הדוח שמור בהיסטוריה של הלקוח.') + '</span></div></div>' : '') +
       '<section class="card"><div class="jd-head"><div><div class="row wrap" style="gap:6px"><span class="muted small">#' + j.id + ' · ' + esc(j.kind) + '</span>' + chip(j.status) + pri(j.priority) + '</div><h1>' + esc(j.title) + '</h1><div class="row wrap muted small" style="gap:14px"><span class="row" style="gap:5px">' + ic('building', 15) + '<a href="#" data-a="open-cust" data-arg="' + c.id + '">' + esc(c.name) + '</a></span><span class="row" style="gap:5px">' + ic('pin', 15) + esc(c.address) + '</span><span class="row" style="gap:5px">' + ic('phone', 15) + esc(c.contact) + '</span></div></div>' +
@@ -296,7 +318,7 @@
   function vCustomer() {
     const c = cust(ui.custId); if (!c) { ui.view = 'customers'; return vCustomers(); }
     const hist = S.jobs.filter(j => j.customerId === c.id).sort((a, b) => d(b.due) - d(a.due));
-    return '<button class="back" data-a="go" data-arg="customers">' + ic('right', 16) + 'חזרה ללקוחות</button>' +
+    return '<button class="back" data-a="back" data-arg="customers">' + ic('right', 16) + 'חזרה</button>' +
       '<section class="card"><div class="jd-head"><div><span class="chip ' + (c.kind === 'חוזה אחזקה' ? 'c-info' : '') + '">' + esc(c.kind) + '</span><h1>' + esc(c.name) + '</h1><div class="row wrap muted small" style="gap:14px"><span class="row" style="gap:5px">' + ic('pin', 15) + esc(c.address) + '</span><span class="row" style="gap:5px">' + ic('phone', 15) + esc(c.contact) + ' · ' + esc(c.phone) + '</span></div></div>' +
       '<div class="row wrap"><a class="btn" href="' + wazeUrl(c) + '" target="_blank" rel="noopener">' + ic('nav') + 'ניווט</a><button class="btn pri" data-a="new-job" data-arg="' + c.id + '">' + ic('plus') + 'קריאה חדשה</button></div></div></section>' +
       '<div class="grid g-main mt"><div class="grid" style="align-content:start">' +
@@ -531,7 +553,18 @@
     if (fid) { const el = document.getElementById(fid); if (el) { el.focus(); try { if (sel && el.setSelectionRange) el.setSelectionRange(sel[0], sel[1]); } catch (e) { } } }
     initSig();
     save();
+    const r = route();
+    if (r !== location.hash) {
+      if (restoring) history.replaceState({ i: histIdx }, '', r);
+      else history.pushState({ i: ++histIdx }, '', r);
+    } else if (restoring && !history.state) history.replaceState({ i: histIdx }, '', r);
+    restoring = false;
   }
+  function goBack(fallback) { if (histIdx > 0) history.back(); else fallback(); }
+  window.addEventListener('popstate', ev => {
+    histIdx = ev.state && typeof ev.state.i === 'number' ? ev.state.i : 0;
+    stopRec(); ui.modal = null; applyRoute(location.hash); restoring = true; window.scrollTo(0, 0); render();
+  });
   function go(v) { ui.view = v; ui.q = ''; ui.report = null; window.scrollTo(0, 0); render(); }
 
   /* ---------------- signature ---------------- */
@@ -636,7 +669,8 @@
     'office-job': a => A['open-job'](a),
     'open-cust': a => { ui.view = 'customer'; ui.custId = a; ui.report = null; window.scrollTo(0, 0); render(); },
     filter: a => { ui.filter = a; render(); }, plantab: a => { ui.planTab = a; render(); }, cat: a => { ui.cat = a; render(); },
-    report: a => { ui.report = +a; window.scrollTo(0, 0); render(); }, 'report-close': () => { ui.report = null; render(); }, print: () => window.print(),
+    report: a => { ui.report = +a; window.scrollTo(0, 0); render(); }, 'report-close': () => goBack(() => { ui.report = null; render(); }),
+    back: a => goBack(() => go(a)), print: () => window.print(),
     approve: a => { const j = job(+a); j.status = 'closed'; pushEvent(j, 'closed'); afterClose(j); render(); toast('הדוח אושר והקריאה נסגרה'); },
     reopen: a => { const j = job(+a); j.status = 'accepted'; j.events.push({ status: 'reopen', at: new Date().toISOString() }); render(); toast('הקריאה חזרה לטכנאי להמשך טיפול'); },
     transfer: a => { ui.modal = { type: 'transfer', jobId: +a }; render(); },
@@ -683,7 +717,7 @@
     closemode: a => { S.settings.closeMode = a; render(); },
     /* technician */
     lang: () => { stopRec(); ui.lang = ui.lang === 'ru' ? 'he' : 'ru'; render(); },
-    tjob: a => { ui.tjob = +a; ui.ttab = 'details'; render(); }, tback: () => { stopRec(); ui.tjob = null; render(); },
+    tjob: a => { ui.tjob = +a; ui.ttab = 'details'; render(); }, tback: () => { stopRec(); goBack(() => { ui.tjob = null; render(); }); },
     ttab: a => { stopRec(); ui.ttab = a; render(); },
     step: a => step(job(+a)),
     tcheck: a => { const j = job(ui.tjob); const r = j.checklist.find(x => x.id === a); r.done = !r.done; render(); },
