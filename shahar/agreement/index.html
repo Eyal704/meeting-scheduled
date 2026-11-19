@@ -28,6 +28,18 @@
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
+  html.locked .paper { display: none; }
+  html:not(.locked) #gate { display: none; }
+  #gate { min-height: 100dvh; display: grid; place-items: center; padding: 24px 16px; }
+  #gate form { width: 100%; max-width: 380px; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 30px 28px; box-shadow: 0 16px 48px rgba(40, 30, 20, .07); }
+  #gate .brand { justify-content: center; margin-bottom: 22px; }
+  #gate h1 { font-size: 23px; margin-bottom: 6px; }
+  #gate p { color: var(--muted); margin: 0 0 20px; }
+  #gate label { display: block; margin-bottom: 6px; font-weight: 500; }
+  #gatePw { width: 100%; min-height: 48px; font: inherit; font-size: 16px; padding: 10px 12px; border: 1px solid #c9c6bf; border-radius: 10px; }
+  #gatePw:focus { outline: 3px solid var(--brand-line); border-color: var(--brand); }
+  #gate .btn { width: 100%; justify-content: center; margin-top: 14px; }
+  #gateErr { min-height: 22px; color: #a82d36; font-size: 14px; margin: 10px 0 0; }
   body.signed .pad-tools { display: none; }
   html { -webkit-text-size-adjust: 100%; }
   body {
@@ -177,6 +189,25 @@
 </style>
 </head>
 <body>
+<script>
+  // Basic client-side gate (same approach as the other demo pages); the file itself stays publicly fetchable.
+  (function () { var ok = false; try { ok = sessionStorage.getItem('shahar-agreement-gate') === '1'; } catch (e) {} if (!ok) document.documentElement.classList.add('locked'); })();
+</script>
+<div id="gate">
+  <form id="gateForm">
+    <div class="brand" aria-hidden="true">
+      <img src="data:image/svg+xml;utf8,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='64' y='144' width='384' height='304' rx='52' fill='%23D95F76'/%3E%3Crect x='64' y='144' width='384' height='128' rx='52' fill='%23C04D63'/%3E%3Crect x='64' y='224' width='384' height='48' fill='%23C04D63'/%3E%3Crect x='176' y='80' width='56' height='112' rx='28' fill='%23D95F76'/%3E%3Crect x='280' y='80' width='56' height='112' rx='28' fill='%23D95F76'/%3E%3Cpath d='M176 312L232 376L336 248' stroke='white' stroke-width='40' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" alt="">
+      <span>Meeting<em>Scheduled</em></span>
+    </div>
+    <h1>הסכם פיתוח לשחר</h1>
+    <p>הזינו את הסיסמה שקיבלתם כדי לפתוח את ההסכם.</p>
+    <label for="gatePw">סיסמה</label>
+    <input id="gatePw" type="password" autocomplete="current-password" required aria-describedby="gateErr">
+    <button class="btn primary" type="submit">כניסה</button>
+    <p id="gateErr" role="alert" aria-live="polite"></p>
+    <noscript>יש להפעיל JavaScript בדפדפן כדי להיכנס.</noscript>
+  </form>
+</div>
 <main class="paper">
 
   <header class="top">
@@ -584,6 +615,24 @@
 
   applySigned();
   check();
+
+  // ---------- password gate ----------
+  const gatePw = $('#gatePw');
+  if (document.documentElement.classList.contains('locked')) gatePw.focus();
+  gatePw.addEventListener('input', () => { $('#gateErr').textContent = ''; gatePw.removeAttribute('aria-invalid'); });
+  $('#gateForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (gatePw.value.trim() !== '1') {
+      $('#gateErr').textContent = 'הסיסמה שגויה. נסו שוב.';
+      gatePw.setAttribute('aria-invalid', 'true'); gatePw.select();
+      return;
+    }
+    gatePw.value = '';
+    try { sessionStorage.setItem('shahar-agreement-gate', '1'); } catch (err) {}
+    document.documentElement.classList.remove('locked');
+    window.scrollTo(0, 0);
+    sizeCanvas(); // the signature pad had no size while the page was hidden
+  });
 })();
 </script>
 </body>
