@@ -83,6 +83,12 @@
   .weeks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 8px 0; }
   .weeks .opt .p { color: var(--ink); font-size: 16px; }
   .options .opt .p { color: var(--ink); font-weight: 400; font-size: 16px; }
+  .bank { display: grid; grid-template-columns: 1fr; width: 50%; min-width: 300px; gap: 0; border: 1px solid var(--line); border-radius: 14px; padding: 10px 20px; margin: 10px 0; }
+  .bank div { display: flex; justify-content: flex-start; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--line); }
+  .bank span { color: var(--muted); min-width: 92px; }
+  .bank b { font-weight: 700; }
+  @media (max-width: 480px) { .bank { width: 100%; min-width: 0; } }
+  @media print { .bank { break-inside: avoid; } }
   .opt { border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; }
   .opt b { display: block; font-size: 16px; }
   .opt .p { color: var(--brand); font-weight: 800; font-size: 18px; margin: 2px 0 4px; }
@@ -176,7 +182,6 @@
     <tr><td class="price">8,950 ₪</td><td>ביום תחילת העבודה</td></tr>
     <tr><td class="price">8,950 ₪</td><td>בסוף השבוע השלישי, 21 יום מתחילת העבודה</td></tr>
   </tbody></table></div>
-
   <h2>אחרי 3 השבועות: לבחירתכם</h2>
   <div class="options">
     <div class="opt"><b>לפי שעת עבודה</b><div class="p">500 ₪ לשעה</div><p>משלמים רק כשמבקשים שינוי או תוספת, לפי הערכה מראש.</p></div>
@@ -195,6 +200,14 @@
     <li>רשימת לקוחות, קבצי אקסל שבשימוש מול הלקוחות, רשימת טכנאים ותחומים, ולוגו.</li>
     <li>מספר הוואטסאפ העסקי ואיש קשר אחד במשרד.</li>
   </ul>
+
+  <h2>פרטים להעברה</h2>
+  <div class="bank" aria-label="פרטים להעברה בנקאית">
+    <div><span>בנק</span><b>לאומי (10)</b></div>
+    <div><span>סניף</span><b>928</b></div>
+    <div><span>מספר חשבון</span><b>5113442</b></div>
+    <div><span>על שם</span><b>אייל טייב שובל</b></div>
+  </div>
 
   <p class="close">אני עובד עם עד 5 לקוחות במקביל, כדי שכל מערכת תקבל את מלוא תשומת הלב שלי. אם זה מתאים לכם, כדאי להתחיל 😊</p>
 
