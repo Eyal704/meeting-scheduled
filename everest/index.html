@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>אוורסט · היסטוריית מכונות</title>
+<meta name="description" content="מערכת שירות לאוורסט מכונות: כרטיס לכל מכונה עם כל הטיפולים, קריאה שמגיעה לטכנאי בטלפון, דוח שירות עם חתימת הלקוח, ומעקב מעבדה.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:url" content="https://www.meeting-scheduled.com/everest/">
+<meta property="og:title" content="אוורסט מכונות · היסטוריה לכל מכונה">
+<meta property="og:description" content="מקלידים מספר מכונה ורואים כל מה שטופל בה. הקריאה מגיעה לטכנאי בטלפון, והלקוח חותם על דוח השירות בסוף הביקור.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16202e;--muted:#5f6b7a;--faint:#9aa4b1;--line:#e3e8ef;--bg:#f5f7fa;--card:#fff;
+  --navy:#12305a;--navy2:#0c2342;--navy-t:#eaf0f8;--navy-b:#c9d6e8;
+  --or:#f07b12;--or2:#b85a00;--or-t:#fff3e6;--or-b:#f8cf9f;
+  --green:#22784a;--green-t:#e6f3ec;--red:#c0392b;--red-t:#fbeae8;--blue:#2f5ea8;--blue-t:#e9f0fb;
+  --violet:#6b4fa0;--violet-t:#f1ecf8;--wa:#1f9d55;
+  --shadow:0 1px 2px rgba(16,32,52,.05),0 8px 24px rgba(16,32,52,.07);
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font-family:'Heebo',system-ui,sans-serif;font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
+h1,h2,h3,h4,p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--navy)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.muted{color:var(--muted)}.small{font-size:13.5px}.b{font-weight:700}.ltr{direction:ltr;unicode-bidi:isolate}
+.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;font-weight:700;display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:var(--navy-b)}
+.btn.pri{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.or{background:var(--or);border-color:var(--or);color:#fff}
+.btn.go{background:var(--green);border-color:var(--green);color:#fff}
+.btn.wa{background:var(--wa);border-color:var(--wa);color:#fff}
+.btn.sm{padding:5px 10px;font-size:13.5px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.chip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:1px 9px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.c-install{background:var(--navy-t);color:var(--navy)}
+.c-periodic{background:var(--green-t);color:var(--green)}
+.c-fault{background:var(--red-t);color:var(--red)}
+.c-lab{background:var(--violet-t);color:var(--violet)}
+.c-warn{background:var(--or-t);color:var(--or2)}
+.c-ok{background:var(--green-t);color:var(--green)}
+.c-gray{background:#eef1f5;color:var(--muted)}
+.c-blue{background:var(--blue-t);color:var(--blue)}
+/* top */
+.top{background:var(--navy2);color:#fff;position:sticky;top:0;z-index:30}
+.top .wrap{display:flex;align-items:center;gap:14px;min-height:58px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .wm{font-weight:800;letter-spacing:.14em;font-size:18px;direction:ltr}
+.brand .sub{font-size:12.5px;opacity:.75;border-inline-start:1px solid rgba(255,255,255,.25);padding-inline-start:10px}
+.tabs{display:flex;gap:4px;margin-inline-start:auto;overflow:auto}
+.tab{border:0;background:none;padding:7px 13px;border-radius:9px;font-weight:600;color:rgba(255,255,255,.75);white-space:nowrap;text-decoration:none}
+.tab:hover{color:#fff}
+.tab.on{background:rgba(255,255,255,.14);color:#fff}
+.tab .n{background:var(--or);color:#fff;border-radius:999px;font-size:11.5px;padding:0 7px;margin-inline-start:5px}
+main{padding:20px 0 60px}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.bar h1{font-size:21px;font-weight:800;margin-inline-end:auto}
+/* search */
+.search{display:flex;align-items:center;gap:10px;padding:14px 16px;margin-bottom:14px}
+.search input{flex:1;border:0;outline:0;font-size:19px;background:transparent;min-width:0}
+.search svg{flex:none;color:var(--faint)}
+.hint{font-size:13px;color:var(--muted);margin:-6px 2px 14px}
+.hint button{border:0;background:none;color:var(--navy);font-weight:700;padding:0 4px;text-decoration:underline}
+/* table */
+table{width:100%;border-collapse:collapse}
+th,td{text-align:start;padding:10px 12px;border-bottom:1px solid var(--line);font-size:14.5px;vertical-align:middle}
+th{font-size:12.5px;color:var(--muted);font-weight:700;background:#fafbfd}
+tr.click{cursor:pointer}tr.click:hover td{background:var(--navy-t)}
+tr.attn td:first-child{box-shadow:inset -3px 0 0 var(--or)}
+.tbl{overflow-x:auto}
+.sn{font-weight:800;direction:ltr;unicode-bidi:isolate;font-size:14px;letter-spacing:.02em}
+@media(max-width:760px){.hide-s{display:none}th,td{padding:9px 8px;font-size:14px}td .small{font-size:12.5px}}
+.sn{white-space:nowrap}
+/* machine card */
+.mhead{padding:18px;display:grid;grid-template-columns:1fr auto;gap:14px}
+.mhead h2{font-size:22px;font-weight:800}
+.mhead .acts{align-self:start}
+.specs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.specs>div{background:#fff;padding:10px 14px}
+.specs .k{font-size:12px;color:var(--muted);font-weight:700}
+.specs .v{font-weight:700;font-size:14.5px}
+@media(max-width:860px){.specs{grid-template-columns:repeat(2,minmax(0,1fr))}.mhead{grid-template-columns:1fr}}
+.banner{display:flex;gap:10px;align-items:center;padding:10px 14px;border-radius:12px;margin-top:12px;font-weight:600;font-size:14.5px}
+.banner.warn{background:var(--or-t);border:1px solid var(--or-b);color:var(--or2)}
+.banner.ok{background:var(--green-t);border:1px solid #cbe6d6;color:var(--green)}
+.banner.info{background:var(--navy-t);border:1px solid var(--navy-b);color:var(--navy)}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;margin-top:14px;align-items:start}
+@media(max-width:960px){.cols{grid-template-columns:1fr}}
+.side .sec+.sec{margin-top:14px}
+.sec{padding:14px 16px}
+.sec h3{font-size:16px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;flex-wrap:wrap}
+.seg button{border:0;background:none;padding:6px 12px;font-weight:600;color:var(--muted);font-size:14px}
+.seg button.on{background:var(--navy);color:#fff}
+/* timeline */
+.tl{position:relative;padding-inline-start:22px}
+.tl::before{content:"";position:absolute;inset-inline-start:7px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.ev{position:relative;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:10px}
+.ev::before{content:"";position:absolute;inset-inline-start:-21px;top:16px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--navy-b)}
+.ev.t-fault::before{border-color:var(--red)}.ev.t-periodic::before{border-color:var(--green)}.ev.t-lab::before{border-color:var(--violet)}.ev.t-install::before{border-color:var(--navy)}
+.ev .h{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ev .h .d{font-weight:800}
+.ev .h .who{color:var(--muted);font-size:13.5px;margin-inline-start:auto}
+.ev .ttl{font-weight:700;margin-top:4px}
+.ev .body{font-size:14.2px;margin-top:4px;color:#2a3442}
+.ev .body b{color:var(--ink)}
+.ev .parts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.part-chip{background:#f1f4f8;border-radius:7px;padding:1px 8px;font-size:12.5px}
+.ev .foot{display:flex;gap:10px;align-items:center;margin-top:8px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.ev .foot a{font-weight:700}
+.kv{display:grid;grid-template-columns:105px 1fr;gap:5px 10px;font-size:14.2px}
+.kv>div:nth-child(odd){color:var(--muted)}
+.mini{display:flex;flex-direction:column;gap:6px}
+.mini .row{display:flex;justify-content:space-between;gap:8px;font-size:14px;border-bottom:1px dashed var(--line);padding-bottom:5px}
+.mini .row:last-child{border:0}
+/* calls */
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media(max-width:980px){.board{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.board{grid-template-columns:1fr}}
+.col{padding:12px;display:flex;flex-direction:column;gap:9px;min-width:0;background:#fbfcfe}
+.col-h{display:flex;align-items:center;gap:8px}
+.col-h h3{font-size:15.5px;font-weight:800}
+.col-h .cnt{margin-inline-start:auto;color:var(--muted);font-weight:700;font-size:13.5px}
+.call{border:1px solid var(--line);border-radius:11px;padding:9px 11px;background:#fff;cursor:pointer;text-align:start;width:100%;display:block}
+.call:hover{border-color:var(--navy-b);box-shadow:var(--shadow)}
+.call.urgent{border-inline-start:4px solid var(--or)}
+.call .c1{font-weight:800;font-size:14.5px}
+.call .c2{font-size:13.5px;color:var(--muted)}
+.call .c3{font-size:13.5px;margin-top:3px}
+.call .row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:5px}
+.empty{font-size:13px;color:var(--faint);text-align:center;padding:8px}
+/* forms */
+label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:4px}
+input[type=text],input[type=tel],input[type=date],input[type=time],input[type=number],input[type=password],select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#fff}
+textarea{min-height:76px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(10,20,34,.42);z-index:50;display:flex;align-items:center;justify-content:center;padding:12px}
+.modal{background:#fff;border-radius:16px;width:min(680px,100%);max-height:100%;overflow:auto;padding:20px}
+.modal .mh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.modal .mh h2{font-size:19px;font-weight:800;margin-inline-end:auto}
+.x{border:0;background:none;font-size:24px;line-height:1;color:var(--muted)}
+.found{background:var(--navy-t);border:1px solid var(--navy-b);border-radius:11px;padding:10px 12px;font-size:14px;margin-top:8px}
+/* tech phone */
+.tv{display:grid;grid-template-columns:260px minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:860px){.tv{grid-template-columns:1fr}}
+.tv-list .t{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;border:1px solid transparent;cursor:pointer;width:100%;background:none;text-align:start}
+.tv-list .t.on{background:#fff;border-color:var(--line);box-shadow:var(--shadow)}
+.av{width:34px;height:34px;border-radius:50%;background:var(--navy-t);color:var(--navy);display:grid;place-items:center;font-weight:800;flex:none;font-size:14px}
+.phone-frame{max-width:410px;margin:0 auto;border:10px solid #111a26;border-radius:40px;background:#111a26;box-shadow:var(--shadow)}
+.screen{background:var(--bg);border-radius:30px;overflow:hidden;min-height:720px;max-height:820px;overflow-y:auto}
+.ph-h{background:var(--navy);color:#fff;padding:16px 16px 14px}
+.ph-h .sm{font-size:13px;opacity:.8}
+.ph-body{padding:12px}
+.ph-body .sec{padding:13px 14px;margin-bottom:10px}
+.ph-body .sec h4{font-size:15.5px;font-weight:800;margin-bottom:8px}
+.pjob{display:block;width:100%;text-align:start;border:1px solid var(--line);background:#fff;border-radius:13px;padding:12px;margin-bottom:9px;cursor:pointer}
+.pjob .tm{font-weight:800;font-size:15px}
+.pjob.done{opacity:.6}
+.prev{background:var(--or-t);border:1px solid var(--or-b);border-radius:13px;padding:12px 13px;margin-bottom:10px}
+.prev h4{color:var(--or2)}
+.prev .pi{font-size:14px;padding:7px 0;border-top:1px dashed var(--or-b)}
+.prev .pi:first-of-type{border-top:0;padding-top:0}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:9px 2px;border-bottom:1px solid var(--line);font-size:14.5px;cursor:pointer}
+.chk:last-child{border:0}
+.chk input{width:20px;height:20px;margin:1px 0 0;flex:none;accent-color:var(--green)}
+.choice{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 10px;font-weight:600;font-size:14px}
+.choice.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.choices{display:flex;gap:6px;flex-wrap:wrap}
+.part{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14.2px}
+.part:last-child{border:0}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:36px;height:36px;border-radius:9px;border:1px solid var(--line);background:#fff;font-size:18px;font-weight:700}
+.qty b{min-width:18px;text-align:center}
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ph-slot{position:relative;aspect-ratio:1;border:1.5px dashed var(--navy-b);border-radius:11px;display:grid;place-items:center;background:#fff;overflow:hidden;cursor:pointer;margin:0;color:var(--muted);font-size:12.5px;text-align:center}
+.ph-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph-slot input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.sig{width:100%;height:150px;border:1.5px dashed var(--navy-b);border-radius:11px;background:#fff;touch-action:none;display:block}
+.bigbtn{width:100%;justify-content:center;padding:14px;font-size:16.5px}
+/* lab */
+.stages{display:flex;gap:4px;flex-wrap:wrap}
+.stg{font-size:12px;padding:2px 8px;border-radius:999px;background:#eef1f5;color:var(--faint);font-weight:700}
+.stg.done{background:var(--violet-t);color:var(--violet)}
+.stg.cur{background:var(--violet);color:#fff}
+/* report */
+.report{max-width:820px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px}
+.rep-h{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid var(--navy);padding-bottom:14px;margin-bottom:16px;gap:14px}
+.rep-h .wm{font-weight:800;letter-spacing:.14em;font-size:22px;color:var(--navy);direction:ltr}
+.rep-sec{margin-top:16px}
+.rep-sec h3{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:6px;border-bottom:1px solid var(--line);padding-bottom:4px}
+.rep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 16px;font-size:14px}
+.rep-grid .k{color:var(--muted);font-size:12.5px;font-weight:700}
+@media(max-width:640px){.rep-grid{grid-template-columns:1fr 1fr}.report{padding:16px}}
+@media print{.noprint{display:none!important}body{background:#fff}.report{border:0;padding:0}.top{display:none}}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;z-index:80;font-weight:600;box-shadow:var(--shadow)}
+.gate{min-height:100vh;display:grid;place-items:center;padding:16px;background:var(--navy2)}
+.gate .card{padding:28px;width:min(360px,100%);text-align:center}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ================= data ================= */
+const KEY='everest-field-v1', LOCK='everest-field-unlocked';
+const TECHS=[
+  {id:'samer',name:'סאמר חורי'},{id:'ahmad',name:'אחמד מנסור'},{id:'nir',name:'ניר לוי'},
+  {id:'walid',name:'ואליד עודה'},{id:'alex',name:'אלכס פרידמן'},
+];
+const CUSTOMERS=[
+  ['c1','מסגריית אל-נור','ג׳דיידה-מכר','מוחמד'],['c2','גליל מתכות בע״מ','כרמיאל','אבי'],['c3','א.ש. נירוסטה','חיפה','שלומי'],
+  ['c4','מטאל-טק הצפון','נוף הגליל','דימה'],['c5','קונסטרוקציות העמק','עפולה','יוסי'],['c6','ארונות חשמל מ.ר','קריית ביאליק','רונן'],
+  ['c7','פרזול השרון','נתניה','גיל'],['c8','אלומיניום הכרמל','דאלית אל-כרמל','סלים'],['c9','מתכת הדרום','באר שבע','אלי'],
+  ['c10','סטיל-ארט עיצובים','תל אביב','נועה'],['c11','ח.ע. עבודות פח','שפרעם','חוסאם'],['c12','מערכות מיזוג הגליל','מעלות-תרשיחא','עמית'],
+  ['c13','ביטון מסגרות','אשדוד','שמעון'],['c14','מתכות אילת','אילת','רפי'],
+];
+const MTYPES={
+  sheet:{name:'פייבר לייזר לחיתוך פח',models:['SENFENG 3015H','SENFENG 3015C','SENFENG 1530N'],laser:true},
+  tube:{name:'חיתוך צינורות בלייזר',models:['SENFENG · חיתוך צינורות'],laser:true},
+  weld:{name:'ריתוך וניקוי בלייזר',models:['SENFENG HW'],laser:true},
+  brake:{name:'מכופפת פח CNC',models:['SENFENG · מכופפת CNC'],laser:false},
+  lathe:{name:'מחרטת CNC',models:['SENFENG · מחרטת CNC'],laser:false},
+};
+const SOURCES=['Raycus RFL-C3000','Raycus RFL-C6000','Raycus RFL-C12000','MAX MFSC-3000','MAX MFSC-6000','IPG YLS-6000'];
+const HEADS=['Raytools BM111','Raytools BM114','BOCI BLT420','BOCI BLT641','Precitec ProCutter 2.0','WSX NC30'];
+const PARTS={
+  sheet:[['עדשת מגן D27.9','PW-279'],['דיזה 1.5 מ״מ (28)','NZ-28-15'],['דיזה 2.0 מ״מ (32)','NZ-32-20'],['טבעת קרמיקה','CR-32'],['עדשת פוקוס','FL-200'],['מסנן צ׳ילר','CH-FLT'],['כבל חיישן גובה','HS-CBL']],
+  tube:[['עדשת מגן D27.9','PW-279'],['דיזה 1.5 מ״מ (28)','NZ-28-15'],['טבעת קרמיקה','CR-32'],['אטם צ׳אק פנאומטי','CK-SEAL'],['מסנן צ׳ילר','CH-FLT']],
+  weld:[['עדשת מגן לראש ריתוך','PW-W20'],['נחיר ריתוך','WN-01'],['מסנן צ׳ילר','CH-FLT']],
+  brake:[['אטם בוכנה הידראולית','HY-SEAL'],['מסנן שמן הידראולי','HY-FLT'],['חיישן סרגל אחורי','BG-SNS']],
+  lathe:[['תותבת צ׳אק','LC-JAW'],['מסנן קירור','CL-FLT'],['רצועת ציר','SP-BLT']],
+};
+const CHECK={
+  sheet:['ניקוי והחלפת עדשת מגן לפי הצורך','בדיקת דיזות וכיול מרכז הקרן','כיול חיישן גובה (קיבול)','צ׳ילר: מים מזוקקים, מסנן, טמפרטורה','בדיקת לחצי גז (חנקן / חמצן)','שימון מסילות וברגים בצירים X/Y/Z','ניקוי מערכת יניקה ומסננים','בדיקת הספק מקור הלייזר','גיבוי פרמטרי חיתוך'],
+  tube:['ניקוי והחלפת עדשת מגן לפי הצורך','בדיקת דיזות וכיול מרכז הקרן','צ׳אקים: לחץ אוויר ואטמים','צ׳ילר: מים מזוקקים, מסנן, טמפרטורה','שימון מסילות וברגים','בדיקת הספק מקור הלייזר','גיבוי פרמטרי חיתוך'],
+  weld:['ניקוי והחלפת עדשת מגן בראש','בדיקת נחיר ואספקת גז','צ׳ילר: מים מזוקקים וטמפרטורה','בדיקת סיב והתחברות לראש','בדיקת הספק מקור הלייזר'],
+  brake:['בדיקת שמן הידראולי ומסנן','בדיקת אטמים ודליפות','כיול סרגל אחורי','בדיקת מקבילות וזווית כיפוף','בדיקת מערכות בטיחות (וילון אור)'],
+  lathe:['בדיקת מערכת קירור','שימון אוטומטי','בדיקת צ׳אק ותותבות','בדיקת דיוק ציר','גיבוי תוכניות'],
+};
+const FAULTS={
+  sheet:[
+    ['חיתוך לא נקי, סיגים בצד התחתון','עדשת מגן שרופה ודיזה פגועה. הוחלפו, כויל מרכז הקרן, עודכנו פרמטרים לנירוסטה 3 מ״מ.',[0,1]],
+    ['התראת טמפרטורה בצ׳ילר','מסנן סתום. הוחלף מסנן, הוחלפו מים מזוקקים, נבדקה הטמפרטורה (22°).',[5]],
+    ['הראש מתנגש בפח, התראת חיישן גובה','כבל חיישן הגובה שחוק. הוחלף כבל וטבעת קרמיקה, בוצע כיול קיבול.',[6,3]],
+    ['ירידה באיכות החיתוך בעובי 10 מ״מ','מדידת הספק: 82% מהנומינלי. נוקה הסיב, הוחלפה עדשת פוקוס. אם לא משתפר, המקור לבדיקה במעבדה.',[4]],
+    ['רעש בתנועת ציר Y','שומנו מסילות וברג, נמתחה רצועה, נבדק דרייבר הסרוו. תקין.',[]],
+    ['שגיאת תקשורת בבקר','כבל רשת פגום בין הבקר לדרייברים. הוחלף, בוצע גיבוי פרמטרים.',[]],
+  ],
+  tube:[
+    ['הצ׳אק לא סוגר עד הסוף','אטם פנאומטי דולף. הוחלף אטם, נבדק לחץ אוויר 6 בר.',[3]],
+    ['חיתוך עקום בצינור עגול','כיול מרכז סיבוב הצ׳אק וכיול מרכז הקרן.',[]],
+    ['התראת טמפרטורה בצ׳ילר','מסנן סתום. הוחלף מסנן ומים מזוקקים.',[4]],
+  ],
+  weld:[
+    ['הריתוך לא חודר מספיק','עדשת מגן מלוכלכת בראש הריתוך. הוחלפה, נוקה הנחיר.',[0,1]],
+    ['התראת סיב בהפעלה','מחבר הסיב לראש לא היה מהודק. חובר מחדש ונבדק הספק.',[]],
+  ],
+  brake:[
+    ['סטייה בזווית הכיפוף לאורך הפח','כויל הקראונינג והסרגל האחורי. נבדק על פח 3 מ״מ, תקין.',[]],
+    ['דליפת שמן מהבוכנה השמאלית','הוחלף אטם בוכנה ומסנן שמן.',[0,1]],
+  ],
+  lathe:[
+    ['רעידות בעיבוד','הוחלפה רצועת ציר, נבדק איזון הצ׳אק.',[2]],
+  ],
+};
+const PNOTES={
+  laser:['כל הבדיקות תקינות. הוחלפו עדשות מגן ודיזות.','הספק מקור 98%. הוחלפו עדשות מגן ודיזות.','נמצא מחבר גז רופף בראש, הודק. שאר הבדיקות תקינות.','מסנן הצ׳ילר מלוכלך, כדאי להחליף בטיפול הבא.','עדשת הפוקוס עם כתמים קלים, לבדוק בביקור הבא.','שומנו הצירים, הוחלפו עדשות מגן. המפעיל קיבל רענון על ניקוי הדיזה.','יניקת עשן חלשה, נוקו המסננים. כל השאר תקין.'],
+  other:['כל הבדיקות תקינות.','הוחלף מסנן. כל השאר תקין.','נמצאה דליפה קלה במחבר, הודק. לבדוק בביקור הבא.','בוצע כיול. נמסרו הנחיות למפעיל.']
+};
+const LAB_STAGES=['התקבל','באבחון','ממתין לאישור הצעת מחיר','בתיקון','בבדיקה','הוחזר ללקוח'];
+const CALL_ST={new:'חדשה',assigned:'שובצה',work:'בטיפול',done:'נסגרה'};
+const TYPE_NAME={install:'התקנה',periodic:'טיפול תקופתי',fault:'תקלה',lab:'מעבדה'};
+let S, VIEW={filter:'all',q:'',tech:null};
+
+/* ================= utils ================= */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const ds=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const TODAY=()=>ds(new Date());
+const addDays=(s,n)=>{const d=new Date(s+'T12:00');d.setDate(d.getDate()+n);return ds(d)};
+const addMonths=(s,n)=>{const d=new Date(s+'T12:00');d.setMonth(d.getMonth()+n);return ds(d)};
+const fd=s=>{const d=new Date(s+'T12:00');return pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear()};
+const fdShort=s=>{const d=new Date(s+'T12:00');return pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+String(d.getFullYear()).slice(2)};
+const daysBetween=(a,b)=>Math.round((new Date(b+'T12:00')-new Date(a+'T12:00'))/864e5);
+const ago=s=>{const n=daysBetween(s,TODAY());if(n<=0)return'היום';if(n===1)return'אתמול';if(n<31)return`לפני ${n} ימים`;const m=Math.round(n/30.4);if(m<12)return m===1?'לפני חודש':`לפני ${m} חודשים`;const y=(n/365).toFixed(1).replace('.0','');return y==='1'?'לפני שנה':`לפני ${y} שנים`};
+const dayLabel=s=>{const t=TODAY();if(s===t)return'היום';if(s===addDays(t,1))return'מחר';if(s===addDays(t,-1))return'אתמול';return new Date(s+'T12:00').toLocaleDateString('he-IL',{weekday:'short',day:'numeric',month:'numeric'})};
+function rng(seed){return()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646}}
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2400)}
+const tech=id=>TECHS.find(t=>t.id===id)||{name:'—'};
+const cust=id=>S.customers.find(c=>c.id===id)||{name:'—',city:''};
+const mach=sn=>S.machines.find(m=>m.sn===sn);
+const hist=sn=>S.history.filter(h=>h.sn===sn).sort((a,b)=>b.date.localeCompare(a.date)||b.no-a.no);
+const call=id=>S.calls.find(c=>c.id===id);
+const initials=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2);
+const waLink=t=>'https://wa.me/?text='+encodeURIComponent(t);
+const link=h=>location.origin+location.pathname+'#'+h;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('האחסון בדפדפן מלא. נסו פחות תמונות.')}}
+function nextNo(){S.seq=(S.seq||2400)+1;return S.seq}
+function nextService(m){
+  const h=hist(m.sn).find(x=>x.type==='periodic'||x.type==='install');
+  return h?addMonths(h.date,6):null;
+}
+function warrantyEnd(m){return addMonths(m.installed,m.warranty)}
+function openCalls(sn){return S.calls.filter(c=>c.sn===sn&&c.status!=='done')}
+
+/* ================= seed ================= */
+function seed(){
+  const r=rng(20261123), pick=a=>a[Math.floor(r()*a.length)], today=TODAY();
+  const customers=CUSTOMERS.map(([id,name,city,contact],i)=>({id,name,city,contact,phone:'050-000-'+String(1010+i*13)}));
+  const machines=[], history=[];
+  let seq=2400;
+  const plan=[['c1','sheet'],['c1','brake'],['c2','sheet'],['c2','tube'],['c2','brake'],['c3','sheet'],['c3','weld'],['c4','sheet'],['c4','lathe'],['c5','sheet'],['c5','tube'],['c6','sheet'],['c6','brake'],['c7','weld'],['c8','sheet'],['c9','sheet'],['c9','brake'],['c10','weld'],['c10','sheet'],['c11','sheet'],['c12','sheet'],['c12','brake'],['c13','tube'],['c14','sheet']];
+  plan.forEach(([cid,type],i)=>{
+    const T=MTYPES[type];
+    const months=6+Math.floor(r()*46);
+    const installed=addDays(addMonths(today,-months),-Math.floor(r()*20));
+    const year=+installed.slice(0,4);
+    const sn=(type==='brake'?'PB':type==='lathe'?'LT':type==='weld'?'HW':type==='tube'?'TC':'SF')+String(year).slice(2)+'-'+String(1100+i*37+Math.floor(r()*30)).padStart(4,'0');
+    const m={sn,type,model:pick(T.models),custId:cid,installed,warranty:pick([12,24,24,36]),controller:T.laser?pick(['Cypcut FSCUT2000','Cypcut FSCUT4000','Au3Tech']):pick(['Delem DA-66T','ESA S630','Siemens 828D']),hours:Math.round(months*(120+r()*60))};
+    if(T.laser){m.source={model:type==='weld'?'Raycus RFL-C3000':pick(SOURCES),sn:'LS'+Math.floor(1e6+r()*8e6)};m.head={model:type==='weld'?'Raytools BW101':pick(HEADS),sn:'LH'+Math.floor(1e5+r()*8e5)};}
+    machines.push(m);
+    const techA=pick(TECHS).id;
+    history.push({id:'h'+(++seq),no:seq,sn,date:installed,type:'install',techId:techA,title:'התקנה והדרכת מפעיל',
+      done:T.laser?`התקנה ופילוס, חיבור צ׳ילר וגז, בדיקת הספק מקור (${m.source.model.split(' ').pop()}), חיתוך ניסיון, הדרכת מפעיל.`:'התקנה ופילוס, חיבור חשמל, כיול ראשוני, תוכנית ניסיון, הדרכת מפעיל.',
+      parts:[],hours:T.laser?8:6,signedBy:customers.find(x=>x.id===cid).contact,status:'ok'});
+    let d=installed, k=0;
+    while(true){
+      d=addDays(addMonths(d,6),Math.floor(r()*24)-8);
+      if(daysBetween(d,today)<0)break;
+      if(i%5===2&&daysBetween(d,today)<70)break; // some machines overdue
+      const tid=pick(TECHS).id; const P=PARTS[type];
+      const used=T.laser?[[P[0][0],P[0][1],2],[P[1][0],P[1][1],3]]:[[P[1][0],P[1][1],1]];
+      history.push({id:'h'+(++seq),no:seq,sn,date:d,type:'periodic',techId:tid,title:'טיפול תקופתי',
+        done:pick(PNOTES[T.laser?'laser':'other']),checklist:CHECK[type].map(()=>true),parts:used.map(([n,pn,q])=>({n,pn,q})),hours:T.laser?3:2,status:'ok'});
+      k++;
+    }
+    const nf=Math.floor(r()*3.2);
+    for(let f=0;f<nf;f++){
+      const fx=pick(FAULTS[type]);const fdte=addDays(installed,10+Math.floor(r()*Math.max(20,daysBetween(installed,today)-12)));
+      history.push({id:'h'+(++seq),no:seq,sn,date:fdte,type:'fault',techId:pick(TECHS).id,title:fx[0],found:fx[0],done:fx[1],
+        parts:fx[2].map(ix=>({n:PARTS[type][ix][0],pn:PARTS[type][ix][1],q:1})),hours:+(1+r()*3).toFixed(1),status:'ok'});
+    }
+    if(T.laser&&i%4===1){
+      const ld=addDays(today,-(40+Math.floor(r()*200)));
+      history.push({id:'h'+(++seq),no:seq,sn,date:ld,type:'fault',techId:pick(TECHS).id,title:'ירידה בהספק המקור',found:'הספק נמדד 2.3kW מתוך 3kW.',done:'נוקה הסיב ונבדקה עדשת הפוקוס, ללא שיפור. מקור הלייזר פורק ונשלח למעבדה, הותקן מקור חלופי.',parts:[],hours:3,status:'follow'});
+      history.push({id:'h'+(++seq),no:seq,sn,date:addDays(ld,9),type:'lab',techId:'alex',title:`מעבדה: תיקון מקור ${m.source.model}`,found:'מודול משאבה (pump) חלש וסיב פלט פגום.',done:`הוחלף מודול משאבה, הוחלף סיב פלט, בדיקת הספק 100% במשך 4 שעות. המקור הוחזר והותקן במכונה.`,parts:[{n:'מודול משאבה',pn:'RC-PM',q:1},{n:'סיב פלט QBH',pn:'RC-QBH',q:1}],hours:11,status:'ok'});
+    }
+  });
+  // open calls
+  const calls=[]; let cn=870;
+  const mk=(sn,desc,status,techId,date,time,urgent)=>calls.push({id:'k'+(++cn),no:cn,sn,desc,status,techId,date,time,urgent:!!urgent,created:addDays(today,status==='new'?0:-1)});
+  const L=machines.filter(m=>m.type==='sheet');
+  mk(L[0].sn,'חיתוך לא נקי בנירוסטה, הרבה סיגים','assigned','samer',today,'09:00',true);
+  history.push({id:'h'+(++seq),no:seq,sn:L[0].sn,date:addDays(today,-41),type:'fault',techId:'walid',title:'חיתוך לא נקי בנירוסטה 4 מ״מ',found:'עדשת מגן שרופה, דיזה פגועה.',done:'הוחלפו עדשת מגן ודיזה, כויל מרכז הקרן. עדשת הפוקוס עם כתם קטן, לא הוחלפה (אין במלאי ברכב). אם התקלה חוזרת: להחליף עדשת פוקוס.',parts:[{n:'עדשת מגן D27.9',pn:'PW-279',q:1},{n:'דיזה 1.5 מ״מ (28)',pn:'NZ-28-15',q:1}],hours:2,status:'follow',signedBy:'מוחמד'});
+  mk(machines.find(m=>m.type==='brake').sn,'סטייה בזווית בכיפוף פח 2 מ״מ','assigned','samer',today,'13:00');
+  mk(L[2].sn,'התראת צ׳ילר בבוקר, המכונה עוצרת אחרי חצי שעה','work','ahmad',today,'08:30',true);
+  mk(machines.find(m=>m.type==='tube').sn,'טיפול תקופתי','assigned','ahmad',today,'12:30');
+  mk(L[4].sn,'טיפול תקופתי','assigned','nir',today,'10:00');
+  mk(machines.find(m=>m.type==='weld').sn,'הריתוך חלש מהרגיל','assigned','walid',addDays(today,1),'09:30');
+  mk(L[6].sn,'הראש נתקע בפח ומפסיק','new',null,today,'',true);
+  mk(L[7].sn,'בקשה להדרכת מפעיל חדש','new',null,today,'');
+  // lab
+  const lab=[]; let ln=310;
+  const labM=machines.filter(m=>m.source);
+  [['מקור לייזר',labM[3],'המקור לא עולה להספק מלא',1],['ראש לייזר',labM[5],'התראת טמפרטורה בראש, עדשת קולימציה עכורה',3],['מקור לייזר',labM[8],'כיבוי פתאומי, התראת Alarm 3',2],['ראש לייזר',labM[10],'שיפוץ כללי אחרי התנגשות',4],['מקור לייזר',labM[1],'נשלח לבדיקה יזומה לפני טיפול תקופתי',0]].forEach(([item,m,fault,stage],i)=>{
+    lab.push({id:'l'+(++ln),no:ln,sn:m.sn,item,model:item==='מקור לייזר'?m.source.model:m.head.model,itemSn:item==='מקור לייזר'?m.source.sn:m.head.sn,fault,stage,received:addDays(today,-(2+i*3))});
+  });
+  return {customers,machines,history,calls,lab,seq,v:1};
+}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.v===1&&s.machines)return s}catch(e){}return null}
+function resetData(){if(!confirm('לאפס את כל נתוני הדוגמה?'))return;S=seed();save();location.hash='machines';route();toast('הנתונים אופסו')}
+
+/* ================= shell ================= */
+const LOGO=`<svg width="38" height="30" viewBox="0 0 38 30" aria-hidden="true"><path d="M2 28 L15 6 L21 15 L25 10 L36 28 Z" fill="#fff" opacity=".95"/><path d="M15 6 L19.5 13.6 L17 12.4 L15 14.2 L12.6 12.3 L10.6 13.4 Z" fill="${'#f07b12'}"/></svg>`;
+function shell(tab,inner){
+  const nNew=S.calls.filter(c=>c.status==='new').length;
+  const nLab=S.lab.filter(l=>l.stage<5).length;
+  const tabs=[['machines','מכונות',''],['calls','קריאות',nNew],['tech','הטכנאי בטלפון',''],['lab','מעבדה',nLab]];
+  $('#app').innerHTML=`<header class="top noprint"><div class="wrap">
+    <a href="#machines" class="brand" style="color:#fff;text-decoration:none">${LOGO}<span class="wm">EVEREST</span><span class="sub">מערכת שירות</span></a>
+    <nav class="tabs">${tabs.map(([k,v,n])=>`<a class="tab ${tab===k?'on':''}" href="#${k}">${v}${n?`<span class="n">${n}</span>`:''}</a>`).join('')}</nav>
+  </div></header><main><div class="wrap" id="view">${inner}</div></main>`;
+}
+
+/* ================= machines list ================= */
+function viewMachines(){
+  const q=VIEW.q.trim().toLowerCase();
+  let list=S.machines.map(m=>{const c=cust(m.custId);const h=hist(m.sn);const nx=nextService(m);return{m,c,last:h[0],nx,open:openCalls(m.sn).length}});
+  if(q)list=list.filter(({m,c})=>[m.sn,m.model,MTYPES[m.type].name,c.name,c.city,m.source?.sn,m.head?.sn,m.source?.model,m.head?.model].some(x=>String(x||'').toLowerCase().includes(q)));
+  if(VIEW.filter==='due')list=list.filter(x=>x.nx&&daysBetween(TODAY(),x.nx)<=30);
+  if(VIEW.filter==='open')list=list.filter(x=>x.open);
+  if(VIEW.filter==='warranty')list=list.filter(x=>warrantyEnd(x.m)>=TODAY());
+  list.sort((a,b)=>(b.last?.date||'').localeCompare(a.last?.date||''));
+  const dueN=S.machines.filter(m=>{const n=nextService(m);return n&&daysBetween(TODAY(),n)<=30}).length;
+  const ex=S.machines[2].sn;
+  shell('machines',`
+    <div class="card search"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="מספר סידורי של מכונה, מקור או ראש · לקוח · עיר" value="${esc(VIEW.q)}" oninput="VIEW.q=this.value;viewMachinesSoft()" onkeydown="if(event.key==='Enter')searchEnter()" autocomplete="off"></div>
+    <p class="hint">לדוגמה: <button onclick="setQ('${ex}')">${ex}</button> <button onclick="setQ('נירוסטה')">נירוסטה</button> <button onclick="setQ('Raycus')">Raycus</button></p>
+    <div class="bar"><h1>${q?`${list.length} תוצאות`:`${S.machines.length} מכונות אצל ${S.customers.length} לקוחות`}</h1>
+      <div class="seg">${[['all','הכל'],['open','קריאה פתוחה'],['due',`טיפול בחודש הקרוב (${dueN})`],['warranty','באחריות']].map(([k,v])=>`<button class="${VIEW.filter===k?'on':''}" onclick="VIEW.filter='${k}';viewMachines()">${v}</button>`).join('')}</div></div>
+    <div class="card tbl" id="mlist">${machineTable(list)}</div>
+    <p class="small muted" style="margin-top:14px;text-align:center">נתוני דוגמה בלבד · <a href="javascript:resetData()">איפוס</a></p>`);
+  const inp=$('#q'); if(document.activeElement!==inp&&!('ontouchstart' in window))inp.focus(); inp.setSelectionRange(inp.value.length,inp.value.length);
+}
+function machineTable(list){
+  if(!list.length)return`<div class="empty" style="padding:30px">לא נמצאה מכונה. אפשר לחפש גם לפי שם לקוח או מספר מקור.</div>`;
+  return`<table><thead><tr><th>מספר סידורי</th><th>מכונה</th><th>לקוח</th><th class="hide-s">טיפול אחרון</th><th class="hide-s">הטיפול הבא</th><th></th></tr></thead><tbody>
+  ${list.map(({m,c,last,nx,open})=>{const dn=nx?daysBetween(TODAY(),nx):null;const attn=open||(dn!==null&&dn<0);
+    return`<tr class="click ${attn?'attn':''}" onclick="location.hash='m/${m.sn}'"><td><span class="sn">${m.sn}</span></td>
+    <td><div class="b">${esc(m.model)}</div><div class="small muted">${MTYPES[m.type].name}</div></td>
+    <td><div>${esc(c.name)}</div><div class="small muted">${esc(c.city)}</div></td>
+    <td class="hide-s">${last?`<div>${fdShort(last.date)} <span class="chip c-${last.type}">${TYPE_NAME[last.type]}</span></div><div class="small muted" style="max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(last.title)}</div>`:'—'}</td>
+    <td class="hide-s">${nx?(dn<0?`<span class="chip c-warn">באיחור ${-dn} ימים</span>`:dn<=30?`<span class="chip c-warn">בעוד ${dn} ימים</span>`:`<span class="small">${fdShort(nx)}</span>`):'—'}</td>
+    <td>${open?`<span class="chip c-warn">קריאה פתוחה</span>`:''}</td></tr>`}).join('')}</tbody></table>`;
+}
+function viewMachinesSoft(){
+  // re-render only the list, keep focus
+  const q=VIEW.q;const pos=$('#q').selectionStart;viewMachines();const i=$('#q');i.value=q;i.focus();i.setSelectionRange(pos,pos);
+}
+function setQ(v){VIEW.q=v;viewMachines()}
+function searchEnter(){const q=VIEW.q.trim().toUpperCase();const m=S.machines.find(x=>x.sn.toUpperCase()===q||x.source?.sn.toUpperCase()===q||x.head?.sn.toUpperCase()===q);if(m)location.hash='m/'+m.sn}
+
+/* ================= machine card ================= */
+function viewMachine(sn){
+  const m=mach(sn);if(!m)return notFound();
+  const c=cust(m.custId), T=MTYPES[m.type], H=hist(sn);
+  const nx=nextService(m), dn=nx?daysBetween(TODAY(),nx):null, we=warrantyEnd(m), inW=we>=TODAY();
+  const open=openCalls(sn), labNow=S.lab.filter(l=>l.sn===sn&&l.stage<5);
+  const f=VIEW.hf||'all';
+  const shown=f==='all'?H:H.filter(h=>h.type===f);
+  const partsAll={};H.forEach(h=>(h.parts||[]).forEach(p=>{partsAll[p.n]=partsAll[p.n]||{q:0,last:h.date,pn:p.pn};partsAll[p.n].q+=p.q;if(h.date>partsAll[p.n].last)partsAll[p.n].last=h.date}));
+  const faults=H.filter(h=>h.type==='fault').length;
+  shell('machines',`
+    <p class="noprint" style="margin-bottom:10px"><a href="#machines" class="small b">→ כל המכונות</a></p>
+    <div class="card" style="overflow:hidden">
+      <div class="mhead"><div>
+        <div class="small muted">${T.name}</div>
+        <h2>${esc(m.model)}</h2><div class="sn" style="font-size:17px;color:var(--navy)">${m.sn}</div>
+        <div style="margin-top:4px"><a href="javascript:void 0" class="b" style="text-decoration:none">${esc(c.name)}</a> · ${esc(c.city)} · איש קשר: ${esc(c.contact)} <span class="ltr">${esc(c.phone)}</span></div>
+      </div>
+      <div class="acts noprint" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn or" onclick="openNewCall('${sn}')">+ פתיחת קריאה</button><button class="btn" onclick="window.print()">הדפסת היסטוריה</button></div></div>
+      <div class="specs">
+        <div><div class="k">הותקנה</div><div class="v">${fd(m.installed)}</div></div>
+        <div><div class="k">אחריות</div><div class="v">${inW?`<span style="color:var(--green)">עד ${fd(we)}</span>`:`הסתיימה ${fd(we)}`}</div></div>
+        <div><div class="k">שעות עבודה (לפי הבקר)</div><div class="v">${m.hours.toLocaleString('he-IL')}</div></div>
+        <div><div class="k">בקר</div><div class="v ltr" style="text-align:right">${esc(m.controller)}</div></div>
+        ${m.source?`<div><div class="k">מקור לייזר</div><div class="v ltr" style="text-align:right">${esc(m.source.model)}</div><div class="small muted ltr" style="text-align:right">${m.source.sn}</div></div>
+        <div><div class="k">ראש</div><div class="v ltr" style="text-align:right">${esc(m.head.model)}</div><div class="small muted ltr" style="text-align:right">${m.head.sn}</div></div>`:''}
+        <div><div class="k">טיפולים</div><div class="v">${H.length} ביקורים · ${faults} תקלות</div></div>
+        <div><div class="k">הטיפול הבא</div><div class="v">${nx?fd(nx):'—'}</div></div>
+      </div>
+    </div>
+    ${open.map(k=>`<div class="banner warn">קריאה פתוחה #${k.no}: ${esc(k.desc)} · ${CALL_ST[k.status]}${k.techId?' · '+tech(k.techId).name+' '+dayLabel(k.date)+(k.time?' '+k.time:''):''}</div>`).join('')}
+    ${labNow.map(l=>`<div class="banner info">במעבדה: ${l.item} ${esc(l.model)} · ${LAB_STAGES[l.stage]}</div>`).join('')}
+    ${!open.length&&nx?(dn<0?`<div class="banner warn">הטיפול התקופתי באיחור של ${-dn} ימים · <a href="javascript:openNewCall('${sn}','טיפול תקופתי')" style="color:inherit">פתיחת קריאה לטיפול</a></div>`:dn<=30?`<div class="banner warn">טיפול תקופתי בעוד ${dn} ימים (${fd(nx)})</div>`:''):''}
+    <div class="cols">
+      <div>
+        <div class="bar" style="margin:4px 0 12px"><h1 style="font-size:18px">היסטוריית טיפולים</h1>
+          <div class="seg noprint">${[['all','הכל'],['fault','תקלות'],['periodic','תקופתי'],['lab','מעבדה']].map(([k,v])=>`<button class="${f===k?'on':''}" onclick="VIEW.hf='${k}';viewMachine('${sn}')">${v}</button>`).join('')}</div></div>
+        <div class="tl">${shown.map(evHTML).join('')||'<div class="empty">אין טיפולים מהסוג הזה</div>'}</div>
+      </div>
+      <aside class="side">
+        <div class="card sec"><h3>חלפים שהוחלפו במכונה</h3>
+          ${Object.keys(partsAll).length?`<div class="mini">${Object.entries(partsAll).sort((a,b)=>b[1].last.localeCompare(a[1].last)).map(([n,p])=>`<div class="row"><span>${esc(n)} <span class="small muted">×${p.q}</span></span><span class="small muted">אחרון ${fdShort(p.last)}</span></div>`).join('')}</div>`:'<div class="small muted">עוד לא הוחלפו חלפים</div>'}</div>
+        <div class="card sec"><h3>מכונות נוספות של ${esc(c.name)}</h3>
+          ${S.machines.filter(x=>x.custId===m.custId&&x.sn!==sn).map(x=>`<a href="#m/${x.sn}" style="display:block;text-decoration:none;padding:6px 0;border-bottom:1px dashed var(--line)"><span class="sn">${x.sn}</span> <span class="small muted">${esc(x.model)}</span></a>`).join('')||'<div class="small muted">אין</div>'}</div>
+      </aside>
+    </div>`);
+  window.scrollTo(0,0);
+}
+function evHTML(h){
+  const st=h.status==='follow'?'<span class="chip c-warn">נדרש המשך טיפול</span>':'';
+  return`<div class="ev t-${h.type}">
+    <div class="h"><span class="d">${fd(h.date)}</span><span class="chip c-${h.type}">${TYPE_NAME[h.type]}</span>${st}<span class="small muted">${ago(h.date)}</span><span class="who">${esc(tech(h.techId).name)}${h.hours?' · '+h.hours+' ש׳':''}</span></div>
+    <div class="ttl">${esc(h.title)}</div>
+    <div class="body">${h.checklist?`<span class="chip c-ok" style="margin-inline-end:6px">${h.checklist.filter(Boolean).length}/${h.checklist.length} בדיקות</span>`:''}${h.found&&h.found!==h.title?`<b>ממצא:</b> ${esc(h.found)}<br>`:''}${h.done?(h.checklist?esc(h.done):`<b>בוצע:</b> ${esc(h.done)}`):''}</div>
+    ${h.parts?.length?`<div class="parts">${h.parts.map(p=>`<span class="part-chip">${esc(p.n)}${p.q>1?' ×'+p.q:''}</span>`).join('')}</div>`:''}
+    ${h.photos?.length?`<div style="display:flex;gap:6px;margin-top:8px">${h.photos.map(p=>`<img src="${p}" style="width:70px;height:70px;object-fit:cover;border-radius:8px">`).join('')}</div>`:''}
+    <div class="foot noprint"><a href="#r/${h.id}">דוח שירות #${h.no}</a>${h.signedBy?`<span>· נחתם ע״י ${esc(h.signedBy)}</span>`:''}</div>
+  </div>`;
+}
+
+/* ================= calls ================= */
+function viewCalls(){
+  const cols=['new','assigned','work','done'];
+  const today=TODAY();
+  const recentDone=S.calls.filter(c=>c.status==='done').sort((a,b)=>(b.closedAt||'').localeCompare(a.closedAt||'')).slice(0,6);
+  shell('calls',`<div class="bar"><h1>קריאות שירות</h1><button class="btn or" onclick="openNewCall()">+ קריאה חדשה</button></div>
+    <div class="board">${cols.map(st=>{
+      const L=st==='done'?recentDone:S.calls.filter(c=>c.status===st).sort((a,b)=>(b.urgent-a.urgent)||(a.date+a.time).localeCompare(b.date+b.time));
+      return`<div class="card col"><div class="col-h"><h3>${CALL_ST[st]}</h3><span class="cnt">${L.length}</span></div>
+      ${L.map(k=>{const m=mach(k.sn),c=cust(m.custId);return`<button class="call ${k.urgent&&st!=='done'?'urgent':''}" onclick="openCall('${k.id}')">
+        <div class="c1">${esc(c.name)}</div><div class="c2"><span class="sn" style="font-size:12.5px;font-weight:700">${k.sn}</span> · ${esc(m.model)}</div>
+        <div class="c3">${esc(k.desc)}</div>
+        <div class="row">${k.urgent&&st!=='done'?'<span class="chip c-warn">דחוף</span>':''}${k.techId?`<span class="chip c-gray">${esc(tech(k.techId).name)}</span>`:''}${k.date&&st!=='new'?`<span class="small muted">${dayLabel(k.date)}${k.time?' '+k.time:''}</span>`:''}</div></button>`}).join('')||'<div class="empty">אין</div>'}</div>`}).join('')}</div>`);
+}
+function openCall(id){
+  const k=call(id),m=mach(k.sn),c=cust(m.custId),H=hist(k.sn).slice(0,3);
+  modal(`<div class="mh"><h2>קריאה #${k.no}</h2><span class="chip ${k.status==='done'?'c-ok':'c-blue'}">${CALL_ST[k.status]}</span><button class="x" onclick="closeModal()">×</button></div>
+    <div class="kv"><div>לקוח</div><div class="b">${esc(c.name)} · ${esc(c.city)}</div><div>מכונה</div><div><a href="#m/${m.sn}" onclick="closeModal()" class="sn">${m.sn}</a> ${esc(m.model)}</div><div>מה דווח</div><div>${esc(k.desc)}</div></div>
+    <h4 style="margin:14px 0 6px;font-size:15px">בפעם הקודמת במכונה</h4>
+    ${H.map(h=>`<div class="small" style="padding:6px 0;border-top:1px dashed var(--line)"><b>${fdShort(h.date)}</b> <span class="chip c-${h.type}">${TYPE_NAME[h.type]}</span> ${esc(h.title)} <span class="muted">· ${esc(tech(h.techId).name)}</span></div>`).join('')}
+    ${k.status==='done'?(k.histId?`<p style="margin-top:12px"><a class="btn pri" href="#r/${k.histId}" onclick="closeModal()">דוח השירות</a></p>`:''):`
+    <div class="grid3" style="margin-top:14px"><div><label>טכנאי</label><select id="k-tech"><option value="">לבחור</option>${TECHS.map(t=>`<option value="${t.id}" ${k.techId===t.id?'selected':''}>${t.name}</option>`).join('')}</select></div>
+      <div><label>תאריך</label><input type="date" id="k-date" value="${k.date||TODAY()}"></div><div><label>שעה</label><input type="time" id="k-time" value="${k.time||'09:00'}" step="900"></div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+      <button class="btn pri" onclick="assignCall('${id}')">${k.techId?'עדכון שיבוץ':'שיבוץ'}</button>
+      ${k.techId?`<a class="btn wa" target="_blank" rel="noopener" href="${waLink(techMsg(k))}">שליחה לטכנאי בוואטסאפ</a><a class="btn" href="#tech/${k.techId}" onclick="closeModal()">מה הטכנאי רואה</a>`:''}
+    </div>`}`);
+}
+function techMsg(k){const m=mach(k.sn),c=cust(m.custId);return`קריאה #${k.no} · ${c.name}, ${c.city}\n${m.model} ${m.sn}\n${k.desc}\n${dayLabel(k.date)} ${k.time}\nהיסטוריית המכונה וטופס השירות:\n${link('job/'+k.id)}`}
+function assignCall(id){const k=call(id),t=$('#k-tech').value;if(!t){toast('בוחרים טכנאי');return}k.techId=t;k.date=$('#k-date').value;k.time=$('#k-time').value;if(k.status==='new')k.status='assigned';save();closeModal();toast(`הקריאה שובצה ל${tech(t).name}`);route()}
+function openNewCall(sn,desc){
+  modal(`<div class="mh"><h2>קריאה חדשה</h2><button class="x" onclick="closeModal()">×</button></div>
+    <label>מספר סידורי של המכונה</label><input type="text" id="n-sn" value="${esc(sn||'')}" placeholder="למשל ${S.machines[0].sn}" oninput="ncFind()" class="ltr" style="text-align:right" list="sns" autocomplete="off">
+    <datalist id="sns">${S.machines.map(m=>`<option value="${m.sn}">${esc(cust(m.custId).name)}</option>`).join('')}</datalist>
+    <div id="n-found"></div>
+    <div style="margin-top:12px"><label>מה דווח</label><textarea id="n-desc" placeholder="מה הלקוח סיפר">${esc(desc||'')}</textarea></div>
+    <label style="display:flex;gap:8px;align-items:center;margin-top:8px;color:var(--ink)"><input type="checkbox" id="n-urg"> דחוף, המכונה עומדת</label>
+    <div class="grid3" style="margin-top:12px"><div><label>טכנאי</label><select id="n-tech"><option value="">אחר כך</option>${TECHS.map(t=>`<option value="${t.id}">${t.name}</option>`).join('')}</select></div>
+      <div><label>תאריך</label><input type="date" id="n-date" value="${TODAY()}"></div><div><label>שעה</label><input type="time" id="n-time" value="10:00" step="900"></div></div>
+    <div style="margin-top:16px;display:flex;gap:8px"><button class="btn or" onclick="saveNewCall()">פתיחת הקריאה</button><button class="btn" onclick="closeModal()">ביטול</button></div>`);
+  ncFind();
+}
+function ncFind(){const v=$('#n-sn').value.trim().toUpperCase();const m=S.machines.find(x=>x.sn.toUpperCase()===v);const el=$('#n-found');
+  if(!m){el.innerHTML=v?'<div class="small muted" style="margin-top:6px">ממשיכים להקליד, או בוחרים מהרשימה</div>':'';return}
+  const c=cust(m.custId),h=hist(m.sn)[0],w=warrantyEnd(m)>=TODAY();
+  el.innerHTML=`<div class="found"><b>${esc(c.name)}</b> · ${esc(c.city)} · ${esc(m.model)}<br>${w?'<span class="chip c-ok">באחריות</span>':'<span class="chip c-gray">מחוץ לאחריות</span>'} טיפול אחרון: ${h?fdShort(h.date)+' · '+esc(h.title)+' ('+esc(tech(h.techId).name)+')':'—'}</div>`}
+function saveNewCall(){
+  const v=$('#n-sn').value.trim().toUpperCase();const m=S.machines.find(x=>x.sn.toUpperCase()===v);if(!m){toast('לא נמצאה מכונה עם המספר הזה');return}
+  const desc=$('#n-desc').value.trim();if(!desc){toast('כותבים מה דווח');return}
+  const t=$('#n-tech').value;const no=Math.max(...S.calls.map(c=>c.no))+1;
+  S.calls.push({id:'k'+no,no,sn:m.sn,desc,urgent:$('#n-urg').checked,techId:t||null,date:$('#n-date').value,time:t?$('#n-time').value:'',status:t?'assigned':'new',created:TODAY()});
+  save();closeModal();toast(`קריאה #${no} נפתחה`);location.hash='calls';route();
+}
+
+/* ================= tech view (office preview of the phone) ================= */
+function viewTech(tid){
+  tid=tid||VIEW.tech||'samer';VIEW.tech=tid;
+  const mine=S.calls.filter(k=>k.techId===tid&&(k.status!=='done'||k.closedAt?.slice(0,10)===TODAY())).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  shell('tech',`<div class="tv">
+    <div class="tv-list"><div class="small muted b" style="margin:0 4px 6px">טכנאים</div>
+      ${TECHS.map(t=>{const n=S.calls.filter(k=>k.techId===t.id&&k.status!=='done').length;return`<button class="t ${t.id===tid?'on':''}" onclick="location.hash='tech/${t.id}'"><span class="av">${initials(t.name)}</span><span><div class="b">${t.name}</div><div class="small muted">${n} קריאות פתוחות</div></span></button>`}).join('')}
+    </div>
+    <div class="phone-frame"><div class="screen" id="screen">${phoneList(tid,mine)}</div></div>
+  </div>`);
+}
+function phoneList(tid,mine){
+  return`<div class="ph-h"><div class="sm">EVEREST · שלום ${tech(tid).name.split(' ')[0]}</div><div style="font-size:19px;font-weight:800">הקריאות שלי</div></div>
+  <div class="ph-body">${mine.map(k=>{const m=mach(k.sn),c=cust(m.custId);return`<button class="pjob ${k.status==='done'?'done':''}" onclick="openJob('${k.id}')">
+    <div style="display:flex;justify-content:space-between;gap:8px"><span class="tm">${dayLabel(k.date)} ${k.time}</span>${k.status==='done'?'<span class="chip c-ok">נסגרה</span>':k.status==='work'?'<span class="chip c-blue">בטיפול</span>':k.urgent?'<span class="chip c-warn">דחוף</span>':''}</div>
+    <div class="b" style="margin-top:3px">${esc(c.name)} · ${esc(c.city)}</div><div class="small muted">${esc(m.model)} · <span class="ltr">${m.sn}</span></div><div class="small" style="margin-top:3px">${esc(k.desc)}</div></button>`}).join('')||'<div class="empty" style="padding:30px">אין קריאות פתוחות</div>'}</div>`;
+}
+
+/* ================= tech job form ================= */
+let TD=null;
+function openJob(id){location.hash='job/'+id}
+function viewJob(id,standalone){
+  const k=call(id);if(!k)return notFound();
+  const m=mach(k.sn),c=cust(m.custId),H=hist(k.sn),T=MTYPES[m.type];
+  if(!TD||TD.id!==id)TD=k.draft||{id,kind:/תקופתי/.test(k.desc)?'periodic':'fault',found:/תקופתי/.test(k.desc)?'':k.desc,done:'',checks:{},parts:{},photos:[],hours:'',signer:c.contact,sig:null};
+  const done=k.status==='done';
+  const html=`<div class="ph-h"><div class="sm">EVEREST · קריאה #${k.no}${k.urgent?' · דחוף':''}</div>
+      <div style="font-size:18px;font-weight:800;margin-top:2px">${esc(c.name)}</div><div class="sm">${esc(c.city)} · ${dayLabel(k.date)} ${k.time}</div>
+      <div style="margin-top:8px;background:rgba(255,255,255,.12);border-radius:10px;padding:8px 10px"><div class="b">${esc(m.model)}</div><div class="sm ltr" style="text-align:right">${m.sn}${m.source?' · '+esc(m.source.model):''}</div></div></div>
+    <div class="ph-body">
+      <div style="display:flex;gap:8px;margin-bottom:10px"><a class="btn" style="flex:1;justify-content:center" href="https://waze.com/ul?q=${encodeURIComponent(c.city)}" target="_blank" rel="noopener">ניווט</a><a class="btn" style="flex:1;justify-content:center" href="tel:${esc(c.phone)}">התקשרות ל${esc(c.contact)}</a></div>
+      <div class="card sec"><h4>מה דווח</h4>${esc(k.desc)}</div>
+      <div class="prev"><h4>מה טופל במכונה בפעם הקודמת</h4>
+        ${H.slice(0,3).map(h=>`<div class="pi"><b>${fdShort(h.date)}</b> · ${TYPE_NAME[h.type]} · ${esc(tech(h.techId).name)}<br>${h.type==='periodic'?esc(h.done):`<b>${esc(h.title)}</b>`}${h.done&&h.type!=='periodic'?`<div class="small" style="color:#5b3a12">${esc(h.done)}</div>`:''}${h.parts?.length?`<div class="small muted">חלפים: ${h.parts.map(p=>esc(p.n)).join(', ')}</div>`:''}</div>`).join('')}
+        <a class="small b" href="#m/${m.sn}" style="color:var(--or2)">כל ההיסטוריה (${H.length})</a></div>
+      ${done?`<div class="card sec" style="text-align:center"><div style="font-size:34px;color:var(--green)">✓</div><h4>הדוח נחתם ונשמר בכרטיס המכונה</h4><a class="btn pri" href="#r/${k.histId}">לדוח השירות</a></div>`:
+      k.status!=='work'?`<button class="btn pri bigbtn" onclick="jobStart('${id}')">הגעתי, מתחיל עבודה</button>`:`
+      <div class="card sec"><h4>1. סוג הביקור</h4><div class="choices">${[['fault','תקלה'],['periodic','טיפול תקופתי'],['install','התקנה / הדרכה']].map(([v,t])=>`<button class="choice ${TD.kind===v?'on':''}" onclick="TD.kind='${v}';jobSave();viewJobRe('${id}')">${t}</button>`).join('')}</div></div>
+      ${TD.kind==='periodic'?`<div class="card sec"><h4>2. רשימת בדיקות</h4>${CHECK[m.type].map((t,i)=>`<label class="chk"><input type="checkbox" ${TD.checks[i]?'checked':''} onchange="TD.checks[${i}]=this.checked;jobSave()"><span>${t}</span></label>`).join('')}</div>`:
+      `<div class="card sec"><h4>2. מה נמצא</h4><textarea oninput="TD.found=this.value;jobSave()" placeholder="מה הבעיה שנמצאה">${esc(TD.found)}</textarea></div>`}
+      <div class="card sec"><h4>3. מה בוצע</h4><textarea oninput="TD.done=this.value;jobSave()" placeholder="מה תוקן, מה כויל, מה כדאי לבדוק בפעם הבאה">${esc(TD.done)}</textarea></div>
+      <div class="card sec"><h4>4. חלפים שהוחלפו</h4>${PARTS[m.type].map(([n,pn],i)=>`<div class="part"><span>${n}</span><span class="qty"><button onclick="jq('${id}',${i},-1)">−</button><b>${TD.parts[i]||0}</b><button onclick="jq('${id}',${i},1)">+</button></span></div>`).join('')}</div>
+      <div class="card sec"><h4>5. תמונות</h4><div class="photos">${[0,1,2].map(i=>`<label class="ph-slot">${TD.photos[i]?`<img src="${TD.photos[i]}" alt="">`:'<span>📷<br>צילום</span>'}<input type="file" accept="image/*" capture="environment" onchange="jPhoto('${id}',${i},this)"></label>`).join('')}</div></div>
+      <div class="card sec"><h4>6. שעות עבודה</h4><input type="number" min="0" step="0.5" value="${esc(TD.hours)}" oninput="TD.hours=this.value;jobSave()" placeholder="למשל 2.5"></div>
+      <div class="card sec"><h4>7. חתימת הלקוח</h4><label>שם החותם</label><input type="text" value="${esc(TD.signer)}" oninput="TD.signer=this.value;jobSave()">
+        <canvas class="sig" id="sig" style="margin-top:8px"></canvas><div style="display:flex;justify-content:space-between;margin-top:4px"><span class="small muted">חותמים עם האצבע</span><button class="btn sm" onclick="TD.sig=null;jobSave();initSig()">ניקוי</button></div></div>
+      <button class="btn go bigbtn" onclick="jobSubmit('${id}')">סיום, הפקת דוח שירות</button>`}
+      <p style="text-align:center;margin:16px 0 4px"><a class="small" href="#tech/${k.techId||''}">חזרה לקריאות שלי</a></p>
+    </div>`;
+  if(standalone){$('#app').innerHTML=`<div style="max-width:480px;margin:0 auto;min-height:100vh;background:var(--bg)">${html}</div>`}
+  else{viewTech(k.techId);$('#screen').innerHTML=html;$('#screen').scrollTop=0}
+  initSig();
+}
+function viewJobRe(id){const sc=$('#screen');const top=sc?sc.scrollTop:window.scrollY;viewJob(id,isPhone());if(sc&&$('#screen'))$('#screen').scrollTop=top;else window.scrollTo(0,top)}
+function isPhone(){return window.innerWidth<700}
+function jobSave(){const k=call(TD.id);k.draft=TD;save()}
+function jobStart(id){const k=call(id);k.status='work';k.started=new Date().toISOString();save();viewJobRe(id)}
+function jq(id,i,d){TD.parts[i]=Math.max(0,(TD.parts[i]||0)+d);jobSave();viewJobRe(id)}
+function jPhoto(id,i,input){const f=input.files[0];if(!f)return;const img=new Image();const u=URL.createObjectURL(f);
+  img.onload=()=>{const sc=Math.min(1,700/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext('2d').drawImage(img,0,0,c.width,c.height);TD.photos[i]=c.toDataURL('image/jpeg',.7);URL.revokeObjectURL(u);jobSave();viewJobRe(id)};
+  img.onerror=()=>toast('לא ניתן לפתוח את התמונה');img.src=u}
+function initSig(){
+  const cv=$('#sig');if(!cv)return;const r=cv.getBoundingClientRect();const dpr=window.devicePixelRatio||1;cv.width=r.width*dpr;cv.height=r.height*dpr;
+  const x=cv.getContext('2d');x.scale(dpr,dpr);x.lineWidth=2.2;x.lineCap='round';x.lineJoin='round';x.strokeStyle='#12305a';
+  if(TD?.sig){const im=new Image();im.onload=()=>x.drawImage(im,0,0,r.width,r.height);im.src=TD.sig}
+  let on=false;const P=e=>{const b=cv.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top]};
+  cv.onpointerdown=e=>{on=true;cv.setPointerCapture(e.pointerId);const[a,b]=P(e);x.beginPath();x.moveTo(a,b)};
+  cv.onpointermove=e=>{if(!on)return;const[a,b]=P(e);x.lineTo(a,b);x.stroke()};
+  cv.onpointerup=cv.onpointercancel=()=>{if(!on)return;on=false;TD.sig=cv.toDataURL('image/png');jobSave()};
+}
+function jobSubmit(id){
+  const k=call(id),m=mach(k.sn);
+  if(TD.kind!=='periodic'&&!TD.found.trim()){toast('כותבים מה נמצא');return}
+  if(!TD.done.trim()&&TD.kind!=='periodic'){toast('כותבים מה בוצע');return}
+  if(!TD.sig){toast('חסרה חתימת הלקוח');return}
+  const no=nextNo();
+  const checks=TD.kind==='periodic'?CHECK[m.type].map((_,i)=>!!TD.checks[i]):null;
+  const h={id:'h'+no,no,sn:k.sn,date:TODAY(),type:TD.kind==='install'?'install':TD.kind,techId:k.techId,
+    title:TD.kind==='periodic'?'טיפול תקופתי':TD.kind==='install'?'התקנה / הדרכה':(TD.found.trim().split('\n')[0].slice(0,80)),
+    found:TD.kind==='periodic'?'':TD.found.trim(),done:TD.done.trim()||(checks?CHECK[m.type].filter((_,i)=>checks[i]).join(' · ')+'.':''),checklist:checks,
+    parts:PARTS[m.type].map(([n,pn],i)=>({n,pn,q:TD.parts[i]||0})).filter(p=>p.q),photos:TD.photos.filter(Boolean),hours:+TD.hours||null,signedBy:TD.signer.trim(),sig:TD.sig,status:'ok',callNo:k.no,fresh:true};
+  S.history.push(h);k.status='done';k.closedAt=new Date().toISOString();k.histId=h.id;delete k.draft;save();TD=null;
+  toast('הדוח נשמר בכרטיס המכונה');location.hash='r/'+h.id;
+}
+
+/* ================= report ================= */
+function viewReport(id){
+  const h=S.history.find(x=>x.id===id);if(!h)return notFound();
+  const m=mach(h.sn),c=cust(m.custId);
+  const msg=`שלום ${c.contact}, מצורף דוח השירות מהביקור היום (${m.model} ${m.sn}):\n${link('r/'+h.id)}\nאוורסט מכונות`;
+  shell('machines',`<div class="noprint" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:14px">
+      <a class="btn wa" target="_blank" rel="noopener" href="${waLink(msg)}">שליחה ללקוח בוואטסאפ</a><a class="btn" href="mailto:?subject=${encodeURIComponent('דוח שירות #'+h.no+' · '+m.sn)}&body=${encodeURIComponent(msg)}">שליחה במייל</a><button class="btn" onclick="window.print()">הדפסה / PDF</button><a class="btn" href="#m/${m.sn}">לכרטיס המכונה</a></div>
+    <div class="report">
+      <div class="rep-h"><div><div style="display:flex;align-items:center;gap:8px"><svg width="34" height="27" viewBox="0 0 38 30"><path d="M2 28 L15 6 L21 15 L25 10 L36 28 Z" fill="#12305a"/><path d="M15 6 L19.5 13.6 L17 12.4 L15 14.2 L12.6 12.3 L10.6 13.4 Z" fill="#f07b12"/></svg><span class="wm">EVEREST</span></div>
+        <div class="small muted">אוורסט יבוא מכונות בע״מ · בולטימור 21, עכו</div></div>
+        <div style="text-align:left"><div style="font-size:20px;font-weight:800">דוח שירות #${h.no}</div><div class="small muted">${fd(h.date)}</div>${h.callNo?`<div class="small muted">קריאה #${h.callNo}</div>`:''}</div></div>
+      <div class="rep-grid">
+        <div><div class="k">לקוח</div>${esc(c.name)}</div><div><div class="k">כתובת</div>${esc(c.city)}</div><div><div class="k">איש קשר</div>${esc(c.contact)}</div>
+        <div><div class="k">מכונה</div>${esc(m.model)}</div><div><div class="k">מספר סידורי</div><span class="ltr">${m.sn}</span></div><div><div class="k">שעות מכונה</div>${m.hours.toLocaleString('he-IL')}</div>
+        ${m.source?`<div><div class="k">מקור לייזר</div><span class="ltr">${esc(m.source.model)} · ${m.source.sn}</span></div><div><div class="k">ראש</div><span class="ltr">${esc(m.head.model)}</span></div>`:''}
+        <div><div class="k">סוג ביקור</div>${TYPE_NAME[h.type]}</div><div><div class="k">טכנאי</div>${esc(tech(h.techId).name)}</div><div><div class="k">שעות עבודה</div>${h.hours||'—'}</div>
+        <div><div class="k">אחריות</div>${warrantyEnd(m)>=h.date?'באחריות':'מחוץ לאחריות'}</div>
+      </div>
+      ${h.found?`<div class="rep-sec"><h3>ממצא</h3><p>${esc(h.found)}</p></div>`:''}
+      ${h.checklist?`<div class="rep-sec"><h3>רשימת בדיקות</h3>${CHECK[m.type].map((t,i)=>`<div style="font-size:14px">${h.checklist[i]?'<b style="color:var(--green)">✓</b>':'<b style="color:var(--faint)">–</b>'} ${t}</div>`).join('')}</div>`:''}
+      ${h.done?`<div class="rep-sec"><h3>מה בוצע</h3><p>${esc(h.done)}</p></div>`:''}
+      <div class="rep-sec"><h3>חלפים</h3>${h.parts?.length?`<table><thead><tr><th>פריט</th><th>מק״ט</th><th>כמות</th></tr></thead><tbody>${h.parts.map(p=>`<tr><td>${esc(p.n)}</td><td class="ltr">${esc(p.pn||'')}</td><td>${p.q}</td></tr>`).join('')}</tbody></table>`:'<p class="muted">לא הוחלפו חלפים</p>'}</div>
+      ${h.photos?.length?`<div class="rep-sec"><h3>תמונות</h3><div style="display:flex;gap:8px;flex-wrap:wrap">${h.photos.map(p=>`<img src="${p}" style="width:160px;height:120px;object-fit:cover;border-radius:8px">`).join('')}</div></div>`:''}
+      <div class="rep-sec" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div><h3>חתימת הלקוח</h3>${h.sig?`<img src="${h.sig}" style="max-width:100%;height:90px;object-fit:contain">`:'<div style="height:60px;border-bottom:1px solid var(--line)"></div>'}<div class="small">${esc(h.signedBy||'')}</div></div>
+        <div><h3>טכנאי</h3><div style="height:60px"></div><div class="small">${esc(tech(h.techId).name)}</div></div></div>
+    </div>`);
+  window.scrollTo(0,0);
+}
+
+/* ================= lab ================= */
+function viewLab(){
+  const L=[...S.lab].sort((a,b)=>(a.stage===5)-(b.stage===5)||b.received.localeCompare(a.received));
+  shell('lab',`<div class="bar"><h1>מעבדת מקורות וראשי לייזר</h1><button class="btn or" onclick="openLabNew()">+ קבלת פריט</button></div>
+  <div class="card tbl"><table><thead><tr><th>#</th><th>פריט</th><th>לקוח · מכונה</th><th class="hide-s">תקלה</th><th>שלב</th><th></th></tr></thead><tbody>
+  ${L.map(l=>{const m=mach(l.sn),c=cust(m.custId),days=daysBetween(l.received,TODAY());return`<tr>
+    <td class="b">${l.no}</td><td><div class="b">${l.item}</div><div class="small muted ltr" style="text-align:right">${esc(l.model)} · ${l.itemSn}</div></td>
+    <td><div>${esc(c.name)}</div><a class="small sn" href="#m/${m.sn}">${m.sn}</a></td>
+    <td class="hide-s small">${esc(l.fault)}</td>
+    <td><div class="stages">${LAB_STAGES.map((s,i)=>`<span class="stg ${i<l.stage?'done':i===l.stage?'cur':''}" title="${s}">${i===l.stage?s:i+1}</span>`).join('')}</div><div class="small muted" style="margin-top:3px">התקבל ${fdShort(l.received)} · ${days} ימים במעבדה</div></td>
+    <td>${l.stage<5?`<button class="btn sm" onclick="labNext('${l.id}')">${LAB_STAGES[l.stage+1]} ←</button>`:'<span class="chip c-ok">הוחזר</span>'}</td></tr>`}).join('')}</tbody></table></div>
+  <p class="small muted" style="margin-top:10px">כשפריט מוחזר ללקוח, התיקון נרשם אוטומטית בהיסטוריה של המכונה.</p>`);
+}
+function labNext(id){
+  const l=S.lab.find(x=>x.id===id);
+  if(l.stage===4){
+    const res=prompt('מה תוקן? (יירשם בכרטיס המכונה)','הוחלף מודול משאבה, בדיקת הספק 100% במשך 4 שעות.');if(res===null)return;
+    const no=nextNo();S.history.push({id:'h'+no,no,sn:l.sn,date:TODAY(),type:'lab',techId:'alex',title:`מעבדה: ${l.item} ${l.model}`,found:l.fault,done:res,parts:[],hours:null,status:'ok'});
+    toast('התיקון נרשם בכרטיס המכונה');
+  }
+  l.stage=Math.min(5,l.stage+1);save();viewLab();
+}
+function openLabNew(){
+  modal(`<div class="mh"><h2>קבלת פריט למעבדה</h2><button class="x" onclick="closeModal()">×</button></div>
+    <div class="grid2"><div><label>מספר סידורי של המכונה</label><input type="text" id="l-sn" list="sns2" class="ltr" style="text-align:right" autocomplete="off"><datalist id="sns2">${S.machines.filter(m=>m.source).map(m=>`<option value="${m.sn}">${esc(cust(m.custId).name)}</option>`).join('')}</datalist></div>
+    <div><label>פריט</label><select id="l-item"><option>מקור לייזר</option><option>ראש לייזר</option></select></div></div>
+    <div style="margin-top:12px"><label>תקלה מדווחת</label><textarea id="l-fault"></textarea></div>
+    <div style="margin-top:14px"><button class="btn or" onclick="saveLab()">קליטה</button></div>`);
+}
+function saveLab(){const v=$('#l-sn').value.trim().toUpperCase();const m=S.machines.find(x=>x.sn.toUpperCase()===v&&x.source);if(!m){toast('לא נמצאה מכונת לייזר עם המספר הזה');return}
+  const item=$('#l-item').value;const no=Math.max(...S.lab.map(l=>l.no))+1;
+  S.lab.push({id:'l'+no,no,sn:m.sn,item,model:item==='מקור לייזר'?m.source.model:m.head.model,itemSn:item==='מקור לייזר'?m.source.sn:m.head.sn,fault:$('#l-fault').value.trim()||'—',stage:0,received:TODAY()});save();closeModal();viewLab()}
+
+/* ================= modal / routing / gate ================= */
+function modal(html){closeModal();const o=document.createElement('div');o.className='ov';o.id='ov';o.innerHTML=`<div class="modal">${html}</div>`;o.onclick=e=>{if(e.target===o)closeModal()};document.body.appendChild(o)}
+function closeModal(){$('#ov')?.remove()}
+function notFound(){shell('',`<div class="card sec">לא נמצא. <a href="#machines">חזרה</a></div>`)}
+function unlocked(){try{return localStorage.getItem(LOCK)==='1'||window._ok}catch(e){return!!window._ok}}
+function renderGate(){$('#app').innerHTML=`<div class="gate"><div class="card"><div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:6px"><svg width="34" height="27" viewBox="0 0 38 30"><path d="M2 28 L15 6 L21 15 L25 10 L36 28 Z" fill="#12305a"/><path d="M15 6 L19.5 13.6 L17 12.4 L15 14.2 L12.6 12.3 L10.6 13.4 Z" fill="#f07b12"/></svg><b style="letter-spacing:.14em;font-size:20px;color:var(--navy)">EVEREST</b></div>
+  <p class="muted" style="margin-bottom:14px">מערכת שירות</p><form onsubmit="return tryUnlock(event)"><input type="password" id="gpw" placeholder="סיסמה" style="text-align:center"><button class="btn pri" style="width:100%;justify-content:center;margin-top:10px">כניסה</button><p id="gerr" class="small" style="color:var(--red);min-height:20px;margin-top:6px"></p></form></div></div>`;setTimeout(()=>$('#gpw')?.focus(),50)}
+function tryUnlock(e){e.preventDefault();if($('#gpw').value.trim()==='1'){try{localStorage.setItem(LOCK,'1')}catch(_){}window._ok=true;route()}else{$('#gerr').textContent='סיסמה שגויה'}return false}
+function route(){
+  closeModal();
+  if(!unlocked())return renderGate();
+  const h=decodeURIComponent(location.hash.slice(1))||'machines';const[a,b]=h.split('/');
+  if(a!=='job')TD=TD&&a==='job'?TD:null;
+  if(a==='machines')return viewMachines();
+  if(a==='m')return viewMachine(b);
+  if(a==='calls')return viewCalls();
+  if(a==='tech')return viewTech(b);
+  if(a==='job')return viewJob(b,isPhone());
+  if(a==='r')return viewReport(b);
+  if(a==='lab')return viewLab();
+  viewMachines();
+}
+S=load()||seed();save();
+window.addEventListener('hashchange',()=>{VIEW.hf=location.hash.startsWith('#m/')?VIEW.hf:'all';route()});
+route();
+</script>
+</body>
+</html>
