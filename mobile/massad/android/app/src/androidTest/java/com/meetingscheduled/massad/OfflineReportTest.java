@@ -31,13 +31,16 @@ public class OfflineReportTest {
     private void until(String condition) throws Exception {
         long end=System.currentTimeMillis()+45000;
         while(System.currentTimeMillis()<end){if("true".equals(js(condition)))return;Thread.sleep(200);}
-        fail("Condition timed out: "+condition+"; body="+js("document.body.innerText.slice(-300)"));
+        screenshot("99-failure");
+        fail("Condition timed out: "+condition+"; package="+device.getCurrentPackageName()+"; native="+js("JSON.stringify(window.lastExportResult)")+"; toast="+js("document.querySelector('#toast')?.textContent"));
     }
     private void fill(String name,String value) throws Exception {
         js("(()=>{const e=document.querySelector('[data-path=\""+name+"\"]');e.value="+JSONObject.quote(value)+";e.dispatchEvent(new Event('input',{bubbles:true}));})()");
     }
     private void click(String selector) throws Exception {js("document.querySelector("+JSONObject.quote(selector)+").click()");}
     private void screenshot(String name) throws Exception {
+        device.waitForIdle(3000);
+        Thread.sleep(1000);
         device.executeShellCommand("mkdir -p /data/local/tmp/massad-screenshots");
         device.executeShellCommand("screencap -p /data/local/tmp/massad-screenshots/"+name+".png");
     }
@@ -86,9 +89,16 @@ public class OfflineReportTest {
         // Verify the user-selected content URI; Android does not promise a filesystem folder.
         js("(()=>{const original=window.massadNative.export;window.massadNative.export=async(...args)=>{const result=await original(...args);window.lastExportResult=result;return result;};})()");
         click("[data-action=download]");
-        androidx.test.uiautomator.UiObject saveButton = device.findObject(new UiSelector().textMatches("(?i)save"));
+        androidx.test.uiautomator.UiObject saveButton = device.findObject(new UiSelector().textMatches("(?i)save").enabled(true));
         assertTrue("Save action missing from Android document picker", saveButton.waitForExists(10000));
-        saveButton.click();
+        device.waitForIdle(5000);
+        Thread.sleep(1000);
+        for(int attempt=0;attempt<3;attempt++){
+            if(!saveButton.exists())break;
+            saveButton.click();
+            if(saveButton.waitUntilGone(5000))break;
+            device.waitForIdle(3000);
+        }
         until("!navigating&&document.querySelector('#toast').textContent.includes('ה־PDF נשמר')");
         String uri = new JSONArray(js("[window.lastExportResult.uri]")).getString(0);
         try (java.io.InputStream exported = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().openInputStream(android.net.Uri.parse(uri))) {
