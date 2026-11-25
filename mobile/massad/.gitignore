@@ -1,0 +1,8 @@
+node_modules/
+*.jks
+*.keystore
+*.p12
+*.apk
+*.aab
+.DS_Store
+artifacts/
