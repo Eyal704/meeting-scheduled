@@ -4,7 +4,7 @@ Native Android packaging of the existing Hebrew safety reporting app, with bundl
 
 ## Build
 
-Requires Node 22+, JDK 21 and Android SDK 36. `npm ci && npx cap sync android`, then `cd android && ./gradlew bundleRelease assembleDebug lintRelease`.
+Requires Node 22+, JDK 21 and Android SDK 36. `npm ci && npx cap sync android`, then `cd android && ./gradlew :app:bundleRelease :app:assembleRelease :app:lintRelease`.
 
 The checked-in `www/` is the encrypted native payload. To refresh from a verified web publication: `node scripts/build-web.mjs /absolute/path/to/massad`, providing the existing authorized entrance password through stdin. Then sync again. The script intentionally fails if source anchors change, rather than silently dropping native functionality. Never put the entrance password in checked-in source. Never copy real reports into fixtures.
 
@@ -26,6 +26,6 @@ GitHub Actions builds an unsigned release AAB, debug APK and runs Android lint p
 
 The automated test checks wrong/correct password, the full hazard form and signature, PDF generation, native PDF/backup picker, and report persistence after activity recreation. Actual camera hardware and receipt of email by a real recipient still require device acceptance; opening a composer never proves delivery.
 
-Before Play submission: complete the developer account and verification, add confirmed publisher/support details to privacy policy and listing, publish the policy URL, review Play declarations, and provide reviewer access privately. Keep release notes factual and do not use marketing/demo labels in client-facing screens.
+Before Play submission: complete the developer account and verification, verify the published privacy URL and supplied publisher/support details, review Play declarations, and provide reviewer access privately. Keep release notes factual and do not use marketing/demo labels in client-facing screens.
 
 Neutral listing text is in `store/listing-he.md`. Instrumented screenshots contain fictional sample entries only.

@@ -1,8 +1,8 @@
 name: Massad Android
 on:
   push:
-    branches: [codex/massad-android]
-    paths: ['mobile/massad/**', '.github/workflows/massad-android.yml']
+    branches: [main, codex/massad-android]
+    paths: ['mobile/massad/android/**', 'mobile/massad/www/**', 'mobile/massad/native-src/**', 'mobile/massad/scripts/**', 'mobile/massad/package*.json', 'mobile/massad/capacitor.config.json']
   workflow_dispatch:
 permissions:
   contents: read

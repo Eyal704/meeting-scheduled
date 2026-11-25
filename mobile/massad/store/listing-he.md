@@ -39,3 +39,13 @@
 - https://support.google.com/googleplay/android-developer/answer/10787469?hl=en
 - https://support.google.com/googleplay/android-developer/answer/10144311?hl=en
 - https://support.google.com/googleplay/android-developer/answer/9866151?hl=en
+
+## תמונות חנות מוכנות
+
+- `assets/icon-512.png`: אייקון 512×512, PNG עם ערוץ אלפא.
+- `assets/feature-1024x500.png`: תמונת כותרת 1024×500, PNG ללא אלפא, ללא מלל שיווקי.
+- `assets/screenshots/01-reports.png`: תיאור חלופי — בחירת סוג הדוח ורשימת הדוחות במכשיר.
+- `assets/screenshots/02-hazard.png`: תיאור חלופי — מילוי שם המדווח, מיקום המפגע וסיווגו.
+- `assets/screenshots/03-report.png`: תיאור חלופי — דוח שהושלם ואפשרויות שמירה ושיתוף PDF.
+
+צילומי המסך הופקו מתוך Android 16 באמולטור, עם פרטי דוגמה פיקטיביים. אינם צילום מטלפון פיזי של מסד.
