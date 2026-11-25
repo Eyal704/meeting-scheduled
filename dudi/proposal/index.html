@@ -88,6 +88,9 @@
   .bank { display: grid; grid-template-columns: 1fr; width: 50%; min-width: 300px; gap: 0; border: 1px solid var(--line); border-radius: 14px; padding: 10px 20px; margin: 10px 0; }
   .bank div { display: flex; justify-content: flex-start; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--line); }
   .bank span { color: var(--muted); min-width: 92px; }
+  .credit { margin: 10px 0 0; }
+  .credit-btn { margin: 10px 0 0; }
+  @media print { .credit-btn { display: none; } }
   .bank b { font-weight: 700; }
   @media (max-width: 480px) { .bank { width: 100%; min-width: 0; } }
   @media print { .bank { break-inside: avoid; } }
@@ -211,6 +214,8 @@
     <div><span>מספר חשבון</span><b>5113442</b></div>
     <div><span>על שם</span><b>אייל טייב שובל</b></div>
   </div>
+  <p class="credit">או באשראי: 9,146 ₪ לכל תשלום (כולל תוספת של 2.2%), עד 3 תשלומים ללא ריבית.</p>
+  <p class="credit-btn"><a class="btn primary" href="https://private.invoice4u.co.il/newsite/he/clearing/public/i4u-payment?ProductGuid=90c45f67-5979-423b-85a0-d7203fec8934" target="_blank" rel="noopener">תשלום באשראי</a></p>
 
   <p class="close">אני עובד עם עד 5 לקוחות במקביל, כדי שכל מערכת תקבל את מלוא תשומת הלב שלי. אם זה מתאים לכם, כדאי להתחיל 😊</p>
 
