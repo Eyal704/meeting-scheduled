@@ -83,6 +83,15 @@ public class OfflineReportTest {
         device.pressBack();
         until("!navigating");
         assertEquals("true",js("pdfFile!==null&&current.status==='ready'"));
+        // Complete a real save too, and inspect the resulting file on the emulator.
+        click("[data-action=download]");
+        androidx.test.uiautomator.UiObject saveButton = device.findObject(new UiSelector().textMatches("(?i)save"));
+        assertTrue("Save action missing from Android document picker", saveButton.waitForExists(10000));
+        saveButton.click();
+        until("!navigating&&document.querySelector('#toast').textContent.includes('ה־PDF נשמר')");
+        String savedPdf = device.executeShellCommand("find /sdcard/Download -type f -name '*.pdf'").trim();
+        assertTrue("No exported PDF in Downloads",savedPdf.endsWith(".pdf"));
+        assertEquals("%PDF-",device.executeShellCommand("head -c 5 '"+savedPdf.replace("'","'\\''")+"'"));
         // Recreate the WebView: this proves IndexedDB survives an app activity restart.
         activity.getScenario().recreate();
         until("document.readyState==='complete'&&((!!document.querySelector('#access-password')&&!document.querySelector('#access-submit').disabled)||!!document.querySelector('.saved-row'))");
