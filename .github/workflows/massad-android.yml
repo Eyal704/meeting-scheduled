@@ -1,0 +1,67 @@
+name: Massad Android
+on:
+  push:
+    branches: [codex/massad-android]
+    paths: ['mobile/massad/**', '.github/workflows/massad-android.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: mobile/massad
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: mobile/massad/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: npm ci && npx cap sync android
+      - name: Build Android bundles and run lint
+        run: cd android && chmod +x gradlew && ./gradlew bundleRelease assembleDebug assembleDebugAndroidTest lintRelease --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: massad-android-build
+          path: |
+            mobile/massad/android/app/build/outputs/bundle/release/*.aab
+            mobile/massad/android/app/build/outputs/apk/debug/*.apk
+            mobile/massad/android/app/build/reports/lint-results-release.html
+          retention-days: 14
+      - name: Enable KVM
+        working-directory: /tmp
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Test offline report on Android
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          MASSAD_APP_ACCESS: ${{ secrets.MASSAD_APP_ACCESS }}
+        with:
+          api-level: 36
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back emulated
+          working-directory: mobile/massad/android
+          script: |
+            ./gradlew connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.access="$MASSAD_APP_ACCESS"
+            adb pull /sdcard/Android/data/com.meetingscheduled.massad/files/screenshots ../artifacts/screenshots
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: massad-android-test-results
+          path: |
+            mobile/massad/android/app/build/reports/androidTests/
+            mobile/massad/android/app/build/outputs/androidTest-results/
+            mobile/massad/artifacts/screenshots/
+          retention-days: 14

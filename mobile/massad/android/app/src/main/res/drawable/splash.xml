@@ -1,0 +1,1 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"><item><shape><solid android:color="#f4f7f8" /></shape></item><item android:width="120dp" android:height="120dp" android:gravity="center" android:drawable="@drawable/massad_logo" /></layer-list>
