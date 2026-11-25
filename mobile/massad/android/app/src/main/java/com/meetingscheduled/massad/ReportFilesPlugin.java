@@ -111,7 +111,7 @@ public class ReportFilesPlugin extends Plugin {
              OutputStream target = getContext().getContentResolver().openOutputStream(result.getData().getData(), "wt")) {
             if (target == null) throw new java.io.IOException();
             copy(source, target, null);
-            call.resolve(new JSObject().put("saved", true));
+            call.resolve(new JSObject().put("saved", true).put("uri", result.getData().getData().toString()));
         } catch (Exception e) { call.reject("שמירת הקובץ לא הצליחה. נסו מקום אחר או בדקו מקום פנוי."); }
     }
 

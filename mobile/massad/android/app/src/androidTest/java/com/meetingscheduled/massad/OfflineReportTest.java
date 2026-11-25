@@ -38,8 +38,8 @@ public class OfflineReportTest {
     }
     private void click(String selector) throws Exception {js("document.querySelector("+JSONObject.quote(selector)+").click()");}
     private void screenshot(String name) throws Exception {
-        File dir=new File(InstrumentationRegistry.getInstrumentation().getTargetContext().getExternalFilesDir(null),"screenshots");dir.mkdirs();
-        assertTrue(device.takeScreenshot(new File(dir,name+".png")));
+        device.executeShellCommand("mkdir -p /data/local/tmp/massad-screenshots");
+        device.executeShellCommand("screencap -p /data/local/tmp/massad-screenshots/"+name+".png");
     }
     @Test public void offlineHazardReportPersistsAndExports() throws Exception {
         String password=InstrumentationRegistry.getArguments().getString("access");
@@ -83,15 +83,17 @@ public class OfflineReportTest {
         device.pressBack();
         until("!navigating");
         assertEquals("true",js("pdfFile!==null&&current.status==='ready'"));
-        // Complete a real save too, and inspect the resulting file on the emulator.
+        // Verify the user-selected content URI; Android does not promise a filesystem folder.
+        js("(()=>{const original=window.massadNative.export;window.massadNative.export=async(...args)=>{const result=await original(...args);window.lastExportResult=result;return result;};})()");
         click("[data-action=download]");
         androidx.test.uiautomator.UiObject saveButton = device.findObject(new UiSelector().textMatches("(?i)save"));
         assertTrue("Save action missing from Android document picker", saveButton.waitForExists(10000));
         saveButton.click();
         until("!navigating&&document.querySelector('#toast').textContent.includes('ה־PDF נשמר')");
-        String savedPdf = device.executeShellCommand("find /sdcard/Download -type f -name '*.pdf'").trim();
-        assertTrue("No exported PDF in Downloads",savedPdf.endsWith(".pdf"));
-        assertEquals("%PDF-",device.executeShellCommand("head -c 5 '"+savedPdf.replace("'","'\\''")+"'"));
+        String uri = new JSONArray(js("[window.lastExportResult.uri]")).getString(0);
+        try (java.io.InputStream exported = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().openInputStream(android.net.Uri.parse(uri))) {
+            byte[] header=new byte[5];assertNotNull(exported);assertEquals(5,exported.read(header));assertEquals("%PDF-",new String(header,java.nio.charset.StandardCharsets.US_ASCII));
+        }
         // Recreate the WebView: this proves IndexedDB survives an app activity restart.
         activity.getScenario().recreate();
         until("document.readyState==='complete'&&((!!document.querySelector('#access-password')&&!document.querySelector('#access-submit').disabled)||!!document.querySelector('.saved-row'))");
