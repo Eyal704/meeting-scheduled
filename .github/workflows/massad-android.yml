@@ -55,6 +55,7 @@ jobs:
           working-directory: mobile/massad/android
           script: |
             ./gradlew connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.access="$MASSAD_APP_ACCESS"
+            mkdir -p ../artifacts
             adb pull /sdcard/Android/data/com.meetingscheduled.massad/files/screenshots ../artifacts/screenshots
       - uses: actions/upload-artifact@v4
         if: always()

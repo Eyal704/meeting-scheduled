@@ -47,7 +47,7 @@ public class ReportFilesPlugin extends Plugin {
             String mode = call.getString("mode", "save");
             String mime = call.getString("mime", "application/octet-stream");
             String name = call.getString("name", "report.pdf").replaceAll("[\\\\/:*?\"<>|\\p{Cntrl}]", "-");
-            if (name.isBlank() || name.length() > 220) throw new IllegalArgumentException();
+            if (name.trim().isEmpty() || name.length() > 220) throw new IllegalArgumentException();
             String data = call.getString("data");
             if (data == null || data.length() > 100_000_000) throw new IllegalArgumentException();
             File folder = new File(getContext().getCacheDir(), "reports/" + UUID.randomUUID());
