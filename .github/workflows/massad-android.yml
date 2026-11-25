@@ -24,9 +24,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
       - run: npm ci && npx cap sync android
       - name: Build Android bundles and run lint
-        run: cd android && chmod +x gradlew && ./gradlew bundleRelease assembleDebug assembleDebugAndroidTest lintRelease --stacktrace
+        run: cd android && chmod +x gradlew && ./gradlew :app:bundleRelease :app:assembleDebug :app:assembleDebugAndroidTest :app:lintRelease --stacktrace
       - uses: actions/upload-artifact@v4
         with:
           name: massad-android-build
@@ -54,7 +55,7 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back emulated
           working-directory: mobile/massad/android
           script: |
-            ./gradlew connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.access="$MASSAD_APP_ACCESS"
+            ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.access="$MASSAD_APP_ACCESS"
             mkdir -p ../artifacts
             adb pull /sdcard/Android/data/com.meetingscheduled.massad/files/screenshots ../artifacts/screenshots
       - uses: actions/upload-artifact@v4
