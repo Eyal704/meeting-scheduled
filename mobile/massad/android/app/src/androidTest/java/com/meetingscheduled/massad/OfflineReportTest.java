@@ -46,7 +46,7 @@ public class OfflineReportTest {
         assertNotNull("Pass the authorized entrance password as instrumentation argument access",password);
         device.executeShellCommand("svc wifi disable");
         device.executeShellCommand("svc data disable");
-        until("!!document.querySelector('#access-password')");
+        until("document.readyState==='complete'&&!!document.querySelector('#access-password')&&!document.querySelector('#access-submit').disabled");
         js("document.querySelector('#access-password').value='invalid-test-password'");click("#access-submit");
         until("document.querySelector('#access-error').textContent.includes('שגויה')");
         js("document.querySelector('#access-password').value="+JSONObject.quote(password));click("#access-submit");
@@ -85,7 +85,7 @@ public class OfflineReportTest {
         assertEquals("true",js("pdfFile!==null&&current.status==='ready'"));
         // Recreate the WebView: this proves IndexedDB survives an app activity restart.
         activity.getScenario().recreate();
-        until("!!document.querySelector('#access-password')||!!document.querySelector('.saved-row')");
+        until("document.readyState==='complete'&&((!!document.querySelector('#access-password')&&!document.querySelector('#access-submit').disabled)||!!document.querySelector('.saved-row'))");
         if("true".equals(js("!!document.querySelector('#access-password')"))){
             js("document.querySelector('#access-password').value="+JSONObject.quote(password));click("#access-submit");
         }
@@ -97,6 +97,6 @@ public class OfflineReportTest {
         js("document.querySelector('.backup-panel').open=true");click("[data-action=backup]");
         assertTrue(device.findObject(new UiSelector().textContains("massad-backup-")).waitForExists(10000));
         device.pressBack();until("!navigating");
-        click("[data-lock]");until("!!document.querySelector('#access-password')");
+        click("[data-lock]");until("document.readyState==='complete'&&!!document.querySelector('#access-password')&&!document.querySelector('#access-submit').disabled");
     }
 }

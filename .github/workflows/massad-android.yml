@@ -27,13 +27,17 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: npm ci && npx cap sync android
       - name: Build Android bundles and run lint
-        run: cd android && chmod +x gradlew && ./gradlew :app:bundleRelease :app:assembleDebug :app:assembleDebugAndroidTest :app:lintRelease --stacktrace
+        run: cd android && chmod +x gradlew && ./gradlew :app:bundleRelease :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest :app:lintRelease --stacktrace
+      - name: Include signing tool for local APK signing
+        run: mkdir -p artifacts/tools && cp "$ANDROID_HOME/build-tools/36.0.0/lib/apksigner.jar" artifacts/tools/
       - uses: actions/upload-artifact@v4
         with:
           name: massad-android-build
           path: |
             mobile/massad/android/app/build/outputs/bundle/release/*.aab
             mobile/massad/android/app/build/outputs/apk/debug/*.apk
+            mobile/massad/android/app/build/outputs/apk/release/*.apk
+            mobile/massad/artifacts/tools/apksigner.jar
             mobile/massad/android/app/build/reports/lint-results-release.html
           retention-days: 14
       - name: Enable KVM
@@ -54,10 +58,7 @@ jobs:
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back emulated
           working-directory: mobile/massad/android
-          script: |
-            ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.access="$MASSAD_APP_ACCESS"
-            mkdir -p ../artifacts
-            adb pull /sdcard/Android/data/com.meetingscheduled.massad/files/screenshots ../artifacts/screenshots
+          script: bash ../scripts/test-android.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:

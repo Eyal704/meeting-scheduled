@@ -1,6 +1,6 @@
 # Massad Android
 
-Native Android packaging of the existing Hebrew safety reporting app, with bundled encrypted offline assets. Publisher account belongs to Eyal Taieb's business. The app has not been published to Google Play.
+Native Android packaging of the existing Hebrew safety reporting app, with bundled encrypted offline assets. Publisher account belongs to Eyal Taieb's business; the supplied official Hebrew publisher name is אייל טייב שובל, support eyal@meeting-scheduled.com. The app has not been published to Google Play.
 
 ## Build
 

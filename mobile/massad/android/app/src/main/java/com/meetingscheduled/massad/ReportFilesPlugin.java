@@ -31,6 +31,11 @@ import java.util.UUID;
 @CapacitorPlugin(name = "ReportFiles")
 public class ReportFilesPlugin extends Plugin {
     @Override public void load() {
+        File pictures = getContext().getExternalFilesDir(android.os.Environment.DIRECTORY_PICTURES);
+        File[] captures = pictures == null ? null : pictures.listFiles();
+        if (captures != null) for (File capture : captures) {
+            if (capture.getName().startsWith("JPEG_") && System.currentTimeMillis() - capture.lastModified() > 86400000L) capture.delete();
+        }
         File root = new File(getContext().getCacheDir(), "reports");
         File[] folders = root.listFiles();
         if (folders != null) for (File folder : folders) {
