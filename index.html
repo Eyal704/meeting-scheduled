@@ -1,882 +1,332 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MeetingScheduled — Systems for the companies that keep equipment running</title>
-<meta name="description" content="Software for inspection and service companies, machinery manufacturers and dealers. Prepare field reports for review and follow up with past parts and service customers.">
-<meta name="robots" content="index, follow">
-
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="MeetingScheduled">
-<meta property="og:title" content="MeetingScheduled — Systems for the companies that keep equipment running">
-<meta property="og:description" content="Less time on reports. Fewer missed follow-ups. Systems for field reporting and parts and service customer follow-up.">
-<meta property="og:url" content="https://www.meeting-scheduled.com">
-<meta property="og:image" content="https://www.meeting-scheduled.com/og-home.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MeetingScheduled — Systems for the companies that keep equipment running">
-<meta name="twitter:description" content="Less time on reports. Fewer missed follow-ups. Systems built around your forms, approval steps and customer records.">
-<meta name="twitter:image" content="https://www.meeting-scheduled.com/og-home.png">
-
-<link rel="icon" type="image/svg+xml" href="/logo.svg">
-<link rel="canonical" href="https://www.meeting-scheduled.com">
-<link rel="alternate" hreflang="en" href="https://www.meeting-scheduled.com/">
-<link rel="alternate" hreflang="he" href="https://www.meeting-scheduled.com/he/">
-<link rel="alternate" hreflang="x-default" href="https://www.meeting-scheduled.com/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --ink:#1c1c1e;--muted:#6c6c72;--faint:#a0a0a8;--border:#e4e4e0;--border-subtle:#f0eeec;--canvas:#fdf9fa;
-  --rose:#c9536e;--rose-dark:#b84a62;--rose-darker:#a84059;--rose-tint:#fdf2f4;
-  --green:#3d6b52;--green-dark:#325943;--green-tint:#e8f2ec;
-  --slate-tint:#f3f2f0;
-  --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:var(--sans);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.5;letter-spacing:-0.01em;}
-img{max-width:100%;display:block;}
-a{color:inherit;text-decoration:none;}
-button{font-family:inherit;}
-.container{max-width:1152px;margin:0 auto;padding:0 24px;}
-
-/* Header */
-header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border-subtle);}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
-.logo{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:var(--ink);}
-.logo-mark{width:32px;height:32px;border-radius:9px;background:var(--rose);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.logo-mark svg{width:16px;height:16px;}
-.nav-links{display:none;align-items:center;gap:28px;}
-.nav-links > a,.nav-dd-btn{font-size:14px;font-weight:500;color:#4a4a50;}
-.nav-links > a:hover,.nav-dd-btn:hover,.nav-dd-btn[aria-expanded="true"]{color:var(--rose);}
-@media(min-width:900px){.nav-links{display:flex;}}
-.nav-dd{position:relative;}
-.nav-dd-btn{display:inline-flex;align-items:center;gap:5px;height:40px;padding:0;border:0;background:none;cursor:pointer;font-family:inherit;letter-spacing:inherit;}
-.nav-dd-btn svg{transition:transform .15s;}
-.nav-dd-btn[aria-expanded="true"] svg{transform:rotate(180deg);}
-.nav-dd-panel{position:absolute;top:calc(100% + 10px);left:-14px;width:360px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 32px rgba(0,0,0,.08);padding:8px;}
-.nav-dd-panel ul{list-style:none;}
-.dd-item{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:11px;}
-.dd-item:hover,.dd-item:focus-visible{background:var(--canvas);}
-.dd-icon{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.dd-title{display:block;font-size:14px;font-weight:600;color:var(--ink);}
-.dd-desc{display:block;margin-top:3px;font-size:12.5px;line-height:1.45;color:var(--muted);}
-.nav-actions{display:none;align-items:center;gap:16px;}
-@media(min-width:640px){.nav-actions{display:flex;}}
-.nav-login{font-size:14px;font-weight:500;color:var(--muted);}
-.nav-login:hover{color:var(--rose);}
-.menu-btn{display:flex;width:40px;height:40px;align-items:center;justify-content:center;border:0;background:none;cursor:pointer;color:var(--ink);}
-@media(min-width:900px){.menu-btn{display:none;}}
-.mobile-nav{display:none;border-top:1px solid var(--border-subtle);background:#fff;}
-.mobile-nav.open{display:block;}
-.mobile-nav .container{display:flex;flex-direction:column;gap:2px;padding-top:16px;padding-bottom:16px;}
-.mobile-nav a{display:block;padding:12px;border-radius:8px;font-weight:500;font-size:15px;color:var(--ink);}
-.mobile-nav a:hover{background:var(--rose-tint);color:var(--rose);}
-.mobile-nav .btn{margin-top:8px;}
-.mobile-nav a.btn-rose{color:#fff;}
-.mobile-nav a.btn-rose:hover{background:var(--rose-dark);color:#fff;}
-.m-group-btn{display:flex;width:100%;align-items:center;justify-content:space-between;padding:12px;border:0;border-radius:8px;background:none;cursor:pointer;font-family:inherit;font-weight:500;font-size:15px;letter-spacing:inherit;color:var(--ink);text-align:left;}
-.m-group-btn,.nav-dd-btn{-webkit-tap-highlight-color:transparent;}
-.m-group-btn:hover{background:var(--rose-tint);color:var(--rose);}
-.m-group-btn svg{transition:transform .15s;}
-.m-group-btn[aria-expanded="true"] svg{transform:rotate(180deg);}
-.m-group{margin:2px 0 6px 12px;padding-left:8px;border-left:1px solid var(--border);}
-.m-group a{font-size:14.5px;color:var(--muted);padding:10px 12px;}
-
-/* Buttons */
-.btn{display:inline-flex;height:48px;align-items:center;justify-content:center;gap:6px;border-radius:10px;padding:0 24px;font-size:14px;font-weight:600;white-space:nowrap;transition:background .15s;border:0;cursor:pointer;}
-.btn-rose{background:var(--rose);color:#fff;}
-.btn-rose:hover{background:var(--rose-dark);}
-.btn-secondary{background:#f5f3f2;color:var(--ink);}
-.btn-secondary:hover{background:#edebe8;}
-.btn-ghost-rose{color:var(--rose);height:auto;padding:0;background:none;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:4px;}
-.btn-ghost-rose:hover{color:var(--rose-dark);}
-.btn-ghost-green{color:var(--green);height:auto;padding:0;background:none;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:4px;}
-.btn-ghost-green:hover{color:var(--green-dark);}
-.btn-sm{height:40px;padding:0 20px;font-size:13px;}
-.btn-row{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
-@media(min-width:640px){.btn-row{flex-direction:row;}}
-:focus-visible{outline:2px solid var(--rose);outline-offset:3px;border-radius:4px;}
-
-/* Typography */
-.eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;margin-bottom:16px;color:var(--rose);}
-h1{font-size:38px;font-weight:600;line-height:1.08;letter-spacing:-.025em;}
-@media(min-width:640px){h1{font-size:56px;}}
-h2{font-size:30px;font-weight:600;line-height:1.15;letter-spacing:-.02em;}
-@media(min-width:640px){h2{font-size:38px;}}
-.section-head{max-width:680px;}
-.section-head.center{margin:0 auto;text-align:center;}
-.subtitle{font-size:16px;color:var(--muted);line-height:1.6;margin-top:16px;}
-.section{padding:80px 0;}
-.section-border-top{border-top:1px solid var(--border-subtle);}
-.bg-canvas{background:var(--canvas);}
-main section[id]{scroll-margin-top:80px;}
-.grid-head{margin-bottom:40px;}
-
-/* Hero */
-.hero{position:relative;overflow:hidden;text-align:center;padding:80px 0 64px;}
-@media(min-width:640px){.hero{padding-top:104px;}}
-.hero-glow{pointer-events:none;position:absolute;inset:0;background:radial-gradient(ellipse 80% 45% at 50% 0%,rgba(201,83,110,.06) 0%,transparent 60%);}
-.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;}
-
-/* Hero orbits: two faint rings, each carrying a slow point of light. Ambient, behind the text. */
-.hero-aura{position:absolute;inset:0;pointer-events:none;transform:translate3d(var(--mx,0px),var(--my,0px),0);transition:transform 1.2s cubic-bezier(.2,.8,.2,1);}
-.hero-aura span{position:absolute;border-radius:50%;will-change:transform;}
-.hero-aura .a1{width:620px;height:620px;top:-260px;left:8%;background:radial-gradient(circle,rgba(201,83,110,.13) 0%,rgba(201,83,110,.05) 38%,transparent 66%);animation:aura1 23s ease-in-out infinite alternate;}
-.hero-aura .a2{width:560px;height:560px;bottom:-300px;right:6%;background:radial-gradient(circle,rgba(61,107,82,.10) 0%,rgba(61,107,82,.04) 40%,transparent 66%);animation:aura2 29s ease-in-out infinite alternate;}
-@keyframes aura1{to{transform:translate(140px,70px) scale(1.12);}}
-@keyframes aura2{to{transform:translate(-120px,-50px) scale(1.15);}}
-.hero-orbits{position:absolute;z-index:0;left:50%;top:50%;width:min(1280px,118%);height:96%;transform:translate(-50%,-50%);pointer-events:none;overflow:visible;}
-@media(min-width:640px){.hero{padding:80px 0 72px;}}
-@media(max-width:640px){.hero-orbits{display:none;}}
-.hero-orbits ellipse{fill:none;vector-effect:non-scaling-stroke;}
-.hero-orbits .track{stroke-width:1.8;}
-.hero-orbits .comet{stroke-linecap:round;animation:orbit var(--d) linear infinite;animation-delay:calc(var(--base) - var(--d) * var(--k));}
-.hero-orbits .o1{--d:17s;--base:0s;}
-.hero-orbits .o2{--d:26s;--base:-9s;}
-/* Each layer is one dash; its delay shifts it back so every layer ends at the same point: one light, fading trail. */
-.hero-orbits .tail{--k:0;stroke-dasharray:300 700;stroke-width:2.2;opacity:.14;}
-.hero-orbits .mid{--k:.17;stroke-dasharray:130 870;stroke-width:2.6;opacity:.3;}
-.hero-orbits .near{--k:.255;stroke-dasharray:45 955;stroke-width:3;opacity:.6;}
-.hero-orbits .halo{--k:.295;stroke-dasharray:5 995;stroke-width:18;opacity:.22;}
-.hero-orbits .head{--k:.2975;stroke-dasharray:2.5 997.5;stroke-width:5.5;opacity:1;}
-@keyframes orbit{from{stroke-dashoffset:0;}to{stroke-dashoffset:-1000;}}
-.hero.is-still .hero-orbits .comet,.hero.is-still .hero-aura span{animation-play-state:paused;}
-@media (prefers-reduced-motion: reduce){
-  .hero-orbits .comet{display:none;}
-  .hero-aura span{animation:none;}
-  .hero-aura{transform:none;}
-}
-.hero p.lede{font-size:17px;color:var(--muted);line-height:1.6;margin-top:24px;max-width:620px;margin-left:auto;margin-right:auto;}
-.hero .btn-row{margin-top:36px;}
-.hero p.domain-line{margin-top:28px;font-size:14px;color:var(--muted);line-height:1.5;}
-
-/* Areas of value */
-.value-grid{display:grid;grid-template-columns:1fr;gap:20px;}
-@media(min-width:900px){.value-grid{grid-template-columns:repeat(3,1fr);}}
-.v-card{border:1px solid var(--border);border-radius:20px;background:#fff;padding:28px;display:flex;flex-direction:column;box-shadow:0 4px 16px rgba(0,0,0,.03);}
-@media(min-width:640px){.v-card{padding:32px;}}
-.v-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:22px;}
-.v-card h3{font-size:21px;font-weight:600;letter-spacing:-.01em;}
-.v-card p.desc{margin-top:10px;font-size:15px;color:var(--muted);line-height:1.6;}
-.v-card ul{margin-top:22px;list-style:none;display:flex;flex-direction:column;gap:11px;}
-.v-card li{display:flex;align-items:flex-start;gap:11px;font-size:14px;line-height:1.5;}
-.v-card li .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:7px;}
-.sub-card{display:block;margin-top:24px;padding:16px 18px;border:1px solid #e9cfd6;border-radius:14px;background:var(--rose-tint);transition:border-color .15s,box-shadow .15s;}
-.sub-card:hover{border-color:var(--rose);box-shadow:0 4px 14px rgba(201,83,110,.12);}
-.sub-card-title{display:block;font-size:14.5px;font-weight:600;color:var(--ink);}
-.sub-card-desc{display:block;margin-top:6px;font-size:13.5px;line-height:1.55;color:var(--muted);}
-.sub-card .btn-ghost-rose{margin-top:10px;font-size:13.5px;}
-
-/* Journeys */
-.journey{border:1px solid var(--border);border-radius:22px;background:#fff;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,.03);}
-@media(min-width:640px){.journey{padding:32px;}}
-.journey + .journey{margin-top:24px;}
-.journey-head{display:flex;align-items:center;gap:12px;cursor:pointer;list-style:none;}
-.journey-head::-webkit-details-marker{display:none;}
-.journey-head::after{content:"+";margin-left:auto;font-size:26px;line-height:1;flex-shrink:0;color:var(--green);}
-.journey[open] .journey-head{margin-bottom:28px;}
-.journey[open] .journey-head::after{content:"−";}
-.journey-head:focus-visible{outline:2px solid var(--green);outline-offset:8px;border-radius:4px;}
-.j-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.j-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;}
-.j-title{margin-top:2px;font-size:16px;font-weight:600;}
-.j-track{list-style:none;display:flex;flex-direction:column;gap:22px;}
-.j-step{position:relative;border:1px solid var(--border-subtle);border-radius:14px;background:#fff;padding:16px 18px;}
-.j-step .j-kicker{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--faint);}
-.j-step .j-text{margin-top:6px;font-size:14px;line-height:1.55;color:var(--ink);}
-.j-step.is-human{border-color:#cfe0d5;background:var(--green-tint);}
-.j-step.is-human .j-kicker{color:var(--green);}
-.j-step.is-outcome{border-color:#e9cfd6;background:var(--rose-tint);}
-.j-step.is-outcome .j-kicker{color:var(--rose);}
-.j-step:not(:last-child)::after{content:'';position:absolute;left:50%;top:100%;width:1px;height:22px;background:var(--border);}
-.j-step:not(:last-child)::before{content:'';position:absolute;left:50%;top:calc(100% + 8px);width:6px;height:6px;border-right:1px solid var(--faint);border-bottom:1px solid var(--faint);transform:translate(-50%,0) rotate(45deg);}
-@media(min-width:900px){
-  .j-track{flex-direction:row;align-items:stretch;gap:0;}
-  .j-step{flex:1;min-width:0;margin-right:22px;}
-  .j-step:last-child{margin-right:0;}
-  .j-step:not(:last-child)::after{left:100%;top:50%;width:22px;height:1px;}
-  .j-step:not(:last-child)::before{left:calc(100% + 8px);top:50%;transform:translate(0,-50%) rotate(-45deg);}
-}
-.journey-note{margin-top:32px;font-size:15px;color:var(--muted);line-height:1.6;max-width:680px;}
-
-/* How we work */
-.work-grid{display:grid;grid-template-columns:1fr;gap:20px;}
-@media(min-width:640px){.work-grid{grid-template-columns:1fr 1fr;}}
-@media(min-width:1024px){.work-grid{grid-template-columns:repeat(4,1fr);}}
-.w-step{border:1px solid var(--border);border-radius:18px;background:#fff;padding:26px;box-shadow:0 4px 16px rgba(0,0,0,.03);}
-.w-num{width:34px;height:34px;border-radius:11px;background:var(--rose-tint);color:var(--rose);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
-.w-step h3{font-size:16.5px;font-weight:600;}
-.w-step p{margin-top:8px;font-size:14px;color:var(--muted);line-height:1.6;}
-
-/* Principles */
-.principle-grid{display:grid;grid-template-columns:1fr;gap:16px;}
-@media(min-width:900px){
-  .principle-grid{grid-template-columns:repeat(3,1fr);}
-}
-.principle{display:flex;gap:16px;align-items:flex-start;padding:22px;border:1px solid var(--border-subtle);border-radius:16px;background:#fff;}
-.principle .p-ic{width:38px;height:38px;border-radius:11px;background:var(--green-tint);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.principle h3{font-size:15.5px;font-weight:600;}
-.principle p{margin-top:6px;font-size:14px;color:var(--muted);line-height:1.55;}
-
-/* Footer */
-footer{border-top:1px solid var(--border-subtle);background:var(--canvas);}
-.footer-top{display:flex;flex-direction:column;gap:40px;padding:56px 0;}
-@media(min-width:640px){.footer-top{flex-direction:row;justify-content:space-between;}}
-.footer-brand{max-width:300px;}
-.footer-brand p{margin-top:16px;font-size:14px;color:var(--muted);line-height:1.6;}
-.footer-cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
-@media(min-width:480px){.footer-cols{grid-template-columns:repeat(3,auto);gap:56px;}}
-.footer-col-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);margin-bottom:12px;}
-.footer-col a{display:block;font-size:14px;color:var(--muted);margin-bottom:10px;}
-.footer-col a:hover{color:var(--rose);}
-.footer-email{display:inline-block;margin-top:16px;font-size:14px;color:#2563eb;}
-.footer-email:hover{color:#1d4ed8;}
-.footer-bottom{border-top:1px solid var(--border-subtle);padding:24px 0;display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--faint);}
-@media(min-width:640px){.footer-bottom{flex-direction:row;justify-content:space-between;}}
-footer .container{padding-left:32px;}
-
-
-/* Dropdown: secondary products */
-.dd-sep{height:1px;background:var(--border-subtle);margin:6px 12px;}
-.dd-label{padding:8px 12px 2px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);}
-.dd-small{display:flex;gap:4px;padding:2px 4px 6px;}
-.dd-small a{padding:8px;border-radius:9px;font-size:13.5px;font-weight:500;color:var(--muted);}
-.dd-small a:hover{background:var(--canvas);color:var(--rose);}
-
-/* Flagship solutions */
-.f-grid{display:grid;grid-template-columns:1fr;gap:20px;}
-@media(min-width:900px){.f-grid{grid-template-columns:1fr 1fr;gap:24px;}}
-.f-card{position:relative;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:22px;background:#fff;padding:28px;box-shadow:0 4px 16px rgba(0,0,0,.03);transition:border-color .15s,box-shadow .15s,transform .15s;}
-@media(min-width:640px){.f-card{padding:36px;}}
-.f-card:hover{border-color:#e2dcd8;box-shadow:0 14px 34px rgba(28,28,30,.08);transform:translateY(-2px);}
-.f-chip{align-self:flex-start;font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--rose-tint);color:var(--rose);margin-bottom:22px;}
-.f-chip.green{background:var(--green-tint);color:var(--green);}
-.f-card h3{font-size:24px;font-weight:600;letter-spacing:-.015em;}
-.f-card p.desc{margin-top:10px;font-size:15.5px;color:var(--muted);line-height:1.6;}
-.f-card ul{margin-top:22px;list-style:none;display:flex;flex-direction:column;gap:11px;}
-.f-card li{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;line-height:1.5;}
-.f-card li svg{flex-shrink:0;margin-top:2px;}
-.f-link{margin-top:auto;padding-top:26px;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--rose);}
-.f-link.green{color:var(--green);}
-.more-row{display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px;}
-@media(min-width:900px){.more-row{grid-template-columns:1fr 1fr;gap:24px;}}
-.more{border:1px solid var(--border-subtle);border-radius:16px;background:var(--canvas);padding:20px 24px;}
-.more h3{font-size:15.5px;font-weight:600;}
-.more p{margin-top:6px;font-size:14px;color:var(--muted);line-height:1.6;}
-.more .btn-ghost-rose,.more .btn-ghost-green{font-size:14px;}
-
-/* About */
-.about{display:grid;grid-template-columns:1fr;gap:36px;align-items:center;}
-@media(min-width:820px){.about{grid-template-columns:300px 1fr;gap:56px;}}
-.about-photo{position:relative;max-width:300px;}
-.about-photo img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 20%;border-radius:22px;box-shadow:0 16px 40px rgba(28,28,30,.12);}
-.about-photo .tag{position:absolute;bottom:16px;left:16px;background:rgba(255,255,255,.94);border-radius:12px;padding:10px 14px;box-shadow:0 4px 14px rgba(0,0,0,.08);}
-.about-photo .tag strong{display:block;font-size:14px;}
-.about-photo .tag span{font-size:12px;color:var(--muted);}
-.about-copy p:not(.eyebrow){font-size:16px;line-height:1.7;color:#3a3a40;margin-top:14px;}
-.about-copy .direct{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px 22px;font-size:14px;}
-.about-copy .direct a{color:var(--rose);font-weight:600;display:inline-flex;align-items:center;gap:5px;}
-.about-copy .direct a:hover{color:var(--rose-dark);}
-
-/* Motion layer: everything below runs only once JS has marked the page (.js), and rests for reduced motion. */
-
-/* Mini illustration: a field form fills in and a report draft appears for review. 9s loop while in view. */
-.mini{position:relative;margin-top:22px;height:128px;border:1px solid var(--border-subtle);border-radius:16px;background:var(--canvas);overflow:hidden;display:flex;align-items:center;gap:14px;padding:14px 16px;}
-.mini *{animation-play-state:paused;}
-.mini.is-on *{animation-play-state:running;}
-.mr-form{flex:1.25;min-width:0;display:flex;flex-direction:column;gap:6px;}
-.mr-row{display:flex;align-items:center;gap:8px;height:28px;padding:0 10px;border-radius:9px;background:#fff;border:1px solid var(--border-subtle);font-size:12px;}
-.mr-k{color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.mr-v{font-weight:600;color:var(--ink);white-space:nowrap;animation:mrVal 9s infinite both;}
-.mr-row .tick{width:16px;height:16px;border-radius:50%;background:var(--green);flex-shrink:0;position:relative;transform:scale(0);animation:mrTick 9s infinite both;}
-.mr-row .tick::after{content:'';position:absolute;left:5px;top:3px;width:4px;height:7px;border:solid #fff;border-width:0 1.8px 1.8px 0;transform:rotate(45deg);}
-.mr-row.r2 .mr-v,.mr-row.r2 .tick{animation-delay:.8s;}
-.mr-row.r3 .mr-v,.mr-row.r3 .tick{animation-delay:1.6s;}
-@keyframes mrVal{0%,8%{opacity:0;transform:translateX(-4px);}14%,90%{opacity:1;transform:none;}97%,100%{opacity:0;}}
-@keyframes mrTick{0%,10%{transform:scale(0);}16%{transform:scale(1.15);}19%,90%{transform:scale(1);}97%,100%{transform:scale(0);}}
-.mr-flow{width:26px;height:2px;flex-shrink:0;position:relative;background:linear-gradient(90deg,var(--border),var(--border));}
-.mr-flow::after{content:'';position:absolute;top:-2px;left:0;width:6px;height:6px;border-radius:50%;background:var(--rose);box-shadow:0 0 8px rgba(201,83,110,.6);opacity:0;animation:mrFlow 9s infinite;}
-@keyframes mrFlow{0%,36%{left:0;opacity:0;}38%{opacity:1;}46%{left:20px;opacity:1;}48%,100%{left:20px;opacity:0;}}
-.mr-doc{position:relative;flex:1;min-width:0;height:100px;border-radius:10px;background:#fff;border:1px solid var(--border);box-shadow:0 6px 18px rgba(28,28,30,.06);padding:10px 11px;opacity:.35;animation:mrDoc 9s infinite both;}
-@keyframes mrDoc{0%,44%{opacity:.35;transform:translateY(4px);}52%,90%{opacity:1;transform:none;}97%,100%{opacity:.35;transform:translateY(4px);}}
-.mr-doc-t{display:block;font-size:10.5px;font-weight:600;color:var(--ink);}
-.mr-lines{display:flex;flex-direction:column;gap:6px;margin-top:9px;}
-.mr-lines b{display:block;height:5px;border-radius:3px;background:var(--slate-tint);transform-origin:left;transform:scaleX(0);animation:mrLine 9s infinite both;}
-.mr-lines b:nth-child(1){width:92%;animation-delay:0s;}
-.mr-lines b:nth-child(2){width:74%;animation-delay:.25s;}
-.mr-lines b:nth-child(3){width:84%;animation-delay:.5s;}
-@keyframes mrLine{0%,48%{transform:scaleX(0);}56%,90%{transform:scaleX(1);}97%,100%{transform:scaleX(0);}}
-.mr-stamp{position:absolute;right:8px;bottom:9px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green);border:1.5px solid var(--green);border-radius:6px;padding:3px 7px;background:rgba(232,242,236,.9);opacity:0;transform:rotate(-8deg) scale(1.5);animation:mrStamp 9s infinite both;}
-@keyframes mrStamp{0%,62%{opacity:0;transform:rotate(-8deg) scale(1.5);}67%{opacity:1;transform:rotate(-8deg) scale(.95);}70%,90%{opacity:1;transform:rotate(-8deg) scale(1);}97%,100%{opacity:0;transform:rotate(-8deg) scale(1);}}
-
-@media(max-width:480px){
-  .mini{gap:10px;padding:12px;}
-  .mr-flow{display:none;}
-  .mr-doc{flex:.75;}
-  .mr-row{gap:6px;padding:0 8px;font-size:11.5px;}
-  .mr-v{display:none;}
-}
-/* Mini illustration: orders stop, a short message goes out, an order comes back. 9s loop while in view. */
-.mo-bars{position:relative;flex:1;height:100%;display:flex;align-items:flex-end;gap:7px;padding-bottom:16px;}
-.mo-bars > span{flex:1;height:var(--h);border-radius:4px 4px 0 0;background:var(--rose);opacity:.75;}
-.mo-bars > span.gap{height:86%;background:repeating-linear-gradient(45deg,var(--border-subtle),var(--border-subtle) 4px,#fff 4px,#fff 8px);border:1px dashed var(--border);border-bottom:0;opacity:1;}
-.mo-bars > span.new{height:0;background:var(--rose);opacity:1;box-shadow:0 0 0 rgba(201,83,110,0);animation:moNew 9s infinite both;}
-@keyframes moNew{0%,48%{height:0;box-shadow:0 0 0 rgba(201,83,110,0);}58%{height:74%;box-shadow:0 0 16px rgba(201,83,110,.45);}66%,90%{height:70%;box-shadow:0 0 8px rgba(201,83,110,.2);}97%,100%{height:0;}}
-.mo-axis{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;font-size:10px;color:var(--faint);}
-.mo-bubble{position:absolute;top:12px;right:14px;max-width:62%;font-size:11.5px;line-height:1.4;background:#fff;border:1px solid #e9cfd6;border-radius:12px 12px 4px 12px;padding:7px 10px;box-shadow:0 6px 18px rgba(28,28,30,.07);opacity:0;transform:translateY(6px) scale(.96);animation:moBubble 9s infinite both;}
-@keyframes moBubble{0%,16%{opacity:0;transform:translateY(6px) scale(.96);}24%,90%{opacity:1;transform:none;}97%,100%{opacity:0;}}
-.mo-label{position:absolute;right:14px;bottom:24px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--rose-dark);background:var(--rose-tint);border-radius:6px;padding:3px 7px;opacity:0;animation:moLabel 9s infinite both;}
-@keyframes moLabel{0%,60%{opacity:0;transform:translateY(4px);}66%,90%{opacity:1;transform:none;}97%,100%{opacity:0;}}
-
-/* Journeys and section reveals: desktop only. On phones, fast scrolling would outrun them and show blank space. */
-@media(min-width:768px){
-  .js .journey .j-step{opacity:.4;transform:translateY(6px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s ease;}
-  .js .journey.is-on .j-step{opacity:1;transform:none;}
-  .js .journey.is-on .j-step:nth-child(2){transition-delay:.25s;}
-  .js .journey.is-on .j-step:nth-child(3){transition-delay:.5s;}
-  .js .journey.is-on .j-step:nth-child(4){transition-delay:.75s;}
-  .js .journey.is-on .j-step:nth-child(5){transition-delay:1s;}
-  .js .journey.is-on .j-step.is-outcome{box-shadow:0 0 0 4px rgba(201,83,110,.07),0 8px 22px rgba(201,83,110,.10);}
-  .js .reveal{opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1);}
-  .js .reveal.is-on{opacity:1;transform:none;}
-  .js .reveal-d1{transition-delay:.08s;}
-  .js .f-card.reveal.is-on:hover{transform:translateY(-2px);}
-  .js .f-card.reveal{transition:opacity .55s ease,transform .5s cubic-bezier(.2,.8,.2,1),border-color .15s,box-shadow .15s;}
-}
-.mr-flow::after{animation-play-state:paused;}
-.mini.is-on .mr-flow::after{animation-play-state:running;}
-
-@media (prefers-reduced-motion: reduce){
-  .mini *{animation:none !important;}
-  .mr-flow::after{display:none;}
-  .mr-v,.mr-doc,.mr-stamp,.mo-bubble,.mo-label{opacity:1 !important;transform:none !important;}
-  .mr-row .tick,.mr-lines b{transform:none !important;}
-  .mr-stamp{transform:rotate(-8deg) !important;}
-  .mo-bars > span.new{height:70% !important;}
-  .js .journey .j-step,.js .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
-}
-
-@media(max-width:639px){
-  .hero{padding:48px 0;}
-  .hero h1{font-size:34px;line-height:1.16;}
-  .hero p.lede{font-size:16px;margin-top:20px;}
-  .hero .btn-row{margin-top:26px;}
-  .section{padding:56px 0;}
-  .f-card{padding:24px;}
-  .journey{padding:20px;}
-  .about-photo{margin-inline:auto;}
-}
-.about-copy{max-width:680px;}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
-
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto;}
-  *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
-}
-
-/* Language switch */
-.lang-switch{display:inline-flex;align-items:center;gap:6px;height:48px;padding:0 10px;font-size:14px;font-weight:600;color:var(--muted);border-radius:10px;}
-.lang-switch:hover{color:var(--rose);}
-</style>
-</head>
-<body>
-
-<header>
-  <div class="container nav-inner">
-    <a href="/" class="logo" aria-label="MeetingScheduled home">
-      <span class="logo-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="white"/></svg>
-      </span>
-      MeetingScheduled
-    </a>
-    <nav class="nav-links" aria-label="Primary">
-      <div class="nav-dd" id="solutionsDD">
-        <button type="button" class="nav-dd-btn" id="solutionsBtn" aria-expanded="false" aria-controls="solutionsMenu">Solutions <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="nav-dd-panel" id="solutionsMenu" hidden>
-          <ul>
-            <li><a href="/field-service/" class="dd-item"><span class="dd-icon" style="background:var(--green-tint)" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg></span><span><span class="dd-title">Field Service Reports</span><span class="dd-desc">Technicians fill in the test on a phone. The report reaches the office ready to approve.</span></span></a></li>
-            <li><a href="/aftermarket/" class="dd-item"><span class="dd-icon" style="background:var(--rose-tint)" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></span><span><span class="dd-title">Aftermarket Revenue Recovery</span><span class="dd-desc">Win back parts and service orders from machinery customers who stopped ordering.</span></span></a></li>
-            <li><a href="#workflow-examples" class="dd-item"><span class="dd-icon" style="background:var(--slate-tint)" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1c1c1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span><span><span class="dd-title">Custom Systems</span><span class="dd-desc">One workflow at a time, built around the systems you already use.</span></span></a></li>
-            <li class="dd-sep" aria-hidden="true"></li>
-            <li class="dd-label">Other products</li>
-            <li class="dd-small"><a href="/receptionist/">AI Receptionist</a><a href="/outbound/">Outbound Sales</a></li>
-          </ul>
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Software and AI for better business performance | MeetingScheduled</title>
+    <meta
+      name="description"
+      content="MeetingScheduled designs and implements systems that connect field teams, operations and finance. Handle more service calls, maintain inspection quality and see which completed work still needs to be billed."
+    />
+    <link rel="canonical" href="https://www.meeting-scheduled.com/" />
+    <link rel="alternate" hreflang="en" href="https://www.meeting-scheduled.com/" />
+    <link rel="alternate" hreflang="he" href="https://www.meeting-scheduled.com/he/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.meeting-scheduled.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MeetingScheduled" />
+    <meta property="og:title" content="Software and AI for better business performance | MeetingScheduled" />
+    <meta
+      property="og:description"
+      content="MeetingScheduled designs and implements systems that connect field teams, operations and finance. Handle more service calls, maintain inspection quality and see which completed work still needs to be billed."
+    />
+    <meta property="og:url" content="https://www.meeting-scheduled.com/" />
+    <meta property="og:image" content="https://www.meeting-scheduled.com/assets/company-share-en.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
+    />
+    <link rel="stylesheet" href="/assets/company.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header>
+      <div class="wrap bar">
+        <a href="/" class="brand" aria-label="MeetingScheduled home"
+          ><img src="/logo.svg" width="28" height="28" alt="" />MeetingScheduled</a
+        >
+        <nav class="links" aria-label="Main navigation">
+          <a href="/#solutions">Solutions</a><a href="/#workflow-examples">Work examples</a
+          ><a href="/#how-we-work">How we work</a>
+        </nav>
+        <div class="actions">
+          <a href="/he/" lang="he" hreflang="he">עברית</a
+          ><a href="https://reach.meeting-scheduled.com" class="desktop-login">Client login</a
+          ><a href="https://cal.com/meeting-scheduled/45-min-meeting" class="button">Book a meeting</a>
+          <details class="mobile-menu">
+            <summary>Menu</summary>
+            <nav aria-label="Mobile navigation">
+              <a href="/#solutions">Solutions</a><a href="/#workflow-examples">Work examples</a
+              ><a href="/#how-we-work">How we work</a><a href="/#about">Company</a
+              ><a href="https://reach.meeting-scheduled.com">Client login</a
+              ><a href="https://cal.com/meeting-scheduled/45-min-meeting">Book a meeting</a>
+            </nav>
+          </details>
         </div>
       </div>
-      <a href="#workflow-examples">Examples</a>
-      <a href="#how-we-work">How It Works</a>
-      <a href="#about">About</a>
-    </nav>
-    <div class="nav-actions">
-      <a href="/he/" class="nav-login" lang="he" hreflang="he">עברית</a>
-      <a href="https://reach.meeting-scheduled.com" class="nav-login">Login</a>
-      <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-rose btn-sm">Let’s talk</a>
-    </div>
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
-      <svg id="menuIconOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
-      <svg id="menuIconClose" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
-    </button>
-  </div>
-  <div class="mobile-nav" id="mobileNav">
-    <div class="container">
-      <button type="button" class="m-group-btn" id="mSolutionsBtn" aria-expanded="false" aria-controls="mSolutionsList">Solutions <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="m-group" id="mSolutionsList" hidden>
-        <a href="/field-service/">Field Service Reports</a>
-        <a href="/aftermarket/">Aftermarket Revenue Recovery</a>
-        <a href="#workflow-examples">Custom Systems</a>
-        <a href="/receptionist/">AI Receptionist</a>
-        <a href="/outbound/">Outbound Sales</a>
-      </div>
-      <a href="#workflow-examples">Examples</a>
-      <a href="#how-we-work">How It Works</a>
-      <a href="#about">About</a>
-      <a href="/he/" lang="he" hreflang="he">עברית</a>
-      <a href="https://reach.meeting-scheduled.com">Login</a>
-      <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-rose">Let’s talk</a>
-    </div>
-  </div>
-</header>
-
-<main>
-
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-glow" aria-hidden="true"></div>
-    <div class="hero-aura" id="heroAura" aria-hidden="true"><span class="a1"></span><span class="a2"></span></div>
-    <svg class="hero-orbits" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id="trackRose" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#c9536e" stop-opacity=".38"/>
-          <stop offset=".45" stop-color="#c9536e" stop-opacity=".06"/>
-          <stop offset="1" stop-color="#c9536e" stop-opacity=".30"/>
-        </linearGradient>
-        <linearGradient id="trackGreen" x1="1" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#3d6b52" stop-opacity=".30"/>
-          <stop offset=".5" stop-color="#3d6b52" stop-opacity=".04"/>
-          <stop offset="1" stop-color="#3d6b52" stop-opacity=".22"/>
-        </linearGradient>
-        <filter id="orbitGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="1.2" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <filter id="orbitHalo" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
-      </defs>
-      <g class="o1" transform="rotate(-4 600 300)">
-        <ellipse class="track" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="url(#trackRose)"/>
-        <ellipse class="comet tail" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#c9536e"/>
-        <ellipse class="comet mid" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#c9536e"/>
-        <ellipse class="comet near" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#d9667f"/>
-        <ellipse class="comet halo" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#d9667f" filter="url(#orbitHalo)"/>
-        <ellipse class="comet head" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#b8405b" filter="url(#orbitGlow)"/>
-      </g>
-      <g class="o2" transform="translate(1200 0) scale(-1 1) rotate(-7 600 300)">
-        <ellipse class="track" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="url(#trackGreen)"/>
-        <ellipse class="comet tail" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#3d6b52"/>
-        <ellipse class="comet mid" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#3d6b52"/>
-        <ellipse class="comet near" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#4f8a69"/>
-        <ellipse class="comet halo" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#4f8a69" filter="url(#orbitHalo)"/>
-        <ellipse class="comet head" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#2f5a43" filter="url(#orbitGlow)"/>
-      </g>
-    </svg>
-    <div class="container hero-inner">
-      <p class="eyebrow">Software and AI for equipment businesses</p>
-      <h1 id="hero-title">Less time on reports.<br>Fewer missed follow-ups.</h1>
-      <p class="lede">For testing, inspection and service companies, and machinery manufacturers and dealers. Turn field readings into reports ready for review, and reconnect with customers who have stopped ordering parts and service.</p>
-      <div class="btn-row">
-        <a href="#solutions" class="btn btn-rose">See the solutions</a>
-        <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-secondary">Let’s talk</a>
-        <a href="/he/" class="lang-switch" lang="he" hreflang="he"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>עברית</a>
-      </div>
-      <p class="domain-line">Field service reports · Aftermarket revenue recovery · Custom systems</p>
-    </div>
-  </section>
-
-  <section id="solutions" class="section section-border-top" aria-labelledby="value-title">
-    <div class="container">
-      <div class="section-head center grid-head reveal">
-        <p class="eyebrow">Solutions</p>
-        <h2 id="value-title">Which part of your business needs attention?</h2>
-        <p class="subtitle">Reports waiting to be written. Customers waiting for a follow-up. Choose the workflow you want to improve.</p>
-      </div>
-      <div class="f-grid">
-
-        <a href="/field-service/" class="f-card reveal">
-          <span class="f-chip green">For testing, inspection and service companies</span>
-          <div class="v-icon" style="background:var(--green-tint)">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
+    </header>
+    <main id="main">
+      <section class="wrap hero">
+        <div>
+          <p class="eyebrow">For service, inspection and industry</p>
+          <h1>Software and AI for better business performance</h1>
+          <p class="lede">
+            MeetingScheduled designs and implements systems that connect field teams, operations and finance.
+            Handle more service calls, maintain inspection quality and see which completed work still needs to
+            be billed.
+          </p>
+          <div class="hero-actions">
+            <a href="https://cal.com/meeting-scheduled/45-min-meeting" class="button">Book a meeting</a
+            ><a href="#workflow-examples" class="textlink">Work examples</a>
           </div>
-          <h3>Field Service Reports</h3>
-          <p class="desc">Technicians record readings and photos on site. The office receives a report draft in your format, ready for review and sign-off.</p>
-          <div class="mini" aria-hidden="true">
-            <div class="mr-form">
-              <div class="mr-row r1"><span class="mr-k">Customer</span><span class="mr-v">Filled in</span><i class="tick"></i></div>
-              <div class="mr-row r2"><span class="mr-k">Readings</span><span class="mr-v">Recorded</span><i class="tick"></i></div>
-              <div class="mr-row r3"><span class="mr-k">Photos</span><span class="mr-v">2 added</span><i class="tick"></i></div>
+        </div>
+        <figure class="sample">
+          <img src="/aftermarket/media/hero-13.jpg" alt="" width="1600" height="410" />
+          <figcaption class="sample-body">
+            <span class="caption">Service operations example</span>
+            <h2>From a service visit to a billing review</h2>
+            <div class="record">
+              <span>Field service</span><strong>Parts and hours logged on site</strong>
             </div>
-            <span class="mr-flow"></span>
-            <div class="mr-doc"><span class="mr-doc-t">Report #0418</span><span class="mr-lines"><b></b><b></b><b></b></span><span class="mr-stamp">For review</span></div>
-          </div>
-          <ul>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Phone forms with the customer and equipment already filled in</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Report drafts in your own layout, signed off by your reviewer</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Reports, equipment history and upcoming inspections in one place</li>
-          </ul>
-          <span class="f-link green">Explore field service reports <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </a>
-
-        <a href="/aftermarket/" class="f-card reveal reveal-d1">
-          <span class="f-chip">For machinery manufacturers and distributors</span>
-          <div class="v-icon" style="background:var(--rose-tint)">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-          </div>
-          <h3>Aftermarket Revenue Recovery</h3>
-          <p class="desc">Identify customers whose parts and service orders have stopped. Follow up with approved messages and route their requests to your team.</p>
-          <div class="mini" aria-hidden="true">
-            <div class="mo-bars">
-              <span style="--h:46%"></span><span style="--h:60%"></span><span style="--h:52%"></span><span style="--h:68%"></span><span style="--h:58%"></span><span class="gap"></span><span class="gap"></span><span class="new"></span>
-              <div class="mo-axis"><span>2019</span><span>2022</span><span>2025</span></div>
+            <div class="record">
+              <span>Service review</span><strong>Visit report approved by service lead</strong>
             </div>
-            <div class="mo-bubble">“Still running your Model X filler?”</div>
-            <span class="mo-label">Quote request</span>
-          </div>
-          <ul>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Quiet accounts found in your own order records</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Short, approved messages sent in your company’s name</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Qualified requests handed to your parts or service team</li>
-          </ul>
-          <span class="f-link">Explore aftermarket revenue recovery <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-        </a>
-
-      </div>
-      <div class="more-row reveal">
-        <div class="more">
-          <h3>Custom systems</h3>
-          <p>Something else slows your team down? We build one workflow at a time, around the systems you already use. <a href="#workflow-examples" class="btn-ghost-rose">See examples <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></p>
-        </div>
-        <div class="more">
-          <h3>Other products</h3>
-          <p>Ready-made tools for sales teams: <a href="/receptionist/" class="btn-ghost-green">AI Receptionist</a> and <a href="/outbound/" class="btn-ghost-rose">Outbound Sales</a>.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="workflow-examples" class="section section-border-top bg-canvas" aria-labelledby="examples-title">
-    <div class="container">
-      <div class="section-head grid-head reveal">
-        <p class="eyebrow">Workflows end to end</p>
-        <h2 id="examples-title">See how the work moves forward</h2>
-        <p class="subtitle">Open an example to see the steps, what the system prepares and where your team reviews the work.</p>
-      </div>
-
-      <details class="journey">
-        <summary class="journey-head">
-          <div class="j-icon" style="background:var(--green-tint)" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
-          </div>
-          <div>
-            <p class="j-eyebrow" style="color:var(--green)">Field service</p>
-            <h3 class="j-title">A periodic test, from the visit to the signed report</h3>
-          </div>
-        </summary>
-        <ol class="j-track">
-          <li class="j-step"><p class="j-kicker">Trigger</p><p class="j-text">A test is due at a customer site.</p></li>
-          <li class="j-step"><p class="j-kicker">Context</p><p class="j-text">The customer, the site, the equipment and last year’s results are already on the technician’s phone.</p></li>
-          <li class="j-step"><p class="j-kicker">Draft</p><p class="j-text">The technician enters readings and photos, and a report draft is laid out in your format.</p></li>
-          <li class="j-step is-human"><p class="j-kicker">Your team</p><p class="j-text">The qualified reviewer approves the report or sends it back with a note.</p></li>
-          <li class="j-step is-outcome"><p class="j-kicker">Outcome</p><p class="j-text">The customer gets the report, and the unit’s history and next due date are updated.</p></li>
-        </ol>
-      </details>
-
-      <details class="journey">
-        <summary class="journey-head">
-          <div class="j-icon" style="background:var(--rose-tint)" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-          </div>
-          <div>
-            <p class="j-eyebrow" style="color:var(--rose)">Aftermarket</p>
-            <h3 class="j-title">A quiet customer, back to a quote request</h3>
-          </div>
-        </summary>
-        <ol class="j-track">
-          <li class="j-step"><p class="j-kicker">Trigger</p><p class="j-text">A customer who ordered parts every year stops ordering.</p></li>
-          <li class="j-step"><p class="j-kicker">Context</p><p class="j-text">Order history, installed machines and past contacts are reviewed.</p></li>
-          <li class="j-step"><p class="j-kicker">Draft</p><p class="j-text">A short message about their machine is prepared, with one easy question.</p></li>
-          <li class="j-step is-human"><p class="j-kicker">Your team</p><p class="j-text">Your team approves the account and the wording before anything is sent.</p></li>
-          <li class="j-step is-outcome"><p class="j-kicker">Outcome</p><p class="j-text">The customer’s need reaches your parts or service team, ready to quote.</p></li>
-        </ol>
-      </details>
-
-      <details class="journey">
-        <summary class="journey-head">
-          <div class="j-icon" style="background:var(--rose-tint)" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9536e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
-          </div>
-          <div>
-            <p class="j-eyebrow" style="color:var(--rose)">Custom system · sales engineering</p>
-            <h3 class="j-title">Quoting a technical requirement</h3>
-          </div>
-        </summary>
-        <ol class="j-track">
-          <li class="j-step"><p class="j-kicker">Trigger</p><p class="j-text">A customer sends technical requirements by email.</p></li>
-          <li class="j-step"><p class="j-kicker">Context</p><p class="j-text">Specifications, past quotes, supplier documents, and pricing rules are pulled together.</p></li>
-          <li class="j-step"><p class="j-kicker">Draft</p><p class="j-text">A structured brief and a recommended configuration are written, with assumptions listed.</p></li>
-          <li class="j-step is-human"><p class="j-kicker">Your team</p><p class="j-text">An engineer checks the assumptions, adjusts, and approves.</p></li>
-          <li class="j-step is-outcome"><p class="j-kicker">Outcome</p><p class="j-text">The proposal goes out and the CRM and quote record are updated.</p></li>
-        </ol>
-      </details>
-
-      <p class="journey-note">These examples show possible workflows. Your forms, approval steps and available data determine what gets built.</p>
-    </div>
-  </section>
-
-  <section id="how-we-work" class="section section-border-top" aria-labelledby="how-title">
-    <div class="container">
-      <div class="section-head grid-head reveal">
-        <p class="eyebrow">How we work</p>
-        <h2 id="how-title">Start with one workflow your team can test</h2>
-        <p class="subtitle">Bring an existing form, report or customer follow-up process. Together, we define the steps, the people involved and what a useful result would look like.</p>
-      </div>
-      <div class="work-grid reveal">
-        <div class="w-step">
-          <div class="w-num" aria-hidden="true">1</div>
-          <h3>Find the right workflow</h3>
-          <p>Choose a recurring task and agree on the result to measure: reporting time, manual re-entry or customer follow-up.</p>
-        </div>
-        <div class="w-step">
-          <div class="w-num" aria-hidden="true">2</div>
-          <h3>Use your actual process</h3>
-          <p>We sit with the people who do the work today — the exceptions, the judgement calls, the steps nobody wrote down — and design around that.</p>
-        </div>
-        <div class="w-step">
-          <div class="w-num" aria-hidden="true">3</div>
-          <h3>Connect the systems</h3>
-          <p>Confirm which records are needed, how they can be accessed and which connections are feasible before agreeing on the build.</p>
-        </div>
-        <div class="w-step">
-          <div class="w-num" aria-hidden="true">4</div>
-          <h3>Deploy, measure, improve</h3>
-          <p>Your team tests the workflow with real examples before rollout. Compare the results with the agreed measure, then decide what to improve next.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-border-top bg-canvas" aria-labelledby="principles-title">
-    <div class="container">
-      <div class="section-head grid-head reveal">
-        <h2 id="principles-title">What stays true in every system</h2>
-        <p class="subtitle">A system only gets used if the people who own the work trust it. These are the commitments behind every system we put into production.</p>
-      </div>
-      <div class="principle-grid reveal">
-
-        <div class="principle">
-          <div class="p-ic" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6"/><path d="M15 2v6"/><path d="M6 8h12v3a6 6 0 0 1-12 0V8z"/><path d="M12 17v5"/></svg>
-          </div>
-          <div>
-            <h3>Start with your existing tools</h3>
-            <p>We review your CRM, ERP, inboxes and shared files, then agree which connections or imports the workflow needs.</p>
+            <div class="record">
+              <span>Finance</span><strong>Visit details ready for billing review</strong>
+            </div>
+          </figcaption>
+        </figure>
+      </section>
+      <section class="band white" id="solutions">
+        <div class="wrap">
+          <div class="section-intro"><h2>Where could a system change the business outcome?</h2></div>
+          <div class="domains">
+            <article class="domain">
+              <h3>Service operations</h3>
+              <p>
+                Scheduling, asset history, parts and labour in one service record. The office can see which
+                visits are complete, what is missing and who owns the follow-up.
+              </p>
+              <a href="/service-operations/" class="textlink">Explore service operations</a>
+            </article>
+            <article class="domain">
+              <h3>Inspection and quality</h3>
+              <p>
+                Readings, photos and findings feed the required report format. A qualified reviewer can check
+                source data, return a report for correction and sign off.
+              </p>
+              <a href="/inspection-quality/" class="textlink">Explore inspection and quality</a>
+            </article>
+            <article class="domain">
+              <h3>Collections and customer revenue</h3>
+              <p>
+                Finance can distinguish disputes from promises to pay and payments awaiting verification.
+                Service teams can identify customers due for parts or a renewal.
+              </p>
+              <a href="/revenue-operations/" class="textlink">Explore collections and customer revenue</a>
+            </article>
           </div>
         </div>
-
-        <div class="principle">
-          <div class="p-ic" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
-          </div>
-          <div>
-            <h3>People make the decisions that matter</h3>
-            <p>Wherever professional judgement or accountability matters, the work stops for a human to review it. Your experts stay the experts.</p>
+      </section>
+      <section class="band" id="workflow-examples">
+        <div class="wrap">
+          <div class="split">
+            <div class="copy">
+              <h2>See the work inside a system</h2>
+              <p>
+                Explore software the company operates and try a professional review workflow. Each example
+                shows who uses the information, which decision they make and what happens next.
+              </p>
+            </div>
+            <div>
+              <article class="case">
+                <span class="caption">Interactive demo</span>
+                <h3>From a field reading to an approved report</h3>
+                <p>
+                  Try an inspection, switch to the office view and send a report back for correction. See what
+                  changes in the report when the reading is corrected.
+                </p>
+                <a href="/field-service/demo/" class="textlink">Try the inspection demo</a>
+              </article>
+              <article class="case">
+                <span class="caption">Our own operating software</span>
+                <h3>What happened after the customer call?</h3>
+                <p>
+                  The MeetingScheduled CRM keeps the call history, deal stage and next action together on the
+                  lead record. See how the next person can pick up the conversation.
+                </p>
+                <a href="/eyal/projects/crm-revenue-systems/" class="textlink"
+                  >View the CRM and walkthrough</a
+                >
+              </article>
+              <article class="case">
+                <span class="caption">Collections demonstration</span>
+                <h3>A customer says they paid. Who checks?</h3>
+                <p>
+                  A payment reference is recorded against the invoice and routed to finance for review. The
+                  customer’s statement and the verified payment remain distinct.
+                </p>
+                <a href="/revenue-operations/#example" class="textlink">Explore the invoice example</a>
+              </article>
+            </div>
           </div>
         </div>
-
-        <div class="principle">
-          <div class="p-ic" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d6b52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
-          </div>
-          <div>
-            <h3>Start with one, expand on evidence</h3>
-            <p>We begin with a single bounded workflow you can judge honestly. What comes next is decided by what that one actually delivered.</p>
+      </section>
+      <section class="band white" id="how-we-work">
+        <div class="wrap">
+          <div class="split">
+            <div class="copy">
+              <h2>From a business goal to rollout</h2>
+              <p>
+                Operations, IT and management get a shared view of the requirements before committing to
+                development.
+              </p>
+            </div>
+            <div>
+              <ol class="steps">
+                <li>
+                  <h3>Goals and requirements</h3>
+                  <p>
+                    Agree with the people responsible on what should improve and how to tell — available
+                    service capacity, reports returned for correction or visibility into outstanding invoices.
+                  </p>
+                </li>
+                <li>
+                  <h3>System design and proposal</h3>
+                  <p>
+                    Map core systems, permissions and exceptions. The proposal defines deliverables,
+                    integrations, costs and acceptance criteria.
+                  </p>
+                </li>
+                <li>
+                  <h3>Development and rollout</h3>
+                  <p>
+                    Users test scenarios from their own work. Rollout planning covers business continuity,
+                    training and exception handling.
+                  </p>
+                </li>
+                <li>
+                  <h3>Handover and support</h3>
+                  <p>
+                    Agree who owns support, how the company can access its data and how changes will be
+                    handled. Review performance against the agreed goals after rollout.
+                  </p>
+                </li>
+              </ol>
+            </div>
           </div>
         </div>
-
+      </section>
+      <section class="band">
+        <div class="wrap">
+          <div class="split">
+            <div class="copy"><h2>How will the system fit your organisation?</h2></div>
+            <div>
+              <div class="qa">
+                <details>
+                  <summary>Which records stay in our ERP or CRM?</summary>
+                  <p>
+                    With IT, establish which system owns each record, who may update it and how failed updates
+                    are handled. Integration feasibility is checked before a commitment is made.
+                  </p>
+                </details>
+                <details>
+                  <summary>Where does AI make sense?</summary>
+                  <p>
+                    For example, AI can turn a dictated service note into a draft visit summary. Retain the
+                    source for review and define who approves the summary before it joins the asset history.
+                  </p>
+                </details>
+                <details>
+                  <summary>What happens at handover?</summary>
+                  <p>
+                    The proposal sets out deliverables, documentation, training and support terms. It also
+                    defines data export, ongoing maintenance and how future changes are handled.
+                  </p>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="band" id="about">
+        <div class="wrap">
+          <div class="split">
+            <div class="copy"><h2>About MeetingScheduled</h2></div>
+            <div>
+              <div class="about">
+                <img
+                  src="/aftermarket/eyal-taieb.jpg"
+                  width="65"
+                  height="77"
+                  loading="lazy"
+                  alt="Eyal Taieb"
+                />
+                <div class="copy">
+                  <h3>Eyal Taieb, founder</h3>
+                  <p>
+                    MeetingScheduled brings experience building operations and sales systems together with
+                    eight years in B2B sales and go-to-market roles.
+                  </p>
+                  <a href="/eyal/" class="textlink">Background and selected work</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="band contact">
+        <div class="wrap">
+          <div class="split">
+            <div class="copy">
+              <h2>What does your company need to manage better?</h2>
+              <p>
+                In the meeting we’ll discuss the business goal, the people involved and where existing systems
+                make it hard to act or make a decision.
+              </p>
+            </div>
+            <div>
+              <div class="hero-actions">
+                <a href="https://cal.com/meeting-scheduled/45-min-meeting" class="button">Book a meeting</a
+                ><a href="mailto:sales@meeting-scheduled.com" class="textlink">Email us</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="wrap foot">
+        <a href="/" class="brand" aria-label="MeetingScheduled home"
+          ><img src="/logo.svg" width="28" height="28" alt="" />MeetingScheduled</a
+        >
+        <nav aria-label="Footer navigation">
+          <a href="/service-operations/">Service operations</a
+          ><a href="/inspection-quality/">Inspection and quality</a
+          ><a href="/revenue-operations/">Collections and customer revenue</a
+          ><a href="/receptionist/">AI Receptionist</a><a href="/outbound/">Outbound Sales</a
+          ><a href="/#about">Company</a><a href="/privacy/">Privacy</a><a href="/terms.html">Terms</a>
+        </nav>
       </div>
-    </div>
-  </section>
-
-  <section id="about" class="section section-border-top" aria-labelledby="about-title">
-    <div class="container about reveal">
-      <div class="about-photo">
-        <img src="/aftermarket/eyal-taieb.jpg" alt="Eyal Taieb" width="720" height="900" loading="lazy">
-        <div class="tag"><strong>Eyal Taieb</strong><span>Founder, MeetingScheduled</span></div>
-      </div>
-      <div class="about-copy">
-        <p class="eyebrow">Who you’ll work with</p>
-        <h2 id="about-title">You talk to the person who builds it.</h2>
-        <p>MeetingScheduled is run by Eyal Taieb. Eyal builds business software and AI systems that run in production every day: a CRM, a multi-line calling system, voice agents and outreach tools.</p>
-        <p>Before building, he spent eight years in B2B sales and go-to-market. That experience shapes the work around how your customers buy and how your team operates.</p>
-        <div class="direct"><a href="/field-service/">See the field service system <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener">Book a time with Eyal <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-border-top bg-canvas" style="text-align:center;" aria-labelledby="cta-title">
-    <div class="container">
-      <h2 id="cta-title">Where does work slow down in your business?</h2>
-      <p class="subtitle" style="max-width:600px;margin-left:auto;margin-right:auto;">Walk us through one report or customer follow-up process. We’ll discuss where the work gets held up, whether a system could help and what a first version would involve.</p>
-      <div class="btn-row" style="margin-top:32px;">
-        <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener" class="btn btn-rose">Book a call</a>
-        <a href="mailto:sales@meeting-scheduled.com" class="btn btn-secondary">Email us</a>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  <div class="container footer-top">
-    <div class="footer-brand">
-      <a href="/" class="logo">
-        <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="white"/></svg></span>
-        MeetingScheduled
-      </a>
-      <p>Systems for the companies that keep equipment running: field service reports, aftermarket revenue recovery and custom workflows, built around the tools and people you already have.</p>
-      <a href="mailto:sales@meeting-scheduled.com" class="footer-email">sales@meeting-scheduled.com</a>
-    </div>
-    <div class="footer-cols">
-      <div class="footer-col">
-        <p class="footer-col-title">Solutions</p>
-        <a href="/field-service/">Field Service Reports</a>
-        <a href="/aftermarket/">Aftermarket Revenue Recovery</a>
-        <a href="/#workflow-examples">Custom Systems</a>
-        <a href="/receptionist/">AI Receptionist</a>
-        <a href="/outbound/">Outbound Sales</a>
-      </div>
-      <div class="footer-col">
-        <p class="footer-col-title">Company</p>
-        <a href="/#how-we-work">How we work</a>
-        <a href="/#about">About</a>
-        <a href="https://cal.com/meeting-scheduled/45-min-meeting" target="_blank" rel="noopener">Let’s talk</a>
-        <a href="https://reach.meeting-scheduled.com">Login</a>
-      </div>
-      <div class="footer-col">
-        <p class="footer-col-title">Legal</p>
-        <a href="/privacy">Privacy Policy</a>
-        <a href="/terms.html">Terms of Service</a>
-        <a href="/he/" lang="he" hreflang="he">עברית</a>
-      </div>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <p>© <span id="year"></span> MeetingScheduled. All rights reserved.</p>
-  </div>
-</footer>
-
-<script>
-document.documentElement.classList.add('js');
-document.getElementById('year').textContent = new Date().getFullYear();
-
-const menuBtn = document.getElementById('menuBtn');
-const mobileNav = document.getElementById('mobileNav');
-const iconOpen = document.getElementById('menuIconOpen');
-const iconClose = document.getElementById('menuIconClose');
-menuBtn.addEventListener('click', () => {
-  const isOpen = mobileNav.classList.toggle('open');
-  menuBtn.setAttribute('aria-expanded', String(isOpen));
-  menuBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-  iconOpen.style.display = isOpen ? 'none' : 'block';
-  iconClose.style.display = isOpen ? 'block' : 'none';
-});
-mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  mobileNav.classList.remove('open');
-  menuBtn.setAttribute('aria-expanded', 'false');
-  menuBtn.setAttribute('aria-label', 'Open menu');
-  iconOpen.style.display = 'block';
-  iconClose.style.display = 'none';
-}));
-
-const ddWrap = document.getElementById('solutionsDD');
-const ddBtn = document.getElementById('solutionsBtn');
-const ddMenu = document.getElementById('solutionsMenu');
-function setDropdown(open, returnFocus) {
-  ddMenu.hidden = !open;
-  ddBtn.setAttribute('aria-expanded', String(open));
-  if (!open && returnFocus) ddBtn.focus();
-}
-ddBtn.addEventListener('click', () => setDropdown(ddMenu.hidden));
-ddWrap.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && !ddMenu.hidden) { e.preventDefault(); setDropdown(false, true); }
-});
-ddWrap.addEventListener('focusout', e => {
-  if (!ddWrap.contains(e.relatedTarget)) setDropdown(false);
-});
-document.addEventListener('pointerdown', e => {
-  if (!ddMenu.hidden && !ddWrap.contains(e.target)) setDropdown(false);
-});
-ddMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setDropdown(false)));
-
-const mGroupBtn = document.getElementById('mSolutionsBtn');
-const mGroup = document.getElementById('mSolutionsList');
-mGroupBtn.addEventListener('click', () => {
-  mGroup.hidden = !mGroup.hidden;
-  mGroupBtn.setAttribute('aria-expanded', String(!mGroup.hidden));
-});
-
-// Scroll-in: sections ease in once, journeys light up step by step once, mini illustrations loop only while visible.
-(() => {
-  const once = document.querySelectorAll('.reveal, .journey');
-  const loops = document.querySelectorAll('.mini');
-  if (!('IntersectionObserver' in window)) {
-    once.forEach(el => el.classList.add('is-on')); loops.forEach(el => el.classList.add('is-on')); return;
-  }
-  let seen = false;
-  const io = new IntersectionObserver(entries => { seen = true; entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('is-on'); io.unobserve(e.target); }
-  }); }, { threshold: 0, rootMargin: '0px 0px 15% 0px' });
-  once.forEach(el => io.observe(el));
-  // Safety net: if the browser never reports visibility, show everything rather than leave gaps.
-  setTimeout(() => { if (!seen && !document.hidden) once.forEach(el => el.classList.add('is-on')); }, 2500);
-  const lo = new IntersectionObserver(entries => entries.forEach(e => e.target.classList.toggle('is-on', e.isIntersecting)), { threshold: .3 });
-  loops.forEach(el => lo.observe(el));
-})();
-
-// Hero: the light leans gently toward the pointer, and the orbits rest while the hero is off screen.
-(() => {
-  const hero = document.querySelector('.hero');
-  const aura = document.getElementById('heroAura');
-  if (!hero || !aura) return;
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([e]) => hero.classList.toggle('is-still', !e.isIntersecting)).observe(hero);
-  }
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(pointer: fine)').matches) return;
-  let raf = 0;
-  hero.addEventListener('pointermove', e => {
-    if (raf) return;
-    raf = requestAnimationFrame(() => {
-      raf = 0;
-      const r = hero.getBoundingClientRect();
-      aura.style.setProperty('--mx', ((e.clientX - r.left) / r.width - .5) * 60 + 'px');
-      aura.style.setProperty('--my', ((e.clientY - r.top) / r.height - .5) * 40 + 'px');
-    });
-  });
-  hero.addEventListener('pointerleave', () => { aura.style.setProperty('--mx', '0px'); aura.style.setProperty('--my', '0px'); });
-})();
-
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const id = a.getAttribute('href').slice(1);
-    const el = id ? document.getElementById(id) : null;
-    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
-  });
-});
-</script>
-
-<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="345c5509-5794-4f9b-9fca-729075f9eea3";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
-
-</body>
+    </footer>
+    <script>
+      const menu = document.querySelector(".mobile-menu");
+      menu.addEventListener("click", (event) => {
+        if (event.target.closest("a")) menu.open = false;
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && menu.open) {
+          menu.open = false;
+          menu.querySelector("summary").focus();
+        }
+      });
+      document.addEventListener("click", (event) => {
+        if (!menu.contains(event.target)) menu.open = false;
+      });
+    </script>
+    <script type="text/javascript">
+      window.$crisp = [];
+      window.CRISP_WEBSITE_ID = "345c5509-5794-4f9b-9fca-729075f9eea3";
+      (function () {
+        d = document;
+        s = d.createElement("script");
+        s.src = "https://client.crisp.chat/l.js";
+        s.async = 1;
+        d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+  </body>
 </html>
