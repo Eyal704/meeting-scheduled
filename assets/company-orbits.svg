@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <style>
+    ellipse { fill: none; vector-effect: non-scaling-stroke; }
+    .track { stroke-width: 1.25; }
+    .head { stroke-width: 3; stroke-linecap: round; stroke-dasharray: 2 998; stroke-dashoffset: -175; opacity: .62; }
+    .o2 .head { stroke-dashoffset: -630; }
+    @media (prefers-reduced-motion: no-preference) {
+      .head { animation: trace 4s cubic-bezier(.25,.46,.45,.94) backwards; }
+      @keyframes trace { from { stroke-dashoffset: 0; opacity: 0; } }
+    }
+  </style>
+  <defs>
+        <linearGradient id="trackRose" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#c9536e" stop-opacity=".38"/>
+          <stop offset=".45" stop-color="#c9536e" stop-opacity=".06"/>
+          <stop offset="1" stop-color="#c9536e" stop-opacity=".30"/>
+        </linearGradient>
+        <linearGradient id="trackGreen" x1="1" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3d6b52" stop-opacity=".30"/>
+          <stop offset=".5" stop-color="#3d6b52" stop-opacity=".04"/>
+          <stop offset="1" stop-color="#3d6b52" stop-opacity=".22"/>
+        </linearGradient>
+      </defs>
+      <g class="o1" transform="rotate(-4 600 300)">
+        <ellipse class="track" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="url(#trackRose)"/>
+        <ellipse class="comet head" cx="600" cy="300" rx="580" ry="276" pathLength="1000" stroke="#b8405b"/>
+      </g>
+      <g class="o2" transform="translate(1200 0) scale(-1 1) rotate(-7 600 300)">
+        <ellipse class="track" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="url(#trackGreen)"/>
+        <ellipse class="comet head" cx="600" cy="300" rx="530" ry="250" pathLength="1000" stroke="#2f5a43"/>
+      </g>
+    </svg>

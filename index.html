@@ -36,7 +36,7 @@
     <header>
       <div class="wrap bar">
         <a href="/" class="brand" aria-label="MeetingScheduled home"
-          ><img src="/logo.svg" width="28" height="28" alt="" />MeetingScheduled</a
+          ><img src="/assets/company-mark.svg" width="28" height="28" alt="" />MeetingScheduled</a
         >
         <nav class="links" aria-label="Main navigation">
           <a href="/#solutions">Solutions</a><a href="/#workflow-examples">Work examples</a
@@ -59,8 +59,8 @@
       </div>
     </header>
     <main id="main">
-      <section class="wrap hero">
-        <div>
+      <section class="hero">
+        <div class="hero-inner wrap">
           <p class="eyebrow">For service, inspection and industry</p>
           <h1>Software and AI for better business performance</h1>
           <p class="lede">
@@ -73,28 +73,27 @@
             ><a href="#workflow-examples" class="textlink">Work examples</a>
           </div>
         </div>
-        <figure class="sample">
-          <img src="/aftermarket/media/hero-13.jpg" alt="" width="1600" height="410" />
-          <figcaption class="sample-body">
-            <span class="caption">Service operations example</span>
-            <h2>From a service visit to a billing review</h2>
-            <div class="record">
-              <span>Field service</span><strong>Parts and hours logged on site</strong>
-            </div>
-            <div class="record">
-              <span>Service review</span><strong>Visit report approved by service lead</strong>
-            </div>
-            <div class="record">
-              <span>Finance</span><strong>Visit details ready for billing review</strong>
-            </div>
-          </figcaption>
-        </figure>
       </section>
       <section class="band white" id="solutions">
         <div class="wrap">
           <div class="section-intro"><h2>Where could a system change the business outcome?</h2></div>
           <div class="domains">
             <article class="domain">
+              <span class="domain-icon" aria-hidden="true"
+                ><svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                  <polyline points="2 17 12 22 22 17" />
+                  <polyline points="2 12 12 17 22 12" /></svg
+              ></span>
               <h3>Service operations</h3>
               <p>
                 Scheduling, asset history, parts and labour in one service record. The office can see which
@@ -103,6 +102,21 @@
               <a href="/service-operations/" class="textlink">Explore service operations</a>
             </article>
             <article class="domain">
+              <span class="domain-icon" aria-hidden="true"
+                ><svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <polyline points="9 15 11 17 15 13" /></svg
+              ></span>
               <h3>Inspection and quality</h3>
               <p>
                 Readings, photos and findings feed the required report format. A qualified reviewer can check
@@ -111,6 +125,22 @@
               <a href="/inspection-quality/" class="textlink">Explore inspection and quality</a>
             </article>
             <article class="domain">
+              <span class="domain-icon" aria-hidden="true"
+                ><svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="8" y1="13" x2="16" y2="13" />
+                  <line x1="8" y1="17" x2="13" y2="17" /></svg
+              ></span>
               <h3>Collections and customer revenue</h3>
               <p>
                 Finance can distinguish disputes from promises to pay and payments awaiting verification.
@@ -130,6 +160,22 @@
                 Explore software the company operates and try a professional review workflow. Each example
                 shows who uses the information, which decision they make and what happens next.
               </p>
+              <figure class="sample">
+                <img src="/aftermarket/media/hero-13.jpg" alt="" loading="lazy" width="1600" height="410" />
+                <figcaption class="sample-body">
+                  <span class="caption">Service operations example</span>
+                  <h3>From a service visit to a billing review</h3>
+                  <div class="record">
+                    <span>Field service</span><strong>Parts and hours logged on site</strong>
+                  </div>
+                  <div class="record">
+                    <span>Service review</span><strong>Visit report approved by service lead</strong>
+                  </div>
+                  <div class="record">
+                    <span>Finance</span><strong>Visit details ready for billing review</strong>
+                  </div>
+                </figcaption>
+              </figure>
             </div>
             <div>
               <article class="case">
@@ -291,7 +337,7 @@
     <footer>
       <div class="wrap foot">
         <a href="/" class="brand" aria-label="MeetingScheduled home"
-          ><img src="/logo.svg" width="28" height="28" alt="" />MeetingScheduled</a
+          ><img src="/assets/company-mark.svg" width="28" height="28" alt="" />MeetingScheduled</a
         >
         <nav aria-label="Footer navigation">
           <a href="/service-operations/">Service operations</a
@@ -328,5 +374,6 @@
         d.getElementsByTagName("head")[0].appendChild(s);
       })();
     </script>
+    <script src="/assets/service-example.js" defer></script>
   </body>
 </html>
